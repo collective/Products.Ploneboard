@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.12 2003/07/19 08:32:42 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.13 2003/07/24 00:04:49 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 get_transaction().commit(1)
         except:
             tb=sys.exc_info()
-            if tb[1].endswith('already in use.'):
+            if str(tb[1]).endswith('already in use.'):
                 self.error_log.raising(tb)
                 res='this product has already been installed without Quickinstaller!'
                 if not swallowExceptions:
