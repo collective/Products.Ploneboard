@@ -1,3 +1,203 @@
+2004-05-24 13:29  tiran
+
+	* version.txt, docs/HISTORY.txt, docs/INSTALL.txt: Preparing beta5
+	  release
+
+2004-05-21 20:44  tiran
+
+	* config.py, types/ATFile.py, types/ATImage.py: Automagically
+	  setting id including filename cleanup
+
+2004-05-21 20:22  tiran
+
+	* types/: ATFile.py, ATImage.py: Added code for setting id
+	  according to the filename
+
+2004-05-21 11:12  tiran
+
+	* skins/ATContentTypes/atct_edit.cpt: Shrinked edit template by
+	  reusing the base_edit template
+
+2004-05-21 09:44  tiran
+
+	* CalendarSupport.py, Extensions/Install.py, docs/HISTORY.txt,
+	  tests/ATCTSiteTestCase.py, tests/common.py,
+	  tests/testATDocument.py, tests/testATEvent.py, types/ATFile.py,
+	  types/ATImage.py: Fixed a bunch of bugs reported on SF.net
+
+2004-05-21 09:11  tiran
+
+	* HistoryAware.py: Security fixes Add more comments
+
+2004-05-21 01:54  lele
+
+	* tests/testATDocument.py: New test against loosing content type
+	  upon renaming.
+
+2004-05-21 00:59  tiran
+
+	* types/ATDocument.py: Fixed from lelit for migration problem
+
+2004-05-20 14:44  tesdal
+
+	* tests/ATCTSiteTestCase.py, types/schemata.py: Added
+	  languageIndependent to some of the Event fields.  Made the tests
+	  run again. Now they don't pass, but that should be due to AT
+	  tests not passing.
+
+2004-05-18 22:40  tiran
+
+	* types/schemata.py: Moved to new ValidationChain syntax
+
+2004-05-17 17:41  tiran
+
+	* types/: ATFile.py, ATImage.py: Fixed #955271 content type and
+	  filename not correctly set
+
+2004-05-17 17:40  tiran
+
+	* CalendarSupport.py: Fixed LF
+
+2004-05-15 03:54  tiran
+
+	* tests/: ATCTSiteTestCase.py, ATCTTestCase.py, common.py,
+	  testATDocument.py, testATEvent.py, testATFavorite.py,
+	  testATFile.py, testATFolder.py, testATImage.py, testATLink.py,
+	  testATNewsItem.py: Moved field test into a site based test
+	  Wrapped dummies into a wrapper in the site
+
+2004-05-15 03:53  tiran
+
+	* config.py, types/ATContentType.py, types/ATDocument.py,
+	  types/ATEvent.py, types/ATFavorite.py, types/ATFile.py,
+	  types/ATFolder.py, types/ATImage.py, types/ATLink.py,
+	  types/ATNewsItem.py, types/ATTopic.py: Introduced
+	  HAS_LINGUA_PLONE constant
+
+2004-05-15 02:54  tiran
+
+	* docs/HISTORY.txt: Added LinguaPlone
+
+2004-05-15 02:52  tiran
+
+	* types/: ATContentType.py, ATDocument.py, ATEvent.py,
+	  ATFavorite.py, ATFile.py, ATFolder.py, ATImage.py, ATLink.py,
+	  ATNewsItem.py, ATTopic.py: Changed import from LinguaPlone -
+	  Explicit is better than Implicit!
+
+2004-05-15 02:51  tiran
+
+	* tests/: ATCTTestCase.py, runtests.sh.example, testATDocument.py,
+	  testATEvent.py, testATFavorite.py, testATFile.py, testATImage.py,
+	  testATLink.py, testATNewsItem.py: Fixed types (validation was out
+	  of date)
+
+2004-05-14 14:36  godchap
+
+	* types/: ATEvent.py, ATFile.py, ATFolder.py, ATImage.py,
+	  ATLink.py, ATNewsItem.py: last types compliant to LinguaPlone
+
+2004-05-14 14:07  godchap
+
+	* types/: ATDocument.py, ATTopic.py: first types compliant to
+	  LinguaPlone
+
+2004-05-14 14:04  godchap
+
+	* interfaces/IATTopic.py: fixed interface
+
+2004-05-14 13:40  godchap
+
+	* interfaces/IATTopic.py,
+	  skins/ATContentTypes/criterion_edit_form.cpt,
+	  skins/ATContentTypes/criterion_edit_form.cpt.metadata,
+	  skins/ATContentTypes/criterion_set_sort.cpy,
+	  skins/ATContentTypes/criterion_set_sort.cpy.metadata,
+	  types/ATTopic.py, types/criteria/ATDateCriteria.py,
+	  types/criteria/ATListCriterion.py,
+	  types/criteria/ATSimpleIntCriterion.py,
+	  types/criteria/ATSimpleStringCriterion.py,
+	  types/criteria/ATSortCriterion.py, types/criteria/__init__.py:
+	  ifirst step at improving user experience with  criteria view
+
+2004-05-14 06:12  godchap
+
+	* skins/ATContentTypes/atct_topic_view.pt, types/ATTopic.py: added
+	  view ala folder_listing to ATTopic
+
+2004-05-12 17:53  tiran
+
+	* docs/INSTALL.txt, types/schemata.py: Updating TemplateMixin
+	  (merged to AT 1.3)
+
+2004-05-12 01:56  lele
+
+	* skins/ATContentTypes/atct_macros.pt, i18n/atct-plone-it.po,
+	  i18n/atct-plone.pot: Added the i18n pot file and the italian
+	  translation.
+
+2004-05-12 00:56  lele
+
+	* types/ATTopic.py: Inserted the description msgid.
+
+2004-05-11 17:12  lele
+
+	* types/criteria/schemata.py: Completed the i18n definitions of the
+	  criterions.
+
+2004-05-11 17:10  lele
+
+	* skins/ATContentTypes/atct_macros.pt: Fix the i18n of the fieldset
+	  title label.
+
+2004-05-10 02:34  tiran
+
+	* types/criteria/: ATBaseCriterion.py, ATDateCriteria.py,
+	  ATListCriterion.py, ATSimpleIntCriterion.py,
+	  ATSimpleStringCriterion.py, ATSortCriterion.py, __init__.py:
+	  Second stage
+
+2004-05-10 02:24  tiran
+
+	* types/criteria/.cvsignore: added cvsignore
+
+2004-05-10 02:23  tiran
+
+	* types/: ATTopic.py, criteria/ATBaseCriterion.py,
+	  criteria/ATDateCriteria.py, criteria/ATListCriterion.py,
+	  criteria/ATSimpleIntCriterion.py,
+	  criteria/ATSimpleStringCriterion.py, criteria/ATSortCriterion.py,
+	  criteria/__init__.py: Working on limi's idea for a better topic
+	  ui
+
+2004-05-10 01:15  tiran
+
+	* Validators.py: Removed debug print statement
+
+2004-05-06 14:14  tiran
+
+	* CalendarSupport.py: Seperated view from get method
+
+2004-05-06 05:30  tiran
+
+	* CalendarSupport.py: Fixed iCal/vCal (all praise my insomnia)
+
+2004-05-06 04:28  tiran
+
+	* CalendarSupport.py, docs/HISTORY.txt, types/ATEvent.py: Added
+	  iCal/vCal support to AT Event The new feature isn't working due
+	  some coding bugs so don't try it. I'm too tired to work on and I
+	  want to backup my work to cvs.
+
+2004-05-04 21:33  tiran
+
+	* Extensions/: migrateFromCMF.py, migrateFromCPT.py: switch back to
+	  default before migration
+
+2004-05-04 21:03  tiran
+
+	* docs/CHANGELOG.txt: updated changelog
+
 2004-05-04 21:02  tiran
 
 	* __pkginfo__.py, version.txt, debian/changelog, docs/AUTHORS.txt,
