@@ -23,9 +23,8 @@
 <metal:div metal:define-macro="type">
     <span class="label" i18n:translate="type">Type</span>
     <div>
-      <select name="fielddata.type:record:string"
-              tal:attributes="onChange string:javascript:this.form.submit();;return true;;">
-        <span tal:repeat="item field_types">
+      <select name="fielddata.type:record:string">
+        <span tal:repeat="item python: ('StringField', 'IntegerField', 'FloatField', 'FixedPointField', 'LinesField', 'DateTimeField', 'BooleanField', 'ReferenceField')">
           <option tal:attributes="value item;
                                   selected python: item==here.atse_getFieldType(field)"
                   tal:content="item" />
@@ -35,63 +34,112 @@
 
 </metal:div>
             
+
 <metal:div metal:define-macro="widget">
 
     <span class="label" i18n:translate="widget">Widget</span>
     <div>
 
-      <select name="fielddata.widget:record:string"
-                            tal:attributes="onChange string:javascript:this.form.submit();;return true;;">
-        <tal:block tal:repeat="widget_info all_widget_info"
-                   tal:omit-tag="python:1">
-          <tal:data tal:define="widget_choice python:widget_info[1]['widget'];
-                                widget_choice_id python:widget_info[0];
-                                widget_choice_visible python:widget_info[1].get('visible', True);
-                                widget_choice_format widget_choice/format | nothing;
-                                widget_format python:getattr(field.widget, 'format', 0);
-                                selected python:widget_name==widget_choice.getName() and test(widget_format, widget_format==widget_choice_format, 1)">
-            <tal:selected tal:condition="selected">
-              <tal:setselected tal:define="global selected_widget_key widget_choice_id;
-                                           global selected_widget_data python:widget_info[1]" />
-            </tal:selected>
-            <option tal:content="widget_choice_id"
-                    tal:attributes="value widget_choice_id;
-                                    selected selected"
-                    tal:condition="widget_choice_visible" />
-          </tal:data>
-        </tal:block>
+      <select name="fielddata.widget:record:string">
+        <option value="String" 
+                tal:content="string:String"
+                tal:attributes="selected python: widget_name=='StringWidget'" />
+        <option value="Textarea" 
+                tal:content="string:Textarea"
+                tal:attributes="selected python: widget_name=='TextAreaWidget'" />
+        <option value="Radio" 
+                tal:content="string:Radio"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='radio'"/>
+        <option value="Select" 
+                tal:content="string:Select"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='select'"/>
+        <option value="Flex" 
+                tal:content="string:flexible Selection"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='flex'"/>
+        <option value="Lines" 
+                tal:content="string:Lines"
+                tal:attributes="selected python: widget_name=='LinesWidget' "/>
+        <option value="Calendar" 
+                tal:content="string:Calendar"
+                tal:attributes="selected python: widget_name=='CalendarWidget' "/>
+        <option value="Boolean" 
+                tal:content="string:Boolean"
+                tal:attributes="selected python: widget_name=='BooleanWidget' "/>
+        <option value="MultiSelect" 
+                tal:content="string:MultiSelect"
+                tal:attributes="selected python: widget_name=='MultiSelectionWidget' "/>
+
+
+        <option value="Richtext" 
+                tal:content="string:Richtext"
+                tal:attributes="selected python: widget_name=='RichWidget' "/>
+        <option value="Password" 
+                tal:content="string:Password"
+                tal:attributes="selected python: widget_name=='PasswordWidget' "/>
+        <option value="Visual" 
+                tal:content="string:Visual"
+                tal:attributes="selected python: widget_name=='VisualWidget' "/>
+        <option value="Epoz" 
+                tal:content="string:Epoz"
+                tal:attributes="selected python: widget_name=='EpozWidget' "/>
+        <option value="Picklist"
+                tal:content="string:Picklist MultiSelect"
+                tal:attributes="selected python: widget_name=='PicklistWidget' "/>
+        <option value="InAndOut"
+                tal:content="string:InAndOut MultiSelect"
+                tal:attributes="selected python: widget_name=='InAndOutWidget' "/>
+        <option value="ReferenceBrowserWidget"
+                tal:content="string:ReferenceBrowserWidget"
+                tal:attributes="selected python: widget_name=='ReferenceBrowserWidget'"
+        		tal:condition="exists:here/referencebrowser_popup"/>
+
+        <tal:comment tal:replace="nothing">
+            <option value="Image" 
+                    tal:content="string:Image"
+                    tal:attributes="selected python: widget_name=='ImageWidget' "/>
+            <option value="Integer" 
+                    tal:content="string:Integer"
+                    tal:attributes="selected python: widget_name=='IntegerWidget' "/>
+            <option value="Decimal" 
+                    tal:content="string:Decimal"
+                    tal:attributes="selected python: widget_name=='DecimalWidget' "/>
+            <option value="Reference" 
+                    tal:content="string:Reference"
+                    tal:attributes="selected python: widget_name=='ReferenceWidget' "/>
+            <option value="Keywords" 
+                    tal:content="string:Keywords"
+                    tal:attributes="selected python: widget_name=='KeywordWidget' "/>
+        </tal:comment>
 
       </select>
     </div>
 </metal:div>
 
-<metal:div metal:define-macro="row_col_size">
-  <metal:block tal:condition="python: hasattr(widget, 'rows')">       
-    <span i18n:translate="rows">Rows</span>
-    <input type="text" size="3" name="fielddata.widgetrows:record:int" 
-           tal:attributes="value widget/rows|string:10"/>
-  </metal:block>
-  <metal:block tal:condition="python: hasattr(widget, 'cols')">       
-    <br>
-    <span i18n:translate="cols">Cols</span>
-    <input type="text" size="3" name="fielddata.widgetcols:record:int" 
-           tal:attributes="value widget/cols|string:60"/>
-  </metal:block>
-</metal:div>
-
 <metal:div metal:define-macro="size">
-  <span class="label" i18n:translate="size">Size</span>
-  <div>
-    <metal:block tal:condition="python:selected_widget_data.has_key('size_macro')">
-      <metal:block use-macro="python:path(selected_widget_data['size_macro'])" />
-    </metal:block>
 
-    <metal:block tal:condition="not: python:selected_widget_data.has_key('size_macro')">
-      <span i18n:translate="size">Size</span>
-      <input type="text" size="3" name="fielddata.widgetsize:record:int" 
-             tal:attributes="value widget/size|string:60"/>
-    </metal:block>
-  </div>
+    <span class="label" i18n:translate="size">Size</span>
+    <div>
+          
+      <metal:block tal:condition="python: widget_name in ('TextAreaWidget', 'LinesWidget')">
+        <metal:block tal:condition="python: hasattr(widget, 'rows')">       
+          <span i18n:translate="rows">Rows</span>
+          <input type="text" size="3" name="fielddata.widgetrows:record:int" 
+                 tal:attributes="value widget/rows|string:10"/>
+        </metal:block>
+        <metal:block tal:condition="python: hasattr(widget, 'cols')">       
+          <br>
+          <span i18n:translate="cols">Cols</span>
+          <input type="text" size="3" name="fielddata.widgetcols:record:int" 
+                 tal:attributes="value widget/cols|string:60"/>
+        </metal:block>
+      </metal:block>
+
+      <metal:block tal:condition="not: python: widget_name in ('TextAreaWidget', 'LinesWidget')">
+         <span i18n:translate="size">Size</span>
+         <input type="text" size="3" name="fielddata.widgetsize:record:int" 
+                tal:attributes="value widget/size|string:60"/>
+      </metal:block>
+    </div>
 </metal:div>
 
 <metal:div metal:define-macro="maintenance">
@@ -184,18 +232,6 @@
 </metal:div>
 
 
-<metal:div define-macro="vocabulary">
-  <span class="label" i18n:translate="vocabulary">
-    Vocabulary (Use "key|value" for passing key-value pairs 
-    or 'method:&lt;methodname&gt;')
-  </span>
-  <div> 
-    <textarea cols="60" rows="6"
-              name="fielddata.vocabulary:record:lines"
-              tal:content="python: here.atse_formatVocabulary(field)"></textarea>
-  </div>
-</metal:div>
-
 
 <metal:div metal:define-macro="fieldeditor">
 
@@ -206,10 +242,7 @@
         <form tal:attributes="action string:${context/absolute_url}/atse_update" method="post"
             tal:define="field python: here.atse_getField(SCHEMA_ID, request['field']);
                         widget python: field.widget;
-                        widget_name python:field.getWidgetName();
-                        all_widget_info here/atse_getWidgetInfo;
-                        all_widget_map here/atse_getWidgetMap;
-                        field_types here/atse_getFieldTypes">
+                        widget_name python:field.getWidgetName()">
         <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" >
         <input type="hidden" name="schema_template" tal:attributes="value SCHEMA_TEMPLATE" />
 
@@ -233,8 +266,17 @@
         </div>
         <div class="clear"> </div>
 
-        <div tal:condition="selected_widget_data/useVocab | nothing">
-            <metal:block use-macro="here/atse_macros/macros/vocabulary" />
+        <div tal:condition="python: widget_name in ('MultiSelectionWidget', 'SelectionWidget', 'PicklistWidget', 'InAndOutWidget')">
+          <span class="label" i18n:translate="vocabulary">
+            Vocabulary (Use "key|value" for passing key-value pairs 
+            or 'method:&lt;methodname&gt;')
+          </span>
+          <div> 
+            <textarea cols="60" rows="6"
+                   name="fielddata.vocabulary:record:lines"
+                   tal:condition="python: widget_name in ('MultiSelectionWidget', 'SelectionWidget', 'PicklistWidget', 'InAndOutWidget')"
+                   tal:content="python: here.atse_formatVocabulary(field)"></textarea>
+          </div>
         </div>
 
         <div>
@@ -265,15 +307,6 @@
             <input type="text" value="" size="60" 
                    name="fielddata.label:record:string"
                    tal:attributes="value python: field.widget.label"/>
-          </div>
-        </div>
-
-        <div>
-          <span class="label" i18n:translate="Description">Description</span>
-          <div>
-            <input type="text" value="" size="60" 
-                   name="fielddata.description:record:string"
-                   tal:attributes="value python: getattr(field.widget, 'description', '')"/>
           </div>
         </div>
 
@@ -336,10 +369,6 @@
           <div class="clear"> </div>
         </div>
 
-        <metal:block tal:condition="python:selected_widget_data.has_key('post_macro')">
-          <metal:block use-macro="python:path(selected_widget_data['post_macro'])" />
-        </metal:block>
-        
 	<br/>
         <div> 
           <div class="field">
