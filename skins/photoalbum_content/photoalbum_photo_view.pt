@@ -50,6 +50,10 @@
 
       <span class="right">
 	<input type="button" 
+	       value="Back to album" 
+               class="context"
+	       tal:attributes="onClick string:javascript:location.href='${request/URL1}/view?b_start=$b_start';; return false;;"/>
+	<input type="button" 
 	       value="Start slideshow" 
 	       class="context"
 	       tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
