@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
+$Id: FSControlledPythonScript.py,v 1.3 2003/07/29 14:18:39 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -25,6 +25,12 @@ from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
 from ControlledPythonScript import ControlledPythonScript
 from ControllerState import ControllerState
 from ControlledBase import ControlledBase
+
+try:
+    from Products.CMFPlone.PloneTool import logException
+except:
+    logException = None
+
 
 
 class FSControlledPythonScript (BaseClass, ControlledBase):
@@ -64,8 +70,10 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
             # is not guaranteed to run, we also call these in __init__
             object._read_action_metadata(object.getId(), object.filepath)
         except:
-            import pdb
-            pdb.set_trace()
+            if logException:
+                logException()
+#            import pdb
+#            pdb.set_trace()
             raise
 
 
