@@ -1,6 +1,5 @@
 import types
 import AccessControl.User
-#import base64
 
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
@@ -131,8 +130,8 @@ content_schema = FieldList((
                 ),
 
     StringField('confirm_password',
-                mutator='_setPassword',
-                accessor='_getPassword',
+                mutator='_setConfirmPassword',
+                accessor='_getConfirmPassword',
                 mode='w',
                 read_permission=VIEW_SECURITY_PERMISSION,
                 write_permission=EDIT_PASSWORD_PERMISSION,
@@ -199,22 +198,36 @@ class Member(BaseContent):
 
     # Note that we override BaseContent.schema
     schema = content_schema + ExtensibleMetadata.schema
+
+    # for Plone compatibility -- managed by workflow state
     listed = 0
+    
+    # the user folder containing the user associated with this member
+    _userFolder = None
+    _user = None
 
     ##IMPL DETAILS
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
         self.id = str(userid)
+        self.password = None
+        self.roles = None
+        self.domains = None
         self._setPassword(self.generatePassword())
         self.listed = 0
+        self._userFolder = None
+        self._createUser()
 
 
     def view(self, **kwargs):
-        return self.getTypeInfo().getActions()
+        """View action"""
+        actions = self.getTypeInfo().getActions()
         for action in actions:
             if action.get('id', None) == 'view':
-                if _verifyActionPermissions(obj, action):
-                    action = obj.restrictedTraverse(action['action'])
+                if _verifyActionPermissions(self, action):
+                    action = self.restrictedTraverse(action['action'])
+                    import sys
+                    sys.stdout.write('action = %s\n' % str(action))
                     if action is not None:
                         return action(**kwargs)
         raise 'Unauthorized', ('No accessible views available for %s' %
@@ -224,7 +237,6 @@ class Member(BaseContent):
     security.declarePublic('getMemberId')
     def getMemberId(self):
         return self.getUserName()
-
 
     # ###############################
     # Validators
@@ -265,7 +277,7 @@ class Member(BaseContent):
 
     security.declarePrivate('post_validate')
     def post_validate(self, REQUEST, errors):
-        if not(errors.get('password', None)) and not(errors.get('confirm_password', None)):
+        if REQUEST and not(errors.get('password', None)) and not(errors.get('confirm_password', None)):
             if REQUEST.get('password', None) != REQUEST.get('confirm_password', None):
                 errors['password'] = errors['confirm_password'] = \
                     'Your password and confirmation did not match. ' \
@@ -273,8 +285,6 @@ class Member(BaseContent):
 
 
     def isValid(self):
-        import sys
-        sys.stdout.write('isValid\n')
         errors = {}
         # make sure object has required data and metadata
         self.Schema().validate(self, None, errors, 1, 1)
@@ -340,21 +350,25 @@ class Member(BaseContent):
     security.declarePublic('getUser')
     # XXX is this perm correct?
     def getUser(self):
-        if not hasattr(self, '_v_user'):
-            u = self.acl_users.getUser(self.id)
-            if u is not None:
-                self._v_user = u
-            else:
-                # create a temporary user - turn into a real user when register() is called
-                self._v_user = AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains)
-        return aq_base(self._v_user).__of__(self.acl_users) # restore the proper context
+        if self._userFolder:
+            return aq_base(self._userFolder.getUser(self.id)).__of__(self.acl_users) # restore the proper context
+#            return aq_base(self._userFolder.getUser(self.id)).__of__(self._userFolder) # restore the proper context
+# XXX is this right?
+        else:
+            if self._user is None:
+                self._createUser()
+            return aq_base(self._user).__of__(self.acl_users) # restore the proper context
 
 
     # ###############################
     # Overrides of base class mutators that trigger workflow transitions
     
     def update(self, **kwargs):
+        membership_tool = getToolByName(self, 'portal_membership')
+        updateSelf = membership_tool.getAuthenticatedMember().getUserName() == self.getUserName()
         ret = BaseContent.update(self, **kwargs)
+        if updateSelf:
+            self._updateCredentials()
         # invoke any automated workflow transitions after update
         import sys
         sys.stdout.write('update\n')
@@ -363,7 +377,11 @@ class Member(BaseContent):
 
 
     def processForm(self, data=1, metadata=0):
+        membership_tool = getToolByName(self, 'portal_membership')
+        updateSelf = membership_tool.getAuthenticatedMember().getUserName() == self.getUserName()
         ret = BaseContent.processForm(self, data, metadata)
+        if updateSelf:
+            self._updateCredentials()
         # invoke any automated workflow transitions after update
         import sys
         sys.stdout.write('processForm\n')
@@ -381,14 +399,13 @@ class Member(BaseContent):
         registration_tool = getToolByName(self, 'portal_registration')
         user_created = 0
         # create a real user
-        if self.acl_users.getUser(self.id) is None:
+        if self._userFolder is None:
             # Limit the granted roles.
             # Anyone is always allowed to grant the 'Member' role.
             roles = self.getRoles()
             _limitGrantedRoles(roles, self, ('Member',))
-
-            self.acl_users.userFolderAddUser(self.id, self._getPassword(), roles, self.getDomains())
-            self._v_user = self.acl_users.getUser(self.id)
+            self.setRoles(roles)
+            self._createUser(force_create=1)
             user_created = 1
 
         # make the user the owner of the current member object
@@ -408,6 +425,18 @@ class Member(BaseContent):
         sys.stdout.write('registering: done\n')
 
 
+    security.declarePrivate('_createUser')
+    def _createUser(self, force_create=0):
+        if force_create and self._userFolder is None:
+            self._userFolder = self.acl_users
+        if self._userFolder is None:
+            self._user = AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains)
+        else:
+            if not self._userFolder.getUser(self.id):
+                self._userFolder.userFolderAddUser(self.id, self.password, self.roles, self.domains)
+                self._user = None
+
+
     security.declarePrivate('disable')
     def disable(self):
         self._setPassword(self.generatePassword())
@@ -422,33 +451,86 @@ class Member(BaseContent):
         self.listed = membership_tool.checkPermission(VIEW_PUBLIC_PERMISSION, self)
 
 
-    # ###############################
-
+    # #############################
     security.declareProtected(MemberPermissions.EDIT_ID_PERMISSION, 'setId')
     def setId(self, id):
-        if hasattr(self, '_v_user'):
-            old_user_id = self._v_user.getUserName()
-            # if a user with with id old_user_id exists, recurse through
-            # the portal and modify local roles and ownership
-            portal = getToolByName(self, 'portal_url').getPortalObject()
-            if self.acl_users.getUser(old_user_id) is not None:
-                # delete local roles and content owned by this user
-                self._changeUserInfo(portal, old_user_id, id)
-                # create a new user with the appropriate id
-                self.acl_users.userFolderAddUser(id, self._getPassword(), self.getRoles(), self.getDomains())
-                # delete the old user
-                self.acl_users.userFolderDelUsers((old_user_id,))
-            delattr(self, '_v_user')
-
         memberdata=getToolByName(self, 'portal_memberdata')
         memberdata.manage_renameObjects( (self.getId(),), (id,) )
 
+
+    # ###########################
+    def _notifyOfCopyTo(self, container, op=0):
+        # XXX should make sure BaseContent never gets a _notifyOfCopyTo method
+#        BaseContent._notifyOfCopyTo(self, container, op)
+#        base = self.inheritedAttribute('_notifyCopyTo')
+#        if base:
+#            base(self, container, op)
+        if op:
+            self._v_old_id = self.id
+
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, object, container):
+        BaseContent.manage_afterAdd(self, object, container)
+        assert(object is self)  # XXX - when would this not be true???
+
+        old_id = getattr(self, '_v_old_id', None)
+        if self.id == old_id:
+            return
+
+        if hasattr(self, '_v_old_id'):
+            delattr(self, '_v_old_id')
+            if self._userFolder:
+                old_folder = self._userFolder
+                self._userFolder = self.acl_users
+                self._createUser()
+                # the old user was real -- transfer ownership and local roles to the new user
+                portal = getToolByName(self, 'portal_url').getPortalObject()
+                # change local roles and content ownership info
+                self._changeUserInfo(portal, old_id, id)
+
+                # delete the old user object if it is from portal.acl_users and not
+                # from root.acl_users
+                if old_folder == self.acl_users: 
+                    # delete the old user
+                    old_folder.userFolderDelUsers((old_id,))
+
+
+    security.declarePrivate('manage_afterClone')
+    def manage_afterClone(self, object):
+        if self._userFolder:
+            self._userFolder = self.acl_users
+        self._createUser()
+
+
+    security.declarePrivate('manage_beforeDelete')
+    def manage_beforeDelete(self, item, container):
+        BaseContent.manage_beforeDelete(self, item, container)
+        if hasattr(self, '_v_old_id'):
+            # if we are in the midst of a move, do nothing
+            return
+
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+
+        # recurse through the portal and delete all of the user's content
+        # XXX we should create some other options here
+        # XXX Do we really want to delete the user's stuff if s/he isn't in
+        #     the portal's acl_users folder?
+        self._changeUserInfo(portal, self.id)
+        # delete the User object if it's in the current portal's acl_users folder
+        if self._userFolder == self.acl_users:
+            self.acl_users.userFolderDelUsers((self.id,))
+
+
     security.declarePrivate('setUser')
     def setUser(self, user):
-        # XXX -- make sure the right things happen if
-        # the new user has a different id than the current user
         assert(user.getUserName() == self.id)
-        self._v_user = user
+        self.password = user.__
+        self.roles = user.roles
+        self.domains = user.domains
+        self._userFolder = self._getUserFolderForUser(user.getUserName())
+        if self._userFolder is None:
+            self._createUser()
 
 
     ##USER INTERFACE IMPL
@@ -480,9 +562,10 @@ class Member(BaseContent):
             if self.getUser().roles is None:
                 self.getUser().roles=('Member',)
             roles=self.getUser().getRoles()
-        # filter out Authenticated, etc
-        allowed = self.valid_roles()
-        return tuple([r for r in roles if r in allowed])
+        return roles
+#        # filter out Authenticated, etc
+#        allowed = self.valid_roles()
+#        return tuple([r for r in roles if r in allowed])
 
 
     security.declarePrivate('getDomains')
@@ -498,64 +581,79 @@ class Member(BaseContent):
         return domains
 
 
+    # dummy method
+    security.declarePrivate('_setConfirmPassword')
+    def _setConfirmPassword(self, value):
+        pass
+
+
+    # dummy method
+    security.declarePrivate('_getConfirmPassword')
+    def _getConfirmPassword(self):
+        return ''
+
+
     def _setPassword(self, password):
         if password:
-            self.getUser().__ = password
-            # don't log out the current user
-            if self.REQUEST:
-                membership_tool = getToolByName(self, 'portal_membership')
-                if membership_tool.getAuthenticatedMember().getUserName() == self.getUserName():
-                    # XXX make sure this works -- replaces commented out code below
-                    cookie_crumbler = getToolByName(self, 'cookie_crumbler')
-                    cookie_crumbler.credentialsChanged(self.getUser(), self.getUserName(), password)
-#                    # XXX - this is kind of ugly -- is there a better way?
-#                    token = self.getUserName() + ':' + password
-#                    token = base64.encodestring(token)
-#                    token = quote(token)
-#                    self.REQUEST.response.setCookie('__ac', token, path='/')
-#                    self.REQUEST['__ac']=token
-
-
-    def _stringToList(self, s):
-        # XXX May not need this anymoure
-        if s is None:
-            return []
-        if isinstance(s, types.StringType):
-            # split on , or \n and ignore \r
-            s = s.replace('\r','')
-            s = s.replace('\n',',')
-            s = s.split(',')
-            s= [v.strip() for v in s if v.strip()]
-            s = filter(None, s)
-        return s
+            self.password = password
+            self.setSecurityProfile(password=password)
 
 
     security.declarePrivate('setRoles')
-    def setRoles(self, value):
-        value = self._stringToList(value)
-        self.getUser().roles = value
+    def setRoles(self, roles):
+        roles = self._stringToList(roles)
+        self.roles = roles
+        self.setSecurityProfile(roles=roles)
 
 
     security.declarePrivate('setDomains')
-    def setDomains(self, value):
-        value = self._stringToList(value)
-        self.getUser().domains = value
+    def setDomains(self, domains):
+        # get rid of empty string domains!
+        domains = self._stringToList(domains)
+        self.domains = domains
+        self.setSecurityProfile(domains=domains)
 
     
     security.declarePrivate('setSecurityProfile')
     def setSecurityProfile(self, password=None, roles=None, domains=None):
         """Set the user's basic security profile"""
-        if password is not None:
-            self._setPassword(password)
-        if roles is not None:
-            self.setRoles(roles)
-        if domains is not None:
-            self.setDomains(domains)
+        if password is None:
+            password = self._getPassword()
+        if roles is None:
+            roles = self.getRoles()
+        if domains is None:
+            domains = self.getDomains()
+
+        if self._userFolder:
+            # if our user lives in a user folder, do this the right way
+
+            self._userFolder.userFolderEditUser(self.id, password, roles, domains)
+        else:
+            # we have a temporary user in hand -- set its attributes by hand
+            self.getUser().__ = password
+            self.getUser().roles = roles
+            self.getUser().domains = domains
+
+
+    def _updateCredentials(self):
+        if self.REQUEST:
+            # don't log out the current user
+            if hasattr(
+                Folder.aq_base, 'credentialsChanged'):
+                # Use an interface provided by LoginManager.
+                self._userFolder.credentialsChanged(self.getUser(), id, password)
+            else:
+                p = getattr(self.REQUEST, '_credentials_changed_path', None)
+                if p is not None:
+                    # Use an interface provided by CookieCrumbler.
+                    change = self.restrictedTraverse(p)
+                    change(self.getUser(), self.id, self._getPassword())
 
 
     #Vocab methods
     def editors(self):
         return self.portal_properties.site_properties.available_editors
+
 
     def valid_roles(self):
         roles = list(self.getUser().valid_roles())
@@ -566,10 +664,11 @@ class Member(BaseContent):
             roles.remove('Anonymous')
         return tuple(roles)
 
+
     def available_skins(self):
         return self.portal_skins.getSkinSelections()
 
-    ##
+
     def __str__(self):
         return self.id
 
@@ -587,6 +686,7 @@ class Member(BaseContent):
             # during migration we generate Member objects that don't have
             # access to the portal -- punt
             return None
+
 
     # replacement for portal_registration's mailPassword function
     security.declareProtected(MAIL_PASSWORD_PERMISSION, 'mailPassword')
@@ -610,25 +710,43 @@ class Member(BaseContent):
         return self.mail_password_response( self, REQUEST )
 
 
-    # ###########################
-    security.declarePrivate('manage_beforeDelete')
-    def manage_beforeDelete(self, item, container):
-        BaseContent.manage_beforeDelete(self, item, container)
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        # make sure the user with id old_user_id exists before recursing through
-        # the whole portal
-        if self.acl_users.getUser(self.id) is not None:
-            # delete local roles and content owned by this user
-            self._changeUserInfo(portal, self.id)
-            self.acl_users.userFolderDelUsers((self.id,))
+    # ########################
+    # utility methods
+
+    def _getUserFolderForUser(self, id):
+        f = getToolByName(self, 'portal_url').getPortalObject()
+        while 1:
+            if not hasattr(f, 'objectIds'):
+                return
+            if 'acl_users' in f.objectIds():
+                if hasattr(f.acl_users, 'getUser'):
+                    user = f.acl_users.getUser(id)
+                    if user is not None:
+                        return f.acl_users
+            if hasattr(f, 'getParentNode'):
+                f = f.getParentNode()
+            else:
+                return None
+
+    
+    def _getUserById(self, id):
+        acl_users = self._getUserFolderForUser(id)
+        if acl_users is None:
+            return None
+        return acl_users.getUser(id)
 
 
-    security.declarePrivate('manage_afterClone')
-    def manage_afterClone(self):
-        BaseContent.manage_afterClone(self)
-        # Remove the link to the old object's user
-        # _v_user will be lazily regenerated
-        delattr(self, '_v_user')
+    def _stringToList(self, s):
+        if s is None:
+            return []
+        if isinstance(s, types.StringType):
+            # split on , or \n and ignore \r
+            s = s.replace('\r',',')
+            s = s.replace('\n',',')
+            s = s.split(',')
+        s= [v.strip() for v in s if v.strip()]
+        s = filter(None, s)
+        return s
 
 
     # utility method for altering information related to a user
@@ -639,7 +757,10 @@ class Member(BaseContent):
             for o in context.objectValues():
                 if self._changeUserInfo(o, old_user_id, new_user_id):
                     # delete object if need be
-                    context.manage_delObjects((o.getId(),))
+                    if o != self:
+                        import sys
+                        sys.stdout.write('deleting %s - %s\n' % (str(o), repr(o)))
+                        context.manage_delObjects([o.getId()])
                     
             if new_user_id is not None:
                 # transfer local roles for old user to local roles for new user
@@ -661,8 +782,6 @@ class Member(BaseContent):
                 # mark this object for deletion
                 return 1
         return 0
-
-
 
 
     # XXX REFACTOR ME

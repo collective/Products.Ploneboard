@@ -114,6 +114,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
         return res
 
+
     security.declarePrivate('pruneMemberDataContents')
     def pruneMemberDataContents(self):
         '''
@@ -148,7 +149,9 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             m = self.get(name)
             m.setUser(user)
             import sys
+            from Acquisition import aq_chain
             sys.stdout.write('wrapUser(%s)\n' % str(user))
+            sys.stdout.write(str(aq_chain(user)))
             triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
             sys.stdout.write('done with trigger\n')
 

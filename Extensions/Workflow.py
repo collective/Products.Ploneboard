@@ -78,7 +78,7 @@ def setupWorkflow(portal, out):
     state = wf.states['pending']
     state.setProperties(
         title='Awaiting registration',
-        transitions=('trigger', 'auto_register', 'register_public', 'register_private',))
+        transitions=('trigger', 'auto_register', 'register_public', 'register_private', 'disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))

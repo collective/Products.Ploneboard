@@ -39,8 +39,7 @@ def replaceTools(self, out, convert=1):
                 try:
                     value = _getOldValue(old_member, new_member, new_field.name, out)
                     _setNewValue(new_member, new_field.name, value, out)
-                    sys.stdout.write('%s.%s = %s\n' % (str(old_member.getMemberId()), new_field.name, str(value)))
-                    print >> out, '%s.%s = %s\n' % (str(old_member.getMemberId()), new_field.name, str(value))
+                    print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), new_field.name, str(value))
                 except:
                     pass
         catalog.unindexObject(new_member)  # don't index stuff in temp folder
