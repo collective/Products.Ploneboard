@@ -78,7 +78,7 @@
         <img tal:attributes="src string:$portal_url/image_icon.gif" alt="Start slideshow" title="Start slideshow" />
       </a>
 
-      <a href="" tal:attributes="onClick string:javascript:location.href='${request/URL1}/view?b_start=$b_start';; return false;;">
+      <a href="" tal:attributes="href string:${request/URL1}/view?b_start=$b_start">
         <img tal:attributes="src string:$portal_url/folder_icon.gif" alt="Back to album" title="Back to album" />
       </a>
     </metal:block>
