@@ -1,0 +1,8 @@
+- create two folders in the skin 
+      compositepack/layouts
+      compositepack/viewlets
+
+- fix highlighting of design tab in design view
+
+- setup of composable should happen in composite_tool rather than in
+  kupu_library_tool
