@@ -146,10 +146,15 @@ class CatalogWalker(Walker):
         ret = []
         LOG("fromType: " + str(self.fromType))
         catalog = self.catalog
-        # usage of Language is required for LinguaPlone
-        brains = catalog(portal_type = self.fromType,
-                         Language = catalog.uniqueValuesFor('Language'),
-                        )
+        
+        if HAS_LINGUA_PLONE:
+            # usage of Language is required for LinguaPlone
+            brains = catalog(portal_type = self.fromType,
+                             Language = catalog.uniqueValuesFor('Language'),
+                            )
+        else:
+            brains = catalog(portal_type = self.fromType)
+
         for brain in brains:
             obj = brain.getObject()
             if obj:

@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: common.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
+$Id: common.py,v 1.3 2004/06/24 20:59:54 tiran Exp $
 """
 
 from Products.Archetypes.debug import log as at_log
@@ -38,3 +38,12 @@ def LOG(logmessage):
 
     if DEBUG:
         at_log(logmessage)
+
+## LinguaPlone addon?
+try:
+    from Products.LinguaPlone.public import registerType
+except ImportError:
+    HAS_LINGUA_PLONE = False
+else:
+    HAS_LINGUA_PLONE = True
+    del registerType
