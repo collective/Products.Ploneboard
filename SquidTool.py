@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.6 2004/09/24 03:33:21 panjunyong Exp $ (Author: $Author: panjunyong $)
+# $Id: SquidTool.py,v 1.7 2004/09/24 03:36:34 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 # make sockets non blocking
@@ -129,7 +129,7 @@ class SquidTool(UniqueObject, SimpleItem):
         brains = portal_catalog()
         for brain in brains:
             url = brain.getURL()
-            self.pruneObject(ob)
+            self.pruneUrl(url)
 
         return "finished"
  
