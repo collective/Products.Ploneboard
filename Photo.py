@@ -8,7 +8,7 @@ from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 
 from Products.CMFDefault.Image import Image
-from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2
+
 import OFS.Image
 from Acquisition import aq_parent, aq_base
 from cgi import escape
