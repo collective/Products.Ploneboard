@@ -304,7 +304,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         method.
         """
         src_id = self.getUser(name).getUserSourceId()
-        Log(LOG_DEBUG, src_id)
         return self.getUserSource(src_id).getUser(name)
 
     security.declareProtected(Permissions.manage_users, "getUnwrappedGroup")
@@ -477,8 +476,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Change the user itself
         src = self.getUser(name).getUserSourceId()
-        Log(LOG_DEBUG, "srcid", src)
-        Log(LOG_DEBUG, "user source", self.getUserSource(src))
         return self.getUserSource(src)._doChangeUser(
             name, password, roles, domains, **kw)
 
@@ -658,7 +655,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/17 09:47:57 $"[7:-2]
+        rev_date = "$Date: 2003/12/18 13:53:15 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1117,7 +1114,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Return this top-level list
         top_level.sort(lambda x, y: cmp(x.sortId(), y.sortId()))
-        Log(LOG_DEBUG, tree_dict)
         return top_level
         
 
@@ -1222,7 +1218,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if last >= l_un:
                 last = l_un - 1
             # Append a tuple (not dict) to avoid too much memory consumption
-            Log(LOG_DEBUG, first, last)
             ret.append((first, last, un[first], un[last]))
 
         # Cache & return it
@@ -1341,7 +1336,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             next_id = "Users%02d" % (last + 1, )
         else:
             next_id = "Users"
-        Log(LOG_DEBUG, "next_id", next_id)
 
         # Add the GRUFFolder object
         uf = GRUFFolder.GRUFUsers(id = next_id)
