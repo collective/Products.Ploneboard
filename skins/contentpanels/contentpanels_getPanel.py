@@ -4,24 +4,26 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=objectPath, panelSkin
+##parameters=objectPath, panelSkin, panelObjectViewlet
 ##title=
+##
 
-try:
-    if objectPath == 'None':
-        panelObject = context
-    elif objectPath[0] != '/':
-        panelObject = getattr(context.aq_parent, objectPath)
-    else :
-        panelObject = context.restrictedTraverse(objectPath)
+panelObject = context.getPanelObject(objectPath)
 
-    return panelObject.object_skin_panel(panelObject, panelSkin=panelSkin)
+# get viewlet infomation
+defaultViewletPath = 'here/viewlet_default/macros/portlet'
+viewletPath = defaultViewletPath
+actions = context.portal_actions.listFilteredActionsFor(panelObject).get('panel_viewlets', [])
+for action in actions:
+    if action['id'] == panelObjectViewlet: 
+      try:
+        viewletPath = action['action']
+      except:
+        viewletPath = action['url']
+      break
 
-except Exception,e:
-    print 'Sorry, Object in this panel was Deleted!<br/>'
-    print 'Please delete this panel. '
-    #from zLOG import LOG, INFO
-    #LOG(script.id,INFO,str(e))
-    #raise
-    return printed
+return panelObject.base_panel(panelObject, 
+                              panelSkin=panelSkin, 
+                              viewletPath=viewletPath, 
+                              panelObjectIsCP = (panelObject == context) )
 

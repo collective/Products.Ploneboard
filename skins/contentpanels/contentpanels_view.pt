@@ -1,47 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="contentpanels">
+
+  <metal:block fill-slot="head_slot">
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels.css" />
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels_skins.css" />
+  </metal:block>
 
 <body>
 
     <td metal:fill-slot="main"
 	tal:omit-tag=""
           tal:define="page request/pageIndex | python:'0';
-                      global pageIndex python:int(page)" >
+                      pageIndex python:int(page)" >
+
+    <h1 tal:content="here/title_or_id">
+    Title or id
+    </h1>
 
 <!--
 HEAD PAGE TITLES!!
 -->
 
-      <div align="right">
-         <span tal:omit-tag="" tal:repeat="pageTitle here/getPageTitles">
+    <metal:block metal:use-macro="here/contentpanels_macros/macros/cpPages"/>
 
-             <code tal:condition="python: pageIndex == repeat['pageTitle'].index" 
-                   tal:content="pageTitle"></code>
+    <div class="documentDescription"
+         tal:content="here/Description">
+    description
+    </div>
 
-             <a class="#" href="#"
-                 tal:condition="python: pageIndex != repeat['pageTitle'].index"
-                 tal:attributes="href python:here.absolute_url() + '/' + template.id + '?pageIndex=%d' % repeat['pageTitle'].index "
-                 tal:content="pageTitle">page tiltle</a>&nbsp;|&nbsp;
-
-          </span>
-
-          <a href="" tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here)"
-	         tal:attributes="href python:here.absolute_url() + '/contentpanels_edit_form?pageIndex=%d' % pageIndex ">
-                 <img src="/misc_/CMFCore/tool.gif"/>
-          </a>
-          <a href="" tal:condition="python:here.portal_membership.checkPermission('List folder contents', here)"
-	            tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_listing'">
-                 <img src="/folder_icon.gif"/>
-          </a>
-
-      </div>
+    <metal:block metal:define-macro="viewlet">
 
       <table width="" align="" cellspacing="" cellpadding="" 
+              tal:define="pageIndex pageIndex | python:0"
               tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
                        cellpadding python: here.getPageInfo(pageIndex, 'pageCellPad');
                        cellspacing python: here.getPageInfo(pageIndex, 'pageCellSpace');
@@ -61,7 +53,8 @@ columns
 <!--
 panel should be here!!
 -->
-                 <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'])"/>
+                 <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
+                      tal:on-error="string: "/>
 
               </div>
 
@@ -69,12 +62,16 @@ panel should be here!!
           </td>
         </tr>
 
-
       </table>
-    </td>
+    </metal:block>
+
+    <br clear="all" />
+
+  </td>
 
 </body>
 
 </html>
+
 
 

@@ -36,22 +36,30 @@ Content Panels is a portlet content to place multi-content to panels visully."""
                             'factory': 'addContentPanels',
                                 'immediate_view': 'contentpanels_edit_form',
                             'actions': ({'id': 'view',
-                                        'name': 'view',
+                                        'name': 'View',
                                         'action': 'contentpanels_view',
                                         'permissions': (CMFCorePermissions.View,)
-                                         , 'visible'   : 0
                                          }
                                       , {'id': 'edit',
-                                        'name': 'configure',
+                                        'name': 'Edit',
                                         'action': 'contentpanels_edit_form',
                                         'permissions': (CMFCorePermissions.ModifyPortalContent,)
-                                         , 'visible'   : 0
+                                         }
+                                      , {'id': 'config',
+                                        'name': 'Config',
+                                        'action': 'contentpanels_config_form',
+                                        'permissions': (CMFCorePermissions.ModifyPortalContent,)
                                          }
                                        , { 'id'            : 'metadata'
                                           , 'name'          : 'Metadata'
                                           , 'action'        : 'metadata_edit_form'
                                           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-                                          , 'visible'   : 0
+                                          }
+                                       , { 'id'            : 'contentpanels_viewlet'
+                                          , 'name'          : 'ContentPanels View'
+                                          , 'action'        : 'string:here/viewlet_contentpanels_body/macros/portlet'
+                                          , 'permissions'   : (CMFCorePermissions.View, )
+                                          , 'category' : 'panel_viewlets'
                                           }
                                      )
                             },
@@ -92,6 +100,80 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
             self.addPage()
         self._p_changed = 1
 
+    def toRelativePath(self, panelObjectPath):
+        """ regenerate panelObjectPath, make it a relative path.
+        path may be relative to this contentpanels or relate to the portal.
+        - if panelObjectPath == '.', it means contentpanels it self
+        - if panelObjectPath start with './', it means relative to portal
+        - else, it means rlative to the folderish context of this contentpanels(can use acquisition)
+        see also: getPanelObject
+        """
+        panelContent = self.getPanelObject(panelObjectPath)
+        if panelContent == None: 
+            panelContent = self 
+
+        folderContext = self
+        if not self.isPrincipiaFolderish:
+            folderContext = self.aq_parent
+
+        relativePath = self.portal_url.getRelativeContentURL(panelContent)
+        if panelContent == self:
+            relativePath = '.'
+        else:
+            folderContextPath = self.portal_url.getRelativeContentURL(folderContext) + '/'
+            if relativePath.startswith(folderContextPath):
+                relativePath = './' + panelObjectPath[len(folderContextPath):]
+        return relativePath
+
+    def getPanelObject(self, objectPath):
+      """get panel object by path.
+         if panelObjectPath == '.', it means contentpanels it self
+         if panelObejctPath start with './', it means relative to this contentpanels
+         else, it means rlative to the portal
+         see also: toRelativePath
+      """
+      panelObject = None
+      try:
+        if objectPath in ['.', '/']:  # '.'means the contentpanels it self
+          panelObject = self
+        elif objectPath.find('./') == 0:  # relative path to the folderish context
+          objectPath = objectPath[2:]
+
+          folderContext = self
+          if not self.isPrincipiaFolderish:
+            folderContext = self.aq_parent
+
+          panelObject = folderContext.restrictedTraverse(objectPath) 
+        else :
+          panelObject = self.portal_url.getPortalObject().restrictedTraverse(objectPath)
+      except:
+        panelObject = None
+      return panelObject
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPage' )
+    def addPage(self, pageTitle='Untitled page', pageIndex=-1):
+        """
+        add a new page at pageIndex, it has two columns as default.
+        if pageIndex is -1 then add at the end of the contentpanels
+        return the new page index (from 0)
+        """
+        if pageIndex == -1:
+            pageIndex = len(self.panelsConfig)
+        self.panelsConfig.insert(pageIndex, {'pageColumns': [],
+                         'pageTitle': pageTitle,
+                         'pageWidth':'100%',
+                         'pageCellSpace':'0',
+                         'pageCellPad':'3',
+                         'pageAlign':'center',
+                         'pageStylesheetFixed':[],
+                         'pageStylesheetDynamic':[]})
+
+        # add two default columns for the new page
+        self.addColumn(pageIndex)
+        self.addColumn(pageIndex)
+        self._p_changed = 1
+        return pageIndex
+
     security.declareProtected( CMFCorePermissions.View, 'getPageTitles' )
     def getPageTitles(self):
         ''' get all the tilte of the pages '''
@@ -105,43 +187,30 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         ''' get general info of the page '''
         return self.panelsConfig[pageIndex][infoName]
 
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPage' )
-    def addPage(self, pageTitle='Untitled page'):
-        """
-        add a new page, it has two columns as default.
-        return the new page index (from 0)
-        """
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePageInfo' )
+    def changePageInfo(self, pageIndex, pageTitle, pageCellPad, pageCellSpace, pageWidth, pageAlign):
+        ''' change page's table info '''
+        if pageCellPad == '':
+            pageCellPad = '3'
+        if pageCellSpace == '':
+            pageCellSpace = '0'
+        if pageWidth == '':
+            pageWidth = '100%'
+        if pageAlign == '':
+            pageAlign = 'center'
 
-        self.panelsConfig.append({'pageColumns': [],
-                         'pageTitle': pageTitle,
-                         'pageWidth':'95%',
-                         'pageCellSpace':'0',
-                         'pageCellPad':'10',
-                         'pageAlign':'center',
-                         'pageStylesheetFixed':[],
-                         'pageStylesheetDynamic':[]})
-
-        # add two default columns for the new page
-        pageIndex = len(self.panelsConfig) - 1
-        self.addColumn(pageIndex)
-        self.addColumn(pageIndex)
-        self._p_changed = 1
-        return pageIndex
-
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addColumn' )
-    def addColumn(self, pageIndex):
-        self.panelsConfig[pageIndex]['pageColumns'].append({'columnWidth': '0',
-                                                            'columnPanels':[] })
+        self.panelsConfig[pageIndex]['pageWidth']= pageWidth
+        self.panelsConfig[pageIndex]['pageAlign']= pageAlign
+        self.panelsConfig[pageIndex]['pageCellPad']= pageCellPad
+        self.panelsConfig[pageIndex]['pageCellSpace']= pageCellSpace
+        self.panelsConfig[pageIndex]['pageTitle']= pageTitle
         self._p_changed = 1
 
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'insertPanel' )
-    def insertPanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectType, panelSkin):
-        ''' insert a new panel at panelIndex'''
-        
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'].\
-                insert(panelIndex, {'panelSkin':panelSkin,
-                        'panelObjectPath':panelObjectPath,
-                        'panelObejctType':panelObjectType})
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'movePage')
+    def movePage(self, pageIndex, toPage):
+        """move a page from fromIndex to toIndex"""
+        page = self.panelsConfig.pop(pageIndex)
+        self.panelsConfig.insert(toPage, page)
         self._p_changed = 1
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'deletePage' )
@@ -157,28 +226,16 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self._p_changed = 1
         return nextPageIndex
 
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'deleteColumn' )
-    def deleteColumn(self, pageIndex, columnIndex):
-        '''# delete column'''
-        del self.panelsConfig[pageIndex]['pageColumns'][columnIndex]
-        self._p_changed = 1
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addColumn' )
+    def addColumn(self, pageIndex, columnIndex=-1):
+        """add a new Column to 'pageIndex' at 'columnIndex'
+        if 'columnIndex' is -1 then add to the end of the column'
+        """
+        if columnIndex == -1:
+           columnIndex = len(self.panelsConfig[pageIndex]['pageColumns'])
 
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'deletePanel' )
-    def deletePanel(self, pageIndex, columnIndex, panelIndex):
-        ''' delete a Panel '''
-        del self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]
-        self._p_changed = 1
-
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePanel' )
-    def changePanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectType, panelSkin):
-        ''' change the skin of a existing panel '''
-        
-        if panelSkin == '':
-            return
-
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelSkin'] = panelSkin
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectType'] = panelObjectType
+        self.panelsConfig[pageIndex]['pageColumns'].insert(columnIndex, {'columnWidth': '0',
+                                                            'columnPanels':[] })
         self._p_changed = 1
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changeColumnWidth' )
@@ -190,52 +247,61 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnWidth'] = columnWidth
         self._p_changed = 1
 
-    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePageInfo' )
-    def changePageInfo(self, pageIndex, pageTitle, pageCellPad, pageCellSpace, pageWidth, pageAlign):
-        ''' change page's table info '''
-        if pageCellPad == '':
-            pageCellPad = '3'    
-        if pageCellSpace == '':
-            pageCellSpace = '0'
-        if pageWidth == '':
-            pageWidth = '100%'
-        if pageAlign == '':
-            pageAlign = 'center'
-        
-        self.panelsConfig[pageIndex]['pageWidth']= pageWidth
-        self.panelsConfig[pageIndex]['pageAlign']= pageAlign
-        self.panelsConfig[pageIndex]['pageCellPad']= pageCellPad
-        self.panelsConfig[pageIndex]['pageCellSpace']= pageCellSpace
-        self.panelsConfig[pageIndex]['pageTitle']= pageTitle
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'moveColumn')
+    def moveColumn(self, pageIndex, columnIndex, toColumn):
+        """move a column from 'fromIndex' to 'toIndex'"""
+        column = self.panelsConfig[pageIndex]['pageColumns'].pop(columnIndex)
+        self.panelsConfig[pageIndex]['pageColumns'].insert(toColumn, column)
         self._p_changed = 1
-    
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'deleteColumn' )
+    def deleteColumn(self, pageIndex, columnIndex):
+        '''# delete column'''
+        if len(self.panelsConfig[pageIndex]['pageColumns']) > 1:
+            del self.panelsConfig[pageIndex]['pageColumns'][columnIndex]
+            self._p_changed = 1
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPanel' )
+    def addPanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectViewlet, panelSkin):
+        ''' insert a new panel at panelIndex'''
+        relativePath = self.toRelativePath(panelObjectPath)
+        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'].\
+                insert(panelIndex, {'panelSkin':panelSkin,
+                        'panelObjectPath':relativePath,
+                        'panelObjectViewlet':panelObjectViewlet})
+        self._p_changed = 1
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'deletePanel' )
+    def deletePanel(self, pageIndex, columnIndex, panelIndex):
+        ''' delete a Panel '''
+        del self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]
+        self._p_changed = 1
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePanel' )
+    def changePanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectViewlet, panelSkin):
+        ''' change the skin of a existing panel '''
+        
+        if panelSkin == '':
+            return
+
+        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelSkin'] = panelSkin
+        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
+        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectViewlet'] = panelObjectViewlet
+        self._p_changed = 1
+
+    security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'movePanel')
+    def movePanel(self, pageIndex, columnIndex, panelIndex, toColumn, toPanel):
+        """move a panel from 'toIndex'"""
+        if toColumn == -1: 
+            toColumn = columnIndex
+        if toPanel == -1: 
+            toPanel = panelIndex
+
+        panel = self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'].pop(panelIndex)
+        toColumnLen = len(self.panelsConfig[pageIndex]['pageColumns'][toColumn]['columnPanels'])
+        if toPanel > toColumnLen:
+            toPanel = toColumnLen
+        self.panelsConfig[pageIndex]['pageColumns'][toColumn]['columnPanels'].insert(toPanel, panel)
+        self._p_changed = 1
+
 InitializeClass(ContentPanels)
-
-
-import OFS.Moniker
-from OFS.CopySupport import _cb_decode
-from AccessControl import ModuleSecurityInfo
-
-
-ModuleSecurityInfo('Products.CMFContentPanels.ContentPanels').declarePublic('getCopyedObjectsInfo')
-def getCopyedObjectsInfo(context, REQUEST=None):
-    '''
-    get copyed object from cookie
-    '''
-    cp=None
-    copyedObjectsInfo = []
-    if REQUEST and REQUEST.has_key('__cp'):
-                cp=REQUEST['__cp']
-    if cp is None:
-        pass
-    else:
-        try:
-            cp=_cb_decode(cp)
-            physicalRoot = context.getPhysicalRoot()
-            for mdata in cp[1]:
-                m = OFS.Moniker.loadMoniker(mdata)
-                ob = m.bind(physicalRoot)
-                copyedObjectsInfo.append( ('/'.join(ob.getPhysicalPath()), ob.Title() ) )
-        except:
-            pass
-    return copyedObjectsInfo

@@ -1,65 +1,76 @@
 What is CMFContentPanels?
 
-  Have you tried the famous "CMFportalts":http://www.zope.org/Members/ausum/CMFPortlets ? Do you want another one which store portlets layout information in a CMF content to build public portlets page but not in a member's private memberdata? Do you want to support more existing contents without creating any new content type? Do you want a easier way to write new box skins? Do you want a total Plone support and more clean code?
+  CMFContentPanels is a cmf/plone portlets product. You can create a new
+content which is composed of other contents as configurable 'content panels'.
+You can change the layout, the panel skin and the content viewlet through the web.
 
-  Maybe CMFContentPanels is an alternative now. CMFContentPanels is totally rewrite from CMFPortlets. It is a CMF/Plone Content which have panels showing other contents to build complex page easily. You can change the box skin for each content panel.
+ <a
+href="http://www.plone.org/Members/panjunyong/ContentPanels/ContentPanels.JPG"
+target="_blank">screen shot</a> 
 
 Features
 
-  * All the things CMFPortlet0.5 have!!
+  * support multi-page and mulit-column
 
-  * CMFContentPanels is a cmf content. You can build mulity public complex page for anonymous users. 
+  * full function layout management, easy to use: move panels left/right/up/down
 
-  * Extensible to support more contents. It supports Documents, Topic, CMFForum, NeoBoard, Folder, CMFWikiPage by defaults. You can write new panel views for other contents and register them to CMFContentPanels.
+  * construction of very complex page: contentpanels can be nested within
+    another contentpanels.
 
-  * Copy and select operation is more natural way to add new content panels.
+  * extensible css panel skin. 4 skins provided by default. Select or extend
+    the skin as you like.
 
-  * Plone compatible. And we just test it with Plone only.
+  * plone portlet compatible viewlets. easy to extend. 
 
-  * Extensible to support more panel box skins. you can write a new skin with PageTemplate Slots and register it to CMFContentPanels. It is easy enough!
+  * integrate with plone's default portlets, add some new portlet like 'my recent changes'.
+
+  * predefined viewlets for Document, Image, Folder, Topic, ZWiki Page.
+
+  * suport relative content path
 
 How to Use it?
 
   1. Install it. See INSTALL.txt for more information.
 
-  2. Add a new ContentPanels: like other content, select CMFContentPanels from the add list in plone, and Add it.
+  2. "a howto with
+screenshots":http://www.plone.org/Members/panjunyong/ContentPanels/howto
 
-  3. Add content to Contentpanels as a panel: 
+How to Extend CMFContentPanels? (For Developers)
 
-    * In the plone folder, select the conent you want to add, click 'Copy' button.
+ How to make more viewlets?
 
-    * go back to the new added ContentPanels, click the CMF Tool icon  on the top right of the page to edit the ContentPanels(we should use another better icon later).
+  Viewlet is a view of content which can be selected in contentpanels. Viewlet
+can be a zpt or a zpt macro. Viewlets are registered with CMF Action
+mechanism.
 
-    * now it is a familiar page for CMFPortlets Users. You can find the copied content from content add list. And you can choose a skin for it. Click add and you get it!
+  1. Write a viewlet for your content.  Viewlet structure is the same to 
+    "Plone 2 portlet":http://plone.org/Members/arnia/plone2-css-reference/Portlets/wikipage_view.
+You can refer to stuff at \CMFContentPanels\skins\contentpanels\viewlets,
+where are default viewlets.
 
-  4. And you can add/delete page, add/delete columns, add/delete panels, Change Column width just like CMFPortlets. This way you can get what you want.
+  2. Add a new CMF action with the CMF Action mechanism. Remember, the action
+catalog should be 'panel_viewlets'. See the Install.py for detail
 
-How to support other content?
+ How to add new panel skin?
 
-  1. write a panel view page for your content. You can refer to stuff at \CMFContentPanels\skins\contentpanels\content_views
+  You can define a new css wrapper to define a new panel skin:
 
-  2. customize "contentpanels_panelviewer_registry" to add your content support.
-
-How to add new panel box skin?
-
-  1. write your panel box skin. you can refer to stuff at \CMFContentPanels\skins\contentpanels\panel_slots
-
-  2. customize "contentpanels_slots_registry" to add you box skin.
-
-todo list
-
-  * use portal_properties to store content registry and box skin registry.
-
-  * i found the 'copy' operation in Zope needs a very high permission. We should find a better way to select a content.
-
-  * Rows support in ContentPanels.
-
-  * Move panels.
-
-  * Use DHTML to build a more easy use layout adjust interface.
-
+  1. customise contentpanels_skin.css.dtml, write your new css wrapper there
+    
+  2. go to ZMI 'portal_contentpanels', in the properties view, add your new
+wrapper there.
+      
 Credits
+    
+  * "ZopeChina.com":http://www.zopechina.com, a leading Zope Service provider
+   in China. ZopeChina.com runs the biggest Chinese Zope community in China -
+   "CZUG.org":http://czug.org (China Zope User Group). We are trying to make
+   Zope/Plone works better for Chinese people.
+      
+  * ausum's "CMFPortlets":http://www.zope.org/Members/ausum/CMFPortlets , many
+   idea comes from CMFPortlets. Thanks!
 
-  * "ZopeChina.com":http://zopechina.ods.org, a leading Zope Service provider in China. ZopeChina.com runs the biggest Chinese Zope community in China - "CZUG.org":http://czug.ods.org (China Zope User Group). We are trying to make Zope/Plone works better for Chinese people. 
+CMFContentPanels is in
+"Collective":http://sourceforge.net/projects/collective. (the latest release
+is not checked in yet, sorry.)
 
-  * ausum's "CMFPortlets":http://www.zope.org/Members/ausum/CMFPortlets , many idea comes from CMFPortlets. Thanks!

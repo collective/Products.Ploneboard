@@ -1,18 +1,18 @@
+CMFContentpanels 1.5 and above is tested under Plone2 only.
+
 Install
 
 1. unzip the product and copy it to the 'products' directory in zope.
 
 2. restart zope
 
-3. goto the root of Plone portal, select 'External Method' from add list, add it with following infomation:
+3. use Plone's product install tool to install 
+  
+  or goto the ZMI root of Plone portal, use portal_quickinstall to install or:
 
-  * id: install_cmfcontentpanels
+UPGRADE
 
-  * title: install CMFContentPanels
+- reinstall it to upgrade
 
-  * Module Name: CMFContentPanels.Install
-
-  * Function Name: install
-
-4. go to install_cmfcontentpanels, click 'Test' tab, and that is all.
-
+- Contentpanels 1.1 is not compatible with contentpanels 1.0, and no
+migration at present.
