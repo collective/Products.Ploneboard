@@ -247,7 +247,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         Return the tuple of roles belonging to this user's group(s)
         """
         ret = []
-        groups = self._GRUF.acl_users.getGroupNames()
+        acl_users = self._GRUF.acl_users 
+        groups = acl_users.getGroupNames()
         
         for group in self.getGroups():
             if not group in groups:
@@ -255,7 +256,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 # This may occur when groups are deleted
                 # Ignored silently
                 continue  
-            ret.extend(self._GRUF.acl_users.getGroup(group).getRoles())
+            ret.extend(acl_users.getGroup(group).getRoles())
             
         return GroupUserFolder.unique(ret)
     
@@ -289,7 +290,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                         group_roles.append(r)
 
             # Prepare next iteration
-            inner = getattr(object, 'aq_inner', object)
+            inner = getattr(object, 'aq_inner', object) 
             parent = getattr(inner, 'aq_parent', None)
             if parent is not None:
                 object = parent
