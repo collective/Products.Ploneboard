@@ -1,3 +1,7 @@
+0.23 (unreleased)
+
+   - fixed handling of widget.help
+
 0.22 (08.01.2005)
 
     - schemas can be exported as text
