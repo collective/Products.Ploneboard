@@ -9,8 +9,7 @@
                         url python:test(contentObject.absolute_url()+'/'+action);">
 
              <a href="#" tal:attributes="href url" target="_blank">
-                <img tal:replace="structure python:path('here/%s' % contentObject.getIcon(1))"
-                                />&nbsp;
+                <img src="#" tal:attributes="src string:${here/portal_url}/${contentObject/getIcon}" />&nbsp;
                 <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(contentObject)" >
                    <span tal:omit-tag=""
                       tal:define="replyCount python:here.portal_discussion.getDiscussionFor(contentObject).replyCount(contentObject)"
@@ -40,4 +39,5 @@
     </td>
   </tr>
 </table>
+
 
