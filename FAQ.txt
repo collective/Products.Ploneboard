@@ -17,13 +17,7 @@ rows?
   Yes, you can.  See ZMI portal_contentpanels. They are just actions. 
   You can define who can use the actions(use permission). 
 
-4. It doesn't appear that the Zwiki viewlet is working anymore. I'm using the
-latest CMFContentPanels 1.5.1a from sf cvs.  When I add a Zwiki page as a content panel, I am unable to view the content of the Zwiki page. Neither "Body" nor "Zwiki" appear in the dropdown of available viewlets.
-
-  You must reinstalled ZWiki or installed ZWiki after CMFContentPanels.
-You should reinstall CMFContentPanels.
-
-5. How to put my new-created contentpanels on plone's left/right column?
+4. How to put my new-created contentpanels on plone's left/right column?
 
    You can do this at the 'edit' tab. Or do it under ZMI:
 
