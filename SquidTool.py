@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.7 2004/09/24 03:36:34 panjunyong Exp $ (Author: $Author: panjunyong $)
+# $Id: SquidTool.py,v 1.8 2004/10/04 18:49:32 runyaga Exp $ (Author: $Author: runyaga $)
 """
 
 # make sockets non blocking
@@ -29,6 +29,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Acquisition import aq_base
 from Permissions import *
 
+URL_REWRITE_MAP = {}
 
 class SquidTool(UniqueObject, SimpleItem):
     """ Tool to send PURGE requests to squid  """
@@ -70,6 +71,8 @@ class SquidTool(UniqueObject, SimpleItem):
         # ob_url is a relative to portal url
 
         results = []
+        ob_url = self.rewriteUrl(ob_url)
+
         for host in self.squid_urls:
             # XXX: probably put into seperate thread
             #      and setup a Queue
@@ -107,6 +110,14 @@ class SquidTool(UniqueObject, SimpleItem):
             if REQUEST: REQUEST.RESPONSE.write('%s\t%s\t%s\n' % (status, ob_url, xsquiderror))
 
         return results
+
+    security.declarePublic('rewriteUrl')
+    def rewriteUrl(self, url):
+        for prefix, new in URL_REWRITE_MAP.items():
+            if url.startswith(prefix):
+                url = url.replace(prefix, new)
+                break
+        return url
 
     security.declareProtected(PURGE_URL, 'pruneObject')
     def pruneObject(self, ob, REQUEST=None):
