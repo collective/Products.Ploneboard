@@ -1,0 +1,111 @@
+(Voici le texte d'une interview réalisé par Tarek pour le site zopeur.com)
+
+(Désolé pour le français ;-) )
+
+
+
+
+1) qu'est ce que GRUF ?
+
+ GRUF  signifie  "GRoup  User  Folder". Il s'agit d'un User Folder pour
+ Zope  capable  d'offrir un support pour les groupes. Contrairement aux
+ autres  types  d'UserFolder  se basent sur divers supports (ZODB, SQL,
+ LDAP,  ...) pour identifier les utilisateurs, GRUF délègue cette tâche
+ à  un UserFolder classique. Par exemple, pour utiliser GRUF avec LDAP,
+ il  suffit  de coupler GRUF à un LDAPUserFolder tout à fait classique.
+ Cette architecture permet de se dispenser de l'écriture de plugins.
+
+
+2) Quels sont ses particularités / avantages comparé à d'autres produits
+ du genre ?
+
+ Avec  GRUF,  aucun  patch n'est fait dans le code de Zope. GRUF est un
+ UserFolder classique et n'utilise aucune "magie" pour fonctionner.
+
+ Aucun patch dans Zope n'a été nécessaire ; pas même de MonkeyPatch.
+
+ Dans  l'interface d'administration de GRUF, on crée deux UserFolders :
+ un pour les groupes et un pour les utilisateurs. Dans l'UserFolder des
+ utilisateurs,  le  groupes  sont affectés aux utilisateurs en tant que
+ rôles.
+
+ Dès que l'on sort de GRUF, en revanche, les groupes sont vus comme des 
+ utilisateurs  "normaux"  sous  Zope. On peut leur affecter des droits, 
+ des rôles locaux, etc.
+
+ C'est cette "astuce" qui fait que GRUF fonctionne directment avec
+ toutes les applications Zope, sans rien changer au code source !
+
+ L'architecture  de  GRUF  permet  d'utiliser  des  types  d'UserFolder
+ classiques  comme  base  d'utilisateurs  ou  de groupes (le UserFolder
+ standard  de  Zope  mais aussi LDAPUserFolder, ExUserFolder, etc). Pas
+ besoin de développer et de maintenir des PlugIns !
+
+ Autrement dit, GRUF reste simple dans son principe, totalement intégré
+ à  Zope (pas de "hotfixing" de Zope), et compatible avec virtuellement
+ tous les types d'UserFolder qui respectent l'API standard de Zope.
+
+ Enfin,  un des points forts de GRUF est son plan de tests... Plusieurs
+ centaines de tests pour garantir un maximum de qualité !
+
+
+3) Dans quelle mesure l'outil peut il s'intégrer à un portail Plone ?
+
+ Depuis  Plone2,  GRUF  est  partie  intégrante  de  Plone.  Des écrans
+ spécifiques  ont  été  développés  pour administrer les groupes depuis
+ l'interface  de  Plone  mais  en dehors de cet aspect "visuel", aucune
+ adaptation  au  niveau  de  la  programmation  n'a été nécessaire pour
+ rendre Plone compatible avec GRUF.
+
+ Ni pour rendre GRUF compatible Plone, d'ailleurs ;)
+
+ Depuis  Plone2,  un  "tool"  est  proposé  pour  rendre la gestion des
+ groupes  sous  Plone  similaire  à  celle  des  utilisateurs  sous CMF
+ (l'équivalent du MembershipTool, mais pour... les groupes !).
+
+
+4) Et à un autre portail (CMS,Zwook, etc.. ) ? Est-ce que l'outil est
+dédié Plone ?
+
+ Depuis  le  départ,  GRUF est un outil _indépendant_ de Plone. Et nous
+ nous  efforçons,  à chaque version, de vérifier son bon fonctionnement
+ en  dehors  de  Plone.  Puisque  GRUF  ne modifie rien à la logique de
+ gestion  des utilisateurs de Zope, il est donc tout à fait possible de
+ remplacer  n'importe quel UserFolder pour bénéficier de la gestion des
+ groupes.
+
+ Il  est  donc  possible, en théorie, de l'utiliser avec ces outils, si
+ ceux-ci  n'utilisent  pas  eux-même du code spécifique à un UserFolder
+ particulier.
+
+
+5) Le futur de GRUF ?
+
+ GRUF3,  qui est encore en phase de qualification, propose une nouvelle
+ API  beaucoup  plus  intuitive.  Nous  avons  aussi optimisé certaines
+ routines,  notamment  pour  LDAP  (LDAPUserFolder  dispose en effet de
+ beaucoup d'optimisations spécifiques).
+
+ GRUF 3 est en phase finale de qualification auprès d'un annuaire de
+ 90.000 utilisateurs ! ;)
+
+ La  prochaîne  étape  dans GRUF sera la possibilité de restreindre des
+ rôles  locaux  : actuellement, Zope ne permet que d'en ajouter, jamais
+ d'en  soustraire  - alors que cela pourrait s'avérer bien pratique. Si
+ tout va bien, cela sera implémenté dans les prochaînes semaines.
+ C'est la notion de "BlackList".
+
+ Nous   avons  également  plein  d'idées  pour  rendre  les  interfaces
+ d'administration  des  utilisateurs/groupes,  que  ce soit côté ZMI ou
+ côté  Plone,  plus intuitives et agréables. Bref, le travail ne manque
+ pas !
+
+ D'ailleurs, n'oublions pas que GRUF est un composant OpenSource, et
+ que, à ce titre, tout le monde peut apporter son grain de sel : code,
+ idées, écrans, doc, traductions, etc...
+
+ Et  quoi qu'il en soit, nous devons une fière chandèle à la communauté
+ Plone  qui  a  testé  intensivement  GRUF,  nous a aidé pour certaines
+ parties,  nous  a envoyé des patches et des idées... C'est là toute la
+ force d'une communauté soudée !
+
