@@ -1,9 +1,9 @@
-# Gettext Message File for CMFPhoto.
+# Gettext Message File for MPoll.
 # Your Name <your@email>, Year
 EDIT the lines below correctly (and DELETE this one) or your translation WILL NOT WORK
 msgid ""
 msgstr ""
-"Project-Id-Version: Plone 1.0\n"
+"Project-Id-Version: MPoll 0.3\n"
 "POT-Creation-Date: 2003-01-19 11:42-100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <your@email>\n"
