@@ -1,3 +1,10 @@
+0.2 (unreleased)
+
+    - added schema registration infrastructure (support for multiple schemas)
+
+    - lots of API changes
+
+
 0.1 (17.09.2004)
 
     - initial release (backport from PloneCollectorNG)

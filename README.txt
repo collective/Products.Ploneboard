@@ -26,6 +26,6 @@ Documentation:
 
     to be written
 
-Credits:
+Contributions:
 
     Whit Morriss: examples and tests
