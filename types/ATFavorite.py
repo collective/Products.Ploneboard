@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.17 2004/10/16 21:24:32 tiran Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

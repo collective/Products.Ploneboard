@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.19 2005/01/24 18:26:54 tiran Exp $
+
 """
 
 __author__  = 'Jens Klein, Christian Heimes'

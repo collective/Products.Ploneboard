@@ -18,7 +18,7 @@
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.8 2005/01/24 18:26:57 tiran Exp $
+
 """
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'

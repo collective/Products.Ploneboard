@@ -18,7 +18,7 @@
 #
 """
 
-$Id: migrateFromCPT.py,v 1.3 2004/07/13 13:12:55 dreamcatcher Exp $
+
 """
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.4 2004/07/13 13:12:56 dreamcatcher Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

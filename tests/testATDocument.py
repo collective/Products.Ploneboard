@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.15 2005/01/24 18:27:01 tiran Exp $
+
 """
 
 __author__ = 'Christian Heimes'

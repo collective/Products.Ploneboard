@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATPortalTypeCriterion.py,v 1.5 2004/08/24 17:29:59 runyaga Exp $
+
 """
 
 __author__  = 'Godefroid Chapelle'

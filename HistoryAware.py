@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.7 2004/10/10 04:25:10 limi Exp $
+
 """
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'

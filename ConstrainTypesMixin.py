@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.10 2005/02/04 03:47:29 panjunyong Exp $
+
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'

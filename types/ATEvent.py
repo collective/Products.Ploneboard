@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.28 2005/01/24 18:27:05 tiran Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

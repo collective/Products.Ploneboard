@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATSimpleStringCriterion.py,v 1.10 2004/08/22 21:43:07 tiran Exp $
+
 """
 
 __author__  = 'Christian Heimes'

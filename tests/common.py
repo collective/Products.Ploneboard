@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.9 2004/09/17 13:35:19 tiran Exp $
+
 """
 
 __author__ = 'Christian Heimes'

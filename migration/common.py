@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: common.py,v 1.5 2005/01/24 18:26:59 tiran Exp $
+
 """
 
 from Products.Archetypes.debug import log as at_log

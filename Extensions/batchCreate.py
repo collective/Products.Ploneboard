@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: batchCreate.py,v 1.2 2004/08/09 07:44:05 tiran Exp $
+
 """ 
 
 __author__  = 'Christian Heimes'

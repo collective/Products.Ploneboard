@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.23 2005/02/11 05:50:52 panjunyong Exp $
+
 """
 
 from copy import copy

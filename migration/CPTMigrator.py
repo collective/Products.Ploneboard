@@ -17,7 +17,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.8 2004/08/09 07:44:09 tiran Exp $
+
 """
 
 from common import *

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.19 2004/10/17 01:33:27 tiran Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

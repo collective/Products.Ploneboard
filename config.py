@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.35 2004/12/14 21:52:31 ctheune Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

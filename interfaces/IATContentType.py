@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.9 2004/10/08 16:23:15 tiran Exp $
+
 """
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'

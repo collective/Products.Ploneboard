@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.14 2004/10/08 16:23:16 tiran Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

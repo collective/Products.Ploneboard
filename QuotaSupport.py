@@ -18,7 +18,7 @@
 #
 """ Quota Support
 
-$Id: QuotaSupport.py,v 1.1 2004/07/23 19:03:19 tiran Exp $
+
 """
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'

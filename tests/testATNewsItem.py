@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATNewsItem.py,v 1.11 2005/01/24 18:27:03 tiran Exp $
+
 """
 
 __author__ = 'Christian Heimes'

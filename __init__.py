@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.10 2004/10/06 21:53:06 tiran Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

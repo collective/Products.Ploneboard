@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: utils.py,v 1.7 2005/01/24 18:18:45 tiran Exp $
+
 """
 
 __author__  = 'Christian Heimes'

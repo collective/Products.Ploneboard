@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.36 2005/02/01 20:18:31 batlogg Exp $
+
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'

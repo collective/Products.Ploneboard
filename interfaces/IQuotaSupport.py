@@ -18,7 +18,7 @@
 #
 """Quota Support marker interface
 
-$Id: IQuotaSupport.py,v 1.1 2004/07/23 19:03:19 tiran Exp $
+
 """
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'

@@ -18,7 +18,7 @@
 #
 """ConstrainTypes awareness marker interface
 
-$Id: IConstrainTypes.py,v 1.2 2004/08/17 16:59:41 tiran Exp $
+
 """
 __author__  = 'Jens Klein'
 __docformat__ = 'restructuredtext'
