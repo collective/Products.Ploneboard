@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.10 2004/02/23 12:48:10 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.11 2004/02/27 16:53:17 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -166,6 +166,14 @@ class GroupData (SimpleItem):
 
     def getTool(self):
         return aq_parent(aq_inner(self))
+
+
+    security.declarePublic("getGroupMemberIds")
+    def getGroupMemberIds(self,):
+        """
+        Return a list of group member ids
+        """
+        return map(lambda x: x.getMemberId(), self.getGroupMembers())
 
     security.declarePublic('getGroupMembers')
     def getGroupMembers(self):

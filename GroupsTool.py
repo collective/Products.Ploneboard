@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.20 2004/02/25 14:38:12 roeder Exp $
+$Id: GroupsTool.py,v 1.21 2004/02/27 16:53:17 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -195,11 +195,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         return res
 
     security.declareProtected(AddGroups, 'addGroup')
-    def addGroup(self, id, password, roles, domains):
+    def addGroup(self, id, password = None, roles = [], domains = ()):
         """Create a group, and a group workspace if the toggle is on, with the supplied id, roles, and domains.
 
         Underlying user folder must support adding users via the usual Zope API.
-        Passwords for groups seem to be currently irrelevant in GRUF."""
+        Passwords for groups ARE irrelevant in GRUF."""
         self.acl_users.Groups.acl_users.userFolderAddUser(id, password, roles, domains)
         self.createGrouparea(id)
 
