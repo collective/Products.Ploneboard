@@ -1,3 +1,9 @@
+$Id: ChangeLog,v 1.3 2003/11/30 17:06:14 bartenst Exp $
+	
+2003-11-30 18:05 bartenst
+
+	* continue minor development of solution2u branch of archetypes
+	
 2003-10-06 13:26  longsleep
 
         * ChangeLog: preparing for release
@@ -16,6 +22,24 @@
         * I18NContent.py, I18NLayer.py: added support for the language tool
         added forcing language urls option
 
+2003-09-13 11:12  batlogg
+    * language_tool is a seperate product. not broken anymore ;-)
+
+2003-09-13 04:41  batlogg
+    * added language_tool. CAUTION currently broken :-(
+
+2003-09-12 00:44  batlogg
+    * tag solution2u, tag hotdi_neutralfields is obsolete
+    * inital version with the following new features
+    support for language independent fields (ArcheTypes),  easier handling,
+    multilingual drop-downs, radioboxes
+
+2003-09-02 10:55  bartenst
+
+        * checkin of patched I18NLayer (shared content support)
+	* hotdi made many changes, for a summary please view README
+
+>>>>>>> 1.1.4.3
 2003-08-12 22:51  longsleep
 
 	* I18NContent.py, I18NLayer.py: some documentation added preparing
