@@ -37,8 +37,7 @@ def install_workflow(self, out):
         wtool.manage_addWorkflow(id=BANNER_WORKFLOW_ID, workflow_type=type)
         wtool.setChainForPortalTypes(('BannerImage',), BANNER_WORKFLOW_ID)
     
-    # If BannerFolder doesn't have a workflow defined, use folder_workflow
-    if wtool.getChainFor('BannerFolder') is None:
+    if wtool.getChainFor('BannerFolder') == wtool.getDefaultChainFor('BannerFolder'):
         wtool.setChainForPortalTypes(('BannerFolder',), 'folder_workflow')
 
 def install(self):
