@@ -2,6 +2,8 @@ V2.0
 
 - support mxmDynamicPage
 
+- add edit content button for each panel
+
 - performance
 
   You can have a look at the base_panel.pt, perhaps this line is too expensive:
