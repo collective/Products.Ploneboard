@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.5 2004/04/11 19:44:17 tiran Exp $
+$Id: ATContentType.py,v 1.6 2004/04/15 19:42:47 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -116,6 +116,12 @@ class ATCTContent(ATCTMixin, BaseContent):
           'action'      : 'string:${object_url}/external_edit',
           'permissions' : (CMFCorePermissions.ModifyPortalContent,),
           'visible'     : 0,
+         },
+        {
+        'id'          : 'local_roles',
+        'name'        : 'Sharing',
+        'action'      : 'string:${object_url}/folder_localrole_form',
+        'permissions' : (CMFCorePermissions.ManageProperties,),
          },
         )
     )
