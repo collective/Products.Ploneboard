@@ -1,21 +1,15 @@
-import sys
+
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-
 from Products.CMFCore import CMFCorePermissions 
 
-from Products.CMFCore.PortalContent import PortalContent
-from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
-
 from Products.CMFDefault.Image import Image
-
 import OFS.Image
-from Acquisition import aq_parent, aq_base
-from cgi import escape
-
-from cStringIO import StringIO
-
 from BTrees.OOBTree import OOBTree
+
+from cgi import escape
+from cStringIO import StringIO
+import sys
 
 factory_type_information = {
     'id'             : 'Photo',
@@ -160,7 +154,7 @@ class Photo(Image):
         # Default values
         w=self.width
         h=self.height
-        
+
         if height is None or width is None:
             
             if size in self.displays.keys():
