@@ -1,17 +1,25 @@
 0.2-beta3
 
- * added a recreateATImageScales method as external method
+ * Added a recreateATImageScales method as external method [tiran]
+
+ * Added missing sharing tab to all ATCTContent based types [tiran]
+
+ * Fixed AT Favorite [jensens]
+
+ * Fixed atct_edit macro [tiran]
+
+ * Fixed default view of ATBTreeFolder [tiran]
 
 0.2-beta2 - 2004-04-11
 
  * Update validators to reflect the last changes and fixes of the archetypes and
-   validation packages.
+   validation packages. [tiran]
    
- * Added uml diagram of ATCT classes
+ * Added uml diagram of ATCT classes [tiran]
 
- * misc small fixes and improvements
+ * misc small fixes and improvements [tiran]
    
 0.2-beta1 - 2004-04-09
 
- * First official beta release for testing
+ * First official beta release for testing [tiran]
 
