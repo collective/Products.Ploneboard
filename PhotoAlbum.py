@@ -38,6 +38,13 @@ factory_type_information =  { 'id'             : 'Photo Album',
                                   'action'        : 'portal_form/folder_edit_form',
                                   'permissions'   : (CMFCorePermissions.ManageProperties,),
                                   'category'      : 'folder'
+                                  },
+                                { 'id'            : 'mkdir',
+                                  'name'          : 'mkdir',
+                                  'action'        : 'createPhotoAlbumInstance',
+                                  'permissions'   : (CMFCorePermissions.AddPortalContent,),
+                                  'category'      : 'folder',
+                                  'visible'       : 0
                                   }
                                 )
                               }
@@ -68,6 +75,19 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
             result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
 
         return result
+
+    security.declarePrivate('PUT_factory')
+    def PUT_factory( self, name, typ, body ):
+        """
+        Dispatcher for PUT requests to non-existent IDs.  Returns
+        an object of the appropriate type (or None, if we don't
+        know what to do).
+        """
+        print name
+        print typ
+        print body
+        return PhotoAlbum.inheritedAttribute('PUT_factory')(self, name, typ, body)
+
 
     
 def addPhotoAlbum( self, id, title='', description='', REQUEST=None ):
