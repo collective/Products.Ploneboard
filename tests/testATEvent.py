@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.3 2004/03/16 17:34:50 tiran Exp $
+$Id: testATEvent.py,v 1.4 2004/04/29 14:05:27 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -236,9 +236,9 @@ class TestATEventFields(ATCTFieldTestCase):
         dummy = self._dummy
         field = dummy.getField('eventType')
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.required == 0, 'Value is %s' % field.required)
+        self.failUnless(field.required == 1, 'Value is %s' % field.required)
         self.failUnless(field.default == (), 'Value is %s' % str(str(field.default)))
-        self.failUnless(field.searchable == 0, 'Value is %s' % field.searchable)
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == 'getEventTypes', 
                         'Value is %s' % str(field.vocabulary))
         self.failUnless(field.enforceVocabulary == 0, 
@@ -282,7 +282,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 0, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
-        self.failUnless(field.searchable == 0, 'Value is %s' % field.searchable)
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
         self.failUnless(field.enforceVocabulary == 0, 
@@ -409,7 +409,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 0, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
-        self.failUnless(field.searchable == 0, 'Value is %s' % field.searchable)
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
         self.failUnless(field.enforceVocabulary == 0, 
@@ -451,7 +451,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 0, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
-        self.failUnless(field.searchable == 0, 'Value is %s' % field.searchable)
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
         self.failUnless(field.enforceVocabulary == 0, 
@@ -493,7 +493,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 0, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
-        self.failUnless(field.searchable == 0, 'Value is %s' % field.searchable)
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
         self.failUnless(field.enforceVocabulary == 0, 

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATNewsItem.py,v 1.2 2004/03/16 15:27:11 tiran Exp $
+$Id: testATNewsItem.py,v 1.3 2004/04/29 14:05:27 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -125,7 +125,7 @@ class TestATNewsItemFields(ATCTFieldTestCase):
         field = dummy.getField('text')
 
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.required == 0, 'Value is %s' % field.required)
+        self.failUnless(field.required == 1, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
         self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
@@ -153,7 +153,7 @@ class TestATNewsItemFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == (),
+        self.failUnless(field.validators == ('isTidyHtmlWithCleanup',),
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, RichWidget),
                         'Value is %s' % id(field.widget))
@@ -163,7 +163,7 @@ class TestATNewsItemFields(ATCTFieldTestCase):
         self.failUnless(tuple(vocab) == (), 'Value is %s' % str(tuple(vocab)))
         
         self.failUnless(field.primary == 1, 'Value is %s' % field.primary)
-        self.failUnless(field.default_content_type == 'text/structured',
+        self.failUnless(field.default_content_type == 'text/restructured',
                         'Value is %s' % field.default_content_type)
         self.failUnless(field.default_output_type == 'text/html',
                         'Value is %s' % field.default_output_type)
