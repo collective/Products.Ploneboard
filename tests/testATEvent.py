@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.7 2004/05/21 07:44:04 tiran Exp $
+$Id: testATEvent.py,v 1.8 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -267,7 +267,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == (),
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, MultiSelectionWidget),
                         'Value is %s' % id(field.widget))
@@ -353,7 +353,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == (),
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, CalendarWidget),
                         'Value is %s' % id(field.widget))
@@ -396,7 +396,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == (),
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, CalendarWidget),
                         'Value is %s' % id(field.widget))

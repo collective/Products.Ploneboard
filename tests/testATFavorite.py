@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.6 2004/05/15 01:54:07 tiran Exp $
+$Id: testATFavorite.py,v 1.7 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -199,7 +199,7 @@ class TestATFavoriteFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == (),
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.8 2004/05/21 07:44:04 tiran Exp $
+$Id: testATDocument.py,v 1.9 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,7 +13,6 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from common import *
-from ATCTSiteTestCase import ArcheSiteTestCase
 
 example_stx = """
 Header
@@ -140,10 +139,10 @@ class TestSiteATDocument(ATCTSiteTestCase):
 
 tests.append(TestSiteATDocument)
 
-class TestSiteATDocumentRename(ArcheSiteTestCase):
+class TestSiteATDocumentRename(ATCTSiteTestCase):
 
     def afterSetUp(self):
-        ArcheSiteTestCase.afterSetUp(self)
+        ATCTSiteTestCase.afterSetUp(self)
         self._portal = self.app.portal
         # login as manager
         user = self.getManagerUser()

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATNewsItem.py,v 1.5 2004/05/15 01:54:07 tiran Exp $
+$Id: testATNewsItem.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -156,8 +156,8 @@ class TestATNewsItemFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': ('isEmpty', 'isTidyHtmlWithCleanup'), 'strategy': 'or'},
-                        'Value is %s' % str(field.validators))
+        self.failUnless(field.validators == TidyHTMLValidator,
+                        'Value is %s: %s' % (str(field.validators), TidyHTMLValidator))
         self.failUnless(isinstance(field.widget, RichWidget),
                         'Value is %s' % id(field.widget))
         vocab = field.Vocabulary(dummy)

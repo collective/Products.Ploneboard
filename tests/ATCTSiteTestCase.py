@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.5 2004/05/21 07:44:04 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -12,7 +12,7 @@ import time
 from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
-#from common import *
+from common import dcEdit, EmptyValidator
 
 from Products.Archetypes.Storage import AttributeStorage, MetadataStorage
 from Products.CMFCore  import CMFCorePermissions
@@ -30,8 +30,8 @@ portal_owner = PloneTestCase.portal_owner
 class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
     def test_dcEdit(self):
-        #if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
-        #    return
+        if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
+            return
         old = self._cmf
         new = self._ATCT
         dcEdit(old)
@@ -69,7 +69,7 @@ class ATCTFieldTestCase(ArchetypesTestCase.ArcheSiteTestCase, BaseSchemaTest):
         self.failUnless(field.type == 'text')
         self.failUnless(isinstance(field.storage, MetadataStorage))
         self.failUnless(field.getLayerImpl('storage') == MetadataStorage())
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'})
+        self.failUnless(field.validators == EmptyValidator)
         self.failUnless(isinstance(field.widget, TextAreaWidget))
         vocab = field.Vocabulary(dummy)
         self.failUnless(isinstance(vocab, DisplayList))

@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.5 2004/05/21 07:44:04 tiran Exp $
+$Id: common.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -61,13 +61,6 @@ ZopeTestCase.installProduct('PortalTransforms', 1)
 ZopeTestCase.installProduct('ATContentTypes', 1)
 
 ###
-# ATContentTypes tests
-###
-from ATCTTestCase import ATCTTestCase
-from ATCTSiteTestCase import ATCTFieldTestCase
-from ATCTSiteTestCase import ATCTSiteTestCase
-
-###
 # from archetypes
 ###
 
@@ -101,16 +94,18 @@ from Products.ATContentTypes.migration.ATCTMigrator import DocumentMigrator,\
 from Products.validation import ValidationChain
 EmptyValidator = ValidationChain('isEmpty')
 EmptyValidator.appendSufficient('isEmpty')
-TidyHTMLValidator = ValidationChain('isTidyHTML')
-TidyHTMLValidator.appendSufficient('isEmpty')
-TidyHTMLValidator.appendRequired('isTidyHTMLWithCleanup')
+TidyHTMLValidator = ValidationChain('isTidyHtmlChain')
+#TidyHTMLValidator.appendSufficient('isEmpty')
+TidyHTMLValidator.appendRequired('isTidyHtmlWithCleanup')
 URLValidator = ValidationChain('isURL')
 URLValidator.appendSufficient('isEmpty')
 URLValidator.appendRequired('isURL')
-EmailValidator = ValidationChain('isEmail')
+RequiredURLValidator = ValidationChain('isRequiredURL')
+RequiredURLValidator.appendRequired('isURL')
+EmailValidator = ValidationChain('isEmailChain')
 EmailValidator.appendSufficient('isEmpty')
 EmailValidator.appendRequired('isEmail')
-PhoneValidator = ValidationChain('isPhone')
+PhoneValidator = ValidationChain('isPhoneChain')
 PhoneValidator.appendSufficient('isEmpty')
 PhoneValidator.appendRequired('isInternationalPhoneNumber')
 
@@ -147,3 +142,10 @@ else:
     from Interface.Verify import verifyClass, verifyObject
     from Interface.Exceptions import BrokenImplementation, DoesNotImplement
     from Interface.Exceptions import BrokenMethodImplementation
+
+###
+# ATContentTypes tests
+###
+from ATCTTestCase import ATCTTestCase
+from ATCTSiteTestCase import ATCTFieldTestCase
+from ATCTSiteTestCase import ATCTSiteTestCase
