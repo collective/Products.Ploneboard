@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.22 2003/10/13 01:36:16 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.23 2003/10/24 17:46:57 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -136,8 +136,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'getProductFile')
     def getProductFile(self,p,fname='readme.txt'):
         ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
-        prodspath=os.path.split(package_home(globals()))[:-1]
-        prodpath=os.path.join(os.path.join(os.path.join(*prodspath)),p)
+        prodpath=self.Control_Panel.Products._getOb(p).home
+        
         #now list the directory to get the readme.txt case-insensitive
         try:
             files=os.listdir(prodpath)
