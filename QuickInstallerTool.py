@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.35 2004/02/18 10:20:53 shh42 Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.36 2004/02/26 15:52:49 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -118,10 +118,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         pids=self.Control_Panel.Products.objectIds() + not_installed(self)
 
         import sys
-        sys.stdout.flush()
 
         pids = [pid for pid in pids if self.isProductInstallable(pid)]
-        sys.stdout.flush()
 
         if skipInstalled:
             installed=[p['id'] for p in self.listInstalledProducts(showHidden=1)]
@@ -275,17 +273,32 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         msg=str(res)
         version=self.getProductVersion(p)
         #add the product
-        if p in self.objectIds():
-            p=getattr(self,p)
-            p.update(types=types,skins=skins,actions=actions,portalobjects=portalobjects,workflows=workflows,
-                     leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,logmsg=res,status=status,error=error,locked=locked,
-                     hidden=hidden)
-        else:
-            ip=InstalledProduct(p,types=types,skins=skins,actions=actions,portalobjects=portalobjects,
-                                workflows=workflows,leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,
-                                logmsg=res,
-                                status=status,error=error,locked=locked,hidden=hidden)
-            self._setObject(p,ip)
+        try:
+            if p in self.objectIds():
+                p=getattr(self,p)
+                p.update(types=types,skins=skins,actions=actions,portalobjects=portalobjects,workflows=workflows,
+                         leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,logmsg=res,status=status,error=error,locked=locked,
+                         hidden=hidden)
+            else:
+                ip=InstalledProduct(p,types=types,skins=skins,actions=actions,portalobjects=portalobjects,
+                                    workflows=workflows,leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,
+                                    logmsg=res,
+                                    status=status,error=error,locked=locked,hidden=hidden)
+                self._setObject(p,ip)
+        except InvalidObjectReference,e:
+            raise 
+        except:
+            tb=sys.exc_info()
+            res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
+            self.error_log.raising(tb)
+
+            # Try to avoid reference
+            del tb
+            
+            if swallowExceptions:
+                get_transaction().abort(1)   #this is very naughty
+            else:
+                raise
 
         return res
 
