@@ -65,7 +65,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
 ##    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
 ##        # This is get back from AccessControl.User.BasicUser
 ##        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
-##                    'authenticate', '_shared_roles', 'changePassword',
+##                    'authenticate', '_shared_roles', 
 ##                    "_setUnderlying", "__init__", )
 ##        if name in deny_names:
 ##            return 0
@@ -378,3 +378,23 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 # Use acquisition regularily
                 # XXX Have to check security on this !!!
                 return self.inheritedAttribute(GRUFUser, name)
+
+
+    #                                                           #
+    #                   Password changing                       #
+    #                                                           #
+
+    security.declarePrivate('changePassword')
+    def changePassword(self, password):
+        """Set the user's password"""
+        # don't spam the user's roles with group roles and Authenticaed
+        roles = self.getUserRoles()
+        roles = filter(lambda x: x not in ('Authenticated', 'Shared', 'Anonymous'), roles)
+        
+        # set the profile on the user folder
+        self.userFolderEditUser(
+            self.getUserName(),
+            password,
+            roles,
+            self.getDomains(),
+            )
