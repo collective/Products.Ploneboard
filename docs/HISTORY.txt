@@ -48,6 +48,9 @@
  * Merged ConstrainTypesMixin from the branch into the HEAD. Thx to Leonardo
    Rochael Almeida and Jens Werner Klein for their work.
    [yenzens, rochael]
+
+ * Fixed [ 1013853 ] File upload image shows mime-type in widget
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 
