@@ -16,7 +16,7 @@ except ImportError:
 class portal_groups(Interface):
     """Defines an interface for working with groups in an abstract manner.
     Parallels the portal_membership interface of CMFCore"""
-    id = Attribute('id','Must be set to "portal_groups"')
+##    id = Attribute('id','Must be set to "portal_groups"')
 
     def getGroupById(id):
         """Returns the portal_groupdata-ish object for a group corresponding
@@ -29,26 +29,29 @@ class portal_groups(Interface):
         """Returns a list of the available portal_groupdata-ish objects."""
 
     def listGroupIds():
-        """Returns a list of the available groups' ids."""
+        """Returns a list of the available groups' ids (ie. with prefixes)."""
 
-    def getPureUserNames():
-        """Get the usernames (ids) of only users. """
+    def listGroupNames():
+        """Returns a list of the available groups' names (ie. without prefixes)."""
 
-    def getPureUsers():
-        """Get the actual (unwrapped) user objects of only users. """
+##    def getPureUserNames():
+##        """Get the usernames (ids) of only users. """
+
+##    def getPureUsers():
+##        """Get the actual (unwrapped) user objects of only users. """
 
     def searchForGroups(REQUEST, **kw):    # maybe searchGroups()?
         """Return a list of groups meeting certain conditions. """
         # arguments need to be better refined?
 
-    def addGroup(id, password, roles, domains):
-        """Create a group with the supplied id, roles, and domains.
+    def addGroup(id, roles = [], groups = []):
+        """Create a group with the supplied id, roles, and groups.
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
 
-    def editGroup(id, password, roles, permissions):
-        """Edit the given group with the supplied password, roles, and domains.
+    def editGroup(id, roles = [], groups = []):
+        """Edit the given group with the supplied roles.
 
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""

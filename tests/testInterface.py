@@ -60,6 +60,7 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
         Test that interfaces are okay
         """
         # Check interface for each and every class
+        ignore = getattr(self, "ignore_interfaces", [])
         for klass in self.klasses:
             intfs = getattr(klass, "__implements__", None)
             self.failUnless(intfs, "'%s' class doesn't implement an interface!" % (klass.__name__, ))
@@ -69,6 +70,8 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
 
             # Check each and everyone
             for intf in intfs:
+                if intf in ignore:
+                    continue
                 self.failUnless(
                     Verify.verifyClass(
                     intf,
@@ -88,6 +91,7 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
         count = 0
         
         # Check interface for each and every class
+        ignore = getattr(self, "ignore_interfaces", [])
         for klass in self.klasses:
             intfs = getattr(klass, "__implements__", None)
             self.failUnless(intfs, "'%s' class doesn't implement an interface!" % (klass.__name__, ))
@@ -97,6 +101,8 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
 
             # Check each and every interface
             for intf in intfs:
+                if intf in ignore:
+                    continue
                 for name in intf.names():
                     count += 1
                     if not "test_%s" % (name,) in tests:
@@ -121,6 +127,7 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
         count = 0
         
         # Check interface for each and every class
+        ignore = getattr(self, "ignore_interfaces", [])
         for klass in self.klasses:
             dict = dir(klass)
             intfs = getattr(klass, "__implements__", None)
@@ -134,6 +141,8 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
             # structures used to store this information!
             # Check each method of every interface
             for intf in intfs:
+                if intf in ignore:
+                    continue
                 for name in intf.names():
                     count += 1
                     if not "%s__roles__" % (name,) in dict:

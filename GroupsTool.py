@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.25 2004/05/19 16:37:45 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.26 2004/05/28 14:14:57 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -123,17 +123,22 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     security.declareProtected(ViewGroups, 'listGroupIds')
     def listGroupIds(self):
         """Returns a list of the available groups' ids as entered (without group prefixes)."""
-        return self.acl_users.getGroupNames(prefixed=0)
+        return self.acl_users.getGroupIds()
 
-    security.declarePrivate('getPureUserNames')
-    def getPureUserNames(self):
-        """Get the usernames (ids) of only users. """
-        return self.acl_users.getPureUserNames()
+    security.declareProtected(ViewGroups, 'listGroupNames')
+    def listGroupNames(self):
+        """Returns a list of the available groups' ids as entered (without group prefixes)."""
+        return self.acl_users.getGroupNames()
 
-    security.declarePrivate('getPureUsers')
-    def getPureUsers(self):
-        """Get the actual (unwrapped) user objects of only users. """
-        return self.acl_users.getPureUsers()
+##    security.declarePrivate('getPureUserNames')
+##    def getPureUserNames(self):
+##        """Get the usernames (ids) of only users. """
+##        return self.acl_users.getPureUserNames()
+
+##    security.declarePrivate('getPureUsers')
+##    def getPureUsers(self):
+##        """Get the actual (unwrapped) user objects of only users. """
+##        return self.acl_users.getPureUsers()
 
     security.declareProtected(View, 'searchForGroups')
     def searchForGroups(self, REQUEST, **kw):
@@ -195,21 +200,21 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         return res
 
     security.declareProtected(AddGroups, 'addGroup')
-    def addGroup(self, id, password = None, roles = [], domains = ()):
+    def addGroup(self, id, roles = [], groups = [], ):
         """Create a group, and a group workspace if the toggle is on, with the supplied id, roles, and domains.
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups ARE irrelevant in GRUF."""
-        self.acl_users.userFolderAddGroup(id, roles, )
+        self.acl_users.userFolderAddGroup(id, roles = roles, groups = groups )
         self.createGrouparea(id)
 
     security.declareProtected(ManageGroups, 'editGroup')
-    def editGroup(self, id, password, roles, permissions):
+    def editGroup(self, id, roles = [], groups = [], ):
         """Edit the given group with the supplied password, roles, and domains.
 
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
-        self.acl_users.userFolderEditGroup(id, roles, )
+        self.acl_users.userFolderEditGroup(id, roles = roles, groups = groups, )
 
     security.declareProtected(DeleteGroups, 'removeGroups')
     def removeGroups(self, ids, keep_workspaces=0):
@@ -239,12 +244,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         For GRUF this is easy. Others may have to re-implement."""
         user = group.getGroup()
-        if user is not None:
-            object.changeOwnership(user)
-            object.manage_setLocalRoles(user.getId(), ['Owner'])
-        else:
-            pass
-                # should we have an error here?
+        if user is None:
+            raise ValueError, "Invalid group: '%s'." % (group, )
+        object.changeOwnership(user)
+        object.manage_setLocalRoles(user.getId(), ['Owner'])
 
     security.declareProtected(ManagePortal, 'setGroupWorkspacesFolder')
     def setGroupWorkspacesFolder(self, id="", title=""):
