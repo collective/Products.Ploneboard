@@ -1,10 +1,14 @@
 ##parameters=schema_id
 
-# dump schema 
+# Dump schema
+#
+# This code stinks but it works :-)
 
-print 
-print "# Schema created by ATSchemaEditorNG"
-print "# (C) 2004, Zope Software Development and Consulting Andreas jung"
+print "######################################################################"
+print "# Schema created by ATSchemaEditorNG                                 #"
+print "# (C) 2004, ZOPYX Software Development and Consulting Andreas Jung   #"
+print "# Published under the Lesser GNU Public License LGPL V 2.1           #"
+print "######################################################################"
 print 
 print "from Products.Archetypes.public import *"
 print 
@@ -23,6 +27,7 @@ for schemata_name in context.atse_getSchemataNames(schema_id):
         s += '\t\trequired=%s,\n' % f.required
         s += '\t\twidget=%s(\n' % widget.getName()
         s += '\t\t\tlabel="%s",\n' % widget.label
+        s += '\t\t\tvisible=%s,\n' % widget.visible
         s += '\t\t\tlabel_msgid="%s",\n' % getattr(widget, 'label_msgid', '')
         s += '\t\t\ti18n_domain="%s",\n' % getattr(widget, 'i18n_domain', '')
 
@@ -34,6 +39,9 @@ for schemata_name in context.atse_getSchemataNames(schema_id):
         for attr in attrs:
             if hasattr(widget, attr):
                 value = getattr(widget, attr)
+                if attr == 'validators' and isinstance(value, tuple):
+                    value = filter(None, value)
+                    if not value: value = ()
                 if attr in ('rows', 'cols', 'size'): value = int(value)
                 if isinstance(value, int ) or isinstance(value, tuple):
                     s += '\t\t\t%s=%s,\n' % (attr, value)

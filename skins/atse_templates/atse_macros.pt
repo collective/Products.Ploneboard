@@ -155,6 +155,7 @@
       <div tal:condition="python: not here.atse_editorCanUpdate(SCHEMA_ID)">
        <b>This schema is actually not configured to update its associated objects</b>
       </div>
+      <br/>
       <div>
         <a href="#" 
            tal:attributes="href string: ${here/absolute_url}/atse_dump_schema?schema_id=$SCHEMA_ID"
