@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.20 2004/05/24 19:10:51 yenzenz Exp $
+$Id: ATFile.py,v 1.21 2004/05/26 07:52:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -181,8 +181,8 @@ class ATFile(ATCTContent):
 
     content_type = ComputedAttribute(get_content_type, 1)
  
-    security.declarePrivate('TXNG2_SearchableText')
-    def txng_get(self, attr):
+    #security.declarePrivate('TXNG2_SearchableText')
+    def txng_get(self, attr=('SearchableText',)):
         """Special searchable text source for text index ng 2
         """
         if attr[0] != 'SearchableText':
@@ -205,12 +205,16 @@ class ATFile(ATCTContent):
         if f:
             mt = f.getContentType()
             try:
-                result = ptTool.convertTo('text/plain', str(f), mimetype=mt).getData()
+                result = ptTool.convertTo('text/plain', str(f), mimetype=mt)
+                if result:
+                    data = result.getData()
+                else:
+                    data = ''
             except TransformException:
-                result = ''
-            source+=result
+                data = ''
+            source+=data
 
-        return (source, mimetype, encoding)
+        return source, mimetype, encoding
 
 registerType(ATFile, PROJECTNAME)
 
