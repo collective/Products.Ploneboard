@@ -2,3 +2,5 @@
 0.2
 
   - Added Open/Close checkbox to open/close poll for voting.
+  - Nederlands (nl) translation contributed by Jaap Noordzij
+    <smokejumper@chello.nl> 
