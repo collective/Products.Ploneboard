@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: iso-8859-1 -*-
-# Written by Martin v. Löwis <loewis@informatik.hu-berlin.de>
+# Written by Martin v. Loewis <loewis@informatik.hu-berlin.de>
 #
 # Changed by Christian 'Tiran' Heimes <ch@comlounge.net> for the placeless
 # translation service (PTS) of zope
@@ -160,6 +160,7 @@ class Msgfmt:
             if not l:
                 continue
             # XXX: Does this always follow Python escape semantics?
+            # XXX: eval is evil because it could be abused
             l = eval(l, globals())
             if section == ID:
                 msgid += l
