@@ -16,12 +16,13 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATDateCriteria.py,v 1.7 2004/05/14 11:40:16 godchap Exp $
+$Id: ATDateCriteria.py,v 1.8 2004/06/01 09:10:52 zworkb Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
+from DateTime import DateTime
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
