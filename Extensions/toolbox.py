@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.13 2004/07/28 17:54:24 tiran Exp $
+$Id: toolbox.py,v 1.14 2004/08/18 20:17:35 dreamcatcher Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -70,7 +70,7 @@ def recreateATImageScales(self):
 
     return out.getvalue()
 
-def _switchToATCT(portal, pt, cat, reg, klass, out):
+def _switchToATCT(portal, pt, cat, reg, klass, out, skip_rename=False):
     """
     """
     atId = klass.__name__
@@ -90,8 +90,10 @@ def _switchToATCT(portal, pt, cat, reg, klass, out):
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
-    # fix some internal AT data after renaming
-    fixAfterRenameType(portal, atId, id)
+    # Only set skip_rename if you know what you are doing!
+    if not skip_rename:
+        # fix some internal AT data after renaming
+        fixAfterRenameType(portal, atId, id)
     # reassociate the content type registry predicates with the portal_type
     fixMimeTypes(portal, klass, id)
     print >>out, '%s -> %s (%s)' % (atId, id, title)
@@ -120,7 +122,8 @@ def _switchToCMF(portal, pt, cat, reg, klass, out):
     try:
         fixAfterRenameType(portal, id, atId)
     except IndexError:
-        LOG('ATContentTypes', ERROR, 'Failed to fixAfterRenameType in switchToCMF',
+        LOG('ATContentTypes', ERROR,
+            'Failed to fixAfterRenameType in switchToCMF',
             error=sys.exc_info(), reraise=0)
         pass
     # reassociate the content type registry predicates with the portal_type
@@ -162,7 +165,7 @@ def _fixLargePloneFolder(self):
     # Large Plone Folder
     self.Members._setPortalTypeName(ATFolder.ATBTreeFolder.newTypeFor[0])
 
-def switchCMF2ATCT(self):
+def switchCMF2ATCT(self, skip_rename=False):
     if isSwitchedToATCT(self):
         return "Error: Already switched"
     pt = getToolByName(self,'portal_types')
@@ -170,7 +173,7 @@ def switchCMF2ATCT(self):
     reg = getToolByName(self, 'content_type_registry')
     out = StringIO()
     for klass in atct_klasses:
-        _switchToATCT(self, pt, cat, reg, klass, out)
+        _switchToATCT(self, pt, cat, reg, klass, out, skip_rename=skip_rename)
     _fixLargePloneFolder(self)
     # XXX maybe we need to reindex only portal_type and meta_type
     #objects are recataloged in switching method
