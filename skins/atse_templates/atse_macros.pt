@@ -23,8 +23,9 @@
 <metal:div metal:define-macro="type">
     <span class="label" i18n:translate="type">Type</span>
     <div>
-      <select name="fielddata.type:record:string">
-        <span tal:repeat="item python: ('StringField', 'IntegerField', 'FloatField', 'FixedPointField', 'LinesField', 'DateTimeField', 'BooleanField', 'ReferenceField')">
+      <select name="fielddata.type:record:string"
+              tal:attributes="onChange string:javascript:this.form.submit();;return true;;">
+        <span tal:repeat="item here/atse_getFieldTypes">
           <option tal:attributes="value item;
                                   selected python: item==here.atse_getFieldType(field)"
                   tal:content="item" />
@@ -34,82 +35,25 @@
 
 </metal:div>
             
-
 <metal:div metal:define-macro="widget">
 
     <span class="label" i18n:translate="widget">Widget</span>
     <div>
 
-      <select name="fielddata.widget:record:string">
-        <option value="String" 
-                tal:content="string:String"
-                tal:attributes="selected python: widget_name=='StringWidget'" />
-        <option value="Textarea" 
-                tal:content="string:Textarea"
-                tal:attributes="selected python: widget_name=='TextAreaWidget'" />
-        <option value="Radio" 
-                tal:content="string:Radio"
-                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='radio'"/>
-        <option value="Select" 
-                tal:content="string:Select"
-                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='select'"/>
-        <option value="Flex" 
-                tal:content="string:flexible Selection"
-                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='flex'"/>
-        <option value="Lines" 
-                tal:content="string:Lines"
-                tal:attributes="selected python: widget_name=='LinesWidget' "/>
-        <option value="Calendar" 
-                tal:content="string:Calendar"
-                tal:attributes="selected python: widget_name=='CalendarWidget' "/>
-        <option value="Boolean" 
-                tal:content="string:Boolean"
-                tal:attributes="selected python: widget_name=='BooleanWidget' "/>
-        <option value="MultiSelect" 
-                tal:content="string:MultiSelect"
-                tal:attributes="selected python: widget_name=='MultiSelectionWidget' "/>
-
-
-        <option value="Richtext" 
-                tal:content="string:Richtext"
-                tal:attributes="selected python: widget_name=='RichWidget' "/>
-        <option value="Password" 
-                tal:content="string:Password"
-                tal:attributes="selected python: widget_name=='PasswordWidget' "/>
-        <option value="Visual" 
-                tal:content="string:Visual"
-                tal:attributes="selected python: widget_name=='VisualWidget' "/>
-        <option value="Epoz" 
-                tal:content="string:Epoz"
-                tal:attributes="selected python: widget_name=='EpozWidget' "/>
-        <option value="Picklist"
-                tal:content="string:Picklist MultiSelect"
-                tal:attributes="selected python: widget_name=='PicklistWidget' "/>
-        <option value="InAndOut"
-                tal:content="string:InAndOut MultiSelect"
-                tal:attributes="selected python: widget_name=='InAndOutWidget' "/>
-        <option value="ReferenceBrowserWidget"
-                tal:content="string:ReferenceBrowserWidget"
-                tal:attributes="selected python: widget_name=='ReferenceBrowserWidget'"
-        		tal:condition="exists:here/referencebrowser_popup"/>
-
-        <tal:comment tal:replace="nothing">
-            <option value="Image" 
-                    tal:content="string:Image"
-                    tal:attributes="selected python: widget_name=='ImageWidget' "/>
-            <option value="Integer" 
-                    tal:content="string:Integer"
-                    tal:attributes="selected python: widget_name=='IntegerWidget' "/>
-            <option value="Decimal" 
-                    tal:content="string:Decimal"
-                    tal:attributes="selected python: widget_name=='DecimalWidget' "/>
-            <option value="Reference" 
-                    tal:content="string:Reference"
-                    tal:attributes="selected python: widget_name=='ReferenceWidget' "/>
-            <option value="Keywords" 
-                    tal:content="string:Keywords"
-                    tal:attributes="selected python: widget_name=='KeywordWidget' "/>
-        </tal:comment>
+      <select name="fielddata.widget:record:string"
+              tal:attributes="onChange string:javascript:this.form.submit();;return true;;">
+        <tal:block tal:repeat="widget_info here/atse_getWidgetInfo"
+                   tal:omit-tag="python:1">
+          <option tal:define="widget_choice python:widget_info[1]['widget'];
+                              widget_choice_id python:widget_info[0];
+                              widget_choice_visible python:widget_info[1]['visible'];
+                              widget_choice_format widget_choice/format | nothing;
+                              widget_format python:getattr(field.widget, 'format', 0)"
+                  tal:content="widget_choice_id"
+                  tal:attributes="value widget_choice_id;
+                                  selected python:widget_name==widget_choice.getName() and test(widget_format, widget_format==widget_choice_format, 1);"
+                  tal:condition="widget_choice_visible" />
+        </tal:block>
 
       </select>
     </div>
@@ -307,6 +251,15 @@
             <input type="text" value="" size="60" 
                    name="fielddata.label:record:string"
                    tal:attributes="value python: field.widget.label"/>
+          </div>
+        </div>
+
+        <div>
+          <span class="label" i18n:translate="Description">Description</span>
+          <div>
+            <input type="text" value="" size="60" 
+                   name="fielddata.description:record:string"
+                   tal:attributes="value python: getattr(field.widget, 'description', '')"/>
           </div>
         </div>
 
