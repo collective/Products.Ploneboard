@@ -1,3 +1,16 @@
+##############################################################################
+#
+# Copyright (c) 2004 CompositePack Contributors. All rights reserved.
+#
+# This software is distributed under the terms of the Zope Public
+# License (ZPL) v2.1. See COPYING.txt for more information.
+#
+##############################################################################
+"""Plone Composite Page : 
+   design view UI in line with Plone UI
+
+$Id: cmfcompositepage.py,v 1.17 2004/06/22 07:47:46 godchap Exp $
+"""
 from cgi import escape
 
 from OFS.Folder import Folder

@@ -1,3 +1,16 @@
+##############################################################################
+#
+# Copyright (c) 2004 CompositePack Contributors. All rights reserved.
+#
+# This software is distributed under the terms of the Zope Public
+# License (ZPL) v2.1. See COPYING.txt for more information.
+#
+##############################################################################
+"""Composite Titles :
+   used to mix titles and composite elements in composite pages
+
+$Id: titles.py,v 1.3 2004/06/22 07:47:46 godchap Exp $
+"""
 import copy
 
 from Products.Archetypes.public import *
