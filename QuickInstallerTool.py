@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.50 2005/03/01 15:12:32 tiran Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.51 2005/03/04 07:05:12 shh42 Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
                 self.error_log.raising(tb)
                 res='this product has already been installed without Quickinstaller!'
                 if not swallowExceptions:
-                    raise AlreadyInstalled
+                    raise AlreadyInstalled, p
 
             res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
             self.error_log.raising(tb)
@@ -323,21 +323,21 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         # add the product
         try:
             if p in self.objectIds():
-                p = getattr(self, p)
-                p.update(types=types,
-                         skins=skins,
-                         actions=actions,
-                         portalobjects=portalobjects,
-                         workflows=workflows,
-                         leftslots=leftslots,
-                         rightslots=rightslots,
-                         registrypredicates=registrypredicates,
-                         installedversion=version,
-                         logmsg=res,
-                         status=status,
-                         error=error,
-                         locked=locked,
-                         hidden=hidden)
+                ip = getattr(self, p)
+                ip.update(types=types,
+                          skins=skins,
+                          actions=actions,
+                          portalobjects=portalobjects,
+                          workflows=workflows,
+                          leftslots=leftslots,
+                          rightslots=rightslots,
+                          registrypredicates=registrypredicates,
+                          installedversion=version,
+                          logmsg=res,
+                          status=status,
+                          error=error,
+                          locked=locked,
+                          hidden=hidden)
             else:
                 ip = InstalledProduct(p, self, types=types,
                                       skins=skins,
