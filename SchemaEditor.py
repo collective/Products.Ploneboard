@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.1 2004/09/12 07:27:21 ajung Exp $
+$Id: SchemaEditor.py,v 1.2 2004/09/16 17:46:47 ajung Exp $
 """
 
 import re
@@ -27,8 +27,6 @@ from ManagedSchema import ManagedSchema
 import util
 from config import ManageSchema
 
-UNDELETEABLE_FIELDS = ('title', 'description', 'classification', 'topic', 'importance', 'contact_email', 'contact_name')
-
 id_regex = re.compile('^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$')
 allowed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/ ().,:;#+*=&%$§!'
 
@@ -41,9 +39,10 @@ class SchemaEditor:
     security = ClassSecurityInfo()
 
     security.declareProtected(ManageSchema, 'atse_init')
-    def atse_init(self, schema, filtered_schemas=('default', 'metadata')):
+    def atse_init(self, schema, filtered_schemas=('default', 'metadata'), undeleteable_fields=[]):
         self._ms = ManagedSchema(schema.fields())
         self._filtered_schemas = filtered_schemas
+        self._undeleteable_fields = undeleteable_fields
 
     security.declareProtected(View, 'atse_getSchema')
     def atse_getSchema(self):
@@ -85,7 +84,7 @@ class SchemaEditor:
         self._ms.addSchemata(name)
         self._p_changed = 1
 
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_added', 'Schemata added'), schemata=name)
 
     security.declareProtected(ManageSchema, 'atse_delSchemata')
@@ -96,7 +95,7 @@ class SchemaEditor:
             raise RuntimeError(self.Translate('atse_can_not_remove_last_schema', 'Can not remove the last schema'))
         self._ms.delSchemata(name)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_deleted', 'Schemata deleted'), schemata=self._ms.getSchemataNames()[0])
 
     ######################################################################
@@ -107,7 +106,7 @@ class SchemaEditor:
     def atse_delField(self, name, RESPONSE=None):
         """ remove a field from a schemata"""
 
-        if name in UNDELETEABLE_FIELDS:
+        if name in self._undeleteable_fields:
             raise ValueError(self.Translate('atse_field_not_deleteable',
                                             'field "$name" can not be deleted because it is protected from deletion',   
                                             name=name))
@@ -121,7 +120,7 @@ class SchemaEditor:
             return_schemata = self._ms.getSchemataNames()[0]
 	
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_field_deleted', 'Field deleted'), schemata=return_schemata)
 
 
@@ -150,7 +149,7 @@ class SchemaEditor:
             field = StringField(R['name'], schemata=fieldset, widget=StringWidget)
             self._ms.addField(field)
             self._p_changed = 1
-            util.redirect(RESPONSE, 'pcng_schema_editor', 
+            util.redirect(RESPONSE, 'atse_editor', 
                           self.Translate('atse_field_added', 'Field added'), schemata=fieldset, field=R['name'])
             return            
 
@@ -246,7 +245,7 @@ class SchemaEditor:
         self._p_changed = 1
         self._ms._p_changed = 1
 
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_field_changed', 'Field changed'), 
                       schemata=FD.schemata, field=FD.name)
 
@@ -259,7 +258,7 @@ class SchemaEditor:
         """ move a schemata to the left"""
         self._ms.moveSchemata(name, -1)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_moved_left', 'Schemata moved to left'), schemata=name)
 
     security.declareProtected(ManageSchema, 'atse_schemataMoveRight')
@@ -267,7 +266,7 @@ class SchemaEditor:
         """ move a schemata to the right"""
         self._ms.moveSchemata(name, 1)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_moved_right', 'Schemata moved to right'), schemata=name)
 
     security.declareProtected(ManageSchema, 'atse_fieldMoveLeft')
@@ -275,7 +274,7 @@ class SchemaEditor:
         """ move a field of schemata to the left"""
         self._ms.moveField(name, -1)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_field_moved_up', 'Field moved up'), schemata=self._ms[name].schemata, field=name)
 
     security.declareProtected(ManageSchema, 'atse_fieldMoveRight')
@@ -283,7 +282,7 @@ class SchemaEditor:
         """ move a field of schemata down to the right"""
         self._ms.moveField(name, 1)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_field_moved_down', 'Field moved down'), schemata=self._ms[name].schemata, field=name)
 
     security.declareProtected(ManageSchema, 'atse_changeSchemataForField')
@@ -291,7 +290,7 @@ class SchemaEditor:
         """ move a field from the current fieldset to another one """
         self._ms.changeSchemataForField(name, schemata_name)
         self._p_changed = 1
-        util.redirect(RESPONSE, 'pcng_schema_editor', 
+        util.redirect(RESPONSE, 'atse_editor', 
                       self.Translate('atse_field_moved', 'Field moved to other fieldset'), schemata=schemata_name, field=name)
 
 
@@ -325,11 +324,6 @@ class SchemaEditor:
             else: l.append('%s|%s' % (k,v))
         return '\n'.join(l)
 
-    def _dump_schema(self):
-        """ only for debugging """
-        for schemata in self._ms.getSchemataNames():
-            print '%s: %s' % (schemata, ', '.join([f.getName() for f in  self._ms.getSchemataFields(schemata)]))
-
     security.declareProtected(ManageSchema, 'migrate_schema')
     def migrate_schema(self):
         """ migrate to ManagedSchema """
@@ -350,23 +344,12 @@ class SchemaEditor:
         """ return name of baseclass """
         return str(self._ms.__class__)
 
-    security.declareProtected(ManageSchema, 'atse_migrate_vocabularies')
-    def atse_migrate_vocabularies(self):
-        """ Convert DisplayList instance to new AT standard where keys *must*
-            be StringType and not UnicodeType.
+    def Translate(self, msgid, default, **kw):
+        """ PTS wrapper...this method must be fixed. It is
+            currently there to get rid of the dependency from
+            PloneCollectorNG.
         """
 
-        for field in self._ms.fields():
-            if hasattr(field, 'vocabulary'):
-                if field.vocabulary.__class__.__name__ == 'DisplayList':
-                    D = DisplayList()
-                    for k in field.vocabulary.keys():
-                        if isinstance(k, unicode):
-                            k = k.encode('iso-8859-15', 'ignore')
-                        v = field.vocabulary.getValue(k)
-                        D.add(k,v)
-                    field.vocabulary = D
-
-        return 'Conversion done'
+        return default
 
 InitializeClass(SchemaEditor)
