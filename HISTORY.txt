@@ -1,4 +1,5 @@
 
+0.2:
 
   - Photo size variants now callable by url (${photo_url}/variant/${variant})
   - Tag method now uses a real url to call each variant instead of passing a
