@@ -103,10 +103,10 @@ msgstr "ZopeZen.."
 
 # viewlet Names
 
-msgid "My Recent Updates"
+msgid "My recent changes"
 msgstr "I miei aggiornamenti più recenti"
 
-msgid "My Favorites"
+msgid "My favorites"
 msgstr "I miei preferiti"
 
 msgid "Calendar"
@@ -115,7 +115,7 @@ msgstr "Calendario"
 msgid "Events"
 msgstr "Eventi"
 
-msgid "Review List"
+msgid "Review list"
 msgstr "Lista di revisione"
 
 msgid "News"
@@ -124,28 +124,28 @@ msgstr "Notizie"
 msgid "Language"
 msgstr "Lingua"
 
-msgid "Recent Published"
+msgid "Recent published"
 msgstr "Pubblicati di recente"
 
-msgid "Nested ContentPanels"
+msgid "Nested contentpanels"
 msgstr "ContentPanels annidati"
 
 msgid "View"
 msgstr "Vista"
 
-msgid "Recent Updates"
+msgid "Recent updates"
 msgstr "Aggiornamenti recenti"
 
-msgid "Content Listing"
+msgid "Content listing"
 msgstr "Lista dei contenuti"
 
 msgid "Body"
 msgstr "Solo Corpo"
 
-msgid "Default Viewlet"
+msgid "Default viewlet"
 msgstr ""
 
-msgid "My Recent Changes"
+msgid "My recent changes"
 msgstr "I miei cambiamenti più recenti"
 
 

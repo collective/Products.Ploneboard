@@ -44,7 +44,7 @@ msgstr ""
 #. ContentPanels is designed to build a complex view out of a combination of portlets.  Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'config' tab to configure pages/columns/panels
 #. </p>
 msgid "description_edit_contentpanels"
-msgstr "ContentPanels is designed to build a complex view out of a combination of portlets. Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'config' tab to configure pages/columns/panels"
+msgstr "ContentPanels is designed to build a complex view out of a combination of portlets. Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page."
 
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
@@ -104,12 +104,14 @@ msgstr ""
 msgid "ZopeZen"
 msgstr "ZopeZen.."
 
-# viewlet Names
+##############################
+# viewlets Names
+##########################
 
-msgid "My Recent Updates"
+msgid "My recent changes"
 msgstr ""
 
-msgid "My Favorites"
+msgid "My favorites"
 msgstr ""
 
 msgid "Calendar"
@@ -118,7 +120,7 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-msgid "Review List"
+msgid "Review list"
 msgstr ""
 
 msgid "News"
@@ -127,30 +129,33 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-msgid "Recent Published"
+msgid "Recent published"
 msgstr ""
 
-msgid "Nested ContentPanels"
+msgid "Nested contentpanels"
 msgstr ""
 
 msgid "View"
 msgstr ""
 
-msgid "Recent Updates"
+msgid "Recent changes"
 msgstr ""
 
-msgid "Content Listing"
+msgid "Content listing"
 msgstr ""
 
 msgid "Body"
 msgstr ""
 
-msgid "Default Viewlet"
+msgid "Default viewlet"
 msgstr ""
 
-msgid "My Recent Changes"
+msgid "My recent changes"
 msgstr ""
 
+#######################
+# panel operations
+########################
 
 msgid "move left"
 msgstr ""
@@ -178,3 +183,60 @@ msgstr ""
 
 msgid "delete this panel"
 msgstr ""
+
+#########################
+# select viewlet
+########################
+
+msgid "viewlet_context"
+msgstr "viewlet context"
+
+msgid "preview_viewlet"
+msgstr "preview viewlet"
+
+msgid "select_this_viewlet"
+msgstr "select this viewlet"
+
+msgid "Title & description"
+msgstr ""
+
+msgid "Image folder"
+msgstr ""
+
+msgid "label_custom_css"
+msgstr "Custom CSS"
+
+msgid "help_custom_css"
+msgstr "You can define custom CSS for this contentpanels here. Leave it blank if you don't know about CSS."
+
+msgid "label_page_layout_mode"
+msgstr "page layout mode"
+
+msgid "help_page_layout_mode"
+msgstr "You can choose 'tile mode' or 'tab mode'. With 'tile mode', all pages are shown directly as rows.
+         It is useful for you to make very complex composite page. With 'tab mode', you can switch pages using
+         the top-right tab links."
+
+msgid "page_layout_tile"
+msgstr "tile"
+
+msgid "page_layout_tab"
+msgstr "tab"
+
+msgid "label_portlet_pos"
+msgstr "set to left/right portlet"
+
+msgid "help_portlet_pos"
+msgstr "You can set this contentpanels as the left or right column of the template"
+
+msgid "portlet_pos_none"
+msgstr "none"
+
+msgid "portlet_pos_left"
+msgstr "left"
+
+msgid "portlet_pos_right"
+msgstr "right"
+
+msgid "goto_this_contentpanels"
+msgstr "goto this contentpanels"

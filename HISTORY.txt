@@ -1,3 +1,14 @@
+V1.7.4
+
+  - Refined the popup viewlet selecting window. It is:
+
+    - cleaner and easier to use.
+    - easier to debug viewlet
+  - all viewlet works with recent plone now.
+  - add link to the contentpanels at left/right column when user can edit it.
+  - complete i18n pot and Chinese translation
+  - remove useless viewlets in the config file
+
 V1.7.3
 
   - clear left_slot/right_slot setting when delete a contentpanels content 

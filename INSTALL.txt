@@ -12,7 +12,10 @@ Install
 
 UPGRADE
 
-- reinstall it to upgrade
+- reinstall it to upgrade. 
+
+  NOTE: when you reinstall all your previous setting in portal_contentpanels will lost.
+  You have to retore them mannually.
 
 - Contentpanels 1.1 is not compatible with contentpanels 1.0, and no
 migration at present.

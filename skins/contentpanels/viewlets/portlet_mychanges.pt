@@ -5,7 +5,7 @@
 <body>
 
 <div metal:define-macro="portlet"
-     tal:define="memberName member/getUserName;
+     tal:define="memberName user/getUserName;
                  results python:here.portal_catalog.searchResults( 
                                     Creator=memberName
                                    , sort_on='modified'
@@ -14,7 +14,7 @@
 
      <div class="portlet">
 
-         <h5 i18n:translate="my_recent_changes">My Recent Changes</h5>
+         <h5 i18n:translate="my_recent_changes">My recent changes</h5>
 
          <div class="portletBody">
               <tal:block metal:use-macro="here/content_list_macros/macros/description_in_title" />

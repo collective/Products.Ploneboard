@@ -36,11 +36,11 @@ actions=[
 
 ### PT: portal type specific viewlets
 
-('document_viewlet', 'Document Body', 
+('document_viewlet', 'Document body', 
 "string: here/viewlet_document_body/macros/portlet",
 '', "View","PT:Document",1),
 
-('view_viewlet', 'Topic List',
+('view_viewlet', 'Topic list',
 'string: here/viewlets_topic_list/macros/base_portlet', 
 '', 'View', 'PT:Topic', 1),
 
@@ -56,7 +56,7 @@ actions=[
 "string:here/viewlet_zwikipage_body/macros/portlet",
 "","View","PT:Wiki Page",1),
 
-('contentpanels_viewlet', 'Nested ContentPanels', 
+('contentpanels_viewlet', 'Nested contentpanels', 
 'string:here/viewlet_contentpanels_body/macros/portlet', 
 '', 'View','PT:ContentPanels', 1),
 
@@ -70,15 +70,15 @@ actions=[
 
 ### GL: global viewlets
 
-('default_viewlet', 'Title & Description',
+('default_viewlet', 'Title & description',
 'string:here/viewlet_default/macros/portlet',
 '', 'View', 'GL:all', 1),
 
-('latest_updates_viewlet', 'Recent Updates',
+('latest_updates_viewlet', 'Recent changes',
 'string:here/viewlets_folder_recent/macros/base_portlet',
 '', 'View', 'GL:folder',1 ),
 
-('folder_list_viewlet' , 'Folder Listing',
+('folder_list_viewlet' , 'Folder listing',
 'string:here/viewlets_folder_listing/macros/base_portlet', 
 '', 'View', 'GL:folder', 1),
 
@@ -90,7 +90,7 @@ actions=[
 'string:here/viewlet_events/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
-('portlet_review', 'Review List', 
+('portlet_review', 'Review list', 
 'string:here/portlet_review/macros/portlet',
 '', 'Review portal content', 'GL:folder', 1),
 
@@ -98,25 +98,21 @@ actions=[
 'string:here/viewlet_news/macros/portlet', 
 '', 'View', 'GL:folder', 1),
 
-('portlet_recent', 'Recent Published',
+('portlet_recent', 'Recent published',
 'string:here/portlet_recent/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
-('image_folder_viewlet', 'Image Folder',
+('image_folder_viewlet', 'Image folder',
 'string:here/viewlet_image_folder/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
 ### global portlet
 
-('portlet_language', 'Language',
-'string:here/portlet_language/macros/portlet',
-'', 'View', 'GN:portal', 1),
-
-('my_recent_changes', 'My Recent Updates',
+('my_recent_changes', 'My recent changes',
 'string:here/portlet_mychanges/macros/portlet',
 '', 'View', 'GN:personal', 1),
 
-('portlet_favorites', 'My Favorites',
+('portlet_favorites', 'My favorites',
 'string:here/portlet_favorites/macros/portlet',
 '', 'View', 'GN:personal', 1),
 

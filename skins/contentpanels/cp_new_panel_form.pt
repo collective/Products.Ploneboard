@@ -6,7 +6,7 @@
                   pageIndex request/pageIndex; 
                   columnIndex request/columnIndex;
                   panelIndex request/panelIndex;
-                  isQuery request/isQuery | python: 0;
+                  viewletId request/viewletId | string:default_viewlet;
                   paramString string:cpPath=$cpPath&amp;addPanel=$addPanel&amp;pageIndex=$pageIndex&amp;panelIndex=$panelIndex&amp;columnIndex=$columnIndex;
 
                   path python:here.portal_url.getRelativeContentURL(here);
@@ -21,150 +21,76 @@
                   gn_personal_viewlets python:viewlets.get('GN:personal', []); ">
 
 <head tal:define="ztu modules/ZTUtils;">
-<title tal:content="string:new panel at ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
           tal:define="charset site_properties/default_charset|string:utf-8;
                       dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
           tal:attributes="content string:text/html;;charset=${charset}" />
+
+<title tal:content="string:panel at ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
+
 <style type="text/css" media="all"
        tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
        tal:content="string:@import url(${here/portal_url}/plone.css?${current_skin});">
 </style>
 
-<!-- Pull-down ECMAScript menu, only active if logged in -->
-<script     type="text/javascript"
-            tal:attributes="src string:${here/portal_url}/plone_menu.js">
-</script>
-
 </head>
       
 <body onload="focus();">
+<div class="documentContent">
 
-<div class="documentEditable">
-
-    <!-- simulating views on the groups/user pages until we have real objects. -->
-    <ul class="contentViews">
-        <li class="" tal:attributes="class python:test(isQuery, '', 'selected')">
-            <a href=""
-               tal:attributes="href string:${here/portal_url}/${template/getId}?$paramString"
-               i18n:translate="box_navigation">Navigation</a>
-        </li>
-
-        <li class="selected" tal:attributes="class python:test(isQuery, 'selected', '')">
-            <a href=""
-               tal:attributes="href string:${here/portal_url}/${template/getId}?$paramString&amp;isQuery:int=1"
-               i18n:translate="">Search</a>
-        </li>
-    </ul>
-
-    <div class="contentActions"
-           tal:condition="not: isQuery">
-        <ul>
-
-          <tal:block tal:repeat="menu python:(
-                     {'viewlets':gn_personal_viewlets, 'title':'personal related', 'id':'gn_personal_viewlets'},
-                     {'viewlets':gn_portal_viewlets, 'title':'site wide', 'id':'gn_portal_viewlets'},
-                     {'viewlets':gl_viewlets, 'title':'content related', 'id':'globalViewlets'},
-                     {'viewlets':pt_viewlets, 'title':'content specific', 'id':'typesSpecific'},
-                     )">
-
-          <li tal:condition="menu/viewlets">
-            <div class="menuPosition">
-              <a href="#"
-                 tal:attributes="onclick string:return buttonClick(event, '${menu/id}');;;
-                               onmouseover string:buttonMouseover(event, '${menu/id}');;;">
-                 <span i18n:translate=""
-                     tal:content="menu/title">types specific</span>
-              </a>
-
-              <ul class="actionMenu" style=" display: block;"
-                  tal:attributes="id menu/id"
-                  onmouseover="menuMouseover(event)">
-                  <metal:block tal:repeat="viewlet menu/viewlets">
-                  <li>
-                    <a href="#"
-                       onMouseUp="if (activeButton != null) resetButton(activeButton);"
-                       tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
-                       tal:content="viewlet/name">viewlet </a>
-                  </li>
-                  </metal:block>
-              </ul>
-            </div>
-         </li>
-         </tal:block>
-       </ul>
-     </div>
-
-   <div class="documentContent">
-
-    <tal:block tal:condition="not: isQuery">
-     <div tal:define="breadcrumbs python:here.breadcrumbs(here)">
+    <fieldset>
+        <legend i18n:translate="viewlet_context" i18n:domain="contentpanels">viewlet context</legend>
+    <div tal:define="breadcrumbs python:here.breadcrumbs(here)" style="white-space:nowrap;">
         <a tal:repeat="crumb python:breadcrumbs[:-2]"
            tal:content="python: crumb[0] + ' / '"
            tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
         </a>
-     </div>
+        <img src="#"  i18n:attributes="title"
+               tal:attributes="src string:${here/portal_url}/${here/getIcon};
+                               title python:here.getTypeInfo().Title()"/>
+        <strong tal:content="here/Title"/>
+    </div>
 
-     <h1 class="documentFirstHeading" tal:content="here/Title"></h1>
-
-     <div class="discreet" tal:content="here/Description"></div>
-
-    </tal:block>
-
-       <!-- search form -->
-
-       <form class="group"
-             tal:condition="isQuery"
-             action="search"
-             method="post"
-             name="search"
-             tal:define="DateTime python:modules['DateTime'].DateTime"
-             tal:attributes="action string:${here/absolute_url}/${template/getId}">
-
-             <span i18n:translate="legend_search_terms">Search Terms</span>
-             <div class="field">
-                   <input name="SearchableText"
-                          size="25"
-                          tal:attributes="value request/SearchableText | nothing"
-                          />
-
-                  <input type="hidden" name="pageIndex" tal:attributes="value pageIndex"/>
-                  <input type="hidden" name="columnIndex" tal:attributes="value columnIndex"/>
-                  <input type="hidden" name="panelIndex" tal:attributes="value panelIndex"/>
-                  <input type="hidden" name="cpPath" tal:attributes="value cpPath"/>
-                  <input type="hidden" name="isQuery:int" value="1"/>
-
-                  <input tabindex=""
-                         type="submit"
-                         name="submit"
-                         value="Search"
-                         i18n:attributes="value"
-                         />
-           </div>
-      </form>
-
-      <!-- the list -->
-
-    <fieldset tal:define="checkPermission python: here.portal_membership.checkPermission;
-                       results python:test(isQuery,[brain.getObject() for brain in here.queryCatalog()[:100]], 
-                              [item for item in here.contentValues() if checkPermission('View',item)])"
-              tal:condition="results">
-    <legend>content list</legend>
-      <div 
-          tal:repeat="item python:results[:100]"
-          tal:attributes="class python:test(repeat['item'].odd(), 'even', 'odd')" >
-
-          <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+    <div tal:condition="here/isPrincipiaFolderish"
+         class="discreet">
+    
+      <span style="white-space:nowrap;"
+            tal:repeat="item python:here.contentValues()[:100]">
+          <img src="#"  i18n:attributes="title"
+               tal:attributes="src string:${here/portal_url}/${item/getIcon};
+                               title python:item.getTypeInfo().Title()"/>
           <a tal:attributes="href string:${item/absolute_url}/${template/getId}?$paramString"
              tal:content="python:item.Title() or item.getId()">Title</a>
-
-          <span class="discreet"
-                i18n:translate=""
-                tal:content="python:item.getTypeInfo() and item.getTypeInfo().Title()">Metatype</span>
-
-      </div>
+      </span>
+    </div>
     </fieldset>
-    </div> 
+
+    <fieldset>
+       <legend i18n:translate="preview_viewlet" i18n:domain="contentpanels">preview viewlet</legend>
+
+       <tal:repeat repeat="viewlet python:pt_viewlets + gl_viewlets + gn_portal_viewlets + gn_personal_viewlets">
+          <a href="#" style="white-space:nowrap; border-bottom: 1px solid; margin-right: 0.5em"
+             tal:condition="python:viewlet['id'] != viewletId"
+             i18n:translate="" i18n:domain="contentpanels"
+             tal:attributes="href string:${here/absolute_url}/${template/getId}?$paramString&amp;viewletId=${viewlet/id}"
+             tal:content="viewlet/name">viewlet name</a>
+
+          <a style="white-space:nowrap; border: 1px dashed; margin-right: 0.5em; background-color: #dee7ec;"
+             title="select this viewlet"
+             i18n:attributes="title select_this_viewlet" i18n:domain="contentpanels"
+             tal:condition="python:viewlet['id'] == viewletId">
+              <input type="checkbox" id="select_the_viewlet"
+                     tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;">
+              <label tal:content="viewlet/name" for="select_the_viewlet" i18n:translate="" i18n:domain="contentpanels">viewlet name</label>
+          </a>
+
+       </tal:repeat>
+
+      <hr/>
+      <div tal:define="viewletPath python:here.portal_contentpanels.getViewletPath(viewletId)"
+          tal:content="structure python:here.base_panel(here, contentpanels=here, panelSkin='', viewletPath=viewletPath)"/>
+
+    </fieldset>
 </div>
 </body>
 </html>

@@ -11,14 +11,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
-"Preferred-Encodings: utf-8\n"
-"Domain: contentpanels\n"
 "Language-code: zh\n"
 "Language-name: Chinese\n"
 "Preferred-encodings: utf-8\n"
+"Domain: contentpanels\n"
 "X-Is-Fallback-For: zh-cn zh-hk zh-mo zh-sg\n"
+
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <span i18n:translate="Column Width">
@@ -46,7 +44,7 @@ msgstr "内容视图"
 #. ContentPanels is designed to build a complex view out of a combination of portlets.  Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'config' tab to configure pages/columns/panels
 #. </p>
 msgid "description_edit_contentpanels"
-msgstr "复合面板页面，是一个把多个不同内容的不同视图组装成一个复杂视图的内容。在下面输入相关的信息，点击'保存'。然后在'查看'页面中点击右上角的配置图标进行配置。"
+msgstr "复合面板页面，可组合多个内容的不同视图到一个页面上。在下面输入相关的信息，点击'保存'。"
 
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
@@ -107,10 +105,10 @@ msgstr "ZopeZen风格"
 
 # viewlet Names
 
-msgid "My Recent Updates"
+msgid "My recent changes"
 msgstr "我最近的更改"
 
-msgid "My Favorites"
+msgid "My favorites"
 msgstr "我的收藏"
 
 msgid "Calendar"
@@ -119,7 +117,7 @@ msgstr "日历"
 msgid "Events"
 msgstr "事件"
 
-msgid "Review List"
+msgid "Review list"
 msgstr "评审清单"
 
 msgid "News"
@@ -128,28 +126,28 @@ msgstr "新闻"
 msgid "Language"
 msgstr "语言"
 
-msgid "Recent Published"
+msgid "Recent published"
 msgstr "最近发布"
 
-msgid "Nested ContentPanels"
+msgid "Nested contentpanels"
 msgstr "嵌套子面板"
 
 msgid "View"
 msgstr "查看"
 
-msgid "Recent Updates"
+msgid "Recent changes"
 msgstr "最近更新"
 
-msgid "Folder Listing"
+msgid "Folder listing"
 msgstr "内容列表"
 
 msgid "Body"
 msgstr "正文"
 
-msgid "Default Viewlet"
+msgid "Default viewlet"
 msgstr "缺省视图"
 
-msgid "My Recent Changes"
+msgid "My recent changes"
 msgstr "我最近的更改"
 
 # title
@@ -180,3 +178,56 @@ msgstr "下移"
 
 msgid "delete this panel"
 msgstr "删除此面板"
+
+msgid "viewlet_context"
+msgstr "关联内容"
+
+msgid "preview_viewlet"
+msgstr "预览面板视图"
+
+msgid "select_this_viewlet"
+msgstr "选择这个视图"
+
+msgid "Title & description"
+msgstr "标题描述"
+
+msgid "Image folder"
+msgstr "图片文件夹"
+
+msgid "label_custom_css"
+msgstr "定制CSS"
+
+msgid "help_custom_css"
+msgstr "在这里可为这个复合面板定制CSS. 如果不了解CSS，可保持空。"
+
+msgid "label_page_layout_mode"
+msgstr "页面排版方式"
+
+msgid "help_page_layout_mode"
+msgstr "你可选择'平铺模式'和'标签页模式'. 使用'平铺模式', 所有的页面将以行的形式显示在一个页面中。
+        这样适合制作非常复杂的页面。使用'标签页模式', 你可以使用页面右上方的标签链接切换页面."
+
+msgid "page_layout_tile"
+msgstr "平铺"
+
+msgid "page_layout_tab"
+msgstr "标签页"
+
+msgid "label_portlet_pos"
+msgstr "设置到模板左右列"
+
+msgid "help_portlet_pos"
+msgstr "你可以把这个复合面板设置到面板的左边或者右边列。"
+
+msgid "portlet_pos_none"
+msgstr "不设置"
+
+msgid "portlet_pos_left"
+msgstr "左列"
+
+msgid "portlet_pos_right"
+msgstr "右列"
+
+msgid "goto_this_contentpanels"
+msgstr "跳转到这个复合面板"
+

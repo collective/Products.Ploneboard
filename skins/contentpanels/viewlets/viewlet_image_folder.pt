@@ -10,7 +10,7 @@
 here.aq_parent);
                    results python: [item for item in
 theFolder.contentValues() if checkPermission('View',item)];
-                   dummy python:results.sort(lambda a,b:cmp(a.id(),b.id()))"
+                   dummy python:results.sort(lambda a,b:cmp(a.id,b.id))"
        tal:condition="results">
 
     <style><!--

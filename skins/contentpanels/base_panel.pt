@@ -1,12 +1,12 @@
 <metal:block tal:define="viewletPath options/viewletPath;
-                         usemacro python:viewletPath.find('/macros/') != -1"
-             tal:on-error="structure here/contentpanels_error">
+                         usemacro python:viewletPath.find('/macros/') != -1">
 
 <metal:globaldefine tal:define="
         global utool nocall:here/portal_url;
         global portal utool/getPortalObject;
         global portal_object nocall:portal;
         global portal_url utool;
+        global here_url here/absolute_url;
         global mtool nocall:portal/portal_membership;
         global gtool nocall:portal/portal_groups | nothing;
         global gdtool nocall:portal/portal_groupdata | nothing;
@@ -15,6 +15,7 @@
         global wtool nocall:portal/portal_workflow;
         global ifacetool nocall:portal/plone_interface | nothing;
         global member mtool/getAuthenticatedMember;
+        global isAnon mtool/isAnonymousUser;
         global checkPermission nocall:mtool/checkPermission;" />
 
     <div class="portlet-wrap" 
