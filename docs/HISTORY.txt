@@ -1,3 +1,9 @@
+0.2.0-rc3 - 
+=====================
+
+ * Added ATContentTypes Site customization policy
+   [tiran]
+
 0.2.0-rc2 - 2004-10-06
 ======================
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.9 2004/09/17 22:06:14 tesdal Exp $
+$Id: __init__.py,v 1.10 2004/10/06 21:53:06 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -116,3 +116,10 @@ def initialize(context):
         extra_constructors = tuple(topic_constructors),
         fti = ftis,
         ).initialize(context)
+        
+    # XXX remove try/except block after we depend on AT 1.3.1
+    try:
+        from Products.ATContentTypes.customizationpolicy import registerPolicy
+        registerPolicy(context)
+    except ImportError:
+        pass
