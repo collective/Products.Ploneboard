@@ -99,15 +99,20 @@
               </tr>
 
               <tr>
-                <td colspan="8" tal:condition="python: not request.get('FORCE_ALL')">
-                  <div class="list-item" tal:condition="not: users">
+                <td colspan="8" tal:condition="python: not request.get('FORCE_ALL')"
+                  tal:define="have_users python: len(users);">
+                  <div class="list-item" tal:condition="not: have_users">
                     No user available. This happens either if you have no users defined or if
                     the underlying UserFolder cannot retreive the entire users list (for example, LDAPUserFolder
                     is limited in results size).
                   </div>
-                  <div class="list-item" tal:condition="python: len(users) != ucount" tal:define="ucount python:len(here.getPureUserNames())">
-                    It is reported that <b><span tal:content="ucount"></span> users</b> stand in the various user sources.<br />
-                      It might be very long to retreive the whole list but you can force it by <a href="?FORCE_ALL=1">Clicking here</a>.
+                  <div class="list-item" tal:condition="have_users">
+                    Some more users may be available but do not show up there.. This happens if
+                    the underlying UserFolder cannot retreive the entire users list (for example, 
+                    LDAPUserFolder is limited in results size and will return only cached users).
+                  </div>
+                  <div class="list-item">
+                    It might be very long to retreive the whole list but you can force it by <a href="?FORCE_ALL=1">Clicking here</a>.
                   </div>
                 </td>
               </tr>
