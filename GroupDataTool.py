@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.4 2003/07/20 02:47:10 bmh Exp $
+$Id: GroupDataTool.py,v 1.5 2003/08/01 20:07:44 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -152,7 +152,7 @@ class GroupData (SimpleItem):
     security.declarePublic('getGroup')
     def getGroup(self):
         """ Returns the actual group implementation. Varies by group
-        implementation (GRUF/Nux/et al)."""
+        implementation (GRUF/Nux/et al). In GRUF this is a user object."""
         # The user object is our context, but it's possible for
         # restricted code to strip context while retaining
         # containment.  Therefore we need a simple security check.

@@ -49,6 +49,9 @@ class portal_groups(Interface):
 
 	Underlying user folder must support removing users via the usual Zope API."""
 
+    def setGroupOwnership(self, group, object):
+    	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""
+
     def setGroupWorkspacesFolder(self, id=""):
     	""" Set the location of the Group Workspaces folder by id.
 

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.8 2003/08/01 18:54:34 jccooper Exp $
+$Id: GroupsTool.py,v 1.9 2003/08/01 20:07:44 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -146,6 +146,19 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 	Underlying user folder must support removing users via the usual Zope API."""
 	self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
 
+    def setGroupOwnership(self, group, object):
+    	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object).
+
+        For GRUF this is easy. Others may have to re-implement."""
+        user = group.getGroup()
+        if user is not None:
+	        object.changeOwnership(user)
+        	object.manage_setLocalRoles(user.getId(), ['Owner'])
+        else:
+        	pass
+                # should we have an error here?
+
+
     def setGroupWorkspacesFolder(self, id=""):
     	""" Set the location of the Group Workspaces folder by id.
 
@@ -204,11 +217,24 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 	        if workspaces is None:
         		# add GroupWorkspaces folder
 			parent.invokeFactory("Folder", self.getGroupWorkspacesFolderId())
+                        workspaces =self.getGroupWorkspacesFolder()
+			workspaces.setTitle("Group Workspaces")
+                        workspaces.setDescription("Container for group workspaces")
+                        # how about ownership?
+
+                        # this stuff like MembershipTool...
+                        portal_catalog = getToolByName( self, 'portal_catalog' )
+                        portal_catalog.unindexObject(members)     # unindex Members folder
+			workspaces._setProperty('right_slots', (), 'lines')
 
         	if workspaces is not None and not hasattr(workspaces, id):
                 	# add workspace to GroupWorkspaces folder
-                        workspace =self.getGroupWorkspacesFolder()
-                        workspace.invokeFactory(self.getGroupWorkspaceType(), id)
+                        workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
+                        space = self.getGroupareaFolder(id)
+                        space.setTitle("%s workspace" % id)
+                        space.setDescription("Container for objects shared by the %s group" % id)
+                        space.manage_delLocalRoles(space.users_with_local_role('Owner'))
+			self.setGroupOwnership(self.getGroupById(id), space)
 
     def getGroupWorkspaceType(self):
 	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
