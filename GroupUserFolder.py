@@ -738,7 +738,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         m = self.getGroup(groupid)
         if not m:
-            raise "AAAAH", groupid
+            raise ValueError, "Invalid group: '%s'" % groupid
         return self.getGroup(groupid).getMemberIds()
 
     security.declareProtected(Permissions.manage_users, "getUserMemberIds")
@@ -1315,7 +1315,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/11 09:56:03 $"[7:-2]
+        rev_date = "$Date: 2004/06/11 11:32:03 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

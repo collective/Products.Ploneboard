@@ -736,7 +736,7 @@ class GRUFGroup(GRUFUserAtom):
 
         # Extraction
         groupid = self.getId()
-        return [u for u in gruf.getUserIds()
+        return [u for u in lst
                 if groupid in getattr(gruf.getUser(u), method)()]
 
     security.declarePrivate("getMemberIds")
