@@ -220,7 +220,7 @@ class Photo(Image):
 
         return '%s />' % result
 
-    security.declarePrivate('update_date')
+    security.declarePrivate('update_data')
     def update_data(self, data, content_type=None, size=None):
         """
         Update/upload image -> remove all copies
