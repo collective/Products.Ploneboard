@@ -21,7 +21,7 @@
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 1, int(b_start), orphan=1);
                      image python:batch[0];
-                     prefered_size python:request.cookies.get('photoalbum_display', 'medium');
+                     photo_display python:request.cookies.get('photo_display', 'medium');
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();">
 
@@ -73,44 +73,14 @@
       </tal:block>
 	
       <a tal:condition="image/size" tal:attributes="href string:${image/absolute_url}/view">
-	<img src="#" tal:replace="structure python:image.tag(size=prefered_size)" />
+	<img src="#" tal:replace="structure python:image.tag(size=photo_display)" />
       </a>
 	
       <p style="margin-top: 2em;" tal:content="structure image/Description">
 	Description
       </p>
             
-      <div class="row">
-	
-	<div style="width: 3em; text-align: left;" class="label">
-	  <span>Size</span>
-	  
-	  <div id="display_help"
-	       class="help"
-	       style="visibility:hidden; left:-18em;">
-	    Select the size of the photos.
-	  </div>
-	</div>
-	
-	<div class="field" tal:define="displays image/getDisplays">
-	  <form id="cookie" action="setDisplayCookie">
-	    <input type="hidden" name="b_start:int" tal:attributes="value python:b_start or 0" />
-		<select onChange="javascript:document.getElementById('cookie').submit()" 
-			id="display" 
-			name="display" 
-			tal:attributes="tabindex tabindex/next" 
-		onfocus="formtooltip('display_help', 1)" 
-		onblur="formtooltip('display_help', 0)">
-		<option value="original">Original size</option>
-		<option tal:repeat="display displays" 
-		  tal:attributes="value display/name;
-		    selected python:test(prefered_size == display['name'], 'selected', '');" 
-		  tal:content="display/label/title">1</option>
-	      </select>
-	  </form>
-	</div>
-	
-      </div>
+      <div metal:use-macro="here/photo_macros/macros/size"/>
       
     </div>
     

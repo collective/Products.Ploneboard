@@ -8,7 +8,7 @@
                   batch python:Batch(images, 1, int(b_start));
                   next python:batch.next;
                   image python:batch[0];
-                  prefered_size python:request.cookies.get('photoalbum_display', 'medium');">
+                  photo_display python:request.cookies.get('photo_display', 'medium');">
 
   <head>
     <!-- Style sheets for CSS2 capable browsers (Mozilla, Opera, IE, Netscape6+, Konqueror etc. -->
@@ -28,7 +28,7 @@
     <div tal:condition="image" tal:define="delay python:request.get('delay', 'manual')">
       <h1 tal:content="image/title_or_id"/>
 	
-      <img tal:replace="structure python:image.tag(size=prefered_size)" />
+      <img tal:replace="structure python:image.tag(size=photo_display)" />
 	  
       <meta tal:condition="python:next and delay!='manual'" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:5;; URL=${request/URL0}?b_start:int=${next/first}&delay=$delay" />
       <meta tal:condition="not:next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:1;; URL=${request/URL1}/photoalbum_slideshow_end" />
