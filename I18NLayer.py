@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.16 2004/03/02 13:12:57 longsleep Exp $
+$Id: I18NLayer.py,v 1.17 2004/03/30 08:20:56 fobmagog Exp $
 """
 
-__version__ = "$Revision: 1.16 $"
+__version__ = "$Revision: 1.17 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -321,7 +321,7 @@ class I18NLayer( TitleLessBaseFolder ):
         self._containmentContentType=content_type
 
 
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setI18NLayerAttributes')
+    security.declarePublic('setI18NLayerAttributes')
     def setI18NLayerAttributes(self, id, ob=None):
         '''
         stores required attributes to a given object
