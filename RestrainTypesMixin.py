@@ -5,7 +5,7 @@
 This module contains a mixin-class and a schema snippet to restrain types 
 in a folder-instance
 
-RCS-ID $Id: RestrainTypesMixin.py,v 1.1 2004/06/09 22:31:38 yenzenz Exp $
+RCS-ID $Id: RestrainTypesMixin.py,v 1.2 2004/06/15 11:47:44 yenzenz Exp $
 """
 #
 # GNU General Public Licence (GPL)
@@ -37,6 +37,7 @@ schema = Schema((
     LinesField('RestrainedAllowedTypes',
         vocabulary='vocabularyPossibleTypes',
         enforceVocabulary=1,
+        languageIndependent=1,
         write_permissions=RESTRAIN_TYPES_MIXIN_PERMISSION,                
         widget=MultiSelectionWidget(
             label='Set allowed types',
