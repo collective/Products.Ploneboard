@@ -44,7 +44,7 @@ factory_type_information = {
         },
       { 'id'            : 'edit',
         'name'          : 'Edit',
-        'action'        : 'photo_edit_form',
+        'action'        : 'image_edit_form',
         'permissions'   : (ModifyPortalContent, )
         },
       { 'id'            : 'metadata',
