@@ -9,18 +9,17 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.11 2004/09/27 17:11:12 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.12 2004/09/27 17:18:09 spamsch Exp $
 """
 
-import types
-from ExtensionClass import ExtensionClass
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Acquisition import ImplicitAcquisitionWrapper
 from Products.CMFCore.CMFCorePermissions import View
 from Products.Archetypes.Schema import ManagedSchema
 from zLOG import LOG, INFO
-import inspect
+
+from util import create_signature
 
 class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
@@ -108,38 +107,10 @@ class ParentManagedSchema:
         object_schema = self.schema
 
         # XXX what about registered objects?
-        if self._atse_signature(atse_schema) != self._atse_signature(object_schema):
+        if create_signature(atse_schema) != create_signature(object_schema):
             LOG('ATSchemaEditorNG', INFO, 'Schema %s changed on disk - refreshing' % atse_schema_id)
             self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
 
         return self.aq_parent.atse_getSchemaById(atse_schema_id)
-
-    def _atse_signature(self, schema):
-        """
-        Replacement for buggy signature impl in AT Schema
-        """
-
-        disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
-        s = 'Schema: {'
-        for f in schema.fields():
-
-            s += '%s.%s-%s.%s: {' % \
-                 (inspect.getmodule(f.__class__).__name__, f.__class__.__name__,
-                  inspect.getmodule(f.widget.__class__).__name__, f.widget.__class__.__name__)
-
-            sorted_keys = f._properties.keys()
-            sorted_keys.sort()
-            
-            for k in sorted_keys:
-                if (type(k) not in disallowed):
-                    if (type(f._properties[k]) not in disallowed):
-                        s = s + '%s:%s,' % (k, f._properties[k])
-                    
-            s = s + '}'
-
-        s = s + '}'
-
-        from md5 import md5
-        return md5(s).digest()
 
 InitializeClass(ParentManagedSchema)
