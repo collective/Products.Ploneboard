@@ -138,8 +138,8 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         see also: getPanelObject
         """
         panelContent = self.getPanelObject(panelObjectPath)
-        if panelContent == None: 
-            panelContent = self 
+        if panelContent is None: 
+            return '.'
 
         folderContext = self
         if not self.isPrincipiaFolderish:
@@ -147,12 +147,12 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
 
         relativePath = self.portal_url.getRelativeContentURL(panelContent)
         if panelContent is self:
-            relativePath = '.'
+            return '.'
         else:
             folderContextPath = self.portal_url.getRelativeContentURL(folderContext)
             if relativePath.startswith(folderContextPath):
                 relativePath = panelObjectPath[len(folderContextPath):]
-                relativePath = relativePath.startswith('/') and  '.' or './'\
+                relativePath = (relativePath.startswith('/') and  '.' or './')\
                                + relativePath
         return relativePath
 
@@ -332,8 +332,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         
         if panelSkin:
             self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelSkin'] = panelSkin
-        if panelObjectPath:
-            self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
+        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
         if panelObjectViewlet:
             self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectViewlet'] = panelObjectViewlet
         self._p_changed = 1
