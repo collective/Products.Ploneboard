@@ -18,7 +18,7 @@
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.4 2004/04/09 22:02:20 tiran Exp $
+$Id: IATTopic.py,v 1.5 2004/05/14 11:40:14 godchap Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -102,3 +102,11 @@ class IATTopicCriterion(Interface):
     def getCriteriaItems():
         """Return a sequence of items to be used to build the catalog query.
         """
+
+class IATTopicSearchCriterion(IATTopicCriterion):
+    """Interface for criteria used for searching
+    """
+
+class IATTopicSortCriterion(IATTopicCriterion):
+    """Interface for criteria used for searching
+    """

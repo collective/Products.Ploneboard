@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATListCriterion.py,v 1.6 2004/05/10 00:34:59 tiran Exp $
+$Id: ATListCriterion.py,v 1.7 2004/05/14 11:40:16 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -31,7 +31,7 @@ from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
     ALL_INDICES, DATE_INDICES, STRING_INDICES, LIST_INDICES
 from Products.ATContentTypes.Permissions import ChangeTopics
-from Products.ATContentTypes.interfaces.IATTopic import IATTopicCriterion
+from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion
 from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATListCriterionSchema
 
@@ -39,12 +39,15 @@ from Products.ATContentTypes.types.criteria.schemata import ATListCriterionSchem
 class ATListCriterion(ATBaseCriterion):
     """A list criterion"""
 
+    __implements__ = BaseContentMixin.__implements__ + (IATTopicSearchCriterion, )
     security       = ClassSecurityInfo()
     schema         = ATListCriterionSchema
     meta_type      = 'ATListCriterion'
     archetype_name = 'AT List Criterion'
     typeDescription= ''
     typeDescMsgId  = ''
+
+    shortDesc      = 'logical AND or OR of list values'
     
     def getCriteriaItems(self):
         # filter out empty strings

@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.3 2004/05/10 00:34:59 tiran Exp $
+$Id: __init__.py,v 1.4 2004/05/14 11:40:16 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -26,6 +26,8 @@ from UserDict import UserDict
 from Products.Archetypes.public import registerType
 from Products.ATContentTypes.config import *
 from types import StringType
+
+from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion, IATTopicSortCriterion
 
 ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
                'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex', 
@@ -66,6 +68,17 @@ class _CriterionRegistry(UserDict):
         
     def listTypes(self):
         return self.keys()
+
+    def listSortTypes(self):
+        return [key for key in self.keys() 
+                    if IATTopicSortCriterion.isImplementedByInstancesOf(self[key])]
+
+    def listSearchTypes(self):
+        return [key for key in self.keys() 
+                    if IATTopicSearchCriterion.isImplementedByInstancesOf(self[key])]
+
+    def listCriteria(self):
+        return self.values()
     
     def indicesByCriterion(self, criterion):
         return self.criterion2index[criterion]

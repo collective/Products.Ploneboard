@@ -17,7 +17,7 @@
     <form action=""
           method="post"
           tal:attributes="action template/getId"
-          tal:define="criteria here/listCriteria;
+          tal:define="criteria here/listSearchCriteria;
                       errors options/state/getErrors|nothing;
                      "
           tal:condition="criteria">
@@ -72,7 +72,7 @@
 
         <fieldset>
     
-            <legend i18n:translate="legend_add_new_topic_criteria">Add New Topic Criteria</legend>
+            <legend i18n:translate="legend_add_new_search_criteria">Add New Search Criteria</legend>
 
             <div class="field" style="float:left">
         
@@ -99,16 +99,18 @@
                 <label for="criterion_type" i18n:translate="label_criteria_type">Criteria type</label>
 
                 <div class="formHelp" i18n:translate="help_criteria_type">
-                List Criteria Types
+                Criteria does match
                 </div>		
         
                 <select name="criterion_type"
                     id="criterion_type"
                     tabindex=""
-                    tal:define="types here/listCriteriaTypes;"
+                    tal:define="types here/listSearchCriteriaTypes;"
                     tal:attributes="tabindex tabindex/next;">
 
-                    <option value="" tal:repeat="type types" tal:attributes="value type/name" tal:content="type/name">Type</option>
+                    <option value="" tal:repeat="type types"
+                                     tal:attributes="value type/name"
+                                     tal:content="type/description">Type</option>
 
                 </select>
         
@@ -130,6 +132,79 @@
     
     </form>
 
+
+    <form action="" 
+          method="post" 
+          tal:attributes="action template/getId"
+          tal:define="errors options/state/getErrors|nothing">
+
+
+        <fieldset>
+    
+            <legend i18n:translate="legend_set_sort_order">Set Sort Order</legend>
+
+            <div class="field" style="float:left">
+        
+                <label for="field" i18n:translate="label_criteria_field_name">Field name</label>
+        
+                <div class="formHelp" i18n:translate="help_criteria_field_name">
+		List Available Fields
+                </div>		
+        
+                    <select name="field"
+                            id="field"
+                            tabindex=""
+                            tal:define="fields here/listFields;"
+                            tal:attributes="tabindex tabindex/next;">
+
+                         <option value="no_sort" 
+                                 tal:attributes="selected python:not here.hasSortCriterion();"
+                                 i18n:translate="no_sort_order">No sort order</option>   
+		
+                         <option value=""
+                                 tal:repeat="field fields"
+                                 tal:attributes="value field;
+                                                 selected python:here.hasSortCriterion() and
+                                                      here.getSortCriterion().field==field;"
+                                 tal:content="field">Field</option>
+
+                    </select>
+
+                 </div>
+
+
+                 <div class="field">
+                     <label for="reversed" i18n:translate="label_sort_reverse">Reverse</label>
+                     <div class="formHelp"
+                     i18n:translate="help_sort_reverse">Reverse display order</div>
+
+                     <input class="noborder"
+                            type="checkbox"
+                            value="on"
+                            tal:attributes="checked
+                            python:here.hasSortCriterion() and here.getSortCriterion().getReversed()"
+                            name="reversed" 
+                            id="reversed"/>
+                 </div>
+                                                                                                                      
+        
+        <input type="hidden" name="form.submitted" value="1" />            
+        <input type="hidden" name="criterion_type" value="ATSortCriterion" />            
+
+        <div class="formControls" style="clear:both">
+          <input class="context"
+                 type="submit"
+                 value="Save"
+                 name="form.button.SetSortCriterion"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+        
+        </fieldset>
+    
+    </form>
 
 
 </div>

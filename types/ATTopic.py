@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.11 2004/05/14 04:12:33 godchap Exp $
+$Id: ATTopic.py,v 1.12 2004/05/14 11:40:15 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,6 +36,7 @@ from Products.ATContentTypes.interfaces.IATTopic import IATTopic
 from Products.ATContentTypes.types.criteria import CriterionRegistry
 from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
 from Products.ATContentTypes.types.schemata import ATTopicSchema
+from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion, IATTopicSortCriterion
 
 class ATTopic(ATCTFolder):
     """A topic folder"""
@@ -88,13 +89,47 @@ class ATTopic(ATCTFolder):
     def listCriteriaTypes(self):
         """List available criteria types as dict
         """
-        return [ {'name': ctype} for ctype in self.listCriteriaMetaTypes() ]
+        return [ {'name': ctype,
+                  'description':CriterionRegistry[ctype].shortDesc}
+                 for ctype in self.listCriteriaMetaTypes() ]
 
     security.declareProtected(ChangeTopics, 'listCriteriaMetaTypes')
     def listCriteriaMetaTypes(self):
         """List available criteria
         """
         val = CriterionRegistry.listTypes()
+        val.sort()
+        return val
+
+    security.declareProtected(ChangeTopics, 'listSearchCriteriaTypes')
+    def listSearchCriteriaTypes(self):
+        """List available search criteria types as dict
+        """
+        return [ {'name': ctype,
+                  'description':CriterionRegistry[ctype].shortDesc}
+                 for ctype in self.listSearchCriteriaMetaTypes() ]
+
+    security.declareProtected(ChangeTopics, 'listSearchCriteriaMetaTypes')
+    def listSearchCriteriaMetaTypes(self):
+        """List available search criteria
+        """
+        val = CriterionRegistry.listSearchTypes()
+        val.sort()
+        return val
+
+    security.declareProtected(ChangeTopics, 'listSortCriteriaTypes')
+    def listSortCriteriaTypes(self):
+        """List available sort criteria types as dict
+        """
+        return [ {'name': ctype,
+                  'description':CriterionRegistry[ctype].shortDesc}
+                 for ctype in self.listSortCriteriaMetaTypes() ]
+
+    security.declareProtected(ChangeTopics, 'listSortCriteriaMetaTypes')
+    def listSortCriteriaMetaTypes(self):
+        """List available sort criteria
+        """
+        val = CriterionRegistry.listSortTypes()
         val.sort()
         return val
 
@@ -106,24 +141,70 @@ class ATTopic(ATCTFolder):
         val.sort()
         return val
 
+    security.declareProtected(ChangeTopics, 'listSearchCriteria')
+    def listSearchCriteria( self ):
+        """Return a list of our search criteria objects.
+        """
+        return [val for val in self.listCriteria() if
+             IATTopicSearchCriterion.isImplementedBy(val)]
+
+    security.declareProtected(ChangeTopics, 'hasSortCriteria')
+    def hasSortCriterion( self ):
+        """Tells if a sort criterai is already setup.
+        """
+        return not self.getSortCriterion() is None
+
+    security.declareProtected(ChangeTopics, 'getSortCriterion')
+    def getSortCriterion( self ):
+        """Return the Sort criterion if setup.
+        """
+        for criterion in self.listCriteria():
+            if IATTopicSortCriterion.isImplementedBy(criterion):
+                return criterion
+        return None
+
+    security.declareProtected(ChangeTopics, 'setSortCriterion')
+    def removeSortCriterion( self):
+        """remove the Sort criterion.
+        """
+        if self.hasSortCriterion():
+            self.deleteCriterion(self.getSortCriterion().getId())
+
+    security.declareProtected(ChangeTopics, 'setSortCriterion')
+    def setSortCriterion( self, field, reversed):
+        """Set the Sort criterion.
+        """
+        self.removeSortCriterion()
+        self.addCriterion(field, 'ATSortCriterion')    
+        self.getSortCriterion().setReversed(reversed)
+
     security.declareProtected(ChangeTopics, 'listIndicesByCriterion')
     def listIndicesByCriterion(self, criterion):
         """
         """
         return CriterionRegistry.indicesByCriterion(criterion)
 
+    security.declareProtected(ChangeTopics, 'listFields')
+    def listFields(self):
+        """Return a list of fields from portal_catalog.
+        """
+        pcatalog = getToolByName( self, 'portal_catalog' )
+        available = pcatalog.indexes()
+        val = [ field
+                 for field in available
+               ]
+        val.sort()
+        return val
+
     security.declareProtected(ChangeTopics, 'listAvailableFields')
     def listAvailableFields(self):
         """Return a list of available fields for new criteria.
         """
-        pcatalog = getToolByName( self, 'portal_catalog' )
         current   = [ crit.Field() for crit in self.listCriteria() ]
-        available = pcatalog.indexes()
         val = [ field
-                 for field in available
+                 for field in self.listFields()
                  if field not in current
                ]
-        val.sort()
         return val
 
     security.declareProtected(ChangeTopics, 'listSubtopics')

@@ -9,3 +9,4 @@ action.success..Cancel=redirect_to:string:criterion_edit_form
 action.success..Save=traverse_to:string:criterion_save
 action.success..Remove=traverse_to:string:criterion_remove
 action.success..AddCriterion=traverse_to:string:criterion_add
+action.success..SetSortCriterion=traverse_to:string:criterion_set_sort
