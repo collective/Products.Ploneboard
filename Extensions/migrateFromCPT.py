@@ -18,15 +18,24 @@
 #
 """
 
-$Id: migrateFromCPT.py,v 1.1 2004/03/10 12:13:09 tiran Exp $
+$Id: migrateFromCPT.py,v 1.2 2004/05/04 19:33:21 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.migration.CPTMigrator import migrateAll
-from Products.CMFCore.utils import getToolByName
+from Products.ATContentTypes.Extensions.toolbox import switchATCT2CMF, switchCMF2ATCT, isSwitchedToATCT
 
 def migrate(self):
-    catalog = getToolByName(self, 'portal_catalog')
-    return migrateAll(catalog)
+    if isSwitchedToATCT(self):
+        switched = 1
+        switchATCT2CMF(self)
+        get_transaction().commit(1)
+    else:
+        switched = 0
+    try:
+        return migrateAll(self)
+    finally:
+        if switched:
+          switchCMF2ATCT(self) 
     
