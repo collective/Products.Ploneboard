@@ -15,37 +15,34 @@ from cStringIO import StringIO
 
 from BTrees.OOBTree import OOBTree
 
-factory_type_information = { 'id'             : 'Photo'
-                             , 'meta_type'      : 'Portal Photo'
-                             , 'description'    : """\
-Photos objects can be embedded in Portal documents."""
-                             , 'icon'           : 'image_icon.gif'
-                             , 'product'        : 'CMFPhoto'
-                             , 'factory'        : 'addPhoto'
-                             , 'immediate_view' : 'metadata_edit_form'
-                             , 'actions'        :
-                                ( { 'id'            : 'view'
-                                  , 'name'          : 'View'
-                                  , 'action'        : 'image_view'
-                                  , 'permissions'   : (
-                                      CMFCorePermissions.View, )
-                                  }
-                                , { 'id'            : 'edit'
-                                  , 'name'          : 'Edit'
-                                  , 'action'        : 'image_edit_form'
-                                  , 'permissions'   : (
-                                      CMFCorePermissions.ModifyPortalContent, )
-                                  }
-                                , { 'id'            : 'metadata'
-                                  , 'name'          : 'Metadata'
-                                  , 'action'        : 'metadata_edit_form'
-                                  , 'permissions'   : (
-                                      CMFCorePermissions.ModifyPortalContent, )
-                                  }
-                                )
-                             }
-                         
-                             
+factory_type_information = {
+    'id'             : 'Photo'
+    , 'meta_type'      : 'Portal Photo'
+    , 'description'    : 'Photos objects can be embedded in Portal documents.'
+    , 'icon'           : 'image_icon.gif'
+    , 'product'        : 'CMFPhoto'
+    , 'factory'        : 'addPhoto'
+    , 'immediate_view' : 'metadata_edit_form'
+    , 'actions'        :
+    ( { 'id'            : 'view'
+        , 'name'          : 'View'
+        , 'action'        : 'image_view'
+        , 'permissions'   : (CMFCorePermissions.View, )
+        }
+      , { 'id'            : 'edit'
+          , 'name'          : 'Edit'
+          , 'action'        : 'image_edit_form'
+          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
+          }
+      , { 'id'            : 'metadata'
+          , 'name'          : 'Metadata'
+          , 'action'        : 'metadata_edit_form'
+          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
+          }
+      )
+    }
+
+
 def addPhoto( self
               , id
               , title=''
@@ -83,6 +80,7 @@ def addPhoto( self
     # constructor because it's faster (see File.py.)
     self._getOb(id).manage_upload(file)
 
+
 class Photo(Image):
     """
     Implements a Photo, a scalable image
@@ -91,6 +89,15 @@ class Photo(Image):
     __implements__ = ( Image.__implements__ ,)
     
     meta_type = 'Portal Photo'
+
+    displays = {'thumbnail': (128,128),
+                'xsmall': (200,200),
+                'small': (320,320),
+                'medium': (480,480),
+                'large': (768,768),
+                'xlarge': (1024,1024)
+                }
+
 
     def __init__( self
                 , id
@@ -119,24 +126,24 @@ class Photo(Image):
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """
-        Display the image, with or without standard_html_[header|footer],
-        as appropriate.
+        Display the image
         """
-        #if REQUEST['PATH_INFO'][-10:] == 'index_html':
-        #    return self.view(self, REQUEST)
+        size = REQUEST.get('size')
+        if size in self.displays.keys():
+            if not size in self._photos.keys():
+                self._photos[size] = OFS.Image.Image('Image', 'Image',
+                                                     self._resize(self.displays.get(size, (0, 0))))
+            return self._photos.get(size).index_html(REQUEST, RESPONSE)
+
         return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
 
-    security.declareProtected(CMFCorePermissions.View, 'thumbnail')
-    def thumbnail(self, REQUEST, RESPONSE):
-        """
-        Return a thumbnail representaion of the image
-        """
-        return OFS.Image.Image('test', 'test', self._resize(80, 80)).index_html(REQUEST, RESPONSE)
-
-    def _resize(self, width, height, quality=75):
+        
+    def _resize(self, size, quality=100):
         """Resize and resample photo."""
         image = StringIO()
 
+        width, height = size
+        
         from popen2 import popen2
         imgout, imgin = popen2('convert -quality %s -geometry %sx%s - -'
                                % (quality, width, height))
@@ -144,10 +151,10 @@ class Photo(Image):
         imgin.close()
         image.write(imgout.read())
         imgout.close()
-
+        
         image.seek(0)
         return image
-
+    
 
 InitializeClass(Photo)
 
