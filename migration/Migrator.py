@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.3 2004/03/08 17:28:49 tiran Exp $
+$Id: Migrator.py,v 1.4 2004/03/08 17:54:01 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -112,9 +112,9 @@ class BaseMigrator:
                 method = getattr(self, name)
                 if callable(method):
                     lastmethods.append(method)
-        return methods+lastmethods
+        return methods+[self.custom]+lastmethods
         
-    def __call__(self):
+    def __call__(self, unittest=0):
         """Migrates the object
         """
         self.renameOld()
@@ -123,6 +123,8 @@ class BaseMigrator:
             for method in self.getMigrationMethods():
                 method()
         except Exception, err: # except all!
+            if unittest:
+                raise
             # aborting transaction
             get_transaction().abort()
             # printing exception

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: testATDocument.py,v 1.2 2004/03/08 17:54:00 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -104,7 +104,8 @@ class TestSiteATDocument(ATCTSiteTestCase):
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
         m = DocumentMigrator(old)
-        m()
+        m(unittest=1)
+        get_transaction().commit(1)
 
         migrated = getattr(self._portal, id)
 

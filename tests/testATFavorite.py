@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: testATFavorite.py,v 1.2 2004/03/08 17:54:01 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -115,7 +115,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
         m = FavoriteMigrator(old)
-        m()
+        m(unittest=1)
 
         migrated = getattr(self._portal, id)
 
