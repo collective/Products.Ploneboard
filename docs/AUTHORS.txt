@@ -23,7 +23,9 @@ Christian Heimes:
  * debian packages
 
 Jens Klein:
-
+ * did some work on the forerunner model CMFPloneTypes (ex-maintainer)
+ * restrained types support
+ 
 
 Bill Schindler:
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.30 2004/05/31 09:42:43 godchap Exp $
+$Id: schemata.py,v 1.31 2004/06/09 22:31:39 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,6 +32,7 @@ from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes import RestrainTypesMixin
 
 from Products.validation.validators.SupplValidators import MaxSizeValidator
 
@@ -251,9 +252,13 @@ ATExtFileSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type Folder
 ###
-ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeSchema
+   
+ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema 
+ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
 
-ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
+if ENABLE_RESTRAIN_TYPES_MIXIN:
+    ATFolderSchema     +=RestrainTypesMixin.schema
+    ATBTreeFolderSchema+=RestrainTypesMixin.schema
 
 ###
 # AT Content Type Image

@@ -1,6 +1,11 @@
+2004-06-10 00:03  jensens
+	* Added RestrainedTypes support, which allows to restrain (restrict) the
+	  allowed types on any AT[*]Folder based on FTI/portal_types + parents 
+	  restrictions + local restriction per folder instance.
+	  
 2004-05-24 19:20  jensens
-    * Changed permission for download tab an ATFile. Dont confuse the average
-      user with the green edit frame 
+	* Changed permission for download tab an ATFile. Dont confuse the average
+	  user with the green edit frame 
 
 2004-05-24 13:29  tiran
 

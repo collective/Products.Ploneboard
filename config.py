@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.21 2004/05/26 02:54:19 tiran Exp $
+$Id: config.py,v 1.22 2004/06/09 22:31:38 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -76,6 +76,13 @@ ENABLE_TEMPLATE_MIXIN = False
 TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+
+## use RestrainedMixin?
+## if enabled you can restrain allowed types.on a ATCT Folder
+ENABLE_RESTRAIN_TYPES_MIXIN = True
+RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+#RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
+#RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 
 ## Document History view permission
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent

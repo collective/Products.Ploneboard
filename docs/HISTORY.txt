@@ -18,6 +18,8 @@
 
  * Added edit() methods for backward compatibility to CMF 
 
+ * Added restrained folder support. [jensens]
+
 0.2-beta5
 
  * Fixed multiple small bugs and added features requested in the bug

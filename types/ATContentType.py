@@ -18,12 +18,13 @@
 #
 """
 
-$Id: ATContentType.py,v 1.12 2004/06/09 13:59:19 tiran Exp $
+$Id: ATContentType.py,v 1.13 2004/06/09 22:31:39 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.RestrainTypesMixin import RestrainTypesMixin
 
 from copy import copy
 
@@ -142,7 +143,6 @@ class ATCTMixin(TemplateMixin):
 
 InitializeClass(ATCTMixin)
 
-
 class ATCTContent(ATCTMixin, BaseContent):
     """Base class for non folderish AT Content Types"""
 
@@ -223,13 +223,25 @@ class ATCTFileContent(ATCTContent):
 
 InitializeClass(ATCTFileContent)
 
-class ATCTFolder(ATCTMixin, BaseFolder):
+class ATCTRestrainedFolderMixin(RestrainTypesMixin, ATCTMixin):
+    """ Restrained folderish type """
+
+    __implements__ = ATCTMixin.__implements__, RestrainTypesMixin.__implements__
+        
+if ENABLE_RESTRAIN_TYPES_MIXIN:
+    ATCTFolderMixin = ATCTRestrainedFolderMixin
+else:
+    ATCTFolderMixin = ATCTMixin
+    
+InitializeClass(ATCTFolderMixin)
+
+class ATCTFolder(ATCTFolderMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""
 
-    __implements__ = BaseFolder.__implements__, IATContentType
+    __implements__ = BaseFolder.__implements__, ATCTFolderMixin.__implements__ 
     
     security       = ClassSecurityInfo()
-
+    
     actions = updateActions(ATCTMixin,
         ({
         'id'          : 'local_roles',
@@ -249,10 +261,11 @@ class ATCTFolder(ATCTMixin, BaseFolder):
 InitializeClass(ATCTFolder)
 
 
-class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
+class ATCTOrderedFolder(ATCTFolderMixin, OrderedBaseFolder):
     """Base class for orderable folderish AT Content Types"""
 
-    __implements__ = OrderedBaseFolder.__implements__, IATContentType
+    __implements__ = OrderedBaseFolder.__implements__, \
+                     ATCTFolderMixin.__implements__
     
     security       = ClassSecurityInfo()
 
@@ -275,10 +288,11 @@ class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
 InitializeClass(ATCTOrderedFolder)
 
 
-class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
+class ATCTBTreeFolder(ATCTFolderMixin, BaseBTreeFolder):
     """Base class for folderish AT Content Types using a BTree"""
 
-    __implements__ = BaseBTreeFolder.__implements__, IATContentType
+    __implements__ = BaseBTreeFolder.__implements__, \
+                     ATCTFolderMixin.__implements__
     
     security       = ClassSecurityInfo()
 
