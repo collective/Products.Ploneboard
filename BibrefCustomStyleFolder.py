@@ -1,7 +1,7 @@
 ##########################################################################
 #                                                                        #
-#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
-#                       and contributors                                 #
+#            copyright (c) 2004 Belgian Science Policy                   #
+#                               and contributors                         #
 #                                                                        #
 #    project leader: David Convent, david.convent@naturalsciences.be     #
 #       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
