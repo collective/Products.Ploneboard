@@ -1,0 +1,205 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+<div tal:define="action_types here/listActionTypes;
+                 availableContextTypes here/listContextTypes;
+                 fixed_template python:here.id=='form_controller' and None or here.id;
+                 filters python:fixed_template and {'template_id':fixed_template} or {};">
+
+
+<h3>Form/Script Actions</h3>
+
+This tool lets you set or override the default actions that are 
+executed when a Controlled Page Template submitted or a Controlled Python Script 
+returns.
+
+<ul>
+   <li><b>Template/Script</b>: The Controlled Page Template or Controlled Python
+       Script for which you are setting actions.  Note that these will <i>only</i>
+       affect Controlled Page Templates and Python Scripts that return a
+       ControllerState object.  <i>These actions will be ignored</i> for ordinary 
+       PageTemplates, DTML pages, or scripts that do not return a Controlled Python
+       Script.</li>
+   <li><b>Status</b>: The status for which the given action is executed.  
+       Validators typically return 'success' or the 'failure' as their status.</li>
+   <li><b>Context</b>: The type of context object for which the given action is 
+       executed.  This lets you set different form actions for different types 
+       of content objects.</li>
+   <li><b>Button</b>: The button for which the given action is executed.  This 
+       lets you set different actions depending on which button on a form is 
+       pressed.  Leave the button field blank to use the same action for any 
+       button.  To use this functionality, you must name each button in the template
+       form.button.NAME.  For example, if you have &lt;input name="form.button.button1" type="submit"&gt; in 
+       your page template, you can specify what happens when this button is pressed by
+       entering <i>button1</i> in the button field.</li>
+   <li><b>Action</b>: The type of action to execute.  The available types of 
+       actions are as follows:
+       <ul>
+           <li tal:repeat="action_type action_types">
+              <b tal:content="action_type/id" />: <span tal:replace="action_type/description" />
+           </li>
+       </ul></li>
+   <li><b>Arguments</b>: The arguments for the specified action.</li>
+</ul>
+
+<hr/>
+
+<h3 class="form-help">Edit form actions</h3>
+
+<form method="POST"
+      tal:attributes="action here/absolute_url" 
+      tal:define="form_actions python:here.listFormActions(**filters);">
+<table border="0" tal:condition="form_actions">
+   <tr>
+      <td>&nbsp;</td>
+      <td class="form-label">Template/Script</td>
+      <td class="form-label">Status</td>
+      <td class="form-label">Context</td>
+      <td class="form-label">Button</td>
+      <td class="form-label">Action</td>
+      <td class="form-label">Arguments</td>
+   </tr>
+   <tr tal:repeat="action form_actions">
+       <td class="form-element">
+          <input type="checkbox" 
+                 tal:attributes="name python:'del_id_'+str(repeat['action'].index);" />
+          <input type="hidden" 
+                 tal:attributes="name python:'del_template_id_'+str(repeat['action'].index);
+                                 value action/template_id;" />
+          <input type="hidden" 
+                 tal:attributes="name python:'del_status_'+str(repeat['action'].index);
+                                 value action/status;" />
+          <input type="hidden" 
+                 tal:attributes="name python:'del_context_type_'+str(repeat['action'].index);
+                                 value action/context_type;" />
+          <input type="hidden" 
+                 tal:attributes="name python:'del_button_'+str(repeat['action'].index);
+                                 value action/button;" />
+       </td>
+       <td tal:condition="fixed_template">
+          <span tal:replace="action/template_id" />
+          <input type="hidden" 
+                 tal:attributes="name python:'template_id_'+str(repeat['action'].index);
+                                 value action/template_id" />
+       </td>
+       <td tal:condition="not:fixed_template" class="form-element">
+          <input type="text" size="15"
+                 tal:attributes="name python:'template_id_'+str(repeat['action'].index);
+                                 value action/template_id" />
+       </td>
+       <td class="form-element">
+          <input type="text" size="10"
+                 tal:attributes="name python:'status_'+str(repeat['action'].index);
+                                 value action/status" />
+       </td>
+       <td class="form-element">
+          <select tal:attributes="name python:'context_type_'+str(repeat['action'].index);">
+             <option value=""
+                     tal:attributes="selected python:test(action['context_type'] is None, 'selected', None);">Any</option>
+             <option tal:repeat="context_type availableContextTypes"
+                     tal:attributes="value context_type;
+                                     selected python:test(action['context_type'] == context_type, 'selected', None);"
+  		             tal:content="context_type" />
+          </select>
+       </td>
+       <td class="form-element">
+          <input type="text" size="10"
+                 tal:attributes="name python:'button_'+str(repeat['action'].index);
+                                 value action/button" />
+       </td>
+       <td class="form-element">
+          <select tal:attributes="name python:'action_type_'+str(repeat['action'].index);">
+             <option tal:repeat="action_type action_types"
+                     tal:attributes="value action_type/id;
+                                     selected python:test(action['action_type'] == action_type['id'], 'selected', None);"
+  		             tal:content="action_type/id" />
+          </select>
+       </td>
+       <td class="form-element">
+          <input type="text" size="50"
+                 tal:attributes="name python:'args_'+str(repeat['action'].index);
+                                 value action/args" />
+       </td>
+   </tr>
+   <tr>
+</table>
+
+<p tal:condition="not:form_actions"><i>No actions have been specified</i></p>
+
+<table tal:condition="form_actions">
+<tr>
+   <td class="form-element"><input type="submit" name="manage_editFormActions:method" value="Save"/></td>
+   <td class="form-element"><input type="submit" name="manage_delFormActions:method" value="Delete"/></td>
+</tr>
+</table>
+</form>
+
+<hr />
+
+<h3 class="form-help">Add a form action</h3>
+
+<form method="POST"
+      tal:attributes="action here/absolute_url">
+<table border="0">
+   <tr>
+       <td class="form-label">Template/Script</td>
+       <td tal:condition="fixed_template">
+          <span tal:replace="fixed_template" />
+          <input type="hidden" name="new_template_id"
+                 tal:attributes="value fixed_template" />
+       </td>
+       <td tal:condition="not:fixed_template" class="form-element">
+          <input type="text" name="new_template_id" size="15" />
+       </td>
+   </tr>
+   <tr>
+       <td class="form-label">Status</td>
+       <td class="form-element">
+          <input type="text" name="new_status" size="10" />
+       </td>
+   </tr>
+   <tr>
+       <td class="form-label">Context type</td>
+       <td class="form-element">
+          <select name="new_context_type">
+             <option value="">Any</option>
+             <option tal:repeat="context_type availableContextTypes"
+                     tal:attributes="value context_type;"
+  		             tal:content="context_type" />
+          </select>
+       </td>
+   </tr>
+   <tr>
+       <td class="form-label">Button</td>
+       <td class="form-element">
+          <input type="text" name="new_button" size="10" />
+       </td>
+   </tr>
+   <tr>
+       <td class="form-label">Action type</td>
+       <td class="form-element">
+          <select name="new_action_type">
+             <option tal:repeat="action_type action_types"
+                     tal:attributes="value action_type/id;"
+  		             tal:content="action_type/id" />
+          </select>
+       </td>
+   </tr>
+   <tr>
+       <td class="form-label">Action arguments</td>
+       <td class="form-element">
+          <input type="text" name="new_args" size="50" />
+       </td>
+   </tr>
+</table>
+
+<table>
+<tr>
+   <td class="form-element"><input type="submit" name="manage_addFormAction:method" value="Add"/></td>
+</tr>
+</table>
+</form>
+
+</div>
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

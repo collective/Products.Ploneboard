@@ -1,0 +1,355 @@
+CMFFormController
+
+   The CMFFormController package helps developers by simplifying the process of
+validating forms.  It also makes it easier for site administrators to override
+some of the behavior of packages without modifying code, making it easier to
+upgrade packages without disturbing the modifications.
+
+   How it 
+works:
+
+   * Developers embed a set of hidden variables in their page templates.  These
+     variables control the validation that takes place after the form is submitted
+     and the actions that occur after validation.
+
+   * *Alternatively*, developers can specify form validation and actions via a
+     set of new ZMI tabs.  Validation and actions specified in the ZMI tabs
+     takes precedence over validation and actions specified in the page template.
+
+   * Site administrators override validation and actions via ZMI tabs.
+
+   Forms
+
+      To take advantage of CMFFormController, you need to use Controlled Page 
+   Templates rather than ordinary Page Templates.  Controlled Page Templates look
+   just like Page Templates, but they do some extra work when they are viewed.
+   
+      Here is a basic form that uses 
+   CMFFormController::
+
+         <form tal:define="errors options/state/getErrors"
+               tal:attributes="action template/id;" 
+               method="post">
+
+            <input type="hidden" name="form.submitted" value="1" />
+
+            <p tal:define="err errors/foo|nothing" tal:condition="err" tal:content="err" />
+            <input type="text" name="foo" tal:define="val request/foo|nothing" tal:attributes="value val" />
+
+            <input type="submit" name="submit" value="submit" />
+         </form>
+
+      Let's take a 
+   look.
+
+      * First, we note that the form is set up to submit to itself.  *Forms must
+        submit to themselves.*
+
+      * Second, we see the special hidden variable 'form.submitted'.  The 
+        controlled page template checks the REQUEST for form.submitted to see
+        if the form has been submitted or if, instead, it has just been accessed,
+        e.g. via a link.  *Forms must contain the hidden variable 'form.submitted'*
+
+      * At the beginning of the form we set the variable errors.  The errors
+        dictionary comes from the state object which is passed in the template
+        options.  The state object lets validators and scripts pass information
+        to each other and to forms.  For our purposes, the most important information
+        is the errors dictionary, which has entries of the form {variable_name:error_message}.
+
+      Before we can use this form we need to specify the validators that will be
+   used to check the form values, and we need to specify the action that will 
+   occur after validation.
+
+      Specifying Validators
+
+         There are two basic ways to specify a form's 
+         validators.
+
+            1. You can specify the validators in the form itself, or
+
+            2. You can specify the values via the ZMI (or programmatically).
+
+         If you specify validators in both places, the validators specified in
+         the ZMI will take precedence over those specified in the form.
+
+         Specifying Validators in a Form
+
+            You can specify validators in a form by adding an additional 
+            hidden variable::
+
+               <input type="hidden" name="form.validators" value="script1, script2" />
+
+            The 'form.validators' variable specifies that when the form is submitted,
+            the validation scripts 'script1' and 'script2' will be called, in order.            
+
+            Specialized Validators
+
+               Type-Specific Validators
+
+                  Suppose you want different validators to be called, depending on 
+                  the type of context the form has.  You can do so as follows::
+
+                     <input type="hidden" name="form.validators" value="script1" />
+                     <input type="hidden" name="form.validators.Document" value="script2" />
+
+                  In the above example, if the context is a Document object, script2
+                  will be called for validation; for everything else, script1 will be
+                  called.  Note that the order in which the hidden variables are 
+                  specified does not matter; the type-specific validators will be
+                  selected over non-specific validators if both are applicable.
+
+               Button-Specific Validators
+
+                  Suppose instead that you have two different buttons on your form,
+                  and you want different validation sequences to occur depending on
+                  which button is pressed.  You can accomplish this as follows:
+
+                  First, name your buttons button1 and 
+                  button2::
+
+                     <input type="submit" name="form.button.button1" value="First Button" />
+                     <input type="submit" name="form.button.button2" value="Second Button" />
+
+                  Next, specify validators for button1 and for 
+                  button2::
+
+                     <input type="hidden" name="form.validators..button1" value="script1, script3" />
+                     <input type="hidden" name="form.validators..button2" value="script2, script4" />
+
+                  Note the presence of the '..' -- this is a placeholder for a type
+                  specifier.  You could further specify that script5 is called if
+                  button 2 is pressed and the context is a Document by adding::
+
+                     <input type="hidden" name="form.validators.Document.button2" value="script5" />
+      
+         Specifying Validators in the ZMI
+
+            If you look at a Controlled Page Template in the ZMI, you will see that
+            it looks just like an ordinary Page Template with two extra tabs, Validation
+            and Actions.  Click on the Validation tab.
+
+            The Validation tab shows all the validators for the page template in
+            question.  You can specify validators with the same kind of specialization
+            options as above via a web form.
+
+            This validator information for all forms is all stored in the form_controller 
+            tool in your portal.  This means that you can specify validators for file system
+            objects with no problems, since the information is persisted in the ZODB.  Note that
+            the validator information is bound to the form's ID, so all forms with the same ID 
+            use the same validators.  This keeps things simple when you have multiple skins --
+            forms with the same ID use the same validators, no matter what skin they are in.
+
+            When a form is submitted, it first checks to see if there are any
+            applicable validators that have been specified via the ZMI.  If it finds one,
+            it uses it.  If it does not find a validator via the ZMI, it then checks the
+            REQUEST to see if validators have been specified in hidden variables.  As a result,
+            validators specified in the ZMI take precedence over those specified in forms.
+
+         Specifying Validators Programmatically
+
+            The portal's form_controller tool has methods you can use to specify the
+            validators for a given ControlledPageTemplate.  The API is as follows::
+
+               form_controller.setValidators(id, context_type, button, validators)
+
+            Here 'id' is the id of the ControlledPageTemplate, 'context_type' is
+            the class name for the class of the context object, 'button' is the name 
+            of the button pressed, and validators is a comma-delimited string or a list
+            of strings.  If you want a validator to act for any class, set context_type
+            = 'FormController.ANY_CONTEXT'.  Similarly, you want a validator to act for 
+            any button, set button = 'FormController.ANY_BUTTON'.
+   
+      Specifying Actions
+
+         The sequence of validators that is executed returns a status in the state object.
+         The default status is 'success', i.e. if no validators are executed, the status will
+         be 'success'.  If a validator encounters an error, it will typically set the status
+         to 'failure'.  The next thing we need to do in your form is to specify what happens
+         when a given status is returned.
+
+         As with validators, there are two basic ways to specify a form's 
+         actions.
+
+            1. You can specify the actions in the form itself, or
+
+            2. You can specify the actions via the ZMI (or programmatically).
+
+         If you specify actions in both places, the actions specified in
+         the ZMI will take precedence over those specified in the form.
+
+         Specifying Actions in a Form
+
+            You can specify actions in a form by adding an additional 
+            hidden variable::
+
+               <input type="hidden" name="form.action.success" value="traverse_to:string:script1" />
+
+            The 'form.action.success' variable specifies that when the form is submitted
+            and the validation scripts return a status of 'success', the 'traverse_to'
+            action is called with argument 'string:script1', i.e. if the form data is
+            valid, we run the script 'script1'.  Alternatively, we could specify
+            'value="redirect_to:string:http://my_url_here"', which would cause the browser to 
+            be redirected to http://my_url_here.
+
+            The default action for status 'failure' is to reload the current 
+            form.  The form will have access to all the error messages, etc, via
+            the state object in its options.
+
+            Specialized Actions
+
+               Type-Specific Actions
+
+                  Suppose you want different actions to occur depending on 
+                  the type of context the form has.  You can do so as follows::
+
+                     <input type="hidden" name="form.action.success" value="traverse_to:string:script1" />
+                     <input type="hidden" name="form.action.success.Document" value="traverse_to:string:document_script" />
+
+                  In the above example, if the context is a Document object, document_script
+                  will be executed upon successful validation; for everything else, script1 will be
+                  executed.  Note that the order in which the hidden variables are 
+                  specified does not matter; the type-specific actions will be
+                  selected over non-specific actions if both are applicable.
+
+               Button-Specific Actions
+
+                  Suppose instead that you have two different buttons on your form,
+                  and you want different actions to occur depending on
+                  which button is pressed.  You can accomplish this as follows:
+
+                  First, name your buttons button1 and 
+                  button2::
+
+                     <input type="submit" name="form.button.button1" value="First Button" />
+                     <input type="submit" name="form.button.button2" value="Second Button" />
+
+                  Next, specify validators for button1 and for 
+                  button2::
+
+                     <input type="hidden" name="form.action.success..button1" value="traverse_to:string:script1" />
+                     <input type="hidden" name="form.action.success..button2" value="traverse_to:string:script2" />
+
+                  Note the presence of the '..' -- this is a placeholder for a type
+                  specifier.  You could further specify that document_script2 is called if
+                  button 2 is pressed and the context is a Document by adding::
+
+                     <input type="hidden" name="form.action.success.Document.button2" value="traverse_to:string:document_script2" />
+
+         Specifying Actions in the ZMI
+
+            If you look at a Controlled Page Template in the ZMI, you will see that
+            it looks just like an ordinary Page Template with two extra tabs, Validation
+            and Actions.  Click on the Actions tab.
+
+            The Actions tab shows all the actions for the page template in
+            question.  You can specify actions with the same kind of specialization
+            options as above via a web form.
+
+            This action information for all forms is all stored in the form_controller 
+            tool in your portal.  This means that you can specify actions for file system
+            objects with no problems, since the information is persisted in the ZODB.  Note that
+            the action information is bound to the form's ID, so all forms with the same ID 
+            use the same actions.  This keeps things simple when you have multiple skins --
+            forms with the same ID use the same actions, no matter what skin they are in.
+
+            When a form is submitted, it first checks to see if there are any
+            applicable actions that have been specified via the ZMI.  If it finds one,
+            it uses it.  If it does not find an action via the ZMI, it then checks the
+            REQUEST to see if actions have been specified in hidden variables.  As a result,
+            actions specified in the ZMI take precedence over those specified in forms.
+
+         Specifying Actions Programmatically
+
+            The portal's form_controller tool has methods you can use to specify the
+            actions for a given ControlledPageTemplate.  The API is as follows::
+
+               form_controller.setAction(id, status, context_type, button, action_type, args)
+
+            Here 'id' is the id of the ControlledPageTemplate, 'status' is the status
+            for which the action will be executed, 'context_type' is
+            the class name for the class of the context object, 'button' is the name 
+            of the button pressed, 'action_type' is the type of action that will occur,
+            and 'args' is a string (typically a TALES expression) that will be passed to the 
+            action.  If you want an action to be executed for any class, set context_type
+            = 'FormController.ANY_CONTEXT'.  Similarly, you want an action to be executed for 
+            any button, set button = 'FormController.ANY_BUTTON'.
+
+   Validation Scripts
+
+      When writing validation scripts, use Controlled Python Scripts instead of
+      ordinary Python Scripts.  Controlled Python Scripts are just like ordinary
+      Scripts with the addition of a ZMI Actions tab.
+
+      Let's take a look at a basic validation script that tests the REQUEST
+      value 'n' to see if it is an integer::
+
+         state = context.form_controller.getState(script, is_validator=1)
+         
+         n = request.get('n', None)
+         if not n:
+            state.setError('n', 'Please enter a value', new_status='failure')
+         else:
+            try:
+               int(n)
+            except ValueError:
+               state.setError('n', 'Please enter an integer', new_status='failure')
+
+         if state.getErrors():
+            state.set(portal_status_message='Please correct the errors shown')
+         return state
+
+      The first thing that happens in any validation script is that we get a
+      state object from the form_controller.  The state object (of class ControllerState)
+      contains basic information about what has happened during the validation chain.
+      When you are writing a validation script, you *must* pass in the argument is_validator=1
+      to the getState method.
+
+      The state object has a 'status' attribute which contains the current validation
+      status.  The initial status is 'success'.  If errors are detected by validators,
+      they set the status to something else, typically 'failure'.
+
+      The state object also stores errors that have been detected.  The setError method
+      is used to set an error message for a particular variable.  The setError method
+      has the optional new_status argument that can be used to both set an error message as
+      well as to update the status.  You can see if an error message has already been
+      stored for a particular variable by calling 'state.getError(variable_name)'.
+
+      The set method lets you set multiple attributes of the state object all at once,
+      e.g.::
+
+         state.set(status='my_new_status').
+
+      You can also pass keyword arguments to the state object via the set method.  These
+      arguments will get passed along by the action.  The traverse_to action places
+      these keyword arguments in the REQUEST; the redirect_top action adds them to 
+      the query string of the URL to which it is redirecting.  
+
+      Finally, we return the state object.
+
+   Scripts
+
+      When writing scripts that does some processing after a validated form, 
+      you can use Controlled Python Scripts instead of ordinary Python Scripts
+      to let site managers override their actions via the ZMI.
+
+      Let's take a look at a basic script that sets a context attribute
+      to the value 'n' that is passed in via the REQUEST::
+
+         state = context.form_controller.getState(script, is_validator=0)
+         context.n = context.REQUEST.get('n')
+         # (Optional) set the default next action (this can be overridden in the ZMI)
+         state.setNextAction('redirect_to','string:view')
+         return state
+
+      The first thing that happens is that we get a state object from the form_controller.  
+      When you are writing a non-validation script, you *must* pass in the argument is_validator=0
+      to the getState method.
+
+      This script sets its action to redirect to the relative url 'view' for the current
+      context object.  The status has not been set, so it is the default status, 'success'.
+      The state.setNextAction directive above is analogous to setting form.action.success to
+      redirect_to:string:view in a form.  As with the form, the default action specified in
+      the script can be overridden via the ZMI.  The nice thing is that this lets site
+      managers override post-script actions without having to customize your code.
+
+      Finally, we return the state object.
