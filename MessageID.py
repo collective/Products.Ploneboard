@@ -17,13 +17,19 @@ Message Id factor based on the i18n/messageid file of Zope 3.
 
 Adapted for the Placeless Translation Service by Christian Heimes
 
-$Id: MessageID.py,v 1.2 2004/02/03 22:14:42 tiran Exp $
+$Id: MessageID.py,v 1.3 2004/02/11 00:15:24 pupq Exp $
 """
 
 from Globals import InitializeClass, get_request
 from AccessControl import ClassSecurityInfo
 from Products.PlacelessTranslationService import translate, utranslate
 from types import BuiltinFunctionType, UnicodeType, StringType
+
+try:
+    True
+except NameError:
+    True=1
+    False=0
 
 
 class MessageIDBase:

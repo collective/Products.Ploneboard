@@ -39,6 +39,12 @@ try:
 except ImportError:
     EINVAL = 22
 
+try:
+    True
+except NameError:
+    True=1
+    False=0
+
 from types import UnicodeType, StringType
 from TAL.TALInterpreter import _write_ValueError
 from Globals import get_request
