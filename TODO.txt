@@ -7,12 +7,8 @@ I've done recently, I'm not sure it still works.
 deletion and renaming, all workflow methods.  There really should
 be unit tests.  I have started some (see tests/).
 
-* Wire up the workflow stuff properly.  I think the permissions 
-are more or less right.  An external method for registering users
-needs to be wired up to the auto_register, register_public, and
-register_private transitions.  The methods just needs to invoke
-the Member object's register method. [I have added the code to do
-this but have not tested it.  GD  4/15]
+* Auto-register an unregistered user when wrapUser is called since
+the user already exists in acl_users (I think).
 
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-

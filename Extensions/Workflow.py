@@ -1,7 +1,9 @@
+from Products.CMFCore.utils import getToolByName
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
 from Products.CMFMember import MemberPermissions
+from Products.CMFMember.MemberPermissions import REGISTER_PERMISSION
 
 # Execute the 'trigger' transition -- this should trigger
 # any automatic transitions for which the guard conditions
@@ -129,6 +131,7 @@ def setupWorkflow(portal, out):
     transition = wf.transitions['trigger']
     transition.setProperties(
         title='Trigger automatic transitions',
+        actbox_name='Trigger automatic transitions',
         new_state_id='', # remain in state
         props={} # no guard roles or expressions
     ) 
@@ -137,55 +140,61 @@ def setupWorkflow(portal, out):
     transition = wf.transitions['auto_pending']
     transition.setProperties(
         title='Lock member properties until registered',
+        actbox_name='Lock member properties until registered',
         new_state_id='pending',
-        props={'trigger_type':TRIGGER_AUTOMATIC})
+        trigger_type=TRIGGER_AUTOMATIC)
 
     # if Manager creates a member, automatically register the member
     transition = wf.transitions['auto_register']
     transition.setProperties(
-        title='Make member profile public',
+        title='Automatically approve member',
+        actbox_name='Automatically approve member',
         new_state_id='public',
-        props={'guard_roles':'Manager',
-               'trigger_type':TRIGGER_AUTOMATIC},
+        trigger_type=TRIGGER_AUTOMATIC,
+        props={'guard_permissions':REGISTER_PERMISSION},
         after_script_name='register')
 
     # manual registration
     transition = wf.transitions['register_private']
     transition.setProperties(
         title='Approve member, make profile private',
-        new_state_id='private',
         actbox_name='Register member and make profile private',
+        new_state_id='private',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Manager'},
+        props={'guard_permissions':REGISTER_PERMISSION},
         after_script_name='register')
 
     # manual registration
     transition = wf.transitions['register_public']
     transition.setProperties(
         title='Approve member, make profile public',
-        new_state_id='public',
         actbox_name='Register member and make profile public',
+        new_state_id='public',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Manager'},
+        props={'guard_permissions':REGISTER_PERMISSION},
         after_script_name='register')
 
     # make profile public
     transition = wf.transitions['make_public']
     transition.setProperties(
         title='Make member profile public',
+        actbox_name='Make member profile public',
         new_state_id='public',
         actbox_name='Make member profile public',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Owner; Manager'})
+        props={'guard_roles':'Owner; Manager'},
+        after_script_name='updateListed')
     
     # make profile private
     transition = wf.transitions['make_private']
     transition.setProperties(
         title='Make member profile private',
+        actbox_name='Make member profile private',
         new_state_id='private',
         actbox_name='Make member profile private',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Owner; Manager'})
+        props={'guard_roles':'Owner; Manager'},
+        after_script_name='updateListed')
     
 
     # standard CMF variables so we can use content_status_history page, etc
@@ -248,3 +257,8 @@ def register(self, state_change):
 def disable(self, state_change):
     obj=state_change.object
     return obj.disable()
+
+# call the Member object's disable() method
+def updateListed(self, state_change):
+    obj=state_change.object
+    return obj.updateListed()

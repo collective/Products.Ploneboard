@@ -65,7 +65,7 @@ content_schema = FieldList((
                 write_permission=EDIT_OTHER_PERMISSION,
                 vocabulary='editors',
                 enforceVocabulary=1,
-                widget=SelectionWidget(format='pulldown',
+                widget=SelectionWidget(format='flex',
                                        label='Content editor',
                                        description='Select the editor that you would like to use ' + \
                                                    'for editing content more easily. Content editors ' + \
@@ -101,7 +101,7 @@ content_schema = FieldList((
                 searchable=0,
                 vocabulary='available_skins',
                 enforceVocabulary=1,
-                widget=SelectionWidget(format='pulldown',
+                widget=SelectionWidget(format='flex',
                                        label='Look',
                                        description='Choose the appearance of the site. Several styles are available.')
                 ),
@@ -191,23 +191,18 @@ class Member(BaseContent):
 
     # Note that we override BaseContent.schema
     schema = content_schema + ExtensibleMetadata.schema
+    listed = 0
 
     ##IMPL DETAILS
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
         self.id = str(userid)
+        self.listed = 0
 
 
     security.declarePublic('getMemberId')
     def getMemberId(self):
         return self.getUserName()
-
-
-    def update(self, **kwargs):
-        ret = BaseObject.update(self, **kwargs)
-        # invoke any automated workflow transitions after update
-        triggerAutomaticTransitions(self)
-        return ret
 
 
     security.declarePrivate('validate_id')
@@ -327,6 +322,26 @@ class Member(BaseContent):
         return aq_base(self._v_user).__of__(acl_users) # restore the proper context
 
 
+    # ###############################
+    # Overrides of base class mutators that trigger workflow transitions
+    
+    def update(self, **kwargs):
+        ret = BaseContent.update(self, **kwargs)
+        # invoke any automated workflow transitions after update
+        triggerAutomaticTransitions(self)
+        return ret
+
+
+    def processForm(self, data=1, metadata=0):
+        ret = BaseContent.processForm(self, data, metadata)
+        # invoke any automated workflow transitions after update
+        triggerAutomaticTransitions(self)
+        return ret
+
+
+    # ###############################
+    # Methods triggered by workflow transitions
+
     security.declarePrivate('register')
     def register(self):
         # create a real user
@@ -345,10 +360,24 @@ class Member(BaseContent):
 
         registration_tool.afterAdd(self, id, password, properties)
 
+        self.updateListed()
+
 
     security.declarePrivate('disable')
     def disable(self):
-        pass
+        # XXX FIXME implement this method
+        self.listed = 0
+
+
+    security.declarePrivate('disable')
+    def updateListed(self):
+        """Extract the correct value of the Member's 'listed' attribute from
+           current security settings."""
+        membership_tool = getToolByName(self, 'portal_membership')
+        self.listed = membership_tool.checkPermission(self, VIEW_PUBLIC_PERMISSION)
+
+
+    # ###############################
 
 
     security.declareProtected(MemberPermissions.EDIT_ID_PERMISSION, 'setId')
@@ -515,10 +544,10 @@ class Member(BaseContent):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         # make sure the user with id old_user_id exists before recursing through
         # the whole portal
-        if portal.acl_users.getUser(old_user_id) is not None:
+        if portal.acl_users.getUser(self.id) is not None:
             # delete local roles and content owned by this user
             self._changeUserInfo(portal, self.id)
-            portal.acl_users.userFolderDelUsers((old_user_id,))
+            portal.acl_users.userFolderDelUsers((self.id,))
 
 
     security.declarePrivate('manage_afterClone')

@@ -25,3 +25,4 @@ VIEW_PERMISSION = CMFCorePermissions.View
 # Enable password mailing
 MAIL_PASSWORD_PERMISSION = CMFCorePermissions.MailForgottenPassword
 
+

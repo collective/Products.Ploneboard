@@ -61,9 +61,10 @@ def replaceTools(self, out, convert=1):
     memberdata_tool = getToolByName(portal, 'portal_memberdata')
     memberdata_tool.manage_permission(CMFMember.ADD_PERMISSION, ('Manager',), acquire=1)
 
+
+    # XXX This seems kind of evil.
     # For a object to be displayed in contentValues it must be registered with the
     # portal_types tool.  So lets do this and make the MemberDataTool not addable.
-    memberdata_tool._setPortalTypeName('Folder')
     typestool=getToolByName(self, 'portal_types')
     from Products.CMFCore.TypesTool import FactoryTypeInformation
     typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
@@ -75,6 +76,10 @@ def replaceTools(self, out, convert=1):
         if action['id']=='view':
             action['action']='folder_contents'
     memberarea._actions=_actions
+    memberarea.allowed_content_types=(CMFMember.TYPE_NAME,)
+    memberarea.global_allow = 0  # make MemberArea not implicitly addable
+    memberdata_tool._setPortalTypeName('MemberArea')
+
 
 def _getOldValue(old, new, id, out):
     old_schema = getattr(old, 'Schema', None)

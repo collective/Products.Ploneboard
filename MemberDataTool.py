@@ -16,6 +16,7 @@ from Products.Archetypes import registerType
 from Products.CMFMember import TYPE_NAME, PKG_NAME
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
+import pdb
 
 from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataTool
 _marker = []
@@ -27,8 +28,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     #    schema = BaseFolder.schema
     id = 'portal_memberdata'
-    meta_type = PKG_NAME + ' Tool'
-    portal_type = 'Folder'
+    portal_type = meta_type = PKG_NAME + ' Tool'
+#    portal_type = 'Folder'
     _actions = []
 
     _defaultMember = None
@@ -172,6 +173,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             self._defaultMember = getattr(tempFolder,'default')
         return self._defaultMember
 
+    security.declarePublic('getProperty')
     def getProperty(self, id, default=None):
         """Get the property 'id', returning the optional second
            argument or None if no such property is found."""
