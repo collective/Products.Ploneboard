@@ -144,6 +144,14 @@ class Photo(Image):
     def tag(self, size='original'):
         """ Return an HTML img tag """
         try:
+            if size in self.displays.keys():
+                # Create resized copy, if it doesnt already exist
+                if not self._photos.has_key(size):
+                    resolution = self.displays.get(size, (0,0))
+                    raw = str(self.data)
+                    image = OFS.Image.Image(size, size, self._resize(resolution))
+                    self._photos[size] = image
+
             photo = self._photos[size]
         except KeyError:
             photo = self
