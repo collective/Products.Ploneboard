@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.41 2004/03/17 11:45:28 achilles_ Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.42 2004/03/20 01:50:59 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 # catch a string exception
                 err = sys.exc_type
                 #print err, sys.exc_type, sys.exc_value
-                if err != "Module Error":
+                if err not in ("Module Error", zExceptions.NotFound):
                     msg = "%s: %s" % (err, sys.exc_value)
                     LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
 
@@ -386,7 +386,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'reinstallProducts')
     def reinstallProducts(self, products, REQUEST=None):
-        ''' removes a list of products '''
+        ''' reinstalls a list of products, the main difference to 
+            ininstall/reinstall is that it does not remove portal objects 
+            created  during install (e.g. tools, etc.)'''
         if type(products) in (type(''),type(u'')):
             products=[products]
 

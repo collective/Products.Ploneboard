@@ -8,20 +8,24 @@ class IQuickInstallerTool(Interface):
     id = Attribute('id', 'Must be set to "portal_quickinstaller"')
     
     def listInstallableProducts(skipInstalled=1):
-        ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
+        ''' list candidate CMF products for installation -> list of dicts with 
+            keys:(id,hasError,status)'''
 
     def listInstalledProducts(showHidden=0):
-        ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden)'''
+        ''' returns a list of products that are installed -> list of dicts with 
+            keys:(id,hasError,status,,isLocked,isHidden)'''
 
     def isProductInstallable(productname):
         ''' is the product directory present and ready for installation '''
 
     def isProductAvailable(productname):
-        ''' is the product directory present (to check if it has been deleted from the Filesystem '''
+        ''' is the product directory present (to check if it has been deleted 
+            from the Filesystem '''
         
     def installProduct(p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name 
-            throws AlreadyInstalled exception, if components of the product are already installed
+            throws AlreadyInstalled exception, if components of the product are 
+            already installed
             
             if swallowExceptions is true, exceptions are caught and logged
         '''
@@ -30,7 +34,8 @@ class IQuickInstallerTool(Interface):
         ''' installs the products specified in the products list'''
 
     def getProductFile(p,fname='readme.txt'):
-        ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
+        ''' returns the content of a file of the product case-insensitive, if it
+             does not exist -> None '''
 
     def getProductReadme(p):
         ''' returns the readme file of the product case-insensitive '''
@@ -50,11 +55,15 @@ class IQuickInstallerTool(Interface):
          '''
 
 
-    def uninstallProducts( products, cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
-        ''' removes a list of products, cascade defines which items created by the install shall be uninstalled '''
+    def uninstallProducts( products, cascade=['types','skins','actions',
+        'portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
+        ''' removes a list of products, cascade defines which items created by 
+            the install shall be uninstalled '''
 
     def reinstallProducts( products, REQUEST=None):
-        ''' reinstalls a list of products '''
+        ''' reinstalls a list of products, the main difference to 
+            ininstall/reinstall is that it does not remove portal objects 
+            created  during install (e.g. tools, etc.)'''
         
 class IInstalledProduct(Interface):
     ''' represents the installed product 
@@ -71,12 +80,13 @@ class IInstalledProduct(Interface):
     rightslots = Attribute('types','default: []')
 
     def __init__(id,types=[],skins=[],actions=[],portalobjects=[],
-        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',
-        error=0,locked=0, hidden=0):
+        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],logmsg='',
+        status='installed', error=0, locked=0, hidden=0):
         ''' constructor '''
         
     def update(types=[],skins=[],actions=[],portalobjects=[],workflows=[],
-        leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
+        leftslots=[],rightslots=[],registrypredicates=[],logmsg='',
+        status='installed',error=0,locked=0,hidden=0):
         ''' updates the product attributes '''
         
     def log(logmsg):
@@ -97,11 +107,14 @@ class IInstalledProduct(Interface):
     def getTranscriptAsText():
         ''' return the product's install log as plain text '''
         
-    def uninstall(cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
+    def uninstall(cascade=['types','skins','actions','portalobjects',
+            'workflows','slots','registrypredicates'],REQUEST=None):
         '''uninstalls the prod and removes its deps
-           the parameter 'cascade' specifies what should be deleted while uninstalling the product
+           the parameter 'cascade' specifies what should be deleted while 
+           uninstalling the product
            
-           if the Product has an uninstall() method in its Install.py it gets called automatically
+           if the Product has an uninstall() method in its Install.py it gets 
+           called automatically
         '''
     def getInstalledVersion():
         ''' returns the version of the prod in the moment of installation '''
