@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.55 2005/01/28 08:43:03 dannybloe Exp $
+$Id: schemata.py,v 1.56 2005/01/28 15:01:28 dannybloe Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -262,7 +262,7 @@ ATFileSchema = ATContentTypeSchema.copy() + Schema((
               validators = MaxSizeValidator('checkFileMaxSize',
                                             maxsize=MAX_FILE_SIZE),
               widget = FileWidget(
-                        description = "Click browse to select the file to upload. An existing file will be replaced by the upload.",
+                        description = "",
                         description_msgid = "help_file",
                         label= "File",
                         label_msgid = "label_file",
@@ -303,7 +303,7 @@ ATImageSchema = ATContentTypeSchema.copy() + Schema((
                validators = MaxSizeValidator('checkFileMaxSize',
                                              maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(
-                        description = "Click browse to select the image to upload. An existing image will be replaced by the upload.",
+                        description = "",
                         description_msgid = "help_image",
                         label= "Image",
                         label_msgid = "label_image",
