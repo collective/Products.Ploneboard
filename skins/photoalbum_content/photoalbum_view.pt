@@ -50,46 +50,49 @@
 	       class="context"
 	       onClick="javascript:centeredWindow('photoalbum_slideshow'); return false;"/>
       </span>
-
+      
       <h1 tal:content="here/title_or_id">
 	Title or id
       </h1>
-
-      <div metal:use-macro="here/batch_macros/macros/navigation" />
-
+      
+      <div metal:use-macro="here/batch_macros/macros/navigation"></div>
+	
       <table style="width: 100%;">
 	<tr>
 	  <td>
 	    <tal:block tal:condition="batch"
-     	               tal:repeat="image batch">
-	      <span class="card" style="background: white; border-color: white; height: 130px; width:130px;">
+	      tal:repeat="image batch">
+	      <span class="card" style="background: white; border-color: white; height: 130px; width:130px; margin: 0.5em;">
 		<a tal:define="id python:int(b_start)+int(repeat['image'].number()-1)" tal:attributes="href string:${here/absolute_url}/photoalbum_photo_view?b_start=$id">
 		  <img tal:replace="structure python:image.tag(size='thumbnail')" />
 		</a>
-	      </span>
+		</span>
 	    </tal:block>
 	  </td>
 	</tr>
 	<tr>
 	  <td>
 	    <tal:block tal:condition="albums"
-	               tal:repeat="album albums">
-	      <span class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
-		                             number_of_images python:len(images_in_album)">
-		<a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		  <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail')" />
-		</a>
-		<br/><span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
-	    </span>
-	    </tal:block>
-	  </td>
-	</tr>
+	      tal:repeat="album albums">
+	      <span style="width:0%;" class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
+		number_of_images python:len(images_in_album)">
+		<div tal:define="image python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail');"
+		     style="width: 130px; margin:0.5em;">
+		  <a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
+		    <img tal:replace="structure image" />
+		  </a>
+		  <br/>
+		  <span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
+                </div>
+              </span>
+            </tal:block>
+          </td>
+        </tr>
       </table>
-
-      <div class="spacer">&nbsp;</div>          
+    
     </div>
     
   </body>
-
+  
 </html>
 
