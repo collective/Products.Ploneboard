@@ -9,3 +9,6 @@ several python installs.
 
 The shell script will eventually be changed to something easier to use.
 
+Alternatively, you can use testrunner this way :
+
+python PathToZope/utilities/testrunner.py -q -i -a -d .
