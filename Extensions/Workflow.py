@@ -8,8 +8,13 @@ from Products.CMFMember import MemberPermissions
 # any automatic transitions for which the guard conditions
 # are satisfied.
 def triggerAutomaticTransitions(ob):
+    import sys
+    sys.stdout.write('triggerAutomaticTransitions\n')
     wf_tool=getToolByName(ob, 'portal_workflow')
-    wf_tool.doActionFor(ob, 'trigger')
+    if 'trigger' in [action.get('id',None) for action in wf_tool.getActionsFor(ob)]:
+        sys.stdout.write('triggerAutomaticTransitions: doActionsFor\n')
+        wf_tool.doActionFor(ob, 'trigger')
+        sys.stdout.write('triggerAutomaticTransitions: done\n')
 
 def setupWorkflow(portal, out):
     wf_tool=portal.portal_workflow
@@ -26,7 +31,7 @@ def setupWorkflow(portal, out):
         wf.states.addState(s)
     wf.states.setInitialState('new')
 
-    for t in ('trigger', 'auto_pending', 'auto_register', 'register_public', 'register_private', 'make_private', 'make_public', 'disable'):
+    for t in ('trigger', 'make_pending', 'auto_register', 'register_public', 'register_private', 'make_private', 'make_public', 'disable'):
         wf.transitions.addTransition(t)
 
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
@@ -52,7 +57,7 @@ def setupWorkflow(portal, out):
             wf.addManagedPermission(p)
             perms[p] = 1
     
-    for l in ('reviewer_queue','member_queue'):
+    for l in ('reviewer_queue',):
         wf.worklists.addWorklist(l)
 
     # STATES
@@ -61,7 +66,7 @@ def setupWorkflow(portal, out):
     state = wf.states['new']
     state.setProperties(
         title='Newly created member',
-        transitions=('trigger', 'auto_pending',))
+        transitions=('trigger', 'make_pending',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Anonymous',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Anonymous',))
@@ -78,7 +83,7 @@ def setupWorkflow(portal, out):
     state = wf.states['pending']
     state.setProperties(
         title='Awaiting registration',
-        transitions=('trigger', 'auto_register', 'register_public', 'register_private', 'disable',))
+        transitions=('register_public', 'register_private', 'disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
@@ -95,7 +100,7 @@ def setupWorkflow(portal, out):
     state = wf.states['private']
     state.setProperties(
         title='Registered user, private profile',
-        transitions=('trigger', 'make_public','disable',))
+        transitions=('make_public','disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Owner', 'Manager'))
@@ -112,7 +117,7 @@ def setupWorkflow(portal, out):
     state = wf.states['public']
     state.setProperties(
         title='Registered user, public profile',
-        transitions=('trigger', 'make_private','disable',))
+        transitions=('make_private','disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
@@ -128,7 +133,7 @@ def setupWorkflow(portal, out):
     state = wf.states['disabled']
     state.setProperties(
         title='Disabled',
-        transitions=('trigger', 'register_public', 'register_private',))
+        transitions=('register_public', 'register_private',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
@@ -153,7 +158,7 @@ def setupWorkflow(portal, out):
     ) 
 
     # change permissions as soon as user fills in member info
-    transition = wf.transitions['auto_pending']
+    transition = wf.transitions['make_pending']
     transition.setProperties(
         title='Lock member properties until registered',
         actbox_name='Lock member properties until registered',
@@ -199,7 +204,7 @@ def setupWorkflow(portal, out):
         actbox_name='Make member profile public',
         new_state_id='public',
         props={'guard_roles':'Owner; Manager'},
-        after_script_name='updateListed')
+        after_script_name='makePublic')
     
     # make profile private
     transition = wf.transitions['make_private']
@@ -208,7 +213,7 @@ def setupWorkflow(portal, out):
         actbox_name='Make member profile private',
         new_state_id='private',
         props={'guard_roles':'Owner; Manager'},
-        after_script_name='updateListed')
+        after_script_name='makePrivate')
 
     # disable member
     transition = wf.transitions['disable']
@@ -261,6 +266,15 @@ def setupWorkflow(portal, out):
     
     wf_tool.updateRoleMappings()
 
+# Transitions that need to be executed in order to move to a particular
+# workflow state
+workflow_transfer = {'new': [],
+                     'pending': ['trigger'],
+                     'registered_public':['trigger', 'register_public'],
+                     'registered_private':['trigger', 'register_private'],
+                     'disabled':['trigger', 'register_private', 'disable']
+                    }
+
 # call the Member object's register() method
 def register(self, state_change):
     obj=state_change.object
@@ -271,7 +285,10 @@ def disable(self, state_change):
     obj=state_change.object
     return obj.disable()
 
-# call the Member object's disable() method
-def updateListed(self, state_change):
+def makePublic(self, state_change):
     obj=state_change.object
-    return obj.updateListed()
+    return obj.makePublic()
+
+def makePrivate(self, state_change):
+    obj=state_change.object
+    return obj.makePrivate()

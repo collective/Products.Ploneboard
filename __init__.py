@@ -7,6 +7,7 @@ from Products.CMFCore  import DirectoryView, utils
 import os, os.path
 import Products.CMFCore.CMFCorePermissions as CMFCorePermissions
 from MemberPermissions import ADD_PERMISSION
+#import types
 
 PKG_NAME = "CMFMember"
 SKIN_NAME = "member"
@@ -36,9 +37,11 @@ def initialize(context):
     
     import MemberDataTool
     import RegistrationTool
+    import MembershipTool
     tools = (
         MemberDataTool.MemberDataTool,
         RegistrationTool.RegistrationTool,
+        MembershipTool.MembershipTool,
         )
 
     utils.ToolInit(PKG_NAME + ' Tool', tools=tools,

@@ -33,12 +33,25 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     _defaultMember = None
     
 
-    actions = ({
-        'id': 'view',
-        'name': 'View',
-        'action': 'folder_contents',
-        'permissions': (CMFCorePermissions.View,) 
-        },)
+    actions = (
+        { 'id': 'view',
+          'name': 'View',
+          'action': 'folder_contents',
+          'permissions': (CMFCorePermissions.View,),
+          'category'      : 'folder'
+        },
+        { 'id'            : 'edit',
+          'name'          : 'Edit',
+          'action'        : 'folder_edit_form',
+          'permissions'   : (CMFCorePermissions.ManageProperties,),
+          'category'      : 'folder'
+        },
+        { 'id'            : 'localroles',
+          'name'          : 'Local Roles',
+          'action'        : 'folder_localrole_form',
+          'permissions'   : (CMFCorePermissions.ManageProperties,),
+          'category'      : 'folder'
+        })
 
     manage_options=( BTreeFolder2Base.manage_options +
                      ActionProviderBase.manage_options
@@ -57,6 +70,13 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             return apply(view, (self, self.REQUEST))
         else:
              return view()
+
+
+    def index_html(self, REQUEST, RESPONSE):
+        """Member search form"""
+        search_form = self.restrictedTraverse('member_search_form')
+        return search_form(REQUEST, RESPONSE)
+    
 
     security.declarePrivate('getMemberFactory')
     def getMemberFactory(self):
@@ -263,7 +283,7 @@ def getMemberFactory(self):
     # types of members in your site.
     types_tool = getToolByName(self, 'portal_types')
     ti = types_tool.getTypeInfo(TYPE_NAME)
-    
+
     try:
         p = self.manage_addProduct[ti.product]
         action = getattr(p, ti.factory, None)

@@ -3,7 +3,14 @@ TO DO
 I have gotten the code working at various points, but with all that 
 I've done recently, I'm not sure it still works.
 
-* Debug pending member worklists.
+* Refactor.  It would be nice to separate out a MemberDataBase class
+from which potential member classes can inherit.
+
+* Add portraits in. [WIRE PORTRAITS TO PLONE MACHINERY]
+
+test portrait migration
+
+* Test member migration, make sure workflow variables are preserved and that user content is not trashed
 
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-
@@ -17,8 +24,6 @@ delete them.  The search should make use of the catalog to the
 extent possible.  I think lalo is doing some automatic search page 
 generation stuff, so this might be really simple.
 
-* Refactor.  It would be nice to separate out a MemberDataBase class
-from which potential member classes can inherit.
 
 * Make sure the code actually works.  Main untested code: member 
 deletion and renaming, all workflow methods.  There really should
@@ -29,8 +34,6 @@ some minor Archetypes mods, e.g. creating an EmptyField class.  [Ben has
 just added a better Description() method -- need to look into it as a
 better way.]
 
-* Add portraits in. [WIRE PORTRAITS TO PLONE MACHINERY]
-
 * Additional delete options.  There should be a "do you really want
 to do this?" confirmation before you delete a member, since all their
 content gets nuked as well.  Additionally, there should be the option
@@ -38,17 +41,14 @@ to assign ownership of their content to somebody else.
 
 * Set initial non-empty passwords [CHECK THIS]
 
-* Modify migration so that workflow variables are preserved
-
 * Add a disable member function.  Disabled members should not be able
-to log in. [CAN WE DISABLE FROM PENDING?  TEST DISABLE]
+to log in. [TEST DISABLE]
 
 ------- this stuff is done but not tested -------------
 
 * Add listed in.  The listed variable can be set by the register()
   method and then by some method that is called after the make_public /
-  make_private transitions are executed. [MAKE SURE LISTED IS SET
-  PROPERLY WHEN WE DISABLE.  TRY MAKING LISTED A COMPUTEDATTRIBUTE]
+  make_private transitions are executed. 
 
 * Modify registration tool's send password method to check Member perms.
 
@@ -56,4 +56,6 @@ to log in. [CAN WE DISABLE FROM PENDING?  TEST DISABLE]
 * Create pending member worklists.
 
 * check security on attributes  (e.g. can i get here/member/password?)
+
+* Debug pending member worklists.
   

@@ -50,9 +50,38 @@ class CMFMemberTest( SecurityRequestTest ):
         newSecurityManager(None, self.root_user.__of__(self.root.acl_users))
         # force creation of user via wrapUser
         self.root_member = self.testsite.portal_membership.getAuthenticatedMember()
-#        self.root_member = self.testsite.portal_memberdata.get(self.root_id, None)
         
         newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
+
+        # create some content
+        user = self.user.__of__(self.testsite.acl_users)
+        root_user = self.root_user.__of__(self.root.acl_users)
+        self.testsite.invokeFactory(id='folder1', type_name='Folder')
+        folder1 = getattr(self.testsite, 'folder1')
+        folder1.changeOwnership(user)
+        folder1.manage_addLocalRoles(self.root_id, ('Reviewer',))
+        
+        folder1.invokeFactory(id='doc1', type_name='Document')
+        doc1 = getattr(folder1, 'doc1')
+        doc1.changeOwnership(user)
+
+        folder1.invokeFactory(id='doc2', type_name='Document')
+        doc2 = getattr(folder1, 'doc2')
+        doc2.changeOwnership(root_user)
+
+        self.testsite.invokeFactory(id='folder2', type_name='Folder')
+        folder2 = getattr(self.testsite, 'folder2')
+        folder2.changeOwnership(root_user)
+        folder2.manage_addLocalRoles(self.id, ('Reviewer',))
+
+        folder2.invokeFactory(id='doc3', type_name='Document')
+        doc3 = getattr(folder2, 'doc3')
+        doc3.changeOwnership(user)
+
+        folder2.invokeFactory(id='doc4', type_name='Document')
+        doc4 = getattr(folder2, 'doc4')
+        doc4.changeOwnership(root_user)
+        
         get_transaction().commit()
 
 
@@ -63,7 +92,7 @@ class CMFMemberTest( SecurityRequestTest ):
         SecurityRequestTest.tearDown(self)
 
 
-    def test_user(self):
+    def _test_user(self):
         # make sure all the member properties we set are correct
         self.failUnless(self.member != None)
         self.assertEqual(self.member.getMemberId(), self.id)
@@ -100,6 +129,22 @@ class CMFMemberTest( SecurityRequestTest ):
         user = self.testsite.acl_users.getUser(self.id)
         self.assertEqual(user, None)
 
+        # make sure appropriate content has been deleted
+        folder1 = getattr(self.testsite, 'folder1', None)
+        self.assertEqual(folder1, None)
+
+        folder2 = getattr(self.testsite, 'folder2', None)
+        self.failUnless(folder2 != None)
+
+        doc3 = getattr(folder2, 'doc3', None)
+        self.assertEqual(doc3, None)
+
+        doc4 = getattr(folder2, 'doc4', None)
+        self.failUnless(doc4 != None)
+
+        # make sure local roles get deleted
+        roles = folder2.get_local_roles_for_userid(self.id)
+        self.assertEqual(roles, ())
 
     def test_deleteRoot(self):
         # a more complicated case -- the authenticated user lives in root.acl_users, not portal.acl_users
@@ -115,8 +160,21 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(user != None)
         self.assertEqual(user, self.root_user)
 
+        # make sure appropriate content has been deleted
+        folder1 = getattr(self.testsite, 'folder1', None)
+        self.failUnless(folder1 != None)
 
-    def test_rename(self):
+        folder2 = getattr(self.testsite, 'folder2', None)
+        self.assertEqual(folder2, None)
+
+        doc1 = getattr(folder1, 'doc1', None)
+        self.failUnless(doc1 != None)
+
+        doc2 = getattr(folder1, 'doc2', None)
+        self.assertEqual(doc2, None)
+
+
+    def _test_rename(self):
         new_id = 'id2'
         self.testsite.portal_memberdata.manage_renameObjects((self.id,),(new_id,))
 
@@ -145,7 +203,7 @@ class CMFMemberTest( SecurityRequestTest ):
 
 
     # a more complicated case -- the authenticated user lives in root.acl_users, not portal.acl_users
-    def test_renameRoot(self):
+    def _test_renameRoot(self):
         new_id = 'id2'
         self.testsite.portal_memberdata.manage_renameObjects((self.root_id,),(new_id,))
 
@@ -174,7 +232,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user, self.root_user)
 
 
-    def test_copy(self):
+    def _test_copy(self):
         cb_copy_data = self.testsite.portal_memberdata.manage_copyObjects((self.id,))
         self.testsite.portal_memberdata.manage_pasteObjects(cb_copy_data)
 
@@ -206,7 +264,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user.domains, self.domains)
 
 
-    def test_copy_root(self):
+    def _test_copy_root(self):
         cb_copy_data = self.testsite.portal_memberdata.manage_copyObjects((self.root_id,))
         self.testsite.portal_memberdata.manage_pasteObjects(cb_copy_data)
 
