@@ -2,7 +2,7 @@
 title = Edit
 
 [validators]
-validators = validate_base
+validators = validate_atct
 
 [actions]
 action.success = traverse_to:string:content_edit

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.8 2004/03/18 01:24:19 tiran Exp $
+$Id: config.py,v 1.9 2004/03/19 17:19:27 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -78,10 +78,6 @@ MX_TIDY_OPTIONS= {
     'show_warnings' : 1, # -v
     'tab_size' : 4,
     }
-
-# experimental feature: Use mxTidy to clean up the data from the request
-# XXX not implemented
-# MX_TIDY_CLEANUP_VALUE = False
 
 # Add attributes to be more CMF compatible?
 # XXX more docs here

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.4 2004/03/18 01:24:19 tiran Exp $
+$Id: ATDocument.py,v 1.5 2004/03/19 17:19:27 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -81,7 +81,15 @@ class ATDocument(BaseContent):
         * set text_format for backward compatibility with std cmf types
         """
         field = self.getField('text')
+
+        # hook for mxTidy / isTidyHtmlWithCleanup validator
+        tidyAttribute = '%s_tidier_data' % field.getName()
+        tidyOutput    = self.REQUEST.get(tidyAttribute, None)
+        if tidyOutput:
+            value = tidyOutput
+        
         field.set(self, value, **kwargs)
+
         # XXX not nice
         bu = self.getRawText(maybe_baseunit=1)
         if hasattr(bu, 'mimetype'):

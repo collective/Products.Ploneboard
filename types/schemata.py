@@ -19,7 +19,7 @@
 #
 """
 
-$Id: schemata.py,v 1.5 2004/03/17 20:46:44 tiran Exp $
+$Id: schemata.py,v 1.6 2004/03/19 17:19:27 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -55,7 +55,8 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
               required = 0,
               searchable = 1,
               primary = 1,
-              validators = ('isTidyHtml',),
+              validators = ('isTidyHtmlWithCleanup',),
+              #validators = ('isTidyHtml',),
               default_content_type = 'text/structured',
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',

@@ -18,19 +18,12 @@
 #
 """
 
-$Id: Validators.py,v 1.5 2004/03/18 01:24:19 tiran Exp $
+$Id: Validators.py,v 1.6 2004/03/19 17:19:27 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-import re
-from config import *
-if HAS_MX_TIDY:
-    from mx.Tidy import tidy as mx_tidy
-
-# matches something like 'line 15 column 1 - Warning: missing'
-REmatchTidyLine = re.compile('^line (\d+) column (.*)$')
-SUBTRACT_LINES = 11
+from Products.ATContentTypes.config import *
 
 if VALIDATION_IN_PRODUCTS:
     from Products.validation import validation
@@ -41,11 +34,33 @@ else:
     from validation.interfaces import ivalidator
     from validation.validators import RegexValidator
 
+import re
+from ZPublisher.HTTPRequest import FileUpload
+
+if HAS_MX_TIDY:
+    from mx.Tidy import tidy as mx_tidy
+
+# matches something like 'line 15 column 1 - Warning: missing ...'
+RE_MATCH_WARNING = re.compile('^line (\d+) column (\d+) - Warning: (.*)$')
+WARNING_LINE = 'line %d column %d - Warning: %s'
+
+# matches something like 'line 15 column 1 - Error: missing ...'
+RE_MATCH_ERROR = re.compile('^line (\d+) column (\d+) - Error: (.*)$')
+ERROR_LINE = 'line %d column %d - Error: %s'
+
+# subtract 11 line numbers from the warning/error
+SUBTRACT_LINES = 11
+
 
 class EmptyEmailValidator:
+    """
+    """
+
     __implements__ = (ivalidator,)
+
     def __init__(self, name):
         self.name = name
+
     def __call__(self, value, *args, **kwargs):
         if str(value) == '':
             return 1
@@ -54,10 +69,16 @@ class EmptyEmailValidator:
 
 validation.register(EmptyEmailValidator('isEmptyEmail'))
 
+
 class EmptyUrlValidator:
+    """
+    """
+
     __implements__ = (ivalidator,)
+
     def __init__(self, name):
         self.name = name
+
     def __call__(self, value, *args, **kwargs):
         if str(value) == '':
             return 1
@@ -66,10 +87,16 @@ class EmptyUrlValidator:
 
 validation.register(EmptyUrlValidator('isEmptyUrl'))
 
+
 class EmptyInternationalPhoneNumberValidator:
+    """
+    """
+    
     __implements__ = (ivalidator,)
+
     def __init__(self, name):
         self.name = name
+
     def __call__(self, value, *args, **kwargs):
         if str(value) == '':
             return 1
@@ -78,61 +105,126 @@ class EmptyInternationalPhoneNumberValidator:
 
 validation.register(EmptyInternationalPhoneNumberValidator('isEmptyInternationalPhoneNumber'))
 
+
 class TidyHtmlValidator:
+    """use mxTidy to check HTML
+    
+    Fail on errors and warnings
+    Do not clean up the value
+    """
+
     __implements__ = (ivalidator,)
+
     def __init__(self, name):
         self.name = name
+
     def __call__(self, value, *args, **kw):
         if not (HAS_MX_TIDY and MX_TIDY_ENABLED):
             # no mxTidy installed
             return 1
-        additional  = ''
-        request     = kw['REQUEST']
-        field       = kw['field']
-        # we can't use the mimetype from the field because it's updated *after*
-        # validation so we must get it from the request
-        # instance    = kw['instance']
-        # mimetype    = field.getContentType(instance)
+
+        request = kw['REQUEST']
+        field   = kw['field']
 
         result = doTidy(value, field, request)
         if result is None:
             return 1
+
         nerrors, nwarnings, outputdata, errordata = result
         errors = nerrors + nwarnings
 
-        if MX_TIDY_CLEANUP_VALUE:
-            # XXX change me
-            #additional = '\nYour data was tidified. Please try again.'
-            pass
         if errors:
-            return ("Validation Failed(%s): \n %s%s" % (self.name, errordata, additional))
+            return ("Validation Failed(%s): \n %s" % (self.name, errordata))
         else:
             return 1
 
 validation.register(TidyHtmlValidator('isTidyHtml'))
 
-def doTidy(value, field, request, unwrap=0):
+
+class TidyHtmlWithCleanupValidator:
+    """use mxTidy to check HTML
+    
+    Fail only on errors
+    Clean up
+    """
+
+    __implements__ = (ivalidator,)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __call__(self, value, *args, **kw):
+        if not (HAS_MX_TIDY and MX_TIDY_ENABLED):
+            # no mxTidy installed
+            return 1
+
+        request = kw['REQUEST']
+        field   = kw['field']
+
+        result = doTidy(value, field, request, cleanup=1)
+        if result is None:
+            return 1
+
+        nerrors, nwarnings, outputdata, errordata = result
+        errors = nerrors
+
+        # save the changed output in the request
+        if nwarnings:
+            tidyAttribute = '%s_tidier_data' % field.getName()
+            request[tidyAttribute] = outputdata
+
+        if nwarnings:        
+            tidiedFields = list(request.get('tidiedFields', []))
+            tidiedFields.append(field)
+            request.set('tidiedFields', tidiedFields)
+
+        if errors:
+            return ("Validation Failed(%s): \n %s" % (self.name, errordata))
+        else:
+            return 1
+
+validation.register(TidyHtmlWithCleanupValidator('isTidyHtmlWithCleanup'))
+
+
+def doTidy(value, field, request, cleanup=0):
     """Tidy the data in 'value' for the field in the current request
     
-    Optional unwrap the output data if necessary
+    Optional cleanup:
+      * removes header/footer of the output data 
+      * Removes warnings from the error data
     
     Return None for 'nothing done'
     else return (nerrors, nwarnings, outputdata, errordata)
     """
+    # we can't use the mimetype from the field because it's updated *after*
+    # validation so we must get it from the request
     tf_name     = '%s_text_format' % field.getName()
     text_format = getattr(request, tf_name, '')
 
+    # MX_TIDY_MIMETYPES configuration option isn't empty
+    # and the current text_format isn't in the list
     if MX_TIDY_MIMETYPES and text_format not in MX_TIDY_MIMETYPES:
         # do not filter this mime type
         return None
 
+    # it's a file upload
+    if isinstance(value, FileUpload):
+        # XXX *mmh* ok it's a file upload but a file upload could destroy
+        # the layout, too. Maybe we are doomed?
+        return 1
+
     result    = mx_tidy(wrapValueInHTML(value), **MX_TIDY_OPTIONS)
     nerrors, nwarnings, outputdata, errordata = result
+
+    #print nerrors, nwarnings
+    #print errordata
+
     # parse and change the error data
-    errordata = parseErrorData(errordata)
-    if unwrap:
+    errordata = parseErrorData(errordata, removeWarnings=cleanup)
+    if cleanup:
         # unwrap tidied output data
         outputdata = unwrappedValueFromHTML(outputdata)
+
     return nerrors, nwarnings, outputdata, errordata
 
 def wrapValueInHTML(value):
@@ -162,18 +254,30 @@ def unwrappedValueFromHTML(value):
     lines = lines[:-4] # remove </body></html>\n\n
     return ''.join(lines)
 
-def parseErrorData(data):
+def parseErrorData(data, removeWarnings=0):
     """Parse the error data to change some stuff
     """
     lines  = data.split('\n')
     nlines = []
     for line in lines:
         # substract 11 lines from line
-        res = REmatchTidyLine.search(line)
-        if res:
-            lnum, text = res.groups()
+        error = RE_MATCH_ERROR.search(line)
+        if error:
+            # an error line
+            lnum, cnum, text = error.groups()
             lnum  = int(lnum) - SUBTRACT_LINES
-            nlines.append('line %d column %s' % (lnum, text))
+            cnum  = int(cnum)
+            nlines.append(ERROR_LINE % (lnum, cnum, text))
         else:
-            nlines.append(line)
+            warning = RE_MATCH_WARNING.search(line)
+            if warning and not removeWarnings:
+                # a warning line and add warnings to output
+                #print warning.groups()
+                lnum, cnum, text = warning.groups()
+                lnum  = int(lnum) - SUBTRACT_LINES
+                cnum  = int(cnum)
+                nlines.append(WARNING_LINE % (lnum, cnum, text))
+            else:
+                # something else
+                nlines.append(line)
     return '\n'.join(nlines)
