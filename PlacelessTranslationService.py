@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.7 2004/01/07 09:33:44 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.8 2004/01/07 09:53:04 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -39,11 +39,7 @@ except NameError:
     False=0
 _marker = []
 
-NOISY_DEBUG = False
-
 def log(msg, severity=zLOG.INFO, detail='', error=None):
-    if not NOISY_DEBUG and severity == zLOG.BLATHER:
-        return
     if type(msg) is UnicodeType:
         msg = msg.encode(sys.getdefaultencoding(), 'replace')
     if type(detail) is UnicodeType:
@@ -124,7 +120,7 @@ class PlacelessTranslationService(Folder):
     # internal is always 0 on releases; if you hack this internally, increment it
     # -3 for alpha, -2 for beta, -1 for release candidate
     # for forked releases internal is always 99
-    _class_version = (1, -2, 1, 99)
+    _class_version = (1, -2, 2, 99)
     all_meta_types = ()
 
     security = ClassSecurityInfo()
