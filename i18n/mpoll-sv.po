@@ -1,0 +1,52 @@
+# Gettext Message File for MPoll.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone 1.0\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: 2003-01-19 14:54+0100\n"
+"Last-Translator: Magnus Heino <magnus.heino@pleon.sigma.se>\n"
+"Language-Team: Swedish <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: sv\n"
+"Language-name: Swedish\n"
+"Preferred-encodings: latin1\n"
+"Domain: mpoll\n"
+"X-Generator: KBabel 0.9.6\n"
+
+msgid "box_poll"
+msgstr "Webbfrågan"
+
+msgid "Vote"
+msgstr "Rösta"
+
+msgid "label_view_results"
+msgstr "Ställningen"
+
+msgid "label_poll_results"
+msgstr "Nuvarande ställning:"
+
+msgid "label_poll_is_closed"
+msgstr "Omröstningen är stängd"
+
+msgid "label_total_votes"
+msgstr "Totalt antal röster: ${total}"
+
+msgid "description_disclaimer"
+msgstr "Resultatet ska inte ses som representativt för allmänheten och inte heller för Internetanvändare eftersom urvalet av de röstande är okontrollerat. Det bör alltså tolkas med viss försiktighet."
+
+msgid "label_question"
+msgstr "Fråga"
+
+msgid "help_question"
+msgstr "Den webbfråga som användarna ska rösta på."
+
+msgid "label_answers"
+msgstr "Svarsalternativ"
+
+msgid "help_answers"
+msgstr "De möjliga svarsalternativ som finns. Ange ett alternativ på varje rad."
+
