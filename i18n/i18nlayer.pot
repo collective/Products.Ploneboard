@@ -97,4 +97,12 @@ msgstr ""
 msgid "start_from_beginning"
 msgstr ""
 
+#: from I18NLayer.py schema definition
+#.
+msgid "help_containmenttype"
+msgstr ""
 
+#: from I18NLayer.py schema definition
+#.
+msgid "label_containmenttype"
+msgstr ""

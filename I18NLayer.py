@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.4 2003/06/01 16:39:11 longsleep Exp $
+$Id: I18NLayer.py,v 1.5 2003/06/10 12:06:03 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.4 $"
+__version__ = "$Revision: 1.5 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -49,7 +49,11 @@ schema = Schema((
         accessor="ContainmentContentType",
         mutator="setContainmentContentType",
         vocabulary="allowedContentTypeNames",
-        widget=SelectionWidget
+        widget=SelectionWidget(   description = "Select the type of documents which this I18NLayer shall contain.",
+                                  description_msgid = "help_containmenttype",
+                                  label = "contains Type",
+                                  i18n_domain = 'i18nlayer',
+                                  label_msgid = "label_containmenttype" )
         ),
     ))
 
