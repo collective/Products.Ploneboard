@@ -18,14 +18,12 @@
 #
 """
 
-$Id: schemata.py,v 1.52 2004/09/17 13:59:28 dreamcatcher Exp $
+$Id: schemata.py,v 1.53 2004/09/17 14:19:33 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
-#from Products.Archetypes.TemplateMixin import TemplateMixinSchema
-from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.Permissions import ChangeEvents
@@ -296,6 +294,7 @@ ATImageSchema = ATContentTypeSchema.copy() + Schema((
                required=True,
                primary=True,
                languageIndependent=True,
+               #swallowResizeExceptions=True,
                sizes= {'preview' : (400, 400),
                        'thumb'   : (128, 128),
                        'tile'    :  (64, 64),

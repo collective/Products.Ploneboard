@@ -16,13 +16,12 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.7 2004/07/23 18:53:59 tiran Exp $
+$Id: schemata.py,v 1.8 2004/09/17 14:19:34 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
-from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from Products.ATContentTypes.Permissions import ChangeTopics
 
 ###
