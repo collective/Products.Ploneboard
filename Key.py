@@ -19,6 +19,8 @@ class Key(OFS.SimpleItem.SimpleItem):
     def _compare(self, k1, k2):
         # make None end up last
         if k1 == None:
+            if k2 == None:
+                return 0
             return 1
         if k2 == None:
             return -1

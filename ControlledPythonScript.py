@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.2 $'[11:-2]
+__version__='$Revision: 1.3 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -32,6 +32,7 @@ from OFS.Cache import Cacheable
 from zLOG import LOG, ERROR, INFO, PROBLEM
 from Products.PythonScripts.PythonScript import PythonScript
 from ControlledBase import ControlledBase
+from FormAction import FormActionContainer
 
 # Track the Python bytecode version
 import imp
@@ -113,6 +114,11 @@ class ControlledPythonScript(PythonScript, ControlledBase):
       'ZPythonScriptHTML_editAction',
       'ZPythonScript_setTitle', 'ZPythonScript_edit',
       'ZPythonScriptHTML_upload', 'ZPythonScriptHTML_changePrefs')
+
+
+    def __init__(self, *args, **kwargs):
+        self.actions = FormActionContainer()
+        return ControlledPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 
     def __call__(self, *args, **kwargs):
