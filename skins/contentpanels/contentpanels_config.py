@@ -34,6 +34,7 @@ elif request.has_key('moveColumn'):
 elif request.has_key('movePanel'):
   context.movePanel(pageIndex, columnIndex, panelIndex, toColumn, toPanel)
 elif request.has_key('addPanel'):
+  relativePath = context.toRelativePath(panelObjectPath)
   if request['addPanel'] == 'edit':
       context.changePanel(pageIndex=pageIndex,
                    columnIndex=columnIndex,
@@ -44,7 +45,7 @@ elif request.has_key('addPanel'):
                    columnIndex=columnIndex, 
                    panelIndex=panelIndex,
                    panelObjectViewlet=panelObjectViewlet, 
-                   panelObjectPath=panelObjectPath, 
+                   panelObjectPath=relativePath, 
                    panelSkin=panelSkin)
 
 context.REQUEST.RESPONSE.redirect('%s/contentpanels_config_form' 

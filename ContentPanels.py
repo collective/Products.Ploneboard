@@ -93,6 +93,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
             self.addPage()
         self._p_changed = 1
 
+    security.declarePublic('toRelativePath')
     def toRelativePath(self, panelObjectPath):
         """ regenerate panelObjectPath, make it a relative path.
         path may be relative to this contentpanels or relate to the portal.
@@ -198,7 +199,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         return self.panelsConfig[pageIndex][infoName]
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePageInfo' )
-    def changePageInfo(self, pageIndex, pageTitle, pageCellPad, pageCellSpace, pageWidth, pageAlign):
+    def changePageInfo(self, pageIndex, pageTitle="", pageCellPad='', pageCellSpace='', pageWidth='', pageAlign=''):
         ''' change page's table info '''
         if pageCellPad == '':
             pageCellPad = '3'
@@ -274,10 +275,9 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPanel' )
     def addPanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectViewlet, panelSkin):
         ''' insert a new panel at panelIndex'''
-        relativePath = self.toRelativePath(panelObjectPath)
         self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'].\
                 insert(panelIndex, {'panelSkin':panelSkin,
-                        'panelObjectPath':relativePath,
+                        'panelObjectPath':panelObjectPath,
                         'panelObjectViewlet':panelObjectViewlet})
         self._p_changed = 1
 

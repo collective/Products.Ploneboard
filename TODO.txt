@@ -57,10 +57,5 @@ my mind now.
 you can do that, but actually it just adds the panel after the one you click.
 How do you put panels inside other panels?
 
-UI should be refined, how about this way:
-1. in the popup add panel window, user can select to add a new
-sub-contentpanels
-2. after that, the sub-contentpanels is auto-created in the same folder and
-added on the panel with the correct viewlet.
-
-It should be easier to use and the code is still very simple. 
+  add a new kind of panel - sub-contentpanels, just click a icon, and you can 
+work on the new sub-contentpanels. And no need to create a sepreate contentpanels. I just get some ideas to achive this without much effort.
