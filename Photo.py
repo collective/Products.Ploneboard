@@ -1,7 +1,8 @@
 
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Products.CMFCore import CMFCorePermissions 
+
+from Products.CMFCore import CMFCorePermissions
 
 from Products.CMFDefault.Image import Image
 import OFS.Image
@@ -22,9 +23,9 @@ factory_type_information = {
     'actions'        :
     ( { 'id'            : 'view',
         'name'          : 'View',
-        'action'        : 'image_view',
+        'action'        : 'photo_view',
         'permissions'   : (CMFCorePermissions.View, )
-        }, 
+        },
       { 'id'            : 'edit',
         'name'          : 'Properties',
         'action'        : 'portal_form/image_edit_form',
@@ -56,10 +57,10 @@ def addPhoto( self
     """
     Add an Photo
     """
-    
+
     # cookId sets the id and title if they are not explicity specified
     id, title = OFS.Image.cookId(id, title, file)
-    
+
     self=self.this()
 
     # Instantiate the object and set its description.
@@ -67,7 +68,7 @@ def addPhoto( self
                   , description, contributors, effective_date, expiration_date
                   , format, language, rights
                   )
-    
+
     # Add the Photo instance to self
     self._setObject(id, iobj)
 
@@ -84,7 +85,7 @@ class Photo(Image):
 
     __implements__ = ( Image.__implements__ ,)
 
-    
+
     meta_type = 'Photo'
 
 
@@ -103,12 +104,12 @@ class Photo(Image):
                 , language='en-US'
                 , rights=''
                 ):
-        Image.__init__(self, id, title, file, content_type, precondition, 
+        Image.__init__(self, id, title, file, content_type, precondition,
                        subject, description, contributors, effective_date,
                        expiration_date, format, language, rights)
         self._photos = OOBTree()
 
-    
+
     security = ClassSecurityInfo()
 
 
@@ -120,17 +121,20 @@ class Photo(Image):
                 'xlarge': (1024,1024)
                 }
 
+    def getPhoto(self,size):
+        '''returns the Photo of the specified size'''
+        return self._photos[size]
 
     security.declareProtected(CMFCorePermissions.View, 'getDisplays')
     def getDisplays(self):
         result = []
 
         for name, size in self.displays.items():
-            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
+            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1]),'size':size})
 
+        result.sort(lambda d1,d2: cmp(d1['size'][0]*d1['size'][0],d2['size'][1]*d2['size'][1])) #sort ascending by size
         return result
 
-    
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE, size=None):
         """Return the image data."""
@@ -141,7 +145,7 @@ class Photo(Image):
                 raw = str(self.data)
                 image = OFS.Image.Image(size, size, self._resize(resolution))
                 self._photos[size] = image
-        
+
             return self._photos[size].index_html(REQUEST, RESPONSE)
 
         return Photo.inheritedAttribute('index_html')(self, REQUEST, RESPONSE)
@@ -177,7 +181,6 @@ class Photo(Image):
                         # with height and width attributes.
                         w=None
                         h=None
-
                 else:
                     # The resized image exist, get it's size
                     photo = self._photos.get(size)
@@ -187,7 +190,6 @@ class Photo(Image):
         if height is None: height=h
         if width is None:  width=w
 
-                
         # Auto-scaling support
         xdelta = xscale or scale
         ydelta = yscale or scale
@@ -238,7 +240,7 @@ class Photo(Image):
         image = StringIO()
 
         width, height = size
-        
+
         if sys.platform == 'win32':
             from win32pipe import popen2
             imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
@@ -266,17 +268,17 @@ class Photo(Image):
     security.declareProtected(CMFCorePermissions.View, 'getEXIF')
     def getEXIF(self):
         """
-	Extracts the exif metadata from the image and returns
-	it as a hashtable
-	"""
+        Extracts the exif metadata from the image and returns
+        it as a hashtable
+        """
         import EXIF
 
-	try:
-    	    data = EXIF.process_file(StringIO(self.data.data))
-	except:
-	    data = {}
-	if not data:
-	    data = {}
+        try:
+            data = EXIF.process_file(StringIO(self.data.data))
+        except:
+            data = {}
+        if not data:
+            data = {}
 
         keys = data.keys()
         keys.sort()
@@ -286,12 +288,11 @@ class Photo(Image):
         for key in keys:
             if key in ('JPEGThumbnail', 'TIFFThumbnail'):
                 continue
-	    try:
-		result[key] = str(data[key].printable)
-	    except:
-		pass
+            try:
+                result[key] = str(data[key].printable)
+            except:
+                pass
         return result
 
 
 InitializeClass(Photo)
-
