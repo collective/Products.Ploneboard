@@ -327,9 +327,27 @@ class IUserAtom(Interface):
         This will never return gruf-related roles.
         """
 
+    # Properties are defined depending on the underlying user folder: some support
+    # properties mutation (such as LDAPUserFolder), some do not (such as regular UF).
+
+    def getProperty(name):
+        """Get a property's value.
+        Will raise if not available.
+        """
+
+    def hasProperty(name):
+        """Return true if the underlying user object has a value for the property.
+        """
 
     # Mutators
 
+    def setProperty(name, value):
+        """Set a property's value.
+        As some user folders cannot set properties, this method is not guaranteed to work
+        and will raise a NotImplementedError if the underlying user folder cannot store
+        properties (or _this_ particular property) for a user.
+        """
+        
     # XXX We do not allow user name / id changes
 ##    def setId(newId):
 ##        """Set the id of the user or group. This might change its name as well.

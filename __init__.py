@@ -9,7 +9,7 @@
 import GroupUserFolder
 import GRUFFolder
 try:
-    import LDAPGroupFolder
+    import Products.LDAPUserFolder
     hasLDAP = 1
 except ImportError:
     hasLDAP = 0

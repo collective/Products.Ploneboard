@@ -39,7 +39,7 @@ Issues
 
       If you want to store your groups in LDAP, you have to understand a few things.
 
-      First of all, LDAP support *groups* and not *roles*. Zope natively supports *roles* and
+      First of all, LDAP supports *groups* and not *roles*. Zope natively supports *roles* and
       not *groups*. So what LDAPUF (alone) does is basically mapping LDAP groups to Zope roles.
 
       [BTW, you cannot assign a *role* to a user if that role doesn't already exist in LDAP,
@@ -79,7 +79,7 @@ Issues
 
       * Groups *must* have the 'cn' as RDN. This is the same requirement as LDAPUF, by the way.
 
-      * Groups are from groupOfUniqueNames (this is LDAPUF's requirement)
+      * Groups are from groupOfUniqueNames class (this is LDAPUF's requirement)
 
       * Users are stored WITHIN groups (and not groups within users). The attribute is 
         "uniqueMember" or "member" (the first is prefered over the second). This is

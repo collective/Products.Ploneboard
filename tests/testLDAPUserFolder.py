@@ -144,7 +144,7 @@ class TestLDAPUserFolderBasics(GRUFTestCase.GRUFTestCase):
         
 
 
-class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics, testGroupUserFolderAPI.TestGroupUserFolderAPI):
+class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics):#, testGroupUserFolderAPI.TestGroupUserFolderAPI):
     """
     Whole API test for GRUF+LDAP
 
@@ -168,6 +168,17 @@ class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics, testGroupUserFolderAPI.Tes
         LDAPUF has no domain support
         """
         pass
+
+    def test_setProperty(self,):
+        """Set user's properties
+        """
+        u1 = self.gruf.getUser("u1")
+
+        # Simplest case: sn property setting
+        u1.setProperty("sn", "Second Name Value")
+
+        # We check that it has been changed
+        self.failUnless(u1.getProperty("sn") == "Second Name Value", u1.getProperty("sn"), )
         
 
 

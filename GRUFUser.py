@@ -369,6 +369,58 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
         """Return the list of domain restrictions for a user"""
         return self._original_domains
 
+
+    security.declarePrivate("getProperty")
+    def getProperty(self, name):
+        """getProperty(self, name) => return property value or raise AttributeError
+        """
+        # Try to do an attribute lookup on the underlying user object
+        return getattr(self.__underlying__, name)
+
+    security.declarePrivate("hasProperty")
+    def hasProperty(self, name):
+        """hasProperty"""
+        return hasattr(self.__underlying__, name)
+
+    security.declarePrivate("setProperty")
+    def setProperty(self, name, value):
+        """setProperty => Try to set the property...
+        By now, it's available only for LDAPUserFolder
+        """
+        # Get actual source
+        src = self._GRUF.getUserSource(self.getUserSourceId())
+        if not src:
+            raise RuntimeError, "Invalid or missing user source for '%s'." % (self.getId(),)
+
+        # LDAPUserFolder => specific API.
+        if hasattr(src, "manage_setUserProperty"):
+            # Unmap pty name if necessary
+            ldapname = name
+            for ldap_name, zope_name in src.getMappedUserAttrs():
+                if name == zope_name:
+                    ldapname = ldap_name
+                    break
+            
+            # Edit user
+            user_dn = src._find_user_dn(self.getUserName())
+            Log(LOG_DEBUG, user_dn, ldapname, value)
+            src.manage_setUserProperty(user_dn, ldapname, value)
+
+            # Expire the underlying user object
+            self.__underlying__ = src.getUser(self.getId())
+            if not self.__underlying__:
+                raise RuntimeError, "Error while setting property of '%s'." % (self.getId(),)
+
+        # Now we check if the property has been changed
+        if not self.hasProperty(name):
+            raise NotImplementedError, "Property setting is not supported for '%s'." % (name,)
+        v = self._GRUF.getUserById(self.getId()).getProperty(name)
+        if not v == value:
+            Log(LOG_WARNING, "Property '%s' for user '%s' should be '%s' and not '%s'" % (
+                name, self.getId(), v, value,
+                ))
+            raise NotImplementedError, "Property setting is not supported for '%s'." % (name,)
+
     # ------------------------------
     # Internal User object interface
     # ------------------------------
@@ -483,8 +535,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
     #                                                           #
     #               Underlying user object support              #
     #                                                           #
-
-
+    
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.

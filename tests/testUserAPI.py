@@ -509,7 +509,30 @@ class TestUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterface):
         g.removeMember("u1")
         self.failUnless("u1" not in g.getMemberIds())
         # 'Will have to test with groups as well
-        
+
+
+
+    def test_getProperty(self,):
+        """Will raise for regular user folders
+        """
+        try:
+            self.gruf.getUser("u1").getProperty("email")
+        except:
+            pass
+        else:
+            raise AssertionError, "Should raise"
+
+    def test_hasProperty(self,):
+        self.failUnless(not self.gruf.getUser("u1").hasProperty("email"))
+
+    def test_setProperty(self,):
+        try:
+            self.gruf.getUser("u1").setProperty("email", "test@test.com")
+        except NotImplementedError:
+            pass
+        else:
+            raise AssertionError, "Should raise here."
+
 
 
 if __name__ == '__main__':

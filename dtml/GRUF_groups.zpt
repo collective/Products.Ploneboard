@@ -2,6 +2,20 @@
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
+  <h4>Groups sources</h4>
+  <!-- Groups source row -->
+  <ol>
+    <table cellspacing="10" width="90%" tal:define="groups here/getGroups">
+      <tr>
+        <th class="list-header">Groups source</th>
+        <td bgcolor="#EEEEEE">
+          <img src="" tal:attributes="src here/Groups/acl_users/icon">&nbsp;
+            <a href="Groups/acl_users/manage_workspace" tal:content="here/Groups/acl_users/meta_type">Type</a>
+        </td>
+      </tr>
+    </table>
+  </ol>
+
   <h4>Groups management</h4>
   <form action="" method="POST" tal:attributes="action here/absolute_url">
     <ol>
