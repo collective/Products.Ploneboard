@@ -1,8 +1,0 @@
-[default]
-title=I18N languages edit form
-
-[actions]
-action.success..Add=traverse_to:string:addI18NLanguageObject
-action.success..ConvertToI18N=traverse_to:string:addI18NLayerToObject
-action.success..Delete=traverse_to:string:deleteI18NLanguageObjects
-action.success..DeleteI18N=traverse_to:string:removeI18NLayerFromObject

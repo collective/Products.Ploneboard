@@ -1,5 +1,0 @@
-[default]
-title=Add an I18NLayer to object
-
-[actions]
-action.success..=redirect_to_action:string:view

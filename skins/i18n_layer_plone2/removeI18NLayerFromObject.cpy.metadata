@@ -1,5 +1,0 @@
-[default]
-title=Remove I18NLayer from object
-
-[actions]
-action.success..=redirect_to_action:string:view
