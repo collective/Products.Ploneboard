@@ -1,0 +1,119 @@
+2003-08-12 22:51  longsleep
+
+	* I18NContent.py, I18NLayer.py: some documentation added preparing
+	for release
+
+2003-08-12 22:28  longsleep
+
+	* I18NLayer.py: small fixes
+
+2003-06-24 18:36  longsleep
+
+	* skins/i18n_layer/insideI18NLayer.py: added helper to detect if
+	inside an i18nlayer
+
+2003-06-17 11:03  longsleep
+
+	* i18n/i18nlayer-de.po,
+	skins/i18n_layer/i18nlayer_languages_form.pt: litte translation
+	correction
+
+2003-06-10 14:06  longsleep
+
+	* I18NLayer.py, i18n/i18nlayer-de.po, i18n/i18nlayer.pot: i18n to
+	the archetypes schema
+
+2003-06-06 17:29  longsleep
+
+	* version.txt, i18n/i18nlayer-de.po, i18n/i18nlayer.pot,
+	skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/i18ncontent_slot.pt,
+	skins/i18n_layer/i18nlayer_default_fallback.pt,
+	skins/i18n_layer/i18nlayer_languages_form.pt,
+	skins/i18n_layer/setI18NContentCookie.py: lots of fixes done added
+	i18n attributes added i18n gettext template added german
+	translation
+	----------------------------------------------------------------------
+
+2003-06-04 23:10  longsleep
+
+	* skins/i18n_layer/: i18ncontent_slot.pt,
+	i18nlayer_default_fallback.pt, i18nlayer_languages_form.pt: i18n
+	stuff added
+	----------------------------------------------------------------------
+
+2003-06-04 22:13  longsleep
+
+	* Extensions/Install.py,
+	skins/i18n_layer/i18nlayer_languages_form.pt: fixed a couple of
+	bugs thanks to the reporters
+	----------------------------------------------------------------------
+
+2003-06-01 19:22  longsleep
+
+	* LICENSE.GPL: license forgotten
+
+2003-06-01 19:21  longsleep
+
+	* version.txt: first alpha relase of i18nlayer archetypes
+	----------------------------------------------------------------------
+
+2003-06-01 19:16  longsleep
+
+	* Extensions/Install.py: also add i18ncontent slot to left slots
+	----------------------------------------------------------------------
+
+2003-06-01 18:40  longsleep
+
+	* version.txt: version increase ;)
+	----------------------------------------------------------------------
+
+2003-06-01 18:39  longsleep
+
+	* I18NContent.py, I18NLayer.py, Patches.py, utils.py,
+	skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/i18nlayer_icon.gif,
+	skins/i18n_layer/setI18NContentCookie.py: ported lots of stuff from
+	latest CMFTypes version to archetypes version
+
+2003-05-09 08:05  ctheune
+
+	* I18NLayer.py:  - modify_fti call fixed to present plone/cmf
+
+2003-03-26 12:41  vladoi
+
+	* I18NLayer.py: [no log message]
+
+2003-03-26 11:49  vladoi
+
+	* __init__.py: test
+
+2003-03-25 17:46  longsleep
+
+	* .cvsignore, I18NLayer.py, Patches.py, __init__.py, refresh.txt,
+	version.txt, Extensions/Install.py, Extensions/__init__.py,
+	skins/i18n_layer/createLanguageObject.py,
+	skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/deleteLanguageObject.py,
+	skins/i18n_layer/expireI18NContentCookie.py,
+	skins/i18n_layer/i18ncontent_slot.pt,
+	skins/i18n_layer/i18nlayer_default_fallback.pt,
+	skins/i18n_layer/i18nlayer_languages_form.pt,
+	skins/i18n_layer/setI18NContentCookie.py, tests/__init__.py,
+	tests/test_I18Nlayer.py: thanks to vlado I18NLayer is now an own
+	module
+
+2003-03-25 17:46  longsleep
+
+	* .cvsignore, I18NLayer.py, Patches.py, __init__.py, refresh.txt,
+	version.txt, Extensions/Install.py, Extensions/__init__.py,
+	skins/i18n_layer/createLanguageObject.py,
+	skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/deleteLanguageObject.py,
+	skins/i18n_layer/expireI18NContentCookie.py,
+	skins/i18n_layer/i18ncontent_slot.pt,
+	skins/i18n_layer/i18nlayer_default_fallback.pt,
+	skins/i18n_layer/i18nlayer_languages_form.pt,
+	skins/i18n_layer/setI18NContentCookie.py, tests/__init__.py,
+	tests/test_I18Nlayer.py: Initial revision
+
