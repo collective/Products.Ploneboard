@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.5 2003/07/30 02:54:39 plonista Exp $
+$Id: FSControlledPythonScript.py,v 1.6 2003/08/08 23:55:50 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -54,7 +54,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
     def __call__(self, *args, **kwargs):
         result = FSControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
         if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result)
+            return self.getNext(result, self.REQUEST)
         return result
 
 

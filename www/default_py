@@ -6,16 +6,16 @@
 # Set is_validator=1 for a validation script; 0 otherwise
 state = context.portal_form_controller.getState(script, is_validator=1)
 
-# Set the state status (unnecessary in this case, as the default status is 'success')
+# Set the state status (unnecessary here, since the default status is 'success')
 state.setStatus = 'success'
 
 # validate your variables here
 n = request.get('n', None)
 if not n:
-   state.setError('n', 'Please enter a value for n', new_status='failure')
+   state.setError('n', 'Please enter a value for n')
 
 if state.getErrors():
-   state.set(portal_status_message='Please correct the errors shown')
+   return state.set(status='failure', portal_status_message='Please correct the errors shown')
 
 # Make sure to return the ControllerState object
 return state

@@ -143,11 +143,10 @@ class ControlledBase:
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formActionsForm')
 
 
-    def getNext(self, controller_state):
+    def getNext(self, controller_state, REQUEST):
         id = self.getId()
         status = controller_state.getStatus()
         context = controller_state.getContext()
-        REQUEST = context.REQUEST
         context_type = getattr(context, '__class__', None)
         if context_type:
             context_type = getattr(context_type, '__name__', None)

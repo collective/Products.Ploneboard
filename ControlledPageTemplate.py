@@ -1,5 +1,6 @@
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate as BaseClass
 
+import os
 import Globals
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -66,6 +67,9 @@ class ControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
         BaseClass.manage_options[2:])
 
     meta_type = 'Controlled Page Template'
+
+    _default_content_fn = os.path.join(Globals.package_home(globals()),
+                                       'www', 'default.html')
 
     def __init__(self, *args, **kwargs):
         self.validators = FormValidatorContainer()

@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.3 $'[11:-2]
+__version__='$Revision: 1.4 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -124,7 +124,7 @@ class ControlledPythonScript(PythonScript, ControlledBase):
     def __call__(self, *args, **kwargs):
         result = ControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
         if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result)
+            return self.getNext(result, self.REQUEST)
         return result
 
 

@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title tal:content="template/title">The title</title>
+  </head>
+  <body tal:define="errors options/state/getErrors">
+    
+    <h2><span tal:replace="here/title_or_id">content title or id</span>
+        <span tal:condition="template/title"
+              tal:replace="template/title">optional template id</span></h2>
+
+    <p>Control what happens when this form is submitted via the Validators
+       and Actions tabs in the ZMI.</p>
+
+    <form method="POST" tal:attributes="action template/id">
+      <p tal:condition="errors/test"><b tal:content="errors/test" /></p>
+      <p>Enter a value: <input name="test" type="text" value=""></p>
+      <p><input type="submit" name="form.button.submit" value="Submit" /></p>
+      <input type="hidden" name="form.submitted" value="1" />
+    </form>
+
+  </body>
+</html>

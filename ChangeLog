@@ -1,3 +1,17 @@
+2003-08-08  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Modified the way that ControllerState objects store the context.  For 
+     reasons I don't completely understand, the old way I was storing them
+     trashed the stored object's acquisition context (even when they were
+     properly unwrapped via aq_inner).  The fix is kind of evil: I store the
+     context in a list, so the acquisition context is unchanged by the 
+     container.  This will wreak havoc if we ever try to persist ControllerState
+     objects, but this shouldn't have to happen, since we just pass around the 
+     state objects in the REQUEST.
+
+   * Added a default.html file that has some useful default content for 
+     ControlledPageTemplates that are created in the ZMI.
+    
 2003-08-06  Kevin Teague <kevin@bud.ca> (Wheat)
 
    * Minor corrections and edits to the documentation within the ZMI Validation

@@ -35,19 +35,17 @@ class BaseControlledPageTemplate(ControlledBase):
 
         form_submitted = REQUEST.form.get('form.submitted', None)        
         if form_submitted:
-            controller_state = self.getButton(controller_state)
-            validators = self.getValidators(controller_state).getValidators()
-            controller_state = self.validate(controller_state, validators)
+            controller_state = self.getButton(controller_state, REQUEST)
+            validators = self.getValidators(controller_state, REQUEST).getValidators()
+            controller_state = self.validate(controller_state, REQUEST, validators)
             del REQUEST.form['form.submitted']
-            return self.getNext(controller_state)
+            return self.getNext(controller_state, REQUEST)
 
         kwargs['state'] = controller_state
         return inherited_call(self, *args, **kwargs)
 
 
-    def getButton(self, controller_state):
-        controller_state.setButton(None)
-        REQUEST = controller_state.getContext().REQUEST
+    def getButton(self, controller_state, REQUEST):
         for k in REQUEST.form.keys():
             if k.startswith('form.button.'):
                 controller_state.setButton(k[len('form.button.'):])
@@ -55,9 +53,8 @@ class BaseControlledPageTemplate(ControlledBase):
         return controller_state
         
 
-    def getValidators(self, controller_state):
+    def getValidators(self, controller_state, REQUEST):
         context = controller_state.getContext()
-        REQUEST = context.REQUEST
         context_type = self._getTypeName(context)
         button = controller_state.getButton()
         controller = getToolByName(self, 'portal_form_controller')
@@ -85,9 +82,8 @@ class BaseControlledPageTemplate(ControlledBase):
         return type_name
 
 
-    def validate(self, controller_state, validators):
+    def validate(self, controller_state, REQUEST, validators):
         context = controller_state.getContext()
-        REQUEST = context.REQUEST
         if validators is None:
             REQUEST.set('controller_state', controller_state)
             return controller_state
@@ -116,8 +112,5 @@ class BaseControlledPageTemplate(ControlledBase):
 
         REQUEST.set('controller_state', controller_state)
         return controller_state
-
-
-
 
 Globals.InitializeClass(BaseControlledPageTemplate)

@@ -1,7 +1,7 @@
 import Globals
 import AccessControl
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_inner, aq_parent, aq_chain
+from Acquisition import aq_inner, aq_parent, aq_chain, aq_self, Implicit
 from Products.CMFCore.utils import getToolByName
 from FormAction import FormAction
 from globalVars import ANY_CONTEXT, ANY_BUTTON
@@ -138,11 +138,16 @@ class ControllerState(AccessControl.Role.RoleManager):
         """Get the context of the current form/script"""
         if self.context is None:
             return self.context
-        return aq_inner(self.context)
+        return self.context[0]
+        #return aq_inner(self.context)
 
     def setContext(self, context):
         """Set the context of the current form/script"""
-        self.context = context
+        # Store the context in a list so that we don't nuke its acquisition chain.
+        # This is kind of an evil hack, but since we aren't persisting 
+        # ControllerState objects, it shouldn't cause any big problems.
+        self.context = [context]
+        # self.context = context
 
     def getKwargs(self):
         """Get any extra arguments (e.g. portal_status_message) that should be
