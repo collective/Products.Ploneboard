@@ -60,6 +60,8 @@ def replaceTools(self, out, convert=1):
                     
         memberarea._actions=_actions
         memberarea.global_allow = 0  # make MemberArea not implicitly addable
+    else:
+        memberarea = typestool.MemberArea
 
     portal = getToolByName(self, 'portal_url').getPortalObject()
     memberdata_tool = getToolByName(self, 'portal_memberdata')
@@ -210,9 +212,10 @@ def installPortalFactory(self, out):
 
     from Products.CMFCore.TypesTool import FactoryTypeInformation
     types_tool = getToolByName(self, 'portal_types')
-    types_tool.manage_addTypeInformation(FactoryTypeInformation.meta_type,
-                                         id='TempFolder', 
-                                         typeinfo_name='CMFCore: Portal Folder')
+    if not hasattr(types_tool, 'TempFolder'):
+        types_tool.manage_addTypeInformation(FactoryTypeInformation.meta_type,
+                                             id='TempFolder', 
+                                             typeinfo_name='CMFCore: Portal Folder')
     folder = types_tool.Folder
     tempfolder = types_tool.TempFolder
     tempfolder.content_meta_type='TempFolder'

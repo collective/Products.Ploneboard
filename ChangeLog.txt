@@ -1,3 +1,18 @@
+2003-07-21  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Factory tool now gives ownership of new objects to the currently 
+      authenticated member.
+
+    * Modified MemberData.getProperty and Member.getProperty to make them 
+      consistent with the CMFCore behavior when a Member property is not found.
+
+    * Added a missing import to Member.py.
+
+    * Made some fixes to Install to make re-installations work.
+
+    * Made Member.getRoles and Member.getDomains public for consistency with
+      CMFCore MemberData.
+     
 2003-07-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Added mechanism to log tracebacks for exceptions thrown by methods called 

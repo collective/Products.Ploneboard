@@ -26,7 +26,7 @@ from Products.Archetypes.interfaces.base import IBaseContent
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Field       import *
 from Products.Archetypes.Widget      import *
-from Products.Archetypes.Schema import Schemata
+from Products.Archetypes.Schema import Schemata, FieldList, MetadataFieldList
 
 from Products.Archetypes.debug import log
 from DateTime import DateTime
@@ -393,7 +393,7 @@ class Member(VariableSchemaSupport, BaseContent):
         return self.getUser()._getPassword()
 
 
-    security.declarePrivate('getRoles')
+    security.declarePublic('getRoles')
     def getRoles(self):
         """Return the list of roles assigned to a user."""
         roles=()
@@ -422,7 +422,7 @@ class Member(VariableSchemaSupport, BaseContent):
         return tuple([r for r in roles if r in allowed])
 
 
-    security.declarePrivate('getDomains')
+    security.declarePublic('getDomains')
     def getDomains(self):
         """Return the list of domain restrictions for a user"""
         domains=()
@@ -747,28 +747,45 @@ class Member(VariableSchemaSupport, BaseContent):
         self.setProperties(mapping)
 
 
+    def _getProperty(self, id):
+        """Try to get a member property.  If the property is not found,
+        raise an AttributeError"""
+        if self.Schema().get(id, None):
+            accessor = getattr(self, self.schema[id].accessor, None)
+            value = accessor()
+        else:
+            base = aq_base(self)
+            value = getattr(base, id)
+        return value
+
+
     security.declarePublic('getProperty')
     def getProperty(self, id, default=_marker):
-        # Archetypes attr
         try:
-            if self.Schema().get(id, None):
-                accessor = getattr(self, self.schema[id].accessor, None)
-                value = accessor()
-            else:
-                value = getattr(self, id)
+            return self._getProperty(id)
         except AttributeError:
-            if default is _marker:
-                # member does not have a value for given property
-                # try memberdata_tool for default value
-                memberdata_tool = getToolByName(self, 'portal_memberdata')
-                try:
-                    value = memberdata_tool.getProperty(id)
-                except:
-                    raise AttributeError(id)
-            else:
-                value = default
 
-        return value
+            # member does not have a value for given property
+            # try memberdata_tool for default value
+            memberdata_tool = getToolByName(self, 'portal_memberdata')
+            tool_value = memberdata_tool.getProperty(id, _marker)
+            user_value = getattr(self.getUser(), id, _marker)
+
+            # If the tool doesn't have the property, use user_value or default
+            if tool_value is _marker:
+                if user_value is not _marker:
+                    return user_value
+                elif default is not _marker:
+                    return default
+                else:
+                    raise ValueError, 'The property %s does not exist' % id
+    
+            # If the tool has an empty property and we have a user_value, use it
+            if not tool_value and user_value is not _marker:
+                return user_value
+    
+            # Otherwise return the tool value
+            return tool_value
 
 
     security.declarePublic('getUser')

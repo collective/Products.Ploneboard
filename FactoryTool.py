@@ -64,7 +64,16 @@ class FactoryTool(UniqueObject, SimpleItem):
             type_name = aq_parent(aq_inner(obj)).id
             folder = aq_parent(obj)
             folder.invokeFactory(id=id, type_name=type_name)
-            return getattr(folder, id)
+            obj = getattr(folder, id)
+
+            # give ownership to currently authenticated member if not anonymous
+            membership_tool = getToolByName(self, 'portal_membership')
+            if not membership_tool.isAnonymousUser():
+                member = membership_tool.getAuthenticatedMember()
+                obj.changeOwnership(member.getUser(), 1)
+                obj.manage_setLocalRoles(member.getUserName(), ['Owner'])
+
+            return obj
 
 
     def isTemporary(self, obj):

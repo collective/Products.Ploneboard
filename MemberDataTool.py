@@ -307,31 +307,19 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             self._defaultMember.unindexObject() 
         return self._defaultMember
 
+
     security.declarePublic('getProperty')
     def getProperty(self, id, default=None):
         """Get the property 'id', returning the optional second
            argument or None if no such property is found."""
         # Get the default value from the Member schema
         # Create a temporary member if needed.
-        prop=_marker
         m = self._getMemberInstance()
-        schema = self._getMemberInstance().Schema()
-        field = schema.get(id, None)
 
-        if field:
-            prop = getattr(field, 'default', _marker)
-        if prop != _marker:
-            return prop
-
-        # No default property 
-        if default is not None:
-            return default
-
-        _val = getattr(aq_base(self), id, None)
-        if _val is not None:
-            return _val
-
-        raise AttributeError, id
+        try:
+            return m._getProperty(id)
+        except:
+            return None
        
 
     ## Folderish Methods
