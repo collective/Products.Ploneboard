@@ -17,7 +17,8 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <div class="discreet">
+        <div class="discreet"
+             tal:condition="not: forums">
         No Forums exist in this Board yet, use the add menu to add forums.
         </div>
         
