@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.39 2004/07/04 14:05:12 limi Exp $
+$Id: schemata.py,v 1.40 2004/07/04 17:25:48 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -272,11 +272,11 @@ ATImageSchema = ATContentTypeSchema + Schema((
                required = 1,
                primary=1,
                languageIndependent=True,
-               sizes= {'preview'   : (400, 400),
-                       'thumbnail' : (128, 128),
-                       'tile'      :  (64, 64),
-                       'icon'      :  (32, 32),
-                       'listing'   :  (16, 16),
+               sizes= {'preview' : (400, 400),
+                       'thumb'   : (128, 128),
+                       'tile'    :  (64, 64),
+                       'icon'    :  (32, 32),
+                       'listing' :  (16, 16),
                       },
                validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
@@ -292,11 +292,11 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
                primary=1,
                languageIndependent=True,
                storage=ExternalStorage(prefix='atct', archive=False),
-               sizes= {'preview'   : (400, 400),
-                       'thumbnail' : (128, 128),
-                       'tile'      :  (64, 64),
-                       'icon'      :  (32, 32),
-                       'listing'   :  (16, 16),
+               sizes= {'preview' : (400, 400),
+                       'thumb'   : (128, 128),
+                       'tile'    :  (64, 64),
+                       'icon'    :  (32, 32),
+                       'listing' :  (16, 16),
                       },
                validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
