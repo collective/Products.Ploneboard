@@ -1,3 +1,7 @@
+0.2-beta5
+
+ * Added iCal/vCal export to AT Event
+
 0.2-beta4
 
  * Added AT Dyn Document. It's a CMFDynamicDocument like type that supports
