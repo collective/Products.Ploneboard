@@ -321,7 +321,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr tal:repeat="member here/acl_users/getGroups">
+            <tr tal:repeat="member here/portal_groups/listGroups">
               <td>
                 <input class="noborder" 
                        type="checkbox"
