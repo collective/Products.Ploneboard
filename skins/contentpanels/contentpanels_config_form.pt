@@ -198,9 +198,26 @@ mnIndex=$nextColumn">
                                     i18n:translate="">css wrapper name</option>
                           </metal:block>
                         </select>
-                        <input type="hidden" name="panelObjectViewlet" 
-                               tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records;
-                                               value panel/panelObjectViewlet;"/>
+                        <span class="label" i18n:translate="label_viewlet">viewlet:</span>
+                        <select name="panelObjectViewlet" title="content viewlet" width="6"
+                                tal:define="viewlets python: here.portal_actions.listFilteredActionsFor(panelContent).get('panel_viewlets', []);
+                                            viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent.absolute_url() != cpPath)];
+                                            portlets python: here.portal_contentpanels.listFilteredActionsFor(panelContent).get('panel_viewlets',[]);"
+                                i18n:attributes="title label_viewlet"
+                                tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records">
+                              <option value="viewletActionId" 	 
+                                      tal:repeat="viewlet_action viewlets"
+                                    tal:attributes="value viewlet_action/id; 	 
+                                           selected python: panel['panelObjectViewlet']==viewlet_action['id'];" 	 
+                                    i18n:translate=""
+                                    tal:content="viewlet_action/name">viewlet</option> 	 
+                              <option value="" tal:condition="viewlets">----</option>
+                              <option tal:repeat="viewlet_action portlets"
+                                    i18n:translate=""
+                                    tal:attributes="value viewlet_action/id;
+                                         selected python: panel['panelObjectViewlet']==viewlet_action['id'];"
+                                    tal:content="viewlet_action/name"> viewlet </option>
+                        </select>
                         <input type="hidden" name="panelIndex" value="#"
                                tal:attributes="value repeat/panel/index;
                                                name string:CPI$columnIndex.panelIndex:records" />

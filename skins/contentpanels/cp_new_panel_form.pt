@@ -126,14 +126,16 @@
                       viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or item.absolute_url() != cpPath)];
                       portlets python: here.portal_contentpanels.listFilteredActionsFor(item).get('panel_viewlets',[]);"
                   onchange="if (this.options[this.selectedIndex].value != 'null') { opener.location.href=this.options[this.selectedIndex].value; window.close();}">
-               <option value="null">Select Viewlet:</option>
+               <option value="null" i18n:tranlate="">Select Viewlet:</option>
                <option tal:repeat="viewlet_action viewlets"
                  tal:content="viewlet_action/name"
+                 i18n:translate=""
                  tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
                </option>
                <option value="null" tal:condition="viewlets">----</option>
                <option tal:repeat="viewlet_action portlets"
                  tal:content="viewlet_action/name"
+                 i18n:translate=""
                  tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
                </option>
           </select>
