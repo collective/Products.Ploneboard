@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.12 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: testATDocument.py,v 1.13 2004/09/23 16:43:03 tesdal Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -60,6 +60,9 @@ class TestSiteATDocument(ATCTSiteTestCase):
         editATCT(new)
         self.failUnless(old.CookedBody() == new.CookedBody(), 'Body mismatch: %s / %s' \
                         % (old.CookedBody(), new.CookedBody()))
+
+    def test_cmf_edit_failure(self):
+        self._ATCT.edit(thisisnotcmfandshouldbeignored=1)
 
     def test_migration(self):
         old = self._cmf
