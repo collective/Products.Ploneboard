@@ -25,7 +25,7 @@ from Products.Archetypes.Widget import TypesWidget
 from BiblioListFormatter import IBiblioListFormatter
 
 from Products.ATBiblioList.config import *
-from Products.ATBiblioList.dummy_refs import dummy_refs
+#from Products.ATBiblioList.dummy_refs import dummy_refs
 
 schema = BaseSchema + Schema((
     TextField('refDisplay',
