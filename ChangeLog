@@ -1,3 +1,14 @@
+2004-12-07 11:02  yenzenz
+
+	* AUTHORS, ChangeLog, HISTORY.txt, InstalledProduct.py,
+	  QuickInstallerTool.py, refresh.txt, version.txt: * workaround for
+	  bug 'BadRequest' while reinstalling a product, for some   reason
+	  QI stores info about the skins of dependend Products also in the
+	  main-installed product. on uninstall this becomes a problem.
+	  silently   ignore those problems.  * some cleanup:   * moved
+	  ChangeLog to HISTORY.txt and added a generated ChangeLog (cvs2cl)
+	  * using of StringTypes   * increased Version
+
 2004-11-25 18:01  shh42
 
 	* version.txt: Bump up version number in CVS too.
