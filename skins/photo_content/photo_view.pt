@@ -27,7 +27,7 @@
     
     <small>
 
-    <span i18n:translate="">Original size:</span>
+    <span i18n:translate="" tal:omit-tag="">Original size</span>:
 
         <span tal:define="size python:here.getObjSize(here)"
               tal:content="size">                        
