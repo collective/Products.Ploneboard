@@ -30,6 +30,7 @@ from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Field       import *
 from Products.Archetypes.Widget      import *
 from Products.Archetypes.Schema import Schemata, Schema, MetadataSchema
+from Products.Archetypes.VariableSchemaSupport import VariableSchemaSupport
 
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, \
@@ -38,7 +39,7 @@ from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, \
      EDIT_SECURITY_PERMISSION, MAIL_PASSWORD_PERMISSION, ADD_PERMISSION
 from Products.CMFMember import RegistrationTool, VERSION
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
-from Products.CMFMember.VariableSchemaSupport import VariableSchemaSupport
+
 from Products.CMFMember.utils import logException, changeOwnership
 
 # generate the addMember method ourselves so we can do some extra
@@ -439,7 +440,7 @@ class Member(VariableSchemaSupport, BaseContent):
         return self.fullname
 
     security.declareProtected(VIEW_PUBLIC_PERMISSION, 'getEmail')
-    def getFullName(self):
+    def getEmail(self):
         return self.email
 
     security.declareProtected(VIEW_OTHER_PERMISSION, 'getLastLoginTime')
