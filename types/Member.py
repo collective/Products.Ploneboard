@@ -188,6 +188,7 @@ security_schema = FieldList((
                 ),
 
     BooleanField('mail_me',
+                mutator='setMailMe',
                 default=0,
                 searchable=0,
                 mode='w',
@@ -496,6 +497,12 @@ class Member(VariableSchemaSupport, BaseContent):
             self.getUser().__ = password
             self.getUser().roles = roles
             self.getUser().domains = domains
+
+
+    security.declareProtected(EDIT_PASSWORD_PERMISSION, 'setMailMe')
+    def setMailMe(self, value):
+        if value:
+            self.mailPassword()
 
 
     security.declarePublic('getPortalSkin')

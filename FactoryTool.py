@@ -10,6 +10,7 @@ from DateTime import DateTime
 import urllib
 import sys
 
+# ##############################################################################
 # A class used for generating the temporary folder that will
 # hold temporary objects.  We need a separate class so that
 # we can add all types to types_tool's allowed_content_types
@@ -23,8 +24,8 @@ class TempFolder(PortalFolder):
         if hasattr(aq_parent(self), id):
             # if so, just do a pass-through
             return getattr(self.getParentNode(), id)
-        elif hasattr(self, id):
-            return self._getOb(id)
+#        elif hasattr(self, id):
+#            return self._getOb(id)
         else:
             type_name = self.getId()
             type_name = urllib.unquote(type_name)
@@ -38,6 +39,7 @@ class TempFolder(PortalFolder):
             obj.unindexObject()
             return obj
 
+# ##############################################################################
 class FactoryTool(UniqueObject, SimpleItem):
     """ """
     id = 'portal_factory'
@@ -56,7 +58,7 @@ class FactoryTool(UniqueObject, SimpleItem):
             else:
                 obj_id = getattr(id, 'id', None)
             if obj_id is None:
-                raise Exception  # FIXME
+                raise Exception  # XXX - FIXME
             if not id:
                 id = obj_id
             type_name = aq_parent(aq_inner(obj)).id
@@ -95,7 +97,6 @@ class FactoryTool(UniqueObject, SimpleItem):
         if not type_name in types_tool.listContentTypes():
             # nope -- do nothing
             return getattr(self, name)
-
         # create a temporary object
         tempFolder = TempFolder(encoded_type_name).__of__(aq_parent(self))
         # modify permissions to allow people to add, modify, and copy/move/rename temporary objects

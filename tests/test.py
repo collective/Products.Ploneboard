@@ -98,10 +98,26 @@ class CMFMemberTest( SecurityRequestTest ):
         doc2 = getattr(folder1, 'doc2')
         self.assertEqual(doc2.getOwner(0), self.root_user)
 
+    def _getUser(self):
+        return self.testsite.acl_users.getUser(self.id)
+
+    def _getRootUser(self):
+        return self.testsite.acl_users.getUser(self.id)
+
+    def _getMember(self):
+        return self.testsite.portal_membership.getMemberById(self.id)
+    
+    def _getRootMember(self):
+        return self.testsite.portal_membership.getMemberById(self.root_id)
+        
+
     def tearDown( self ):
+        self.user = None
+        self.root_user = None
         self.member = None
         self.root_member = None
         self.testsite = None
+        get_transaction().commit()
 
         # get rid of the test site we added
         if hasattr(self.root, site):

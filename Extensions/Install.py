@@ -51,6 +51,13 @@ def replaceTools(self, out, convert=1):
             except AttributeError:
                 if action.id=='view':
                     action.action=Expression(text='string:folder_contents')
+            try:
+                if action['category'] == 'folder':
+                    action['category'] = 'object_tabs'
+            except AttributeError:
+                if action.category == 'folder':
+                    action.category = 'object_tabs'
+                    
         memberarea._actions=_actions
         memberarea.global_allow = 0  # make MemberArea not implicitly addable
 

@@ -51,7 +51,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     _defaultMember = None
     
 
-    actions = (
+    memberdata_actions = (
         { 'id': 'view',
           'name': 'View',
           'action': 'folder_contents',
@@ -71,10 +71,12 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
           'category'      : 'folder'
         })
 
+
     manage_options=( BTreeFolder2Base.manage_options +
                      ActionProviderBase.manage_options
                    )  +({'label':'Schema','action':'schemaForm'}, ) 
     schemaForm = DTMLFile('dtml/schemaForm',globals())
+
 
     ##IMPL DETAILS
     def __init__(self):
@@ -117,6 +119,13 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     
     ##PORTAL_MEMBERDATA INTERFACE IMPL
+    security.declarePrivate('listActions')
+    def listActions(self, info=None):
+        """
+        Return actions provided via tool.
+        """
+        return self._actions
+
     # XXX fixme
     security.declarePrivate('getMemberDataContents')
     def getMemberDataContents(self):

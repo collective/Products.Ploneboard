@@ -1,3 +1,15 @@
+2003-06-22  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Fixed tabs in portal_memberdata.  You now will get the standard tabs after
+      creation.  Adding actions now works, too.
+
+    * Enabled the option to mail your password to yourself when you change it.
+
+    * Minor code cleanup in the factory tool.
+
+    * Code cleanup in the main test (which still doesn't run because of some
+      evil code in Archetypes)
+
 2003-06-13  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Fixed a couple of pretty serious bugs in Member.py that had to do with
