@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.16 2004/05/17 15:41:12 tiran Exp $
+$Id: ATFile.py,v 1.17 2004/05/21 07:44:04 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -209,8 +209,8 @@ class ATExtFile(ATFile):
 
     def getFile(self, **kwargs):
         """return the file with proper content type"""
-        REQUEST=kwargs.get('REQUEST',self.REQUEST)
-        RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
+        #REQUEST=kwargs.get('REQUEST',self.REQUEST)
+        #RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
         field  = self.getField('file') 
         file   = field.get(self, **kwargs)
         ct     = self.getContentType()

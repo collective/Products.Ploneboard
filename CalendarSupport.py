@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.4 2004/05/17 15:40:00 tiran Exp $
+$Id: CalendarSupport.py,v 1.5 2004/05/21 07:44:03 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -194,6 +194,8 @@ class CalendarSupportMixin:
             out.write('LOCATION:%s\n' % location)
         out.write(VCS_EVENT_END)
         # XXX todo
+        # Insert missing code here :]
+        return n2rn(out.getvalue())
 
     security.declareProtected(CMFCorePermissions.View, 'vcs_view')
     def vcs_view(self, REQUEST, RESPONSE):

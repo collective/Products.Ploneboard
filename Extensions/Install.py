@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.14 2004/05/04 18:26:23 tiran Exp $
+$Id: Install.py,v 1.15 2004/05/21 07:44:03 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -158,7 +158,7 @@ def setChainFor(portal_type, chain, wftool, out):
     print >>out, 'Assigning portal type %s with workflow %s' % (portal_type, chain or 'NONE')
     if chain != '(Default)':
         # default is default :)
-        wftool.setChainForPortalTypes(portal_type, chain)
+        wftool.setChainForPortalTypes((portal_type,), chain)
 
 def removeApplicationXPython(self, out):
     """Fixed broken .py file extension in older version of PortalTransforms

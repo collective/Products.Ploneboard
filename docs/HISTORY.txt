@@ -1,10 +1,15 @@
 0.2-beta5
 
- * Added iCal/vCal export to AT Event
-   [tiran]
+ * Fixed python 2.1 compatibility problem with CMFCore/WorkflowTool. Thx to
+   Tiziano Lattisi [tiran]
+
+ * Moved to validation chains [tiran]
+ 
+ * Fixed security of HistoryAwareMixin [tiran]
+ 
+ * Added iCal/vCal export to AT Event [tiran]
   
- * Added PloneLingua support 
-   [gotcha]
+ * Added PloneLingua support [gotcha]
 
 0.2-beta4
 

@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.4 2004/05/15 01:54:07 tiran Exp $
+$Id: common.py,v 1.5 2004/05/21 07:44:04 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -97,6 +97,23 @@ from Products.ATContentTypes.types import ATDocument, ATEvent, \
 from Products.ATContentTypes.migration.ATCTMigrator import DocumentMigrator,\
     EventMigrator, FavoriteMigrator, FileMigrator, ImageMigrator, LinkMigrator,\
     NewsItemMigrator, FolderMigrator
+
+from Products.validation import ValidationChain
+EmptyValidator = ValidationChain('isEmpty')
+EmptyValidator.appendSufficient('isEmpty')
+TidyHTMLValidator = ValidationChain('isTidyHTML')
+TidyHTMLValidator.appendSufficient('isEmpty')
+TidyHTMLValidator.appendRequired('isTidyHTMLWithCleanup')
+URLValidator = ValidationChain('isURL')
+URLValidator.appendSufficient('isEmpty')
+URLValidator.appendRequired('isURL')
+EmailValidator = ValidationChain('isEmail')
+EmailValidator.appendSufficient('isEmpty')
+EmailValidator.appendRequired('isEmail')
+PhoneValidator = ValidationChain('isPhone')
+PhoneValidator.appendSufficient('isEmpty')
+PhoneValidator.appendRequired('isInternationalPhoneNumber')
+
 
 ###
 # CMF Default Types

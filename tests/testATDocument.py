@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.7 2004/05/20 23:54:41 lele Exp $
+$Id: testATDocument.py,v 1.8 2004/05/21 07:44:04 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -45,6 +45,7 @@ def editATCT(obj):
     obj.setText(example_stx, mimetype = text_format)
 
 tests = []
+
 
 class TestATDocument(ATCTTestCase):
 
@@ -210,8 +211,8 @@ class TestATDocumentFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': ('isEmpty', 'isTidyHtmlWithCleanup'), 'strategy': 'or'},
-                        'Value is %s' % str(field.validators))
+        self.failUnless(field.validators == TidyHTMLValidator,
+                        'Value is %s' % repr(field.validators))
         self.failUnless(isinstance(field.widget, RichWidget),
                         'Value is %s' % id(field.widget))
         vocab = field.Vocabulary(dummy)

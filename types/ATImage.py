@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.11 2004/05/17 15:41:12 tiran Exp $
+$Id: ATImage.py,v 1.12 2004/05/21 07:44:04 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -138,10 +138,8 @@ class ATExtImage(ATImage):
 
     def getImage(self, **kwargs):
         """return the image with proper content type"""
-        REQUEST=kwargs.get('REQUEST',self.REQUEST)
-        RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
         field  = self.getField('image') 
-        image   = field.get(self, **kwargs)
+        image  = field.get(self, **kwargs)
         ct     = self.getContentType()
         parent = aq_parent(self)
         i      = Image(self.getId(), self.Title(), image, ct)

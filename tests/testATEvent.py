@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.6 2004/05/15 01:54:07 tiran Exp $
+$Id: testATEvent.py,v 1.7 2004/05/21 07:44:04 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -226,7 +226,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == EmptyValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))
@@ -311,7 +311,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': ('isEmpty', 'isURL'), 'strategy': 'or'},
+        self.failUnless(field.validators == URLValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))
@@ -438,7 +438,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
+        self.failUnless(field.validators == EmptyValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))
@@ -480,7 +480,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': ('isEmpty', 'isEmail'), 'strategy': 'or'},
+        self.failUnless(field.validators == EmailValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))
@@ -522,7 +522,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == {'handlers': ('isEmpty', 'isInternationalPhoneNumber'), 'strategy': 'or'},
+        self.failUnless(field.validators == PhoneValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))

@@ -2,24 +2,24 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.4 2004/05/20 12:44:50 tesdal Exp $
+$Id: ATCTSiteTestCase.py,v 1.5 2004/05/21 07:44:04 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 import time
-#from Testing import ZopeTestCase
-#from AccessControl.SecurityManagement import newSecurityManager
-#from AccessControl.SecurityManagement import noSecurityManager
-from common import *
+from Testing import ZopeTestCase
+from AccessControl.SecurityManagement import newSecurityManager
+from AccessControl.SecurityManagement import noSecurityManager
+#from common import *
 
 from Products.Archetypes.Storage import AttributeStorage, MetadataStorage
 from Products.CMFCore  import CMFCorePermissions
 from Products.Archetypes.Widget import TextAreaWidget
 from Products.Archetypes.utils import DisplayList
 from Products.Archetypes.interfaces.layer import ILayerContainer
-from Products.Archetypes.tests.common import ArcheSiteTestCase
+from Products.Archetypes.tests import ArchetypesTestCase
 from Products.Archetypes.tests.test_baseschema import BaseSchemaTest
 from Products.ATContentTypes.Extensions.Install import install as installATCT
 
@@ -27,7 +27,7 @@ from Products.CMFPlone.tests import PloneTestCase
 portal_name = PloneTestCase.portal_name
 portal_owner = PloneTestCase.portal_owner
 
-class ATCTSiteTestCase(ArcheSiteTestCase):
+class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
     def test_dcEdit(self):
         #if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
@@ -42,7 +42,7 @@ class ATCTSiteTestCase(ArcheSiteTestCase):
                         % (old.Description(), new.Description()))
         # XXX more
 
-class ATCTFieldTestCase(ArcheSiteTestCase, BaseSchemaTest):
+class ATCTFieldTestCase(ArchetypesTestCase.ArcheSiteTestCase, BaseSchemaTest):
     """ ATContentTypes test including AT schema tests """
     
     def test_description(self):
@@ -78,10 +78,11 @@ class ATCTFieldTestCase(ArcheSiteTestCase, BaseSchemaTest):
 def setupATCT(app, quiet=0):
     get_transaction().begin()
     _start = time.time()
+    print "Installing at content types"
     if not quiet: ZopeTestCase._print('Installing ATContentTypes ... ')
 
     # login as manager
-    user = app.acl_users.getUserById(portal_owner).__of__(app.acl_users)
+    user = app.acl_users.getUserById(ArchetypesTestCase.portal_owner).__of__(app.acl_users)
     newSecurityManager(None, user)
     # add Archetypes
     installATCT(app.portal)
