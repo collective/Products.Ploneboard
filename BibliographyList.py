@@ -20,6 +20,8 @@ from Products.Archetypes.public import ReferenceField, ReferenceField, StringFie
 from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWidget
 
+from roman import *
+
 # possible types of bibliographic references by module 'CMFBibliography'
 search_types = (
                'ArticleReference',
