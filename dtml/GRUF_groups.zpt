@@ -54,7 +54,7 @@
             <table bgcolor="#EEEEEE">
               <tr class="list-header">
                 <th>&nbsp;</th>
-                <th>Affected roles</th>
+                <th>Affect roles</th>
               </tr>
               
               <tr tal:repeat="role here/valid_roles">

@@ -36,6 +36,7 @@ commit:apidoc changelogfile www
 www:apidoc changelogfile
 	scp CHANGES ChangeLog README* ${SCP_SERVER}/${PRODUCT}/
 	scp doc/*html ${SCP_SERVER}/${PRODUCT}/api/ || echo ""
+	scp website/* ${SCP_SERVER}/${PRODUCT}/ || echo ""
 
 dist:version.txt
 	echo .

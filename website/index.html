@@ -91,6 +91,7 @@
     </p>
 
     <a name="what"/>
+    <p>&nbsp;</p>
     <span class="boxtab">What's GRUF ?</span>
     <div class="boxcontent">
       <p>GRUF is a convenient tool to manage groups of users within Zope.</p>
@@ -99,25 +100,28 @@
         will store the groups.</p>
       <p>It has a whole bunch of cool features, especially :</p>
       <ul>
-        <li>It doesn't patch anything in Zope ;</li>
+        <li>It <b>doesn't patch anything</b> in Zope ;</li>
         <li>It integrates smoothly without the need of any additional form (some are 
           provided but it's only for convenience) ;</li>
         <li>It doesn't store users by itself but delegates that job to another User 
-          Folder. So, it works with virtually ANY Zope UserFolder in there ! (especially 
+          Folder. So, it <b>works with virtually ANY Zope UserFolder</b> in there ! (especially 
           standard acl_users but also LDAPUserFolder, SimpleUserFolder, ...) ;</li>
-        <li>It allows groups and users to be stored in a separated backend ;</li>
-        <li>It provides clean management screens (including user and groups editing interfaces) ;</li>
-        <li>It provides security auditing tools ;</li>
+        <li>It allows groups and users to be stored in a separated backend (eg. groups in ZODB and users in LDAP, ...);</li>
+        <li>It provides <b>clean management screens</b> (including user and groups editing interfaces) ;</li>
+        <li>It provides <b>security auditing tools</b> ;</li>
         <li>It's compatible with regular Zope UserFolder API ;</li>
         <li>Groups are seen as regular Zope users in applications that doesn't include 
-          groups support. Thus, you don't have to rewrite anything to gain benefit from 
-          GRUF's groups !</li>
+          groups support. Thus, <b>you don't have to rewrite anything to gain benefit from 
+          GRUF's groups</b> !</li>
       </ul>
+
+      <p>GRUF has been designed by the <a href="http://www.ingeniweb.com">Ingeniweb</a> team.</p>
 
       <p>And, of course, it's Open-Source (GPL licence). </p>
     </div>
-    <p>&nbsp;</p>
+
     <a name="how"/>
+    <p>&nbsp;</p>
     <span class="boxtab">How does-it work ?</span>
     <div class="boxcontent">
       <p> GroupUserFolder is a kind of user folder that provides a special kind of 
@@ -167,8 +171,8 @@
         One group can have zero, one or more users affected.</p>
     </div>
 
-    <p>&nbsp;</p>
     <a name="compat"/>
+    <p>&nbsp;</p>
     <span class="boxtab">Is it compatible with...</span>
     <div class="boxcontent">
       <ul>
@@ -185,8 +189,8 @@
       </ul>
     </div>
 
-    <p>&nbsp;</p>
     <a name="download"/>
+    <p>&nbsp;</p>
     <span class="boxtab">Download</span>
     <div class="boxcontent">
       <p>
@@ -194,11 +198,11 @@
         And don't forget that even if GRUF is hosted by a Plone-related project, <b>GRUF independent from Plone !</b></p>
       <h2>Official releases</h2>
       <ol>
-          <p>Releases are now hosted by SourceForge</p>
+          <p>Releases are now hosted by SourceForge. The latest release can always be found <a href="http://sourceforge.net/project/showfiles.php?group_id=55262">here</a>.</p>
           <ul>
-            <li><b><a href="http://sourceforge.net/project/showfiles.php?group_id=55262">1.2</a></b> (2003-07-10): Major ZMI enhancing and GRUF API improvements</li>
-            <li><b><a href="http://sourceforge.net/project/showfiles.php?group_id=55262&release_id=169050">1.1</a></b> (2003-07-02): Includes major security fixes, an useful audit tab, and two "groupship" tools for Plone</li>
-            <li><b><a href="http://sourceforge.net/project/showfiles.php?group_id=55262&release_id=159286">1.0RC1</a></b> (2003-05-14): Code cleaning, better documentation and UI (and Plone skins) improves</li>
+            <li><b>1.2</b> (2003-07-10): Major ZMI enhancing and GRUF API improvements</li>
+            <li><b>1.1</b> (2003-07-02): Includes major security fixes, an useful audit tab, and two "groupship" tools for Plone</li>
+            <li><b>1.0RC1</b> (2003-05-14): Code cleaning, better documentation and UI (and Plone skins) improves</li>
             <li><b>0.2</b> (2003-03-31): Fixed user acquisition trick (no more hotfixing), minor API update to comply with LDAPUF and SimpleUF</li>
             <li><b>0.1</b> (2002-11-26): First attempt to show that this product can work !</li>
           </ul>
@@ -216,8 +220,8 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
       </ol>
     </div>
 
-    <p>&nbsp;</p>
     <a name="screenshots"/>
+    <p>&nbsp;</p>
     <span class="boxtab">Screenshots</span>
     <div class="boxcontent">
       <p>
@@ -251,8 +255,8 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
       </p>
     </div>
 
-    <p>&nbsp;</p>
     <a name="faq"/>
+    <p>&nbsp;</p>
     <span class="boxtab">Frequently Asked Questions</span>
     <div class="boxcontent">
       <p>
@@ -263,7 +267,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
         Yes, yes, yes, yes and yes.</li>
       <li><strong>Is GRUF stable ?</strong><br />
         It's used in a production environment for several major websites. Furthermore, it's qualified to be included
-        in Plone 1.1. It's considered reliable enouth !</li>
+        in Plone 1.1. It's considered reliable enough !</li>
       <li><strong>Is GRUF maintained ?</strong><br />
         Yes, it is, actively. Features (especially regarding useablility) are often 
         added to GRUF. Official releases are considered very stable.</li>
@@ -276,8 +280,8 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
     </p>
     </div>
 
-    <p>&nbsp;</p>
     <a name="contact"/>
+    <p>&nbsp;</p>
     <span class="boxtab">Contact</span>
     <div class="boxcontent">
       <p>
@@ -285,6 +289,9 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
       <p>It's actively maintained by <a href="mailto:grizel@ingeniweb.com">Pierre-Julien Grizel</a>.</p>
       <p>Some contributors then joined the project to add cool features for Plone. Thanks, especially,
         to J. Cameroun Cooper, Brent Hendricks and Alan Runyan for their help and support.
+      </p>
+      <p align="center">
+        <a href="http://www.ingeniweb.com"><img border="0" src="IWLogo.jpg"></a>
       </p>
     </div>
 

@@ -5,6 +5,12 @@
       GRUF has generated random passwords for them: here they are.
   </p>
 
+  <p class="form-help">
+    <b><font color="red">IMPORTANT</font></b>: Take some time to write down this information
+    (a copy/paste within a notepad should do it) before clicking the "Ok" button below, as 
+    you won't have any (easy) way to retreive your user's passwords after!
+  </p>
+
   <h3>Generated passwords</h3>
   <ol>
     <form action="" method="GET" tal:attributes="action string:${here/absolute_url}/manage_users">

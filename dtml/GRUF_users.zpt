@@ -13,8 +13,8 @@
               <tr class="list-header">
                 <th>&nbsp;</th>
                 <th>User</th>
-                <th>Current role(s)*</th>
                 <th>Current group(s)</th>
+                <th>Current role(s)*</th>
               </tr>
               
               <tr tal:repeat="user here/getPureUsers" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
@@ -27,20 +27,20 @@
                 </td>
                 <td>
                   <div class="list-item">
-                    <span tal:repeat="role python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles())">
-                      <font color=""
-                            tal:attributes="color here/role_color">
-                        <span tal:condition="python: role not in user.getUserRoles()" tal:replace="role"></span><i tal:condition="python: role in user.getUserRoles()" tal:content="role"></i><span tal:condition="not:repeat/role/end">, </span>
-                      </font>
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <div class="list-item">
                     <font color="" tal:attributes="color here/group_color"
                        tal:content="python:modules['string'].join(user.getGroupsWithoutPrefix(),', ')">
                     Group, group, group, group, ...
                       </font>
+                  </div>
+                </td>
+                <td>
+                  <div class="list-item">
+                    <span tal:repeat="role python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles())">
+                      <font color=""
+                            tal:attributes="color here/role_color">
+                        <span tal:condition="python: role in user.getUserRoles()" tal:replace="role"></span><i tal:condition="python: role not in user.getUserRoles()" tal:content="role"></i><span tal:condition="not:repeat/role/end">, </span>
+                      </font>
+                    </span>
                   </div>
                 </td>
               </tr>
@@ -65,7 +65,7 @@
                   <table>
                     <tr class="list-header">
                       <th>&nbsp;</th>
-                      <th>Affected groups</th>
+                      <th>Affect groups</th>
                     </tr>
                     
                     <tr tal:repeat="group here/getGroups">
@@ -90,7 +90,7 @@
                     <table>
                       <tr class="list-header">
                         <th>&nbsp;</th>
-                        <th>Affected roles</th>
+                        <th>Affect roles</th>
                       </tr>
                       
                       <tr tal:repeat="role here/valid_roles">

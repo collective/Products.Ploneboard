@@ -371,6 +371,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         if hasattr(self.__dict__['__underlying__'], name):
             return self.__dict__['__underlying__'].restrictedTraverse(name)
         else:
-            # Use acquisition regularily
-            # XXX Have to check security on this !!!
-            return self.inheritedAttribute(GRUFUser, name)
+            # Use a try/except to fetch attributes from UserFolders that
+            # override the __getattr__ method (eg. LDAPUserFolder)
+            try:
+                return getattr(self.__dict__['__underlying__'], name)
+            except:
+                # Use acquisition regularily
+                # XXX Have to check security on this !!!
+                return self.inheritedAttribute(GRUFUser, name)
