@@ -21,6 +21,8 @@ contentpanelsCostom.css.dtml
   9. remove reply counts in topic and folder viewlets for better performance
 and clean
 
+  10. add debug_panel for panel debug
+
 V1.5.0
 
   This version has a new viewlet/skin structure. Simpler code and more flexible
