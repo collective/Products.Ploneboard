@@ -5,6 +5,6 @@ Install
 2. unzip the DCWorkflowEditor to your zope Products directory.
 
 3. check if your dot binary path is included in 'bin_search_path' in config.py. 
-   if not, add it.
+   if not, add it. (on windows, it looks from registery automatically)
 
 4. restart zope
