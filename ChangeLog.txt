@@ -1,3 +1,40 @@
+2004-04-06  Bill Schindler <bill@bitranch.com> (bitranch)
+
+    * Moved mail password logic from Member to RegistrationTool to kill the
+      permissions errors coming from the dtml template.
+
+    * Rewrote the mail_password_template to make it work with CMFMember and
+      get around a couple of other permission problems. Gave it full legal
+      email headers while I was at it, so it can use an rfc-abiding email
+      server rather than generating bounces.
+
+2004-04-05  Bill Schindler <bill@bitranch.com> (bitranch)
+
+    * VariableSchemaSupport.py:
+      The field._properties dict is a constant. Switched to use
+      field.__dict__ instead to detect changes within the schema. (This
+      should probably be fixed in Archetypes, too.)
+
+    * Member.py:
+      Changed attributes on fields after registration. This allows fields to be
+      (for example) required during registration, but not required afterwards.
+      This appears to fix the problem with Archetypes 1.2.5 validation
+      breaking on a required id/user name when updating user preferences.
+
+2004-04-04  Bill Schindler <bill@bitranch.com> (bitranch)
+
+    * Changed the name attributes on the join_form buttons so they can
+      work with CMFFormController.
+
+    * VariableSchemaSupport.py:
+      Major clean-up. Tried to bring VariableSchemaSupport back in line with
+      current versions of Archetypes. Made Schemata() return schematas in
+      proper order.
+
+2004-04-01 Bill Schindler  <bill@bitranch.com> (bitranch)
+
+    * README.txt: First pass at a real README.
+
 2004-03-31  Bill Schindler <bill@bitranch.com> (bitranch)
 
     * join_form: Added confirm_password to hidden fields for fieldsets
