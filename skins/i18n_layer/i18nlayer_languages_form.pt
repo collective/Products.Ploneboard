@@ -21,7 +21,12 @@
                   <span i18n:domain="plone" i18n:translate=""
                         tal:content="python:here.getTypeInfo().Title()" 
                         tal:omit-tag="">Item type</span>
-            </span>
+               </span>
+               <span i18n:name="containment">
+                  <span i18n:domain="plone" i18n:translate=""
+                        tal:content="here/ContainmentContentType"
+                        tal:omit-tag="">Containment content type</span>
+               </span>
         </h1>
 
         <p i18n:translate="description_languages_sheet">

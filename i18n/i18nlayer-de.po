@@ -1,4 +1,4 @@
-# translation of i18nlayer-de.po to 
+# translation of i18nlayer-de.po to
 # Gettext Message File for i18nlayer.
 # Simon Eisenmann <simon@struktur.de>, 2003
 msgid ""
@@ -56,7 +56,7 @@ msgstr ""
 #.           </h1>
 #: from ../../I18NLayer/skins/i18n_layer/i18nlayer_languages_form.pt
 msgid "heading_languages_sheet"
-msgstr "Sprachen dieses ${itemtype}`s"
+msgstr "Sprachen dieses ${itemtype} ${containment}`s"
 
 #.   <h1>
 #.       Document not available in this language.
