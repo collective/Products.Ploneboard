@@ -1,3 +1,8 @@
+V1.8.2
+
+  - fix bug: can't select non-folderish content
+  - simplify the layout form
+
 V1.8.1
 
   - fix bug 'AttributeError: toRelativePath' when add new panel 
