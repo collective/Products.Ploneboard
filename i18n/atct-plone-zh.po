@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ATContentTypes CVS\n"
 "POT-Creation-Date: 2004-05-11 23:22+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2005-01-30 23:13 +0080\n"
+"Last-Translator: Junyong Pan <panjyAT zopechina.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=gbk\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
-"Preferred-Encodings: latin1 utf-8\n"
+"Language-Code: zh\n"
+"Language-Name: Chinese\n"
+"Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
+"X-Is-Fallback-For: zh-cn zh-hk zh-mo zh-sg\n"
 
 #: ./skins/ATContentTypes/atct_macros.pt
 #. <legend i18n:translate="legend_criteria_field">
@@ -22,144 +22,143 @@ msgstr ""
 #.  ${fieldname}
 #. </legend>
 msgid "legend_criteria_field"
-msgstr ""
+msgstr "${fieldname}的条件"
 
 ## types/criteria/schemata.py
 
 msgid "label_date_criteria_operation"
-msgstr ""
+msgstr "日期条件的操作"
 
 msgid "help_date_criteria_operation"
-msgstr "" 
+msgstr "对日期条件的操作" 
 
 msgid "label_date_criteria_value"
-msgstr ""
+msgstr "日期值"
 
 msgid "help_date_criteria_value"
-msgstr ""
+msgstr "条件的值是一个日期类型"
 
 msgid "label_date_criteria_range"
-msgstr ""
+msgstr "日期范围"
 
 msgid "help_date_criteria_range"
-msgstr ""
+msgstr "日期的范围"
 
 msgid "label_list_criteria_value"
-msgstr ""
+msgstr "列表类型"
 
 msgid "help_list_criteria_value"
-msgstr ""
+msgstr "列表类型允许对多个值操作"
 
 msgid "label_list_criteria_operator"
-msgstr ""
+msgstr "列表值的操作"
 
 msgid "help_list_criteria_operator"
-msgstr ""
+msgstr "对列表数据采用何种操作"
 
 msgid "label_int_criteria_value"
-msgstr ""
+msgstr "整数值"
 
 msgid "help_int_criteria_value"
-msgstr ""
+msgstr "条件的值为一个整数"
 
 msgid "label_string_criteria_value"
-msgstr ""
+msgstr "字符串值"
 
 msgid "help_string_criteria_value"
-msgstr ""
+msgstr "条件的值为一个字符串"
 
 
 # criterion_edit_form.cpt
 
 # These are the standard field names. No field_ possible. :/
 msgid "id"
-msgstr ""
+msgstr "标识ID"
 
 msgid "Creator"
-msgstr ""
+msgstr "创建人"
 
 msgid "Subject"
-msgstr ""
+msgstr "分类"
 
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 msgid "created"
-msgstr ""
+msgstr "创建时间"
 
 msgid "effective"
-msgstr ""
+msgstr "生效时间"
 
 
 msgid "end"
-msgstr ""
+msgstr "结束时间"
 
 msgid "expires"
-msgstr ""
+msgstr "失效时间"
 
 msgid "modified"
-msgstr ""
+msgstr "修改时间"
 
 msgid "review_state"
-msgstr ""
+msgstr "状态"
 
 msgid "start"
-msgstr ""
+msgstr "起始时间"
 
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 msgid "path"
-msgstr ""
+msgstr "路径"
 
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 msgid "SearchableText"
-msgstr ""
+msgstr "全文搜索"
 
 msgid "exact date value"
-msgstr ""
+msgstr "日期"
 
 msgid "logical AND or OR of list values"
-msgstr ""
+msgstr "值清单的“与”或者“并”逻辑"
 
 msgid "portal types values"
-msgstr ""
+msgstr "内容类型的值"
 
 msgid "exact integer value"
-msgstr ""
+msgstr "数字"
 
 msgid "exact text value"
-msgstr ""
+msgstr "文本"
 
 msgid "table_criteria_field"
-msgstr ""
+msgstr "条件域"
 
 msgid "table_criterion_details"
-msgstr ""
+msgstr "条件详细信息"
 
 msgid "label_sort_reverse"
-msgstr ""
+msgstr "逆序"
 
 msgid "help_sort_reverse"
-msgstr ""
+msgstr "由大到小进行排序"
 
 ###################
 # schema of ConstrainTypesMixin.py
 #################
 
 msgid "label_enable_constrain_allowed_types"
-msgstr "Overwrite allowed types"
+msgstr "重新定义允许添加的内容类型"
 
 msgid "description_enable_constrain_allowed_types"
-msgstr ""
+msgstr "仅仅允许添加在下面定义的内容类型"
 
 msgid "label_constrain_allowed_types"
-msgstr "Set allowed types"
+msgstr "设置允许添加的内容类型"
 
 msgid "description_constrain_allowed_types"
-msgstr "Select one or more types, that should be allowed to "
-       "add inside this folder and its subfolders. Choose "
-       "nothing will allow all types."
+msgstr "选择应该或者多个内容类型, 他们允许添加到这个文件夹和其子文件夹中。"
+       "如果不选，将允许添加所有的内容类型。"
 
