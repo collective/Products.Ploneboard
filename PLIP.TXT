@@ -1,6 +1,6 @@
   -- PLIP - number = 1
   -- Proposer - Kai Hoppert
-  -- Seconder -
+  -- Seconder - Jodok Batlok
   -- Status - Stable
 
 Definition:
@@ -89,6 +89,7 @@ Implementation:
 
 Deliverables:
   -The code is produced
+  - Make an upgrade for handling action icons
 
 Risks:
   - No Risk
