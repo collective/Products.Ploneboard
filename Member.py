@@ -1153,6 +1153,7 @@ class Member(VariableSchemaSupport, BaseContent):
             except:
                 logException()
             self.updateListed()
+            self._changeFieldsAfterRegistration()
 
             if email_notify and auto:
                 # check to see if 'mail_me' was set for auto-registration
@@ -1166,6 +1167,22 @@ class Member(VariableSchemaSupport, BaseContent):
             logException()
             raise
 
+    def _changeFieldsAfterRegistration(self):
+        """
+        Fix up fields that need different settings after
+        registration.
+        """
+        fldchg = (('id', {'required':0}),
+                  ('password', {'required':0}),
+                  ('confirm_password', {'required':0}),
+                 )
+        schema = self.getSchema()
+        for fieldname, params in fldchg:
+            field = schema.get(fieldname, None)
+            if field:
+                for key, value in params.items():
+                    setattr(field, key, value)
+    
     security.declarePrivate('autoRegister')
     def autoRegister(self):
         self.register(auto=1)
