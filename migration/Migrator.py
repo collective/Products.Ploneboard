@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.9 2004/03/18 13:17:09 tiran Exp $
+$Id: Migrator.py,v 1.10 2004/04/04 21:46:02 tiran Exp $
 """
 
 from copy import copy, deepcopy
@@ -83,7 +83,7 @@ class BaseMigrator:
     subtransaction = 30
 
     def __init__(self, obj):
-        print "called for %s " % obj.absolute_url(1)
+        # print "called for %s " % obj.absolute_url(1)
         self.old = obj
         self.orig_id = self.old.getId()
 
@@ -281,7 +281,10 @@ class ItemMigrationMixin:
     def createNew(self):
         """Create the new object
         """
-        self.parent.invokeFactory(id=self.new_id, type_name=self.toType)
+        ttool = getToolByName(self.parent, 'portal_types')
+        typeInfo = ttool.getTypeInfo(self.toType)
+        typeInfo.constructInstance(self.parent, self.new_id)
+
         self.new = getattr(self.parent, self.new_id)
     
     def remove(self):
