@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.28 2003/11/19 02:42:50 zopezen Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.29 2003/11/27 14:49:30 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -18,6 +18,7 @@ import Globals
 from Globals import HTMLFile, InitializeClass
 from OFS.SimpleItem import SimpleItem
 from OFS.ObjectManager import ObjectManager
+from ZODB.POSException import InvalidObjectReference
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base, aq_inner, aq_parent
@@ -217,6 +218,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             error=0
             if swallowExceptions:
                 get_transaction().commit(1)
+        except InvalidObjectReference,e:
+            raise 
         except:
             tb=sys.exc_info()
             if str(tb[1]).endswith('already in use.'):
@@ -341,7 +344,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         if type(products) in (type(''),type(u'')):
             products=[products]
             
-        #only delete everything EXCEPT portaöobjects (tools etc) for reinstall
+        #only delete everything EXCEPT portalobjects (tools etc) for reinstall
         cascade=[c for c in InstalledProduct.default_cascade if c != 'portalobjects']
         self.uninstallProducts(products,cascade)
         self.installProducts(products,stoponerror=1)

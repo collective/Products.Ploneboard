@@ -4,12 +4,11 @@ CMFQuickInstallerTool
 Features
 ----------
 
-This tool is independent from the former CMFQuickInstaller.
-The main difference to CMFQuickInstaller the tracking of
-what a product creates during install. 
+CMFQuickInstallerTool is a facility for comfortable activation/deactivation
+of CMF compliant products inside a CMF site.
 
 Therefore it has to be installed as a tool inside a CMF portal,
-where it stores the infotmation about the installed products.
+where it stores the information about the installed products.
 
 The requirements for a product to be installable with
 QuickInstallerTool are quite simple (almost all existing CMF 

@@ -50,8 +50,8 @@ class IQuickInstallerTool(Interface):
          '''
 
 
-    def uninstallProducts( products, REQUEST=None):
-        ''' removes a list of products '''
+    def uninstallProducts( products, cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
+        ''' removes a list of products, cascade defines which items created by the install shall be uninstalled '''
 
     def reinstallProducts( products, REQUEST=None):
         ''' reinstalls a list of products '''
@@ -105,3 +105,5 @@ class IInstalledProduct(Interface):
         '''
     def getInstalledVersion():
         ''' returns the version of the prod in the moment of installation '''
+
+
