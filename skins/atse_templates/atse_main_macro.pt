@@ -2,7 +2,7 @@
 
   <!-- portlets left side -->
   <div class="left" style="width: 25%"
-       tal:define="fieldsets python:[key for key in here.atse_getSchemataNames() if not key in ['metadata', 'default']];
+       tal:define="fieldsets context/atse_getSchemataNames;
                    default_fieldset python: fieldsets[0];
                    global fieldset request/schemata|default_fieldset">
 
@@ -15,7 +15,6 @@
     <tal:div metal:use-macro="here/atse_macros/macros/maintenance" />
   </div>
         
-
   <!-- portlet right side -->
   <div class="right" style="width: 70%">
     <tal:div metal:use-macro="here/atse_macros/macros/fieldeditor" />

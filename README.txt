@@ -3,8 +3,9 @@ schema editing for AT content-types
 
 Author:
 
-   Andreas Jung, ZOPYX Software Development and Consulting
-   D-72070 Tübingen, Germany
+    Andreas Jung, ZOPYX Software Development and Consulting
+    D-72070 Tübingen, Germany
+    Email: andreas at andreas-jung dot com
 
 License:
 
@@ -24,5 +25,3 @@ Installation:
 Documentation:
 
     to be written
- 
-

@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.4 2004/09/16 17:58:53 ajung Exp $
+$Id: SchemaEditor.py,v 1.5 2004/09/16 18:24:16 ajung Exp $
 """
 
 import re
@@ -39,10 +39,15 @@ class SchemaEditor:
     security = ClassSecurityInfo()
 
     security.declareProtected(ManageSchemaPermission, 'atse_init')
-    def atse_init(self, schema, filtered_schemas=('default', 'metadata'), undeleteable_fields=[]):
+    def atse_init(self, 
+                  schema,     
+                  filtered_schemas=(), 
+                  undeleteable_fields=[], 
+                  domain='plone'):
         self._ms = ManagedSchema(schema.fields())
         self._filtered_schemas = filtered_schemas
         self._undeleteable_fields = undeleteable_fields
+        self._i18n_domain = domain
 
     security.declareProtected(View, 'atse_getSchema')
     def atse_getSchema(self):
@@ -50,11 +55,12 @@ class SchemaEditor:
         return self._ms
 
     security.declareProtected(View, 'atse_getSchemataNames')
-    def atse_getSchemataNames(self):
+    def atse_getSchemataNames(self, filter=True):
         """ return names of all schematas """
-        if not hasattr(self, '_filtered_schemas'):          # migration
-            self._filtered_schemas = ('default', 'metadata')
-        return [n  for n in self._ms.getSchemataNames() if not n in self._filtered_schemas]
+        if filter:
+            return [n for n in self._ms.getSchemataNames() if not n in self._filtered_schemas]
+        else:
+            return [n for n in self._ms.getSchemataNames()]
 
     security.declareProtected(View, 'atse_getSchemata')
     def atse_getSchemata(self, name):
@@ -91,7 +97,7 @@ class SchemaEditor:
     def atse_delSchemata(self, name, RESPONSE=None):
         """ delete a schemata """
 
-        if len(self._ms.getSchemataNames()) == 2: # default is hidden
+        if len(self._ms.getSchemataNames()) == 1: 
             raise RuntimeError(self.translate('atse_can_not_remove_last_schema', default='Can not remove the last schema'))
         self._ms.delSchemata(name)
         self._p_changed = 1
@@ -104,7 +110,7 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_delField')
     def atse_delField(self, name, RESPONSE=None):
-        """ remove a field from a schemata"""
+        """ remove a field from the  schema"""
 
         if name in self._undeleteable_fields:
             raise ValueError(self.translate('atse_field_not_deleteable',
@@ -210,7 +216,7 @@ class SchemaEditor:
         widget.visible = 1
         widget.label = FD.label
         widget.label_msgid = 'label_' + FD.label
-        widget.i18n_domain = 'plonecollectorng'
+        widget.i18n_domain = self._i18n_domain
 
         D['widget'] = widget
 
@@ -233,10 +239,10 @@ class SchemaEditor:
                 for line in vocab:
                     line = line.strip()
                     if not line: continue
-                    if line.find('|') == -1:
-                        k = v = line
-                    else:
+                    if '|' in lines:
                         k,v = line.split('|', 1)
+                    else:
+                        k = v = line
 
                     k = remove_unallowed_chars(k)
                     l.append( (k,v))
@@ -276,7 +282,7 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveLeft')
     def atse_fieldMoveLeft(self, name, RESPONSE=None):
-        """ move a field of schemata to the left"""
+        """ move a field of a schemata to the left"""
         self._ms.moveField(name, -1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
@@ -284,7 +290,7 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveRight')
     def atse_fieldMoveRight(self, name, RESPONSE=None):
-        """ move a field of schemata down to the right"""
+        """ move a field of a schemata to the right"""
         self._ms.moveField(name, 1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
@@ -315,7 +321,7 @@ class SchemaEditor:
     
     security.declareProtected(ManageSchemaPermission, 'atse_formatVocabulary')
     def atse_formatVocabulary(self, field):
-        """ format the DisplayList of a field to be display
+        """ format the DisplayList of a field to be displayed
             within a textarea.
         """
 
@@ -328,21 +334,6 @@ class SchemaEditor:
             if k == v: l.append(k)
             else: l.append('%s|%s' % (k,v))
         return '\n'.join(l)
-
-    security.declareProtected(ManageSchemaPermission, 'migrate_schema')
-    def migrate_schema(self):
-        """ migrate to ManagedSchema """
-
-        old_schema = self._ms.copy()
-        self._ms = ManagedSchema()
-        for schemata_name in old_schema.getSchemataNames():
-            for field in old_schema.getSchemataFields(schemata_name):
-                try:
-                    field._validationLayer()  # re-init validation layer (ValidationChain etc)
-                except AttributeError:
-                    pass
-                self._ms.addField(field)
-        self._p_changed = 1
 
     security.declareProtected(ManageSchemaPermission, 'atse_schema_baseclass')
     def atse_schema_baseclass(self):
