@@ -457,11 +457,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddUser(name, password, roles, domains, groups, **kw)
     
     security.declareProtected(Permissions.manage_users, "userFolderEditUser")
-    def userFolderEditUser(self, name, password, roles, domains = (), groups = (), **kw):
+    def userFolderEditUser(self, name, password = None, roles = None, domains = None, groups = None, **kw):
         """API method for changing user object attributes. Note that not
         all user folder implementations support changing of user object
         attributes."""
-        return self._doChangeUser(name, password, roles, domains, groups, **kw)
+        return self._updateUser(name, password, roles, domains, groups, **kw)
 
     security.declareProtected(Permissions.manage_users, "userFolderDelUsers")
     def userFolderDelUsers(self, names):
@@ -478,10 +478,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddGroup(name, roles, groups, **kw)
         
     security.declareProtected(Permissions.manage_users, "userFolderEditGroup")
-    def userFolderEditGroup(self, name, roles, groups = (), **kw):
+    def userFolderEditGroup(self, name, roles = None, groups = None, **kw):
         """API method for changing group object attributes.
         """
-        return self._doChangeGroup(name, roles, groups = groups, **kw)
+        return self._updateGroup(name, roles, groups = groups, **kw)
 
     security.declareProtected(Permissions.manage_users, "userFolderDelGroups")
     def userFolderDelGroups(self, names):
@@ -514,6 +514,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # Use source-specific search methods if available
             if hasattr(src.aq_base, "findUser"):
                 # LDAPUF
+                Log(LOG_DEBUG, "We use LDAPUF to find users")
                 id_attr = src._uid_attr
                 if attribute == 'name':
                     attr = src._login_attr
@@ -521,6 +522,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     attr = src._uid_attr
                 else:
                     attr = attribute
+                Log(LOG_DEBUG, "we use findUser", attr, search_term, )
                 users = src.findUser(attr, search_term)
                 ret.extend(
                     [ u[id_attr] for u in users ],
@@ -542,6 +544,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     s = getattr(u, method)().lower()
                     if string.find(s, search_term) != -1:
                         ret.append(u.getId())
+        Log(LOG_DEBUG, "We've found them:", ret)
         return ret
 
     security.declareProtected(Permissions.manage_users, "searchUsersByName")
@@ -1217,7 +1220,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self.Groups.acl_users._doChangeUser(name, password,
                                                   roles, domains, **kw)
 
-    security.declarePrivate("_updateUser")
+    security.declarePrivate("_updateGroup")
     def _updateGroup(self, name, roles = None, groups = None):
         """
         _updateGroup(self, name, roles = None, groups = None)
@@ -1284,7 +1287,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/09/06 09:44:47 $"[7:-2]
+        rev_date = "$Date: 2004/10/20 10:03:54 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

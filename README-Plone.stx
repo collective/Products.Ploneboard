@@ -24,6 +24,23 @@ PLONE 2 INSTRUCTIONS
   search only users which are in the CACHE. This may be fixed in Plone
   later (2004-08-31: still not fixed).
 
+
+  Plone 2.1 will work even better with GRUF. You can already gain
+  benefit from some GRUF-for-Plone21 features:
+
+    BY DEFAULT, this thing is NOT enabled. To enable it, you have to do two
+    things:
+
+    * Install the gruf_plone_2_0 skin manually (see README file in this skin)
+
+    * Put a 'preview.txt' file in your GroupUserFolder directory. Unless you
+    do so, the monkeypatch won't be applied.
+
+    This stuff is only provided for convenience and should be considered as
+    experimental.
+
+
+
 PLONE 1 INSTRUCTIONS
 
   IMPORTANT NOTICE

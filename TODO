@@ -5,6 +5,14 @@ TODO-LIST
 
   * check caches ?
 
+  * Corriger le bug des arguments par défaut:
+
+    - grep -R "def.*= \[\]" *
+
+    - grep -R "def.*= {}" *
+
+    Cf.  http://www.ferg.org/projects/python_gotchas.html#bct_sec_5
+
 
 [v3.1]
 

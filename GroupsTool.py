@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.32 2004/07/13 13:07:46 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.33 2004/10/20 10:03:55 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -28,8 +28,11 @@ from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from interfaces.portal_groups import portal_groups as IGroupsTool
 from global_symbols import *
 
+# Optional feature-preview support
+import PloneFeaturePreview
 
-class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
+
+class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
     """ This tool accesses group data through a GRUF acl_users object.
 
     It can be replaced with something that groups member data in a
@@ -62,9 +65,9 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                      },
                 ) + SimpleItem.manage_options)
 
-    #
-    #   ZMI methods
-    #
+    #                                                   #
+    #                   ZMI methods                     #
+    #                                                   #
     security.declareProtected(ViewManagementScreens, 'manage_overview')
     manage_overview = DTMLFile('dtml/explainGroupsTool', globals())     # unlike MembershipTool
     security.declareProtected(ViewManagementScreens, 'manage_config')
@@ -219,7 +222,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         self.getGroupById(id).setProperties(**kw)
 
     security.declareProtected(ManageGroups, 'editGroup')
-    def editGroup(self, id, roles = [], groups = [], *args, **kw):
+    def editGroup(self, id, roles = None, groups = None, *args, **kw):
         """Edit the given group with the supplied password, roles, and domains.
 
         Underlying user folder must support editing users via the usual Zope API.
@@ -459,5 +462,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 pass
         # Failed.
         return g
+
+
 
 InitializeClass(GroupsTool)

@@ -3,6 +3,10 @@
 GRUF 3.0 NOTES WITH LDAPUserFolder
 
 
+THIS DOCUMENT WILL BE RE-WRITTEN SOON! PLEASE BE VERY CAREFUL ABOUT IT AS 
+SOME STATEMENTS HERE MAY BE OUTDATED.
+
+
 Overview
 
   LDAP support was not perfect with GRUF < 3. It worked perfectly in a read-only, 

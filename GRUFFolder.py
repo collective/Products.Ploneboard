@@ -115,7 +115,7 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
         """
         # Call the "new_getUserNames" method if available
         if "new_getUserNames" in self.objectIds():
-            return self.new_getUserNames()
+            return self.unrestrictedTraverse('new_getUserNames')()
 
         # Return () if nothing is there
         return ()

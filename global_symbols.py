@@ -30,6 +30,14 @@ if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/version.txt'):
 else:
     version__ = "(UNKNOWN)"
 
+
+# Check if we are in preview mode
+PREVIEW_PLONE21_IN_PLONE20_ = 0
+if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/preview.txt'):
+    # Have to test if we use Plone 2.0 here to avoid monkeypatching a Plone 2.1 instance !
+    PREVIEW_PLONE21_IN_PLONE20_ = 1
+
+
 # Group prefix
 GROUP_PREFIX = "group_"
 GROUP_PREFIX_LEN = len(GROUP_PREFIX)

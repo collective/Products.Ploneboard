@@ -167,9 +167,9 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
         ret = self._getGroups(no_recurse = 1)
         return list(ret)
     
-    def _getGroups(self, no_recurse = 0, already_done = [], prefix = GROUP_PREFIX):
+    def _getGroups(self, no_recurse = 0, already_done = None, prefix = GROUP_PREFIX):
         """
-        getGroups(self, no_recurse = 0, already_done = [], prefix = GROUP_PREFIX) => list of strings
+        getGroups(self, no_recurse = 0, already_done = None, prefix = GROUP_PREFIX) => list of strings
         
         If this user is a user (uh, uh), get its groups.
         THIS METHODS NOW SUPPORTS NESTED GROUPS ! :-)
@@ -180,6 +180,9 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
         This method is private and should remain so.
         """
+        if already_done is None:
+            already_done = []
+
         # List this user's roles. We consider that roles starting 
         # with GROUP_PREFIX are in fact groups, and thus are 
         # returned (prefixed).

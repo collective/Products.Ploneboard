@@ -16,3 +16,5 @@ CONTRIBUTORS
   Volker: LDAPGroupFolder initial coding
 
   Kai Bielenberg <kai@bielenberg.info>: LDAP tips
+
+  Jens Vagelpohl <jens@dataflake.org>: Help on LDAPUserFolder support

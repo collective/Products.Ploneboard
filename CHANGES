@@ -1,3 +1,11 @@
+
+  * Added a Plone 2.0 optional patch to improve LDAP and groups management. 
+    It's basically a preview of what will be done in Plone 2.1 for users managment.
+    For example, now, you can assign local roles to users in your LDAP directory,
+    EVEN if they're not in the cache in folder_localrole_form.
+    Other "preview" features will come later. Please read README and PloneFeaturePreview.py
+    files for more explanations on these.
+
 v3_1_1 - 20040906
 
   * Fixed a bug in getProperty() - it always returned None !
