@@ -32,15 +32,18 @@
       <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$lastPage"
          tal:condition="python: lastPage!=-1">
          <img title="move left" alt="move left"
+              i18n:attributes="title"
               tal:attributes="src string:$portal_url/left.gif;"/>
       </a>
       <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$nextPage" 
          tal:condition="python: nextPage!=len(here.getPageTitles())">
         <img title="move right" alt="move right"
+             i18n:attributes="title"
              tal:attributes="src string:$portal_url/right.gif;"/>
       </a>
       <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePage=1&amp;pageIndex=$pageIndex">
          <img title="delete this page" alt="delete this page"
+              i18n:attributes="title"
               tal:attributes="src string:$portal_url/delete.gif;"/>
       </a>
     </div>
@@ -113,24 +116,29 @@ columns
 
                 <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                    <img title="new panel" alt="new panel"
+                        i18n:attributes="title"
                          tal:attributes="src string:$portal_url/newPanel.gif"/>
                 </a>
                 <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;toColumn=$lastColumn"
                    tal:condition="not: repeat/column/start">
                     <img title="move left" alt="move left"
+                         i18n:attributes="title"
                          tal:attributes="src string:$portal_url/left.gif"/>
                 </a>
                 <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;toColumn=$nextColumn"
                     tal:condition="not: repeat/column/end">
                    <img title="move right" alt="move right"
+                        i18n:attributes="title"
                          tal:attributes="src string:$portal_url/right.gif"/>
                 </a>
                 <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$nextColumn">
                     <img title="new column" alt="new column"
+                         i18n:attributes="title"
                          tal:attributes="src string:$portal_url/newCol.gif"/>
                 </a>
                 <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deleteColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex">
                     <img title="delete column" alt="delete column"
+                         i18n:attributes="title"
                          tal:attributes="src string:$portal_url/delete.gif"/>
                 </a>
             </div>
@@ -158,29 +166,35 @@ columns
                         <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toPanel=$lastPanel"
                            tal:condition="not: repeat/panel/start">
                           <img title="move up" alt="move up"
+                             i18n:attributes="title"
                              tal:attributes="src string:$portal_url/up.gif"/>
                         </a>
                         <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toPanel=$nextPanel"
                            tal:condition="not: repeat/panel/end">
                           <img title="move down" alt="move down"
+                             i18n:attributes="title"
                              tal:attributes="src string:$portal_url/down.gif"/>
                         </a>
                         <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toColumn=$lastColumn"
                            tal:condition="not: repeat/column/start">
                           <img title="move left" alt="move left"
+                             i18n:attributes="title"
                              tal:attributes="src string:$portal_url/left.gif"/>
                         </a>
                         <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toColumn=$nextColumn"
                            tal:condition="not: repeat/column/end">
                           <img title="move right" alt="move right"
+                             i18n:attributes="title"
                              tal:attributes="src string:$portal_url/right.gif"/>
                         </a>
                         <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                           <img title="new panel" alt="new panel"
+                             i18n:attributes="title"
                              tal:attributes="src string:$portal_url/newPanel.gif"/>
                         </a>
                         <a href="#" tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex">
                           <img title="delete this panel" alt="delete this panel"
+                               i18n:attributes="title"
                              tal:attributes="src string:$portal_url/delete.gif"/>
                         </a>
                       </div>

@@ -1,9 +1,10 @@
-# Getget file for contentpanels
-
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: CMFContentPanels 1.6\n"
-"POT-Creation-Date: 2004-03-25 00:33+0000\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-03-25 01:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,27 +64,11 @@ msgstr "Padding:"
 
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span class="label" i18n:translate="label_skin">
-#.  skin:
-#. </span>
-msgid "label_skin"
-msgstr "skin:"
-
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <span i18n:translate="label_title">
 #.  Title:
 #. </span>
 msgid "label_title"
 msgstr "Title:"
-
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span class="label" i18n:translate="label_viewlet">
-#.  viewlet:
-#. </span>
-msgid "label_viewlet"
-msgstr "viewlet:"
 
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
@@ -101,10 +86,74 @@ msgstr "Width:"
 msgid "legend_contentpanels_details"
 msgstr "ContentPanels Details"
 
-#- Removed msgids:
-# 
 
-#- Added msgids:
-#  description_edit_contentpanels legend_contentpanels_details
-# label_title label_align label_width label_panel_space Save
-# "Column Width" label_skin label_viewlet "content viewlet"
+msgid "Select Viewlet:"
+msgstr ""
+
+# Box Skin Names
+
+msgid "Blank Box"
+msgstr ""
+
+msgid "Title Only"
+msgstr ""
+
+msgid "Plone Box"
+msgstr ""
+
+msgid "Blue Box"
+msgstr ""
+
+msgid "Red Box"
+msgstr ""
+
+msgid "Yellow Box"
+msgstr ""
+
+# viewlet Names
+
+msgid "ContentPanels View"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Lastest Updates"
+msgstr ""
+
+msgid "Body"
+msgstr ""
+
+msgid "Default Viewlet"
+msgstr ""
+
+msgid "My Recent Changes"
+msgstr ""
+
+
+msgid "move left"
+msgstr ""
+
+msgid "move right"
+msgstr ""
+
+msgid "delete this page"
+msgstr ""
+
+msgid "new panel"
+msgstr ""
+
+msgid "new column"
+msgstr ""
+
+msgid "delete column"
+msgstr ""
+
+msgid "move up"
+msgstr ""
+
+msgid "move down"
+msgstr ""
+
+msgid "delete this panel"
+msgstr ""
