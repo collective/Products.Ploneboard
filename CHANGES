@@ -1,7 +1,10 @@
-CVS
+[v3.2 - ]
+
+  * Added a helper table on the sources tab to help managing LUF group mappings
 
   * Fixed a bug in Zope 2.7 preventing the zope quickstart page to show up.
     A hasUsers() method was missing from GRUF's API.
+
   * Fixed a bug in ZMI which prevented LUF cached users to be individually
     managed by GRUF.
 
