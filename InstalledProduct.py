@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.8 2003/05/24 18:51:21 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.9 2003/05/26 12:20:00 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ class InstalledProduct(SimpleItem):
                 portal.right_slots=[s for s in portal.right_slots if s not in self.rightslots]
             
         self.status='uninstalled'
-        self.log('uninstalled\n'+res)
+        self.log('uninstalled\n'+str(res))
         
         if REQUEST and REQUEST.get('nextUrl',None):
             return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
