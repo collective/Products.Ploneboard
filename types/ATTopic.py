@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.19 2004/06/10 15:19:37 tiran Exp $
+$Id: ATTopic.py,v 1.20 2004/06/17 23:22:30 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -315,7 +315,9 @@ class ATTopic(ATCTFolder):
     def synContentValues(self):
         """Getter for syndacation support
         """
-        results = [brain.getObject() for brain in self.queryCatalog()]
-        return [obj for obj in results if obj]
+        syn_tool = getToolByName(self, 'portal_syndication')
+        limit = syn_tool.getMaxItems(self)
+        brains = self.queryCatalog(sort_limit=limit)[:limit]
+        return [brain.getObject() for brain in brains]
 
 registerType(ATTopic)

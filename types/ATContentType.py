@@ -18,13 +18,12 @@
 #
 """
 
-$Id: ATContentType.py,v 1.17 2004/06/13 21:48:34 tiran Exp $
+$Id: ATContentType.py,v 1.18 2004/06/17 23:22:30 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.RestrainTypesMixin import RestrainTypesMixin
 
 from copy import copy
 
@@ -246,19 +245,7 @@ class ATCTFileContent(ATCTContent):
 
 InitializeClass(ATCTFileContent)
 
-class ATCTRestrainedFolderMixin(RestrainTypesMixin, ATCTMixin):
-    """ Restrained folderish type """
-
-    __implements__ = ATCTMixin.__implements__, RestrainTypesMixin.__implements__
-        
-if ENABLE_RESTRAIN_TYPES_MIXIN:
-    ATCTFolderMixin = ATCTRestrainedFolderMixin
-else:
-    ATCTFolderMixin = ATCTMixin
-    
-InitializeClass(ATCTFolderMixin)
-
-class ATCTFolder(ATCTFolderMixin, BaseFolder):
+class ATCTFolder(ATCTMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""
 
     __implements__ = BaseFolder.__implements__, ATCTFolderMixin.__implements__ 

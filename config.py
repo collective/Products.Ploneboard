@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.25 2004/06/16 20:02:17 tiran Exp $
+$Id: config.py,v 1.26 2004/06/17 23:22:29 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -77,13 +77,6 @@ TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 
-## use RestrainedMixin?
-## if enabled you can restrain allowed types.on a ATCT Folder
-ENABLE_RESTRAIN_TYPES_MIXIN = False
-RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
-#RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
-#RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
-
 ## Document History view permission
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
@@ -103,7 +96,6 @@ GLOBALS = globals()
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
                  'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
                  'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE',
-                 'ENABLE_RESTRAIN_TYPES_MIXIN', 'RESTRAIN_TYPES_MIXIN_PERMISSION',
                  )
 
 ## using special plone 2 stuff?
@@ -156,6 +148,7 @@ ICONMAP = {'application/pdf' : 'pdf_icon.gif',
 GOOD_CHARS = string.ascii_letters + string.digits + '._'
 CHAR_MAPPING = {
     ' ' : '_',
+    'Å' : 'Aa',
     'À' : 'A',
     'Á' : 'A',
     'Â' : 'A',
