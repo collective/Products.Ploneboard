@@ -269,13 +269,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Group-specific operation
     # ------------------------
 
-    def getGroupNames(self, without_prefix = 0):
+    def getGroupNames(self, prefixed = 1):
         """
         Fetch the list from GRUFGroups.
         """
         if not "acl_users" in self.Groups.objectIds():
             return ()
-        return self.Groups.listGroups(without_prefix = without_prefix)
+        return self.Groups.listGroups(prefixed = prefixed)
 
     def getGroups(self):
         """Return a list of user objects"""

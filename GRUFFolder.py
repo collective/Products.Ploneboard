@@ -185,12 +185,12 @@ class GRUFGroups(GRUFFolder):
         return ret
         
 
-    def listGroups(self, without_prefix = 0):
+    def listGroups(self, prefixed = 0):
         """
         Return a list of available groups.
         Group names are prefixed !
         """
-        if without_prefix:
+        if not prefixed:
             return self.acl_users.getUserNames()
         else:
             #XXX Please replace this w/ a sensible list comprehension    
