@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.1 2003/03/25 16:46:55 longsleep Exp $
+$Id: I18NLayer.py,v 1.2 2003/03/26 11:41:53 vladoi Exp $
 """
 
-__version__ = "$Revision: 1.1 $"
+__version__ = "$Revision: 1.2 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -200,7 +200,7 @@ class CheckValidity:
 
 schema = Schema((
 
-    BaseSchema.schema['id'],
+    BaseSchema['id'],
 
     ObjectField(
         'allowedType',
