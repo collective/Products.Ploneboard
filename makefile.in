@@ -1,6 +1,6 @@
 NAME=CMFQuickInstallerTool
-MAJOR_VERSION=1.4
-MINOR_VERSION=1
+MAJOR_VERSION=1.5
+MINOR_VERSION=0
 RELEASE_TAG=
 PACKAGE_NAME=${NAME}-${MAJOR_VERSION}.${MINOR_VERSION}${RELEASE_TAG}
 
@@ -55,8 +55,10 @@ sdist_tgz:
           ${CD} ${TMPDIR} && ${TAR} czfh ${BASE_DIR}/${PACKAGE_NAME}.tgz ${NAME} \
            --exclude=${PACKAGE_NAME}.tgz\
            --exclude=CVS \
+           --exclude=debian \
            --exclude=.cvsignore \
            --exclude=makefile \
+           --exclude=makefile.in \
            --exclude=Makefile \
            --exclude=*.pyc \
            --exclude=TAGS \
