@@ -106,6 +106,18 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self._GRUF = GRUF
         self._source_id = source_id
         self.id = self._original_id
+        # Store the results of getRoles and getGroups. Initially set to None,
+        # set to a list after the methods are first called.
+        # If you are caching users you want to clear these.
+        self.clearCachedGroupsAndRoles()
+
+    security.declarePrivate('clearCachedGroupsAndRoles')
+    def clearCachedGroupsAndRoles(self):
+        self._groups = None
+        self._user_roles = None
+        self._group_roles = None
+        self._all_roles = None
+        
 
     security.declarePublic('isGroup')
     def isGroup(self,):
@@ -137,6 +149,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # List this user's roles. We consider that roles starting 
         # with _group_prefix are in fact groups, and thus are 
         # returned (prefixed).
+        if self._groups is not None:
+            return self._groups
+
         ret = []
 
         # Scan roles to find groups
@@ -166,7 +181,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                         ret.append(extend)
 
         # Return the groups
-        return tuple(ret)
+        self._groups = tuple(ret)
+        return self._groups
 
 
     security.declarePrivate('getGroupsWithoutPrefix')
@@ -218,34 +234,31 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         Return the list (tuple) of roles assigned to a user.
         THIS IS WHERE THE ATHENIANS REACHED !
         """
-        user = []
-        groups = []
-        prefix = GRUFFolder.GRUFGroups._group_prefix
-
-        # Get user roles
-        for role in self._original_roles:
-            if string.find(role, grufprefix) != 0:
-                user.append(role)
-
-        # Get group roles
-        groups = self.getGroupRoles()
+        if self._all_roles is not None:
+            return self._all_roles
 
         # Return user and groups roles
-        return GroupUserFolder.unique(tuple(user) + tuple(groups))
+        self._all_roles = GroupUserFolder.unique(self.getUserRoles() + self.getGroupRoles())
+        return self._all_roles
 
     security.declarePublic('getUserRoles')
     def getUserRoles(self):
         """
         returns the roles defined for the user without the group roles
         """
+        if self._user_roles is not None:
+            return self._user_roles
         prefix=GRUFFolder.GRUFGroups._group_prefix
-        return tuple([r for r in self._original_roles if not r.startswith(prefix)])
+        self._user_roles = tuple([r for r in self._original_roles if not r.startswith(prefix)])
+        return self._user_roles
 
     security.declarePublic("getGroupRoles")
     def getGroupRoles(self,):
         """
         Return the tuple of roles belonging to this user's group(s)
         """
+        if self._group_roles is not None:
+            return self._group_roles
         ret = []
         acl_users = self._GRUF.acl_users 
         groups = acl_users.getGroupNames()
@@ -257,8 +270,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 # Ignored silently
                 continue
             ret.extend(acl_users.getGroup(group).getUserRoles())
-            
-        return GroupUserFolder.unique(ret)
+        
+        self._group_roles = GroupUserFolder.unique(ret)
+        return self._group_roles
     
     security.declarePublic('getRolesInContext')
     def getRolesInContext(self, object, userid = None):
@@ -366,20 +380,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             return None
 
         # Try the top level group roles.
-        acl_users = self._GRUF.acl_users 
-        groups = acl_users.getGroupNames()
-        groups_dict = {}
-        for g in groups:
-            groups_dict[g] = 1
+        if [role for role in self.getGroupRoles() if object_roles_dict.has_key(role)]:
+            if self._check_context(object):
+                return 1
+            return None
 
         user_groups = self.getGroups()
-        for group in user_groups:
-            if group in groups:
-                if [role for role in acl_users.getGroup(group).getUserRoles() if object_roles_dict.has_key(role)]:
-                    if self._check_context(object):
-                        return 1
-                    return None
-
         # No luck on the top level, try local roles
         inner_obj = getattr(object, 'aq_inner', object)
         userid = self.getId()
