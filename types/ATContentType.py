@@ -18,24 +18,31 @@
 #
 """
 
-$Id: ATContentType.py,v 1.8 2004/05/04 18:26:46 tiran Exp $
+$Id: ATContentType.py,v 1.9 2004/05/15 00:52:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
+from copy import copy
+
+from Products.Archetypes.public import BaseContent, BaseFolder
+from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
 from Products.Archetypes.TemplateMixin import TemplateMixin
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
+
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from copy import copy
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
 
+
 def updateActions(klass, actions):
+    """Merge the actions from a class with a list of actions
+    """
     kactions = copy(klass.actions)
     aids  = [action.get('id') for action in actions ]
     actions = list(actions)
@@ -46,6 +53,7 @@ def updateActions(klass, actions):
             actions.append(kaction)
     
     return tuple(actions)
+
 
 class ATCTMixin(TemplateMixin):
     """Mixin class for AT Content Types"""
@@ -102,8 +110,8 @@ class ATCTMixin(TemplateMixin):
         """
         return self.default_view
 
-
 InitializeClass(ATCTMixin)
+
 
 class ATCTContent(ATCTMixin, BaseContent):
     """Base class for non folderish AT Content Types"""
@@ -130,6 +138,7 @@ class ATCTContent(ATCTMixin, BaseContent):
 
 InitializeClass(ATCTContent)
 
+
 class ATCTFolder(ATCTMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""
 
@@ -155,6 +164,7 @@ class ATCTFolder(ATCTMixin, BaseFolder):
 
 InitializeClass(ATCTFolder)
 
+
 class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
     """Base class for orderable folderish AT Content Types"""
 
@@ -178,8 +188,8 @@ class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
         )
     )
 
-
 InitializeClass(ATCTOrderedFolder)
+
 
 class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
     """Base class for folderish AT Content Types using a BTree"""
@@ -204,7 +214,8 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
         )
     )
 
-
 InitializeClass(ATCTBTreeFolder)
 
-__all__ = ('ATCTContent', 'ATCTFolder', 'ATCTOrderedFolder', 'ATCTBTreeFolder', 'updateActions' )
+
+__all__ = ('ATCTContent', 'ATCTFolder', 'ATCTOrderedFolder', 'ATCTBTreeFolder',
+           'updateActions' )

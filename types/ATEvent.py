@@ -18,19 +18,19 @@
 #
 """
 
-$Id: ATEvent.py,v 1.10 2004/05/14 12:36:04 godchap Exp $
+$Id: ATEvent.py,v 1.11 2004/05/15 00:52:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from types import StringType
 
-from Products.Archetypes.public import *
 try:
-    from Products.LinguaPlone.public import *
+    from Products.LinguaPlone.public import registerType
 except ImportError:
     # No multilingual support
-    pass
+    from Products.Archetypes.public import registerType
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo

@@ -18,19 +18,19 @@
 #
 """
 
-$Id: ATFile.py,v 1.13 2004/05/14 12:36:04 godchap Exp $
+$Id: ATFile.py,v 1.14 2004/05/15 00:52:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from urllib import quote
 
-from Products.Archetypes.public import *
 try:
-    from Products.LinguaPlone.public import *
+    from Products.LinguaPlone.public import registerType, BaseContent
 except ImportError:
     # No multilingual support
-    pass
+    from Products.Archetypes.public import registerType, BaseContent
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
