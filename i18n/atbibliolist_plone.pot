@@ -205,7 +205,7 @@ msgstr "Download Format"
 #            Please select the format.
 #          </div>
 msgid "help_bibliography_download_format"
-msgstr "Please select the format."
+msgstr "Select export format."
 
 #: listDownloadForm.pt
 #          <input class="context"
@@ -229,9 +229,9 @@ msgstr "Search and select references to add to the list or organize/remove liste
 #: BibliographyList.py
 # PresentationStyle
 msgid "label_presentation"
-msgstr "Presentation Style"
+msgstr "Bibliography Style"
 msgid "help_presentation"
-msgstr "Select the format how you want to present your list."
+msgstr "The style the list will be rendered in."
 
 #: BibliographyList.py
 # ListingLayout
@@ -240,70 +240,66 @@ msgstr "Listing Layout"
 msgid "help_bibliolist_listing_format"
 msgstr "How the list will be rendered in the view page."
 
-  
-
 #: BibrefCustomStyleSet.py
 # DefaultStyle 
 msgid "label_styleset_default"
 msgstr "Default Presentation Style"
 msgid "help_styleset_default"
-msgstr "Select the default bibliographic style you want to present your list with."
+msgstr "Default bibliographic style."
  
 #: BibrefCustomStyleSet.py
 # dynamic list of reference types 
 msgid "help_styleset_list"
 msgstr "Select the bibliographic style how you want to present your list for this type of reference."
  
-
-
 #: BibrefCustomStyle.py
 # refDisplay
 msgid "label_refpresentation_formatandorder"
 msgstr "Format"
 msgid "help_refpresentation_formatandorder"
-msgstr "Give the desired format of the bibliographic reference. Place a field using the following way: Author: %A | Title: %T | Publication_month: %m | Publication_year: %y | Journal: %J | Institution: %I | Organisation: %O | Booktitle: %B | Pages: %p | Volume: %v | Number: %n | Editor(s): %E | EditorFlag: %F | Publisher: %P | Adress: %a | Pmid: %i | Edition: %e | Howpublished: %h | Chapter: %c | School: %S | Preprint sever: %r | Series: %s | '%' sign: %%"
+msgstr "Format of the bibliographic reference. Place a field using the following way: Author: %A | Title: %T | Publication_month: %m | Publication_year: %y | Journal: %J | Institution: %I | Organisation: %O | Booktitle: %B | Pages: %p | Volume: %v | Number: %n | Editor(s): %E | EditorFlag: %F | Publisher: %P | Adress: %a | Pmid: %i | Edition: %e | Howpublished: %h | Chapter: %c | School: %S | Preprint sever: %r | Series: %s | '%' sign: %%"
 
 #: BibrefCustomStyle.py
 # nameOrder
 msgid "label_refpresentation_nameorderformat"
 msgstr "Names Order"
 msgid "help_refpresentation_nameorderformat"
-msgstr "Order the family name, 1st name, middlename the way you want."
+msgstr "Display Order for author names."
 
 #: BibrefCustomStyle.py
 # firstnameFormat
 msgid "label_refpresentation_firstnameformat"
 msgstr "First name author (in %A)"
 msgid "help_refpresentation_firstnameformat"
-msgstr "Choose a fitting format for the first name."
+msgstr "Format for the first name."
 
 #: BibrefCustomStyle.py
 # middlenameFormat
 msgid "label_refpresentation_middlenameFormat"
 msgstr "Middle name author (in %A)"
 msgid "help_refpresentation_middlenameFormat"
-msgstr "Choose a fitting format for the middle name."
+msgstr "Format for the middle name."
 
 #: BibrefCustomStyle.py
 # lastnameFormat
 msgid "label_refpresentation_lastnameformat"
 msgstr "Family name author (in %A)"
 msgid "help_refpresentation_lastNameFormat"
-msgstr "Choose a fitting format for the family name."
+msgstr "Format for the last name."
 
 #: BibrefCustomStyle.py
 # authorSeparator
 msgid "label_refpresentation_authorseparator"
 msgstr "Default symbol or string between authors"
 msgid "help_refpresentation_nameseparatorformat"
-msgstr "Type the separator to put between each author, except between the two last authors(spaces included)"
+msgstr "Separator between each author, except between the two last authors(spaces included)"
 
 #: BibrefCustomStyle.py
 # lastauthorSeparator
 msgid "label_refpresentation_lastauthorseparator"
 msgstr "Symbol or string between last author and its predecessor"
 msgid "help_refpresentation_lastnameseparatorformat"
-msgstr "Type the separator to put between the two last authors(spaces included)"
+msgstr "Separator between the two last authors (spaces included)."
  
 #: BibrefCustomStyle.py
 # withAuthorUrl 
@@ -317,7 +313,7 @@ msgstr "Check if authors must link to their URL (if URL exists)."
 msgid "label_refpresentation_titleformat"
 msgstr "PublicationTitle (%T)"
 msgid "help_refpresentation_titleformat"
-msgstr "Choose a fitting format for the title."
+msgstr "Format for the title."
  
 #: BibrefCustomStyle.py
 # withTitleUrl 
@@ -331,51 +327,53 @@ msgstr "Check if title must link to its URL (if URL exists)."
 msgid "label_refpresentation_journalformat"
 msgstr "Journal (%J)"
 msgid "help_refpresentation_journalformat"
-msgstr "Choose a format on how to present the Journal name."
+msgstr "Format for the Journal name."
  
 #: BibrefCustomStyle.py
 # pagesFormat 
 msgid "label_refpresentation_pagesformat"
 msgstr "Pages (%p)"
 msgid "help_refpresentation_pagesformat"
-msgstr "Choose a format on how to represent page numbers."
+msgstr "Format for page numbers."
  
 #: BibrefCustomStyle.py
 # volumeFormat 
 msgid "label_refpresentation_volumeformat"
 msgstr "Volume number(%v)"
 msgid "help_refpresentation_volumeformat"
-msgstr "Choose a format on how to present the volume number."
+msgstr "Format for the volume number."
  
 #: BibrefCustomStyle.py
 # chapterFormat 
 msgid "label_refpresentation_chapterformat"
 msgstr "Chapter number(%c)"
 msgid "help_refpresentation_chapterformat"
-msgstr "Choose a format on how to present the chapter number."
+msgstr "Format for the chapter number."
  
 #: BibrefCustomStyle.py
 # numberFormat 
 msgid "label_refpresentation_numberformat"
 msgstr "Magazine/Journal/Report Number (%n)"
 msgid "help_refpresentation_numberformat"
-msgstr "Choose a format on how to present the number."
+msgstr "Format for the number."
  
 #: BibrefCustomStyle.py
 # seriesFormat 
 msgid "label_refpresentation_seriesformat"
 msgstr "Series Format (%s)"
 msgid "help_refpresentation_seriesformat"
-msgstr "Choose a fitting format for the series name."
+msgstr "Format for the series name."
  
 #: BibrefCustomStyle.py
 # bookTitleFormat 
 msgid "label_refpresentation_booktitleformat"
 msgstr "Title of Book (for inbook reference) (%B)"
 msgid "help_refpresentation_booktitleformat"
-msgstr "Choose a fitting format for the title of the book."
+msgstr "Format for the title of the book."
  
-
+#: BibrefCustomStyle.py
+# msgid "help_refpresentation_editionformat"
+# msgstr "Format d'affichage du numéro de l'édition."
 
  
  

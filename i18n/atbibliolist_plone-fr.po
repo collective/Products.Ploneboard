@@ -1,4 +1,3 @@
-
 msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioList 0.1\n"
@@ -347,7 +346,7 @@ msgstr "Format d'affichage ajusté du numéro de volume."
 msgid "label_refpresentation_chapterformat"
 msgstr "Numéro du chapitre (%c)"
 msgid "help_refpresentation_chapterformat"
-msgstr "Format d'affichage du numéro du chapitre."
+msgstr "Format d'affichage du numéro de chapitre."
 
 #: BibrefCustomStyle.py
 # numberFormat 
@@ -370,6 +369,10 @@ msgstr "Titre du livre (pour des références de parties de livres (%B)"
 msgid "help_refpresentation_booktitleformat"
 msgstr "Format d'affichage du titre du livre."
 
+#: BibrefCustomStyle.py
+# msgid "help_refpresentation_editionformat"
+# msgstr "Format d'affichage du numéro de l'édition."
+
 #: ReferencePresentation.py
 # msgid "label_publicationYearformat"
 # msgstr "Année de publication (%y)"
@@ -379,7 +382,7 @@ msgstr "Format d'affichage du titre du livre."
 #: ReferencePresentation.py
 # msgid "label_editionformat"
 # msgstr "Edition (%e)"
-# msgid "help_editionformat"
+# msgid "help_refpresentation_editionformat"
 # msgstr "Format d'affichage du numéro de l'édition."
 
 #: ReferencePresentation.py
