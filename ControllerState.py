@@ -1,6 +1,7 @@
 import Globals
 import AccessControl
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_inner, aq_parent, aq_chain
 from Products.CMFCore.utils import getToolByName
 
 class ControllerState(AccessControl.Role.RoleManager):
@@ -19,7 +20,7 @@ class ControllerState(AccessControl.Role.RoleManager):
     errors = {}
 
     # The new context (use None if the context should remain the same)
-    context = [None]
+    context = None
 
     # The button that was pressed (None if no named button was pressed)
     button = None
@@ -132,13 +133,13 @@ class ControllerState(AccessControl.Role.RoleManager):
 
     def getContext(self):
         """Get the context of the current form/script"""
-        return self.context[0]
+        if self.context is None:
+            return self.context
+        return aq_inner(self.context)
 
     def setContext(self, context):
         """Set the context of the current form/script"""
-        # keep context in a list so we don't nuke its acquisition chain
-        # XXX - this may be evil
-        self.context = [context]
+        self.context = context
 
     def getKwargs(self):
         """Get any extra arguments (e.g. portal_status_message) that should be
