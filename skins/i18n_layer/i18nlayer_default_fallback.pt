@@ -25,7 +25,7 @@
     </table>-->
 
     <p><span tal:omit-tag="" i18n:translate="start_from_beginning">.. or start from the beginning in your currently selected language.</span>&nbsp;&nbsp;-->&nbsp;
-      <a tal:content="python:here.portal_url.getPortalObject().Title()" href="" tal:attributes="href portal_url">welcome</a>
+      <a tal:content="python:here.portal_url.getPortalObject().Title()" href="" tal:attributes="href here/portal_url">welcome</a>
     </p>
     
 </div>
