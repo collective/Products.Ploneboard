@@ -14,7 +14,8 @@ class EmoticonDataProvider(TransformDataProvider):
         self.config = PersistentMapping()
         self.config_metadata = PersistentMapping()
         
-        self.config.update({ 'inputs' : {':)' : "smile.png", ':(' : "sad.png"} })
+        self.config.update({ 'inputs' : { ':)' : '<img src="smile.png" />'
+                                        , ':(' : '<img src="sad.png" />'} })
         self.config_metadata.update({
             'inputs' : {
                 'key_label' : 'emoticon code', 
