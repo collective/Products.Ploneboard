@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.6 2004/04/26 06:30:14 tiran Exp $
+$Id: ATLink.py,v 1.7 2004/05/14 12:36:04 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -29,6 +29,11 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
+try:
+    from Products.LinguaPlone.public import *
+except ImportError:
+    # No multilingual support
+    pass
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATLink import IATLink
 from Products.ATContentTypes.types.schemata import ATLinkSchema

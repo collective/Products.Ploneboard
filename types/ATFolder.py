@@ -18,13 +18,18 @@
 #
 """
 
-$Id: ATFolder.py,v 1.10 2004/05/04 18:26:46 tiran Exp $
+$Id: ATFolder.py,v 1.11 2004/05/14 12:36:04 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Acquisition import aq_base, aq_inner, aq_parent
 from Products.Archetypes.public import *
+try:
+    from Products.LinguaPlone.public import *
+except ImportError:
+    # No multilingual support
+    pass
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo

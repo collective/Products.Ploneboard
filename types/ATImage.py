@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.7 2004/04/29 14:08:19 tiran Exp $
+$Id: ATImage.py,v 1.8 2004/05/14 12:36:04 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,11 @@ __docformat__ = 'restructuredtext'
 from urllib import quote
 
 from Products.Archetypes.public import *
+try:
+    from Products.LinguaPlone.public import *
+except ImportError:
+    # No multilingual support
+    pass
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
