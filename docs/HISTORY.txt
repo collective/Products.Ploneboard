@@ -13,6 +13,9 @@
    slashes. This is fixing http://plone.org/collector/3296 for ATCT.
    [tiran]
 
+ * Added support for the clear format feature of CMF Document.
+   [tiran]
+
 0.2.0-rc2 - 2004-10-06
 ======================
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.33 2004/10/08 16:23:16 tiran Exp $
+$Id: ATDocument.py,v 1.34 2004/10/17 00:11:31 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -88,9 +88,28 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     security.declareProtected(CMFCorePermissions.ModifyPortalContent,
                               'EditableBody')
     def EditableBody(self):
-        """
+        """CMF compatibility method
         """
         return self.getRawText()
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent,
+                              'EditableBody')
+    def setFormat(self, value):
+        """CMF compatibility method
+        
+        The default mutator is overwritten to:
+        
+          o add a conversion from stupid CMF content type (e.g. structured-text)
+            to real mime types used by MTR.
+        
+          o Set format to default format if value is empty
+
+        """
+        if not value:
+            value = ATDOCUMENT_CONTENT_TYPE
+        else:
+            value = translateMimetypeAlias(value)
+        ATCTContent.setFormat(self, value)
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setText')
     def setText(self, value, **kwargs):
@@ -106,16 +125,6 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             value = tidyOutput
 
         field.set(self, value, **kwargs) # set is ok
-
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setFormat')
-    def setFormat(self, value, **kwargs):
-        """format mutator
-        
-        The default mutator is overwritten add a conversion from stupid CMF
-        content type (e.g. structured-text) to real mime types used by MTR.
-        """
-        value = translateMimetypeAlias(value)
-        ATCTContent.setFormat(self, value, **kwargs)
 
     # XXX test me
     text_format = ComputedAttribute(ATCTContent.getContentType, 1)
