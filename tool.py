@@ -12,8 +12,12 @@ from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
 
+from Products.Archetypes.interfaces.referenceable import IReferenceable
+
+
 from Products.CompositePage.tool import CompositeTool as BaseTool
 from Products.CompositePack.config import TOOL_ID, LAYOUTS
+from Products.CompositePack.config import VIEWLETS, LAYOUTS
 
 zmi_dir = os.path.join(Globals.package_home(globals()),'www')
 
@@ -92,79 +96,100 @@ class CompositeTool(Folder, BaseTool):
         if props is None:
             props = REQUEST
         # Set up the default viewlets.
-        ids = []
-        for viewlet_id in default_viewlets:
-            if viewlet_id:
-                if not self.getViewletById(viewlet_id):
-                    raise ValueError, (
-                        '"%s" is not a viewlet ID.' % viewlet_id)
-                ids.append(viewlet_id)
-        if default_default not in default_viewlets:
-            raise ValueError, ('For Default, the default '
-                               'viewlet (%s) is not among '
-                               'viewlets (%s).' % (default_default,
-                                                   default_viewlets))
-        self._default_viewlets = tuple(ids)
-        self._default_default = default_default
-        vbt = self._viewlets_by_type
-        if vbt is None:
-            self._viewlets_by_type = vbt = PersistentMapping()
+        self.setDefaultViewlets(default_viewlets, default_default)
         ti = self._listTypeInfo()
         # Set up the viewlets by type.
         for t in ti:
-            id = t.getId()
-            field_name = 'viewlets_%s' % id
-            viewlets = tuple(props.get(field_name, (DEFAULT,)))
-            field_name = 'default_%s' % id
-            default = props.get(field_name, DEFAULT).strip()
-            if viewlets == (DEFAULT,) and default == DEFAULT:
-                # Remove from vbt.
-                if vbt.has_key(id):
-                    del vbt[id]
-            else:
-                viewlets = filter(lambda x: x != DEFAULT, viewlets)
-                ids = []
-                for viewlet_id in viewlets:
-                    if viewlet_id:
-                        if not self.getViewletById(viewlet_id):
-                            raise ValueError, ('"%s" is not a '
-                                               'registered viewlet.' %
-                                               viewlet_id)
-                        ids.append(viewlet_id)
-                if default == DEFAULT:
-                    if self._default_default not in viewlets:
-                        raise ValueError, (
-                            'For type %s, the default viewlet (%s) '
-                            'is not among viewlets '
-                            '(%s).' % (id, self._default_default, viewlets))
-                elif not ((not viewlets and
-                           default in self._default_viewlets) or
-                          default in viewlets):
-                    if not viewlets:
-                        viewlets = self._default_viewlets
-                    raise ValueError, (
-                        'For type %s, the default viewlet '
-                        '(%s) is not among viewlets '
-                        '(%s).' % (id, default, viewlets))
-                vft = ViewletsForType()
-                if not ids:
-                    ids = (DEFAULT,)
-                vft.viewlets = tuple(ids)
-                vft.default = default
-                vbt[id] = vft
+            type = t.getId()
+            field_name = 'viewlets_%s' % type
+            viewlet_ids = tuple(props.get(field_name, (DEFAULT,)))
+            field_name = 'default_%s' % type
+            default_viewlet = props.get(field_name, DEFAULT).strip()
+            self.setViewletsForType(type, viewlet_ids, default_viewlet)
         if REQUEST is not None:
             return self.manage_selectViewlets(REQUEST,
                             manage_tabs_message='Changed.')
+
+    security.declareProtected( ManagePortal, 'setDefaultViewlets' )
+    def setViewletsForType(self, type, viewlet_ids, default_viewlet):
+        """ Setup viewlets used by type.
+        """
+        vbt = self._viewlets_by_type
+        if vbt is None:
+            self._viewlets_by_type = vbt = PersistentMapping()
+        if viewlet_ids == (DEFAULT,) and default_viewlet == DEFAULT:
+            # Remove from vbt.
+            if vbt.has_key(type):
+                del vbt[type]
+        else:
+            viewlet_ids = filter(lambda x: x != DEFAULT, viewlet_ids)
+            ids = []
+            for viewlet_id in viewlet_ids:
+                if viewlet_id:
+                    if not self.getViewletById(viewlet_id):
+                        raise ValueError, ('"%s" is not a '
+                                           'registered viewlet.' %
+                                           viewlet_id)
+                    ids.append(viewlet_id)
+            if default_viewlet == DEFAULT:
+                if self._default_default not in viewlet_ids:
+                    raise ValueError, (
+                        'For type %s, the default viewlet (%s) '
+                        'is not among viewlets '
+                        '(%s).' % (type, self._default_default, viewlet_ids))
+            elif not ((not viewlet_ids and
+                       default_viewlet in self._default_viewlets) or
+                      default_viewlet in viewlet_ids):
+                if not viewlet_ids:
+                    viewlet_ids = self._default_viewlets
+                raise ValueError, (
+                    'For type %s, the default viewlet '
+                    '(%s) is not among viewlets '
+                    '(%s).' % (type, default_viewlet, viewlet_ids))
+            vft = ViewletsForType()
+            if not ids:
+                ids = (DEFAULT,)
+            vft.viewlets = tuple(ids)
+            vft.default = default_viewlet
+            vbt[type] = vft
+    
+    security.declareProtected( ManagePortal, 'setDefaultViewlets' )
+    def setDefaultViewlets(self, viewlet_ids, default_viewlet):
+        """ Setup viewlets used by types for which nothing has been setup.
+        """
+        ids = []
+        for viewlet_id in viewlet_ids:
+            if viewlet_id:
+                if not self.getViewletById(viewlet_id):
+                    raise ValueError, (
+                        'Default setup : "%s" is not a registered viewlet.'
+                        % viewlet_id)
+                ids.append(viewlet_id)
+        if default_viewlet not in ids:
+            raise ValueError, ('The default viewlet (%s) of the default '
+                               'setup should be among the '
+                               'viewlets (%s).' % (default_viewlet,
+                                                   viewlet_ids))
+        self._default_viewlets = tuple(ids)
+        self._default_default = default_viewlet
+
+        
 
     security.declarePrivate( '_listTypeInfo' )
     def _listTypeInfo(self):
         """ List the portal types which are available.
         """
         pt = getToolByName(self, 'portal_types', None)
-        if pt is None:
+        at = getToolByName(self, 'archetype_tool', None)
+        if (pt is None) or (at is None):
             return ()
         else:
-            return pt.listTypeInfo()
+            tis = [pt.getTypeInfo(ty['name']) for ty in at.listRegisteredTypes()
+                if IReferenceable.isImplementedByInstancesOf(ty['klass'])]
+            # remove types not installed
+            # iow not in portal_types
+            tis = [ti for ti in tis if ti is not None]
+            return tis
 
     def getViewletById(self, id):
         if hasattr(self.viewlets, id):
@@ -273,6 +298,34 @@ class CompositeTool(Folder, BaseTool):
         result.extend(templates)
         return templates
 
+    security.declareProtected( ManagePortal, 'registerViewlet' )
+    def registerViewlet(self, id, description, skin_method):
+        from Products.CompositePack import viewlet
+        viewlets = getattr(self, VIEWLETS)
+        viewlet.addViewlet(viewlets, 
+                           id=id, 
+                           title=description, 
+                           template_path=skin_method)
+    
+    security.declareProtected( ManagePortal, 'registerLayout' )
+    def registerLayout(self, id, description, skin_method):
+        from Products.CompositePack import viewlet
+        layouts = getattr(self, LAYOUTS)
+        viewlet.addViewlet(layouts, 
+                           id=id, 
+                           title=description, 
+                           template_path=skin_method)
+    
+    security.declareProtected( ManagePortal, 'unregisterLayout' )
+    def unregisterLayout(self, id):
+        layouts = getattr(self, LAYOUTS)
+        layouts.manage_delObjects([id])
+    
+    security.declareProtected( ManagePortal, 'unregisterViewlet' )
+    def unregisterViewlet(self, id):
+        viewlets = getattr(self, VIEWLETS)
+        viewlets.manage_delObjects([id])
+
 class ViewletsForType(Persistent):
     def __init__(self):
         self.viewlets  = ()
@@ -284,8 +337,6 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     """Adds a composite tool to a folder.
     """
     from Products.CompositePack.viewlet import container
-    from Products.CompositePack import viewlet
-    from Products.CompositePack.config import VIEWLETS, LAYOUTS
     ob = CompositeTool()
     dispatcher._setObject(ob.getId(), ob)
     ob = dispatcher._getOb(ob.getId())
@@ -293,24 +344,9 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
                                   title='A Container for registered Viewlets')
     container.addViewletContainer(ob, id=LAYOUTS,
                                   title='A Container for registered Layouts')
-    layouts = getattr(ob, LAYOUTS)
-    viewlet.addViewlet(layouts, 
-                       id='two_slots', 
-                       title='Two slots', 
-                       template_path='portal_skins/compositepack/two_slots'
-                       )
-    viewlet.addViewlet(layouts, 
-                       id='three_slots', 
-                       title='Three slots', 
-                       template_path='portal_skins/compositepack/three_slots')
-    viewlets = getattr(ob, VIEWLETS)
-    viewlet.addViewlet(viewlets, 
-                       id='default_viewlet', 
-                       title='Default viewlet', 
-                       template_path='default_viewlet')
-    viewlet.addViewlet(viewlets, 
-                       id='link_viewlet', 
-                       title='Link Only', 
-                       template_path='link_viewlet')
+    ob.registerLayout('two_slots', 'Two slots', 'two_slots')
+    ob.registerLayout('three_slots', 'Three slots', 'three_slots')
+    ob.registerViewlet('default_viewlet', 'Basic viewlet (getId)', 'default_viewlet')
+    ob.registerViewlet('link_viewlet', 'Link Only', 'link_viewlet')
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)

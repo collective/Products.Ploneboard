@@ -37,10 +37,10 @@ def initialize(context):
         tool.CompositeTool,
         meta_type=TOOL_NAME,
         constructors=(tool.manage_addCompositeTool,),
-        icon = 'tool.gif')
+        icon = TOOL_ICON)
              
     cmf_utils.ToolInit(TOOL_NAME,
                        tools = tools,
                        product_name = PROJECTNAME,
-                       icon='tool.gif'
+                       icon=TOOL_ICON
                    ).initialize(context)

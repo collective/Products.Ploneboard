@@ -22,33 +22,9 @@
       <h2> Types/Viewlets </h2>
       <form action="manage_changeViewlets" method="POST">
         <table>
-          <tr><th>Portal types</th><th>Viewlets</th><th>Default</th></tr>
-          <tr tal:repeat="ti options/types_info">
-            <td class="form-label" tal:content="ti/id" />
-            <td class="form-element">
-              <select multiple="multiple" size="5"
-                      tal:attributes="name string:viewlets_${ti/id}:list;">
-                <option tal:repeat="vi ti/viewlet_info"
-                        tal:attributes="value vi/id;
-                                        selected python:vi['id'] in ti['viewlets']"
-                        tal:content="vi/title/strip|vi/id">
-                  Viewlet
-                </option>
-              </select>
-            </td>
-            <td class="form-element">
-              <select tal:attributes="name string:default_${ti/id};">
-                <option tal:repeat="vi ti/viewlet_info"
-                        tal:attributes="value vi/id;
-                                        selected python:vi['id'] == ti['default']"
-                        tal:content="vi/title/strip|vi/id">
-                  Viewlet
-                </option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td class="form-label">(Default)</td>
+          <tr><th>Portal types</th><th>Viewlets</th><th>Default viewlet</th></tr>
+          <tr style="background: #CCCCCC;vertical-align: top;" >
+            <td class="form-label">Default Setup</td>
             <td class="form-element">
               <select multiple="multiple" size="5"
                       tal:attributes="name string:default_viewlets:list">
@@ -65,6 +41,34 @@
                 <option tal:repeat="vi options/available_viewlets"
                         tal:attributes="value vi/id;
                                         selected python:vi['id'] == options['default_default']"
+                        tal:content="vi/title/strip|vi/id">
+                  Viewlet
+                </option>
+              </select>
+            </td>
+          </tr>
+          <tr style="vertical-align: top;" tal:repeat="ti options/types_info">
+            <td class="form-label"><div tal:content="ti/id" />
+              <!--input type="checkbox" 
+                     tal:attributes="name string:cb_default_${ti/id};"
+                     />Use Default Setup -->
+            </td>
+            <td class="form-element">
+              <select multiple="multiple" size="5"
+                      tal:attributes="name string:viewlets_${ti/id}:list;">
+                <option tal:repeat="vi ti/viewlet_info"
+                        tal:attributes="value vi/id;
+                                        selected python:vi['id'] in ti['viewlets']"
+                        tal:content="vi/title/strip|vi/id">
+                  Viewlet
+                </option>
+              </select>
+            </td>
+            <td class="form-element">
+              <select tal:attributes="name string:default_${ti/id};">
+                <option tal:repeat="vi ti/viewlet_info"
+                        tal:attributes="value vi/id;
+                                        selected python:vi['id'] == ti['default']"
                         tal:content="vi/title/strip|vi/id">
                   Viewlet
                 </option>
