@@ -13,6 +13,7 @@ class MembershipTool( BaseTool ):
 
     def getPersonalPortrait(self, member_id=None, verifyPermission=0):
         """Returns the Portait for a member_id"""
+        portal = getToolByName(self, 'portal_url').getPortalObject()
         if not member_id:
             return getattr(portal, self.default_portrait)
 

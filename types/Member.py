@@ -268,13 +268,24 @@ class Member(BaseContent):
 
     def view(self, **kwargs):
         """View action"""
-        actions = self.getTypeInfo().getActions()
-        for action in actions:
-            if action.get('id', None) == 'view':
-                if _verifyActionPermissions(self, action):
-                    action = self.restrictedTraverse(action['action'])
-                    if action is not None:
-                        return action(**kwargs)
+        #XXX CMF1.4 compatibility
+        try:
+            actions = self.getTypeInfo().getActions()
+            for action in actions:
+                if action.get('id', None) == 'view':
+                    if _verifyActionPermissions(self, action):
+                        action = self.restrictedTraverse(action['action'])
+                        if action is not None:
+                            return action(**kwargs)
+        except AttributeError:
+            actions = self.getTypeInfo().listActions()
+            for action in actions:
+                if action.id == 'view':
+                    if _verifyActionPermissions(self, action):
+                        action = self.restrictedTraverse(action.action(self))
+                        if action is not None:
+                            return action(**kwargs)
+
         raise 'Unauthorized', ('No accessible views available for %s' %
                                '/'.join(self.getPhysicalPath()))
 
@@ -651,7 +662,11 @@ class Member(BaseContent):
         self.changeOwnership(self.getUser(), 1)
         # XXX - should we invoke this for members with users in the Zope root acl_user?
         registration_tool.afterAdd(self, id, self._getPassword(), None)
-        self.updateListed()
+        
+        try:
+            self.updateListed()
+        except AttributeError:
+            pass #XXX gdavis where is this method?
 
         # only send mail if we had to create a new user -- this avoids
         # sending mail to users who are already registered at the Zope root level

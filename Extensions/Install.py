@@ -16,6 +16,9 @@ import sys
 
 TYPE_NAME = 'Member'
 
+def getCMFVersion(self):
+    return self.Control_Panel.Products.CMFCore.version[4:]
+
 def installMember(self, out):
     installTypes(self, out, CMFMember.listTypes(CMFMember.PKG_NAME), CMFMember.PKG_NAME)
     wf_tool = getToolByName(self, 'portal_workflow')
@@ -45,7 +48,7 @@ def replaceTools(self, out, convert=1):
                     action['action']='folder_contents'
             except AttributeError:
                 if action.id=='view':
-                    action.action='string:folder_contents'
+                    action.action=Expression(text='string:folder_contents')
         memberarea._actions=_actions
         memberarea.global_allow = 0  # make MemberArea not implicitly addable
 
@@ -138,7 +141,7 @@ def setupRegistration(self, out):
     actions=registration_tool._cloneActions()
     for action in actions:
             if action.id=='join':
-                action.action=Expression('string:${portal_url}/portal_memberdata/createObject?type_name=Member')
+                action.action=Expression(text='string:${portal_url}/portal_memberdata/createObject?type_name=Member')
     registration_tool._actions=tuple(actions)
 
 
