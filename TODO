@@ -1,5 +1,11 @@
 TODO-LIST
 
+[v2.xx => ]
+
+  * Check users overview : users disapear sometimes
+
+  * Pass to ZPL licence
+
 [v1.31 => Planned 2003-08-31]
 
   * [Core] Fix impossible group removing in users view

@@ -1,0 +1,11 @@
+[default]
+title=Edit form
+
+[validators]
+validators..Change=validate_id,validate_GroupSpace_edit
+validators..Cancel=
+
+[actions]
+action.success..Save=traverse_to:string:GroupSpace_edit
+action.success..Cancel=redirect_to:string:view
+action.failure=traverse_to:string:GroupSpace_editForm

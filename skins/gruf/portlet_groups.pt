@@ -1,0 +1,36 @@
+  <html xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    i18n:domain="gruf">
+
+    <body>
+
+      <!-- The groups box -->
+      <div metal:define-macro="portlet"
+        tal:define="results python:here.portal_catalog.searchResults( 
+        meta_type='GroupSpace',
+        listGroupSpaceMemberUsers=here.portal_membership.getAuthenticatedMember().getUserName(),
+        sort_on='Date',
+        sort_order='reverse',
+        )[:5];
+        portal_url here/portal_url;"
+        tal:condition="results"
+        >
+        <div class="portlet" id="portlet-groups">
+          <h5 i18n:translate="">My group spaces</h5>
+          <div class="portletBody">
+            <tal:block tal:repeat="obj results">
+              <div tal:define="oddrow repeat/obj/odd"
+                tal:attributes="class python:test(oddrow, 'portletContent even', 'portletContent odd')">
+                <a href=""
+                   tal:attributes="href obj/getURL;
+                  title obj/Description">
+                  <img src="" tal:attributes="src obj/getIcon" />
+                    <span tal:replace="python:test(obj.Title, obj.Title, obj.getId)"> Extended Calendar Product </span>
+                </a>
+              </div>
+            </tal:block>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>

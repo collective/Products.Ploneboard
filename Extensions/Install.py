@@ -6,6 +6,7 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 from Acquisition import aq_base
 from OFS.Folder import manage_addFolder
 
+
 SKIN_NAME = "gruf"
 _globals = globals()
 
@@ -89,15 +90,57 @@ def migrate_plone_site_to_gruf(self, out = None):
         migrate_user_folder(obj, out, )
     print >>out, "  Done Migrating UserFolders to GroupUserFolders."
     return out.getvalue()
+
+
+
+def setupCustomSlots(self, out):
+   """ sets up the custom slots"""
+   slots = (
+       'here/portlet_groups/macros/portlet',
+       'here/portlet_groupspaces_changes/macros/portlet',
+       )
+   for slot in slots: 
+       if hasattr(self, "right_slots"):
+           if slot in self.right_slots:
+               out.write("Right slot exists already\n")
+           else:
+               right_slots_list=list(self.right_slots)
+               self._delProperty('right_slots')
+               right_slots_list.append(slot)
+               self._setProperty('right_slots',tuple(right_slots_list),'lines')
+               out.write("Added %s slot\n" % (slot, ))
+
     
 def install(self):
     out = StringIO()
     print >>out, "Installing GroupUserFolder"
-
     install_subskin(self, out)
     install_plone(self, out)
     migrate_plone_site_to_gruf(self, out)
-
     print >>out, "Done."
+
+    from Products.GroupUserFolder.Installation import Installation
+    installation = Installation(self)
+    if installation.isPlone2():
+        print >>out, "Installing GroupSpace features"
+        from Products.GroupUserFolder import GroupSpace
+        installation.setupTypesandSkins((GroupSpace.factory_type_information,), "", groupuserfolder_globals)
+        if not "GroupMember" in installation.root.userdefined_roles():
+            installation.root._addRole("GroupMember")
+        catalog = getToolByName(self, 'portal_catalog')
+        if not "listGroupSpaceMemberUsers" in catalog.indexes():
+            print >>out, "Adding GroupSpace-related indexes"
+            catalog.manage_addIndex('listGroupSpaceMemberUsers', 'KeywordIndex', )
+        if not "getGroupSpaceId" in catalog.indexes():
+            catalog.manage_addIndex('getGroupSpaceId', 'FieldIndex', )
+        wf_tool = installation.root.portal_workflow
+        if not "groupspace_workflow" in wf_tool.objectIds():
+            print >>out, "Installing GroupSpace-specific Workflow"
+            wf_tool._importObjectFromFile(GroupSpace.DATA_PATH, verify = 1, set_owner = 1)
+            wf_tool.setChainForPortalTypes(('GroupSpace',), 'groupspace_workflow')
+        installation.root.portal_groups.setGroupWorkspaceType("GroupSpace")
+        setupCustomSlots(self, out)
+        print >>out, installation.report()
+        print >>out, "Done."
     
     return out.getvalue()

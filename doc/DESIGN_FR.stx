@@ -1,0 +1,169 @@
+Présentation
+
+  Ces espaces permettent à des groupes de travailler sur des sujets donnés. Ils doivent pouvoir etre créés ou supprimés de manière aisée.
+
+  Nous proposons que ces espaces soient gérés par l'Administrateur du site via l'outil de gestion des groupes (accessible dans l'espace d'administration). A chaque création d'un nouveau groupe, un espace de groupe dédié au groupe en question est créé sous "/GroupWorkspaces", comme pour les "Member folders".
+
+Définitions
+
+  **Group** : Ensemble d'utilisateurs et/ou de groupes reliées au sein d'une entité logique présente dans un User Folder. Un groupe utilisé dans le cadre des GroupSpace ne correspond donc pas forcément à un groupe GRUF.
+
+  **GroupSpace** (ou espace de groupe) : Branche d'un site (ie. folderish) dont les membres actifs (contributeurs, reviewers, ...) appartiennent à un même groupe.
+
+  **Workspace** (ou espace de travail) : Synonyme de GroupSpace.
+
+  **Workgroup** : Notion générale et abstraite de travail collaboratif. Cette notion se concrétise dans Plone par un ensemble de composants (GRUF, groups_tool et types de contenu de type GroupSpace).
+
+Use cases
+
+  Cf. GroupUseCases
+
+Aspects techniques d'un espace de travail
+
+  Compte-tenu des use cases présentés ci-dessus :
+
+  - Le **type de contenu** utilisé pour les espaces de travail sera un autre type de folder (il s'appellera GroupSpace) avec les spécificités suivantes :
+
+    - Type Folderish (il est d'ailleurs possible de spécifier dans portal_types, pour ce type, les types de contenu autorisées et permettre la création de GroupSpace ne contenant qu'un nombre restreint de types de contenu)
+
+    - Son workflow est le WorkflowEspaceGroupe.
+
+    - Il peut être "Implicitly Addable" pour permettre à des membres du site de créer leurs propres groupes.
+
+  - Les **roles locaux** suivants sont à créer dans le site et à appliquer à l'espace de travail :
+
+    - **GroupMember** : un role qui contient les permissions nécessaires pour créer, modifier, et publier du contenu **et** inviter des membres à collaborer au sein de l'espace.
+
+    - **GroupReviewer** : même chose que Reviewer mais dans le cadre d'un groupe. Ce rôle n'est peut-être pas pertinent : A valider.
+
+    - **GroupGuest** : un role qui porterait les même permissions que GroupMember **moins** la possibilité d'inviter d'autres membres - **PAS A REALISER**
+
+  - Le rôle Owner : le porteur de ce rôle possède les qualités de membre PLUS la possibilité de changer l'état du GroupSpace.
+
+
+  - On ne gère **pas de hierarchie ou groupes imbriqués** (avec des sous-groupes) => Les instances de GroupSpace sont tous indépendantes et les espaces sont répartis sur tout le site (créés par groups_tool dans une branche particulière, mais pouvant aussi être créés partout ailleurs).
+
+
+Services particuliers
+
+  Cette section liste les services à forte valeur ajoutée que le composant de gestion des groupes apporte par rapport à une gestion classique par rôles "local viewer" ou par rapport au composant standard de Plone2.
+
+* Création d'**objets par défaut** lors de la création d'un espace de groupe.
+
+  * Wiki
+
+  * ...
+
+  Ces objets par défaut pourraient, dans un monde idéal, être mentionnés (id + type + description) dans l'interface ZMI ou PMI de l'outil groups_tool, avec la possibilité d'appeler un python script pour faire du plus spécifique.
+
+* **Homepage par défaut** d'un groupspace customisable (et par défaut, y mettre des choses pertinentes)
+
+* **Notification**
+
+  Il serait génial de pouvoir interfacer un outil de notification (WorkflowNotification ou complémentaire ??) aux membres du groupe.
+  Exemple : chaque fois que qque chose est publié, mail à tous les membres du groupe.
+
+* **Mailing-list** de groupe
+
+  Il serait plaisant de disposer d'un lien "écrire au groupe" qui pointerait vers un formulaire du site permettant d'écrire un email à tout le groupe. Le composant se chargeait alors d'envoyer ce mail en copie à tous les membres du groupe.
+
+* Possibilité "d'**export**" d'un objet publié dans le GS (group space) vers une zone précise du site **(pas prioritaire)**
+
+* **Recent additions** (in index_html et dans une slot, sachant que la difficulté réside dans le fait qu'un utilisateur donné peut appartenir à plusieurs GroupSpace)
+
+* Possibilité de **checkin / checkout** (rapport avec le workflow) permettant à des membres d'1 grp de travailler sur les mêmes objets en ayant la garantie de ne pas se marcher sur les pieds. Si un doc est en checkout, il est VISIBLE aux autres mais pas MODIFIABLE. => **Ce point est déporté vers les types de contenu eux-mêmes, et ne sera donc pas implémenté par l'outil de gestion des groupes**
+
+* **Slots** :
+
+  * Recent activities sur 1 workspace (ou all workspaces d'1 user ?)
+
+  * Workspaces I'm involved into
+
+  * Send email to group
+
+Autres questions techniques
+
+  - S'assurer que le comportement du moteur de recherche reste cohérent, i.e. affiche des contenus d'un espace de groupe si ceux-ci sont dans l'état 'publié' et si la politique du WF autorise l'utilisateur.
+
+    - A priori OK. Il faut tester rigoureusement.
+
+
+Tâches
+
+  Voici les tâches à réaliser.
+
+  * Création du type de contenu GroupSpace (y compris comportement par défaut d'affectation des rôles aux membres)
+
+  * Création du workflow GroupSpaceWorkflow
+
+  * Création de la skin :
+
+    * Slot "My groups"
+
+    * Slot "Recent groupspace changes"
+
+    * ZPT + script d'envoi de mail
+
+    * index_html par défaut dans les GroupSpace
+
+  * Création du fichier d'Install
+
+    * Affectation du bon type de contenu à portal_groups
+
+    * Install skin
+
+    * Install rôles
+
+    * Install Workflows
+
+  * DOCUMENTATION
+
+Livrables
+
+  Pour l'instant, l'implémentation des groupes dans Plone2 est strictement identique à celle de GRUF (Cf. le code de GroupsTool.py dans Plone2). Cela nous laisse toute lattitude pour implémenter les fonctionnalités (y compris le type de contenu) dans GRUF ! :-)
+
+  Le produit est livré avec :
+
+  * GRUF (car recyclage du tool déjà existant dans GRUF)
+
+  * 1 type de contenu GroupSpace 
+
+  * 1 workflow GroupSpaceWorkflow
+
+  * 1 skin
+
+    * Slots
+
+    * ...
+
+  * 1 script d'install
+
+    * Chgt du type de contenu associé à groups_tool
+
+    * Install skin, type de contenu et workflow
+
+
+Ressources
+
+  * API de GRUF : http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.html
+
+  * API de GRUF/GroupsTool : http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.docs.html#GroupsTool
+
+  * Cf. <a href="http://www.plone.org/development/current/projects/GroupSpace">http://www.plone.org/development/current/projects/GroupSpace</a> => discussion de Limi au sujet de la notion de groupspaces
+
+    A ce sujet, il propose :
+
+    * Default groups security model : 
+
+      * Nouveaux rôles **GroupMember** et **GroupReviewer** E
+
+      * Nouveau **portal_workflow tool** qui serait group-aware et proposerait des workflows spécifiques aux groupes dans les espaces de groupes (IMHO c'est une usine à gaz non nécessaire si le type de contenu associé aux group spaces est doté d'un workflow correct - à valider)
+
+    * **GroupProjectSpace** qui est un GroupSpace instanciable partout, permettant par exemple de créer des "sous-groupes"
+
+    * **Portlet widgets** (calendar, events, news, CMFMessenger, ...) spécifique aux groupes
+
+
+
+
+
