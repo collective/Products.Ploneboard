@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: __init__.py,v 1.1 2003/02/16 11:29:36 zworkb Exp $
+# RCS-ID:      $Id: __init__.py,v 1.1.1.2 2003/02/16 13:22:34 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
