@@ -17,7 +17,7 @@ composite_schema = Schema((
 
 
 edit_tag = '''<div class="slot_element" source_path="%s" icon="%s" title="%s"
-allowed_viewlets_ids="%s" allowed_viewlets_titles="%s">
+allowed_viewlets_ids="%s" allowed_viewlets_titles="%s" full_path="%s">
 <div class="slot_element_body">%s</div>
 </div>'''
 
@@ -28,7 +28,8 @@ class PackSlot(Slot):
         o2 = obj.dereference()
         icon = escape(getIconURL(o2, icon_base_url).encode('utf8'))
         title = escape(o2.title_and_id().encode('utf8'))
-        path = obj.absolute_url()
+        path = escape('/'.join(obj.getPhysicalPath()))
+        full_path = obj.absolute_url()
         composite_tool = getToolByName(self, TOOL_ID)
         viewlets_info = composite_tool.getViewletsFor(o2)
         allowed_viewlets_ids = []
@@ -48,6 +49,7 @@ class PackSlot(Slot):
                            title,
                            allowed_viewlets_ids,
                            allowed_viewlets_titles,
+                           full_path,
                            text)
         return result
 
