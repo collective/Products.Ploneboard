@@ -128,7 +128,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'manage_editFormValidators')
     def manage_editFormValidators(self, REQUEST):
         """Process form validator edit form"""
-        self._editFormValidators(self, self.validators, REQUEST)
+        self._editFormValidators(self.validators, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
 
 
@@ -167,7 +167,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'manage_delFormValidators')
     def manage_delFormValidators(self, REQUEST):
         """Process form validator delete form"""
-        self._delFormValidators(self, self.validators, REQUEST)
+        self._delFormValidators(self.validators, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
 
 
