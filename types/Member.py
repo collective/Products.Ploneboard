@@ -870,7 +870,7 @@ class Member(VariableSchemaSupport, BaseContent):
 
         # only send mail if we had to create a new user -- this avoids
         # sending mail to users who are already registered at the Zope root level
-        if user_created and self.getMail_me():
+        if user_created:
             registration_tool.registeredNotify(self.getUserName())
 
 

@@ -1,3 +1,11 @@
+2003-06-24  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Removed test for mail_me from Member.register().  If you want to test for
+      the mail_me flag, at the very least, make sure that the user had the
+      ability to modify their password at startup (check the permissions).
+      Alternatively, you can customize the registration tool's registeredNotify
+      or override register in a subclass.
+
 2003-06-22  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Fixed tabs in portal_memberdata.  You now will get the standard tabs after
