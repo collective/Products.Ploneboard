@@ -8,10 +8,14 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: __init__.py,v 1.1 2004/09/12 07:27:20 ajung Exp $
+$Id: __init__.py,v 1.2 2004/09/27 13:32:47 spamsch Exp $
 """
 
 from Products.CMFCore.DirectoryView import registerDirectory
 from config import SKINS_DIR, GLOBALS
 
 registerDirectory(SKINS_DIR, GLOBALS)
+
+# make refresh possible
+from SchemaEditor import SchemaEditor
+from ParentManagedSchema import ParentManagedSchema
