@@ -68,8 +68,8 @@ def migrate_user_folder(obj, out, ):
 
         container.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
         container.acl_users.Users.manage_delObjects( 'acl_users' )
-        container.acl_users.Users.__allow_groups__ = aq_base(tmp_allow)
         container.acl_users.Users._setObject('acl_users', aq_base(tmp_users))
+        container.__allow_groups__ = aq_base(getattr(container,'acl_users'))
         
     return out.getvalue()
     
