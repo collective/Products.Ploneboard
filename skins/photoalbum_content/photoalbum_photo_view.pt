@@ -15,7 +15,8 @@
     </metal:block>
   
     <div metal:fill-slot="main"
-         tal:define="images python:here.contentValues(spec='Photo');
+         tal:define="DateTime python:modules['DateTime'].DateTime;
+                     images python:here.contentValues(spec='Photo');
                      Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 1, int(b_start), orphan=1);
@@ -59,6 +60,13 @@
       </div>
       
       <div metal:use-macro="here/batch_macros/macros/navigation"></div>
+
+      <tal:block tal:define="raw_date python:image.getEXIF().get('EXIF DateTimeOriginal');">
+	<div style="position: relative; top: 1.6em; left: 0.3em; color: white; background: black; width:0%; white-space: nowrap; padding: 1px;"
+	     tal:condition="raw_date"
+             tal:content="python:here.toPortalTime(DateTime(raw_date), long_format=1)">
+	</div>
+      </tal:block>
 	
       <a tal:condition="image/size" tal:attributes="href string:${image/absolute_url}/view">
 	<img src="#" tal:replace="structure python:image.tag(prefered_size)" />
@@ -67,23 +75,7 @@
       <p style="margin-top: 2em;" tal:content="structure image/Description">
 	Description
       </p>
-      
-      <small>
-	
-	<span i18n:translate="label_size">Size:</span>
-	
-	<span tal:define="size python:image.getObjSize(image)"
-	  tal:content="size">                        
-	  File size
-	</span>            
-	
-	<span tal:condition="python:test(image.size, 0, 1)"
-	  i18n:translate="no_file_uploaded">
-	  (No file has been uploaded)
-	</span>
-	
-      </small>
-      
+            
       <div class="row">
 	
 	<div style="width: 3em; text-align: left;" class="label">
