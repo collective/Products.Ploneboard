@@ -13,8 +13,12 @@ def changeVisibility(p, portal_type, action, value):
     tt=getToolByName(p, 'portal_types')
     actions=tt[portal_type]._cloneActions()
     for a in actions:
-        if a.get('id','') in (action, ): 
-            a['visible']=value
+        try:
+           if a.get('id','') in (action, ): 
+              a['visible']=value
+        except:
+           if a.id in (action, ):
+              a.visible=value
     tt[portal_type]._actions=actions
 
 def setupNavigation(p):
@@ -69,7 +73,6 @@ def install(self):
                  types_globals)
 
     setupNavigation(self)
-    changeVisibility(self, 'MPoll', 'references', None)
 
     print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
