@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.3 2004/09/23 17:42:17 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.4 2004/09/23 19:10:16 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -42,6 +42,31 @@ class ParentManagedSchema:
         schema = getattr(self, '_v_schema', None)
         if schema is None:
             schema = self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
+
+            for field in self._v_schema.fields():
+
+                ##########################################################
+                # Fake accessor and mutator methods
+                ##########################################################
+
+                name = field.getName()
+
+                method = lambda self=self, name=name, *args, **kw: \
+                         self.getField(name).get(self) 
+                setattr(self, '_v_%s_accessor' % name, method )
+                field.accessor = '_v_%s_accessor' % name
+                field.edit_accessor = field.accessor
+
+                method = lambda value,self=self, name=name, *args, **kw: \
+                         self.getField(name).set(self, value) 
+                setattr(self, '_v_%s_mutator' % name, method )
+                field.mutator = '_v_%s_mutator' % name
+
+                # Check if we need to update our own properties
+                try:
+                    value = field.get(self)  
+                except:
+                    field.set(self, field.default)
 
         return ImplicitAcquisitionWrapper(self._v_schema, self)
 
