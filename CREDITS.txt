@@ -1,9 +1,11 @@
-**Helge Tesdal** -- *code, idea, architecture*
+**Helge Tesdal** -- *Code, idea, architecture*
 
-**Ruslan Spivak** -- *code*
+**Ruslan Spivak** -- *Code*
 
-**Alexander Limi** -- *user interface*
+**Alexander Limi** -- *User interface, concepts*
 
-**Vidar Andersen** -- *icons*
+**Vidar Andersen** -- *Application icons*
+
+**Johan H. Borg** -- *Smiley icons, Copyright 2003, used in Ploneboard with permission*
 
 **Kapil Thangavelu** -- *initial architecture*
