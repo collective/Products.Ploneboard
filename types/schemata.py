@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.44 2004/08/12 12:23:44 tiran Exp $
+$Id: schemata.py,v 1.45 2004/08/13 13:21:24 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -80,9 +80,9 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
 ###
 ATDocumentSchema = ATContentTypeSchema + Schema((
     TextField('text',
-              required = 1,
-              searchable = 1,
-              primary = 1,
+              required=True,
+              searchable=True,
+              primary=True,
               validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
               default_content_type = ATDOCUMENT_CONTENT_TYPE,
@@ -113,7 +113,7 @@ ATEventBaseSchema['description'].primary = True
 
 ATEventSchema = ATEventBaseSchema + Schema((
     StringField('location',
-                searchable = 1,
+                searchable=True,
                 write_permission = ChangeEvents,
                 widget = StringWidget(
     description = "Enter the location where the event will take place.",
@@ -123,8 +123,8 @@ ATEventSchema = ATEventBaseSchema + Schema((
     i18n_domain = "plone")),
 
     LinesField('eventType',
-               required = 1,
-               searchable = 1,
+               required=True,
+               searchable=True,
                write_permission = ChangeEvents,
                vocabulary = 'getEventTypes',
                languageIndependent=True,
@@ -138,7 +138,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
 
     StringField('eventUrl',
                 required=False,
-                searchable = 1,
+                searchable=True,
                 accessor='event_url',
                 write_permission = ChangeEvents,
                 validators = ('isURL',),
@@ -150,8 +150,8 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         label_msgid = "label_url",
                         i18n_domain = "plone")),
     DateTimeField('startDate',
-                  required = 1,
-                  searchable = 1,
+                  required=True,
+                  searchable=True,
                   accessor='start',
                   write_permission = ChangeEvents,
                   default_method=DateTime,
@@ -165,8 +165,8 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
 
     DateTimeField('endDate',
-                  required = 1,
-                  searchable = 1,
+                  required=True,
+                  searchable=True,
                   accessor='end',
                   write_permission = ChangeEvents,
                   default_method=DateTime,
@@ -180,7 +180,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
     StringField('contactName',
                 required=False,
-                searchable = 1,
+                searchable=True,
                 accessor='contact_name',
                 write_permission = ChangeEvents,
                 widget = StringWidget(
@@ -191,7 +191,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
     StringField('contactEmail',
                 required=False,
-                searchable = 1,
+                searchable=True,
                 accessor='contact_email',
                 write_permission = ChangeEvents,
                 validators = ('isEmail',),
@@ -204,7 +204,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
     StringField('contactPhone',
                 required=False,
-                searchable = 1,
+                searchable=True,
                 accessor='contact_phone',
                 write_permission = ChangeEvents,
                 validators = ('isInternationalPhoneNumber',),
@@ -222,8 +222,8 @@ ATEventSchema = ATEventBaseSchema + Schema((
 ###
 ATFavoriteSchema = ATContentTypeSchema + Schema((
     StringField('remoteUrl',
-                required = 1,
-                searchable = 1,
+                required=True,
+                searchable=True,
                 accessor='_getRemoteUrl',
                 primary=True,
                 validators = (),
@@ -242,7 +242,7 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
 
 ATFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
-              required=False,
+              required=True,
               primary=True,
               languageIndependent=True,
               validators = MaxSizeValidator('checkFileMaxSize',
@@ -272,7 +272,7 @@ ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
 
 ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
-               required = 1,
+               required=True,
                primary=True,
                languageIndependent=True,
                sizes= {'preview' : (400, 400),
@@ -299,8 +299,8 @@ ATExtImageSchema['image'].storage = ExternalStorage(prefix='atct', archive=False
 ###
 ATLinkSchema = ATContentTypeSchema + Schema((
     StringField('remoteUrl',
-                required = 1,
-                searchable = 1,
+                required=True,
+                searchable=True,
                 primary=True,
                 validators = ('isURL',),
                 widget = StringWidget(
@@ -317,9 +317,9 @@ ATLinkSchema = ATContentTypeSchema + Schema((
 ###
 ATNewsItemSchema = ATContentTypeSchema + Schema((
     TextField('text',
-              required = 1,
-              searchable = 1,
-              primary = 1,
+              required=True,
+              searchable=True,
+              primary=True,
               validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
               default_content_type = ATDOCUMENT_CONTENT_TYPE,
