@@ -23,7 +23,7 @@ if failMessage:
   return context.password_form(context,
                                context.REQUEST,
                                error=failMessage)
-context.REQUEST.AUTHENTICATED_USER.changePassword(password)
+context.REQUEST['AUTHENTICATED_USER'].changePassword(password)
 mt.credentialsChanged(password)
 return context.personalize_form(context,
                                 context.REQUEST,
