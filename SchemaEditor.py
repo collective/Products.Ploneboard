@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.26 2004/11/07 21:52:50 brcwhit Exp $
+$Id: SchemaEditor.py,v 1.27 2004/11/19 18:09:10 ajung Exp $
 """
 
 import re
@@ -576,12 +576,15 @@ class SchemaEditor:
         Returns True if the given field is visible
         in the given mode. Default is view.
         """
-
+        
         if not schema_id:
             schema_id = self.atse_getDefaultSchemaId()
             
         field = self.atse_getField(schema_id, fieldname)
         if hasattr(field.widget, 'visible'):
+            visible = field.widget.visible
+            if isinstance(visible, int):
+                return visible
             if field.widget.visible.get(mode) == 'invisible':
                 return False
             else: return True
