@@ -18,7 +18,7 @@
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.5 2004/05/14 11:40:14 godchap Exp $
+$Id: IATTopic.py,v 1.6 2004/05/14 12:04:07 godchap Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -38,8 +38,44 @@ class IATTopic(IATContentType):
         """List available criteria
         """
 
+    def listSearchCriteriaTypes():
+        """List available search criteria types as dict
+        """
+
+    def listSearchCriteriaMetaTypes():
+        """List available search criteria
+        """
+    
+    def listSortCriteriaTypes():
+        """List available sort criteria types as dict
+        """
+
+    def listSortCriteriaMetaTypes():
+        """List available sort criteria
+        """
+    
     def listCriteria():
         """Return a list of our criteria objects.
+        """
+
+    def listSearchCriteria():
+        """Return a list of our search criteria objects.
+        """
+
+    def hasSortCriterion():
+        """Tells if a sort criterai is already setup.
+        """
+
+    def getSortCriterion():
+        """Return the Sort criterion if setup.
+        """
+
+    def removeSortCriterion():
+        """remove the Sort criterion.
+        """
+
+    def setSortCriterion(field, reversed):
+        """Set the Sort criterion.
         """
 
     def listAvailableFields():
@@ -108,5 +144,5 @@ class IATTopicSearchCriterion(IATTopicCriterion):
     """
 
 class IATTopicSortCriterion(IATTopicCriterion):
-    """Interface for criteria used for searching
+    """Interface for criteria used for sorting
     """
