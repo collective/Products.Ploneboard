@@ -61,7 +61,7 @@
                                      default here/typeDescription| nothing;"
                          tal:condition="default">
 
-          <p tal:content="python:here.translate(msgid, default=default)">
+          <p tal:content="python:here.translate(msgid=msgid, default=default)">
             type description
           </p>
 
