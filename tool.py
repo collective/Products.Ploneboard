@@ -299,5 +299,11 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
                        id='three_slots', 
                        title='Three slots', 
                        template_path='portal_skins/compositepack/three_slots')
+    viewlets = ob.viewlets
+    viewlet.addViewlet(viewlets, 
+                       id='default_viewlet', 
+                       title='Default viewlet', 
+                       template_path='portal_skins/compositepack/default_viewlet')
+    
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)

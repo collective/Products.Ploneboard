@@ -25,7 +25,14 @@ class CMFCompositePage(BaseFolder, Composite):
                 'name': 'View',
                 'action': 'cp_view',
                 'permissions': (CMFCorePermissions.View,)
-               },)
+               },
+               {'id': 'design',
+                'name': 'Design',
+                'action': 'string:${object_url}/design?ui=plone',
+                'condition':'object/getLayout',
+                'permissions': (CMFCorePermissions.ManagePortal,)
+               },
+               )
 
     cp_view = Composite.__call__
 
