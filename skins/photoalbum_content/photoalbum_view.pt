@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="cmfphotoalbum">
 
   <body>
 
@@ -56,7 +56,7 @@
 		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail', title=album.Description());" />
 		  </a>
 	          <a tal:condition="not:images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-	            <p style="text-align: center;">Album is empty</p>
+	            <p i18n:translate="" style="text-align: center;">Empty album</p>
 	          </a>
 		  <br/>
 		  <span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
@@ -67,13 +67,13 @@
         </tr>
       </table>
 
-      <p tal:condition="python:not (albums or images)">This album is empty.</p>
+      <p i18n:translate="" tal:condition="python:not (albums or images)">This album is empty.</p>
     
     </div>
 
     <metal:block fill-slot="documentActions">
       <a tal:condition="python:here.aq_parent.meta_type=='Photo Album'" href="" tal:attributes="href string:${here/aq_parent/absolute_url}/view;">
-        <img tal:attributes="src string:$portal_url/folder_icon.gif; title string:Back to album: ${here/aq_parent/title_or_id}" alt="Back" title="Back to album" />
+        <img i18n:attributes="alt title" i18n:name="tooltip" tal:attributes="src string:$portal_url/folder_icon.gif; title string:Back to album: ${here/aq_parent/title_or_id}" alt="Back" title="Back to album" />
       </a>
     </metal:block>
     

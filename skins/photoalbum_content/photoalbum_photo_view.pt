@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="cmfphotoalbum">
 
   <body>
   
@@ -52,7 +52,7 @@
 
     <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0);">
       <a href="" tal:attributes="href string:${request/URL1}/view?b_start=$b_start">
-        <img tal:attributes="src string:$portal_url/folder_icon.gif" alt="Back to album" title="Back to album" />
+        <img tal:attributes="src string:$portal_url/folder_icon.gif" i18n:attributes="alt title" alt="Back to album" title="Back to album" />
       </a>
     </metal:block>
 
