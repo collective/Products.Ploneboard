@@ -55,7 +55,7 @@
                             if older than this week. (limi)
                         -->
                         <td tal:condition="not: forum/getLastMessageAuthor">
-                            <span class="discreet">No conversations started yet</span>
+                            <span class="discreet">No conversations started</span>
                         </td>
                         <td tal:condition="forum/getLastMessageAuthor">
                             <span>
