@@ -15,7 +15,8 @@
                   viewlets python: here.portal_contentpanels.listFilteredActionsFor(here);
                   pt_viewlets python:viewlets.get('PT:' + typeId, []);
                   pt_viewlets python: [viewlet for viewlet in pt_viewlets if (viewlet['id']!='contentpanels_viewlet' or here.absolute_url() != cpPath)];
-                  gl_viewlets python:viewlets.get('GL:folder', []) + viewlets.get('GL:content', []) + viewlets.get('GL:all', []);
+                  gl_viewlets python:viewlets.get('GL:content', []) + viewlets.get('GL:all', []);
+                  gl_viewlets python:test(here.isPrincipiaFolderish, viewlets.get('GL:folder', [])+gl_viewlets, gl_viewlets);
                   gn_portal_viewlets python:viewlets.get('GN:portal', []);
                   gn_personal_viewlets python:viewlets.get('GN:personal', []); ">
 

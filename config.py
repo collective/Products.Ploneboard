@@ -36,23 +36,23 @@ actions=[
 
 ### PT: portal type specific viewlets
 
-('document_viewlet', 'Body', 
+('document_viewlet', 'Document Body', 
 "string: here/viewlet_document_body/macros/portlet",
 '', "View","PT:Document",1),
 
-('view_viewlet', 'Body',
+('view_viewlet', 'Topic List',
 'string: here/viewlets_topic_list/macros/base_portlet', 
 '', 'View', 'PT:Topic', 1),
 
-('topic_title_only', 'title only',
+('topic_title_only', 'simple topic list',
 'string: here/viewlets_topic_list/macros/title_only',
 '', 'View', 'PT:Topic', 1),
 
-('image_view','Body',
+('image_view','image',
 'string:here/viewlet_image_body/macros/portlet',
 "","View","PT:Image", 1),
 
-("wiki_page_content","Body",
+("wiki_page_content","wiki text",
 "string:here/viewlet_zwikipage_body/macros/portlet",
 "","View","PT:Wiki Page",1),
 
@@ -70,7 +70,7 @@ actions=[
 
 ### GL: global viewlets
 
-('default_viewlet', 'Default Viewlet',
+('default_viewlet', 'Title & Description',
 'string:here/viewlet_default/macros/portlet',
 '', 'View', 'GL:all', 1),
 
@@ -87,7 +87,7 @@ actions=[
 '', 'View', 'GL:folder', 1),
 
 ('portlet_events', 'Events', 
-'string:here/portlet_events/macros/portlet',
+'string:here/viewlet_events/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
 ('portlet_review', 'Review List', 
@@ -95,7 +95,7 @@ actions=[
 '', 'Review portal content', 'GL:folder', 1),
 
 ('portlet_news', 'News', 
-'string:here/portlet_news/macros/portlet', 
+'string:here/viewlet_news/macros/portlet', 
 '', 'View', 'GL:folder', 1),
 
 ('portlet_recent', 'Recent Published',

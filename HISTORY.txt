@@ -8,9 +8,9 @@ V1.7
 
   - better error handler
 
-  - more viewlets for PloneChat and mxmDynamicPage
+  - more viewlets: support PloneChat and mxmDynamicPage
 
-  - ContentPanels content can be a plone portlet now. See FAQ.txt
+  - the whole ContentPanels content can be a plone portlet now. See FAQ.txt
 
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl
 
@@ -18,7 +18,11 @@ V1.7
 
   - allow custom css in contentpanels
 
-  - change tab name:  'config' -> 'layout' 
+  - change tab name:  'config' -> 'layout'
+
+  - change a lot of viewlet names
+
+  - events portlet and news portlet are local now(shown events and news under certain folder).
 
 V1.6
 
