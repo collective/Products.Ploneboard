@@ -16,12 +16,14 @@ Requirements
   
   * CMFBibliographyAT
 
+  * The docutils python module is recommended for transforming numbers from arabic to roman.
+
 
 Installation
 
   * Recommanded: Copy ATBiblioList into your Products directory and install it with the 'QuickInstaller' Tool.
 
-  * Or: create an external method at the root of your cmf portal and run it by clicking its 'test' tab.
+  * Or: create an external method at the root of your plone portal and run it by clicking its 'test' tab.
 
     - Id            : InstallATBiblioList
 

@@ -15,13 +15,12 @@
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
+from Products.Archetypes.public import registerType
+from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import StringField, TextField, LinesField
+from Products.Archetypes.public import StringField, TextField
+from Products.Archetypes.public import StringWidget, SelectionWidget, EpozWidget
 from Products.Archetypes.public import BooleanField, BooleanWidget
-from Products.Archetypes.public import SelectionWidget, TextAreaWidget, EpozWidget
-from Products.Archetypes.public import RichWidget, IdWidget, StringWidget
-from Products.Archetypes.public import BaseContent, registerType
-from Products.Archetypes.Widget import TypesWidget
 
 from BibrefStyle import IBibrefStyle
 

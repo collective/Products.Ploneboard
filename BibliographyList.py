@@ -14,19 +14,19 @@
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
-from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import DisplayList, registerType
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import ReferenceField, ReferenceField, StringField
-from Products.Archetypes.public import BaseContent, registerType
-from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWidget
+from Products.Archetypes.public import BaseContent
+from Products.Archetypes.public import ReferenceField, ReferenceWidget
+from Products.Archetypes.Widget import StringField, SelectionWidget, 
 from Products.Archetypes.Registry import registerWidget
-from roman import *
 
-# possible types of bibliographic references by module 'CMFBibliography'
+# possible types of bibliographic references from module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
+
 from config import LISTING_VALUES
 
-class ReferencesWidget(TypesWidget):
+class BibrefListWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
@@ -39,7 +39,7 @@ schema = BaseSchema + Schema((
     ReferenceField('references_list',
                    multiValued=1,
                    relationship='lists reference',
-                   widget=ReferencesWidget(label="References",
+                   widget=BibrefListWidget(label="References",
                                            label_msgid="label_references_list",
                                            description_msgid="help_references_list",
                                            i18n_domain="plone",

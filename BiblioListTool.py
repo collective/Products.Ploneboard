@@ -20,12 +20,14 @@ from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 
+# ATBiblioList stuff
 from BibrefStyle import IBibrefStyle
 from styles.Minimal import MinimalBibrefStyle
 from styles.Chicago import ChicagoBibrefStyle
 from styles.Harvard import HarvardBibrefStyle
 from styles.MLA import MLABibrefStyle
 from styles.APA import APABibrefStyle
+
 import Products
 
 class BiblioListTool(UniqueObject, Folder):

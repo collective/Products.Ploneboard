@@ -15,11 +15,10 @@
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
-from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import DisplayList, registerType
+from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import StringField
-from Products.Archetypes.public import BaseContent, registerType
-from Products.Archetypes.Widget import SelectionWidget
+from Products.Archetypes.public import StringField, SelectionWidget
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 from BibrefStyle import IBibrefStyle
