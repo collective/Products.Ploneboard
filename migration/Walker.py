@@ -148,7 +148,7 @@ class CatalogWalker(Walker):
         LOG("fromType: " + str(self.fromType))
         catalog = self.catalog
 
-        if HAS_LINGUA_PLONE:
+        if HAS_LINGUA_PLONE and 'Language' in catalog.indexes():
             # usage of Language is required for LinguaPlone
             brains = catalog(portal_type = self.fromType,
                              Language = catalog.uniqueValuesFor('Language'),
@@ -182,7 +182,7 @@ class CatalogWalkerWithLevel(Walker):
         LOG("fromType: %s, level %s" % (self.fromType, depth))
         catalog = self.catalog
 
-        if HAS_LINGUA_PLONE:
+        if HAS_LINGUA_PLONE and 'Language' in catalog.indexes():
             # usage of Language is required for LinguaPlone
             brains = catalog(portal_type = self.fromType,
                              Language = catalog.uniqueValuesFor('Language'),
