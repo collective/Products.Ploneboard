@@ -1,135 +1,177 @@
-# Gettext Message File for ContentPanels.
-
 msgid ""
 msgstr ""
-"Project-Id-Version: ContentPanels 1.5\n"
-"POT-Creation-Date: 2004-02-15 01:11+0300\n"
-"PO-Revision-Date: 2004-02-15 16:16+0800\n"
+"Project-Id-Version: CMFContentPanels 1.6\n"
+"POT-Creation-Date: 2004-03-25 01:57+0000\n"
+"PO-Revision-Date: 2004-03-25 00:33 +0001\n"
 "Last-Translator: Enzo Cesanelli <enzo@noiza.com>\n"
-"Language-Team: noiza.com <enzo@noiza.com>\n"
+"Language-Team: Italian <<enzo@noiza.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=latin1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language-code: it-ch\n"
-"Language-name: Italian\n"
-"Preferred-encodings: utf-8\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: latin1 utf-8\n"
 "Domain: contentpanels\n"
 
-msgid "label_content"
-msgstr "Contenuto:"
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="Column Width">
+#.  Width
+#. </span>
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <input i18n:attributes="title" name="columnInfos.columnWidth:records" size="4" tal:attributes="value column/columnWidth" title="Column Width" type="text" value=""/>
+msgid "Column Width"
+msgstr "Larghezza Colonna"
 
-msgid "label_skin"
-msgstr "Skin§"
 
-msgid "click here to select other content"
-msgstr "Clicca qui per selezionare altro contenuto"
-
-msgid "label_column_width"
-msgstr "Larghezza colonna"
-
-msgid "label_viewlet"
-msgstr "Viewlet"
-
-msgid "heading_new_panel"
-msgstr "Testata Nuovo Pannello"
-
-msgid "Add Panel"
-msgstr "Aggiungi Pannello"
-
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <input class="sameline" i18n:attributes="value" name="save" type="submit" value="Save"/>
 msgid "Save"
 msgstr "Registra"
 
-msgid "Delete"
-msgstr "Elimina§"
 
-msgid "heading_column"
-msgstr "Testata colonna"
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <select i18n:attributes="title label_viewlet" name="panelObjectViewlet" tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records" tal:define="viewlets python: here.portal_actions.listFilteredActionsFor(panelContent).get('panel_viewlets', []);                                             viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent.absolute_url() != cpPath)];                                             portlets python: here.portal_contentpanels.listFilteredActionsFor(panelContent).get('panel_viewlets',[]);" title="content viewlet" width="6">
+msgid "content viewlet"
+msgstr ""
 
-msgid "label_title"
-msgstr "Titolo"
 
-msgid "label_align"
-msgstr "Allineamento"
-
-msgid "label_width"
-msgstr "Larghezza"
-
-msgid "label_panel_space"
-msgstr "Padding"
-
-msgid "Add Column"
-msgstr "Aggiungi Colonna"
-
-msgid "Add Page"
-msgstr "Aggiungi Pagina"
-
-msgid "Delete Page"
-msgstr "Elimina Pagina"
-
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_edit_form.cpt
+#. <p i18n:domain="contentpanels" i18n:translate="description_edit_contentpanels">
+#. ContentPanels is designed to build a complex view out of a combination of portlets.  Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'config' tab to configure pages/columns/panels
+#. </p>
 msgid "description_edit_contentpanels"
-msgstr "Contentpanels descrizione modifica"
+msgstr "ContentPanels è concepito per costruire una visione complessiva risultante dalla combinazione dei portlet. Vari tipi di portlet per vari tipi di contenuto (Documenti, Immagini, Cartelle, Temi, ZWiki, etc) possono essere combinati in una singola pagina. Inserisci i dettagli attinenti qui di seguito e premi 'Registra'. Puoi usare il tab 'Configura' per configurare pagine/colonne/pannelli"
 
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_align">
+#.  Align:
+#. </span>
+msgid "label_align"
+msgstr "Allinea:"
+
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_panel_space">
+#.  Padding:
+#. </span>
+msgid "label_panel_space"
+msgstr "Padding:"
+
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_title">
+#.  Title:
+#. </span>
+msgid "label_title"
+msgstr "Titolo:"
+
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_width">
+#.  Width:
+#. </span>
+msgid "label_width"
+msgstr "Largezza:"
+
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_edit_form.cpt
+#. <legend i18n:domain="contentpanels" i18n:translate="legend_contentpanels_details">
+#.  ContentPanels Details
+#. </legend>
 msgid "legend_contentpanels_details"
-msgstr "Dettagli Contentpanels"
+msgstr "Dettagli di ContentPanels"
 
-msgid "ContentPanels"
-msgstr "ContentPanels"
 
-msgid "Config Layout"
-msgstr "Configura Layout"
-
-msgid "View Layout"
-msgstr "Visualizza Layout"
-
+msgid "Select Viewlet:"
+msgstr "Seleziona Viewlet"
 
 # Box Skin Names
 
-msgid "Blank Box"
-msgstr "Box vuoto"
+msgid "Default"
+msgstr ""
 
-msgid "Title Only"
-msgstr "Solo Titolo"
+msgid "No Title"
+msgstr "Nessun Titolo"
 
-msgid "Plone Box"
-msgstr "Box Plone"
+msgid "Default Box"
+msgstr ""
 
-msgid "Blue Box"
-msgstr "Box Blu"
-
-msgid "Red Box"
-msgstr "Box Rosso"
-
-msgid "Yellow Box"
-msgstr "Box Giallo"
+msgid "ZopeZen"
+msgstr "ZopeZen.."
 
 # viewlet Names
 
-msgid "ContentPanels View"
-msgstr "Visualizzazione ContentPanels"
+msgid "My Recent Updates"
+msgstr "I miei aggiornamenti più recenti"
+
+msgid "My Favorites"
+msgstr "I miei preferiti"
+
+msgid "Calendar"
+msgstr "Calendario"
+
+msgid "Events"
+msgstr "Eventi"
+
+msgid "Review List"
+msgstr "Lista di revisione"
+
+msgid "News"
+msgstr "Notizie"
+
+msgid "Language"
+msgstr "Lingua"
+
+msgid "Recent Published"
+msgstr "Pubblicati di recente"
+
+msgid "Nested ContentPanels"
+msgstr "ContentPanels annidati"
 
 msgid "View"
-msgstr "Visualizza"
+msgstr "Vista"
 
-msgid "Latest Updates"
-msgstr "Ultimi aggiornamenti"
+msgid "Recent Updates"
+msgstr "Aggiornamenti recenti"
+
+msgid "Content Listing"
+msgstr "Lista dei contenuti"
 
 msgid "Body"
-msgstr "Corpo"
+msgstr "Solo Corpo"
 
 msgid "Default Viewlet"
-msgstr "Viewlet di default"
+msgstr ""
 
 msgid "My Recent Changes"
-msgstr "I miei cambiamenti recenti"
+msgstr "I miei cambiamenti più recenti"
 
-#viewlet 
 
-msgid "none_my_post"
-msgstr "Nessun mio post"
+msgid "move left"
+msgstr "sposta a sinistra"
 
-msgid "cp_page_title"
-msgstr "Á¨¨$page_numÈ°µÔºö"
+msgid "move right"
+msgstr "sposta a destra"
 
-msgid "Add"
-msgstr "Aggiungi"
+msgid "delete this page"
+msgstr "elimina questa pagina"
+
+msgid "new panel"
+msgstr "nuovo pannello"
+
+msgid "new column"
+msgstr "nuova colonna"
+
+msgid "delete column"
+msgstr "elimina colonna"
+
+msgid "move up"
+msgstr "sposta sopra"
+
+msgid "move down"
+msgstr "sposta sotto"
+
+msgid "delete this panel"
+msgstr "elimina questo pannello"

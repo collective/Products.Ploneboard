@@ -140,7 +140,7 @@ msgid "Recent Updates"
 msgstr ""
 
 msgid "Content Listing"
-msgtr ""
+msgstr ""
 
 msgid "Body"
 msgstr ""
