@@ -265,19 +265,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         XXX Have to improve perfs here
         """
-        # Fetch users first
-        for src in self.listUserSources():
-            u = src.getUser(name)
-            if u:
-                ret = GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
-                return ret
-
         # Prevent infinite recursion when instanciating a GRUF 
         # without having sub-acl_users set
         if not "acl_users" in self.Groups.objectIds():
             return None
         
-        # If not found, fetch groups (then the user must be 
+        # Fetch groups first (then the user must be 
         # prefixed by 'group_' prefix)
         u = self.Groups.getGroup(name)
         if u:
@@ -285,6 +278,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # a double-wrapped group object...
             return u
  
+        # Fetch users then
+        for src in self.listUserSources():
+            u = src.getUser(name)
+            if u:
+                ret = GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
+                return ret
+
         return None
 
     security.declareProtected(Permissions.manage_users, "getUnwrappedUser")
@@ -658,7 +658,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/16 17:45:49 $"[7:-2]
+        rev_date = "$Date: 2003/12/17 09:47:57 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
