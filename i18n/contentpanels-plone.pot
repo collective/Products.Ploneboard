@@ -28,3 +28,6 @@ msgstr ""
 
 msgid "contentpanels property changes saved."
 msgstr ""
+
+msgid "Layout"
+msgstr ""

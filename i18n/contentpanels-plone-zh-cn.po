@@ -28,3 +28,6 @@ msgstr "复合面板页面是一种用来构建复合页面的Portlets内容"
 
 msgid "contentpanels property changes saved. "
 msgstr "复合面板页面的属性已经保存。"
+
+msgid "Layout"
+msgstr "面板布局"

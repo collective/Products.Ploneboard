@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2002 ZopeChina Corporation (http://zopechina.com). All Rights Reserved.
+# Copyright (c) 2002 ZopeChina Corporation (http://www.zopechina.com). All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
@@ -50,11 +50,11 @@ factory_type_information = ( {'id': 'ContentPanels',
                                         'action': 'contentpanels_config_form',
                                         'permissions': (CMFCorePermissions.ModifyPortalContent,)
                                          }
-                                       , { 'id'            : 'metadata'
-                                          , 'name'          : 'Metadata'
-                                          , 'action'        : 'metadata_edit_form'
-                                          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-                                          }
+                                      , { 'id'            : 'metadata'
+                                         , 'name'          : 'Metadata'
+                                         , 'action'        : 'metadata_edit_form'
+                                         , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
+                                         }
                                      )
                             },
                         )
