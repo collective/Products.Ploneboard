@@ -1,0 +1,70 @@
+# ATContentTypes messages catalog.
+# These are the messages that ATContentTypes adds to the plone domain.
+# Albert Lombarte, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: ATContentTypes CVS\n"
+"POT-Creation-Date: 2004-05-11 23:22+0000\n"
+"PO-Revision-Date: 2004-05-10 17:22+0200\n"
+"Last-Translator: Albert Lombarte <artomb-pCzzcW6XgXY@public.gmane.org>\n"
+"Language-Team: Català <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: ca\n"
+"Language-Name: Català\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+#: ./skins/ATContentTypes/atct_macros.pt
+#. <legend i18n:translate="legend_criteria_field">
+#.                Criterion for
+#.  ${fieldname}
+#. </legend>
+msgid "legend_criteria_field"
+msgstr "Criteri per ${fieldname}"
+
+## types/criteria/schemata.py
+
+msgid "label_date_criteria_operation"
+msgstr "Operacions"
+
+msgid "help_date_criteria_operation"
+msgstr "Operacions que s'han d'aplicar als valors" 
+
+msgid "label_date_criteria_value"
+msgstr "Data"
+
+msgid "help_date_criteria_value"
+msgstr "Data a la que fa referència"
+
+msgid "label_date_criteria_range"
+msgstr "Interval de temps"
+
+msgid "help_date_criteria_range"
+msgstr "Especifica si l'interval de temps precedeix o segueix la data de referència"
+
+msgid "label_list_criteria_value"
+msgstr "Valors"
+
+msgid "help_list_criteria_value"
+msgstr "Valors, un per línia"
+
+msgid "label_list_criteria_operator"
+msgstr "Operador"
+
+msgid "help_list_criteria_operator"
+msgstr "Operador per utilitzar després dels diversos valors especificats"
+
+msgid "label_int_criteria_value"
+msgstr "Valor"
+
+msgid "help_int_criteria_value"
+msgstr "Un nombre enter"
+
+msgid "label_string_criteria_value"
+msgstr "Valor"
+
+msgid "help_string_criteria_value"
+msgstr "Una cadena de text"
