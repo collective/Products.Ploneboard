@@ -3,7 +3,7 @@ Section: web
 Priority: optional
 Maintainer: Sylvain Thenault <sylvain.thenault@logilab.fr> 
 Build-Depends-Indep: debhelper (>= 3.0.0)
-Standards-Version: 3.5.8
+Standards-Version: 3.6.0
 
 Package: zope-cmfquickinstallertool
 Architecture: all
@@ -12,6 +12,8 @@ Description: A tool to manage installation of CMF products inside CMF sites
  This tool is independent from the former CMFQuickInstaller.
  The main difference to CMFQuickInstaller the tracking of
  what a product creates during install.
- 
+ .
+ Homepage: http://www.sourceforge.net/projects/collective
+
 
 
