@@ -1,6 +1,7 @@
 # Gettext Message File for MPoll
-# Your Name <your@email>, Year
+# Philipp von Weitershausen <philikon@philikon.de>, 2003
 msgid ""
+msgstr ""
 "Project-Id-Version: MPoll 0.3\n"
 "POT-Creation-Date: 2003-01-19 11:42-100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
