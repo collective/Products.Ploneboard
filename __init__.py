@@ -1,7 +1,7 @@
 """
 Archetypes derived I18NLayer.
 
-$Id: __init__.py,v 1.1 2003/03/25 16:46:55 longsleep Exp $
+$Id: __init__.py,v 1.2 2003/03/26 10:49:14 vladoi Exp $
 """
 
 from Products.CMFCore.CMFCorePermissions import AddPortalContent
@@ -9,6 +9,7 @@ from Products.CMFCore.utils import getToolByName, ContentInit
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Archetypes.public import *
 from Products.Archetypes import listTypes
+
 
 PROJECTNAME = "I18NLayer"
 
