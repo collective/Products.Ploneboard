@@ -64,6 +64,7 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
                      SimpleItem.Item.manage_options
 
     security = ClassSecurityInfo()
+    def __creatable_by_emergency_user__(self): return 1
 
     def __init__(self, id = None):
         if id:

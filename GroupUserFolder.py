@@ -97,7 +97,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     title    ='Group-aware User Folder'
 
     __implements__ = (IUserFolder, )
-
+    def __creatable_by_emergency_user__(self): return 1
+    
     isAnObjectManager = 1
     isPrincipiaFolderish = 1
     isAUserFolder = 1
@@ -1313,7 +1314,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/12/18 15:33:49 $"[7:-2]
+        rev_date = "$Date: 2004/12/27 12:10:36 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
