@@ -17,9 +17,11 @@
 import GroupUserFolder
 import GRUFFolder
 from global_symbols import *
-
+from Products.CMFCore.DirectoryView import registerDirectory
 import AccessControl.User
 
+global groupuserfolder_globals
+groupuserfolder_globals=globals()
 
 ##################################
 ## CMF / Plone SUPPORT START... ##
@@ -51,6 +53,9 @@ Log(LOG_NOTICE, "Loaded GroupUserFolder.")
 
 
 def initialize(context):
+
+    registerDirectory('skins', groupuserfolder_globals)
+    
     context.registerClass(
         GroupUserFolder.GroupUserFolder,
         permission='Add GroupUserFolders',
