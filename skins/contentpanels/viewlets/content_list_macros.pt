@@ -11,11 +11,11 @@
 
 <!-- 1. description in link title -->
 
-<metal:block metal:define-macro="description_in_tilte">
+<metal:block metal:define-macro="description_in_title">
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd" 
-             tal:define="item item/getObject | item"
+             tal:define="item item/getObject | nocall: item"
              tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
              tal:condition="python:item != None and item.getTypeInfo()">
 
@@ -46,7 +46,7 @@
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd"
-             tal:define="item item/getObject | item"
+             tal:define="item item/getObject | nocall:item"
              tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
              tal:condition="python:item != None and item.getTypeInfo()">
 
@@ -76,7 +76,7 @@
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd"
-             tal:define="item item/getObject | item"
+             tal:define="item item/getObject | nocall: item"
              tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
              tal:condition="python:item != None and item.getTypeInfo()">
 

@@ -20,7 +20,7 @@
 
          <div class="portletBody">
 
-             <metal:block metal:deine-slot="body">
+             <metal:block metal:define-slot="body">
                 <metal:block metal:use-macro="here/content_list_macros/macros/description_inline"/>
              </metal:block>
 
