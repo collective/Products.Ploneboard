@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.7 2004/04/09 22:02:21 tiran Exp $
+$Id: ATFolder.py,v 1.8 2004/04/17 20:02:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -138,10 +138,20 @@ class ATBTreeFolder(ATCTBTreeFolder):
     assocMimetypes = ()
     assocFileExt   = ()
 
-
     __implements__ = ATCTBTreeFolder.__implements__, IATBTreeFolder
 
     security       = ClassSecurityInfo()
+
+    actions = updateActions(ATCTBTreeFolder,
+       (
+       {
+       'id'          : 'view',
+       'name'        : 'View',
+       'action'      : 'string:${folder_url}/',
+       'permissions' : (CMFCorePermissions.View,)
+        },
+       )
+       )
 
 registerType(ATBTreeFolder, PROJECTNAME)
 
