@@ -100,8 +100,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 ##        return self.get(id).__of__(getToolByName(self, 'portal_url').getPortalObject())
 
 
-    security.declarePrivate('getMemberFactory')
-    def getMemberFactory(self):
         """Return a callable that is the registered object returning a
         contentish member object"""
         return getMemberFactory(self, self.typeName)
@@ -201,13 +199,14 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
             # Return a wrapper with self as containment and
             # the user as context following CMFCore portal_memberdata
+            # the user as context following CMFCore portal_memberdata
+            # the user as context following CMFCore portal_memberdata
             return m.__of__(self).__of__(user)
         except:
             import traceback
             import sys
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            import pdb
-            pdb.set_trace()
+            #import pdb; pdb.set_trace()
             raise
 
 
@@ -222,15 +221,17 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         self._setObject(id, m)
 
     def _getMemberInstance(self):
-        """Get an instance of the Member class.  Used for extracting
-        default property values, etc."""
+        """Get an instance of the Member class.  Used for 
+           extracting default property values, etc."""
         if self._defaultMember is None:
             tempFolder = PortalFolder('temp').__of__(self)
             getMemberFactory(tempFolder, self.typeName)('default')
             self._defaultMember = getattr(tempFolder,'default')
             getattr(tempFolder,'default').unindexObject()
-            tempFolder.unindexObject() # don't store _defaultMember in the catalog
-            self._defaultMember.unindexObject() # don't store _defaultMember in the catalog
+            # don't store _defaultMember in the catalog
+            tempFolder.unindexObject() 
+            # don't store _defaultMember in the catalog
+            self._defaultMember.unindexObject() 
         return self._defaultMember
 
     security.declarePublic('getProperty')
@@ -252,6 +253,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         # No default property 
         if default is not None:
             return default
+
+        _val = getattr(aq_base(self), id, None)
+        if _val is not None:
+            return _val
 
         raise AttributeError, id
        
@@ -298,6 +303,13 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     # register type type of Member object that the MemberDataTool will store
     def registerType(self, new_type_name):
+        self.typeName = new_type_name
+        BTreeFolder2Base._checkId(self, id, allow_dup)
+
+
+    # register type type of Member object that the MemberDataTool will store
+    def registerType(self, new_type_name):
+        self.typeName = new_type_name
         self.typeName = new_type_name
         self._defaultMember = None # nuke the default member (which was of the old Member type)
         typestool=getToolByName(self, 'portal_types')
@@ -386,13 +398,6 @@ def _getViewFor(obj, view='view', default=None):
         actions = ti.getActions()
         for action in actions:
             if action.get('id', None) == default:
-                default=action
-            if action.get('id', None) == view:
-                if _verifyActionPermissions(obj, action) and action['action']!='':
-                    return obj.restrictedTraverse(action['action'])
-
-        if default is not None:    
-            if _verifyActionPermissions(obj, default):
                 return obj.restrictedTraverse(default['action'])
 
         # "view" action is not present or not allowed.
