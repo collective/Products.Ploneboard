@@ -357,7 +357,6 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless(self.compareGroups("group_compta", ('intranet', 'extranet', )))
     
 
-
     def test08traversal(self,):
         """
         test traversal to ensure management screens are correctly accessible
