@@ -9,7 +9,10 @@
 <tal:block metal:define-macro="skinslot">
 
   <div class="box">
-    <h5 tal:content="here/Title">Title</h5>
+    <h5>
+        <a tal:attributes="href here/absolute_url"
+           tal:content="here/Title">Title</a>
+    </h5>
     <div class="body" tal:content="structure here/contentpanels_renderObject">
       content
     </div>

@@ -7,7 +7,8 @@
 <body>
 
 <tal:block metal:define-macro="skinslot">
-  <H3 tal:content="here/Title">title</H3>
+  <H3><a tal:attributes="href here/absolute_url" 
+      tal:content="here/Title">title</a></H3>
   <div align="top" tal:content="structure here/contentpanels_renderObject">content
   </div>
 </tal:block>

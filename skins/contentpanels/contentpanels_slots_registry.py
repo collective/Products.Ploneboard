@@ -20,6 +20,7 @@ return [
         , ('About Box', 'here/about_slot/macros/aboutBox')
         , ('Related Box', 'here/related_slot/macros/relatedBox')
         , ('Calendar', 'here/calendar_slot/macros/calendarBox')
+        , ('latest Event', 'here/events_slot/macros/eventsBox')
         , ('Navigation Tree', 'here/navigation_tree_slot/macros/navigationBox')
         , ('News Box', 'here/news_slot/macros/newsBox')
         , ('Review Box', 'here/workflow_review_slot/macros/review_box')
