@@ -45,5 +45,3 @@ class MembershipTool( BaseTool ):
         return memberdata_tool.searchForMembers(REQUEST, **kw)
 
 InitializeClass(MembershipTool)
-
-

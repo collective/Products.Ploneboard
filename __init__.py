@@ -37,14 +37,15 @@ def initialize(context):
     import MemberDataTool
     import RegistrationTool
     import MembershipTool
+    import FactoryTool
     tools = (
         MemberDataTool.MemberDataTool,
         RegistrationTool.RegistrationTool,
         MembershipTool.MembershipTool,
+        FactoryTool.FactoryTool,
         )
 
     utils.ToolInit(PKG_NAME + ' Tool', tools=tools,
                    product_name=PKG_NAME,
                    icon="tool.gif",
                    ).initialize(context)
-    

@@ -20,6 +20,9 @@ import pdb
 from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataTool
 _marker = []
 
+class TempFolder(PortalFolder):
+    portal_type = meta_type = 'MemberArea'
+
 class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     __implements__ = (portal_memberdata, ActionProviderBase.__implements__)
 
@@ -64,6 +67,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         self.setTitle('Member profiles')
 
 
+    security.declarePublic('__call__')
     def __call__(self):
         """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
@@ -73,6 +77,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
              return view()
 
 
+    security.declarePublic('view')
     def view(self):
         """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
@@ -82,22 +87,11 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
              return view()
 
 
+    security.declarePublic('index_html')
     def index_html(self, REQUEST, RESPONSE):
         """Member search form"""
         search_form = self.restrictedTraverse('member_search_form')
         return search_form(REQUEST, RESPONSE)
-    
-
-    security.declarePublic('registerMember')
-    def registerMember(self, id):
-        """Create a new member with the specified id.  Wrap the member
-        in the context of the portal so that we avoid having member
-        breadcrumbs."""
-        self.invokeFactory(id=id, type_name=self.typeName)
-#        o=getattr(portal.portal_memberdata, id, None)
-#        self.getMemberFactory()(id)
-        return self.get(id)
-##        return self.get(id).__of__(getToolByName(self, 'portal_url').getPortalObject())
 
 
         """Return a callable that is the registered object returning a

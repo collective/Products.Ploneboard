@@ -31,13 +31,11 @@ def installMember(self, out):
 
 
 def replaceTools(self, out, convert=1):
-    portal = getToolByName(self, 'portal_url').getPortalObject()
-    memberdata_tool = getToolByName(self, 'portal_memberdata')
-    if memberdata_tool.__class__ != CMFMember.MemberDataTool.MemberDataTool:
+    typestool=getToolByName(self, 'portal_types')
+    if not hasattr(typestool, 'MemberArea'):
         # For a object to be displayed in contentValues it must be registered with the
         # portal_types tool.  So lets do this and make the MemberDataTool not addable.
         # XXX This seems kind of evil.
-        typestool=getToolByName(self, 'portal_types')
         from Products.CMFCore.TypesTool import FactoryTypeInformation
         typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
           typeinfo_name='CMFCore: Portal Folder')
@@ -54,6 +52,10 @@ def replaceTools(self, out, convert=1):
                     action.action=Expression(text='string:folder_contents')
         memberarea._actions=_actions
         memberarea.global_allow = 0  # make MemberArea not implicitly addable
+
+    portal = getToolByName(self, 'portal_url').getPortalObject()
+    memberdata_tool = getToolByName(self, 'portal_memberdata')
+    if memberdata_tool.__class__ != CMFMember.MemberDataTool.MemberDataTool:
 
 #        # purge orphans
 #        if memberdata_tool.getMemberDataContents()[0]['orphan_count'] > 0:
@@ -100,8 +102,7 @@ def replaceTools(self, out, convert=1):
             catalog.reindexObject(member)
 
         memberdata_tool._setPortalTypeName('MemberArea')
-        memberarea.allowed_content_types=(memberdata_tool.typeName,)
-
+    memberarea.allowed_content_types=(memberdata_tool.typeName,)
     
 
 def _getUserFolderForUser(self, id=None):
@@ -143,22 +144,59 @@ def setupRegistration(self, out):
     registration_tool=getToolByName(self, 'portal_registration')
     actions=registration_tool._cloneActions()
     for action in actions:
-            if action.id=='join':
-                action.action=Expression(text='string:${portal_url}/portal_memberdata/createObject?type_name=Member')
+        if action.id=='join':
+            action.action=Expression('string:${portal_url}/createMember')
     registration_tool._actions=tuple(actions)
+
+
+def setupMembership(self, out):
+    # wire up personalize action to new machinery
+    membership_tool=getToolByName(self, 'portal_membership')
+    actions=membership_tool._cloneActions()
+    for action in actions:
+        if action.id=='preferences':
+            action.action=Expression('string:${portal_url}/portal_memberdata/${portal/portal_membership/getAuthenticatedMember}/portal_form/personalize_form')
+    membership_tool._actions=tuple(actions)
 
 
 def setupNavigation(self, out, type_name):
     nav_tool = getToolByName(self, 'portal_navigation')
 
-    nav_tool.addTransitionFor('default', 'register_member', 'failure', 'register_member')
-    nav_tool.addTransitionFor('default', 'register_member', 'success', 'script:do_register')
+    nav_tool.addTransitionFor('default', 'join_form', 'failure', 'join_form')
+    nav_tool.addTransitionFor('default', 'join_form', 'success', 'script:do_register')
+    nav_tool.addTransitionFor('default', 'do_register', 'success', 'registered')
 
-    nav_tool.addTransitionFor(type_name, 'do_register', 'success', 'registered')
+    nav_tool.addTransitionFor('default', 'personalize_form', 'failure', 'personalize_form')
+    nav_tool.addTransitionFor('default', 'personalize_form', 'success', 'script:content_edit')
+
+    form_tool = getToolByName(self, 'portal_form')
+    form_tool.setValidators('join_form', ['validate_base'])
+    form_tool.setValidators('personalize_form', ['validate_base'])
 
 
 def installSkins(self, out):
     install_subskin(self, out, CMFMember.GLOBALS, 'skins')
+
+
+def installPortalFactory(self, out):
+    if hasattr(self, 'portal_factory'):
+        self.manage_delObjects(['portal_factory'])
+    self.manage_addProduct[CMFMember.PKG_NAME].manage_addTool('Plone Factory Tool', None)
+
+    site_props = self.portal_properties.site_properties
+    if not hasattr(site_props,'portal_factory_types'):
+        site_props._setProperty('portal_factory_types',('Member',), 'lines')
+
+    from Products.CMFCore.TypesTool import FactoryTypeInformation
+    types_tool = getToolByName(self, 'portal_types')
+    types_tool.manage_addTypeInformation(FactoryTypeInformation.meta_type,
+                                         id='TempFolder', 
+                                         typeinfo_name='CMFCore: Portal Folder')
+    tempfolder = types_tool.TempFolder
+    tempfolder.content_meta_type='Temporary Folder'
+    tempfolder.icon = 'folder_icon.gif'
+    tempfolder.global_allow = 0  # make TempFolder not implicitly addable
+    tempfolder.allowed_content_types=(types_tool.listContentTypes())
 
 
 def install(self):
@@ -169,7 +207,9 @@ def install(self):
     replaceTools(self, out)
     installSkins(self, out)
     setupRegistration(self, out)
+    setupMembership(self, out)
     setupNavigation(self, out, 'Member')
+    installPortalFactory(self, out)
     
     print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME
     import sys

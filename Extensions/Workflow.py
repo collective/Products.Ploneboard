@@ -13,6 +13,7 @@ def triggerAutomaticTransitions(ob):
     if 'trigger' in [action.get('id',None) for action in wf_tool.getActionsFor(ob)]:
         wf_tool.doActionFor(ob, 'trigger')
 
+
 def setupWorkflow(portal, out):
     wf_tool=portal.portal_workflow
 
@@ -28,7 +29,10 @@ def setupWorkflow(portal, out):
         wf.states.addState(s)
     wf.states.setInitialState('new')
 
-    for t in ('trigger', 'make_pending', 'auto_register', 'register_public', 'register_private', 'make_private', 'make_public', 'disable'):
+    for t in ('trigger', 'make_pending', 'auto_register',
+              'register_public', 'register_private',
+              'make_private', 'make_public',
+              'disable', 'enable_pending', 'enable_public', 'enable_private'):
         wf.transitions.addTransition(t)
 
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
@@ -38,6 +42,8 @@ def setupWorkflow(portal, out):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('register', 'Register a Member', 'CMFMember.Workflow', 'register')
     if not 'disable' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('disable', 'Disable a Member', 'CMFMember.Workflow', 'disable')
+    if not 'enable' in wf.scripts.objectIds():
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Enable a Member', 'CMFMember.Workflow', 'enable')
 
     perms = {}
     for p in (MemberPermissions.REGISTER_PERMISSION,
@@ -74,7 +80,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager','Anonymous',))
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager','Anonymous'))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
     state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Anonymous',))
 
@@ -135,7 +141,7 @@ def setupWorkflow(portal, out):
     state = wf.states['disabled']
     state.setProperties(
         title='Disabled',
-        transitions=('register_public', 'register_private',))
+        transitions=('enable_pending', 'enable_private', 'enable_public',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
@@ -225,8 +231,38 @@ def setupWorkflow(portal, out):
         actbox_name='Disable member',
         new_state_id='disabled',
         props={'guard_permissions':MemberPermissions.DISABLE_PERMISSION,},
-        after_script_name='disable')
+        script_name='disable')
 
+    # re-enable disabled member
+    transition = wf.transitions['enable_pending']
+    transition.setProperties(
+        title='Re-enable member',
+        actbox_name='Re-enable member',
+        new_state_id='pending',
+        props={'guard_permissions':MemberPermissions.DISABLE_PERMISSION,
+               'guard_expr':'python:getattr(here,\'old_state\',None) == \'pending\''},
+        after_script_name='enable')
+
+    # re-enable disabled member
+    transition = wf.transitions['enable_public']
+    transition.setProperties(
+        title='Re-enable member',
+        actbox_name='Re-enable member',
+        new_state_id='public',
+        props={'guard_permissions':MemberPermissions.DISABLE_PERMISSION,
+               'guard_expr':'python:getattr(here,\'old_state\',None) == \'public\''},
+        after_script_name='enable')
+
+    # re-enable disabled member
+    transition = wf.transitions['enable_private']
+    transition.setProperties(
+        title='Re-enable member',
+        actbox_name='Re-enable member',
+        new_state_id='private',
+        props={'guard_permissions':MemberPermissions.DISABLE_PERMISSION,
+               'guard_expr':'python:getattr(here,\'old_state\',None) == \'private\''},
+        after_script_name='enable')
+    
     # standard CMF variables so we can use content_status_history page, etc
     wf.variables.setStateVar('review_state')
 
@@ -275,19 +311,29 @@ workflow_transfer = {'new': [],
                      'disabled':['trigger', 'register_private', 'disable']
                     }
 
+
 # call the Member object's register() method
 def register(self, state_change):
     obj=state_change.object
     return obj.register()
+
 
 # call the Member object's disable() method
 def disable(self, state_change):
     obj=state_change.object
     return obj.disable()
 
+
+# call the Member object's enable() method
+def enable(self, state_change):
+    obj=state_change.object
+    return obj.enable()
+
+
 def makePublic(self, state_change):
     obj=state_change.object
     return obj.makePublic()
+
 
 def makePrivate(self, state_change):
     obj=state_change.object

@@ -1,0 +1,136 @@
+from Products.CMFCore.utils import UniqueObject, getToolByName                        
+from Globals import InitializeClass
+from Acquisition import aq_parent, aq_base, aq_inner, aq_chain 
+from AccessControl import ClassSecurityInfo
+from OFS.SimpleItem import SimpleItem
+from DateTime import DateTime
+from CMFCore import CMFCorePermissions
+from Products.CMFCore.PortalFolder import PortalFolder
+from DateTime import DateTime
+import urllib
+import sys
+
+# A class used for generating the temporary folder that will
+# hold temporary objects.  We need a separate class so that
+# we can add all types to types_tool's allowed_content_types
+# for the class without having side effects in the rest of
+# the portal.
+class TempFolder(PortalFolder):
+    portal_type = meta_type = 'Temporary Folder'
+
+    def __getitem__(self, id):
+        import sys
+        sys.stdout.write('__getitem__(%s)\n' % (str(id)))
+        # see if the object exists in the parent context
+        if hasattr(aq_parent(self), id):
+            # if so, just do a pass-through
+            sys.stdout.write('hasattr(aq_parent(self)), id): 1\n')
+            return getattr(self.getParentNode(), id)
+        elif hasattr(self, id):
+            sys.stdout.write('hasattr(self, id): 1\n')
+            return self._getOb(id)
+        else:
+            sys.stdout.write('else\n')
+            type_name = self.getId()
+            type_name = urllib.unquote(type_name)
+            # make sure we can add an object of this type to the temp folder
+            types_tool = getToolByName(self, 'portal_types')
+            if not type_name in types_tool.TempFolder.allowed_content_types:
+                # update allowed types for tempfolder
+                types_tool.TempFolder.allowed_content_types=(types_tool.listContentTypes())
+            self.invokeFactory(id=id, type_name=type_name)
+#            obj = aq_base(self._getOb(id)).__of__(aq_parent(self))
+            obj = self._getOb(id).__of__(aq_parent(self))
+            obj.unindexObject()
+            return obj
+
+debug = 1  # enable/disable logging
+
+class FactoryTool(UniqueObject, SimpleItem):
+    """ """
+    id = 'portal_factory'
+    meta_type= 'Plone Factory Tool'
+    security = ClassSecurityInfo()
+
+    def doCreate(self, obj, **kw):
+        if not self.isTemporary(obj=obj):
+            return obj
+        else:
+            id = kw.get('id', None)
+            if not id:
+                if hasattr(obj, 'getId') and callable(getattr(obj, 'getId')):
+                    id = obj.getId()
+                else:
+                    id = getattr(id, 'id', None)
+                if id is None:
+                    raise Exception  # FIXME
+            type_name = aq_parent(aq_inner(obj)).id
+            folder = aq_parent(obj)
+            folder.invokeFactory(id=id, type_name=type_name)
+            return getattr(folder, id)
+
+
+    def isTemporary(self, obj):
+        return aq_parent(aq_inner(obj)).meta_type == TempFolder.meta_type
+
+
+    def __bobo_traverse__(self, REQUEST, name):
+        """ """
+        import sys
+        sys.stdout.write('__bobo_traverse__: %s\n' % (name))
+
+        # The portal factory intercepts URLs of the form
+        #   .../portal_factory/TYPE_NAME/ID/...
+        # where TYPE_NAME is a type from portal_types.listContentTypes() and
+        # ID is the desired ID for the object.  For intercepted URLs, 
+        # portal_factory creates a temporary object of type TYPE_NAME with
+        # id ID and puts it on the traversal stack.  The context for the
+        # temporary object is set to portal_factory's context.
+        #
+        # If the object with id ID already exists in portal_factory's context,
+        # portal_factory returns the existing object.
+        #
+        # All other requests are passed through unchanged.
+        # 
+
+        # try to extract a type string from next piece of the URL
+        encoded_type_name = name
+        # unmangle type name
+        type_name = urllib.unquote(encoded_type_name)
+        types_tool = getToolByName(self, 'portal_types')
+        # make sure this is really a type name
+        if not type_name in types_tool.listContentTypes():
+            # nope -- do nothing
+            return getattr(self, name)
+
+        sys.stdout.write('type_name = %s\n' % type_name)
+
+
+        # create a temporary object
+        tempFolder = TempFolder(encoded_type_name).__of__(self)
+        # modify permissions to allow people to add, modify, and copy/move/rename temporary objects
+        tempFolder.manage_permission(CMFCorePermissions.AddPortalContent, ('Anonymous','Authenticated',), acquire=1 )
+        tempFolder.manage_permission(CMFCorePermissions.ModifyPortalContent, ('Anonymous','Authenticated',), acquire=1 )
+        tempFolder.manage_permission('Copy or Move', ('Anonymous','Authenticated',), acquire=1 )
+        return tempFolder.__of__(aq_parent(self))
+        return aq_base(tempFolder).__of__(aq_parent(self))
+        tempFolder.unindexObject()
+        tempFolder.invokeFactory(id=type_name, type_name='TempFolder')
+#        obj = aq_base(getattr(tempFolder, id)).__of__(aq_parent(self))
+#        obj.unindexObject()
+#        tempFolder.unindexObject()
+#
+#        return obj
+
+
+    security.declarePublic('log')
+    def log(self, msg, loc=None):
+        """ """
+        if not debug:
+            return
+        import sys
+        prefix = 'FactoryTool'
+        if loc:
+            prefix = prefix + '. ' + str(loc)
+        sys.stdout.write(prefix+': '+str(msg)+'\n')
+InitializeClass(FactoryTool)
