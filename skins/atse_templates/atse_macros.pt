@@ -121,11 +121,17 @@
   <div class="portlet">
     <h5 i18n:translate="maintenance">Maintenance</h5>
     <div class="portletBody" id="atse_maintenance">
-      <div>
-        <a tal:attributes="href string:update_all_schemas?return_to=$SCHEMA_TEMPLATE" i18n:translate="update_schema_for_all_issues">Update schema for all issues</a>
+      <div tal:condition="python: here.atse_editorCanUpdate(SCHEMA_ID)">
+        <a href="#" 
+	   tal:attributes="href string: ${here/absolute_url}/atse_updateManagedSchema?portal_type=$SCHEMA_ID&return_to=atse_editor"
+	   i18n:translate="update_schema_for_all_schemas">Update schema for all managed schemas</a>
+      </div>
+      <div tal:condition="python: not here.atse_editorCanUpdate(SCHEMA_ID)">
+       <b>This schema is actually not configured to update its associated objects</b>
       </div>
     </div>
   </div>
+
 </metal:div>
 
 
@@ -260,6 +266,24 @@
         </div>
       
         <div>
+          <div class="left">
+            <span class="label" i18n:translate="visible_edit">Visible (Edit)</span >
+            <div>
+              <input type="checkbox" value="visible" 
+                     name="fielddata.visible_edit:record:string"
+                     tal:attributes="checked python: here.atse_isFieldVisible(field.getName(), 'edit', SCHEMA_ID)"/>
+            </div>
+         </div>
+
+          <div class="left">
+            <span class="label" i18n:translate="required">Visible (View)</span >
+            <div>
+              <input type="checkbox" value="visible" 
+                     name="fielddata.visible_view:record:string"
+                     tal:attributes="checked python: here.atse_isFieldVisible(field.getName(), 'view', SCHEMA_ID)"/>
+            </div>
+         </div>
+
           <div class="left">
             <span class="label" i18n:translate="required">Required</span >
             <div>

@@ -17,10 +17,12 @@ class TestSchemaEditor(ATSETestCase):
     def test_updateObjectSchema(self):
         original_schema = self.target1.Schema()
         name = 'additionalField'
-        
+
+        # deleting
         self.container.atse_delField(name)
-        
-        self.container.update_all_schemas()
+
+        # updating all portal_types
+        self.container.atse_updateManagedSchema(self.target1.portal_type)
         
         new_schema = self.target1.Schema()
         self.assertNotEqual([x.getName() for x in original_schema.fields()], [x.getName() for x in new_schema.fields()])

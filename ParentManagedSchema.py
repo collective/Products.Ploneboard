@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.5 2004/09/23 19:18:10 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.6 2004/09/27 12:39:15 spamsch Exp $
 """
 
 from Globals import InitializeClass
@@ -21,10 +21,10 @@ class ParentManagedSchema:
         the parent container and retrieved through acquisition.
     """
 
-    security = ClassSecurityInfo()    
+    security = ClassSecurityInfo()  
 
     security.declareProtected(View, 'Schema')
-    def Schema(self, schema_id):
+    def Schema(self, schema_id=None):
         """ Retrieve schema from parent object. The client class should
             override the method as Schema(self) and then call his method
             of the baseclass with the corresponding schema_id.
@@ -35,6 +35,14 @@ class ParentManagedSchema:
 
         if not hasattr(self, 'aq_parent'): return self.schema
 
+        # If we're called by the generated methods we can not rely on
+        # the id and need to check for portal_type
+        if not self.aq_parent.atse_isSchemaRegistered(self.portal_type):
+            return self.schema
+
+        if not schema_id:
+            schema_id = self.portal_type
+            
         # Otherwise get the schema from the parent collector through
         # acquisition and assign it to a volatile attribute for performance
         # reasons
@@ -42,7 +50,8 @@ class ParentManagedSchema:
         self._v_schema = getattr(self, '_v_schema', None)
         if self._v_schema is None:
             self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
-
+            self.initializeArchetype()
+            
             for field in self._v_schema.fields():
 
                 ##########################################################
@@ -51,20 +60,27 @@ class ParentManagedSchema:
 
                 name = field.getName()
 
-                method = lambda self=self, name=name, *args, **kw: \
-                         self.getField(name).get(self) 
-                setattr(self, '_v_%s_accessor' % name, method )
+                def atse_get_method(self=self, name=name, *args, **kw):
+                    return self.getField(name).get(self, **kw)
+
+                setattr(self, '_v_%s_accessor' % name, atse_get_method )
                 field.accessor = '_v_%s_accessor' % name
                 field.edit_accessor = field.accessor
 
-                method = lambda value,self=self, name=name, *args, **kw: \
-                         self.getField(name).set(self, value) 
-                setattr(self, '_v_%s_mutator' % name, method )
+                def atse_set_method(value, self=self, name=name, *args, **kw):
+                    if name != 'id':
+                        self.getField(name).set(self, value, **kw)
+
+                    # saving id directly (avoiding unicode problems)
+                    else: self.setId(value)
+
+                setattr(self, '_v_%s_mutator' % name, atse_set_method )
                 field.mutator = '_v_%s_mutator' % name
 
                 # Check if we need to update our own properties
                 try:
-                    value = field.get(self)  
+                    value = field.get(self)
+                    
                 except:
                     field.set(self, field.default)
 

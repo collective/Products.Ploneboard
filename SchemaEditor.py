@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.15 2004/09/23 18:36:55 ajung Exp $
+$Id: SchemaEditor.py,v 1.16 2004/09/27 12:39:15 spamsch Exp $
 """
 
 import re
@@ -20,7 +20,7 @@ from AccessControl import ClassSecurityInfo
 from Acquisition import ImplicitAcquisitionWrapper
 from BTrees.OOBTree import OOBTree
 from Products.CMFCore.CMFCorePermissions import *
-from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import DisplayList, BaseFolderSchema
 from Products.Archetypes.Field import *
 from Products.Archetypes.Widget import *
 from ManagedSchema import ManagedSchema
@@ -76,11 +76,25 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_init')
     def atse_init(self):
-        """ init everything """
-        self._clear()
+        """
+        init everything
+        """
 
-    def _clear(self):
-        self._schemas = OOBTree()   # schema_id -> ManagedSchema instance
+        # only for compat reasons
+        return
+
+    def _clear(self, safe=False):
+        if not safe:
+            self._schemas = OOBTree()   # schema_id -> ManagedSchema instance
+            self._obj_ptype = []
+
+        # safe update
+        else:
+            if not hasattr(self, '_schemas'):
+                self._schemas = OOBTree()
+
+            if not hasattr(self, '_obj_ptype'):
+                self._obj_ptype = []
 
     security.declareProtected(ManageSchemaPermission, 'atse_registerSchema')
     def atse_registerSchema(self, 
@@ -91,6 +105,9 @@ class SchemaEditor:
                             undeleteable_schematas=('default', 'metadata'), 
                             domain='plone'):
 
+        # staying in sync
+        self._clear(safe=True)
+            
         if self._schemas.has_key(id):
             raise SchemaEditorError('Schema with id "%s" already exists' % id)
     
@@ -100,6 +117,39 @@ class SchemaEditor:
         S._undeleteable_schematas = undeleteable_schematas 
         S._i18n_domain = domain
         self._schemas[schema_id] = S
+
+    def atse_registerObject(self, obj,
+                            filtered_schemas=(), 
+                            undeleteable_fields=(), 
+                            undeleteable_schematas=('default', 'metadata'), 
+                            domain='plone'):
+        """
+        Using that method you can register an object.
+        Information needed are extracted from it. The Schema id
+        is set to the portal type of the object.
+        """
+
+        if not hasattr(obj, 'portal_type'):
+            raise Exception, 'Object %s is not an valid input' % str(obj)
+
+        # avoiding update problems
+        self._clear(safe=True)
+
+        schema = getattr(obj, 'schema')
+        ptype = getattr(obj, 'portal_type')
+
+        if not (ptype in self._obj_ptype):
+            self._obj_ptype.append(ptype)
+
+        # do nothing if object is already there
+        # XXX refresh schema
+        else: return
+            
+        self.atse_registerSchema(ptype, schema,
+                                 filtered_schemas,
+                                 undeleteable_fields,
+                                 undeleteable_schematas,
+                                 domain)
 
     security.declareProtected(ManageSchemaPermission, 'atse_unregisterSchema')
     def atse_unregisterSchema(self, schema_id):
@@ -115,6 +165,30 @@ class SchemaEditor:
         if not self._schemas.has_key(schema_id):
             raise SchemaEditorError('No such schema: %s' % schema_id)
         return self._schemas[schema_id]
+
+    security.declareProtected(View, 'atse_isSchemaRegistered')
+    def atse_isSchemaRegistered(self, schema_id):
+        """ returns True if schema exists """
+        return self._schemas.has_key(schema_id)
+
+    security.declareProtected(View, 'atse_getDefaultSchema')
+    def atse_getDefaultSchema(self):
+        """ returns the first schema in list """
+
+        if self._schemas.items():
+            return self._schemas.items()[0][1]
+
+        # XXX urgh
+        return BaseFolderSchema()
+
+    security.declareProtected(View, 'atse_getDefaultSchemaId')
+    def atse_getDefaultSchemaId(self):
+        """ returns default schema id """
+
+        if self._schemas.items():
+            return self._schemas.items()[0][0]
+
+        return ''
 
     security.declareProtected(View, 'atse_getSchemataNames')
     def atse_getSchemataNames(self, schema_id, filter=True):
@@ -285,7 +359,14 @@ class SchemaEditor:
         else:
             raise SchemaEditorError
 
-        widget.visible = 1
+        # setting visibility of field
+        widget.visible = {'edit' : 'visible', 'view' : 'visible'}
+        if not FD.has_key('visible_edit'):
+            widget.visible['edit'] = 'invisible'
+
+        if not FD.has_key('visible_view'):
+            widget.visible['view'] = 'invisible'
+            
         widget.label = FD.label
         widget.label_msgid = 'label_' + FD.label
         widget.i18n_domain = S._i18n_domain
@@ -430,5 +511,74 @@ class SchemaEditor:
         """ return name of baseclass """
         S = self.atse_getSchemaById(schema_id)
         return S.__class__.__name__
+
+    ######################################################################
+    # [spamies] Helper methods for maintenance and widget access
+    ######################################################################
+
+    security.declareProtected(ManageSchemaPermission, 'atse_isFieldVisible')
+    def atse_isFieldVisible(self, fieldname, mode='view', schema_id=None):
+        """
+        Returns True if the given field is visible
+        in the given mode. Default is view.
+        """
+
+        if not schema_id:
+            schema_id = self.atse_getDefaultSchemaId()
+            
+        field = self.atse_getField(schema_id, fieldname)
+        if hasattr(field.widget, 'visible'):
+            if field.widget.visible.get(mode) == 'invisible':
+                return False
+            else: return True
+
+        # always True if we've found nothing
+        return True
+
+    security.declareProtected(ManageSchemaPermission, 'atse_editorCanUpdate')
+    def atse_editorCanUpdate(self, portal_type):
+        """
+        Returns True if an object was registered and
+        its portal_type could be saved.
+        """
+
+        if hasattr(self, '_obj_ptype'):
+           if portal_type and \
+                  (portal_type in getattr(self, '_obj_ptype')):
+               return True
+
+        return False
+
+    security.declareProtected(ManageSchemaPermission, 'atse_updateManagedSchemas')
+    def atse_updateManagedSchema(self,
+                                 portal_type,
+                                 REQUEST=None, RESPONSE=None):
+        
+        """
+        Update stored issue schema for all managed schemas.
+        That can only done, if an complete object was registered.
+        """
+
+        # we absolutely need to have portal_type
+        if not self.atse_editorCanUpdate(portal_type):
+            return util.redirect(RESPONSE, 'atse_editor',
+                                 self.translate('Can not determine portal_type of managed objects (%s)...' \
+                                                % portal_type))
+
+        # we assume that the schema name is the same as the portal_type
+        schema = self.atse_getSchemaById(portal_type)
+
+        # gettin' objects and updating them
+        objects = [ o.getObject() for o in self.portal_catalog.searchResults(portal_type=portal_type)]
+
+        # ParentManagedSchema is refreshing the schema,
+        # if the _v_ variable is None...
+        for obj in objects:
+            if hasattr(obj, '_v_schema'):
+                delattr(obj, '_v_schema')
+                obj._p_changed = 1
+                
+        return util.redirect(RESPONSE, 'atse_editor',
+                      self.translate('Updated objects of type %s successfully' % portal_type))
 
 InitializeClass(SchemaEditor)

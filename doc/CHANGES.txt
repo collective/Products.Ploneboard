@@ -1,3 +1,15 @@
+0.2.5 (unreleased)
+
+    - Added methods to register objects not only schematas
+
+    - Moved updateSchema method to SchemaEditor.py
+
+    - Fixed bug that caused the objects' id to be saved in unicode
+
+    - Fixed tests
+
+    - Added some field to control if widget is visible
+
 0.2 (unreleased)
 
     - added schema registration infrastructure (support for multiple schemas)
