@@ -74,7 +74,7 @@
         <tbody>
         <tr>
           <th i18n:translate="label_viewlet" style="white-space:nowrap;">viewlet</th>
-          <td>
+          <td style="padding: 0.5em">
             <tal:block tal:repeat="viewlet python:pt_viewlets + gl_viewlets + gn_portal_viewlets + gn_personal_viewlets">
               <a href="#" style="white-space:nowrap; border-bottom: 1px solid; margin-right: 0.5em"
                  tal:condition="python:viewlet['id'] != viewletId"
@@ -92,7 +92,7 @@
         </tr>
         <tr> 
           <th i18n:translate="label_skin" style="white-space:nowrap;">skins</th> 
-          <td>
+          <td style="padding: 0.5em">
             <tal:block tal:repeat="skinInfo here/portal_contentpanels/getPanelSkins">
               <a i18n:translate=""
                  tal:define="repeatSkin python:skinInfo[1]"
@@ -110,7 +110,7 @@
         </tr>
         <tr>
           <th i18n:translate="label_preview" style="white-space:nowrap;">preview</th>
-          <td style="padding: 1em 1em 1em 1em">
+          <td style="padding: 0.5em">
             <div tal:define="viewletPath python:here.portal_contentpanels.getViewletPath(viewletId);"
              tal:content="structure python:here.base_panel(here, contentpanels=here, panelSkin=panelSkin, viewletPath=viewletPath)"/>
           </td>
