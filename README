@@ -1,8 +1,8 @@
 INSTALLATION:
 
-  * Zope 2.5.1 - http://www.zope.org
+  * Zope 2.6.1 - http://www.zope.org
 
-  * Plone 1.0 alpha 4  - http://www.plone.org
+  * Plone 1.0.1 - http://www.plone.org
 
   * CMF 1.3 - http://cmf.zope.org
 
@@ -13,22 +13,10 @@ INSTALLATION:
 
 KNOWN ISSUES:
 
-After changing the imagesize, the photo_view returns the image in the
-wrong size, but after a reload of the page, the image is resized.
-
-The javascript-files used in the slideshow has been removed from Plone,
-but I have included them here. There are reported some problems with Netscape
-4 crashing. The files are styley.js.dtml and ieemu.js.py.
-
-Some depriticated api-s are also used, but I haven't had the time to hunt
-them down. Anyway it should work now.
-
-Size is N/A for some images.
+None.
 
 For more information see http://sourceforge.net/projects/collective/
 
 CONTACT:
 
   magnus.heino@home.se
-  
-  Adapted to Plone 1.0 alpha 4 by Sigve Tjora
