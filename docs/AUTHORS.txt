@@ -14,10 +14,13 @@ Kai Bielenberg:
 
 
 Christian Heimes:
- * Maintainer
- * Migration system
- * Basic unit testing suit and most of the unit tests
- * Reimplementation of CMFTopic for ATContentTypes
+ * maintainer
+ * migration system
+ * basic unit testing suit and most of the unit tests
+ * reimplementation of CMFTopic for ATContentTypes
+ * moving CMFPloneTypes to ATContentTypes
+ * mxTidy validation
+ * debian packages
 
 Jens Klein:
 
@@ -30,6 +33,9 @@ Sylvain Thenault:
 
 Contributors (in alphabetic order)
 ----------------------------------
+
+Volker Bachschneider:
+ * idea + testing of mxTidy validation
 
 Markus Koelle:
  * bug reporting
