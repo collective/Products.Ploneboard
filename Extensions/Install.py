@@ -70,13 +70,6 @@ def install_Skins(self, out):
     except:
         out.write( 'Unable to add CMFContentpanels directory view to portal_skins.\n')
 
-def install_actions(self, actions=[]):
-    p_cp=getToolByName(self, 'portal_contentpanels')
-    for action in actions:
-        p_cp.addAction(action[0],action[1],action[2],
-           action[3],action[4],action[5],action[6])
-
-
 def install(self):
     """ Register the ContentPanels Skins with portal_skins and friends """
     skinstool = getToolByName(self, 'portal_skins')
@@ -103,6 +96,7 @@ def install(self):
         out.write('Added ConentPanels Tool\n')
 
     from Products.CMFContentPanels.config import actions
-    install_actions(self, actions)
+    p_cp=getToolByName(self, 'portal_contentpanels')
+    p_cp.installAction(actions)
 
     return out.getvalue()

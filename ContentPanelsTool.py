@@ -46,6 +46,12 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
     def getPanelSkins(self):
         return filter(lambda i: (i[0] != 'title'), list(self.propertyItems()))
 
+    def installActions(self, actions=[]):
+        for action in actions:
+            self.addAction(action[0],action[1],action[2],
+                           action[3],action[4],action[5],action[6])
+
+
     security.declarePublic('getViewletName')
     def getViewletName(self, viewletId):
         """get a name of a viewlet"""
