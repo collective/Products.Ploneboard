@@ -6,6 +6,7 @@ V1.7.3
     thanks Luciano De Fazio(http://www.camaracatanduva.sp.gov.br )
   - fix bug: css is lost when CP is set to left/right
   - new picture viewlet. thanks Peter Shute (NUW)
+  - fix mxmDynamicPage support, more to come...
 
 V1.7.2
 

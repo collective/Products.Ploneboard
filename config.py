@@ -66,7 +66,7 @@ actions=[
 
 ('viewlet_dynamicpage', 'dynamic page',
 'string:here/viewlet_dynamicpage/macros/portlet',
-'', 'View', 'PT:Dynamic Page', 1),
+'', 'View', 'PT:DynamicPage', 1),
 
 ### GL: global viewlets
 
