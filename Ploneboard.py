@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.3 2004/03/15 01:58:41 limi Exp $
+$Id: Ploneboard.py,v 1.4 2004/03/19 17:01:04 tesdal Exp $
 """
 
 import Globals
@@ -81,6 +81,11 @@ class Ploneboard(BaseBTreeFolder):
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._setupInternalCatalog()
+
+    security.declareProtected(ViewBoard, 'getBoardTitle')
+    def getBoardTitle(self):
+        """Gets the title, useful to avoid manual acquisition from messages."""
+        return self.Title()
 
     def _setupInternalCatalog(self):
         catalog = PloneboardCatalog.PloneboardCatalog()
