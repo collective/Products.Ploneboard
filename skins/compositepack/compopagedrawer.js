@@ -1,4 +1,4 @@
-// $Id: compopagedrawer.js,v 1.6 2004/06/30 08:22:44 godchap Exp $
+// $Id: compopagedrawer.js,v 1.7 2004/06/30 14:37:47 godchap Exp $
 
 //----------------------------------------------------------------------------
 
@@ -46,29 +46,38 @@ target_path) {
           
           if (!e)
             e = event;
-          var page_w = window.innerWidth || document.body.clientWidth;
-          var page_h = window.innerHeight || document.body.clientHeight;
+          var page_w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+          var page_h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
           // have to check documentElement in some IE6 releases
           var page_x = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
           var page_y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
           // Choose a location for the menu based on where the user clicked
-          if (page_w - e.clientX < drawernode.offsetWidth) {
+          var node_top, node_left;
+          var drawer_half_w = Math.floor(drawernode.offsetWidth / 2) + 1;
+          var drawer_half_h = Math.floor(drawernode.offsetHeight / 2) + 1;
+          if (page_w - e.clientX < drawer_half_w) {
             // Close to the right edge
-            drawernode.style.left = '' + (
-              page_x + e.clientX - drawernode.offsetWidth - 1) + 'px';
+            node_left = page_x + page_w - drawernode.offsetWidth - 1; 
           }
           else {
-            drawernode.style.left = '' + (page_x + e.clientX + 1) + 'px';
+            node_left = page_x + e.clientX - drawer_half_w;
           }
-          if (page_h - e.clientY < drawernode.offsetHeight) {
+          if (node_left < page_x) {
+              node_left = page_x;
+          }
+          if (page_h - e.clientY < drawer_half_h) {
             // Close to the bottom
-            drawernode.style.top = '' + (
-              page_y + e.clientY - drawernode.offsetHeight - 1) + 'px';
+            node_top = page_y + page_h - drawernode.offsetHeight - 1;
           }
           else {
-            drawernode.style.top = '' + (page_y + e.clientY + 1) + 'px';
+            node_top = page_y + e.clientY - drawer_half_h;
           }
+          if (node_top < page_y) {
+              node_top = page_y;
+          }
+          drawernode.style.left = '' + node_left + 'px';
+          drawernode.style.top = '' + node_top + 'px';
         
     };    
 
