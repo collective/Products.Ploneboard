@@ -288,7 +288,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
     def _doDelUsers(self, names):
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
-        return self.Users.acl_users._doDelUsers(name)
+        return self.Users.acl_users._doDelUsers(names)
 
 
 
