@@ -359,7 +359,7 @@
             <div class="row">
 
 
-                <span class="card" 
+                <div class="portrait" 
                       tal:repeat="lrole python:here.acl_users.getLocalRolesForDisplay(here)"
                       tal:define="username python:here.portal_membership.getAuthenticatedMember().getUserName();">
             
@@ -413,7 +413,7 @@
                         </tal:block>
                     </span>
                 		
-                </span>
+                </div>
 
             </div>
 
