@@ -48,16 +48,16 @@ Using the CMFFormController
 
       * Second, we see the special hidden variable 'form.submitted'.
         The controlled page template checks the REQUEST for
-	form.submitted to see if the form has been submitted or if,
-	instead, it has just been accessed, e.g. via a link.
-	*Forms must contain the hidden variable 'form.submitted'*
+        form.submitted to see if the form has been submitted or if,
+        instead, it has just been accessed, e.g. via a link.
+        *Forms must contain the hidden variable 'form.submitted'*
 
       * At the beginning of the form we set the variable errors.  The
         errors dictionary comes from the state object which is passed
-	in the template options.  The state object lets validators and
-	scripts pass information to each other and to forms.  For our
-	purposes, the most important information is the errors
-	dictionary, which has entries of the form '{field_name:error_message}'.
+        in the template options.  The state object lets validators and
+        scripts pass information to each other and to forms.  For our
+        purposes, the most important information is the errors
+        dictionary, which has entries of the form '{field_name:error_message}'.
 
       Before we can use this form we need to specify the validators
       that will be used to check the form values, and we need to
@@ -67,45 +67,44 @@ Using the CMFFormController
 
          There are two basic ways to specify a form's validators.
 
-	    1. You can specify the validators in the .metadata
-	       properties for filesystem-based Controller Page
-	       Templates.
+            1. You can specify the validators in the .metadata
+               properties for filesystem-based Controller Page
+               Templates.
 
             2. You can specify the validators via the ZMI (or
-	       programmatically). These values will be stored in the
-	       ZODB as attributes of the 'portal_form_controller' object.
+               programmatically). These values will be stored in the
+               ZODB as attributes of the 'portal_form_controller' object.
 
          If you specify validators in both places, the validators
-	 specified in the ZMI will take precedence over those
-	 specified in the form.
+         specified in the ZMI will take precedence over those
+         specified in the form.
 
       Specifying Validators on the Filesystem
 
          You can specify validators on the filesystem using an objects
-	 .metadata properties file.
+         .metadata properties file.
 
          To create a .metadata file, simply create a file with the
-	 same name as your page template, and then append .metadata to
-	 the end of the name of the file. For instance, you might have
-	 a Controller Page Template called
-	 'document_edit_form.cpt'. The properties for that file would
-	 be stored in a file called 'document_edit_form.cpt.metadata'
+         same name as your page template, and then append .metadata to
+         the end of the name of the file. For instance, you might have
+         a Controller Page Template called
+         'document_edit_form.cpt'. The properties for that file would
+         be stored in a file called 'document_edit_form.cpt.metadata'
 
          The .metadata file uses the standard python ConfigParser
-	 syntax. The validator section of the .metadata file would
-	 look like::
+         syntax. The validator section of the .metadata file would
+         look like::
 
            [validators]
            validators = validate_script1, validate_script2
 
          The validation scripts 'validate_script1' and
-	 'validate_script2' will be called in order.
-
+         'validate_script2' will be called in order.
 
          Type-Specific Validators
 
             Suppose you want different validators to be called,
-	    depending on the type of context the form has.
+            depending on the type of context the form has.
 
          You can do so as follows::
 
@@ -114,154 +113,153 @@ Using the CMFFormController
             validators.Document = validate_script2
 
          In the above example, if the context is a Document object,
-	 'validate_script2' will be called for validation; for
-	 everything else, only 'validate_script1' will be called.
+         'validate_script2' will be called for validation; for
+         everything else, only 'validate_script1' will be called.
 
-	 Note that the order in which the variables are specified does
-	 not matter; the type-specific validators override
-	 non-specific validators if both are applicable.
+         Note that the order in which the variables are specified does
+         not matter; the type-specific validators override
+         non-specific validators if both are applicable.
 
          Button-Specific Validators
 
             Suppose instead that you have two different buttons on
-	    your form, and you want different validation sequences to
-	    occur depending on which button is pressed.  You can
-	    accomplish this as follows:
+            your form, and you want different validation sequences to
+            occur depending on which button is pressed.  You can
+            accomplish this as follows:
 
          First, name your buttons button1 and button2::
 
                <input type="submit"
-	              name="form.button.button1"
+                      name="form.button.button1"
                       value="First Button" />
                <input type="submit"
                       name="form.button.button2"
                       value="Second Button" />
 
          Next, specify validators in the .metadata file for button1
-	 and for button2::
+         and for button2::
 
                [validators]
                validators..button1 = validate_script1, validate_script3
                validators..button2 = validate_script2, validate_script4
 
          Note the presence of the '..'.  This is a placeholder for a
-	 type specifier.  You could further specify that
-	 'validate_script5' is called if 'button2' is pressed and the
-	 context is a Document by adding::
+         type specifier.  You could further specify that
+         'validate_script5' is called if 'button2' is pressed and the
+         context is a Document by adding::
 
                [validators]
                validators.Document.button2 = validate_script5
 
          Remember that button specific validators take precedence over
-	 non-specific validators.
+         non-specific validators.
 
       Specifying Validators in the ZMI
 
             If you look at a Controller Page Template in the ZMI, you
-	    will see that it looks just like an ordinary Page Template
-	    with two extra tabs, Validation and Actions. Click on the
-	    Validation tab.
+            will see that it looks just like an ordinary Page Template
+            with two extra tabs, Validation and Actions. Click on the
+            Validation tab.
 
             The Validation tab shows all the validators for the page
-	    template in question. You can specify validators with the
-	    same kind of specialization options as above via a web
-	    form.
+            template in question. You can specify validators with the
+            same kind of specialization options as above via a web
+            form.
 
             The validator information for all forms is stored in the
-	    'portal_form_controller' tool in your portal. This means
-	    that you can specify validators for filesystem objects
-	    with no problems, since the information is persisted in
-	    the ZODB. Note that the validator information is bound to
-	    the form's Id, so all forms with the same Id use the same
-	    validators. This keeps things simple when you have
-	    multiple skins:
+            'portal_form_controller' tool in your portal. This means
+            that you can specify validators for filesystem objects
+            with no problems, since the information is persisted in
+            the ZODB. Note that the validator information is bound to
+            the form's Id, so all forms with the same Id use the same
+            validators. This keeps things simple when you have
+            multiple skins:
 
             *Forms with the same Id use the same validators, no matter
-	    what skin they are in.*
-
+            what skin they are in.*
 
             When a form is submitted, it first checks to see if there
-	    are any applicable validators that have been specified via
-	    the ZMI.  If it finds one, it uses it. If it does not find
-	    a validator via the ZMI, it then checks the REQUEST object
-	    to see if validators have been specified in hidden
-	    variables.  As a result, validators specified in the ZMI
-	    take precedence over those specified in forms.
+            are any applicable validators that have been specified via
+            the ZMI.  If it finds one, it uses it. If it does not find
+            a validator via the ZMI, it then checks the REQUEST object
+            to see if validators have been specified in hidden
+            variables.  As a result, validators specified in the ZMI
+            take precedence over those specified in forms.
 
          Specifying Validators Programmatically
 
             The portal's 'portal_form_controller' tool has methods you
-	    can use to specify the validators for a given
-	    ControllerPageTemplate. The API is as follows::
+            can use to specify the validators for a given
+            ControllerPageTemplate. The API is as follows::
 
-              portal_form_controller.setValidators(id, context_type,
-						   button, validators)
-
+              portal_form_controller.addFormValidators(id,
+                                                       context_type,
+                                                       button,
+                                                       validators)
 
             Here 'id' is the Id of the ControllerPageTemplate,
-	    'context_type' is the class name for the class of the
-	    context object, 'button' is the name of the button
-	    pressed, and validators is a comma-delimited string or a
-	    list of strings. If you want a validator to act for any
-	    class, set context_type = 'FormController.ANY_CONTEXT'.
-	    Similarly, you want a validator to act for any button, set
-	    button = 'FormController.ANY_BUTTON'.
-
+            'context_type' is the class name for the class of the
+            context object, 'button' is the name of the button
+            pressed, and validators is a comma-delimited string or a
+            list of strings. If you want a validator to act for any
+            class, set context_type to None.
+            Similarly, you want a validator to act for any button, set
+            button to None.
 
    Specifying Actions
 
          The sequence of validators that is executed returns a status
-	 in the state object.
+         in the state object.
          The default status is 'success', i.e. if no validators are
-	 executed, the status will be 'success'. If a validator
-	 encounters an error, it will typically set the status to
-	 'failure'.  The next thing we need to do in your form is to
-	 specify what happens when a given status is returned.
+         executed, the status will be 'success'. If a validator
+         encounters an error, it will typically set the status to
+         'failure'.  The next thing we need to do in your form is to
+         specify what happens when a given status is returned.
 
          As with validators, there are two basic ways to specify a
-	 form's actions.
+         form's actions.
 
-	    1. You can specify the actions in the .metadata properties
+            1. You can specify the actions in the .metadata properties
                for filesystem-based Controller Page Templates and
                Controller Python Scripts.
 
             2. You can specify the actions via the ZMI (or
-	       programmatically). These values will be stored in the
-	       ZODB as attributes of the 'portal_form_controller' object.
+               programmatically). These values will be stored in the
+               ZODB as attributes of the 'portal_form_controller' object.
 
          If you specify actions in both places, the actions specified
-	 in the ZMI will take precedence over those specified in the
-	 form.
+         in the ZMI will take precedence over those specified in the
+         form.
 
          Specifying Actions on the Filesystem
 
             You can specify actions on the filesystem using an objects
-	    .metadata properties file.
+            .metadata properties file.
 
          Actions are stored in the same .metadata file as the
-	 validators. The syntax for the actions section of your file
-	 would look like::
+         validators. The syntax for the actions section of your file
+         would look like::
 
            [actions]
            action.success = traverse_to:string:script1
 
          In the above example, when the form is submitted and the
-	 validation scripts return a status of 'success', the
-	 'traverse_to' action is called with the argument
-	 'string:script1', i.e. if the form data is valid, we run the
-	 script 'script1'.  Alternatively, we could specify
-	 'action.success = redirect_to:string:http://my_url_here',
-	 which would cause the browser to be redirected to
-	 'http://my_url_here'.
+         validation scripts return a status of 'success', the
+         'traverse_to' action is called with the argument
+         'string:script1', i.e. if the form data is valid, we run the
+         script 'script1'.  Alternatively, we could specify
+         'action.success = redirect_to:string:http://my_url_here',
+         which would cause the browser to be redirected to
+         'http://my_url_here'.
 
           The default action for the 'failure' status is to reload the
-	  current form. The form will have access to all the error
-	  messages, via the state object in its options.
+          current form. The form will have access to all the error
+          messages, via the state object in its options.
 
             Type-Specific Actions
 
                Suppose you want different actions to occur depending
-	       on the type of context the form has.
+               on the type of context the form has.
 
             You can do so as follows::
 
@@ -270,27 +268,27 @@ Using the CMFFormController
                   action.success.Document = traverse_to:string:document_script
 
             In the above example, if the context is a Document object,
-	    document_script will be executed upon successful
-	    validation; for everything else, script1 will be executed.
-	    Note that the order in which the variables are specified
-	    does not matter; the type-specific actions will override
-	    non-specific actions if both are applicable.
+            document_script will be executed upon successful
+            validation; for everything else, script1 will be executed.
+            Note that the order in which the variables are specified
+            does not matter; the type-specific actions will override
+            non-specific actions if both are applicable.
 
             Button-Specific Actions
 
                Suppose instead that you have two different buttons on
-	       your form, and you want different actions to occur
-	       depending on which button is pressed.  You can
-	       accomplish this as follows:
+               your form, and you want different actions to occur
+               depending on which button is pressed.  You can
+               accomplish this as follows:
 
             First, name your buttons button1 and button2::
 
                <input type="submit"
-	              name="form.button.button1"
-		      value="First Button" />
+                      name="form.button.button1"
+                      value="First Button" />
                <input type="submit"
-		      name="form.button.button2"
-		      value="Second Button" />
+                      name="form.button.button2"
+                      value="Second Button" />
 
             Next, specify actionss for button1 and for button2::
 
@@ -299,65 +297,66 @@ Using the CMFFormController
                action.success..button2 = traverse_to:string:script2
 
             Note the presence of the '..'.  This is a placeholder for
-	    a type specifier.  You could further specify that
-	    'document_script2' is called if button2 is pressed and the
-	    context is a Document by adding::
+            a type specifier.  You could further specify that
+            'document_script2' is called if button2 is pressed and the
+            context is a Document by adding::
 
                [actions]
                action.success.Documnet.button2 = traverse_to:string:document_script2
 
-
          Specifying Actions in the ZMI
 
             If you look at a Controller Page Template in the ZMI, you
-	    will see that it looks just like an ordinary Page Template
-	    with two extra tabs, Validation and Actions. Click on the
-	    Actions tab.
+            will see that it looks just like an ordinary Page Template
+            with two extra tabs, Validation and Actions. Click on the
+            Actions tab.
 
             The Actions tab shows all the actions for the page
-	    template in question. You can specify actions with the
-	    same kind of specialization options as above via a web
-	    form.
-
+            template in question. You can specify actions with the
+            same kind of specialization options as above via a web
+            form.
 
             The action information for all forms is stored in the
-	    'portal_form_controller' tool in your portal.  This means
-	    that you can specify actions for filesystem objects with
-	    no problems, since the information is persisted in the
-	    ZODB. Note that the action information is bound to the
-	    form's Id, so all forms with the same Id use the same
-	    actions. This keeps things simple when you have multiple
-	    skins: forms with the same Id use the same actions, no
-	    matter what skin they are in.
+            'portal_form_controller' tool in your portal.  This means
+            that you can specify actions for filesystem objects with
+            no problems, since the information is persisted in the
+            ZODB. Note that the action information is bound to the
+            form's Id, so all forms with the same Id use the same
+            actions. This keeps things simple when you have multiple
+            skins: forms with the same Id use the same actions, no
+            matter what skin they are in.
 
             When a form is submitted, it first checks to see if there
-	    are any applicable actions that have been specified via
-	    the ZMI. If it finds one, it uses it. If it does not find
-	    an action via the ZMI, it then checks the REQUEST object
-	    to see if actions have been specified in hidden
-	    variables. As a result, actions specified in the ZMI take
-	    precedence over those specified in forms.
+            are any applicable actions that have been specified via
+            the ZMI. If it finds one, it uses it. If it does not find
+            an action via the ZMI, it then checks the REQUEST object
+            to see if actions have been specified in hidden
+            variables. As a result, actions specified in the ZMI take
+            precedence over those specified in forms.
 
          Specifying Actions Programmatically
 
             The portal's 'portal_form_controller' tool has methods you
-	    can use to specify the actions for a given
-	    ControllerPageTemplate. The API is as follows::
+            can use to specify the actions for a given
+            ControllerPageTemplate. The API is as follows::
 
-               portal_form_controller.setAction(id, status, context_type,
-						button, action_type, args)
+               portal_form_controller.addFormAction(id,
+                                                    status,
+                                                    context_type,
+                                                    button,
+                                                    action_type,
+                                                    args)
 
             Here 'id' is the Id of the ControllerPageTemplate,
-	    'status' is the status for which the action will be
-	    executed, 'context_type' is the class name for the class
-	    of the context object, 'button' is the name of the button
-	    pressed, 'action_type' is the type of action that will
-	    occur, and 'args' is a string (typically a TALES
-	    expression) that will be passed to the action. If you want
-	    an action to be executed for any class, set context_type
-	    to 'FormController.ANY_CONTEXT'. Similarly, you want an
-	    action to be executed for any button, set button to
-	    'FormController.ANY_BUTTON'.
+            'status' is the status for which the action will be
+            executed, 'context_type' is the class name for the class
+            of the context object, 'button' is the name of the button
+            pressed, 'action_type' is the type of action that will
+            occur, and 'args' is a string (typically a TALES
+            expression) that will be passed to the action. If you want
+            an action to be executed for any class, set context_type
+            to None. Similarly, you want an action to be executed for
+            any button, set button to None.
 
    Validation Scripts
 
