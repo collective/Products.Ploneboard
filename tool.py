@@ -36,6 +36,10 @@ class CompositeTool(Folder, BaseTool):
     _viewlets_by_type = None # PersistentMapping
     _default_viewlets = ('default_viewlet', )
     _default_default = 'default_viewlet'
+    
+    #def __init__(self):
+    #    self.id = TOOL_ID
+      
     def __repr__(self):
         return "CompositePack Tool"
 

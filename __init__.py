@@ -35,6 +35,12 @@ def initialize(context):
 
     context.registerClass(
         tool.CompositeTool,
+        meta_type=TOOL_NAME,
         constructors=(tool.manage_addCompositeTool,),
-        icon='tool.gif',
-        )
+        icon = 'tool.gif')
+             
+    cmf_utils.ToolInit(TOOL_NAME,
+                       tools = tools,
+                       product_name = PROJECTNAME,
+                       icon='tool.gif'
+                   ).initialize(context)
