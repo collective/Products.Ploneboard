@@ -1,3 +1,11 @@
+CVS
+
+  * Fixed a bug in Zope 2.7 preventing the zope quickstart page to show up.
+    A hasUsers() method was missing from GRUF's API.
+  * Fixed a bug in ZMI which prevented LUF cached users to be individually
+    managed by GRUF.
+
+
 [v3.2RC1 - 20041215]
 
   * _doChangeUser and _doChangeGroup lost existing groups if the groups argument

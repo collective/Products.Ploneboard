@@ -1326,7 +1326,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2005/01/04 13:49:57 $"[7:-2]
+        rev_date = "$Date: 2005/01/04 15:21:12 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2063,12 +2063,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         via the left tree view.
         """
         path = string.split(REQUEST.PATH_INFO, '/')[:-1]
-        username = path[-1]
+        userid = path[-1]
 
         # Use individual usr/grp management screen (only if name is passed along the mgt URL)
-        if username != "acl_users":
-            if username in map(lambda x: x.getId(), self.getUsers()):
-                REQUEST.set('username', username)
+        if userid != "acl_users":
+            usr = self.getUserById(userid)
+            if usr:
+                REQUEST.set('username', userid)
                 REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
                 return self.restrictedTraverse('manage_user')()
 
