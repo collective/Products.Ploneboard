@@ -1,0 +1,71 @@
+1.0beta1 - 2003-10-??
+
+    Internationalized our own page templates (for ZMI) and added a
+    pt_BR translation
+
+    Generalized the Negotiator so that it may negotiate any header in
+    the "accept" format
+
+1.0alpha2 - 2003-09-26
+
+    Some primitive DTML support
+
+    Fixed persistence issues that were arising from having the same
+    object stored in the ZODB and in a module-level global var (thanks
+    to Sidnei)
+
+1.0alpha1 - 2003-08-27
+
+    Removed dependency from PAX
+
+    Now PTS looks for an "i18n" subdirectory under each Product
+    package, which makes it easier to package/install i18n-aware
+    products.  The i18n dir on INSTANCE_HOME is still kept, you can
+    use it for local overrides
+
+    Improvements on the ZMI usability
+
+0.5 - 2003-03-31
+
+    Now we have a ZMI (Zope Management Interface) in Zope's Control
+    Panel.  You can use it to refresh catalogs without restarting, and
+    to test installed catalogs
+
+    Some functions at module-level are exported for use in Python
+    Scripts and Page Templates (Open or Z): negotiate(), translate(),
+    getLanguages(), getLanguageName()
+
+    Added a "hotfix" to StringIO that should make PTS work with ZPT
+    without UnicodeError being raised constantly
+
+0.4 - 2003-02-03
+
+    Relicensed to GPL
+
+    Now it really works with ZPT (thoroughly tested)
+
+    If used with OpenPT, it will use the output encoding negotiation
+    hooks
+
+    Negotiator now uses a cache (stored in the request) to speed
+    things up
+
+    Can now use multiple catalogs for the same domain (but the order
+    in which they are checked is a bit randomic)
+
+    Special thanks to Magnus Heino for the ZPT support hints and
+    patches
+
+0.3 - 2003-01-02
+
+  This release marked the split of PlacelessTranslationService into
+  its own package, and the initial attempts at making it compatible
+  with ZPT.
+
+0.2 - 2002-09-22
+
+  Updated release
+
+0.1 - 2002-08-24
+
+  Initial release

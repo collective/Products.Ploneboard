@@ -1,0 +1,39 @@
+# Gettext Message File for PlacelessTranslationService.
+msgid ""
+msgstr ""
+"Project-Id-Version: pts-\n"
+"POT-Creation-Date: 2003-10-04 12:51+0300\n"
+"Last-Translator: Lalo Martins <lalo@laranja.org>\n"
+"Language-Team: na\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: pt_BR\n"
+"Language-name: Português do Brasil\n"
+"Preferred-encodings: latin1 utf-8\n"
+"Domain: PlacelessTranslationService\n"
+
+msgid "Gettext message catalog"
+msgstr "Catálogo de mensagens tipo Gettext"
+
+msgid "Reload this catalog"
+msgstr "Recarregar este catálogo"
+
+msgid "This catalog cannot be reloaded because the corresponding file does not exist"
+msgstr "Este catálogo não pode ser recarregado porque o arquivo correspondente não existe"
+
+msgid "Test ${title}"
+msgstr "Testar ${title}"
+
+msgid "Test results:"
+msgstr "Resultados do teste:"
+
+msgid "Translation not found"
+msgstr "Tradução não encontrada"
+
+msgid "New test:"
+msgstr "Novo teste:"
+
+msgid "Translate this phrase"
+msgstr "Traduzir esta frase"

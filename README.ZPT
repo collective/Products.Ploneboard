@@ -1,0 +1,18 @@
+About using PlacelessTranslationService with ZPT
+
+  This product was originally written for use with OpenTAL.  It has
+  since been refactored to become compatible with ZPT; however,
+  "compatible" doesn't mean guaranteed.
+
+  PlacelessTranslationService is fully unicode-based, so that you may
+  write your potfiles in any encoding you want.  ZPT, on the other
+  hand, is blissfully unicode-ignorant.  When it tries to concatenate
+  the translation results to the page-in-progress, depending on your
+  encodings, you may get UnicodeError.  This problem is not exclusive
+  of Placeless; it also happens with Localizer.
+
+  As of more recent releases, this problem seems to have disappeared,
+  thanks to tireless effort of a few contributors.  However, if your
+  setup is peculiar enough that you still get UnicodeError, now you
+  know why.  The fix?  Either fix ZPT, or (shameless plug) switch to
+  OpenPT which is a bit slower but works ;-)
