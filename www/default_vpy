@@ -5,7 +5,7 @@
 state.setStatus = 'success'
 
 # validate your variables here
-n = request.get('n', None)
+n = context.REQUEST.get('n', None)
 if not n:
    state.setError('n', 'Please enter a value for n')
 
