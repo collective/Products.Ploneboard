@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.24 2004/09/13 15:46:18 tiran Exp $
+$Id: ATTopic.py,v 1.25 2004/10/04 06:27:17 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,6 +36,7 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import CatalogTool
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_parent, aq_inner
 
 from Products.ATContentTypes.types.ATContentType import ATCTFolder, updateActions
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic
@@ -257,11 +258,11 @@ class ATTopic(ATCTFolder):
             try:
                 # Tracker 290 asks to allow combinations, like this:
                 # parent = aq_parent(self)
-                parent = aq_parent( aq_inner(self) )
-                result.update( parent.buildQuery() )
-            except: # oh well, can't find parent, or it isn't a Topic.
+                parent = aq_parent(aq_inner(self))
+                result.update(parent.buildQuery())
+            except AttributeError: # oh well, can't find parent, or it isn't a Topic.
                 pass
-
+            
         for criterion in criteria:
             for key, value in criterion.getCriteriaItems():
                 result[key] = value

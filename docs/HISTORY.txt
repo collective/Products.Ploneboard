@@ -92,7 +92,7 @@
 
  * Fixed [ 1036255 ] switchCMF2ATCT: Favorite can't be added anymore. The type
    was disabled inside the switch script.
-   [tiran]
+   [tiran]  
    
 0.2.0-rc1 - 2004-07-28
 
