@@ -2,6 +2,8 @@ V1.6.1
 
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl
 
+  - FolderRecentChanges and FolderListing viewlets shows only when there are contents in the folder
+
 V1.6
 
   - Items in recent updates open in the same window.

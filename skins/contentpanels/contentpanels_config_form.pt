@@ -55,7 +55,7 @@
     description
     </div>
 
-    <form method="get" action="contentpanels_config"
+    <form method="post" action="contentpanels_config"
           tal:attributes="action string:${here/absolute_url}/contentpanels_submit"
           tal:define="page request/pageIndex | python:'0';
                       global pageIndex python:int(page)">

@@ -12,7 +12,8 @@
                                    , sort_on='modified'
                                    , sort_order='reverse')[:6];
                  results python:[item.getObject() for item in results if item.getPath() != folderPath];
-                 results python:results[:5]">
+                 results python:results[:5]"
+           tal:condition="results">
 
          <h5><a href="#"    
                 tal:attributes="href here/absolute_url"

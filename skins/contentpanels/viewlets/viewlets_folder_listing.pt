@@ -8,7 +8,8 @@
           tal:define="theFolder python:test(here.isPrincipiaFolderish, here, here.aq_parent);
                  results python: [item for item in theFolder.contentValues() if checkPermission('View',item)];
                  dull python:results.reverse;
-                 results python:results[:5]">
+                 results python:results[:5]"
+          tal:condition="results">
 
          <h5><a href="#"    
                 tal:attributes="href here/absolute_url"
