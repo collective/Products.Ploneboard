@@ -6,11 +6,11 @@ function plone_edit(element) {
   window.document.location = path + "/edit_compo_element"; 
 }
 
-function plone_add(target) {
+function plone_add(e, target) {
   // Note that target_index is also available.
   var target_path = target.getAttribute("target_path");
   var target_index = target.getAttribute("target_index");
-  draweropen(target_path, target_index);
+  draweropen(e, target_path, target_index);
 }
 
 function plone_add_title(target) {

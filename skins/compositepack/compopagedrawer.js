@@ -1,4 +1,4 @@
-// $Id: compopagedrawer.js,v 1.5 2004/06/29 09:05:09 godchap Exp $
+// $Id: compopagedrawer.js,v 1.6 2004/06/30 08:22:44 godchap Exp $
 
 //----------------------------------------------------------------------------
 
@@ -38,20 +38,56 @@ target_path) {
             '&target_index=' + this.target_index;
     };
 
-    
+    this.setPosition = function(e){
+
+          // this function adapted from code in pdlib.js in CompositePage
+          
+          drawernode = document.getElementById('kupu-librarydrawer');
+          
+          if (!e)
+            e = event;
+          var page_w = window.innerWidth || document.body.clientWidth;
+          var page_h = window.innerHeight || document.body.clientHeight;
+          // have to check documentElement in some IE6 releases
+          var page_x = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
+          var page_y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+
+          // Choose a location for the menu based on where the user clicked
+          if (page_w - e.clientX < drawernode.offsetWidth) {
+            // Close to the right edge
+            drawernode.style.left = '' + (
+              page_x + e.clientX - drawernode.offsetWidth - 1) + 'px';
+          }
+          else {
+            drawernode.style.left = '' + (page_x + e.clientX + 1) + 'px';
+          }
+          if (page_h - e.clientY < drawernode.offsetHeight) {
+            // Close to the bottom
+            drawernode.style.top = '' + (
+              page_y + e.clientY - drawernode.offsetHeight - 1) + 'px';
+          }
+          else {
+            drawernode.style.top = '' + (page_y + e.clientY + 1) + 'px';
+          }
+        
+    };    
+
+
+
 };
 
 SelectDrawer.prototype = new LibraryDrawer;
 
 function CompoDrawerTool() {
 
-    this.openDrawerWithTarget = function(id, target_path, target_index) {
+    this.openDrawerWithTarget = function(id, e, target_path, target_index) {
         if (this.current_drawer) {
             this.closeDrawer();
             };
         var drawer = this.drawers[id];
         drawer.setTarget(target_path, target_index);
         drawer.createContent();
+        drawer.setPosition(e);
         this.current_drawer = drawer;
     };
 };
@@ -91,8 +127,8 @@ function cp_initdrawer(link_xsl_uri, link_libraries_uri, search_links_uri, compo
     
 };
 
-function draweropen(target_path, target_index) {
-                    drawertool.openDrawerWithTarget('selectdrawer', target_path, target_index); 
+function draweropen(e, target_path, target_index) {
+                    drawertool.openDrawerWithTarget('selectdrawer', e, target_path, target_index); 
 };
 
 
