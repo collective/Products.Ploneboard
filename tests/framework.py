@@ -1,19 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
-# This software is subject to the provisions of the Zope Public License,
-# Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
-# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
-# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
-# FOR A PARTICULAR PURPOSE
-# 
-##############################################################################
-
-##############################################################################
-#
-# ZopeTestCase 
+# ZopeTestCase
 #
 # COPY THIS FILE TO YOUR 'tests' DIRECTORY.
 #
@@ -24,12 +11,16 @@
 # Products.__path__ and sys.path with be adjusted to include the
 # instance's Products and lib/python directories respectively.
 #
-# If the tests directory contains a custom_zodb.py file, INSTANCE_HOME
+# If you explicitly set INSTANCE_HOME prior to running the tests,
+# auto-detection is disabled and the specified path will be used
+# instead.
+#
+# If the 'tests' directory contains a custom_zodb.py file, INSTANCE_HOME
 # will be adjusted to use it.
 #
-# New feature: If you explicitly set the INSTANCE_HOME environment
-# variable a ZEO setup is assumed, and you can attach to a running
-# ZEO server (via that instance's custom_zodb.py).
+# If you set the ZEO_INSTANCE_HOME environment variable a ZEO setup
+# is assumed, and you can attach to a running ZEO server (via the
+# instance's custom_zodb.py).
 #
 ##############################################################################
 #
@@ -46,7 +37,7 @@
 #
 ##############################################################################
 
-__version__ = '0.2.0'
+__version__ = '0.2.2'
 
 # Save start state
 #
@@ -94,7 +85,7 @@ if 1:   # Create a new scope
         sys.exit(1)
 
     ztc_common = 'ztc_common.py'
-    ztc_common_global = os.path.join(p, ztc_common) 
+    ztc_common_global = os.path.join(p, ztc_common)
 
     f = 0
     if os.path.exists(ztc_common_global):
@@ -108,9 +99,8 @@ if 1:   # Create a new scope
         print 'Unable to locate %s.' % ztc_common
         sys.exit(1)
 
-
 # Debug
 #
 print 'SOFTWARE_HOME: %s' % os.environ.get('SOFTWARE_HOME', 'Not set')
 print 'INSTANCE_HOME: %s' % os.environ.get('INSTANCE_HOME', 'Not set')
-
+sys.stdout.flush()
