@@ -38,7 +38,6 @@ class MembershipTool( BaseTool ):
         memberdata_tool = getToolByName(self, 'portal_memberdata')
         member = memberdata_tool.get(member_id, None)
         if member:
-            print member, type(member)
             member.setPortrait(portrait)
             #apply(member.mutator('portrait'), portrait)
 
@@ -56,7 +55,7 @@ class MembershipTool( BaseTool ):
             if preCreateMemberArea returns 1 the normal createMemberArea will be
             called. otherwise it is skipped.
         """
-        # if preCreateMemberArea returns false, 
+        # if preCreateMemberArea returns false,
         # no further creation of the member area takes place
 
         # do not create member_area for groups
