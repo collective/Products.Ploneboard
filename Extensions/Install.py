@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.10 2004/04/09 22:28:01 tiran Exp $
+$Id: Install.py,v 1.11 2004/04/15 16:10:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -63,11 +63,11 @@ def install(self):
     portal=getToolByName(self,'portal_url').getPortalObject()
     manage_addExternalMethod(portal,'switch_old_plone_types_off',    
         'switch_old_plone_types_off',    
-        PROJECTNAME+'.switchOldPloneTypes', 
+        PROJECTNAME+'.toolbox', 
         'switch_old_plone_types_off')    
     manage_addExternalMethod(portal,'switch_old_plone_types_on',    
         'switch_old_plone_types_on',    
-        PROJECTNAME+'.switchOldPloneTypes', 
+        PROJECTNAME+'.toolbox', 
         'switch_old_plone_types_on')    
 
     manage_addExternalMethod(portal,'migrateFromCMFtoATCT',
@@ -80,6 +80,10 @@ def install(self):
         PROJECTNAME+'.migrateFromCPT', 
         'migrate')    
 
+    manage_addExternalMethod(portal,'recreateATImageScales',    
+        '',    
+        PROJECTNAME+'.toolbox', 
+        'recreateATImageScales')
 
     # changing workflow
     setupWorkflows(self, typeInfo, out)
@@ -114,7 +118,7 @@ def uninstall(self):
     # remove external methods for toggling between old and new types
     portal=getToolByName(self,'portal_url').getPortalObject()
     for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off',
-     'migrateFromCMFtoATCT', 'migrateFromCPTtoATCT'):
+     'migrateFromCMFtoATCT', 'migrateFromCPTtoATCT', 'recreateATImageScales', ):
         if hasattr(aq_base(portal), script):
             portal.manage_delObjects(ids=[script,])
     

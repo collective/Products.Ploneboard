@@ -17,10 +17,34 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: switchOldPloneTypes.py,v 1.1 2004/03/13 23:25:32 yenzenz Exp $
+$Id: toolbox.py,v 1.1 2004/04/15 16:10:36 tiran Exp $
 """ 
 
-__author__  = 'Jens Klein'
+__author__  = 'Jens Klein, Christian Heimes'
+__docformat__ = 'restructuredtext'
+
+from StringIO import StringIO
+from Products.CMFCore.utils import getToolByName
+from Products.ATContentTypes.types import ATDocument, ATEvent, \
+    ATFavorite, ATFile, ATFolder, ATImage, ATLink, ATNewsItem
+
+def recreateATImageScales(self):
+    """Recreates AT Image scales (doesn't remove unused!)
+    """
+    out = StringIO()
+    print >>out, "Updating AT Image scales"
+    catalog = getToolByName(self, 'portal_catalog')
+    brains  = catalog(portal_type = 'ATImage')
+    for brain in brains:
+        obj = brain.getObject()
+        if not obj:
+            continue
+        field = obj.getField('image')
+        if field:
+            print >>out, 'Updating %s' % obj.absolute_url(1)
+            field.createScales(obj)
+
+    return out.getvalue()
 
 def switch_old_plone_types_off(self):
     ''' switch OldPloneTypes Off by setting its global_allow property in 
