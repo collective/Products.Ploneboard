@@ -61,7 +61,7 @@ class CompositeTool(Folder, BaseTool):
                         for ob in self.viewlets.objectValues()]
         viewlet_info.sort(lambda x, y: cmp(x['title'], y['title']))
         available_viewlets = viewlet_info[:]
-        viewlet_info.insert(0, {'id':DEFAULT, 'title':'Default'})
+        viewlet_info.insert(0, {'id':DEFAULT, 'title':'use Default Setup'})
         for t in ti:
             id = t.getId()
             title = t.Title()
