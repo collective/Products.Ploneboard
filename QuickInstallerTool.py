@@ -1,11 +1,11 @@
 #-----------------------------------------------------------------------------
 # Name:        QuickInstallerTool.py
-# Purpose:     
+# Purpose:
 #
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.13 2003/07/24 00:04:49 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.14 2003/08/14 12:45:32 dreamcatcher Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -45,33 +45,33 @@ def addQuickInstallerTool(self,REQUEST=None):
     self._setObject('portal_quickinstaller',qt,set_owner=0)
     if REQUEST:
         return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-    
 
-    
+
+
 class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     __implements__ = IQuickInstallerTool
-    
+
     meta_type = 'CMF QuickInstaller Tool'
     id='portal_quickinstaller'
-    
+
     security = ClassSecurityInfo()
-    
+
     manage_options=(
         {'label':'install','action':'installForm'},
         ) +ObjectManager.manage_options
-    
+
     installForm=ZopePageTemplate('installForm',open(os.path.join(package_home(globals()),'forms','install_products_form.pt')).read())
     security = ClassSecurityInfo()
-    
+
     def __init__(self):
         self.id = 'portal_quickinstaller'
-    
+
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
 
         productInCP = self.Control_Panel.Products[productname]
-        
+
         for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
 
             if mod in productInCP.objectIds():
@@ -83,60 +83,60 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 return ExternalMethod('temp','temp',productname+'.'+mod, func)
             except:
                 pass
-            
+
         return None
-    
+
     isProductInstallable=getInstallMethod
-    
+
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation '''
         pids=self.Control_Panel.Products.objectIds()
-        
+
         import sys
         sys.stdout.flush()
 
         pids = [pid for pid in pids if self.isProductInstallable(pid)]
         sys.stdout.flush()
-        
+
         if skipInstalled:
             installed=[p['id'] for p in self.listInstalledProducts(showHidden=1)]
             pids=[r for r in pids if r not in installed]
-            
+
         res=[]
-        
+
         for r in pids:
             p=self._getOb(r,None)
             if p:
                 res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError()})
             else:
                 res.append({'id':r,'status':'new','hasError':0})
-                
-        return res
-    
 
-    
+        return res
+
+
+
     def listInstalledProducts(self, showHidden=0):
         ''' returns a list of products that are installed -> list of strings'''
         pids = [o.id for o in self.objectValues() if o.isInstalled() and (o.isVisible() or showHidden )]
 
         res=[]
-        
+
         for r in pids:
             p=self._getOb(r,None)
             res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden()})
- 
+
         return res
 
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name '''
-        
+
         if self.isProductInstalled(p):
             prod=self._getOb(p)
             msg='this product is already installed, please uninstall before reinstalling it'
             prod.log(msg)
             return msg
-            
+
         portal_types=getToolByName(self,'portal_types')
         portal_skins=getToolByName(self,'portal_skins')
         portal_actions=getToolByName(self,'portal_actions')
@@ -144,7 +144,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portal=getToolByName(self,'portal_url').getPortalObject()
         leftslotsbefore=getattr(portal,'left_slots',[])
         rightslotsbefore=getattr(portal,'right_slots',[])
-        
+
 
         emid='install'+p
         typesbefore=portal_types.objectIds()
@@ -171,15 +171,18 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 res='this product has already been installed without Quickinstaller!'
                 if not swallowExceptions:
                     raise AlreadyInstalled
-            
-            res+='failed:'+'\n'+'\n'.join(traceback.format_exception(tb[0],tb[1],tb[2]))
+
+            res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
             self.error_log.raising(tb)
+
+            # Try to avoid reference
+            del tb
             
             if swallowExceptions:
                 get_transaction().abort()   #this is very naughty
             else:
                 raise
-                
+
 
         typesafter=portal_types.objectIds()
         skinsafter=portal_skins.objectIds()
@@ -188,7 +191,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portalobjectsafter=portal.objectIds()
         leftslotsafter=getattr(portal,'left_slots',[])
         rightslotsafter=getattr(portal,'right_slots',[])
-        
+
         types=[t for t in typesafter if t not in typesbefore]
         skins=[s for s in skinsafter if s not in skinsbefore]
         actions=[a.id for a in portal_actions._actions if a.id not in actionsbefore]
@@ -196,9 +199,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portalobjects=[a for a in portalobjectsafter if a not in portalobjectsbefore]
         leftslots=[s for s in leftslotsafter if s not in leftslotsbefore]
         rightslots=[s for s in rightslotsafter if s not in rightslotsbefore]
-        
+
         msg=str(res)
-        
+
         #add the product
         if p in self.objectIds():
             p=getattr(self,p)
@@ -210,9 +213,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                                 workflows,leftslots,rightslots,res,
                                 status,error,locked,hidden)
             self._setObject(p,ip)
-            
+
         return res
-        
+
     security.declareProtected(ManagePortal, 'installProducts')
     def installProducts(self,products=[],stoponerror=0,REQUEST=None):
         ''' '''
@@ -239,13 +242,13 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 if stoponerror:
                     raise
                 res += 'failed\n'
-            
+
         if REQUEST :
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-                    
+
         return res
 
-    
+
     def isProductInstalled(self,productname):
         ''' checks wether a product is installed (by name) '''
         o=self._getOb(productname,None)
@@ -264,17 +267,17 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             ip=InstalledProduct(p,locked=locked, hidden=hidden, **kw)
             self._setObject(p,ip)
 
-            
+
     security.declareProtected(ManagePortal, 'uninstallProducts')
     def uninstallProducts(self, products, REQUEST=None):
         ''' removes a list of products '''
-        
+
         for pid in products:
             prod=getattr(self,pid)
             prod.uninstall()
-            
+
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-    
+
 
 InitializeClass( QuickInstallerTool )
