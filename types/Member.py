@@ -750,11 +750,12 @@ class Member(VariableSchemaSupport, BaseContent):
         self.setProperties(mapping)
 
 
-    def _getProperty(self, id):
+     def _getProperty(self, id):
         """Try to get a member property.  If the property is not found,
         raise an AttributeError"""
-        if self.Schema().get(id, None):
-            accessor = getattr(self, self.schema[id].accessor, None)
+        schema = self.Schema()
+        if schema.get(id, None):
+            accessor = getattr(self, schema.get(id).accessor, None)
             value = accessor()
         else:
             base = aq_base(self)
