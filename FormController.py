@@ -351,7 +351,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
                 obj = context.restrictedTraverse(v)
                 if obj is None:
                     raise ValueError, 'Unable to find validator %s\n' % str(v)
-                if not getattr(obj, 'is_validator', 0):
+                if not getattr(obj, 'is_validator', 1):
                     raise ValueError, '%s is not a CMFFormController validator' % str(v)
                 REQUEST = controller_state.getContext().REQUEST
                 controller_state = mapply(obj, args, kwargs,
