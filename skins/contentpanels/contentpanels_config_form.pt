@@ -25,7 +25,7 @@
     <div style="float: right"
          tal:define="lastPage python:pageIndex-1;
                      nextPage python:pageIndex+1">
-      <a tal:attributes="href string: ${here/absolute_url}/contentpanels_config?addPage=1&amp;pageIndex=$nextPage">
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addPage=1&amp;pageIndex=$nextPage">
          <img title="new page" alt="new page"
               tal:attributes="src string:$portal_url/newPage.gif"/>
       </a>
@@ -243,7 +243,7 @@ columns
                   <tr>
                     <td>
                      <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
-                         tal:on-error="string: This panel content is nolonger existed or you have no right to access it. We recommend you remove this panel."/>
+                         tal:on-error="string:This panel content is nolonger existed or you have no right to access it. We recommend you remove this panel."/>
                     </td>
                   </tr>
               </table>

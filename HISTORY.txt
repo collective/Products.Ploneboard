@@ -14,7 +14,7 @@ now. (thanks Marc Lindahl)
   - source code back to sf.net/projects/collective now
 
   - now contentpanels_skins.css.dtml is renamed to
-contentpanelsCostom.css.dtml
+contentpanelsCustom.css.dtml
 
   - remove reply counts in topic and folder viewlets for better performance
 and clean

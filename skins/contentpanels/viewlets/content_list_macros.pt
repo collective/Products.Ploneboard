@@ -34,7 +34,7 @@
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
                                   modificationDate python:here.toPortalTime(modificationDate)"
-                      tal:content="string: (${item/Creator}) $modificationDate">
+                      tal:content="string:(${item/Creator}) $modificationDate">
                       creator   08/19/2001 03:01 AM
                 </span>
             </tal:block>
@@ -64,7 +64,7 @@
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
                                   modificationDate python:here.toPortalTime(modificationDate)"
-                      tal:content="string: (${item/Creator}) ${item/Description} $modificationDate">
+                      tal:content="string:(${item/Creator}) ${item/Description} $modificationDate">
                       creator   08/19/2001 03:01 AM
                 </span>
             </tal:block>
@@ -94,7 +94,7 @@
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
                                   modificationDate python:here.toPortalTime(modificationDate)"
-                      tal:content="string: (${item/Creator}) $modificationDate">
+                      tal:content="string:(${item/Creator}) $modificationDate">
                       creator   08/19/2001 03:01 AM
                 </span>
 

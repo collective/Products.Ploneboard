@@ -52,7 +52,7 @@ columns
 panel should be here!!
 -->
                  <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
-                      tal:on-error="string: "/>
+                      tal:on-error="string:"/>
 
               </div>
 
