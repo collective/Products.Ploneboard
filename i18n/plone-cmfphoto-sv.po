@@ -19,3 +19,6 @@ msgstr ""
 
 msgid "Photo"
 msgstr "Foto"
+
+msgid "Photo has been created."
+msgstr "Fotot har skapats."
