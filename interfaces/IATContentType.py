@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.3 2004/03/29 07:20:53 tiran Exp $
+$Id: IATContentType.py,v 1.4 2004/03/29 16:44:19 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -46,4 +46,3 @@ class IATContentType(Interface):
     def getDefaultLayout():
         """Get the default layout used for TemplateMixin
         """
-    

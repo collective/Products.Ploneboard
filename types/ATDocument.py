@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
+$Id: ATDocument.py,v 1.8 2004/03/29 16:44:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -100,5 +100,81 @@ class ATDocument(ATCTContent):
         bu = self.getRawText(maybe_baseunit=1)
         if hasattr(bu, 'mimetype'):
             self.text_format = str(bu.mimetype)
+
+    security.declarePrivate('getHistories')
+    def getHistories(self, max=10):
+        """Get a list of historic revisions.
+        
+        Returns metadata as well    
+        (object, time, transaction_note, user)"""
+    
+        historyList = self._p_jar.db().history(self._p_oid, None, max)
+    
+        if not historyList:
+            return ()
+    
+        # Build list of objects
+        lst = []
+        parent = aq_parent(self)
+        for revision in historyList:
+            serial = revision['serial']
+            # get the revision object and wrap it in a context wrapper
+            obj    = historicalRevision(self, serial)
+            obj    = obj.__of__(parent)
+            lst.append((obj,
+                        DateTime(revision['time']),
+                        revision['description'],
+                        revision['user_name'],
+                      ))
+
+        return lst
+
+    security.declareProtected(CMFCorePermissions.View, 'getDocumentComparisons')
+    def getDocumentComparisons(self, max=10, filterComment=0):
+        """
+        """
+        mTool = getToolByName(self, 'portal_membership')
+        
+        histories = self.getHistories()
+        if max > len(histories):
+            max = len(histories)
+
+        lst = []
+
+        for revisivon in range(1, max):
+    
+            oldObj, oldTime, oldDesc, oldUser = histories[revisivon]
+            newObj, newTime, newDesc, newUser = histories[revisivon-1]
+
+            oldText  = oldObj.getRawText().split("\n")
+            newText  = newObj.getRawText().split("\n")
+            member = mTool.getMemberById(newUser)
+
+            lines = [
+                     html_quote(line)
+                     for line in difflib.unified_diff(oldText, newText)
+                    ][3:]
+
+            description = newDesc            
+            if filterComment:
+                relativUrl = self.absolute_url(1)
+                description = '<br />\n'.join(
+                              [line
+                               for line in description.split('\n')
+                               if line.find(relativUrl) != -1]
+                              )
+            else:
+                description.replace('\n', '<br />\n')
+            
+            if lines:
+                lst.append({
+                            'lines'       : lines,
+                            'oldTime'     : oldTime,
+                            'newTime'     : newTime,
+                            'description' : description,
+                            'user'        : newUser,
+                            'member'      : member
+                           })
+        return lst
 
 registerType(ATDocument, PROJECTNAME)

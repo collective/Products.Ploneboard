@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
+$Id: schemata.py,v 1.8 2004/03/29 16:44:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,9 +28,8 @@ from Products.Archetypes.TemplateMixin import schema as TemplateMixinSchema
 from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
-#from Products.ATContentTypes.config import NEWS_TYPES
 from Products.ATContentTypes import Validators
-
+from Products.ATContentTypes.config import *
 
 ATContentTypeBaseSchema = BaseSchema + Schema((
     TextField('description',
@@ -60,7 +59,7 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
                                        #label_msgid = "",
                                        i18n_domain = "plone",
                                        visible={'view' : 'invisible',
-                                                'edit' : 'visible'},
+                                                'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'invisible'},
                                        )),
     ))
     
@@ -81,7 +80,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
                                          'text/restructured',
                                          'text/html',
                                          'text/plain',
-                                         'text/x-python',),
+                                         'text/python-source',),
               widget = RichWidget(description = "The body text of the document.",
                                   description_msgid = "help_body_text",
                                   label = "Body text",

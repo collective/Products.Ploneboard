@@ -29,10 +29,10 @@ Archetypes
 
 AT Content Types is tested with the following AT versions
 
- * AT 1.2.5rc4 or newer
- * AT 1.3.0a2 or newer
- * AT CVS HEAD after 2004-03-12
- * AT CS release-1_2 branch after 2004-03-12
+ * AT 1.2.5-rc5 or newer
+ * AT 1.3 *only* a new CVS checkout - 1.3.0a2 is too old
+ * AT CVS HEAD (aka 1.3) after 2004-03-30
+ * AT CVS release-1_2 branch after 2004-03-30
 
 AT Content Types would work with AT 1.0.x when someone is willing to backport
 some fixes and changes from AT 1.2 or AT 1.3. That is action in actions is a

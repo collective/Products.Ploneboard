@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.12 2004/03/20 19:22:35 tiran Exp $
+$Id: config.py,v 1.13 2004/03/29 16:44:17 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -84,9 +84,9 @@ MX_TIDY_OPTIONS= {
     'char_encoding'    : 'raw',
     }
 
-# Add attributes to be more CMF compatible?
-# XXX more docs here
-CMF_COMPATIBILITY_ATTRIBUTS=1
+# use TemplateMixin?
+# if enabled users can choose between different view templates for each object
+ENABLE_TEMPLATE_MIXIN = True
 
 # workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'

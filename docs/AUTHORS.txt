@@ -40,5 +40,5 @@ Volker Bachschneider:
 Markus Koelle:
  * bug reporting
 
-Christian Theune:
+Christian Theune (gocept):
  * document history function
