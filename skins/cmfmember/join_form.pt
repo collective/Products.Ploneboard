@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<metal:block fill-slot="javascript_head_slot">
+   <tal:block define="macro here/archetypes_custom_js/macros/javascript_head | nothing" tal:condition="macro">
+      <metal:block use-macro="macro" />
+   </tal:block>
+</metal:block>
+
+<body>
+   <metal:block fill-slot="base">
+      <tal:block tal:define="dummy python:request.set('disable_border', 1)"
+                 tal:replace="nothing">
+         Disable the tabs
+      </tal:block>
+   </metal:block>
+
+   <div metal:fill-slot="main">
+      <div metal:define-macro="main"
+	         tal:define="errors python:request.get('errors', {});
+		                   Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                       tabindex python:Iterator();
+                       fieldset request/fieldset|options/fieldset|string:default;
+                       schematas here/Schemata;
+ 		                   fieldsets python:[key for key in schematas.keys() if key not in ['metadata', fieldset]];"
+                       tal:omit-tag="">
+
+         <h1 i18n:translate="heading_registration_form">Please register</h1>
+
+         <p i18n:translate="description_registration_form">
+         By registering with us, you will have your own account with the
+         possibility to have personalized content, and you will be able to add
+         your own documents, images and files to the site.
+         </p>
+         <p tal:content="python:str(errors)"/>
+
+         <form class="group"
+               name="edit_form"
+	             method="post" 
+      	       enctype="multipart/form-data"
+               tal:attributes="action request/URL">
+	
+            <span class="legend" i18n:translate="legend_personal_details">Personal Details</span>
+
+            <tal:fields repeat="field python: schematas[fieldset].fields()">
+               <metal:fieldMacro use-macro="python: here.widget(field.name, mode='edit')"/>
+            </tal:fields>
+
+            <input type="hidden" name="form_submitted" value="register_member" />
+
+            <input type="hidden" name="fieldset" value="default"
+                   tal:attributes="value fieldset|string:default" />
+
+            <div class="row">
+               <div class="label">&nbsp;</div>
+               <div class="field" tal:define="process_creation request/process_creation|nothing;"> 
+	                <input class="context" 
+    	                   tabindex=""
+		                     type="submit" 
+		                     name="Change" 
+                         i18n:attributes="value"
+		                     value="Register" 
+		                     tal:attributes="tabindex tabindex/next;" /> 
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</body>
+</html>
