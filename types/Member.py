@@ -190,7 +190,7 @@ security_schema = FieldList((
     BooleanField('mail_me',
                 default=0,
                 searchable=0,
-                read_permission=EDIT_PASSWORD_PERMISSION,
+                mode='w',
                 write_permission=EDIT_PASSWORD_PERMISSION,
                 widget=BooleanWidget( label='Mail password', description="Have your password mailed to you after you change it"),
                 ),
