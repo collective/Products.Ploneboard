@@ -1,3 +1,4 @@
+# -*- coding: iso-8859-15 -*-
 
 """
 ATSchemaEditorNG
@@ -9,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: Install.py,v 1.4 2004/09/16 17:36:01 ajung Exp $
+$Id: Install.py,v 1.5 2004/11/02 17:27:48 ajung Exp $
 """
 
 from cStringIO import StringIO
