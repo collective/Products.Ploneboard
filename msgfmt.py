@@ -160,7 +160,7 @@ class Msgfmt:
             if not l:
                 continue
             # XXX: Does this always follow Python escape semantics?
-            l = eval(l)
+            l = eval(l, globals())
             if section == ID:
                 msgid += l
             elif section == STR:
@@ -181,20 +181,3 @@ class Msgfmt:
     def __call__(self):
         return self.getAsFile()
 
-
-def main(pofile='/var/lib/zope/plone/Products/PlacelessTranslationService/plone-nl.po'):
-    from gettext import GNUTranslations
-    from cStringIO import StringIO
-    import os
-    #import locale
-    #locale.setlocale(locale.LC_ALL, 'de_DE@euro')
-    po = pofile
-    mo = Msgfmt(po)
-    
-    moFile = mo.getAsFile()
-    tro = None
-    tro = GNUTranslations(moFile)
-    return dir(tro)
-
-if __name__ == '__main__':
-    print main()
