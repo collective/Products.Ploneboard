@@ -404,8 +404,20 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Pass the request along to the underlying user-related UserFolder 
         object
         THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code 
-        in AccessControl/User.py
+        in AccessControl/User.py.
+        We also check for inituser in there.
         """
+        # Emergency user checking stuff
+        emergency = self._emergency_user
+        if name is None:
+            return None
+        if emergency and name==emergency.getUserName():
+            if emergency.authenticate(password, request):
+                return emergency
+            else:
+                return None
+            
+        # Usual GRUF authentication
         for src in self.listUserSources():
             # XXX We can imagine putting a try/except here to "ignore"
             # UF errors such as SQL or LDAP shutdown
@@ -655,7 +667,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/22 10:01:19 $"[7:-2]
+        rev_date = "$Date: 2003/12/22 10:35:51 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
