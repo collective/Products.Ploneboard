@@ -1315,7 +1315,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/11 11:32:03 $"[7:-2]
+        rev_date = "$Date: 2004/06/11 11:34:13 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2015,9 +2015,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         uf = GRUFFolder.GRUFUsers(id = next_id)
         self._setObject(next_id, uf)
 
-        # If we use ldap, tag it
-        if string.find(factory_uri.lower(), "ldap") > -1:
-            self._haveLDAPUF += 1
+##        # If we use ldap, tag it
+##        if string.find(factory_uri.lower(), "ldap") > -1:
+##            self._haveLDAPUF += 1
 
         # Add its underlying UserFolder
         # If we're called TTW, uses a redirect else tries to call the UF factory directly
