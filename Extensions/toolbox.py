@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.6 2004/06/20 15:13:18 tiran Exp $
+$Id: toolbox.py,v 1.7 2004/06/20 16:22:57 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -135,6 +135,13 @@ def _changePortalType(cat, old, new):
             continue
         obj._setPortalTypeName(new)
 
+def _fixLargePloneFolder(self):
+    # XXX why do I need this hack?
+    # probably because of the hard coded and false portal type in Plone :|
+    # Members._getPortalTypeName() returns ATBTreeFolder instead of 
+    # Large Plone Folder
+    self.Members._setPortalTypeName(ATFolder.ATBTreeFolder.newTypeFor[0])
+
 def switchCMF2ATCT(self):
     if isSwitchedToATCT(self):
         return "Error: Already switched"
@@ -145,6 +152,7 @@ def switchCMF2ATCT(self):
     for klass in atct_klasses:
         _switchToATCT(pt, cat, reg, klass, out)
     # XXX maybe we need to reindex only portal_type and meta_type
+    _fixLargePloneFolder(self)
     cat.refreshCatalog(clear=1)
     return out.getvalue()
 
@@ -158,6 +166,7 @@ def switchATCT2CMF(self):
     for klass in atct_klasses:
         _switchToCMF(pt, cat, reg, klass, out)
     # XXX maybe we need to reindex only portal_type and meta_type
+    _fixLargePloneFolder(self)
     cat.refreshCatalog(clear=1)
     return out.getvalue()
 

@@ -1,3 +1,11 @@
+0.2-beta7
+
+ * Moved around some code from ATFolder to ATContentType [tiran]
+
+ * Fixed problem with index_html in ATBTreeFolder [tiran]
+
+ * Fixed wrong portal type in Members ATBTreeFolder after migration [tiran]
+
 0.2-beta6 - 2004-06-20
 
  * Added max upload size validator to ATFile and ATImage [tiran]
