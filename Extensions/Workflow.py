@@ -3,6 +3,7 @@ from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC, TRIGGER_WORKFLOW_
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
 from Products.CMFMember import MemberPermissions
+from Products.CMFCore import CMFCorePermissions
 
 # Execute the 'trigger' transition -- this should trigger
 # any automatic transitions for which the guard conditions
@@ -48,7 +49,8 @@ def setupWorkflow(portal, out):
               MemberPermissions.VIEW_SECURITY_PERMISSION,
               MemberPermissions.VIEW_PUBLIC_PERMISSION,
               MemberPermissions.VIEW_OTHER_PERMISSION,
-              MemberPermissions.VIEW_PERMISSION):
+              MemberPermissions.VIEW_PERMISSION,
+              CMFCorePermissions.ModifyPortalContent):
         if not perms.has_key(p):
             wf.addManagedPermission(p)
             perms[p] = 1
@@ -64,16 +66,17 @@ def setupWorkflow(portal, out):
         title='Newly created member',
         transitions=('trigger', 'make_pending',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
-    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Anonymous',))
-    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Anonymous',))
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager','Anonymous',))
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager','Anonymous',))
     state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Manager',)) # make anonymous to allow people to set their own initial passwords
     state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager','Anonymous',))
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Anonymous',))
 
     # Pending approval
     state = wf.states['pending']
@@ -91,6 +94,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Manager',))
 
     # Registered, private
     state = wf.states['private']
@@ -108,6 +112,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
+    state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Owner', 'Manager',))
 
     # Registered, public
     state = wf.states['public']
@@ -124,6 +129,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Authenticated', 'Manager')) # allow Anonymous to let everyone search for public members
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
+    state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Owner', 'Manager',))
     
     # Disabled
     state = wf.states['disabled']
@@ -141,6 +147,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Manager',))
 
     # TRANSITIONS
 

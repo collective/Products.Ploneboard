@@ -63,7 +63,17 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         self.typeName = 'Member'  # The name used for the factory in types_tool
         self.setTitle('Member profiles')
 
+
     def __call__(self):
+        """Invokes the default view."""
+        view = _getViewFor(self, 'view', 'folderlisting')
+        if getattr(aq_base(view), 'isDocTemp', 0):
+            return apply(view, (self, self.REQUEST))
+        else:
+             return view()
+
+
+    def view(self):
         """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
         if getattr(aq_base(view), 'isDocTemp', 0):
@@ -77,6 +87,18 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         search_form = self.restrictedTraverse('member_search_form')
         return search_form(REQUEST, RESPONSE)
     
+
+    security.declarePublic('registerMember')
+    def registerMember(self, id):
+        """Create a new member with the specified id.  Wrap the member
+        in the context of the portal so that we avoid having member
+        breadcrumbs."""
+        self.invokeFactory(id=id, type_name=self.typeName)
+#        o=getattr(portal.portal_memberdata, id, None)
+#        self.getMemberFactory()(id)
+        return self.get(id)
+##        return self.get(id).__of__(getToolByName(self, 'portal_url').getPortalObject())
+
 
     security.declarePrivate('getMemberFactory')
     def getMemberFactory(self):
@@ -321,6 +343,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
                 workflow_tool.doActionFor(ob, t)
 
             self.manage_delObjects(temp_id)
+        from Products.CMFMember.Extensions.Install import installNavigation
+        setupNavigation(self, out, new_type_name)
 
 
     ##SUBCLASS HOOKS

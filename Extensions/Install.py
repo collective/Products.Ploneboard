@@ -27,7 +27,7 @@ def installMember(self, out):
 def replaceTools(self, out, convert=1):
     portal = getToolByName(self, 'portal_url').getPortalObject()
     memberdata_tool = getToolByName(self, 'portal_memberdata')
-    if memberdata_tool.__class__ != CMFMember.MemberDataTool:
+    if memberdata_tool.__class__ != CMFMember.MemberDataTool.MemberDataTool:
         # For a object to be displayed in contentValues it must be registered with the
         # portal_types tool.  So lets do this and make the MemberDataTool not addable.
         # XXX This seems kind of evil.
@@ -37,6 +37,7 @@ def replaceTools(self, out, convert=1):
           typeinfo_name='CMFCore: Portal Folder')
         memberarea=typestool.MemberArea
         memberarea.content_meta_type='CMFMember Tool'
+        memberarea.icon = 'folder_icon.gif'
         _actions=memberarea._cloneActions()
         for action in _actions:
             if action['id']=='view':
@@ -123,17 +124,31 @@ def _getUserById(self, id):
     return acl_users.getUser(id).__of__(acl_users)
 
 
-def setupRegistration(self):
+def setupRegistration(self, out):
     # Allow Anonymous to add objects to memberdata tool
+    memberdata_tool = getToolByName(self, 'portal_memberdata')
     memberdata_tool.manage_permission(CMFCorePermissions.AddPortalContent, ('Anonymous','Authenticated','Manager',), acquire=1 )
 
     # wire up join action to new machinery
-    registration_tool=getToolByName(portal, 'portal_registration')
+    registration_tool=getToolByName(self, 'portal_registration')
     actions=registration_tool._cloneActions()
     for action in actions:
             if action.id=='join':
                 action.action=Expression('string:${portal_url}/portal_memberdata/createObject?type_name=Member')
     registration_tool._actions=tuple(actions)
+
+
+def setupNavigation(self, out, type_name):
+    nav_tool = getToolByName(self, 'portal_navigation')
+
+    nav_tool.addTransitionFor('default', 'register_member', 'failure', 'register_member')
+    nav_tool.addTransitionFor('default', 'register_member', 'success', 'script:do_register')
+
+    nav_tool.addTransitionFor(type_name, 'do_register', 'success', 'registered')
+
+
+def installSkins(self, out):
+    install_subskin(self, out, CMFMember.GLOBALS, 'skins')
 
 
 def install(self):
@@ -142,6 +157,9 @@ def install(self):
     setupWorkflow(self, out)
     installMember(self, out)
     replaceTools(self, out)
+    installSkins(self, out)
+    setupRegistration(self, out)
+    setupNavigation(self, out, 'Member')
     
     print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME
     import sys

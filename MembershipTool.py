@@ -1,4 +1,4 @@
-from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone.MembershipTool import MembershipTool as BaseTool
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION
 
