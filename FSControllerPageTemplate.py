@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.6 2003/12/02 16:24:42 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.7 2003/12/10 17:05:57 dreamcatcher Exp $
 """
 
 import copy
@@ -95,9 +95,10 @@ class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
         """Can default actions and validators be modified?"""
         return 0
 
+_s = Src()
 
-d = FSControllerPageTemplate.__dict__
-d['source.xml'] = d['source.html'] = Src()
+setattr(FSControllerPageTemplate, 'source.xml', _s)
+setattr(FSControllerPageTemplate, 'source.html', _s)
 
 Globals.InitializeClass(FSControllerPageTemplate)
 
