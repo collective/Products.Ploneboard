@@ -955,10 +955,11 @@ class Member(VariableSchemaSupport, BaseContent):
                     object._changeUserInfo(portal, old_owner_info, new_owner)
 
                     # Delete the old user object if it was from portal.acl_users but not
-                    # if it was from zope_root.acl_users
-                    if old_user.aq_parent == portal.acl_users: 
+                    # if it was from zope_root.acl_users.
+                    if self._isPortalUser(old_user):
                         # delete the old user
-                        portal.acl_users.userFolderDelUsers([old_user.getUserName()])
+                        if portal.acl_users.getUser(old_user.getUserName()):
+                            portal.acl_users.userFolderDelUsers([old_user.getUserName()])
         except:
             import traceback
             import sys
@@ -1002,21 +1003,20 @@ class Member(VariableSchemaSupport, BaseContent):
             if self.getUser() == None:
                 self._v_user = None # remove references to user
                 return
-            
-            BaseContent.manage_beforeDelete(self, item, container)
+
             portal = getToolByName(self, 'portal_url').getPortalObject()
 
-            # recurse through the portal and delete all of the user's content
-            # XXX we should create some other options here
-            # XXX Do we really want to delete the user's stuff if s/he isn't in
-            #     the portal's acl_users folder?
-            self._changeUserInfo(portal, Owned.ownerInfo(self.getUser()))
-            
-            # delete the User object if it's in the current portal's acl_users folder
-            if self.getUser().aq_parent == portal.acl_users: 
+            # make sure user comes from the portal.acl_users folder and not
+            # zope.acl_users or somewhere above the portal
+            if self._isPortalUser(self.getUser()): 
+                # recurse through the portal and delete all of the user's content
+                # XXX we should create some other options here
+                self._changeUserInfo(portal, Owned.ownerInfo(self.getUser()))
+                # Delete the User object if it's in the current portal's acl_users folder.
                 if portal.acl_users.getUser(self.id):
                     portal.acl_users.userFolderDelUsers([self.id])
             self._v_user = None # remove references to user
+            BaseContent.manage_beforeDelete(self, item, container)
         except:
             import traceback
             import sys
@@ -1024,6 +1024,18 @@ class Member(VariableSchemaSupport, BaseContent):
             #import pdb; pdb.set_trace()
             raise
 
+
+    def _isPortalUser(self, user):
+        """Test whether a user object comes from the portal's acl_users folder"""
+        # (The ugly comparison is because (1) the user's aq_parent is set to
+        # portal.acl_users, so we first need to do aq_inner, and (2) it appears
+        # that the == function for acl_users is not very smart, so we need to
+        # see if the acl_users folders have the same parent.)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+
+        return user.aq_inner.aq_parent.aq_inner.aq_parent == \
+            portal.acl_users.aq_inner.aq_parent
+        
 
     security.declarePrivate('setUser')
     def setUser(self, user):
@@ -1126,6 +1138,8 @@ class Member(VariableSchemaSupport, BaseContent):
                 if self._changeUserInfo(o, old_user_info, new_user):
                     # delete object if need be
                     if o != self:
+                        import sys
+                        sys.stdout.write('deleting %s\n' % o.getId())
                         context.manage_delObjects([o.getId()])
                     
             # remove any local roles the user may have had

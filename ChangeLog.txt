@@ -1,3 +1,16 @@
+2003-06-13  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Fixed a couple of pretty serious bugs in Member.py that had to do with
+      deleting members with user objects that come from outside the current
+      portal.  First, the test for the source of the user objects' acl_users 
+      folder was broken, which meant that one could delete the site administrator.
+      Even worse, when one deleted the site administrator, all the objects they
+      owned were deleted recursively, which included the portal itself!  This
+      wreaked all sorts of havoc and is now fixed.
+
+    * Updated skins/content_edit.py to work with changes in Archetypes'
+      handling of schemata
+
 2003-06-10  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * MemberDataTool.py: removed a spurious declaration of registerType and 
