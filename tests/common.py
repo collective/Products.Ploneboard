@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.8 2004/06/24 19:47:12 tiran Exp $
+$Id: common.py,v 1.9 2004/09/17 13:35:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -100,15 +100,15 @@ TidyHTMLValidator = ValidationChain('isTidyHtmlChain')
 #TidyHTMLValidator.appendSufficient('isEmpty')
 TidyHTMLValidator.appendRequired('isTidyHtmlWithCleanup')
 URLValidator = ValidationChain('isURL')
-URLValidator.appendSufficient('isEmpty')
+URLValidator.appendSufficient('isEmptyNoError')
 URLValidator.appendRequired('isURL')
 RequiredURLValidator = ValidationChain('isRequiredURL')
 RequiredURLValidator.appendRequired('isURL')
 EmailValidator = ValidationChain('isEmailChain')
-EmailValidator.appendSufficient('isEmpty')
+EmailValidator.appendSufficient('isEmptyNoError')
 EmailValidator.appendRequired('isEmail')
 PhoneValidator = ValidationChain('isPhoneChain')
-PhoneValidator.appendSufficient('isEmpty')
+PhoneValidator.appendSufficient('isEmptyNoError')
 PhoneValidator.appendRequired('isInternationalPhoneNumber')
 
 
