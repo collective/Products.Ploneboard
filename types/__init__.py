@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.2 2004/04/22 23:26:58 tiran Exp $
+$Id: __init__.py,v 1.3 2004/04/23 09:54:59 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,7 +26,6 @@ __docformat__ = 'restructuredtext'
 import ATLink
 import ATImage
 import ATDocument
-import ATDynDocument
 import ATFile
 import ATEvent
 import ATNewsItem

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.18 2004/04/22 23:26:58 tiran Exp $
+$Id: schemata.py,v 1.19 2004/04/23 09:54:59 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -96,52 +96,6 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
                                   label_msgid = "label_body_text",
                                   rows = 25,
                                   i18n_domain = "plone")),
-    ), marshall=RFC822Marshaller()
-    )
-
-###
-# AT Content Type Dyn Document
-###
-
-ATDynDocumentSchema = ATContentTypeSchema + Schema((
-    TextField('text',
-              required = 1,
-              searchable = 1,
-              validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isTAL',) },
-              primary = 1,
-              default_content_type = 'text/restructured',
-              default_output_type = 'text/html',
-              allowable_content_types = ('text/structured',
-                                         'text/restructured',
-                                         'text/html',
-                                         'text/plain',
-                                         'text/plain-pre',
-                                         'text/python-source',),
-              widget = RichWidget(description = "The body text of the document.",
-                                  description_msgid = "help_body_text",
-                                  label = "Body text",
-                                  label_msgid = "label_body_text",
-                                  rows = 25,
-                                  i18n_domain = "plone")),
-
-##    StringField('templateMacro',
-##                searchable = 0,
-##                required = 1,
-##                default= "here/main_template/macros/master",
-##                widget = StringWidget(description = "'here/main_template/macros/master'",
-##                                      #description_msgid = "help_event_location",
-##                                      label = "Template and Macro",
-##                                      #label_msgid = "label_event_location",
-##                                      i18n_domain = "plone")),
-##    StringField('slot',
-##                searchable = 0,
-##                required = 1,
-##                default= "main",
-##                widget = StringWidget(description = "'main'",
-##                                      #description_msgid = "help_event_location",
-##                                      label = "Slot",
-##                                      #label_msgid = "label_event_location",
-##                                      i18n_domain = "plone")),
     ), marshall=RFC822Marshaller()
     )
 

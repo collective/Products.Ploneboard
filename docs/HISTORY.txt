@@ -1,6 +1,9 @@
 0.2-beta4
 
- * Added AT Dyn Document. It's a CMFDynamicDocument like type <XXX more>
+ * Added AT Dyn Document. It's a CMFDynamicDocument like type that supports
+   rendering of TAL inside the body text.
+
+ * Moved AT Dyn Document to a new product ATDynDocument.
 
 0.2-beta3 - 2004-04-20
 
