@@ -3,7 +3,8 @@ import sha
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, Owned
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
 from Products import CMFCore
-from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
+from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, \
+                                   _verifyActionPermissions
 from Products.CMFCore.Expression import createExprContext
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
@@ -13,6 +14,7 @@ from Products.Archetypes.Field       import *
 from Products.Archetypes.Widget      import *
 from Products.Archetypes.Schema import Schemata
 from Products.Archetypes.ClassGen import ClassGenerator, Generator
+from Products.Archetypes.utils import OrderedDict
 
 from Globals import InitializeClass
 
@@ -69,7 +71,7 @@ class VariableSchemaSupport:
     '''
     def Schemata(self):
         schema = self.getAndPrepareSchema()
-        schemata = {}
+        schemata = OrderedDict()
         for f in schema.fields():
             sub = schemata.get(f.schemata, Schemata(name=f.schemata))
             sub.addField(f)
