@@ -16,16 +16,14 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATPortalTypeCriterion.py,v 1.3 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATPortalTypeCriterion.py,v 1.4 2004/08/22 21:43:07 tiran Exp $
 """
 
 __author__  = 'Godefroid Chapelle'
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.TypesTool import TypesTool
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
@@ -39,7 +37,7 @@ from Products.ATContentTypes.types.criteria.schemata import ATPortalTypeCriterio
 class ATPortalTypeCriterion(ATBaseCriterion):
     """A portal_types criterion"""
 
-    __implements__ = BaseContentMixin.__implements__ + (IATTopicSearchCriterion, )
+    __implements__ = ATBaseCriterion.__implements__ + (IATTopicSearchCriterion, )
     security       = ClassSecurityInfo()
     schema         = ATPortalTypeCriterionSchema
     meta_type      = 'ATPortalTypeCriterion'
@@ -52,7 +50,7 @@ class ATPortalTypeCriterion(ATBaseCriterion):
     security.declareProtected(CMFCorePermissions.View, 'getValue')
     def getValue(self):
         # refresh vocabulary
-        types_tool = getToolByName(self, TypesTool.id)
+        types_tool = getToolByName(self, 'portal_types')
         portal_types = types_tool.listContentTypes()
         portal_types = [(portal_type, portal_type)
                         for portal_type in portal_types]

@@ -16,17 +16,17 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATBaseCriterion.py,v 1.10 2004/08/04 15:00:44 tiran Exp $
+$Id: ATBaseCriterion.py,v 1.11 2004/08/22 21:43:07 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
-from Products.Archetypes.BaseContent import BaseContentMixin
+from Products.Archetypes.public import BaseContentMixin
 
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
@@ -77,4 +77,5 @@ class ATBaseCriterion(BaseContentMixin):
         """
         raise NotImplementedError
 
+InitializeClass(ATBaseCriterion)
 # registerCriterion(ATBaseCriterion, ())

@@ -16,13 +16,12 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATSimpleIntCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATSimpleIntCriterion.py,v 1.10 2004/08/22 21:43:07 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 
@@ -37,7 +36,7 @@ from Products.ATContentTypes.types.criteria.schemata import ATSimpleIntCriterion
 class ATSimpleIntCriterion(ATBaseCriterion):
     """A simple int criterion"""
 
-    __implements__ = BaseContentMixin.__implements__ + (IATTopicSearchCriterion, )
+    __implements__ = ATBaseCriterion.__implements__ + (IATTopicSearchCriterion, )
     security       = ClassSecurityInfo()
     schema         = ATSimpleIntCriterionSchema
     meta_type      = 'ATSimpleIntCriterion'

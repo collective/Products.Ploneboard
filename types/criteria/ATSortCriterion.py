@@ -16,13 +16,12 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATSortCriterion.py,v 1.11 2004/07/19 12:01:50 godchap Exp $
+$Id: ATSortCriterion.py,v 1.12 2004/08/22 21:43:07 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 
@@ -37,7 +36,7 @@ from Products.ATContentTypes.types.criteria.schemata import ATSortCriterionSchem
 class ATSortCriterion(ATBaseCriterion):
     """A sort criterion"""
 
-    __implements__ = BaseContentMixin.__implements__ + (IATTopicSortCriterion, )
+    __implements__ = ATBaseCriterion.__implements__ + (IATTopicSortCriterion, )
     security       = ClassSecurityInfo()
     schema         = ATSortCriterionSchema
     meta_type      = 'ATSortCriterion'
@@ -47,6 +46,7 @@ class ATSortCriterion(ATBaseCriterion):
 
     shortDesc      = 'Sort'
 
+    security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         result = [('sort_on', self.Field())]
 

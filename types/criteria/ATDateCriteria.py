@@ -16,14 +16,13 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATDateCriteria.py,v 1.10 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATDateCriteria.py,v 1.11 2004/08/22 21:43:07 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from DateTime import DateTime
-from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 
@@ -39,7 +38,7 @@ class ATDateCriteria(ATBaseCriterion):
     """A date criteria"""
 
 
-    __implements__ = BaseContentMixin.__implements__ + (IATTopicSearchCriterion, )
+    __implements__ = ATBaseCriterion.__implements__ + (IATTopicSearchCriterion, )
 
     security       = ClassSecurityInfo()
     schema         = ATDateCriteriaSchema
