@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.26 2004/08/01 17:49:40 tiran Exp $
+$Id: ATImage.py,v 1.27 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -60,6 +60,7 @@ class ATImage(ATCTFileContent):
     typeDescMsgId  = 'description_edit_image'
     assocMimetypes = ('image/*', )
     assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
+    cmf_edit_kws   = ()
 
     __implements__ = ATCTFileContent.__implements__, IATImage
 

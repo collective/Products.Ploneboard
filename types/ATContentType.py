@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.42 2004/10/05 23:38:45 tiran Exp $
+$Id: ATContentType.py,v 1.43 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -111,6 +111,7 @@ class ATCTMixin(TemplateMixin):
     typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
+    cmf_edit_kws   = ()
 
     __implements__ = IATContentType
 
@@ -190,11 +191,12 @@ class ATCTMixin(TemplateMixin):
         if len(args) != 0:
             # use cmf edit method
             return self.cmf_edit(*args, **kwargs)
-
-        fieldNames = [field.getName() for field in self.Schema().fields()]
-        for name in kwargs.keys():
-            if name not in fieldNames:
-                #print "unknow kwarg %s" % name, kwargs
+        
+        # if kwargs is containing a key that is also in the list of cmf edit
+        # keywords then we have to use the cmf_edit comp. method
+        cmf_edit_kws = getattr(aq_inner(self).aq_explicit, 'cmf_edit_kws', ())
+        for kwname in kwargs.keys():
+            if kwname in cmf_edit_kws:
                 return self.cmf_edit(**kwargs)
         # standard AT edit - redirect to update()
         return self.update(**kwargs)

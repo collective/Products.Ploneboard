@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.32 2004/09/27 14:55:32 tiran Exp $
+$Id: ATDocument.py,v 1.33 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -63,6 +63,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
                       'application/msword', 'message/rfc822', 'text/*',
                      )
     assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', 'py' )
+    cmf_edit_kws   = ('text_format',)
 
     __implements__ = (ATCTContent.__implements__,
                       IATDocument,

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.17 2004/08/17 16:59:42 tiran Exp $
+$Id: ATFolder.py,v 1.18 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -55,6 +55,7 @@ class ATFolder(ATCTOrderedFolder):
     typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
+    cmf_edit_kws   = ()
 
     __implements__ = ATCTOrderedFolder.__implements__, IATFolder
 
@@ -90,6 +91,7 @@ class ATBTreeFolder(ATCTBTreeFolder):
     TypeDescription= ''
     assocMimetypes = ()
     assocFileExt   = ()
+    cmf_edit_kws   = ()
 
     __implements__ = ATCTBTreeFolder.__implements__, IATBTreeFolder
 

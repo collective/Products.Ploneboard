@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.29 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATFile.py,v 1.30 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -61,6 +61,7 @@ class ATFile(ATCTFileContent):
     typeDescMsgId  = 'description_edit_file'
     assocMimetypes = ('application/*', 'audio/*', 'video/*', )
     assocFileExt   = ()
+    cmf_edit_kws   = ()
 
     __implements__ = ATCTFileContent.__implements__, IATFile
 

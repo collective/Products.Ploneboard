@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.13 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATNewsItem.py,v 1.14 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -57,6 +57,7 @@ class ATNewsItem(ATDocument):
     typeDescMsgId  = 'description_edit_news_item'
     assocMimetypes = ()
     assocFileExt   = ('news', )
+    cmf_edit_kws   = ATDocument.cmf_edit_kws
 
     __implements__ = ATDocument.__implements__, IATNewsItem
 

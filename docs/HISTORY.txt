@@ -4,6 +4,11 @@
  * Added ATContentTypes Site customization policy
    [tiran]
 
+ * Fixed [ 1041830 ] TypeError: cmf_edit() takes at least 3 non-keyword
+   arguments by changing the edit() implementation. A class var named
+   cmf_edit_kws was introduced to fix the issue.
+   [tiran]
+
 0.2.0-rc2 - 2004-10-06
 ======================
 

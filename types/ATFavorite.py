@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.15 2004/09/10 15:09:22 tiran Exp $
+$Id: ATFavorite.py,v 1.16 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -63,6 +63,7 @@ class ATFavorite(ATCTContent):
     typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ('fav', )
+    cmf_edit_kws   = ()
 
     __implements__ = ATCTContent.__implements__, IATFavorite
 

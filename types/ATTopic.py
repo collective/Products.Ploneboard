@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.26 2004/10/05 11:46:32 hoka Exp $
+$Id: ATTopic.py,v 1.27 2004/10/08 16:23:16 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -63,6 +63,7 @@ class ATTopic(ATCTFolder):
     typeDescMsgId  = 'description_edit_topic'
     assocMimetypes = ()
     assocFileExt   = ()
+    cmf_edit_kws   = ()
 
     filter_content_types  = 1
     allowed_content_types = ()

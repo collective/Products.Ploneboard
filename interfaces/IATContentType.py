@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.8 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: IATContentType.py,v 1.9 2004/10/08 16:23:15 tiran Exp $
 """
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -44,6 +44,12 @@ class IATContentType(Interface):
     assocFileExt = Attribute('''A tuple of file extensions that are associated
                                 with this type. Format: ('jpeg', 'png',)
                              ''')
+
+    cmf_edit_kws = Attribute('''List of keyword names.
+    
+    If one of this kw names is used with edit() then the cmf_edit method is
+    called.
+    ''')
 
     def getLayout(**kw):
         """Get the current layout or the default layout if the current one is None
