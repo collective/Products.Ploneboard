@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.5 2003/06/09 19:08:28 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.6 2003/07/09 01:30:13 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -33,6 +33,8 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 
 from InstalledProduct import InstalledProduct
 
+from IQuickInstaller import IQuickInstallerTool
+
 def addQuickInstallerTool(self,REQUEST=None):
     ''' '''
     qt=QuickInstallerTool()
@@ -44,6 +46,8 @@ def addQuickInstallerTool(self,REQUEST=None):
     
 class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
+    __implements__ = IQuickInstallerTool
+    
     meta_type = 'CMF QuickInstaller Tool'
     id='portal_quickinstaller'
     
@@ -115,7 +119,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         
         for r in pids:
             p=self._getOb(r,None)
-            res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError()})
+            res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden()})
  
         return res
         
@@ -150,12 +154,27 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
                     
         return res
+
     
     def isProductInstalled(self,productname):
         ''' checks wether a product is installed (by name) '''
         o=self._getOb(productname,None)
         return o and o.isInstalled()
-        
+
+
+    security.declareProtected(ManagePortal, 'notifyInstalled')
+    def notifyInstalled(self,p,locked=1,hidden=0,**kw):
+        ''' marks a product that has been installed without QuickInstaller
+         as installed '''
+
+        if p in self.objectIds():
+            p=getattr(self,p)
+            p.update(locked=locked, hidden=hidden, **kw)
+        else:
+            ip=InstalledProduct(p,locked=locked, hidden=hidden, **kw)
+            self._setObject(p,ip)
+
+            
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p):
         ''' installs a product by name '''
