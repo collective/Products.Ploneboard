@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.4 2003/05/24 17:22:14 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.5 2003/06/09 19:08:28 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -171,8 +171,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portal_actions=getToolByName(self,'portal_actions')
         portal_workflow=getToolByName(self,'portal_workflow')
         portal=getToolByName(self,'portal_url').getPortalObject()
-        leftslotsbefore=portal.left_slots
-        rightslotsbefore=portal.right_slots
+        leftslotsbefore=getattr(portal,'left_slots',[])
+        rightslotsbefore=getattr(portal,'right_slots',[])
         
 
         emid='install'+p
@@ -204,8 +204,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         actionsafter=portal_actions.objectIds()
         workflowsafter=portal_workflow.objectIds()
         portalobjectsafter=portal.objectIds()
-        leftslotsafter=portal.left_slots
-        rightslotsafter=portal.right_slots
+        leftslotsafter=getattr(portal,'left_slots',[])
+        rightslotsafter=getattr(portal,'right_slots',[])
         
         types=[t for t in typesafter if t not in typesbefore]
         skins=[s for s in skinsafter if s not in skinsbefore]
