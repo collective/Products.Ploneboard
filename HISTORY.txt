@@ -1,3 +1,7 @@
+V1.71
+
+  - move the viewlet selection drop down menu to the top-right
+
 V1.7
 
   - much faster: just use catalogBrain and remove global_defines at base_panel
