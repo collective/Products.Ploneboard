@@ -8,13 +8,14 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.6 2004/09/27 12:39:15 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.7 2004/09/27 15:22:30 ajung Exp $
 """
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Acquisition import ImplicitAcquisitionWrapper
 from Products.CMFCore.CMFCorePermissions import View
+from Products.Archetypes.Schema import ManagedSchema
 
 class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
@@ -33,12 +34,13 @@ class ParentManagedSchema:
         # Schema() seems to be called during the construction phase when there is
         # not acquisition context. So we return the default schema itself.
 
-        if not hasattr(self, 'aq_parent'): return self.schema
+        if not hasattr(self, 'aq_parent'): 
+            return ImplicitAcquisitionWrapper(ManagedSchema(self.schema.fields()), self)
 
         # If we're called by the generated methods we can not rely on
         # the id and need to check for portal_type
         if not self.aq_parent.atse_isSchemaRegistered(self.portal_type):
-            return self.schema
+            return ImplicitAcquisitionWrapper(ManagedSchema(self.schema.fields()), self)
 
         if not schema_id:
             schema_id = self.portal_type
