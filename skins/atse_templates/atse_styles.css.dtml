@@ -11,6 +11,11 @@ div.clear {
     clear: both;
 }
 
+a#atse_selected {
+    font-weight: bold;
+    font-size: 120%;
+}
+
 .portlet div#atse_fieldsets, 
 .portlet div#atse_fields, 
 .portlet div#atse_fieldeditor, 

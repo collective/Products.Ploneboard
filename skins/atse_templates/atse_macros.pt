@@ -137,7 +137,7 @@
         <div class="left">
            <a tal:content="string: ${set}" 
               tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${set};
-                             class python: test(set==fieldset, 'selected', '')"/>
+                             id python: test(set==fieldset, 'atse_selected', '')"/>
         </div>
         <div class="right">
             <a tal:attributes="href string:atse_schemataMoveLeft?name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
@@ -165,7 +165,7 @@
       <div  tal:repeat="field python: here.atse_getSchemata(fieldset).fields()">
         <div class="left">
           <a tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${fieldset}&field=${field/getName};
-                             class python: test(field.getName() == request.get('field'), 'selected', '')"
+                             id python: test(field.getName() == request.get('field'), 'atse_selected', '')"
               tal:content="string: ${field/getName}" />
         </div>
         <div class="right">
