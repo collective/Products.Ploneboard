@@ -204,7 +204,7 @@ class Photo(Image):
 
 
     security.declareProtected(CMFCorePermissions.View, 'get_exif')
-    def get_exif(self):
+    def getEXIF(self):
         """
 	Extracts the exif metadata from the image and returns
 	it as a hashtable
