@@ -29,7 +29,7 @@ Archetypes
 
 AT Content Types is tested with the following AT versions
 
- * AT CVS HEAD (aka 1.3) after 2004-04-20
+ * AT CVS HEAD (aka 1.3) after 2004-04-25
    
    Note: Please use the version of AT that is bundled with AT Content Types.
          It's the latest developer checkout.
@@ -67,8 +67,8 @@ AT Content Types requires the templates and icon of CMFPlone for viewing the
 types and AT Folder requires some code from PloneFolder, too. It should be easy
 to seperate the dependecies if needed.
 
-AT Content Types should work with Plone 2.0 but for better results update
-CMFPlone to the latest Plone-2_0-branch	cvs checkout.
+AT Content Types should work with Plone 2.0 but for better results use Plone
+2.0.1 or update CMFPlone to the latest Plone-2_0-branch	cvs version.
 
 
 =====================
@@ -105,16 +105,50 @@ Python Imaging Library (PIL)
 ----------------------------
 
 In order to enable the auto resizing feature of ATImage (Archetypes ImageField)
-you have to install PIL.
+you have to install PIL also known as python-imaging or Python Imaging Library.
+It's available under http://www.pythonware.com/products/pil/
 
+
+ExternalStorage
+---------------
+
+ExternalStorage (ES) is required to store images and files on the file system
+instead of storing them in the ZODB.
+NOTE FOR ZEO: You have to sync the clients file repositories manually (e.g. by 
+              using rsync)
 
 ============
 Installation
 ============
 
 Use the QuickInstaller to install AT Content Types. You should install
-Archetypes and PortalTransform before installin AT Content Types
+Archetypes and PortalTransform before installing AT Content Types.
 
+
+=======================
+Reconfiguration of Zope
+=======================
+
+You need to reconfigure Zope to make it play nice with Plone and AT Content
+Types.
+
+At first you need to set reST header level to 2. For Zope 2.7 change the 
+etc/zope.conf and adjust the environment section in the config file:
+
+<environment>
+    STX_DEFAULT_LEVEL 2
+</environment>
+
+For Zope 2.6 define a environment var. For a un*x bash script:
+
+export STX_DEFAULT_LEVEL=2
+
+For Windows:
+@set STXT_DEFAULT_LEVEL=2
+
+For Zope 2.7 you also must set the rest-input-encoding and rest-out-encoding
+to the same encoding you are using as site-encoding for Plone. I suggest using
+utf-8 everywhere.
 
 ========================
 Migration from CMF types
