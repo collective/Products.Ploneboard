@@ -4,6 +4,9 @@ AT Content Type development team
 Team members (in alphabetic order)
 ----------------------------------
 
+Leonardo Rochael Almeida:
+ * constrain types support
+
 Dominik Bartenstein:
 
 
@@ -16,7 +19,6 @@ Kai Bielenberg:
 Godefroid Chapelle:
  * ATTopic and criteria enhancements
 
-
 Christian Heimes:
  * maintainer
  * migration system
@@ -28,13 +30,12 @@ Christian Heimes:
 
 Jens Klein:
  * did some work on the forerunner model CMFPloneTypes (ex-maintainer)
- * restrained types support
+ * constrain types support
 
 Bill Schindler:
 
 
 Sylvain Thenault:
-
 
 Contributors (in alphabetic order)
 ----------------------------------

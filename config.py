@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.30 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: config.py,v 1.31 2004/08/17 16:19:58 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -77,6 +77,13 @@ TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 
+## use ConstrainedMixin?
+## if enabled you can constrain allowed types on an ATCT Folder
+ENABLE_CONSTRAIN_TYPES_MIXIN = True
+CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
+#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
+
 ## Document History view permission
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
@@ -103,7 +110,9 @@ GLOBALS = globals()
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
                  'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
                  'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE',
-                 'ATDOCUMENT_CONTENT_TYPE', )
+                 'ENABLE_CONSTRAIN_TYPES_MIXIN', 'CONSTRAIN_TYPES_MIXIN_PERMISSION',
+                 'ATDOCUMENT_CONTENT_TYPE',
+                 )
 
 ## using special plone 2 stuff?
 try:

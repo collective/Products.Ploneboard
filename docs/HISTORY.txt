@@ -44,6 +44,10 @@
 
  * Fixed an ugly bug in ATDocument which was screwing up references on copy.
    [tiran]
+
+ * Merged ConstrainTypesMixin from the branch into the HEAD. Thx to Leonardo
+   Rochael Almeida and Jens Werner Klein for their work.
+   [yenzens, rochael]
    
 0.2.0-rc1 - 2004-07-28
 

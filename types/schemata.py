@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.45 2004/08/13 13:21:24 tiran Exp $
+$Id: schemata.py,v 1.46 2004/08/17 16:20:00 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,6 +30,7 @@ from DateTime import DateTime
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.Permissions import ChangeEvents
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.ConstrainTypesMixin import ConstrainTypesMixinSchema
 
 from Products.validation.validators.SupplValidators import MaxSizeValidator
 
@@ -265,6 +266,10 @@ ATExtFileSchema['file'].storage = ExternalStorage(prefix='atct', archive=False)
 
 ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema
 ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
+
+if ENABLE_CONSTRAIN_TYPES_MIXIN:
+    ATFolderSchema      = ATFolderSchema + ConstrainTypesMixinSchema
+    ATBTreeFolderSchema = ATBTreeFolderSchema + ConstrainTypesMixinSchema
 
 ###
 # AT Content Type Image

@@ -21,7 +21,7 @@
 Copy customconfig.py.example to customconfig.py and change the values in the
 user options section below.
 
-$Id: customconfig.py.example,v 1.7 2004/08/13 13:59:55 rochael Exp $
+$Id: customconfig.py.example,v 1.8 2004/08/17 16:19:58 tiran Exp $
 """ 
 
 from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
@@ -66,6 +66,13 @@ ENABLE_TEMPLATE_MIXIN = False
 TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+
+## use ConstrainedMixin?
+## if enabled you can constrain allowed types on a ATCT Folder
+ENABLE_CONSTRAIN_TYPES_MIXIN = False
+CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
+#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 
 ## Document History view permission
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
