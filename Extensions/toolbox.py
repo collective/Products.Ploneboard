@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.16 2004/09/13 15:25:12 tiran Exp $
+$Id: toolbox.py,v 1.17 2004/10/04 05:56:39 tiran Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -35,7 +35,7 @@ from zLOG import LOG, ERROR
 
 from Products.Archetypes import fixAfterRenameType
 
-not_global_allow = ('Favorite', 'Large Plone Folder')
+not_global_allow = ('Large Plone Folder', )
 
 atct_klasses = (
     ATDocument.ATDocument,
