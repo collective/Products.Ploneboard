@@ -1,0 +1,77 @@
+============
+Requirements
+============
+
+Zope 2.7+, 2.6.2, 2.6.4
+-----------------------
+
+AT Content Types requires Zope 2.7.x or Zope 2.6.2/2.6.4 with a fixed Interface
+package. Get the file Implements.py from the Zope Corp. cvs server at
+http://cvs.zope.org/Zope/lib/python/Interface/?only_with_tag=Zope-2_6-branch and
+copy it to ZOPE_HOME/lib/python/Interface/. Without it some features may not
+work or even break silently!
+You shouldn't use 2.6.1 or 2.6.3 due some evil bugs. Zope 2.7 is recommanded 
+because of the ordered folder interface.
+
+
+Python 2.3.3 or 2.1.3
+---------------------
+
+AT Content Types should work with Python 2.1.3 (under Zope 2.6.x) and Python
+2.3.3 (under 2.7.x and 2.6.x). Python 2.3.3 is recommanded and the backward
+compatibility for Python 2.1.x may be dropped when AT and Plone requires
+Zope 2.7.x.
+
+
+Archetypes
+----------
+
+AT Content Types is tested with the following AT versions
+
+ * AT 1.2.5rc2 or newer
+ * AT 1.3.0a2 or newer
+ * AT CVS HEAD after 2004-03-08
+ * AT CS release-1_2 branch after 2004-03-08
+
+AT Content Types would work with AT 1.0.x when someone is willing to backport
+some fixes and changes from AT 1.2 or AT 1.3. That is action in actions is a
+TALES expression and ordered stuff.
+
+
+CMFPlone 2rc6 or newer
+----------------------
+
+AT Content Types requires the templates and icon of CMFPlone for viewing the
+types and AT Folder requires some code from PloneFolder, too. It should be easy
+to seperate the dependecies if needed.
+
+
+============
+Installation
+============
+
+Use the QuickInstaller to install AT Content Types. You should install
+Archetypes and PortalTransform before installin AT Content Types
+
+
+========================
+Migration from CMF types
+========================
+
+** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP **
+
+             YOU MUST (!) BACKUP YOUR ZODB BEFORE MIGRATING!
+
+** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP ** ** BACKUP **
+
+Migration may fail and it could destroy your data. So please backup your ZODB
+before migrating to AT Content Types.
+
+Create an ExternalMethod in the ZMI:
+
+Id:            migrateATCT
+Title: 
+Module Name:   ATContentTypes.migrateFromCMF
+Function Name: migrate
+
+Run it using the 'test' tab.
