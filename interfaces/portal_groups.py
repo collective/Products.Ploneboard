@@ -18,17 +18,17 @@ class portal_groups(Interface):
     Parallels the portal_membership interface of CMFCore"""
     id = Attribute('id','Must be set to "portal_groups')
 
-    def getGroupById(id):
+    def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
 
-    def listGroups():
+    def listGroups(self):
         """Returns a list of the available portal_groupdata-ish objects."""
 
-    def listGroupIds():
+    def listGroupIds(self):
         """Returns a list of the available groups' ids."""
 
-    def searchForGroups(REQUEST, **kw):    # maybe searchGroups()?
+    def searchForGroups(self, REQUEST, **kw):    # maybe searchGroups()?
         """Return a list of groups meeting certain conditions. """
         # arguments need to be better refined?
 

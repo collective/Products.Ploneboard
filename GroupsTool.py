@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.7 2003/07/31 01:06:20 jccooper Exp $
+$Id: GroupsTool.py,v 1.8 2003/08/01 18:54:34 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -60,13 +60,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
-        print "getGroupById: " + id
 	if id==None:
 		return None
         prefix = self.acl_users.getGroupPrefix()
         g = self.acl_users.getGroup(id, prefixed=id.startswith(prefix))
         if g is not None:
-	    print "getGroupById: wrapping"
             g = self.wrapGroup(g)
         return g
 
@@ -198,24 +196,19 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
-        print "createGrouparea: making grouparea"
 	parent = self.aq_inner.aq_parent
         workspaces = self.getGroupWorkspacesFolder()
         pt = getToolByName( self, 'portal_types' )
 
         if id and self.getGroupWorkspacesCreationFlag():
-        	print "createGrouparea: okay to make"
 	        if workspaces is None:
         		# add GroupWorkspaces folder
-                        print "createGrouparea: add GroupWorkspaces folder"
 			parent.invokeFactory("Folder", self.getGroupWorkspacesFolderId())
 
         	if workspaces is not None and not hasattr(workspaces, id):
                 	# add workspace to GroupWorkspaces folder
-                        print "createGrouparea: add workspace to GroupWorkspaces folder"
                         workspace =self.getGroupWorkspacesFolder()
                         workspace.invokeFactory(self.getGroupWorkspaceType(), id)
-	print "createGrouparea: done"
 
     def getGroupWorkspaceType(self):
 	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
@@ -259,7 +252,6 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         tool to retrieve and store member data independently of
         the user object.
         '''
-        print "wrapGroup: start"
         b = getattr(g, 'aq_base', None)
         if b is None:
             # u isn't wrapped at all.  Wrap it in self.acl_users.
@@ -267,10 +259,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             g = g.__of__(self.acl_users)
         if (b is nobody and not wrap_anon) or hasattr(b, 'getMemberId'):
             # This user is either not recognized by acl_users or it is
-            # already registered with something that implements the 
+            # already registered with something that implements the
             # member data tool at least partially.
             return g
-        
+
         parent = self.aq_inner.aq_parent
         base = getattr(parent, 'aq_base', None)
         if hasattr(base, 'portal_groupdata'):
@@ -284,13 +276,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             # Get portal_groupdata to do the wrapping.
             gd = getToolByName(parent, 'portal_groupdata')
             try:
-            	print "wrapGroup: wrapping group"
                 portal_group = gd.wrapGroup(g)
 
                 # Check for the member area creation flag and
                 # take appropriate (non-) action
                 if self.getGroupWorkspacesCreationFlag():
-			print "wrapGroup: creating grouparea"
                 	self.createGrouparea(portal_group.getGroupName())
 
                 return portal_group
