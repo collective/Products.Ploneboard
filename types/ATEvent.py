@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.18 2004/06/20 18:45:55 tiran Exp $
+$Id: ATEvent.py,v 1.19 2004/06/27 16:38:58 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,7 @@ __docformat__ = 'restructuredtext'
 from Products.ATContentTypes.config import *
 
 from types import StringType
+from DateTime import DateTime
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
@@ -150,10 +151,23 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
                     contactEmail=contact_email, contactPhone=contact_phone,
                     eventUrl=event_url)
 
-    #security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'update')
-    #def update(self, startDate=None, endDate=None, **kwargs):
-    #    if endDate < startDate:
-    #        endDate = startDate
-    #     ATCTContent.update(self, endDate=endDate, startDate=startDate, **kwargs)
+    security.declareProtected(CMFCorePermissions.View, 'post_validate')
+    def post_validate(self, REQUEST=None, errors=None):
+        """Validates upload file and id
+        """
+        rstartDate = REQUEST.get('startDate', None)
+        rendDate = REQUEST.get('endDate', None)
+
+        if rendDate:
+            end = DateTime(rendDate)
+        else:
+            end = self.end()
+        if rstartDate:
+            start = DateTime(rstartDate)
+        else:
+            start = self.start()
+            
+        if start > end:
+            errors['endDate'] = "End date must be after start date"
 
 registerType(ATEvent, PROJECTNAME)
