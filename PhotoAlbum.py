@@ -1,17 +1,11 @@
+
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.CMFCorePermissions import AddPortalFolders, AddPortalContent
-from Products.CMFDefault.SkinnedFolder import SkinnedFolder
 from AccessControl import ClassSecurityInfo
-from Products.CMFCore import CMFCorePermissions
 from Globals import InitializeClass
-from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base, BTreeFolder2
-import OFS.Image
-from cStringIO import StringIO
-import sys
-from zLOG import LOG, ERROR, WARNING
-from Acquisition import aq_parent, aq_base, aq_self
-from zExceptions import Unauthorized
-from AccessControl import getSecurityManager
+
+from Products.CMFDefault.SkinnedFolder import SkinnedFolder
+from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
+from Acquisition import aq_base
 
 factory_type_information =  { 'id'             : 'Photo Album',
                               'meta_type'      : 'Photo Album',
