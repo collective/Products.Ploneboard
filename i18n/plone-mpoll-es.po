@@ -1,0 +1,38 @@
+# Gettext Message File for MPoll
+# Your Name <your@email>, Year
+msgid ""
+"Project-Id-Version: MPoll 0.3\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Philipp von Weitershausen <philikon@philikon.de>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: es\n"
+"Language-name: Spanish\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: mpoll\n"
+
+msgid "MPoll"
+msgstr "Encuesta"
+
+msgid "An error occured while processing your vote."
+msgstr "Ocurrió un error procesando su voto."
+
+msgid "Your vote has been registered."
+msgstr "Se ha registrado su voto."
+
+msgid "You have already voted in this poll."
+msgstr "Usted ya ha votado en está encuesta."
+
+msgid "MPoll has been created."
+msgstr "Se ha creado la encuesta."
+
+msgid "Your changes have been saved."
+msgstr "Se han guaradado sus cambios."
+
+msgid "This poll is closed."
+msgstr "La encuesta está cerrada."
+

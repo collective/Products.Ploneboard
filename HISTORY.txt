@@ -1,4 +1,7 @@
 
+  - Spanish (es) translation contributed by Philipp von
+    Weitershausen <philikon@philikon.de>
+
 0.2
 
   - Added Open/Close checkbox to open/close poll for voting.
