@@ -655,7 +655,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/18 13:53:15 $"[7:-2]
+        rev_date = "$Date: 2003/12/22 10:01:19 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -685,7 +685,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         
 
     security.declareProtected(Permissions.manage_users, "changeOrCreateUsers")
-    def changeOrCreateUsers(self, users = [], groups = [], roles = [], new_users = [], REQUEST = {}, ):
+    def changeOrCreateUsers(self, users = [], groups = [], roles = [], new_users = [], default_password = '', REQUEST = {}, ):
         """
         changeOrCreateUsers => affect roles & groups to users and/or create new users
         
@@ -726,10 +726,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if name in self.getUserNames():
                 continue
             
-            # Generate a random password
-            password = ""
-            for x in range(0, 8):  # Password will be 8 chars long
-                password = "%s%s" % (password, random.choice("ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"), )
+            # Use default password or generate a random one
+            if default_password:
+                password = default_password
+            else:
+                password = ""
+                for x in range(0, 8):  # Password will be 8 chars long
+                    password = "%s%s" % (password, random.choice("ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"), )
             self._doAddUser(name, password, add_roles, (), add_groups, )
 
             # Store the newly created password

@@ -87,10 +87,40 @@
               <!-- New user -->
               <tr>
                 <td><div class="list-item">&nbsp;</div></td>
-                <td><div class="list-item">Create users:<br /><textarea name="new_users:lines" cols="20" rows="3"></textarea></div></td>
+                <td>
+                  <div class="list-item">Create users:</div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="list-item">&nbsp;</div></td>
+                <td>
+                  <div class="list-item">
+                    <textarea name="new_users:lines" cols="20" rows="3"></textarea>
+                  </div>
+                </td>
+                <td colspan="4">
+                  <div class="list-item" valign="top">
+                    Newly created users will be affected groups and roles according to the table below.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="list-item">&nbsp;</div></td>
+                <td>
+                  <div class="list-item">Default password:</div>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="list-item">&nbsp;</div></td>
+                <td>
+                  <div class="list-item">
+                      <input name="default_password:string" size="20" />
+                  </div>
+                </td>
                 <td colspan="4">
                   <div class="list-item">
-                    Newly created users will be affected groups and roles according to the table below.
+                    Fill in this field to specify a default password for new users, 
+                    or leave it empty to let GRUF generate random ones.
                   </div>
                 </td>
               </tr>
