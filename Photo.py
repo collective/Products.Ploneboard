@@ -250,7 +250,7 @@ class Photo(Image):
 
         try:
             if isPilAvailable:
-                img = PIL.Image.open(StringIO(self.data.data))
+                img = PIL.Image.open(StringIO(str(self.data)))
                 fmt = img.format
                 # Resize photo
                 img.thumbnail((width, height))
@@ -293,7 +293,7 @@ class Photo(Image):
         import EXIF
 
         try:
-            data = EXIF.process_file(StringIO(self.data.data))
+            data = EXIF.process_file(StringIO(str(self.data)))
         except:
             data = {}
         if not data:
