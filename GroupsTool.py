@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.11 2003/09/23 19:45:42 jccooper Exp $
+$Id: GroupsTool.py,v 1.12 2003/10/03 20:23:40 bmh Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -19,7 +19,9 @@ from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import AccessContentsInformation
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
+from GroupsToolPermissions import AddGroups
 from GroupsToolPermissions import ManageGroups
+from GroupsToolPermissions import DeleteGroups
 from GroupsToolPermissions import ViewGroups
 from GroupsToolPermissions import SetGroupOwnership
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
@@ -177,7 +179,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         return res
 
-    security.declareProtected(ManageGroups, 'addGroup')
+    security.declareProtected(AddGroups, 'addGroup')
     def addGroup(self, id, password, roles, domains):
         """Create a group, and a group workspace if the toggle is on, with the supplied id, roles, and domains.
 
@@ -194,7 +196,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         Passwords for groups seem to be currently irrelevant in GRUF."""
         self.acl_users.Groups.acl_users.userFolderEditUser(id, password, roles, permissions)
 
-    security.declareProtected(ManageGroups, 'removeGroups')
+    security.declareProtected(DeleteGroups, 'removeGroups')
     def removeGroups(self, ids, keep_workspaces=0):
         """Remove the group in the provided list (if possible).
 
@@ -269,7 +271,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         upon the creation of the group (if one doesn't exist already). """
         return self.groupWorkspacesCreationFlag
 
-    security.declareProtected(ManageGroups, 'createGrouparea')
+    security.declareProtected(AddGroups, 'createGrouparea')
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
@@ -300,7 +302,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                         workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
                         space = self.getGroupareaFolder(id)
                         space.setTitle("%s workspace" % id)
-                        space.setDescription("Container for objects shared by the %s group" % id)
+                        space.setDescription("Container for objects shared by this group")
                         space.manage_delLocalRoles(space.users_with_local_role('Owner'))
 			self.setGroupOwnership(self.getGroupById(id), space)
 
