@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.12 2004/08/09 07:44:09 tiran Exp $
+$Id: ATCTMigrator.py,v 1.13 2004/09/15 11:09:51 tesdal Exp $
 """
 
 from common import *
@@ -29,6 +29,7 @@ from Acquisition import aq_parent
 
 from Products.ATContentTypes.types import ATDocument, ATEvent, \
     ATFavorite, ATFile, ATFolder, ATImage, ATLink, ATNewsItem
+from Products.ATContentTypes.types.ATContentType import translateMimetypeAlias
 from Products.ATContentTypes.Extensions.toolbox import _fixLargePloneFolder
 
 ##def isPloneFolder(obj, ob=None):
@@ -57,8 +58,8 @@ class DocumentMigrator(CMFItemMigrator):
 
     def custom(self):
         oldFormat = self.old.text_format
-        # ATDocument does automagically conversion :]
-        self.new.setContentType(oldFormat)
+        # Need to convert between old mimetype and new
+        self.new.setContentType(translateMimetypeAlias(oldFormat))
 
 class EventMigrator(CMFItemMigrator):
     fromType = ATEvent.ATEvent.newTypeFor[0]
