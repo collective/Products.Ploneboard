@@ -1,0 +1,63 @@
+# Gettext Message File for CMFPhoto.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone 1.0\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: 2004-02-15 18:06+0200\n"
+"Last-Translator: Vladimir Iliev <vlado@vintech.bg>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: bg\n"
+"Language-name: Bulgarian\n"
+"Preferred-encodings: utf-8 cp1251\n"
+"Domain: mpoll\n"
+
+msgid "box_poll"
+msgstr "Анкета"
+
+msgid "Vote"
+msgstr "Гласуване"
+
+msgid "label_view_results"
+msgstr "Резултати"
+
+msgid "label_poll_results"
+msgstr "Текущи резултати от тази анкета."
+
+msgid "label_poll_is_closed"
+msgstr "Тази анкета е затворена за гласуване."
+
+msgid "label_total_votes"
+msgstr "Общо гласове: ${total}"
+
+msgid "description_disclaimer"
+msgstr "The poll is not scientific and reflects only the opinions of those users who chose to participate. The results should not be considered representative of either users opinions in general, or the public as a whole.Тази анкета не е с научна цел и отразява само мненията на избралите да участват потребители. Резултатите не трябва да бъдат разглеждани представяни "
+
+msgid "label_question"
+msgstr "Въпрос"
+
+msgid "help_question"
+msgstr "Въпросът за тази анкета."
+
+msgid "label_answers"
+msgstr "Отговори"
+
+msgid "help_answers"
+msgstr "Списък с възможните отговори. По един отговор на ред."
+
+msgid "label_open"
+msgstr "Отваряне"
+
+msgid "help_open"
+msgstr "Изберете тази възможност за да отворите анкетата за гласуване от потребителите. "
+
+msgid "do_vote"
+msgstr "Гласуване"
+
+msgid "all_mpolls"
+msgstr "Всички анкети"
+
