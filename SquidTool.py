@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.3 2004/09/20 05:49:48 panjunyong Exp $ (Author: $Author: panjunyong $)
+# $Id: SquidTool.py,v 1.4 2004/09/22 13:33:38 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 # make sockets non blocking
@@ -101,7 +101,7 @@ class SquidTool(UniqueObject, SimpleItem):
             #       if you are not allowed to PURGE status is 403
             #       see README.txt for details how to setup squid to allow PURGE
 
-            if REQUEST: REQUEST.RESPONSE.write('%s\t%s%s\t%s\n' % (status, url, path, xsquiderror))
+            if REQUEST: REQUEST.RESPONSE.write('%s\t%s\t%s\n' % (status, url, xsquiderror))
 
         return results
 
