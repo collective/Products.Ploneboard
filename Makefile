@@ -4,9 +4,9 @@ CVS_TAG := v$(shell sed "s/\./_/g" version.txt)
 PRODUCT := $(shell cat product.txt)
 PRODUCT_NAME := ${PRODUCT}
 MODULE := ${PRODUCT}
-CVS_URL := :ext:$(USERNAME)@cvs.sourceforge.net:/cvsroot/collective
+CVS_URL := :ext:$(USER)@cvs.sourceforge.net:/cvsroot/collective
 PYTHON := $(shell which python)
-SCP_SERVER := $(USERNAME)@shell.sourceforge.net:/home/groups/i/in/ingeniweb/htdocs/Products
+SCP_SERVER := $(USER)@shell.sourceforge.net:/home/groups/i/in/ingeniweb/htdocs/Products
 
 default:
 	echo "Nothing to do by default."
