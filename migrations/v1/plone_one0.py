@@ -72,6 +72,11 @@ def setupMembership(portal):
     # wire up personalize action to new machinery
     pm = getToolByName(portal, 'portal_membership')
     actions = pm._cloneActions()
+    res = []
+    for a in actions:
+        res.append( a.clone() )
+    pm._actions = tuple(res)
+    actions = res
     # plone_setup missing in old CMFMember
     setupLink = 1
     for action in actions:
