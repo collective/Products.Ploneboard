@@ -11,6 +11,11 @@
 if not id:
     id = context.getId()
 
+if portletsPos != 'none' and id == 'index_html':
+    # I found portlet doesn't work when id is 'index_html', strange.
+    return state.set(status='failure',\
+           portal_status_message="Short ID can't be index_html when set to left/right column.")
+
 old_id = context.getId()
 folder = context.aq_parent
 oldPortletPos = context.getPortletsPos()

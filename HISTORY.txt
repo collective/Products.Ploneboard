@@ -1,3 +1,8 @@
+V1.8.3
+
+  - add new global varible to viewlet: contentpanels, 
+    where the panel belongs. 
+
 V1.8.2
 
   - fix bug: can't select non-folderish content

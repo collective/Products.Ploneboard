@@ -16,7 +16,11 @@
         global ifacetool nocall:portal/plone_interface | nothing;
         global member mtool/getAuthenticatedMember;
         global isAnon mtool/isAnonymousUser;
-        global checkPermission nocall:mtool/checkPermission;" />
+        global checkPermission nocall:mtool/checkPermission;
+        global Iterator python:modules['Products.CMFPlone'].IndexIterator;
+        global tabindex python:Iterator(pos=80000);
+        global contentpanels nocall:options/contentpanels; 
+        "/>
 
     <div class="portlet-wrap" 
          tal:attributes="class string:viewlet ${options/panelSkin};
