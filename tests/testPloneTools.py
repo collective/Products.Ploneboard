@@ -129,19 +129,46 @@ class TestGroupsTool(GroupTestCase, testInterface.TestInterface):
 
     def test_searchForGroups(self, ):    # maybe searchGroups()?
         """Return a list of groups meeting certain conditions. """
-        # arguments need to be better refined?
+##        grps = searchForGroups(name = "toto")
 
     def test_addGroup(self, ):
         """Create a group with the supplied id, roles, and domains.
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
+        # Create a sample group
+        self.groups.addGroup("grptest1",)
+        self.failUnless("grptest1" in self.groups.listGroupIds())
+
+        # Re-create that group to ensure it's forbidden
+        self.failUnlessRaises(ValueError, self.groups.addGroup, "grptest1")
+
+        # Create group with additional roles, groups and properties (if possible)
+        self.groups.addGroup("grptest2", ["Reviewer", ], ["grptest1", ], description = "Sample group")
+        g = self.groups.getGroupById("grptest2")
+        g1 = self.groups.getGroupById("grptest1")
+        self.failUnlessEqual(g.getProperty("description"), "Sample group")
+        self.failUnless("grptest2" in g1.getGroupMemberIds(), g1.getGroupMemberIds(), )
+        self.failUnless(self.gruf.getGroupByName("grptest2").has_role("Reviewer"))
 
     def test_editGroup(self, ):
         """Edit the given group with the supplied password, roles, and domains.
 
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
+        # Edit a group with additional roles, groups and properties (if possible)
+        self.groups.addGroup("grptest1",)
+        self.groups.addGroup("grptest2",)
+        self.groups.editGroup("grptest2", ["Reviewer", ], ["grptest1", ], description = "Sample group")
+        g = self.groups.getGroupById("grptest2")
+        g1 = self.groups.getGroupById("grptest1")
+        self.failUnlessEqual(g.getProperty("description"), "Sample group")
+        self.failUnless("group_grptest2" in g1.getGroup().getMemberIds(), g1.getGroup().getMemberIds(), )
+        self.failUnless("grptest2" in g1.getGroupMemberIds(), g1.getGroupMemberIds(), )
+        self.failUnless(self.gruf.getGroupByName("grptest2").has_role("Reviewer"))
+
+        # Try to edit an invalid group
+        self.failUnlessRaises(ValueError, self.groups.editGroup, "grptest_toto")
 
     def test_removeGroups(self, ):
         """Remove the group in the provided list (if possible).
@@ -279,6 +306,10 @@ class TestGroupData(GroupTestCase, testInterface.TestInterface):
     def test_getGroupId(self,):
         g1 = self.groups.getGroupById("g1")
         self.failUnlessEqual(g1.getGroupId(), "g1")
+
+    def test_getMemberId(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(g1.getMemberId(), "g1")
 
     def test_getGroupName(self,):
         g1 = self.groups.getGroupById("g1")

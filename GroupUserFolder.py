@@ -159,8 +159,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         So, there might be a collision between a user name and a group name.
         [NOTA: This method is time-expensive !]
         """
-        if __include_users__:
-            LogCallStack(LOG_DEBUG, "This call can be VERY expensive!")
+##        if __include_users__:
+##            LogCallStack(LOG_DEBUG, "This call can be VERY expensive!")
         names = []
         ldap_sources = []
 
@@ -481,7 +481,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def userFolderEditGroup(self, name, roles, groups = (), **kw):
         """API method for changing group object attributes.
         """
-        return self._doChangeGroup(name, roles, groups = (), **kw)
+        return self._doChangeGroup(name, roles, groups = groups, **kw)
 
     security.declareProtected(Permissions.manage_users, "userFolderDelGroups")
     def userFolderDelGroups(self, names):
@@ -1100,6 +1100,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Change groups affectation
         cur_groups = self.getGroups()
         given_roles = tuple(grp.getRoles()) + tuple(roles)
+        Log(LOG_DEBUG, name, groups, cur_groups, given_roles)
         for group in groups:
             if not group.startswith(GROUP_PREFIX, ):
                 group = "%s%s" % (GROUP_PREFIX, group, )
@@ -1191,7 +1192,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/08 08:34:24 $"[7:-2]
+        rev_date = "$Date: 2004/06/08 10:26:03 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

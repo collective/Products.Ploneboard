@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.27 2004/06/07 14:10:06 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.28 2004/06/08 10:26:03 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -138,7 +138,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 ##        return self.acl_users.getPureUsers()
 
     security.declareProtected(View, 'searchForGroups')
-    def searchForGroups(self, REQUEST, **kw):
+    def searchForGroups(self, REQUEST = {}, **kw):
         """Return a list of groups meeting certain conditions. """
         # arguments need to be better refined?
         if REQUEST:
@@ -202,8 +202,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups ARE irrelevant in GRUF."""
+        if id in self.listGroupIds():
+            raise ValueError, "Group '%s' already exists." % (id, )
         self.acl_users.userFolderAddGroup(id, roles = roles, groups = groups )
         self.createGrouparea(id)
+        self.getGroupById(id).setProperties(**kw)
 
     security.declareProtected(ManageGroups, 'editGroup')
     def editGroup(self, id, roles = [], groups = [], *args, **kw):
@@ -212,6 +215,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
         self.acl_users.userFolderEditGroup(id, roles = roles, groups = groups, )
+        self.getGroupById(id).setProperties(**kw)
 
     security.declareProtected(DeleteGroups, 'removeGroups')
     def removeGroups(self, ids, keep_workspaces=0):

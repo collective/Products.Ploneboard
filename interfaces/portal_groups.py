@@ -44,17 +44,18 @@ class portal_groups(Interface):
         """Return a list of groups meeting certain conditions. """
         # arguments need to be better refined?
 
-    def addGroup(id, roles = [], groups = []):
+    def addGroup(id, roles = [], groups = [], **kw):
         """Create a group with the supplied id, roles, and groups.
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
 
-    def editGroup(id, roles = [], groups = []):
+    def editGroup(id, roles = [], groups = [], **kw):
         """Edit the given group with the supplied roles.
 
         Underlying user folder must support editing users via the usual Zope API.
-        Passwords for groups seem to be currently irrelevant in GRUF."""
+        Passwords for groups seem to be currently irrelevant in GRUF.
+        One can supply additional named parameters to set group properties."""
 
     def removeGroups(ids, keep_workspaces=0):
         """Remove the group in the provided list (if possible).

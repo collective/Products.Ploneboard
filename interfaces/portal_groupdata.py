@@ -40,6 +40,10 @@ class GroupData(Interface):
     def getGroupId():
         """ Return the string id of this group, WITHOUT group prefix."""
 
+    def getMemberId():
+        """This exists only for a basic user/group API compatibility
+        """
+
     def getGroupName():
         """ Return the name of the group."""
 

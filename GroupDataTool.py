@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.17 2004/06/07 14:10:06 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.18 2004/06/08 10:26:03 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -327,6 +327,12 @@ class GroupData (SimpleItem):
         Python, to get the user from the user's UserDatabase.
         Within Plone, all group ids are UNPREFIXED."""
         return self.getGroup().getId(unprefixed = 1)
+
+    security.declarePublic("getMemberId")
+    def getMemberId(self,):
+        """This exists only for a basic user/group API compatibility
+        """
+        return self.getGroupId()
 
     security.declarePublic('getRoles')
     def getRoles(self):

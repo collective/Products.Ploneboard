@@ -386,9 +386,22 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.gruf.userFolderEditGroup(
             name = "created_group",
             roles = ["r1", ],
-            groups = ["g1", ],
+            groups = ["group_g1", ],
             )
         self.compareRoles(None, "created_group", ['r1',], )
+        self.failUnless(
+            "g1" in self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            )
+        self.gruf.userFolderEditGroup(
+            name = "created_group",
+            roles = ["r1", ],
+            groups = ["g2", ],
+            )
+        self.failUnless(
+            "g2" in self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            )
 
     def test_userFolderDelGroups(self):
         self.gruf.userFolderAddGroup(
