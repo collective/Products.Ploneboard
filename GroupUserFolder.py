@@ -1297,7 +1297,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/08/04 15:36:49 $"[7:-2]
+        rev_date = "$Date: 2004/08/31 08:11:51 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2187,13 +2187,20 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         listUserSources(self, ) => Return a list of userfolder objects
         Only return VALID (ie containing an acl_users) user sources if all is None
         XXX HAS TO BE OPTIMIZED VERY MUCH!
+        We add a check in debug mode to ensure that invalid sources won't be added
+        to the list.
         """
         ret = []
-        for src in self.objectValues(['GRUFUsers']):
-            if 'acl_users' in src.objectIds():
-                ret.append(src.acl_users)                       # XXX possible security hole ?
-                                                                # we cannot use restrictedTraverse here because
-                                                                # of infinite recursion issues.
+        if DEBUG_MODE:
+            for src in self.objectValues(['GRUFUsers']):
+                if 'acl_users' in src.objectIds():
+                    if getattr(aq_base(src.acl_users), 'authenticate', None):   # Additional check in debug mode
+                        ret.append(src.acl_users)                   # we cannot use restrictedTraverse here because
+                                                                    # of infinite recursion issues.
+        else:
+            for src in self.objectValues(['GRUFUsers']):
+                if 'acl_users' in src.objectIds():
+                    ret.append(src.acl_users)                   # we cannot use restrictedTraverse here because
         ret.sort(lambda x,y: cmp(x.aq_parent.id, y.aq_parent.id))    # XXX speed improvements to do there
         return ret
 

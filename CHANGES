@@ -1,3 +1,9 @@
+v3_1 - 
+
+  * Group-to-role mapping now works for LDAPGroupFolder
+
+  * Debug mode now allows broken source not to be checken against
+
 v3_0 - 20040623
 
   * Minor interface changes

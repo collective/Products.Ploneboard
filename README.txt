@@ -141,12 +141,20 @@ GRUF AND LDAPUserFolder
 
   So... the next thing to do is to wrap user objects, now ! :-)
 
-
 BUGS
 
   There is a bug using GRUF with Zope 2.5 and Plone 1.0Beta3 : when trying to join the plone site
   as a new user, there is a Zope error "Unable to unpickle object"... I don't know how to fix that now.
   With Zope 2.6 there is no such bug.
+
+DEBUG
+
+  If you put a file named 'debug.txt' in your GRUF's product directory, it will switch the product in
+  debug mode next time you restart Zope. This is the common behaviour for all Ingeniweb products.
+  Debug mode is normally just a way of printing more things on the console. But, with GRUF, debug
+  mode (since 3.1 version) enables a basic user source integrity check. If you've got a broken user 
+  folder product on your hard drive that you use as a source with GRUF, it will allow you to unlock
+  the situation.
 
 LICENCE
 

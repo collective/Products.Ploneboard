@@ -12,8 +12,10 @@ import os
 import Log
 if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/debug.txt'):
     Log.LOG_LEVEL = Log.LOG_DEBUG
+    DEBUG_MODE = 1
 else:
     Log.LOG_LEVEL = Log.LOG_NOTICE
+    DEBUG_MODE = 0
 
 from Log import *
 Log = Log
