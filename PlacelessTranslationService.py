@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.12 2004/01/28 08:53:05 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.13 2004/01/28 13:41:31 tiran Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -103,11 +103,24 @@ class PTSWrapper:
 
     def translate(self, domain, msgid, mapping=None, context=None,
                   target_language=None, default=None):
-        # get the real service and call its translate method
-        # return default if service couldnt be retrieved
+        """translate a message using the default encoding
+        
+        get the real service and call its translate method
+        return default if service couldnt be retrieved
+        """
         service = self.load(context)
         if not service: return default
         return service.translate(domain, msgid, mapping, context, target_language, default)
+
+    def utranslate(self, domain, msgid, mapping=None, context=None,
+                  target_language=None, default=None):
+        """translate a message using unicode
+        
+        see translate()
+        """
+        service = self.load(context)
+        if not service: return default
+        return service.utranslate(domain, msgid, mapping, context, target_language, default)
 
     def __repr__(self):
         """ return a string representation """
@@ -276,6 +289,13 @@ class PlacelessTranslationService(Folder):
             l = [k[0] for k in catalogRegistry.keys() if k[1] == domain]
         l.sort()
         return l
+
+    def utranslate(self, domain, msgid, mapping=None, context=None,
+                  target_language=None, default=None):
+        """translate() using unicode
+        """
+        self.translate(domain, msgid, mapping, context,
+                  target_language, default, as_unicode=True):
 
     def translate(self, domain, msgid, mapping=None, context=None,
                   target_language=None, default=None, as_unicode=False):
