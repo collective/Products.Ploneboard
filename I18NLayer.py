@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.6 2003/08/12 20:28:43 longsleep Exp $
+$Id: I18NLayer.py,v 1.7 2003/08/12 20:51:19 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.6 $"
+__version__ = "$Revision: 1.7 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -76,7 +76,7 @@ class I18NLayer( BaseFolder ):
         'name'          : 'Language Listing',
         'action'        : 'i18nlayer_languages_form',
         'permissions'   : (CMFCorePermissions.AddPortalContent, CMFCorePermissions.ModifyPortalContent,),
-		'visible'       : 1
+        'visible'       : 1
         },{
         'id': 'defaultfallback',
         'name'          : 'Default Fallback Page',
@@ -87,13 +87,13 @@ class I18NLayer( BaseFolder ):
 
     security = ClassSecurityInfo()
 
-    # all stuff is public but not the protected
+    # all stuff is public
     security.declareObjectPublic()
 
     
     security.declarePrivate('retrieveContentLayer')
     def retrieveContentLayer(self, REQUEST=None, verifypermission=1):
-        """ """
+        """ returns the contentlayer helper instance """
         # get request
         if not REQUEST:
             try: REQUEST=self.REQUEST
@@ -104,47 +104,50 @@ class I18NLayer( BaseFolder ):
 
     security.declarePrivate('retrieveLanguageContentUnprotected')
     def retrieveLanguageContentUnprotected(self):
-        """ """
+        """ provides a method to get the requested language object
+            without permission checks """
         return self.retrieveContentLayer(None,verifypermission=0).getObject(verifypermission=0)
 
 
     security.declarePublic('retrieveLanguageContent')
     def retrieveLanguageContent(self, REQUEST=None):
-        """ """
+        """ public method to get the requested language object
+            including permission checks """
         return self.retrieveContentLayer(REQUEST).getObject()
 
 
     security.declarePublic('retrieveI18NContentLayerOb')
     def retrieveI18NContentLayerOb(self, REQUEST=None):
-        """ """
+        """ helper to get the i18nlayer object easily """
         return self
 
 
     security.declarePublic('retrieveI18NContentLayerURL')
     def retrieveI18NContentLayerURL(self, REQUEST=None):
-        """ """
+        """ get the i18nlayers url easily """
         return self.absolute_url()
 
 
     security.declarePublic('retrieveFilteredLanguages')
     def retrieveFilteredLanguages(self, REQUEST=None):
-        """ """
+        """ returns a mapping of the filtered languages """
         return self.retrieveContentLayer(REQUEST).getFilteredLanguageMap()
 
 
     security.declarePublic('retrieveExistingLanguages')
     def retrieveExistingLanguages(self, REQUEST=None):
-        """ """
+        """ returns a list of existing languages """
         return self.retrieveExistingLanguages()
 
 
     security.declarePublic('retrieveAcceptLanguages')
     def retrieveAcceptLanguages(self, REQUEST=None):
-        """ """
+        """ returns a list of acceptable languages """
         return self.retrieveContentLayer(REQUEST).getLanguagesFromTranslationService()
 
 
     def _checkId(self, id, allow_dup=0):
+        # we only allow valid languages as id
         ObjectManager._checkId(self, id, allow_dup)
         if not CheckValidity(None, None).check(id):
             raise 'Bad Request', ( 'The id "%s" is not allowed.' % id)
@@ -178,9 +181,9 @@ class I18NLayer( BaseFolder ):
 
     security.declarePublic('__call__')
     def __call__(self, *args, **kw):
-        '''
+        """
         Invokes the default view
-        '''
+        """
         # NOTE: returns view of an available object
         #       if none is available returns language sheet depended on permission
         #       of the current user on the layer
@@ -202,9 +205,9 @@ class I18NLayer( BaseFolder ):
     view = __call__
 
     def index_html(self, REQUEST, RESPONSE):
-        '''
+        """
         return content if subobject has index_html method
-        '''
+        """
         # NOTE: this implies for images and files which are returned directly when
         #       called with index_html.
         # NOTE: files download method is deprecated and not supported
@@ -224,9 +227,9 @@ class I18NLayer( BaseFolder ):
  
     security.declarePublic('allowedContentTypeNames')
     def allowedContentTypeNames(self):
-        '''
+        """
         returns a tuple with portal types current user can construct inside us
-        '''
+        """
         allowed=self.allowedContentTypes()
 
         portal_types=getToolByName(self, 'portal_types')
@@ -285,21 +288,25 @@ class I18NLayer( BaseFolder ):
 
     security.declarePublic('listFolderContents')
     def listFolderContents(self, spec=None, contentFilter=None):
-        """ """
+        """ map containers helper method
+            we return the language objects contents if its folderish 
+        """
         try: return self.mapCore('listFolderContents', default=(), spec=spec, contentFilter=contentFilter)
         except: return I18NLayer.inheritedAttribute('listFolderContents')(self, spec=spec, contentFilter=contentFilter)
 
 
     security.declarePublic('contentValues')
     def contentValues(self, spec=None, filter=None):
-        """ """
+        """ map containers helper method 
+            we return the language objects contents if its folderish
+        """
         try: return self.mapCore('contentValues', default=(), spec=spec, filter=filter)
         except: return I18NLayer.inheritedAttribute('contentValues')(self, spec=spec, filter=filter)
 
 
     security.declarePublic('title_or_id')
     def title_or_id(self):
-        """ """
+        """ return the language objects title_or_id """
         title=self.mapCore('title')
         if title: return title
         return self.getId()
@@ -308,6 +315,7 @@ class I18NLayer( BaseFolder ):
     def get_size(self):
         """
         WebDAV needs this
+        we return the language objects size
         """
         try: return self.mapCore('get_size')
         except: return None
@@ -316,92 +324,92 @@ class I18NLayer( BaseFolder ):
 
     security.declarePublic('getIcon')
     def getIcon(self, relative_to_portal=0):
-        """ """
+        """ we display the language objects icon """
         return self.mapCore('getIcon', relative_to_portal=relative_to_portal)
 
     security.declarePublic('CookedBody')
     def CookedBody(self, stx_level=None, setlevel=0):
-        """ """
+        """ needed to support standard renderable types """
         return self.mapCore('CookedBody', stx_level=stx_level, setlevel=setlevel)
 
     security.declarePublic('Title')
     def Title(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Title')
 
     security.declarePublic('Creator')
     def Creator(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Creator')
 
     security.declarePublic('Subject')
     def Subject(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Subject', default=())
 
     security.declarePublic('Publisher')
     def Publisher(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Publisher')
 
     security.declarePublic('Description')
     def Description(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Description')
 
     security.declarePublic('Contributors')
     def Contributors(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Contributors')
 
     security.declarePublic('Date')
     def Date(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Date')
 
     security.declarePublic('CreationDate')
     def CreationDate(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('CreationDate')
 
     security.declarePublic('EffectiveDate')
     def EffectiveDate(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('EffectiveDate')
 
     security.declarePublic('ExpirationDate')
     def ExpirationDate(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('ExpirationDate')
 
     security.declarePublic('ModificationDate')
     def ModificationDate(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('ModificationDate')
 
     security.declarePublic('Type')
     def Type(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Type')
 
     security.declarePublic('Format')
     def Format(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Format')
 
     security.declarePublic('Identifier')
     def Identifier(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Identifier')
 
     security.declarePublic('Language')
     def Language(self):
-        """ """
+        """ dublincore meta data support """
         return self.retrieveContentLayer().Served()
 
     security.declarePublic('Rights')
     def Rights(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('Rights')
 
     def content_type(self):
@@ -413,53 +421,42 @@ class I18NLayer( BaseFolder ):
 
     security.declarePublic('isEffective')
     def isEffective(self, date):
-        """ """
+        """ publication meta data """
         return self.mapCore('isEffective', date)
 
     security.declarePublic('created')
     def created(self):
-        """ """
+        """ dublincore meta data support """
         return self.mapCore('created')
 
     security.declarePublic('effective')
     def effective(self):
-        """ """
+        """ publication meta data """
         return self.mapCore('effective')
 
     security.declarePublic('expires')
     def expires(self):
-        """ """
+        """ publication meta data """
         return self.mapCore('expires')
 
     security.declarePublic('modified')
     def modified(self):
-        """ """
+        """ meta data support """
         return self.mapCore('modified')
 
     security.declareProtected(ModifyPortalContent, 'indexObject')
     def indexObject(self):
-        """
-            Index the object in the portal catalog.
-        """
+        """ we dont index i18nlayer into catalog """
         pass
 
     security.declareProtected(ModifyPortalContent, 'unindexObject')
     def unindexObject(self):
-        """
-            Unindex the object from the portal catalog.
-        """
+        """ as are not indexed we dont have to unindex """
         pass
 
     security.declareProtected(ModifyPortalContent, 'reindexObject')
     def reindexObject(self, idxs=[]):
-        """
-            Reindex the object in the portal catalog.
-            If idxs is present, only those indexes are reindexed.
-            The metadata is always updated.
-
-            Also update the modification date of the object,
-            unless specific indexes were requested.
-        """
+        """ no indexing of i18nlayers """
         pass
 
 

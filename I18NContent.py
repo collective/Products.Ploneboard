@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.1 2003/06/01 16:39:11 longsleep Exp $
+$Id: I18NContent.py,v 1.2 2003/08/12 20:51:19 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.1 $"
+__version__ = "$Revision: 1.2 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission
@@ -34,6 +34,7 @@ from utils import getLangPrefsMethod, CheckValidity
 
 
 class I18NContentBase:
+    """ base class for multilingual content """
 
     def __init__(self, layer, REQUEST, verifypermission=1):
 
@@ -51,6 +52,7 @@ class I18NContentBase:
         return self.languages
 
     def getLanguagesFromRequest(self):
+        """ return a list of languages matching this request """
 
         language=self.REQUEST.cookies.get('I18N_CONTENT_LANGUAGE', None)
         language_once=self.REQUEST.get('cl', None)
@@ -74,7 +76,6 @@ class I18NContentBase:
         return getLangPrefsMethod(self.REQUEST)
 
     def getObject(self, verifypermission=1):
-
         # returns the object holding language information
         # for language self.language
 
@@ -82,11 +83,11 @@ class I18NContentBase:
         raise "NotImplementedError"
 
     def getFilteredLanguageMap(self, verifypermission=1):
-
         # returns a language code to id mapping
         raise "NotImplementedError"
 
     def setServed(self, lang):
+        # set cookies and response headers for multilingual content
         self.REQUEST.set('I18N_CONTENT_SERVED_LANGUAGE', lang)
         self.REQUEST.RESPONSE.setHeader('Content-Language', lang)
         self.REQUEST.RESPONSE.setHeader('Vary', '*') #
@@ -97,7 +98,7 @@ class I18NContentBase:
         except: return None
 
     def existingLanguages(self, both=0):
-
+        # return existing languages and existing languages name
         existing_languages=()
         existing_languages_long=()
         for code, name in self.Layer().availableLanguages():
@@ -108,8 +109,11 @@ class I18NContentBase:
 
 
 class I18NContentLayer(I18NContentBase):
+    """ zodb layer like content .. using seperate objects to store the different languages """
 
     def getFilteredLanguageMap(self, verifypermission=1):
+        # filter unaccessable language objects
+        # which are not accessable by the current user
 
         layer=self.Layer()
         try: available_languages, available_languages_long =self.existingLanguages(both=1)
@@ -140,6 +144,7 @@ class I18NContentLayer(I18NContentBase):
         return objs
 
     def getObject(self, verifypermission=1):
+        # get an object by checking until one was found
 
         layer=self.Layer()
         base = aq_base(layer)
