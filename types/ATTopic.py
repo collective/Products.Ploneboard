@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.8 2004/04/26 06:30:14 tiran Exp $
+$Id: ATTopic.py,v 1.9 2004/05/10 00:23:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,7 +36,6 @@ from Products.ATContentTypes.interfaces.IATTopic import IATTopic
 from Products.ATContentTypes.types.criteria import CriterionRegistry
 from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
 from Products.ATContentTypes.types.schemata import ATTopicSchema
-
 
 class ATTopic(ATCTFolder):
     """A topic folder"""
@@ -108,6 +107,12 @@ class ATTopic(ATCTFolder):
         val = self.objectValues(self.listCriteriaMetaTypes())
         val.sort()
         return val
+
+    security.declareProtected(ChangeTopics, 'listIndicesByCriterion')
+    def listIndicesByCriterion(self, criterion):
+        """
+        """
+        return CriterionRegistry.indicesByCriterion(criterion)
 
     security.declareProtected(ChangeTopics, 'listAvailableFields')
     def listAvailableFields(self):

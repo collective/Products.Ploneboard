@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATSimpleIntCriterion.py,v 1.4 2004/04/09 22:02:21 tiran Exp $
+$Id: ATSimpleIntCriterion.py,v 1.5 2004/05/10 00:23:55 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -53,4 +53,4 @@ class ATSimpleIntCriterion(ATBaseCriterion):
 
         return tuple(result)
 
-CriterionRegistry.register(ATSimpleIntCriterion)
+CriterionRegistry.register(ATSimpleIntCriterion, ())
