@@ -193,15 +193,20 @@ class Photo(Image):
             imgin, imgout = popen2('convert -rotate %s - -'
                                % (degrees,), 'b')
         else:
-            from popen2 import popen2
-            imgout, imgin = popen2('convert -rotate %s - -'
-                               % (degrees,))
+            from popen2 import Popen3
+            convert=Popen3('convert -rotate %s - -' % (degrees,))
+            imgout=convert.fromchild
+            imgin=convert.tochild
 
         imgin.write(self.data.data)
         imgin.close()
         image.write(imgout.read())
         imgout.close()
-        
+
+	#Wait for process to close if unix. Should check returnvalue for wait
+	if sys.platform !='win32':
+            convert.wait()        
+
         image.seek(0)
         self.manage_upload(image)
         self._photos = OOBTree()
@@ -218,14 +223,21 @@ class Photo(Image):
             imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
                                    % (quality, width, height), 'b')
         else:
-            from popen2 import popen2
-            imgout, imgin = popen2('convert -quality %s -geometry %sx%s - -'
+            from popen2 import Popen3
+            convert=Popen3('convert -quality %s -geometry %sx%s - -'
                                    % (quality, width, height))
+            imgout=convert.fromchild
+            imgin=convert.tochild
 
         imgin.write(self.data.data)
         imgin.close()
         image.write(imgout.read())
         imgout.close()
+
+        #Wait for process to close if unix. Should check returnvalue for wait
+        if sys.platform !='win32':
+            convert.wait()
+
         image.seek(0)
         return image
     
