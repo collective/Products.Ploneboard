@@ -376,7 +376,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         """
         self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
         self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
-        urllib.urlopen(base+'/acl_users/getGRUFId')
+        #urllib.urlopen(base+'/acl_users/getGRUFId')
 
 
     def test11GRUFAPI(self,):
