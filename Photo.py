@@ -12,6 +12,12 @@ from cgi import escape
 from cStringIO import StringIO
 import sys
 
+try: 
+    import PIL.Image
+    isPilAvailable = 1
+except ImportError: 
+    isPilAvailable = 0
+
 factory_type_information = {
     'id'             : 'Photo',
     'meta_type'      : 'Photo',
@@ -143,7 +149,7 @@ class Photo(Image):
             if not self._photos.has_key(size):
                 resolution = self.displays.get(size, (0,0))
                 raw = str(self.data)
-                image = OFS.Image.Image(size, size, self._resize(resolution))
+                image = OFS.Image.Image(size, size, self._resize(resolution,sizename=size))
                 self._photos[size] = image
 
             return self._photos[size].index_html(REQUEST, RESPONSE)
@@ -235,33 +241,47 @@ class Photo(Image):
         Image.update_data(self, data, content_type, size)
         self._photos = OOBTree()
 
-    def _resize(self, size, quality=100):
+    def _resize(self, size, quality=100, sizename=None):
         """Resize and resample photo."""
         image = StringIO()
 
         width, height = size
 
-        if sys.platform == 'win32':
-            from win32pipe import popen2
-            imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
-                                   % (quality, width, height), 'b')
+        if isPilAvailable:
+            try:
+                img = PIL.Image.open(StringIO(str(self.data)))
+                fmt = img.format
+                img.thumbnail((width, height))
+                img.save(image, fmt, quality=quality)
+                
+                #if sizename:
+                #    self.displays[sizename]=img.size
+                
+            except Exception,e:
+                print 'Error:',e
+                
         else:
-            from popen2 import Popen3
-            convert=Popen3('convert -quality %s -geometry %sx%s - -'
-                                   % (quality, width, height))
-            imgout=convert.fromchild
-            imgin=convert.tochild
-
-        imgin.write(str(self.data))
-        imgin.close()
-        image.write(imgout.read())
-        imgout.close()
-
-        #Wait for process to close if unix. Should check returnvalue for wait
-        if sys.platform !='win32':
-            convert.wait()
-
-        image.seek(0)
+            if sys.platform == 'win32':
+                from win32pipe import popen2
+                imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
+                                       % (quality, width, height), 'b')
+            else:
+                from popen2 import Popen3
+                convert=Popen3('convert -quality %s -geometry %sx%s - -'
+                                       % (quality, width, height))
+                imgout=convert.fromchild
+                imgin=convert.tochild
+    
+            imgin.write(str(self.data))
+            imgin.close()
+            image.write(imgout.read())
+            imgout.close()
+    
+            #Wait for process to close if unix. Should check returnvalue for wait
+            if sys.platform !='win32':
+                convert.wait()
+    
+            image.seek(0)
         return image
 
 
