@@ -1,0 +1,127 @@
+msgid ""
+msgstr "Project-Id-Version: PloneBannerManager 0.9\n"
+"POT-Creation-Date: 2004-01-14 15:11+EET\n"
+"PO-Revision-Date: 2003-01-14 15:11+EET\n"
+"Last-Translator: Osma Suominen <osma.suominen@mbconcert.fi>\n"
+"Language-Team: PloneBannerManager-fi <osma.suominen@mbconcert.fi>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: fi\n"
+"Language-name: Suomi\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: bannermanager\n"
+
+msgid "Banner Folder"
+msgstr "Bannerikansio"
+
+msgid "Banner Image"
+msgstr "Bannerikuva"
+
+# Image
+msgid "label_image"
+msgstr "Kuva"
+
+# Image file for the banner
+msgid "help_image"
+msgstr "Tämän bannerin kuvatiedosto."
+
+# Alternate text
+msgid "label_alttext"
+msgstr "Vaihtoehtoinen teksti"
+
+# Alternate text for the banner image.
+msgid "help_alttext"
+msgstr "Teksti, joka voidaan tarvittaessa näyttää kuvan asemesta."
+
+# URL
+msgid "label_url"
+msgstr "URL"
+
+# The web address of the banner.
+msgid "help_url"
+msgstr "Bannerin www-osoite."
+
+# Open in new window
+msgid "label_target"
+msgstr "Avaa uudessa ikkunassa"
+
+# If checked, the link will open in a new window, if supported by the
+# browser.
+msgid "help_target"
+msgstr ""
+"Jos tämä valitaan, linkki avautuu uuteen ikkunaan, edellyttäen että "
+"selain sitä tukee."
+
+# Max views
+msgid "label_maxviews"
+msgstr "Maksiminäyttökerrat"
+
+# Maximum number of views. After this many views, the banner will disappear.
+# If not set, there is no limit.
+msgid "help_maxviews"
+msgstr ""
+"Asettaa rajan sille, montako kertaa banneri näytetään. Kun raja tulee "
+"täyteen, banneri katoaa näkyvistä. Jos rajaa ei tässä aseteta, ei "
+"näyttökerroille ole ylärajaa."
+
+# Max clicks
+msgid "label_maxclicks"
+msgstr "Maksimiklikkaukset"
+
+# Maximum number of clicks. After this many clicks, the banner will disappear.
+# If not set, there is no limit.
+msgid "help_maxclicks"
+msgstr ""
+"Asettaa rajan sille, montako kertaa banneria voidaan klikata. Kun raja "
+"tulee täyteen, banneri katoaa näkyvistä. Jos rajaa ei tässä aseteta, ei "
+"klikkauksille ole ylärajaa."
+
+# Weight
+msgid "label_weight"
+msgstr "Painoarvo"
+
+# A banner with a higher weight will be shown more frequently. E.g. a banner
+# with weight 2 will be shown twice as often as one with weight 1.
+msgid "help_weight"
+msgstr ""
+"Banneri, jolla on suurempi painoarvo, näytetään useammin. Esimerkiksi "
+"banneri, jonka painoarvo on 2, näytetään kaksi kertaa useammin kuin "
+"banneri, jonka painoarvo on 1."
+
+# Views
+msgid "label_views"
+msgstr "Näyttökerrat"
+
+# Number of views so far.
+msgid "help_views"
+msgstr "Tähänastiset näyttökerrat."
+
+# Clicks
+msgid "label_clicks"
+msgstr "Klikkaukset"
+
+# Number of clicks so far.
+msgid "help_clicks"
+msgstr "Tähänastiset klikkaukset."
+
+# Preview
+msgid "listingheader_preview"
+msgstr "Esikatselu"
+
+# Views
+msgid "listingheader_views"
+msgstr "Näytetty"
+
+# Clicks
+msgid "listingheader_clicks"
+msgstr "Klikattu"
+
+# Weight
+msgid "listingheader_weight"
+msgstr "Paino"
+
+# Advertisement
+msgid "box_advertisement"
+msgstr "Ilmoitus"

@@ -1,0 +1,17 @@
+This Product would not be possible without Zope, CMF, Plone and Archetypes.
+Thanks to everyone involved.
+
+Some page template code and the folder icon under skins/ are derived from
+Plone2.0RC3 material that is placed under the GPL by George A. Runyan Jr.,
+Alexander Limi and Vidar Andersen.
+
+When coding, I had lots of help from studying the code of the above
+mentioned products. In addition, I used CMFBoard by Nikolay Kim as a
+reference when trying to figure out how to glue everything together and make
+sure things install smoothly.
+
+Many ideas were stolen the AdManager Zope product by Blue Wild Fire.
+http://www.bluewildfire.com/products/admanager/
+
+I initially wanted to name this product BadManner, but smatt on #plone
+convinced me that a descriptive name is better.

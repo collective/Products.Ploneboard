@@ -1,0 +1,15 @@
+Before 1.0
+* what kind of workflow should Banner Folder have? folder_workflow?
+  anyway it shouldn't make much difference...
+* maybe somehow fix Contents tab, which doesn't highlight properly because
+  of using bannerfolder_contents as a substitute for folder_contents
+* define permissions for the extra methods in BannerFolder and BannerImage
+* make sure the banner images are properly cacheable
+
+Future:
+* support "fallback" banners - either a new workflow state or a Boolean flag
+* keyword matching, so you get related banners in the style of portlet_related
+* optional borders on banners
+* limits on banner sizes e.g. "only banners of size 468x60 in this folder"
+* Flash support, maybe using the SWF File Zope product
+* folder_contents with Method Aliases? (CMF HEAD / 1.5 only)
