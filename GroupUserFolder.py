@@ -286,9 +286,14 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         Return the named user object or None.
         User have precedence over group.
+        If name is None, getUser() will return None.
 
         XXX Have to improve perfs here
         """
+        # Basic check
+        if name is None:
+            return None
+        
         # Prevent infinite recursion when instanciating a GRUF
         # without having sub-acl_users set
         if not "acl_users" in self._getOb('Groups').objectIds():
@@ -305,24 +310,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     u, self, isGroup = 1, source_id = "Groups"
                     ).__of__(self)
                 return ret              # XXX This violates precedence
- 
-##            # Fetch LDAP groups
-##            if self._haveLDAPUF:
-##                for src in self.listUserSources():
-##                    if not hasattr(src, LDAPUF_METHOD):                # We check if we have an LDAPUF
-##                        continue
-##                    if src._local_groups:
-##                        continue
-##                    groups = src.getGroups(attr = LDAP_GROUP_RDN)
-##                    if id in groups:
-##                        # Create a dummy user
-##                        u = AccessControl.User.SimpleUser(name, '', [], [])
-
-##                        # Bind it to a gruf user
-##                        Log(LOG_DEBUG, "id", id, u, )
-##                        return GRUFUser.GRUFLDAPGroup(
-##                            u, self, isGroup = 1, source_id = "Groups"
-##                            ).__of__(self)
                 
         # Fetch users then
         if __include_users__:
@@ -1297,7 +1284,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/08/31 08:11:51 $"[7:-2]
+        rev_date = "$Date: 2004/08/31 08:18:50 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

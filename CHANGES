@@ -4,6 +4,9 @@ v3_1 -
 
   * Debug mode now allows broken source not to be checken against
 
+  * Fixed getUser() bug with remote_user_mode (getUser(None) now returns None).
+    Thanks to Marco Bizzari.
+
 v3_0 - 20040623
 
   * Minor interface changes
