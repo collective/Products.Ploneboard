@@ -61,19 +61,20 @@ class CompositeTool(Folder, BaseTool):
         for t in ti:
             id = t.getId()
             title = t.Title()
+            #import pdb; pdb.set_trace()
             if title == id:
                 title = None
-                if vbt is not None and vbt.has_key(id):
-                    viewlets = vbt[id].viewlets
-                    default_per_type = vbt[id].default
-                else:
-                    viewlets = (DEFAULT,)
-                    default_per_type = DEFAULT
-                types_info.append({'id': id,
-                                   'title': title,
-                                   'viewlets': viewlets,
-                                   'default':default_per_type,
-                                   'viewlet_info':viewlet_info})
+            if vbt is not None and vbt.has_key(id):
+                viewlets = vbt[id].viewlets
+                default_per_type = vbt[id].default
+            else:
+                viewlets = (DEFAULT,)
+                default_per_type = DEFAULT
+            types_info.append({'id': id,
+                               'title': title,
+                               'viewlets': viewlets,
+                               'default':default_per_type,
+                               'viewlet_info':viewlet_info})
 
         return self._manage_selectViewlets(
             REQUEST, default_viewlets=self._default_viewlets,
@@ -197,20 +198,23 @@ class CompositeTool(Folder, BaseTool):
         May return None.
         """
         vbt = self._viewlets_by_type
-        if vbt is None:
-            return None
-        info = vbt.get(portal_type)
-        if info is None:
+        if vbt is not None:
+            info = vbt.get(portal_type)
+            if info is None:
+                # Return default viewlets
+                default = self._default_default
+                viewlets = self._default_viewlets
+            else:
+                default = info.default
+                if default == DEFAULT:
+                    default = self._default_default
+                viewlets = info.viewlets
+                if viewlets == DEFAULT:
+                    viewlets = self._default_viewlets
+        else:            
             # Return default viewlets
             default = self._default_default
             viewlets = self._default_viewlets
-        else:
-            default = info.default
-            if default == DEFAULT:
-                default = self._default_default
-            viewlets = info.viewlets
-            if viewlets == DEFAULT:
-                viewlets = self._default_viewlets
         v_names = tuple(viewlets) + (default,)
         v_names = filter(lambda x: x != DEFAULT, v_names)
         viewlets = {}

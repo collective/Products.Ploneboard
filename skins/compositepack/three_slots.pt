@@ -7,18 +7,21 @@
 
   <div metal:fill-slot="main">
 
+      <h4>First slot</h4>
       <div tal:replace="structure slot: first 'First slot'">
         First slot elements here
       </div>
       
       <hr />
 
+      <h4>Second slot</h4>
       <div tal:replace="structure slot: second 'Second slot'">
         Second slot elements here
       </div>
       
       <hr />
 
+      <h4>Third slot</h4>
       <div tal:replace="structure slot: third 'Third slot'">
         Third slot elements here
       </div>
