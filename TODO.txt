@@ -3,12 +3,21 @@ TO DO
 I have gotten the code working at various points, but with all that 
 I've done recently, I'm not sure it still works.
 
+* Grant Add Portal Content permission to anonymous within
+  portal_memberdata
+
+* Grant new CMFMember perms to appropriate roles  
+
+* Find out why workflow transitions are executing for partially
+  created Member objects
+
+* Set initial non-empty passwords
+
+* Find out why temp/ stuff remained in zodb
+
 * Make sure the code actually works.  Main untested code: member 
 deletion and renaming, all workflow methods.  There really should
 be unit tests.  I have started some (see tests/).
-
-* Auto-register an unregistered user when wrapUser is called since
-the user already exists in acl_users (I think).
 
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-
@@ -30,13 +39,9 @@ to assign ownership of their content to somebody else.
 * Add a disable member function.  Disabled members should not be able
 to log in.
 
+* Modify registration tool's send password method to check Member perms.
+
 * Create pending member worklists.
-
-* Add portraits in.
-
-* Add listed in.  The listed variable can be set by the register()
-  method and then by some method that is called after the make_public /
-  make_private transitions are executed.
 
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
@@ -45,3 +50,13 @@ from which potential member classes can inherit.
 some minor Archetypes mods, e.g. creating an EmptyField class.  [Ben has
 just added a better Description() method -- need to look into it as a
 better way.]
+
+---
+* Auto-register an unregistered user when wrapUser is called since
+the user already exists in acl_users (I think).
+
+* Add listed in.  The listed variable can be set by the register()
+  method and then by some method that is called after the make_public /
+  make_private transitions are executed.
+
+* Add portraits in.

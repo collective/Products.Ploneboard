@@ -1,6 +1,6 @@
 import types
 import AccessControl.User
-import base64
+#import base64
 
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
@@ -10,7 +10,7 @@ from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
-from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.utils import getToolByName, _limitGrantedRoles
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
 from Products.Archetypes.interfaces.base import IBaseContent
@@ -105,6 +105,17 @@ content_schema = FieldList((
                                        label='Look',
                                        description='Choose the appearance of the site. Several styles are available.')
                 ),
+
+    ImageField('portrait',
+               mode='rw',
+               read_permission=VIEW_PUBLIC_PERMISSION,
+               write_permission=EDIT_OTHER_PERMISSION,
+               required=0,
+               searchable=0,
+               widget=ImageWidget(label='Portrait',
+                                  description='To add a new portrait, click the <strong>Browse</strong> button and select ' + \
+                                            'a picture of yourself. Recommended size is 75 pixels wide, 100 pixels tall)')
+               ),
     
     StringField('password',
                 mutator='_setPassword',
@@ -129,6 +140,7 @@ content_schema = FieldList((
                 ),
 
     LinesField('roles',
+               default=('Member',),
                mutator='setRoles',
                accessor='getRoles',
                vocabulary='valid_roles',
@@ -143,6 +155,7 @@ content_schema = FieldList((
                ), 
     
     LinesField('domains',
+               default=(),
                mutator='setDomains',
                accessor='getDomains',
                mode='rw',
@@ -205,6 +218,9 @@ class Member(BaseContent):
         return self.getUserName()
 
 
+    # #####################################
+    # Validators
+
     security.declarePrivate('validate_id')
     def validate_id(self, id):
         # no change -- ignore
@@ -248,7 +264,8 @@ class Member(BaseContent):
                      + 'Please try again.'
 
 
-    ## Contract with portal_membership
+    # ####################################
+    # Contract with portal_membership
     
     security.declareProtected(MemberPermissions.EDIT_OTHER_PERMISSION, 'setProperties')
     def setProperties(self, mapping=None, **kwargs):
@@ -309,17 +326,16 @@ class Member(BaseContent):
 
 
     security.declarePublic('getUser')
-    # XXX is this perm correct
+    # XXX is this perm correct?
     def getUser(self):
-        acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users
         if not hasattr(self, '_v_user'):
-            u = acl_users.getUser(self.id)
+            u = self.acl_users.getUser(self.id)
             if u is not None:
                 self._v_user = u
             else:
                 # create a temporary user - turn into a real user when register() is called
-                self._v_user = AccessControl.User.SimpleUser(self.id, None, None, None)
-        return aq_base(self._v_user).__of__(acl_users) # restore the proper context
+                self._v_user = AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains)
+        return aq_base(self._v_user).__of__(self.acl_users) # restore the proper context
 
 
     # ###############################
@@ -328,6 +344,8 @@ class Member(BaseContent):
     def update(self, **kwargs):
         ret = BaseContent.update(self, **kwargs)
         # invoke any automated workflow transitions after update
+        import sys
+        sys.stdout.write('update\n')
         triggerAutomaticTransitions(self)
         return ret
 
@@ -335,6 +353,8 @@ class Member(BaseContent):
     def processForm(self, data=1, metadata=0):
         ret = BaseContent.processForm(self, data, metadata)
         # invoke any automated workflow transitions after update
+        import sys
+        sys.stdout.write('processForm\n')
         triggerAutomaticTransitions(self)
         return ret
 
@@ -344,22 +364,20 @@ class Member(BaseContent):
 
     security.declarePrivate('register')
     def register(self):
+        registration_tool = getToolByName(self, 'portal_registration')
         # create a real user
         if self.acl_users.getUser(self.id) is None:
-            registration_tool = getToolByName(self, 'portal_registration')
             # Limit the granted roles.
             # Anyone is always allowed to grant the 'Member' role.
             roles = self.getRoles()
-            registration_tool._limitGrantedRoles(roles, self, ('Member',))
+            _limitGrantedRoles(roles, self, ('Member',))
 
             self.acl_users.userFolderAddUser(self.id, self._getPassword(), roles, self.getDomains())
             self._v_user = self.acl_users.getUser(self.id)
 
         # make the user the owner of the current member object
         self.changeOwnership(self.getUser(), 1)
-
-        registration_tool.afterAdd(self, id, password, properties)
-
+        registration_tool.afterAdd(self, id, self._getPassword(), None)
         self.updateListed()
 
 
@@ -374,7 +392,7 @@ class Member(BaseContent):
         """Extract the correct value of the Member's 'listed' attribute from
            current security settings."""
         membership_tool = getToolByName(self, 'portal_membership')
-        self.listed = membership_tool.checkPermission(self, VIEW_PUBLIC_PERMISSION)
+        self.listed = membership_tool.checkPermission(VIEW_PUBLIC_PERMISSION, self)
 
 
     # ###############################
@@ -387,13 +405,13 @@ class Member(BaseContent):
             # if a user with with id old_user_id exists, recurse through
             # the portal and modify local roles and ownership
             portal = getToolByName(self, 'portal_url').getPortalObject()
-            if portal.acl_users.getUser(old_user_id) is not None:
+            if self.acl_users.getUser(old_user_id) is not None:
                 # delete local roles and content owned by this user
                 self._changeUserInfo(portal, old_user_id, id)
                 # create a new user with the appropriate id
-                portal.acl_users.userFolderAddUser(id, self._getPassword(), self.getRoles(), self.getDomains())
+                self.acl_users.userFolderAddUser(id, self._getPassword(), self.getRoles(), self.getDomains())
                 # delete the old user
-                portal.acl_users.userFolderDelUsers((old_user_id,))
+                self.acl_users.userFolderDelUsers((old_user_id,))
             delattr(self, '_v_user')
 
         memberdata=getToolByName(self, 'portal_memberdata')
@@ -544,10 +562,10 @@ class Member(BaseContent):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         # make sure the user with id old_user_id exists before recursing through
         # the whole portal
-        if portal.acl_users.getUser(self.id) is not None:
+        if self.acl_users.getUser(self.id) is not None:
             # delete local roles and content owned by this user
             self._changeUserInfo(portal, self.id)
-            portal.acl_users.userFolderDelUsers((self.id,))
+            self.acl_users.userFolderDelUsers((self.id,))
 
 
     security.declarePrivate('manage_afterClone')

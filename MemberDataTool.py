@@ -5,17 +5,16 @@ from BTrees.OOBTree import OOBTree
 from OFS.SimpleItem import SimpleItem
 from OFS.PropertyManager import PropertyManager
 from OFS.ObjectManager import ObjectManager
+from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.interfaces.portal_memberdata import portal_memberdata
 from Products.CMFCore.utils import UniqueObject, getToolByName
-#from Products.Archetypes.BaseFolder import BaseFolder
-#from Products.Archetypes.interfaces.base import IBaseFolder
+from Products.CMFCore.PortalFolder import PortalFolder
 from Products.Archetypes.debug import log
 from Products.Archetypes import registerType
 from Products.CMFMember import TYPE_NAME, PKG_NAME
-from Products.CMFCore.PortalFolder import PortalFolder
-from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
+from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 import pdb
 
 from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataTool
@@ -26,7 +25,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     security=ClassSecurityInfo()
 
-    #    schema = BaseFolder.schema
     id = 'portal_memberdata'
     portal_type = meta_type = PKG_NAME + ' Tool'
 #    portal_type = 'Folder'
@@ -148,7 +146,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             ## member object for this user
             self.getMemberFactory()(name)
             m = self.get(name)
-        m.setUser(user)
+            m.setUser(user)
+            import sys
+            sys.stdout.write('wrapUser(%s)\n' % str(user))
+            triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
 
         # Return a wrapper with self as containment and
         # the user as context following CMFCore portal_memberdata

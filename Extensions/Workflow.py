@@ -1,5 +1,5 @@
 from Products.CMFCore.utils import getToolByName
-from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
+from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC, TRIGGER_WORKFLOW_METHOD
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
 from Products.CMFMember import MemberPermissions
@@ -33,9 +33,9 @@ def setupWorkflow(portal, out):
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
 
-    if not hasattr(wf.scripts, 'register'):
+    if not 'register' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('register', 'Register a Member', 'CMFMember.Workflow', 'register')
-    if not hasattr(wf.scripts, 'disable'):
+    if not 'disable' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('disable', 'Disable a Member', 'CMFMember.Workflow', 'disable')
 
     perms = {}
@@ -133,7 +133,7 @@ def setupWorkflow(portal, out):
         title='Trigger automatic transitions',
         actbox_name='Trigger automatic transitions',
         new_state_id='', # remain in state
-        props={} # no guard roles or expressions
+        props={}, # no guard roles or expressions
     ) 
 
     # change permissions as soon as user fills in member info
@@ -180,7 +180,6 @@ def setupWorkflow(portal, out):
         title='Make member profile public',
         actbox_name='Make member profile public',
         new_state_id='public',
-        actbox_name='Make member profile public',
         actbox_url='%(content_url)s/do_review',
         props={'guard_roles':'Owner; Manager'},
         after_script_name='updateListed')
@@ -191,7 +190,6 @@ def setupWorkflow(portal, out):
         title='Make member profile private',
         actbox_name='Make member profile private',
         new_state_id='private',
-        actbox_name='Make member profile private',
         actbox_url='%(content_url)s/do_review',
         props={'guard_roles':'Owner; Manager'},
         after_script_name='updateListed')
