@@ -1,3 +1,125 @@
+2004-05-04 21:02  tiran
+
+	* __pkginfo__.py, version.txt, debian/changelog, docs/AUTHORS.txt,
+	  docs/HISTORY.txt, docs/INSTALL.txt: Preparing 0.2-beta4
+
+2004-05-04 20:51  tiran
+
+	* Extensions/toolbox.py: fixed tests
+
+2004-05-04 20:26  tiran
+
+	* types/: ATContentType.py, ATFolder.py: Fixed reported UI bugs
+	  (sharing, folder contents)
+
+2004-05-04 20:26  tiran
+
+	* Extensions/: Install.py, toolbox.py, utils.py: Fixed minor
+	  problems with switching Added test before switching Added doc
+	  strings
+
+2004-05-03 00:09  tiran
+
+	* types/schemata.py: Fixed ATCT to work with missing
+	  ExternalStorage
+
+2004-05-02 20:59  tiran
+
+	* Extensions/utils.py: fixed missing import
+
+2004-05-02 20:26  tiran
+
+	* migration/.cvsignore: added cvsignore file
+
+2004-05-02 20:21  tiran
+
+	* skins/ATContentTypes/addtoFavorites.py: removed addToFavorite.py
+	  Migrate and switch to ATCT to use AT Favorite
+
+2004-05-01 19:14  tiran
+
+	* Extensions/toolbox.py: Addef fix from lelit: Migrate the types in
+	  the content type registry, too
+
+2004-05-01 18:55  tiran
+
+	* Extensions/: Install.py, utils.py: Moved utilities out of Install
+
+2004-04-29 16:08  tiran
+
+	* types/ATFile.py, types/ATImage.py, types/schemata.py, config.py,
+	  customconfig.py.example: Adding first ExternalStorage
+	  implementation (just experimental) It will be possibly replaces
+	  by a ReplaceableStorageLayer
+
+2004-04-29 16:05  tiran
+
+	* tests/: testATDocument.py, testATEvent.py, testATFavorite.py,
+	  testATLink.py, testATNewsItem.py: updated unit text to reflect
+	  small changes
+
+2004-04-27 02:17  tiran
+
+	* config.py: Forget to checkin configuration for external storage
+
+2004-04-26 08:34  tiran
+
+	* docs/HISTORY.txt: updated history
+
+2004-04-26 08:32  tiran
+
+	* Extensions/: Install.py, toolbox.py: Fixed and improved the
+	  switch from/to ATCT methods
+
+2004-04-26 08:30  tiran
+
+	* interfaces/IATContentType.py, types/ATContentType.py,
+	  types/ATDocument.py, types/ATEvent.py, types/ATFavorite.py,
+	  types/ATFile.py, types/ATFolder.py, types/ATImage.py,
+	  types/ATLink.py, types/ATNewsItem.py, types/ATTopic.py,
+	  types/schemata.py: Added default_view class var Changed
+	  newTypeFor to a tuple
+
+2004-04-26 08:29  tiran
+
+	* docs/INSTALL.txt: Updated install  text: Changed versions, added
+	  zope configuration note
+
+2004-04-26 08:28  tiran
+
+	* migration/: ATCTMigrator.py, CPTMigrator.py, Migrator.py: Fixed
+	  misc problems with the migration system
+
+2004-04-24 19:50  tiran
+
+	* Field.py, ReplaceableStorage.py,
+	  interfaces/IReplaceableStorage.py, types/ATImage.py,
+	  types/schemata.py: Experimental replaceable storage (doesn't work
+	  yet)
+
+2004-04-23 11:54  tiran
+
+	* docs/HISTORY.txt, types/ATDynDocument.py, types/__init__.py,
+	  types/schemata.py: Moving ATDynDocument to a seperate product
+
+2004-04-23 01:26  tiran
+
+	* Validators.py, docs/HISTORY.txt, types/ATDynDocument.py,
+	  types/__init__.py, types/schemata.py: Added ATDynDocument - a
+	  CMFDynamicDocument like implementation for AT Content Types
+
+2004-04-22 14:17  tiran
+
+	* types/schemata.py: Using new validation schema
+
+2004-04-20 23:35  tiran
+
+	* Validators.py: Removed empty validators
+
+2004-04-20 02:28  tiran
+
+	* docs/CHANGELOG.txt: updated changelog for 0.2-beta3
+
 2004-04-20 02:27  tiran
 
 	* __pkginfo__.py, version.txt, debian/changelog, docs/HISTORY.txt,
