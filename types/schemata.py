@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.24 2004/05/18 20:40:14 tiran Exp $
+$Id: schemata.py,v 1.25 2004/05/20 12:44:51 tesdal Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,6 +32,12 @@ from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
+
+try:
+    True
+except NameError:
+    True=1
+    False=0
 
 if HAS_EXT_STORAGE:
     from Products.ExternalStorage.ExternalStorage import ExternalStorage
@@ -121,6 +127,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                required = 1,
                searchable = 1,
                vocabulary = 'getEventTypes',
+               languageIndependent=True,
                widget = MultiSelectionWidget(size = 6,
                                              description = "Select the type of event. Multiple event types possible.",
                                              description_msgid = "help_event_type",
@@ -143,6 +150,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   searchable = 1,
                   accessor='start',
                   default=DateTime(),
+                  languageIndependent=True,
                   widget = CalendarWidget(description="Enter the starting date and time, or click the calendar icon and select it. ",
                                           description_msgid = "help_event_start",
                                           label="Event Starts",
@@ -154,6 +162,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   searchable = 1,
                   accessor='end',
                   default=DateTime(),
+                  languageIndependent=True,
                   widget = CalendarWidget(description= "Enter the ending date and time, or click the calendar icon and select it. ",
                                           description_msgid = "help_event_end",
                                           label = "Event Ends",

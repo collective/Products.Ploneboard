@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.3 2004/05/15 01:54:07 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.4 2004/05/20 12:44:50 tesdal Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -19,12 +19,15 @@ from Products.CMFCore  import CMFCorePermissions
 from Products.Archetypes.Widget import TextAreaWidget
 from Products.Archetypes.utils import DisplayList
 from Products.Archetypes.interfaces.layer import ILayerContainer
-from Products.Archetypes.tests import ArcheSiteTestCase
+from Products.Archetypes.tests.common import ArcheSiteTestCase
 from Products.Archetypes.tests.test_baseschema import BaseSchemaTest
 from Products.ATContentTypes.Extensions.Install import install as installATCT
 
+from Products.CMFPlone.tests import PloneTestCase
+portal_name = PloneTestCase.portal_name
+portal_owner = PloneTestCase.portal_owner
 
-class ATCTSiteTestCase(ArcheSiteTestCase.ArcheSiteTestCase):
+class ATCTSiteTestCase(ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
     def test_dcEdit(self):
         #if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
@@ -39,7 +42,7 @@ class ATCTSiteTestCase(ArcheSiteTestCase.ArcheSiteTestCase):
                         % (old.Description(), new.Description()))
         # XXX more
 
-class ATCTFieldTestCase(ArcheSiteTestCase.ArcheSiteTestCase, BaseSchemaTest):
+class ATCTFieldTestCase(ArcheSiteTestCase, BaseSchemaTest):
     """ ATContentTypes test including AT schema tests """
     
     def test_description(self):
@@ -77,9 +80,8 @@ def setupATCT(app, quiet=0):
     _start = time.time()
     if not quiet: ZopeTestCase._print('Installing ATContentTypes ... ')
 
-    uf = app.portal.acl_users
     # login as manager
-    user = uf.getUserById('PloneManager').__of__(uf)
+    user = app.acl_users.getUserById(portal_owner).__of__(app.acl_users)
     newSecurityManager(None, user)
     # add Archetypes
     installATCT(app.portal)
