@@ -306,7 +306,10 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     viewlet.addViewlet(viewlets, 
                        id='default_viewlet', 
                        title='Default viewlet', 
-                       template_path='portal_skins/compositepack/default_viewlet')
-    
+                       template_path='default_viewlet')
+    viewlet.addViewlet(viewlets, 
+                       id='link_viewlet', 
+                       title='Link Only', 
+                       template_path='link_viewlet')
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)
