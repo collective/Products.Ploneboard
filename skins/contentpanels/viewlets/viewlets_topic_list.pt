@@ -9,7 +9,7 @@
                  results python:[item.getObject() for item in results]"
      tal:condition="results">
 
-     <div v class="portlet">
+     <div class="portlet">
 
          <h5><a href="#"    
                 tal:attributes="href here/absolute_url"

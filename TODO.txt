@@ -1,30 +1,8 @@
 V2.0
 
-- i18n
-
-- (done)add folder contents viewlet
-
 - compatible with I18NLayer
 
-- (done)add to collective
-
 - submit to Plone as a portlet proposal
-
-- (done)view refinement
-
-- (done) viewlet title should be clickable
-
-- (refuse) description should add to document view 
-
-- (done)bug: css refinement: bulleted list not work now
-
-- (done)more choice (select viewlet) in the popup windows.
-
-- (refuse)bug: empty folder will cause recent folder viewlet broken.
-
-- (done)a new css which support content icon
-
-- (done)compatible with quickinstaller
 
 - Local published event/Local published news viewlet
 

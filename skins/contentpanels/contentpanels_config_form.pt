@@ -25,21 +25,21 @@
     <div style="float: right"
          tal:define="lastPage python:pageIndex-1;
                      nextPage python:pageIndex+1">
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addPage=1&pageIndex=$nextPage">
+      <a tal:attributes="href string: ${here/absolute_url}/contentpanels_config?addPage=1&amp;pageIndex=$nextPage">
          <img title="new page" alt="new page"
               tal:attributes="src string:$portal_url/newPage.gif"/>
       </a>
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&pageIndex=$pageIndex&toPage=$lastPage"
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$lastPage"
          tal:condition="python: lastPage!=-1">
          <img title="move left" alt="move left"
               tal:attributes="src string:$portal_url/left.gif;"/>
       </a>
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&pageIndex=$pageIndex&toPage=$nextPage" 
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$nextPage" 
          tal:condition="python: nextPage!=len(here.getPageTitles())">
         <img title="move right" alt="move right"
              tal:attributes="src string:$portal_url/right.gif;"/>
       </a>
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePage=1&pageIndex=$pageIndex">
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePage=1&amp;pageIndex=$pageIndex">
          <img title="delete this page" alt="delete this page"
               tal:attributes="src string:$portal_url/delete.gif;"/>
       </a>
@@ -111,26 +111,25 @@ columns
                            tal:attributes="value repeat/column/index" />
               </div>
 
-                <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                    <img title="new panel" alt="new panel"
                          tal:attributes="src string:$portal_url/newPanel.gif"/>
                 </a>
-                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex&toColumn=$lastColumn"
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;toColumn=$lastColumn"
                    tal:condition="not: repeat/column/start">
                     <img title="move left" alt="move left"
                          tal:attributes="src string:$portal_url/left.gif"/>
                 </a>
-                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex&toColumn=$nextColumn"
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;toColumn=$nextColumn"
                     tal:condition="not: repeat/column/end">
                    <img title="move right" alt="move right"
                          tal:attributes="src string:$portal_url/right.gif"/>
                 </a>
-                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addColumn=1&pageIndex=$pageIndex&colu
-mnIndex=$nextColumn">
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$nextColumn">
                     <img title="new column" alt="new column"
                          tal:attributes="src string:$portal_url/newCol.gif"/>
                 </a>
-                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deleteColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex">
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deleteColumn=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex">
                     <img title="delete column" alt="delete column"
                          tal:attributes="src string:$portal_url/delete.gif"/>
                 </a>
@@ -156,31 +155,31 @@ mnIndex=$nextColumn">
                           <a tal:attributes="href panelContent/absolute_url" tal:content="panelContent/title_or_id"/>
                         </div>
 
-                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toPanel=$lastPanel"
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toPanel=$lastPanel"
                            tal:condition="not: repeat/panel/start">
                           <img title="move up" alt="move up"
                              tal:attributes="src string:$portal_url/up.gif"/>
                         </a>
-                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toPanel=$nextPanel"
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toPanel=$nextPanel"
                            tal:condition="not: repeat/panel/end">
                           <img title="move down" alt="move down"
                              tal:attributes="src string:$portal_url/down.gif"/>
                         </a>
-                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toColumn=$lastColumn"
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toColumn=$lastColumn"
                            tal:condition="not: repeat/column/start">
                           <img title="move left" alt="move left"
                              tal:attributes="src string:$portal_url/left.gif"/>
                         </a>
-                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toColumn=$nextColumn"
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toColumn=$nextColumn"
                            tal:condition="not: repeat/column/end">
                           <img title="move right" alt="move right"
                              tal:attributes="src string:$portal_url/right.gif"/>
                         </a>
-                        <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$nextPanel', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                        <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                           <img title="new panel" alt="new panel"
                              tal:attributes="src string:$portal_url/newPanel.gif"/>
                         </a>
-                        <a href="#" tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex">
+                        <a href="#" tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex">
                           <img title="delete this panel" alt="delete this panel"
                              tal:attributes="src string:$portal_url/delete.gif"/>
                         </a>

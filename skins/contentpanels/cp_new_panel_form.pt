@@ -6,7 +6,7 @@
                   columnIndex request/columnIndex;
                   panelIndex request/panelIndex;
                   isQuery request/isQuery | python: 0;
-                  paramString string:cpPath=$cpPath&pageIndex=$pageIndex&panelIndex=$panelIndex&columnIndex=$columnIndex">
+                  paramString string: cpPath=$cpPath&amp;pageIndex=$pageIndex&amp;panelIndex=$panelIndex&amp;columnIndex=$columnIndex">
 
 <head tal:define="ztu modules/ZTUtils;">
 <title tal:content="string: new panel at ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
@@ -34,7 +34,7 @@
 
         <li class="selected" tal:attributes="class python:test(isQuery, 'selected', '')">
             <a href=""
-               tal:attributes="href string: ${here/portal_url}/${template/getId}?$paramString&isQuery:int=1"
+               tal:attributes="href string: ${here/portal_url}/${template/getId}?$paramString&amp;isQuery:int=1"
                i18n:translate="">Search</a>
         </li>
     </ul>
@@ -82,10 +82,10 @@
                           />
 
                   <input type="hidden" name="pageIndex" tal:attributes="value pageIndex"/>
-                  <input type="hidden" name="columnIndex" tal:attributes="value columnIndex">
-                  <input type="hidden" name="panelIndex" tal:attributes="value panelIndex">
-                  <input type="hidden" name="cpPath" tal:attributes="value cpPath">
-                  <input type="hidden" name="isQuery:int" value="1">
+                  <input type="hidden" name="columnIndex" tal:attributes="value columnIndex"/>
+                  <input type="hidden" name="panelIndex" tal:attributes="value panelIndex"/>
+                  <input type="hidden" name="cpPath" tal:attributes="value cpPath"/>
+                  <input type="hidden" name="isQuery:int" value="1"/>
 
                   <input tabindex=""
                          type="submit"
@@ -108,7 +108,7 @@
           <div style="float:left">
 
             <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-            <a tal:condition="python: item.isPrincipiaFolderish and item<>here"
+            <a tal:condition="python: item.isPrincipiaFolderish and item != here"
                tal:attributes="href string: ${item/absolute_url}/${template/getId}?$paramString"
                tal:content="python:item.Title() or item.getId()">Title</a>
 
@@ -130,13 +130,13 @@
                <option tal:repeat="viewlet_action viewlets"
                  tal:content="viewlet_action/name"
                  i18n:translate=""
-                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
+                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;panelObjectPath=$path&amp;panelObjectViewlet=${viewlet_action/id}"> viewlet
                </option>
                <option value="null" tal:condition="viewlets">----</option>
                <option tal:repeat="viewlet_action portlets"
                  tal:content="viewlet_action/name"
                  i18n:translate=""
-                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
+                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;panelObjectPath=$path&amp;panelObjectViewlet=${viewlet_action/id}"> viewlet
                </option>
           </select>
 

@@ -29,7 +29,7 @@
                  <a href="#"
                     class="portletMore"
                     i18n:translate="box_morelink"
-                    tal:attributes="href string:$portal_url/search?path=$folderPath&sort_on=modified&sort_order=reverse"
+                    tal:attributes="href string:$portal_url/search?path=$folderPath&amp;sort_on=modified&amp;sort_order=reverse"
                    >More...</a>
 
               </div>

@@ -4,12 +4,14 @@
 
 <body>
 
-<!-- ----------------------------------------------------------------- 
+<!--
      here defines some macros for different content list for viewlets.
      input is 'results', which is a list of contents or catalogBrains 
-     ---------------------------------------------------------------- -->
+-->
 
-<!-- 1. description in link title -->
+<!-- 
+1. description in link title 
+-->
 
 <metal:block metal:define-macro="description_in_title">
     <tal:block tal:repeat="item results">
