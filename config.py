@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.3 2004/03/08 17:03:04 tiran Exp $
+$Id: config.py,v 1.4 2004/03/13 18:18:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,6 +36,13 @@ GLOBALS = globals()
 # Archetypes 1.2.5+ requires: 1
 # Archetypes 1.3.x requires:  1 
 VALIDATION_IN_PRODUCTS = 1
+
+try:
+    from Products.CMFPlone.PloneFolder import ReplaceableWrapper
+except ImportError:
+    HAS_PLONE2=0
+else:
+    HAS_PLONE2=1
 
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATFolder.py,v 1.2 2004/03/13 18:18:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -29,13 +29,12 @@ from OFS.ObjectManager import REPLACEABLE
 from ComputedAttribute import ComputedAttribute
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from schemata import ATFolderSchema, ATBTreeFolderSchema
 
 
-class ATFolder(OrderedBaseFolder):
+class ATFolderBase(OrderedBaseFolder):
     """A simple folderish archetype"""
 
     schema         =  ATFolderSchema
@@ -43,8 +42,9 @@ class ATFolder(OrderedBaseFolder):
     content_icon   = 'folder_icon.gif'
     meta_type      = 'ATFolder'
     archetype_name = 'AT Folder'
+    newTypeFor     = 'Folder'
     immediate_view = 'folder_listing'
-    newTypeFor     = 'Plone Folder'
+    
     TypeDescription= ''
 
     __implements__ = OrderedBaseFolder.__implements__, IATContentType
@@ -79,17 +79,35 @@ class ATFolder(OrderedBaseFolder):
         },
        )
 
-    def index_html(self):
-        """ Acquire if not present. """
-        _target = aq_parent(aq_inner(self)).aq_acquire('index_html')
-        return ReplaceableWrapper(aq_base(_target).__of__(self))
 
-    index_html = ComputedAttribute(index_html, 1)
+if HAS_PLONE2:
+    # ********** plone 2 **********
+    from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 
-    def __browser_default__(self, request):
-        """ Set default so we can return whatever we want instead
-        of index_html """
-        return getToolByName(self, 'plone_utils').browserDefault(self)
+    class ATFolder(ATFolderBase):
+        newTypeFor     = 'Plone Folder'
+
+        def index_html(self):
+            """ Acquire if not present. """
+            _target = aq_parent(aq_inner(self)).aq_acquire('index_html')
+            return ReplaceableWrapper(aq_base(_target).__of__(self))
+    
+        index_html = ComputedAttribute(index_html, 1)
+    
+        def __browser_default__(self, request):
+            """ Set default so we can return whatever we want instead
+            of index_html """
+            return getToolByName(self, 'plone_utils').browserDefault(self)        
+
+    # ********** plone 2 **********
+else:
+    # **********   cmf   **********
+    class ATFolder(ATFolderBase):
+        pass
+    
+    # **********   cmf   **********
+
+ATFolder.__doc__ = ATFolderBase.__doc__    
 
 registerType(ATFolder, PROJECTNAME)
 
