@@ -2,11 +2,6 @@ TODO-LIST
 
 [v3.1]
 
-  * FIX DOCUMENTATION (especially README & INSTALLs)
-
-  * Plone tools refactoring (user interface must support nested groups, cleaning necessary,
-    API refactoring necessary)
-
   * Allow LocalRole blacklisting
 
   * [Plone] Allow user property mutation: needs MembershipTool update !
@@ -17,19 +12,24 @@ TODO-LIST
   * [ZMI] Improve ZMI for large users lists (batching, 'select all' buttons,
     'expand all' for tree, ...)
 
-  * [Core] Implement join()/leave() methods (and logic!) on groups
-
-  * [Core] Implement some feature to make LDAPUF roles/groups binding easier
-
   * [CMF] Test within CMF (not only Plone)
-
-  * [LDAP] Improve group mapping for already existing groups
 
   * [ZMI] Improve users/groups admin screens:
 
     - use thin borders for audit table and fix cell width
 
-[v3.0]
+[v3.0 => Planned 2003-06]
+
+  DONE * [LDAP] Improve group mapping for already existing groups
+
+  DONE * [Core] Implement join()/leave() methods (and logic!) on groups
+
+  DONE * [Core] Implement some feature to make LDAPUF roles/groups binding easier
+
+  DONE * Plone tools refactoring (user interface must support nested groups, cleaning necessary,
+    API refactoring necessary)
+
+  DONE * FIX DOCUMENTATION (especially README & INSTALLs)
 
   DONE * Apply security on API methods
 
