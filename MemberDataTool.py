@@ -1,3 +1,9 @@
+try:
+    from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
+    memberdata_interface = 1
+except:
+    memberdata_interface = 0
+
 from Globals import InitializeClass
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from Acquisition import aq_base, aq_parent
@@ -8,7 +14,6 @@ from OFS.ObjectManager import ObjectManager
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
-from Products.CMFCore.interfaces.portal_memberdata import portal_memberdata
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.Archetypes.debug import log
@@ -24,7 +29,8 @@ class TempFolder(PortalFolder):
     portal_type = meta_type = 'MemberArea'
 
 class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
-    __implements__ = (portal_memberdata, ActionProviderBase.__implements__)
+    if memberdata_interface:
+        __implements__ = (IMemberData, ActionProviderBase.__implements__)
 
     security=ClassSecurityInfo()
 

@@ -61,47 +61,53 @@ def replaceTools(self, out, convert=1):
 #        if memberdata_tool.getMemberDataContents()[0]['orphan_count'] > 0:
 #            memberdata_tool.pruneMemberDataContents()
 
-        catalog = getToolByName(self, 'portal_catalog')
-        _v_tempFolder = PortalFolder('temp').__of__(self)
-        factory = MemberDataTool.getMemberFactory(_v_tempFolder, TYPE_NAME)
-
-#        membership_tool= getToolByName(self, 'portal_membership')
-#        user_list = membership_tool.listMemberIds()
-#        for u in user_list:
-        for u in memberdata_tool._members.keys():
-            user = _getUserById(self, u)
+        membership_tool = getToolByName(self, 'portal_membership')
+        
+        oldMemberData = {}
+        for id in memberdata_tool._members.keys():
+            user = _getUserById(self, id)
             if user is not None:
-                old_member = memberdata_tool.wrapUser(user)
-                id = old_member.getMemberId()
-                factory(id)
-                new_member = getattr(_v_tempFolder, id)
-                new_member._migrate(old_member, ['portrait'], out)
-                catalog.unindexObject(new_member)  # don't index stuff in temp folder
+                data = {}
+                data['user'] = user
+                from Products.Archetypes.Field import Image
+                p = membership_tool.getPersonalPortrait(id)
+                img_id = p.id
+                if callable(p.id):
+                    img_id = p.id()
+                img_data = getattr(p, 'data', getattr(p, '_data', ''))
+                data['portrait'] = Image(img_id, img_id, str(img_data), p.getContentType())
+                properties = {}
+                m = memberdata_tool.wrapUser(user)
+                for id in memberdata_tool.propertyIds():
+                    properties[id] = m.getProperty(id)
+                data['properties'] = properties
+                oldMemberData[user.getUserName()] = data
 
+        # replace the old tools
         memberdata_tool = None
         # delete the old tools
         if hasattr(portal, 'portal_memberdata'):
             portal.manage_delObjects(['portal_memberdata'])
-        if hasattr(portal, 'portal_registration'):
-            portal.manage_delObjects(['portal_registration'])
-        if hasattr(portal, 'portal_membership'):
-            portal.manage_delObjects(['portal_membership'])
 
         addTool = portal.manage_addProduct[CMFMember.PKG_NAME].manage_addTool
         addTool(CMFMember.PKG_NAME + ' Tool', None)
-        addTool('CMFMember Registration Tool', None)
-        addTool('CMFMember Membership Tool', None)
 
         memberdata_tool = getToolByName(self, 'portal_memberdata')
-        registration_tool = getToolByName(self, 'portal_registration')
-    
-        # move the old members into the new memberdata tool
-        for m in _v_tempFolder.objectValues():
-            memberdata_tool.registerMemberData(m, m.id)
-            member = memberdata_tool.get(m.id)
-            catalog.reindexObject(member)
-
         memberdata_tool._setPortalTypeName('MemberArea')
+        if hasattr(portal, 'portal_registration'):
+            portal.manage_delObjects(['portal_registration'])
+        addTool('CMFMember Registration Tool', None)
+        if hasattr(portal, 'portal_membership'):
+            portal.manage_delObjects(['portal_membership'])
+        addTool('CMFMember Membership Tool', None)
+
+        factory = MemberDataTool.getMemberFactory(memberdata_tool, TYPE_NAME)
+
+        for id in oldMemberData.keys():
+            factory(id)
+            new_member = memberdata_tool.get(id)
+            new_member._migrate(oldMemberData[id], ['portrait'], out)
+
     memberarea.allowed_content_types=(memberdata_tool.typeName,)
     
 

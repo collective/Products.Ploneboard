@@ -39,7 +39,7 @@
                tal:attributes="action request/URL">
 	
             <span class="legend" i18n:translate="legend_personal_details">Personal Details</span>
-         <p tal:content="python:str(errors)"/>
+<!--         <p tal:content="python:str(errors)"/>-->
 
 <!--            <p tal:content="python:str(here.getRolesInContext(here))"/>-->
             <tal:fields repeat="field python: schematas[fieldset].fields()">

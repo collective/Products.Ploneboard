@@ -26,6 +26,7 @@ class MembershipTool( BaseTool ):
             return apply(member.accessor('portrait'), ())
         except AttributeError:
             member = getattr(portal, self.default_portrait)
+#            member = portal.restrictedTraverse(self.default_portrait)
         return member
 
     def changeMemberPortrait(self, portrait, member_id=None):

@@ -1,3 +1,9 @@
+try:
+    from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
+    memberdata_interface = 1
+except:
+    memberdata_interface = 0
+
 import types
 import AccessControl.User
 import copy
@@ -6,12 +12,12 @@ from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
     EDIT_REGISTRATION_PERMISSION, VIEW_OTHER_PERMISSION, EDIT_OTHER_PERMISSION, \
     VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, EDIT_SECURITY_PERMISSION, \
-    MAIL_PASSWORD_PERMISSION
+    MAIL_PASSWORD_PERMISSION, ADD_PERMISSION
 
-from AccessControl import ClassSecurityInfo, Owned
+from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, Owned
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
 from Products import CMFCore
-from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
+
 from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
@@ -27,6 +33,8 @@ import random
 
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
+security = ModuleSecurityInfo('Products.CMFMember.types.Member')
+security.declareProtected(ADD_PERMISSION, 'addMember')
 
 def addMember(self, id, **kwargs):
     o = Member(id)
@@ -241,7 +249,11 @@ _marker = []
 
 class Member(BaseContent):
     """A description of a member"""
-    __implements__ = IMemberData, IBaseContent
+
+    if memberdata_interface:
+        __implements__ = IMemberData, IBaseContent
+    else:
+        __implements__ = IBaseContent
 
     security = ClassSecurityInfo()
 
@@ -1071,29 +1083,46 @@ class Member(BaseContent):
         
     def _migrate(self, old_member, excluded_fields, out):
         """Set Member attributes using values from old_member"""
-        fields = self.Schema().fields() + ['listed', 'last_login']
-        for new_field in fields:
-            if hasattr(new_field, 'name'):
-                name = new_field.name
-            else:
-                name = new_field
-            if name not in ['password', 'roles', 'domains'] and \
-               name not in excluded_fields: # fields managed by user object
-                try:
-                    value = self._migrateGetOldValue(old_member, name, out)
-                    self._migrateSetNewValue(name, value, out)
-                    print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), name, str(value))
-                except:
-                    pass
 
-        # move the user over
-        self.setUser(old_member.getUser())
+        if type(old_member) == type({}):
+            properties = old_member['properties']
+            fields = self.Schema().fields() + ['listed', 'login_time', 'last_login_time']
+            for new_field in fields:
+                if hasattr(new_field, 'name'):
+                    name = new_field.name
+                else:
+                    name = new_field
+                if name not in ['id', 'password', 'roles', 'domains'] and \
+                   name not in excluded_fields: # fields managed by user object
+                    try:
+                        value = properties.get(name)
+                        self._migrateSetNewValue(name, value, out)
+                        print >> out, '%s.%s = %s' % (old_member['user'].getUserName(), name, str(value))
+                    except:
+                        print >> out, 'Unable to get field %s from member %s' % (name, old_member['user'].getUserName())
+                self.setId(old_member['user'].getUserName())
 
-        if old_member.__class__ == CMFCore.MemberDataTool.MemberData:
-            membership_tool = getToolByName(self, 'portal_membership')
-            portrait = membership_tool.getPersonalPortrait()
-            if portrait:
-                self.portrait = portrait
+            self.portrait = old_member['portrait']
+            self.setUser(old_member['user'])
+
+        else:
+            fields = self.Schema().fields() + ['listed', 'login_time', 'last_login_time']
+            for new_field in fields:
+                if hasattr(new_field, 'name'):
+                    name = new_field.name
+                else:
+                    name = new_field
+                if name not in ['password', 'roles', 'domains'] and \
+                   name not in excluded_fields: # fields managed by user object
+                    try:
+                        value = self._migrateGetOldValue(old_member, name, out)
+                        self._migrateSetNewValue(name, value, out)
+                        print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), name, str(value))
+                    except:
+                        pass
+
+            # move the user over
+            self.setUser(old_member.getUser())
 
 
     def _migrateGetOldValue(self, old, id, out):
