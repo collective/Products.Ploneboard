@@ -9,7 +9,7 @@
 """Plone Composite Page : 
    design view UI in line with Plone UI
 
-$Id: cmfcompositepage.py,v 1.19 2004/07/19 09:32:14 godchap Exp $
+$Id: cmfcompositepage.py,v 1.20 2004/07/24 10:42:31 godchap Exp $
 """
 from cgi import escape
 
@@ -26,7 +26,7 @@ except ImportError:
 
 from Products.CompositePage.interfaces import IComposite
 from Products.CompositePage.composite import Composite, SlotGenerator
-from Products.CompositePage.slot import Slot, getIconURL
+from Products.CompositePage.slot import Slot, getIconURL, formatException
 from Products.CompositePack.config import PROJECTNAME, TOOL_ID
 from Products.CMFCore.CMFCorePermissions import setDefaultRoles
 from Products.CMFCore import CMFCorePermissions 
@@ -44,25 +44,32 @@ class PackSlot(Slot):
    __occams_gestalt__ = 1 
 
    def _render_editing(self, obj, text, icon_base_url):
-        o2 = obj.dereference()
-        icon = escape(getIconURL(o2, icon_base_url).encode('utf8'))
-        title = escape(o2.title_and_id().encode('utf8'))
         path = escape('/'.join(obj.getPhysicalPath()))
+        icon = ""
+        title = ""
+        allowed_viewlets_ids = ""
+        allowed_viewlets_titles = ""
         full_path = obj.absolute_url()
-        composite_tool = getToolByName(self, TOOL_ID)
-        viewlets_info = composite_tool.getViewletsFor(o2)
-        allowed_viewlets_ids = []
-        allowed_viewlets_titles = []
-        if viewlets_info:
-            allowed_viewlets_ids.append(viewlets_info['default']["id"])
-            allowed_viewlets_titles.append(viewlets_info['default']["viewlet"].title_or_id())
-            for viewlet in viewlets_info['viewlets']:
-                allowed_viewlets_ids.append(viewlet["id"])
-                allowed_viewlets_titles.append(viewlet["viewlet"].title_or_id())
-        allowed_viewlets_ids = " ".join(allowed_viewlets_ids)
-        allowed_viewlets_ids = allowed_viewlets_ids.encode('utf8')
-        allowed_viewlets_titles = "%".join(allowed_viewlets_titles)
-        allowed_viewlets_titles = allowed_viewlets_titles.encode('utf8')
+        try:
+            o2 = obj.dereference()
+            icon = escape(getIconURL(o2, icon_base_url).encode('utf8'))
+            title = escape(o2.title_and_id().encode('utf8'))
+            composite_tool = getToolByName(self, TOOL_ID)
+            viewlets_info = composite_tool.getViewletsFor(o2)
+            allowed_viewlets_ids = []
+            allowed_viewlets_titles = []
+            if viewlets_info:
+                allowed_viewlets_ids.append(viewlets_info['default']["id"])
+                allowed_viewlets_titles.append(viewlets_info['default']["viewlet"].title_or_id())
+                for viewlet in viewlets_info['viewlets']:
+                    allowed_viewlets_ids.append(viewlet["id"])
+                    allowed_viewlets_titles.append(viewlet["viewlet"].title_or_id())
+            allowed_viewlets_ids = " ".join(allowed_viewlets_ids)
+            allowed_viewlets_ids = allowed_viewlets_ids.encode('utf8')
+            allowed_viewlets_titles = "%".join(allowed_viewlets_titles)
+            allowed_viewlets_titles = allowed_viewlets_titles.encode('utf8')
+        except:
+            text = formatException(self, editing=1)
         result = edit_tag % (path,
                            icon,
                            title,

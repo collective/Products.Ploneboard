@@ -8,7 +8,7 @@
 ##############################################################################
 """Composite Element : this has an archetypes reference.
 
-$Id: archetype.py,v 1.6 2004/06/22 07:47:46 godchap Exp $
+$Id: archetype.py,v 1.7 2004/07/24 10:42:31 godchap Exp $
 """
 from Products.Archetypes.public import *
 from Products.CompositePage.interfaces import ICompositeElement
@@ -19,6 +19,9 @@ from Acquisition import aq_base
 
 TARGET = 'target'
 VIEWLET = 'viewlet'
+
+class CompositePackError(Exception):
+   pass
 
 class Element(BaseContentMixin):
     """A basic, Archetypes-based Composite Element
@@ -32,15 +35,14 @@ class Element(BaseContentMixin):
     schema = MinimalSchema + Schema((
         ReferenceField(
         'target',
-        vocabulary='_get_targets',
         relationship=TARGET,
-        #allowed_types=('Document',), # XXX Fix here
         widget=ReferenceWidget(label='Target Object',
                                description=('The object to be displayed '
                                             'when rendering the viewlet.'))
         ),
         ReferenceField(
         'viewlet',
+        vocabulary='_get_viewlets',
         relationship=VIEWLET,
         widget=ReferenceWidget(label='Viewlet',
                                description=('The viewlet to be used '
@@ -48,8 +50,6 @@ class Element(BaseContentMixin):
                                             'Context Object'))
         )))
 
-    def _get_targets(self):
-        return DisplayList((('test', 'test'),))
 
     def _get_viewlets(self):
         obj = self.dereference()
@@ -87,7 +87,11 @@ class Element(BaseContentMixin):
         """Returns the object referenced by this composite element.
         """
         refs = self.getRefs(TARGET)
-        return refs and refs[0] or None
+        if refs:
+           return refs[0]
+        else:
+            raise CompositePackError('composite element has lost '
+                'its reference to its target')
 
     def renderInline(self):
         """Returns a representation of this object as a string.
