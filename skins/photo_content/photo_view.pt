@@ -8,7 +8,10 @@
 
 <body>
 
-<div metal:fill-slot="main" tal:define="size request/size | string:small">
+<div metal:fill-slot="main" tal:define="image nocall:here; 
+                                        Iterator python:modules['Products.CMFPlone'].IndexIterator; 
+                                        tabindex python:Iterator(); 
+                                        photo_display python:request.cookies.get('photo_display', 'medium');">
 
     <div class="contentHeader">
         <h1 tal:content="here/title_or_id">Title or id</h1> 
@@ -16,7 +19,7 @@
 
     <img tal:condition="here/size" 
          src="#" 
-         tal:replace="structure python:here.tag(size=size);" />
+         tal:replace="structure python:here.tag(size=photo_display);" />
 
     <p style="margin-top: 2em;" tal:content="here/Description">
     Description
@@ -24,7 +27,7 @@
     
     <small>
 
-    <span i18n:translate="label_size">Size:</span>
+    <span i18n:translate="label_size">Original size:</span>
 
         <span tal:define="size python:here.getObjSize(here)"
               tal:content="size">                        
@@ -38,35 +41,7 @@
 
     </small>
     
-    
-    <form id="show_photo" tal:attributes="action string:${here/absolute_url}/view" style="margin-top: 0.5em;">
-        <select name="size" onChange="javascript:document.getElementById('show_photo').submit()" >
-            <tal:block tal:repeat="s here/getDisplays" >
-                <tal:block tal:define="selected python: test(s['name'] == size,'selected','');
-                            size string:${s/name}">
-                   <option  tal:attributes="selected selected; value size  " 
-                        tal:content="s/label" 
-                     > </option>
-                </tal:block>
-            </tal:block>
-    
-            <tal:block tal:define="selected python: test('original' == size,'selected','')">
-               <option  
-                   tal:attributes="selected selected;value string:original" 
-                    tal:content="string:original" i18n:translate="">  
-               original </option>
-            </tal:block>
-        </select>
-
-        <input class="context" 
-               tabindex=""
-               type="submit" 
-               name="Show" 
-               value="Show" 
-               i18n:attributes="value"
-                /> 
-        
-    </form>
+    <div metal:use-macro="here/photo_macros/macros/size"/>
 
 </div>
 

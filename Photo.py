@@ -11,6 +11,7 @@ from BTrees.OOBTree import OOBTree
 from cgi import escape
 from cStringIO import StringIO
 import sys
+from zLOG import LOG, ERROR
 
 try: 
     import PIL.Image
@@ -149,7 +150,7 @@ class Photo(Image):
             if not self._photos.has_key(size):
                 resolution = self.displays.get(size, (0,0))
                 raw = str(self.data)
-                image = OFS.Image.Image(size, size, self._resize(resolution,sizename=size))
+                image = OFS.Image.Image(size, size, self._resize(resolution))
                 self._photos[size] = image
 
             return self._photos[size].index_html(REQUEST, RESPONSE)
@@ -241,49 +242,47 @@ class Photo(Image):
         Image.update_data(self, data, content_type, size)
         self._photos = OOBTree()
 
-    def _resize(self, size, quality=100, sizename=None):
+    def _resize(self, size, quality=100):
         """Resize and resample photo."""
         image = StringIO()
 
         width, height = size
 
-        if isPilAvailable:
-            try:
-                img = PIL.Image.open(StringIO(str(self.data)))
+        try:
+            if isPilAvailable:
+                img = PIL.Image.open(StringIO(self.data.data))
                 fmt = img.format
+                # Resize photo
                 img.thumbnail((width, height))
+                # Store copy in image buffer
                 img.save(image, fmt, quality=quality)
-                
-                #if sizename:
-                #    self.displays[sizename]=img.size
-                
-            except Exception,e:
-                print 'Error:',e
-                
-        else:
-            if sys.platform == 'win32':
-                from win32pipe import popen2
-                imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
-                                       % (quality, width, height), 'b')
             else:
-                from popen2 import Popen3
-                convert=Popen3('convert -quality %s -geometry %sx%s - -'
-                                       % (quality, width, height))
-                imgout=convert.fromchild
-                imgin=convert.tochild
-    
-            imgin.write(str(self.data))
-            imgin.close()
-            image.write(imgout.read())
-            imgout.close()
-    
-            #Wait for process to close if unix. Should check returnvalue for wait
-            if sys.platform !='win32':
-                convert.wait()
-    
-            image.seek(0)
-        return image
+                if sys.platform == 'win32':
+                    from win32pipe import popen2
+                    imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
+                                           % (quality, width, height), 'b')
+                else:
+                    from popen2 import Popen3
+                    convert=Popen3('convert -quality %s -geometry %sx%s - -'
+                                           % (quality, width, height))
+                    imgout=convert.fromchild
+                    imgin=convert.tochild
 
+                imgin.write(str(self.data))
+                imgin.close()
+                image.write(imgout.read())
+                imgout.close()
+
+                #Wait for process to close if unix. Should check returnvalue for wait
+                if sys.platform !='win32':
+                    convert.wait()
+
+                image.seek(0)
+                
+        except Exception, e:
+            LOG('CMFPhoto.Photo', ERROR, 'Error while resizing photo', e)
+                
+        return image
 
     security.declareProtected(CMFCorePermissions.View, 'getEXIF')
     def getEXIF(self):

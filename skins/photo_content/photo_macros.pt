@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+  <div class="row" metal:define-macro="size">
+	
+    <div style="width: 3em; text-align: left;" class="label">
+      <span>Size</span>
+      
+      <div id="display_help"
+	   class="help"
+	   style="visibility:hidden; left:-18em;">
+	Select the size of the photos.
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      function setCookie(name, value, path, domain, secure) {
+        expires = new Date();
+        expires.setFullYear(expires.getFullYear()+20);
+        var curCookie = name + "=" + escape(value) +
+        ((expires) ? "; expires=" + expires.toGMTString() : "") +
+        ((path) ? "; path=" + path : "") +
+        ((domain) ? "; domain=" + domain : "") +
+        ((secure) ? "; secure" : "");
+        document.cookie = curCookie;
+        window.location.reload();
+        return false;
+      }
+    </script>
+    
+    <div class="field" tal:define="displays image/getDisplays">
+      <form id="cookie">
+	<select onChange="javascript:setCookie('photo_display', document.getElementById('display').options[selectedIndex].value, '/')" 
+		id="display" 
+		name="display" 
+		tal:attributes="tabindex tabindex/next" 
+	        onfocus="formtooltip('display_help', 1)" 
+	        onblur="formtooltip('display_help', 0)">
+	  <option value="original">Original size</option>
+	  <option tal:repeat="display displays" 
+	          tal:attributes="value display/name;
+	          selected python:test(photo_display == display['name'], 'selected', '');" 
+	          tal:content="display/label/title">1</option>
+	</select>
+      </form>
+    </div>
+    
+  </div>
+  
