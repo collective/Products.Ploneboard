@@ -28,6 +28,8 @@ Features
 
   * suport relative content path
 
+  * contentpanels content can be a plone portlet and show on the left/right column.
+
 How to Use it?
 
   1. Install it. See INSTALL.txt for more information.

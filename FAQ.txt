@@ -23,3 +23,13 @@ latest CMFContentPanels 1.5.1a from sf cvs.  When I add a Zwiki page as a conten
   You must reinstalled ZWiki or installed ZWiki after CMFContentPanels.
 You should reinstall CMFContentPanels.
 
+5. How to put my new-created contentpanels on plone's left/right column?
+
+   Say you have created a contentpanels named 'my-contentpanels'. You can add
+   it to plone this way:
+
+   1. go to folder's ZMI, properties
+   2. add a new lines property, with name left_slots or right_slots.
+   3. add the contentpanels portlet:
+
+      here/my-contentpanels/contentpanels_view/macros/viewlet 
