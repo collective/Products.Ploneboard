@@ -1,0 +1,72 @@
+#  ATContentTypes http://sf.net/projects/collective/
+#  Archetypes reimplementation of the CMF core types
+#  Copyright (c) 2003-2004 AT Content Types development team
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#
+"""custom configuration file
+
+Copy customconfig.py.example to customconfig.py and change the values in the
+user options section below.
+
+$Id: customconfig.py.example,v 1.1 2004/04/11 12:33:24 tiran Exp $
+""" 
+
+from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
+from Products.CMFCore import CMFCorePermissions
+
+try:
+    True
+except NameError:
+    True  = 1
+    False = 0
+
+###############################################################################
+## user options
+## The options in this section can be overwritten by customconfig
+
+## enable mxTidy for ATDocument?
+MX_TIDY_ENABLED = True
+
+## options for mxTidy
+## read http://www.egenix.com/files/python/mxTidy.html for more informations
+MX_TIDY_OPTIONS= {
+    'drop_font_tags'   : 1,
+    'drop_empty_paras' : 1,
+    'input_xml'        : 0,
+    'output_xhtml'     : 1,
+    'quiet'            : 1,
+    'show_warnings'    : 1,
+    'tab_size'         : 4,
+    'wrap'             : 72,
+    #'indent'           : 'auto',
+    'indent_spaces'    : 1,
+    'word_2000'        : 1,
+    'char_encoding'    : 'raw',
+    }
+
+## use TemplateMixin?
+## if enabled users can choose between different view templates for each object
+ENABLE_TEMPLATE_MIXIN = False
+
+## TemplateMixin write permission. Only if the member has this permission he
+## is allowed to choose another permission then the default permission
+TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
+# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
+# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+
+## Document History view permission
+HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
+# HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
