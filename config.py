@@ -23,7 +23,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.15 2004/04/10 16:31:09 tiran Exp $
+$Id: config.py,v 1.16 2004/04/12 01:38:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -85,13 +85,6 @@ GLOBALS = globals()
 
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'ENABLE_TEMPLATE_MIXIN',
                  'TEMPLATE_MIXIN_PERMISSION', 'HISTORY_VIEW_PERMISSION', )
-
-## Load the validation package from Products.validation (True) or from the
-## python site-packages (False)
-## Archetypes 1.2.x requires:  False
-## Archetypes 1.2.5+ requires: True
-## Archetypes 1.3.x requires:  True 
-VALIDATION_IN_PRODUCTS = True
 
 ## using special plone 2 stuff?
 try:

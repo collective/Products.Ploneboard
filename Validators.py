@@ -18,21 +18,16 @@
 #
 """
 
-$Id: Validators.py,v 1.10 2004/04/11 12:32:58 tiran Exp $
+$Id: Validators.py,v 1.11 2004/04/12 01:38:54 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
 
-if VALIDATION_IN_PRODUCTS:
-    from Products.validation import validation
-    from Products.validation.interfaces.IValidator import IValidator
-    from Products.validation.validators.RegexValidator import RegexValidator
-else:
-    from validation import validation
-    from validation.interfaces.IValidator import IValidator
-    from validation.validators.RegexValidator import RegexValidator
+from Products.validation.config import validation
+from Products.validation.interfaces.IValidator import IValidator
+from Products.validation.validators.RegexValidator import RegexValidator
 
 import re
 from ZPublisher.HTTPRequest import FileUpload

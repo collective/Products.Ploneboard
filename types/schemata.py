@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.13 2004/04/11 12:32:59 tiran Exp $
+$Id: schemata.py,v 1.14 2004/04/12 01:38:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,6 +30,13 @@ from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
+
+from Products.validation.config import validation
+from zLOG import LOG, ERROR
+try:
+    v = validation.validatorFor('isTidyHtmlWithCleanup')
+except KeyError, msg:
+    LOG(PROJECTNAME, ERROR, ': isTidyHtmlWithCleanup is not registered!')
 
 ATContentTypeBaseSchema = BaseSchema + Schema((
     TextField('description',
@@ -222,7 +229,8 @@ ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
-               sizes= {'thumb'   : (128, 128),
+               sizes= {'preview' : (400, 400),
+                       'thumb'   : (128, 128),
                        'tile'    :  (64, 64),
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
