@@ -24,8 +24,10 @@ for criterion in criteria:
     for field in fields:
         fid = '%s_%s' % (id, field.getName())
         rval = REQUEST.get(fid, MARKER)
-        if rval is not MARKER and field.get(criterion) != rval:
-            field.set(criterion, rval)
+        accessor = field.getAccessor(criterion)
+        if rval is not MARKER and accessor() != rval:
+            mutator = field.getMutator(criterion)
+            mutator(rval)
 
 msg='Changes saved'
 transaction_note(msg)
