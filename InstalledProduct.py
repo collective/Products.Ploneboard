@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.17 2004/02/27 02:14:25 achilles_ Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.18 2004/03/10 09:45:50 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -165,7 +165,10 @@ class InstalledProduct(SimpleItem):
     def getUninstallMethod(self):
         ''' returns the uninstaller method '''
         
-        productInCP = self.Control_Panel.Products[self.id]
+        try:
+            productInCP = self.Control_Panel.Products[self.id]
+        except KeyError:
+            return None
         
         for mod,func in (('Install','uninstall'),('Install','Uninstall'),('install','uninstall'),('install','Uninstall')):
             if mod in productInCP.objectIds():
