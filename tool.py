@@ -13,7 +13,7 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
 
 from Products.CompositePage.tool import CompositeTool as BaseTool
-from Products.CompositePack.config import TOOL_ID
+from Products.CompositePack.config import TOOL_ID, LAYOUTS
 
 zmi_dir = os.path.join(Globals.package_home(globals()),'www')
 
@@ -285,14 +285,15 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     """
     from Products.CompositePack.viewlet import container
     from Products.CompositePack import viewlet
+    from Products.CompositePack.config import VIEWLETS, LAYOUTS
     ob = CompositeTool()
     dispatcher._setObject(ob.getId(), ob)
     ob = dispatcher._getOb(ob.getId())
-    container.addViewletContainer(ob, id=container.ViewletContainer.id,
+    container.addViewletContainer(ob, id=VIEWLETS,
                                   title='A Container for registered Viewlets')
-    container.addViewletContainer(ob, id='layouts',
+    container.addViewletContainer(ob, id=LAYOUTS,
                                   title='A Container for registered Layouts')
-    layouts = ob.layouts
+    layouts = getattr(ob, LAYOUTS)
     viewlet.addViewlet(layouts, 
                        id='two_slots', 
                        title='Two slots', 
@@ -302,7 +303,7 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
                        id='three_slots', 
                        title='Three slots', 
                        template_path='portal_skins/compositepack/three_slots')
-    viewlets = ob.viewlets
+    viewlets = getattr(ob, VIEWLETS)
     viewlet.addViewlet(viewlets, 
                        id='default_viewlet', 
                        title='Default viewlet', 

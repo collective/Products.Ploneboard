@@ -8,7 +8,6 @@ class ViewletContainer(BaseFolderMixin, UniqueObject):
     that uses references instead of path, and a dropdown
     for selecting templates
     """
-    id = 'viewlets'
     meta_type = portal_type = archetype_name = 'CompositePack Viewlet Container'
     schema = MinimalSchema
     global_allow = 0

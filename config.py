@@ -7,3 +7,6 @@ TOOL_NAME = 'CompositePack Tool'
 
 COMPOSABLE_TYPES = ['ATDocument', 'ATImage']
 COMPOSABLE = 'composable'
+
+VIEWLETS = 'viewlets'
+LAYOUTS = 'layouts'
