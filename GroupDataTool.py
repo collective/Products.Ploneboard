@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.12 2004/02/27 17:02:22 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.13 2004/04/14 00:25:34 k_vertigo Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -123,7 +123,7 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
         transactions and to reduce the necessary number of
         entries.
         '''
-        self._members[id] = g
+        self._members[id] = aq_base(g)
 
 
 InitializeClass(GroupDataTool)
