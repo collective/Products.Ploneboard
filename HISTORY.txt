@@ -1,6 +1,7 @@
 V1.7.3
 
   - clear left_slot/right_slot setting when delete a contentpanels content 
+  - fix bug with nested contentpanels
 
 V1.7.2
 
