@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.17 2003/12/22 09:30:01 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.18 2003/12/23 10:24:48 shh42 Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -222,10 +222,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         gwf = self.getGroupWorkspacesFolder()
         if not gwf: # _robert_
             return
-        try:
-            gwf.manage_delObjects(ids)
-        except 'BadRequest':
-            pass
+        if not keep_workspaces:
+            for id in ids:
+                if hasattr(aq_base(gwf), id):
+                    gwf._delObject(id)
         
     security.declareProtected(SetGroupOwnership, 'setGroupOwnership')
     def setGroupOwnership(self, group, object):
