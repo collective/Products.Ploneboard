@@ -1,0 +1,43 @@
+<table width="100%">
+ <tbody tal:repeat="item python:here.queryCatalog()[:5]">
+  <tr class="odd" 
+       tal:attributes="class python:test(repeat['item'].index % 2, 'even', 'odd')">
+    <td tal:define="contentObject item/getObject" tal:condition="contentObject">
+
+
+        <span tal:define="action python:contentObject.getTypeInfo().getActionById('view');
+                        url python:test(contentObject.absolute_url()+'/'+action);">
+
+             <a href="#" tal:attributes="href url" target="_blank">
+                <img tal:replace="structure python:path('here/%s' % contentObject.getIcon(1))"
+                                />&nbsp;
+                <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(contentObject)" >
+                   <span tal:omit-tag=""
+                      tal:define="replyCount python:here.portal_discussion.getDiscussionFor(contentObject).replyCount(contentObject)"
+                      tal:condition="python: replyCount > 0"
+                      tal:replace="python: '[%d]'% replyCount"> 8
+                    </span>
+               </span>&nbsp;
+ 
+               <span tal:replace="contentObject/title_or_id">Title</span>
+            </a>
+      </span>
+
+       <span tal:content="python:' (' + contentObject.Creator() + ')'">
+                        size
+        </span>
+
+          <span tal:content="python:here.toPortalTime(contentObject.ModificationDate())">
+                        08/19/2001 03:01 AM
+           </span>
+
+    </td>
+  </tr>
+ </tbody>
+  <tr>
+    <td align="right">
+      <a href="#" tal:attributes="href here/absolute_url" i18n:translate="read_more">More...</a>
+    </td>
+  </tr>
+</table>
+

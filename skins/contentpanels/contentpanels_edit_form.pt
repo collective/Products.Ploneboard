@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+    <td metal:fill-slot="main"
+         tal:omit-tag=""
+          tal:define="page request/pageIndex | python:'0';
+                      global pageIndex python:int(page)" >
+
+        <table align="center" width="95%" bgcolor="#D2FFED" border="1" cellspacing="0" cellpadding="2" 
+              style="font-size:8pt; font-family:Arial; font-color:#336699;">
+
+          <form method="get" action="contentpanels_edit">
+             <input type="hidden" name="pageIndex" value="#" 
+                       tal:attributes="value pageIndex"/>
+
+             <tr>
+               <td>
+                 <table width="100%">
+                 <tr>
+                   <td align="center" valign="bottom" >
+                Tile: 
+                <input type="text" name="pageTitle" size="18" value=''
+                       tal:attributes="value python: here.getPageInfo(pageIndex, 'pageTitle')"/>
+                Align:
+                <select name="pageAlign">
+                   <option value="left" selected="#" 
+         tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='left'"> left</option>
+                   <option value="center" selected="#" 
+         tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='center'"> Center(default)</option>
+                   <option value="right" selected="#" 
+         tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='right'"> right</option>
+                </select>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td align="center">
+                Width: 
+                <input type="text" name="pageWidth" size="4" value="#" maxlength="4"
+                       tal:attributes="value python: here.getPageInfo(pageIndex, 'pageWidth')"/>
+                CellPad: 
+                <input type="text" name="pageCellPad" size="4" value="#" maxlength="4"
+                       tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellPad')"/>
+                CellSpace:
+                <input type="text" name="pageCellSpace" size="4" value="#" maxlength="4"
+                       tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellSpace')"/>
+                   </td>
+                 </tr>
+                 </table>
+               </td>
+
+
+               <td align="center">
+             <input type="submit" class="context" name="changePageInfo" value="change"/>
+               </td>
+             </tr>
+
+             <tr>
+                <td colspan="2"  align="center">
+             <input type="submit" class="context" name="addColumn" value="addColumn"/>
+             <input type="submit" class="context" name="addPage" value="addPage"/>
+             <input type="submit" class="context" name="deletePage" value="deletePage"/>
+                </td>
+             </tr>
+
+          </form>
+        </table> 
+<!--
+HEAD PAGE TITLES!!
+-->
+
+      <div align="right">
+         <span tal:omit-tag="" tal:repeat="pageTitle here/getPageTitles">
+
+             <code tal:condition="python: pageIndex == repeat['pageTitle'].index" 
+                   tal:content="pageTitle"></code>
+
+             <a class="#" href="#"
+                 tal:condition="python: pageIndex != repeat['pageTitle'].index"
+                 tal:attributes="href python:here.absolute_url() + '/' + template.id + '?pageIndex=%d' % repeat['pageTitle'].index "
+                 tal:content="pageTitle">page tiltle</a>&nbsp;|&nbsp;
+
+          </span>
+
+          <a href="" tal:attributes="href python:here.absolute_url() + '/contentpanels_view?pageIndex=%d' % pageIndex ">
+                 <img src="/misc_/CMFPlone/tool.gif"/>
+          </a>
+          <a href="" tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_contents'">
+                 <img src="/folder_icon.gif"/>
+          </a>
+
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      </div>
+
+      <table width="" align="" cellspacing="" cellpadding="" 
+              tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
+                       cellpadding python: here.getPageInfo(pageIndex, 'pageCellPad');
+                       cellspacing python: here.getPageInfo(pageIndex, 'pageCellSpace');
+                       align python: here.getPageInfo(pageIndex, 'pageAlign')">
+
+<!--
+columns
+-->
+        <tr>  
+          <td width="#" valign="top" 
+              tal:repeat="column python:here.getPageInfo(pageIndex, 'pageColumns')"
+              tal:attributes="width python:test(column['columnWidth']=='0', '', column['columnWidth'])" >
+            <tal:block tal:define="panels column/columnPanels;
+                                   isEmptyColumn python: len(column['columnPanels']) == 0">
+              <div tal:repeat="panel panels">
+
+<!--
+panel should be here!!
+-->
+                 <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'])"/>
+              
+              <table width="100%" bgcolor="#D2FFED" border="1" cellspacing="0" cellpadding="2" 
+                 style="font-size:8pt; font-family:Arial; font-color:#336699;">
+
+                <form class="group" action="contentpanels_edit" method="get">
+
+                  <tr>
+                    <td align="center">
+                  Panel Skin:
+                  <select name="panelSkin">
+                    <metal:block tal:repeat="panelSlotInfo here/contentpanels_slots_registry">
+                      <option value="slotpath" 
+                             tal:attributes="value python:panelSlotInfo[1];
+                                             selected python: panel['panelSkin']==panelSlotInfo[1]"
+                             tal:content="python:panelSlotInfo[0]">slotpath</option>
+                    </metal:block>
+                  </select><br/>
+                  <input type="hidden" name="pageIndex" value="#" 
+                       tal:attributes="value pageIndex" />
+                  <input type="hidden" name="columnIndex" value="#" 
+                       tal:attributes="value repeat/column/index" />
+                  <input type="hidden" name="panelIndex" value="#" 
+                       tal:attributes="value repeat/panel/index" />
+                  <input type="hidden" name="panelObjectPath" value="#" 
+                       tal:attributes="value panel/panelObjectPath" />
+                  <input type="submit" class="context" name="changePanel" value="Change" />
+                  <input type="submit" class="context" name='deletePanel' value="Delete" />
+
+                    </td>
+                  </tr>
+
+                </form>
+
+              </table>
+
+              </div>
+              <br/>
+              <table width="100%" bgcolor="#D2FFED" border="1" cellspacing="0" cellpadding="2" 
+                 style="font-size:8pt; font-family:Arial; font-color:#336699;">
+
+                <form action="contentpanels_edit" method="get">
+                  <tr>
+                    <td >
+                      <div align="center"
+                          tal:condition="python: len(column['columnPanels'])==0">
+                             <h3>Empty Column</h3>
+                      </div>
+                      Content:
+                      <select name="panelObjectPath">
+                        <option value="None">select ...</option>
+                        <metal:block tal:repeat="panelObjectInfo here/get_contentpanels_objects">
+                          <option value="objectPath" 
+                                  tal:attributes="value python:panelObjectInfo[0]"
+                                  tal:content="python:panelObjectInfo[1]">object title</option>
+                        </metal:block>
+                      </select>
+                      <br/>
+                      Skin:
+                      <select name="panelSkin">
+                        <metal:block tal:repeat="panelSlotInfo here/contentpanels_slots_registry">
+                          <option value="slotpath" 
+                                  tal:attributes="value python:panelSlotInfo[1]"
+                                  tal:content="python:panelSlotInfo[0]">slotpath</option>
+                        </metal:block>
+                      </select>
+                      <br/>
+                      <input type="hidden" name="pageIndex" value="#" 
+                           tal:attributes="value pageIndex" />
+                      <input type="hidden" name="columnIndex" value="#" 
+                           tal:attributes="value repeat/column/index" />
+                      <input type="hidden" name="panelIndex" value="#" 
+                           tal:attributes="value python:len(panels)" />
+                      <input type="submit" class="context" name='insertPanel' value="Add Panel" /> 
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                      column Width: 
+                      <input type="text" name="columnWidth" size="5" value=""
+                             tal:attributes="value column/columnWidth"/>
+                      <br/>
+                      <input type="submit" class="context" name='changeColumnWidth' value="change"/>
+                      <input type="submit" class="context" name='deleteColumn' value="Delete"/>
+                    </td>
+                  </tr>
+                </form>
+              </table>
+
+            </tal:block>
+          </td>
+        </tr>
+
+
+      </table>
+    </td>
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,18 @@
+Install
+
+1. unzip the product and copy it to the 'products' directory in zope.
+
+2. restart zope
+
+3. goto the root of Plone portal, select 'External Method' from add list, add it with following infomation:
+
+  * id: install_cmfcontentpanels
+
+  * title: install CMFContentPanels
+
+  * Module Name: CMFContentPanels.Install
+
+  * Function Name: install
+
+4. go to install_cmfcontentpanels, click 'Test' tab, and that is all.
+

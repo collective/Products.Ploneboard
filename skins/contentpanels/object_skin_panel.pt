@@ -1,0 +1,6 @@
+<metal:block tal:define="global actions python:here.portal_actions.listFilteredActionsFor(here);
+                       global site_properties here/portal_properties/site_properties;
+                       global portal_url here/portal_url" >
+
+                   <metal:block metal:use-macro="python:path(options['panelSkin'])" />
+</metal:block>

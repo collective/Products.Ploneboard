@@ -1,0 +1,48 @@
+<div> [ <span tal:replace="here/Description"> Description </span> ] </div><hr/>
+<table width="100%">
+ <tbody tal:define="global mstring modules/string"
+         tal:repeat="item python:here.portal_catalog.searchResults( {'path':mstring.join(here.getPhysicalPath(), '/'), 'meta_type':'Post', 
+                 'sort_on':'modified', 'sort_order':'reverse'} )[:5]">
+  <tr class="odd" 
+       tal:attributes="class python:test(repeat['item'].index % 2, 'even', 'odd')">
+    <td tal:define="contentObject item/getObject" tal:condition="contentObject">
+
+
+        <span tal:define="action python:contentObject.getTypeInfo().getActionById('view');
+                        url python:test(contentObject.absolute_url()+'/'+action);">
+
+             <a href="#" tal:attributes="href url">
+                <img tal:replace="structure python:path('here/%s' % contentObject.getIcon(1))"
+                                />&nbsp;
+                <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(contentObject)" >
+                   <span tal:omit-tag=""
+                      tal:define="replyCount python:here.portal_discussion.getDiscussionFor(contentObject).replyCount(contentObject)"
+                      tal:condition="python: replyCount > 0"
+                      tal:replace="python: '[%d]'% replyCount"> 8
+                    </span>
+               </span>&nbsp;
+ 
+               <span tal:replace="contentObject/title_or_id">Title</span>
+            </a>
+      </span>
+
+       <span tal:content="string: ( ${contentObject/author} )">
+                        size
+        </span>
+
+          <span tal:content="python:here.toPortalTime(contentObject.ModificationDate())">
+                        08/19/2001 03:01 AM
+           </span>
+
+    </td>
+  </tr>
+ </tbody>
+  <tr>
+    <td align="right">
+      <a href="#" tal:attributes="href string: ${here/absolute_url}/forum_post_message" i18n:translate="forum_label_post_message" target="_blank">post </a> | 
+      <a href="#" tal:attributes="href here/absolute_url" i18n:translate="forum_label_topic_home" target="_blank">More...</a>
+    </td>
+  </tr>
+</table>
+
+

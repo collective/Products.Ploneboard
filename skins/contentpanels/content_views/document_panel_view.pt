@@ -1,0 +1,4 @@
+<div tal:replace="structure here/CookedBody">
+ducument Body
+</div>
+

@@ -1,0 +1,4 @@
+<div tal:replace="structure here/render">
+ducument Body
+</div>
+
