@@ -127,7 +127,7 @@
 </div>
 <div align="right"> 
      <a href="#" 
-        tal:attributes="href python: here.absolute_url() + '/knowledgefolder_view'"
+        tal:attributes="href python: here.absolute_url() + '/folder_listing'"
 	i18n:translate="read_more">More... 
      </a>
 </div>
