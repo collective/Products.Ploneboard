@@ -17,11 +17,11 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h2 tal:content="here/Title">Board title</h2>
+        <h2 tal:content="here/Title">Forum title</h2>
 
         <div class="documentDescription"
              tal:content="here/Description"> 
-        description
+        Forum Description
         </div>
         
         <form tal:attributes="action string:${here/absolute_url}/portal_form/add_conversation_form">
@@ -30,42 +30,49 @@
                   value="Start a new Conversation" />
         </form>
 
-        <div class="boardForumListing">
+        <table class="listing">
 
-            <tal:showconversations tal:repeat="conversation conversations">
-            
-            <div class="boardForumEntry">
-                <div class="visualForumEntry">
-                    <a href=""
-                       tal:attributes="href conversation/absolute_url">
-                        <span>
+            <thead>
+                <tr>
+                    <th>Conversation</th>
+                    <th>Most Recent Comment</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tal:showconversations tal:repeat="conversation conversations">
+                
+                <tr tal:define="oddrow repeat/conversation/odd;"
+                    tal:attributes="class python:test(oddrow, 'even', 'odd')">
+                    <td>
+                        <a href=""
+                           class="listingConversation"
+                           tal:attributes="href conversation/absolute_url">
                             <span tal:replace="conversation/Title">This is a title</span>
 
-                            <em>
+                            <span class="discreet">
                                 by <span tal:replace="conversation/Creator">This is a title</span>
-                            </em>
+                            </span>
+                        </a>
+                    </td>
+    
+                    <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                    <td class="listingDetails">
+                        <span>
+                            by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span>
                         </span>
-                    </a>
-                </div>
 
-                <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                <div class="boardLastPost">
-                    <span tal:replace="python:here.toPloneboardTime(conversation.getLastMessageDate())">
-                        Thursday 13:21
-                    </span>
-
-                    <em>
-                        by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span>
-                    </em>
-                </div>
-
-            </div>
-            
-            </tal:showconversations>
-
-            <div class="visualClear"></div>
-
-        </div>
+                        <span class="discreet"
+                             tal:content="python:here.toPloneboardTime(conversation.getLastMessageDate())">
+                            Thursday 13:21
+                        </span>
+                    </td>
+    
+                </tr>
+                
+                </tal:showconversations>
+            </tbody>
+        </table>
 
     </div>
                      

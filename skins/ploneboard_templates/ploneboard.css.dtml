@@ -11,90 +11,45 @@
 
 /* <dtml-with base_properties> */
 
-#boardHeader {
-    
+/* Adjusting a few basic Plone classes */
+
+.listing {
+    font-size: 100%;
 }
 
-.boardForumListing {
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    border-top: 0;
+.listing th {
+    font-size: &dtml-fontSmallSize;;
 }
 
-.boardForumEntry {
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    border-style: &dtml-borderStyle; none none none;
-    clear: both;
-    padding-bottom: 1px;
-}
-
-.boardForumEntry .visualForumEntry {
-    float: left;
-    margin-right: -20em;
-    width: 100%;
-    padding: 0;
-}
-
-.boardForumEntry a {
+.listing .discreet {
+    text-align: right;
     display: block;
-    margin-right: 20em;
 }
 
-.boardForumEntry a span {
+/* The listing classes */
+
+.listingConversation {
     display: block;
     padding: 10px;
-    padding-left: 35px;
+    padding-left: 25px;
+    font-size: 110%;
     background: transparent url("<dtml-var portal_url>/ploneboard_conversation_icon.gif") no-repeat;
-    background-position: 15px 10px;
+    background-position: 5px 10px;
 }
 
-.boardForumIndex .boardForumEntry a span {
+.listingForum {
     display: block;
     padding: 10px;
-    padding-left: 35px;
+    padding-left: 25px;
+    font-size: 110%;
     background: transparent url("<dtml-var portal_url>/ploneboard_forum_icon.gif") no-repeat;
-    background-position: 15px 10px;
+    background-position: 5px 10px;
 }
 
-.boardForumEntry a:hover {
-    border: 5px solid #FFA500;
-}
-
-.boardForumEntry a:hover span {
-    padding: 5px;
-    padding-left: 30px;
-    background-position: 10px 5px;
-}
-
-.boardForumEntry a em,
-.boardForumEntry a strong {
-    display: block;
-    font-size: &dtml-fontSmallSize;;
-    color: &dtml-fontColor;;
-    font-style: normal;
-}
-
-.boardForumEntry a strong {
-    float: right;
-}
-
-.boardForumEntry .boardLastPost {
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    border-style: none none none dashed;
-    float: right;
-    width: 15em;
-    text-align: center;
-    padding: 5px;
-    margin: 5px;
-    font-size: &dtml-fontSmallSize;;
-}
-
-.boardConversation {
-
-}
+/* The Message classes */
 
 .boardMessage {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    margin-top: 1.5em;
     position: relative;
 }
 
@@ -106,7 +61,6 @@
 }
 
 .boardMessageBody {
-    padding: 0.5em 1em;
 }
 
 .boardMessageContent {
@@ -114,14 +68,14 @@
 }
 
 .boardMessageActions {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+
 }
 
 .boardMessagePortrait {
-    float: right; 
-    margin-bottom: 1em;
+    float: right;
+    width: 100px;
+    border-right: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    margin: 0;
 }
 
 /* </dtml-with> */

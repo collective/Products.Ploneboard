@@ -57,21 +57,23 @@
                         </a>
                     </div>
                     
-                    <div class="boardMessageContent" tal:content="structure message/getBody">Jeg mener mye rart.</div>
+                    <div class="boardMessageContent" tal:content="structure message/getBody">
+                    The message content.
+                    </div>
                     
+                    <div class="boardMessageActions" tal:condition="not: python: noreply == 1">
+                    
+                        <form tal:attributes="action string:${message/absolute_url}/portal_form/add_message_form">
+                            <input class="standalone"
+                                   type="submit" 
+                                   value="Reply to this" />
+                        </form>
+    
+                    </div>
+
+                    <div class="visualClear"></div>
                 </div>
                 
-                <div class="boardMessageActions" tal:condition="not: python: noreply == 1">
-                
-                    <form tal:attributes="action string:${message/absolute_url}/portal_form/add_message_form">
-                        <input class="standalone"
-                               type="submit" 
-                               value="Reply to this" />
-                    </form>
-
-                </div>
-
-                <div class="visualClear"></div>
 
             </div>
         </div>    

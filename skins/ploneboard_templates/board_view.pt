@@ -21,52 +21,56 @@
            description
         </div>
         
-        <div class="boardForumListing boardForumIndex">
+        <table class="listing">
+        
 
-            <tal:showforums tal:define="forums here/getForums"
-                            tal:repeat="forum forums">
+            <thead>
+                <tr>
+                    <th>Forum name</th>
+                    <th>Most recent post</th>
+                </tr>
+            </thead>
 
-                <div class="boardForumEntry">
-                    <div class="visualForumEntry">      
-                        <a href=""
-                           tal:attributes="href forum/absolute_url">
+            <tbody>
+                <tal:showforums tal:define="forums here/getForums"
+                                tal:repeat="forum forums">
+    
+                    <tr tal:define="oddrow repeat/forum/odd;"
+                        tal:attributes="class python:test(oddrow, 'even', 'odd')">
+
+                        <td>      
+                            <a href=""
+                               class="listingForum"
+                               tal:attributes="href forum/absolute_url">
+                                    <span tal:replace="forum/Title">This is a title</span>
+    
+                                    <span class="discreet" tal:content="forum/Description">
+                                    This is the Board Description
+                                    </span>
+                            </a>
+                        </td>
+    
+                        <!-- 
+                            This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
+                            if older than this week. (limi)
+                        -->
+                        <td>
                             <span>
-
-                                <span tal:replace="forum/Title">This is a title</span>
-
-                                <strong>(<span tal:replace="forum/Description">This is the Board Description</span>)</strong>
-
-                                <em>
-                                    by <span tal:replace="forum/Creator">This is a title</span>
-                                    -
-                                    <span tal:replace="forum/getNumberOfConversations" /> conversations, 
-                                    <span tal:replace="forum/getNumberOfMessages" /> messages.
-                                </em>
+                                by <span tal:replace="forum/getLastMessageAuthor">last author</span>
                             </span>
-                        </a>
 
-                    </div>
+                            <span class="discreet"
+                                  tal:content="python:here.toPloneboardTime(forum.getLastMessageDate())">
+                                Thursday 13:21
+                            </span>
+                        </td>
+    
+                    </tr>
+    
+                </tal:showforums>
 
-                    <!-- 
-                        This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
-                        if older than this week. (limi)
-                    -->
-                    <div class="boardLastPost">
-                        <span tal:replace="python:here.toPloneboardTime(forum.getLastMessageDate())">
-                            Thursday 13:21
-                        </span>
-                        <em>
-                            by <span tal:replace="forum/getLastMessageAuthor">last author</span>
-                        </em>
-                    </div>
-
-                </div>
-
-            </tal:showforums>
-
-            <div class="visualClear"></div>
-
-        </div>            
+            </tbody>
+        </table>            
     
     </div>
                      
