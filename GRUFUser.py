@@ -429,8 +429,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     security.declarePrivate('changePassword')
     def changePassword(self, password):
         """Set the user's password"""
-        # don't spam the user's roles with group roles and Authenticaed
-        roles = self.getUserRoles()
+        # don't spam the user's roles with special roles
+        roles = self._original_roles  # we must keep group roles
         roles = filter(lambda x: x not in ('Authenticated', 'Shared', 'Anonymous'), roles)
         
         # set the profile on the user folder
