@@ -51,11 +51,11 @@
 
       <p i18n:translate="description_deleted_members_orphan_content">When members are deleted, the content they own may end up with an
         invalid owner.  
-        <span i18n:translate="description_orphans_take_ownership" tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+        <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
           Click the button below to take ownership of orphaned content.
         </span>
-        <span i18n:translate="description_orphans_delete_content" tal:condition="python:here.orphanedContentDestination == 'delete'">
-          Click the button below to delete ordelete_content.
+        <span tal:condition="python:here.orphanedContentDestination == 'delete'">
+          Click the button below to delete orphaned content.
         </span>
       </p>
 

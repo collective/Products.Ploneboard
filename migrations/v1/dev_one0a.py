@@ -127,7 +127,7 @@ def replaceTools(self, convert=1):
         addTool('CMFMember Registration Tool', None)
 
         _migrateTool(portal, 'portal_registration', 'CMFMember Registration Tool', ['_actions'])
-        _migrateTool(portal, 'portal_catalog', 'Portal CMFMember Catalog Tool', ['_actions', '_catalog'])
+        #_migrateTool(portal, 'portal_catalog', 'Portal CMFMember Catalog Tool', ['_actions', '_catalog'])
         
         catalog = portal.portal_catalog
         catalog.addIndex('indexedUsersWithLocalRoles', 'KeywordIndex')

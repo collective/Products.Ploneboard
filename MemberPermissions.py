@@ -1,7 +1,10 @@
 from Products.CMFCore import CMFCorePermissions
+from utils import ContentPermMap
 
 # Add a new member
-ADD_PERMISSION = CMFCorePermissions.AddPortalMember
+ADD_PERMISSION = ADD_MEMBER_PERMISSION = CMFCorePermissions.AddPortalMember
+# Add a MemberDataContainer
+ADD_MDC_PERMISSION = 'Manage users'
 # Register a new member, i.e. create a User object and enable a member to log in
 REGISTER_PERMISSION = 'CMFMember: Register member'
 # Disable a membership
@@ -24,3 +27,11 @@ VIEW_PUBLIC_PERMISSION = VIEW_PERMISSION
 VIEW_OTHER_PERMISSION = EDIT_PROPERTIES_PERMISSION
 # Enable password mailing
 MAIL_PASSWORD_PERMISSION = CMFCorePermissions.MailForgottenPassword
+
+# map types to permissions
+ContentPermissionMap = ContentPermMap()
+ContentPermissionMap[ ADD_MEMBER_PERMISSION ] = 'Member'
+ContentPermissionMap[ ADD_MDC_PERMISSION ] = 'MemberDataContainer'
+ContentPermissionMap[ ADD_MDC_PERMISSION ] = 'ControlTool'
+# our way of saying all the other content types should get this permission
+ContentPermissionMap[ CMFCorePermissions.AddPortalContent ] =  None

@@ -10,11 +10,6 @@ from AccessControl.SecurityManagement import newSecurityManager
 
 import Products.CMFMember
 from Products.CMFMember.MemberDataContainer import MemberDataContainer
-from Products.CMFMember.Member import Member as MemberData
-
-default_user = CMFMemberTestCase.default_user
-_d = {'__ac_name': default_user,
-      '__ac_password': 'secret'}
 
 allowed_types = ('Member',)
 
@@ -81,14 +76,14 @@ class TestMemberDataContainer(CMFMemberTestCase.CMFMemberTestCase):
         # check member types for instance 
         self.assertEqual(list(self.memberdata.getAllowedMemberTypes()),
                         ['Member1','Member2'])
+                        
+    def testFolderContentsTabRemoval(self):
+    
+        # the PortalMemberdata Container doesn't need a Folder Contents tab;
+        # the view tab's action is folder_contents, so we remove it.
+        fc_types = getToolByName(self.portal, 'portal_properties').site_properties.use_folder_tabs
+        self.failIf('MemberDataContainer' in fc_types, 'MDC Still in use_folder_tabs Types List: %s' % (fc_types,))
 
-
-class TestMemberData(CMFMemberTestCase.CMFMemberTestCase):
-
-    def testMemberDataInterface(self):
-        from Products.CMFCore.interfaces.portal_memberdata \
-                import MemberData as IMemberData
-        verifyClass(IMemberData, MemberData)
 
 if __name__ == '__main__':
     framework(verbosity=1)
@@ -97,6 +92,5 @@ else:
     def test_suite():
         suite = TestSuite()
         suite.addTest(makeSuite(TestMemberDataContainer))
-        suite.addTest(makeSuite(TestMemberData))
         return suite
 

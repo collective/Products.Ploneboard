@@ -27,34 +27,8 @@
 
     <div class="documentContent">
 
+      <span metal:use-macro="here/prefs_cmfmember_macros/macros/setup_content" />
 
-    <tal:block tal:repeat="group groups">
-
-        <h2 tal:content="group/title"
-            i18n:translate="header_cmfmember_configlet_group_title">CMFMember Configlet Group Title</h2>
-
-        <ul class="configlets" tal:define="configlets python:controlPanel.enumConfiglets(group=group['id'])">
-
-            <li tal:repeat="configlet configlets">
-                <a href=""
-                   tal:attributes="href configlet/url"
-                   tal:condition="configlet/visible">
-                    <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);
-                                         alt configlet/description"
-                         i18n:attributes="alt"
-                         tal:on-error="string:" />
-                <tal:configletname tal:content="configlet/name"
-                                   i18n:translate=""></tal:configletname>
-                </a>
-            </li>
-
-            <li tal:condition="not:configlets" i18n:translate="label_no_panels_available">
-                No Preference Panels available.
-            </li>
-
-        </ul>
-
-    </tal:block>
     </div>
    </div>
   </div>

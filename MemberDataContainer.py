@@ -23,6 +23,7 @@ from Products.CMFCore.PortalFolder import PortalFolder
 from Products.CMFMember import PKG_NAME
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 from Products.CMFMember.Member import Member
+from Products.CMFMember.MemberPermissions import ADD_MEMBER_PERMISSION
 from Products.CMFMember.utils import logException, changeOwnership
 from DateTime import DateTime
 import string
@@ -59,6 +60,8 @@ schema = BaseFolderSchema + Schema((
                     searchable = 0,
                     vocabulary = 'all_type_names',
                     enforceVocabulary=1,
+                    accessor='getAllowedMemberTypes',
+                    mutator='setAllowedMemberTypes',
                     widget = MultiSelectionWidget(label = 'Allowed member types',
                                                   description = 'Indicate the allowed member types')),
          StringField('orphanedContentDestination',
@@ -99,6 +102,8 @@ class MemberDataContainer(BaseBTreeFolder):
     global_allow = 0
 
     _defaultMember = None
+    
+    #DWM: should be private. and/or accesible as a method
     defaultMemberSchema = Member.schema
     _instanceVersion = ''
 
@@ -169,7 +174,7 @@ class MemberDataContainer(BaseBTreeFolder):
         The result is designed to be iterated over in a dtml-in
         """
 
-        members = self.objectValues()
+        members = self.objectValues(spec=self.getAllowedMemberTypes())
         oc = 0
         member_ids = []
         for member in members:
@@ -191,7 +196,7 @@ class MemberDataContainer(BaseBTreeFolder):
         like manage its workflow state. The default impl will remove.
         """
 
-        members = self.objectValues()
+        members = self.objectValues(spec=self.getAllowedMemberTypes())
         for member in members:
             if member.isOrphan():
                 self.pruneOrphan(member.getUserName())
@@ -399,30 +404,8 @@ class MemberDataContainer(BaseBTreeFolder):
             self._defaultMember.unindexObject()
         return self._defaultMember
 
-
     ## Folderish Methods
-
-#     security.declareProtected(CMFCorePermissions.AddPortalContent, 'invokeFactory')
-#     def invokeFactory( self
-#                      , type_name
-#                      , id
-#                      , RESPONSE=None
-#                      , *args
-#                      , **kw
-#                      ):
-#         """
-#         Overriding invokeFactory to be able to have different Member types per
-#         instance base. We do a change in the portal_types.MemberDataContainer's
-#         allowed content types before we add a new member. After the creation we
-#         change to default value.
-#         """
-#         portal_types = getToolByName(self, 'portal_types')
-#         type_info = portal_types.getTypeInfo('MemberDataContainer')
-#         old_content_types = type_info.allowed_content_types
-#         type_info.allowed_content_types = self.getAllowedMemberTypes()
-#         new_id = BaseBTreeFolder.invokeFactory(self, type_name, id, RESPONSE, *args, **kw)
-#         type_info.allowed_content_types = old_content_types
-#         return new_id
+    security.declareProtected(ADD_MEMBER_PERMISSION, 'invokeFactory')
 
     def allowedContentTypes(self):
         """
@@ -431,10 +414,24 @@ class MemberDataContainer(BaseBTreeFolder):
         objects in i.e. Plone.
         """
         result = []
+
         portal_types = getToolByName(self, 'portal_types')
+        myType = portal_types.getTypeInfo(self)
+
+        if myType is not None:
+            for contentType in portal_types.listTypeInfo(self):
+                if myType.allowType( contentType.getId() ):
+                    result.append( contentType )
+        else:
+            result.extend(portal_types.listTypeInfo())
+
         for contentType in self.getAllowedMemberTypes():
-            result.append(portal_types.getTypeInfo(contentType))
-        return result
+            if portal_types.getTypeInfo(contentType) not in result:
+                result.append(portal_types.getTypeInfo(contentType))
+
+        return filter( lambda typ, container=self:
+                          typ and typ.isConstructionAllowed( container )
+                     , result )
 
     # Removed since we now can control allowed content types per instance
     # It could and should be use when the in & out widget is available to
@@ -458,7 +455,7 @@ class MemberDataContainer(BaseBTreeFolder):
     
     security.declareProtected(CMFCorePermissions.ListPortalMembers, 'contentValues')
     def contentValues(self, spec=None, filter=None):
-        objects = [v.__of__(self) for v in self.objectValues(spec=spec)]
+        objects = [v.__of__(self) for v in self.objectValues(spec)]
         l = []
         for v in objects:
             id = v.getId()
@@ -475,8 +472,10 @@ class MemberDataContainer(BaseBTreeFolder):
         BaseBTreeFolder._checkId(self, id, allow_dup)
 
 
-    # register type type of Member object that the MemberDataConatiner will store
-    def registerType(self, new_type_name, default=1):
+    # register type type of Member object
+    # that the MemberDataConatiner will store
+    def registerType(self, new_type_name, default=False):
+        ### DWM: add implementation check
         if default:
             self.setDefaultType(new_type_name)
         typestool=getToolByName(self, 'portal_types')
@@ -494,6 +493,7 @@ class MemberDataContainer(BaseBTreeFolder):
         pkg = type_info.product
         self.defaultMemberSchema = at_tool.lookupType(pkg, type_name)['schema']
         self._defaultMember = None # nuke the default member (which was of the old Member type)
+
 
     # Migrate members when changing member type
     # 1) rename old member to some temp name
@@ -535,6 +535,7 @@ class MemberDataContainer(BaseBTreeFolder):
                 workflow_tool.doActionFor(new_member, t)
 
             self.manage_delObjects(temp_id)
+            
         from Products.CMFMember.Extensions.Install import setupNavigation
         setupNavigation(self, out, new_type_name)
 
@@ -583,8 +584,10 @@ class MemberDataContainer(BaseBTreeFolder):
     def getMemberSchema(self):
         """
         Returns acquisition wrapped member schema.
+
+        future: add args to return a particular types schema
         """
-        schema = getattr(self,'memberSchema',self.defaultMemberSchema )
+        schema = getattr(self, 'memberSchema', self.defaultMemberSchema )
         schema = ImplicitAcquisitionWrapper(schema, self)
         return schema
 
@@ -595,19 +598,29 @@ class MemberDataContainer(BaseBTreeFolder):
         variable allowed_content_types directly.  No checking
         for whether types are real, proper, etc.
         """
-
-
-        self.allowed_content_types = memberTypes
+        for item in memberTypes:
+            if not item:
+                memberTypes.remove(item)
+        
         field=self.Schema()['allowedMemberTypes']
         field.set(self, memberTypes, **kwargs)
 
         type_tool = getToolByName(self, 'portal_types')
-        
+
         mdc = type_tool.getTypeInfo(self)
-        mdc.manage_changeProperties(allowed_content_types=memberTypes)
+        allowedMemberTypes=self.all_type_names()
+        allowed_content_types=[]
+
+        for item in mdc.allowed_content_types:
+            if item not in allowedMemberTypes:
+                allowed_content_types.append(item)
+        allowed_content_types.extend(memberTypes)
+        mdc.allowed_content_types=tuple(allowed_content_types)
+        self.allowed_content_types = allowed_content_types
 
     def _vocabAllowedMemberTypes(self):
         return self.getAllowedMemberTypes()
+
 
 # Put this outside the MemberData tool so that it can be used for
 # conversion of old MemberData during installation

@@ -1,0 +1,18 @@
+** CSV import **
+
+
+place your import file in 
+
+INSTANCE_HOME/import/users.csv
+
+place your images in 
+
+INSTANCE_HOME/import/user_files
+
+
+The importer compares the default member schema to the csv. CSV files will be read in order of schema fields.
+
+
+The importer will look for files with the following naming scheme: [username]_[fieldname].ext (ext stands for any extension.)
+
+

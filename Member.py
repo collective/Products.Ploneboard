@@ -25,7 +25,6 @@ from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, \
 from Products.CMFCore.Expression import createExprContext
 from Products.Archetypes.public import *
 from Products.Archetypes.debug import log
-from Products.Archetypes.interfaces.base import IBaseContent
 from Products.Archetypes.Schema import Schemata
 from Products.Archetypes.VariableSchemaSupport import VariableSchemaSupport
 
@@ -33,7 +32,7 @@ from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, \
      EDIT_ID_PERMISSION, VIEW_OTHER_PERMISSION, EDIT_PROPERTIES_PERMISSION, \
      VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, \
-     EDIT_SECURITY_PERMISSION, MAIL_PASSWORD_PERMISSION, ADD_PERMISSION, \
+     EDIT_SECURITY_PERMISSION, MAIL_PASSWORD_PERMISSION, ADD_MEMBER_PERMISSION, \
      VIEW_PERMISSION, REGISTER_PERMISSION
 from Products.CMFMember import RegistrationTool, VERSION
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
@@ -43,7 +42,7 @@ from Products.CMFMember.utils import logException, changeOwnership, unique
 # generate the addMember method ourselves so we can do some extra
 # initialization
 security = ModuleSecurityInfo('Products.CMFMember.Member')
-security.declareProtected(ADD_PERMISSION, 'addMember')
+security.declareProtected(ADD_MEMBER_PERMISSION, 'addMember')
 def addMember(self, id, **kwargs):
     o = Member(id)
     self._setObject(id, o)
@@ -80,6 +79,18 @@ id_schema = Schema((
                     macro='memid'
                     ),
                 regfield=1,  ### this field is part of the registration form
+                ),
+
+
+    StringField('title',
+                required=0,
+                searchable=1,
+                default='',
+                accessor='Title',
+                mutator='setTitle',
+                widget=StringWidget(
+    label_msgid="label_title",
+    i18n_domain="plone"),
                 ),
 ))
 
@@ -257,7 +268,7 @@ security_schema = Schema((
                     ),
                 regfield=1,
                 ),
-
+    
     LinesField('roles',
                default=('Member',),
                mutator='setRoles',
@@ -365,7 +376,7 @@ login_info_schema = Schema((
                                'view':'visible'},
                       ),
                   ),
-
+    
     ComputedField('listed',
                   mode='r',
                   read_permission=VIEW_OTHER_PERMISSION,
@@ -400,7 +411,7 @@ class BaseMember:
 
     # Give a nice icon
     content_icon = "user.gif"
-
+    
     # Note that we override BaseContent.schema
     schema = content_schema + ExtensibleMetadata.schema
 
@@ -472,7 +483,14 @@ class BaseMember:
     # User interface
     security.declarePublic('Title')
     def Title(self):
-        return self.id
+        try:
+            title = self.Schema()['title'].get(self)
+        except KeyError:
+            title = ''
+        if not title:
+            return self.id
+        else:
+            return title
 
     def index_html(self):
         """ Acquire if not present. """
@@ -648,7 +666,9 @@ class BaseMember:
 
         if self.hasUser():
             # if our user lives in a user folder, do this the right way
-            aq_parent(aq_inner(self.getUser())).userFolderEditUser(self.id,
+            # XXX: Work around GRUF3 over-validating arguments
+            #aq_parent(aq_inner(self.getUser())).userFolderEditUser(self.id,
+            aq_parent(aq_inner(self.getUser()))._doChangeUser(self.id,
                                                                    password,
                                                                    roles,
                                                                    domains)
@@ -787,6 +807,8 @@ class BaseMember:
     # ########################################################################
     # Validators and vocabulary methods
 
+    import re
+    __ALLOWED_MEMBER_ID_PATTERN = re.compile( "^[A-Za-z][A-Za-z0-9_]*$" )
     security.declarePrivate('validate_id')
     def validate_id(self, id):
         # no change -- ignore
@@ -794,13 +816,13 @@ class BaseMember:
             return None
 
         memberdata_tool = getToolByName(self, 'portal_memberdata')
-        if memberdata_tool.get(id, None):
+        if memberdata_tool.has_key(id):
             return 'This name is already in use.  Please choose another.'
 
-        registration_tool = getToolByName(self, 'portal_registration')
-        if registration_tool.isMemberIdAllowed(id):
-            return None
-        else:
+        # Copy this in there from registration tool to avoid wrapping users
+        if len(id) < 1 or id == 'Anonymous User':
+            return 'Please provide real user name'
+        if not self.__ALLOWED_MEMBER_ID_PATTERN.match( id ):
             return 'Names can only include letters and numbers.  Please choose another.'
 
 
@@ -1002,11 +1024,7 @@ class BaseMember:
             if self._v_user[0] is None:
                 # orphan! -- our associated user object has been deleted
                 self._createTempUser()
-        try:
-            self._v_user[0]
-        except:
-            import pdb
-            pdb.set_trace()
+
         return self._v_user[0]
 
 
@@ -1249,10 +1267,10 @@ class BaseMember:
         return ret
 
 
-    def processForm(self, data=1, metadata=0):
+    def processForm(self, data=1, metadata=0, REQUEST=None, values=None):
         membership_tool = getToolByName(self, 'portal_membership')
         updateSelf = membership_tool.getAuthenticatedMember().getUserName() == self.getUserName()
-        ret = self.base_archetype.processForm(self, data, metadata)
+        ret = self.base_archetype.processForm(self, data, metadata, REQUEST, values)
         if updateSelf:
             self._updateCredentials()
         # invoke any automated workflow transitions after update
@@ -1557,11 +1575,13 @@ class BaseMember:
         mail_text = self.mail_password_template( self
                                                , self.REQUEST
                                                , member=self
-                                               , email=email
+                                               , password=self.getPassword()
+                                               , member_id=self.getId()
+                                               , member_email=self.getEmail()  
                                                )
         host = self.MailHost
         host.send( mail_text )
-
+        
 
     # ########################################################################
     # utility methods
