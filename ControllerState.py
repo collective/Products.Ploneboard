@@ -138,7 +138,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         err = {}
         for k,v in self.errors.items():
             # make allowances for old-style string errors
-            if type(v) == type(''):
+            if type(v) == type('') or type(v) == type(u''):
                 err[k] = (v, None)
             else:
                 err[k] = v
@@ -150,7 +150,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.errors = {}
         # make allowances for old-style errors
         for k,v in errors.items():
-            if type(v) == type(''):
+            if type(v) == type('') or type(v) == type(u''):
                 self.errors[k] = (v, None)
             else:
                 self.errors[k] = v
