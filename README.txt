@@ -13,7 +13,7 @@ below how to register them).
 
 Products required
 =================
-CompositePage: HEAD of cvs.zope.org/Products/CompositePage
+CompositePage 0.2 http://hathawaymix.org/Software/CompositePage/CompositePage-0.2.tar.gz
 kupu : HEAD of http://codespeak.net/svn/kupu/trunk/kupu
 Archetypes: release-1_3-branch from SF archetypes project
 
