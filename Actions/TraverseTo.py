@@ -15,9 +15,9 @@ class TraverseTo(BaseFormAction):
             REQUEST.set(key, value)
         # make sure target exists
         context = controller_state.getContext()
-        if not hasattr(context, url):
+        obj = context.restrictedTraverse(url, default=None)
+        if obj is None:
             raise ValueError, 'Unable to find %s\n' % str(url)
-        obj = context.restrictedTraverse(url)
         return mapply(obj, REQUEST.args, REQUEST,
                                call_object, 1, missing_name, dont_publish_class,
                                REQUEST, bind=1)
