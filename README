@@ -1,0 +1,16 @@
+
+INSTALLATION:
+
+  * Zope 2.5 - http://www.zope.org
+
+  * Plone 0.9.9 preview 5  - http://www.plone.org
+
+  * CMF 1.2 - http://cmf.zope.org
+
+  * Photo 1.2.3 - http://www.zope.org/Members/rbickers/Photo
+
+  Add and run Extenstions/Install/install as an external method after plone is installed.
+
+CONTACT:
+
+  magnus.heino@home.se
