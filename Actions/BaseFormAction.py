@@ -7,6 +7,7 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFFormController.FormController import registerFormAction
+from Products.CMFFormController.utils import log
 from IFormAction import IFormAction
 
 # ###########################################################################
@@ -19,8 +20,11 @@ class BaseFormAction(Role.RoleManager):
 
     expression = None
 
-    def __init__(self, arg):
-        self.expression = Expression(arg)
+    def __init__(self, arg=None):
+        if arg is None:
+            log('No argument specified for action.  This means that some of your CMFFormController actions may have been corrupted.  You may be able to fix them by editing the actions in question via the Actions tab and re-saving them.')
+        else:
+            self.expression = Expression(arg)
 
 
     def __call__(self, controller_state):

@@ -185,10 +185,17 @@ class ControllerBase:
 
     
     def getButton(self, controller_state, REQUEST):
+        buttons = []
         for k in REQUEST.form.keys():
             if k.startswith('form.button.'):
-                controller_state.setButton(k[len('form.button.'):])
-                return controller_state
+                buttons.append(k)
+        if buttons:
+            # Clicking on an image button results in 3 button variables in REQUEST.form,
+            # namely form.button.button_name, form.button.button_name.x, and form.button.button_name.y
+            # If we see more than one key with the button prefix, grab the shortest one.
+            if len(buttons) > 1:
+                buttons.sort(lambda x, y: cmp(len(x), len(y)))
+            controller_state.setButton(buttons[0][len('form.button.'):])
         return controller_state
         
 
