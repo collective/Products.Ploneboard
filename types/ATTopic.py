@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.25 2004/10/04 06:27:17 tiran Exp $
+$Id: ATTopic.py,v 1.26 2004/10/05 11:46:32 hoka Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -77,7 +77,7 @@ class ATTopic(ATCTFolder):
         {
         'id'          : 'view',
         'name'        : 'View',
-        'action'      : 'string:${folder_url}/atct_topic_view',
+        'action'      : 'string:${folder_url}/',
         'permissions' : (CMFCorePermissions.View,)
         },
         {
