@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.3 2003/07/29 14:18:39 plonista Exp $
+$Id: FSControlledPythonScript.py,v 1.4 2003/07/29 15:16:56 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -25,13 +25,7 @@ from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
 from ControlledPythonScript import ControlledPythonScript
 from ControllerState import ControllerState
 from ControlledBase import ControlledBase
-
-try:
-    from Products.CMFPlone.PloneTool import logException
-except:
-    logException = None
-
-
+from utils import logException
 
 class FSControlledPythonScript (BaseClass, ControlledBase):
     """FSControlledPythonScripts act like Controlled Python Scripts but are not 
@@ -53,6 +47,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
 
     def __init__(self, id, filepath, fullname=None, properties=None):
         BaseClass.__init__(self, id, filepath, fullname, properties)
+        self.filepath = filepath
         self._read_action_metadata(self.getId(), filepath)
 
     def __call__(self, *args, **kwargs):
@@ -68,12 +63,9 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
             # Re-read .metadata after adding so that we can do validation checks
             # using information in portal_form_controller.  Since manage_afterAdd
             # is not guaranteed to run, we also call these in __init__
-            object._read_action_metadata(object.getId(), object.filepath)
+            self._read_action_metadata(self.getId(), self.filepath)
         except:
-            if logException:
-                logException()
-#            import pdb
-#            pdb.set_trace()
+            logException()
             raise
 
 

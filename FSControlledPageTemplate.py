@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControlledPageTemplate.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
+$Id: FSControlledPageTemplate.py,v 1.3 2003/07/29 15:16:56 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -27,6 +27,7 @@ from Products.CMFCore.FSPageTemplate import FSPageTemplate as BaseClass
 from ControlledPageTemplate import ControlledPageTemplate
 from ControlledBase import ControlledBase
 from BaseControlledPageTemplate import BaseControlledPageTemplate
+from utils import logException
 
 
 class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
@@ -47,6 +48,7 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
 
     def __init__(self, id, filepath, fullname=None, properties=None):
         BaseClass.__init__(self, id, filepath, fullname, properties)
+        self.filepath = filepath
         self._read_action_metadata(self.getId(), filepath)
         self._read_validator_metadata(self.getId(), filepath)
 
@@ -58,11 +60,10 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
             # Re-read .metadata after adding so that we can do validation checks
             # using information in portal_form_controller.  Since manage_afterAdd
             # is not guaranteed to run, we also call these in __init__
-            object._read_action_metadata(object.getId(), object.filepath)
-            object._read_validator_metadata(object.getId(), object.filepath)
+            self._read_action_metadata(self.getId(), self.filepath)
+            self._read_validator_metadata(self.getId(), self.filepath)
         except:
-            import pdb
-            pdb.set_trace()
+            logException()
             raise
 
 

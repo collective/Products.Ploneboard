@@ -203,10 +203,6 @@ class ControlledBase:
                 act = v.split(':',1)
                 while len(act) < 2:
                     act.append('')
-                import sys
-                sys.stdout.write('form action: %s, %s, %s, %s, %s, %s\n' % (str(id), \
-                    str(component[1]), str(component[2]), str(component[3]),
-                    str(act[0]), str(act[1])))
                 self.actions.set(FormAction(id, component[1], component[2], component[3], act[0], act[1], controller))
 
 

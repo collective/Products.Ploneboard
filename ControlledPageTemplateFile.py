@@ -12,7 +12,7 @@
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControlledPageTemplateFile.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
+$Id: ControlledPageTemplateFile.py,v 1.3 2003/07/29 15:16:56 plonista Exp $
 """
 
 import os
@@ -21,6 +21,7 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFCore.CMFCorePermissions import View
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile as BaseClass
 from BaseControlledPageTemplate import BaseControlledPageTemplate
+from utils import logException
 
 
 class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
@@ -54,11 +55,10 @@ class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
             # Re-read .metadata after adding so that we can do validation checks
             # using information in portal_form_controller.  Since manage_afterAdd
             # is not guaranteed to run, we also call these in __init__
-            object._read_action_metadata(object.getId(), object.filepath)
-            object._read_validator_metadata(object.getId(), object.filepath)
+            self._read_action_metadata(self.getId(), self.filepath)
+            self._read_validator_metadata(self.getId(), self.filepath)
         except:
-            import pdb
-            pdb.set_trace()
+            logException()
             raise
 
 

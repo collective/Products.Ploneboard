@@ -90,8 +90,6 @@ class BaseControlledPageTemplate(ControlledBase):
             return controller_state
         for v in validators:
             REQUEST.set('controller_state', controller_state)
-#            sys.stdout.write('controller_state = %s\n' % (str(controller_state)))
-#            sys.stdout.write('Invoking %s\n' % v)
             try:
                 obj = context.restrictedTraverse(v)
                 REQUEST = controller_state.getContext().REQUEST

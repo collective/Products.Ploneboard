@@ -15,8 +15,6 @@ class RedirectTo(BaseFormAction):
             # No host specified, so url is relative.  Get an absolute url.
             url = urljoin(context.absolute_url()+'/', url)
         url = self.updateQuery(url, controller_state.kwargs)
-#        import sys
-#        sys.stdout.write('redirecting to %s\n' % url)
         return context.REQUEST.RESPONSE.redirect(url)
 
 
