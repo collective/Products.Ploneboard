@@ -17,13 +17,13 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
 
-msgid "config"
+msgid "Config"
 msgstr ""
 
 msgid "ContentPanels"
 msgstr ""
 
-msgid "ContentPanels is a portlets content to build composite page."
+msgid "ContentPanels is a portlet content to build composite page."
 msgstr ""
 
 msgid "contentpanels property changes saved."

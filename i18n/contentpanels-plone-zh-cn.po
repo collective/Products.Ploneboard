@@ -22,7 +22,7 @@ msgstr "配置"
 msgid "ContentPanels"
 msgstr "复合面板页面"
 
-msgid "ContentPanels is a portlets content to build composite page."
+msgid "ContentPanels is a portlet content to build composite page."
 msgstr "复合面板页面是一种用来构建复合页面的Portlets内容"
 
 msgid "contentpanels property changes saved. "
