@@ -35,7 +35,7 @@
               ">
               <div class="portlet">
                 <h6>
-                  <img src="" style="border: 0"
+                  <img src="" alt="Type" style="border: 0"
                        tal:attributes="src groupspace/getIcon;
                     alt groupspace/Type" />
                     <span tal:omit-tag="" i18n:translate="">Managed by</span>
@@ -113,6 +113,7 @@
                     </div>
                   </div>
                 </div>
+
             </tal:block>
           </tal:block>
           <p tal:condition="not: spaces" i18n:translate="">
