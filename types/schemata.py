@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.21 2004/04/29 14:08:19 tiran Exp $
+$Id: schemata.py,v 1.22 2004/05/02 22:09:57 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -37,7 +37,12 @@ if HAS_EXT_STORAGE:
     from Products.ExternalStorage.ExternalStorage import ExternalStorage
 else:
     # dummy storage
-    from Products.Archetypes.Storage import Storage as ExternalStorage
+    from Products.Archetypes.Storage import Storage as BaseStorage
+
+    class ExternalStorage(BaseStorage):
+        def __init__(self, prefix='', archive=False):
+            pass
+
 
 ATContentTypeBaseSchema = BaseSchema + Schema((
     TextField('description',
@@ -261,7 +266,7 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
-              storage=ExternalStorage(prefix='atct', archive=False),
+               storage=ExternalStorage(prefix='atct', archive=False),
                sizes= {'preview' : (400, 400),
                        'thumb'   : (128, 128),
                        'tile'    :  (64, 64),
