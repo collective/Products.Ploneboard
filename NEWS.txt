@@ -1,3 +1,7 @@
+1.0fork-rc1 - 2004-02-11 (aka Plone 2.0final release)
+
+    Fixed minors problems with python 2.1 compatibility
+
 1.0fork-beta5 - 2004-02-03
 
     Added utranslate method
