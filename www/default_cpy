@@ -1,11 +1,6 @@
 ################################################################################
 # Example form action code
 
-# Get the ControllerState object.  This is where you set error messages, 
-# status messages, and the final return status for the portal_form_controller.
-# Set is_validator=1 for a validation script; 0 otherwise
-state = context.portal_form_controller.getState(script, is_validator=0)
-
 # Set the state status (unnecessary in this case, as the default status is 'success')
 state.setStatus = 'success'
 

@@ -12,9 +12,10 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.3 2003/09/27 22:51:07 plonista Exp $
 """
 
+import re
 import copy
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
@@ -23,11 +24,13 @@ from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
+from Products.CMFCore.utils import getToolByName
+from Script import FSPythonScript as BaseClass
 from ControllerPythonScript import ControllerPythonScript
 from ControllerState import ControllerState
 from ControllerBase import ControllerBase
 from utils import logException
+
 
 class FSControllerPythonScript (BaseClass, ControllerBase):
     """FSControllerPythonScripts act like Controller Python Scripts but are not 
@@ -74,7 +77,6 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             logException()
             raise
 
-
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControllerPythonScript(self.getId())
@@ -89,7 +91,12 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
         """Can default actions and validators be modified?"""
         return 0
 
+    def _getState(self):
+        return getToolByName(self, 'portal_form_controller').getState(self, is_validator=0)
+
+
 Globals.InitializeClass(FSControllerPythonScript)
+
 
 registerFileExtension('cpy', FSControllerPythonScript)
 registerMetaType('Controller Python Script', FSControllerPythonScript)

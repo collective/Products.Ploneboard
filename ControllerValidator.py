@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.2 $'[11:-2]
+__version__='$Revision: 1.3 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -30,7 +30,8 @@ from AccessControl import getSecurityManager
 from OFS.History import Historical
 from OFS.Cache import Cacheable
 from zLOG import LOG, ERROR, INFO, PROBLEM
-from Products.PythonScripts.PythonScript import PythonScript
+from Products.CMFCore.utils import getToolByName
+from Script import PythonScript
 from ControllerBase import ControllerBase
 from FormAction import FormActionContainer
 
@@ -127,10 +128,5 @@ class ControllerValidator(PythonScript, ControllerBase):
 #            return self.getNext(result, self.REQUEST)
         return result
 
-
-_first_indent = re.compile('(?m)^ *(?! |$)')
-_nonempty_line = re.compile('(?m)^(.*\S.*)$')
-
-_nice_bind_names = {'context': 'name_context', 'container': 'name_container',
-                    'script': 'name_m_self', 'namespace': 'name_ns',
-                    'subpath': 'name_subpath'}
+    def _getState(self):
+        return getToolByName(self, 'portal_form_controller').getState(self, is_validator=1)

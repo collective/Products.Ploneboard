@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
+$Id: FSControllerValidator.py,v 1.3 2003/09/27 22:51:07 plonista Exp $
 """
 
 import copy
@@ -23,7 +23,8 @@ from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
+from Products.CMFCore.utils import getToolByName
+from Script import FSPythonScript as BaseClass
 from ControllerValidator import ControllerValidator
 from ControllerState import ControllerState
 from ControllerBase import ControllerBase
@@ -85,6 +86,9 @@ class FSControllerValidator (BaseClass, ControllerBase):
     def writableDefaults(self):
         """Can default actions and validators be modified?"""
         return 0
+
+    def _getState(self):
+        return getToolByName(self, 'portal_form_controller').getState(self, is_validator=1)
 
 Globals.InitializeClass(FSControllerValidator)
 

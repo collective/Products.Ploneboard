@@ -17,12 +17,11 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.3 $'[11:-2]
+__version__='$Revision: 1.4 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
 import AccessControl, OFS
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.SimpleItem import SimpleItem
 from urllib import quote
 from Shared.DC.Scripts.Script import BindingsUI
@@ -30,7 +29,9 @@ from AccessControl import getSecurityManager
 from OFS.History import Historical
 from OFS.Cache import Cacheable
 from zLOG import LOG, ERROR, INFO, PROBLEM
-from Products.PythonScripts.PythonScript import PythonScript
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+from Products.CMFCore.utils import getToolByName
+from Script import PythonScript
 from ControllerBase import ControllerBase
 from ControllerState import ControllerState
 from FormAction import FormActionContainer
@@ -54,6 +55,10 @@ _default_file = os.path.join(package_home(globals()),
                              'www', 'default_cpy')
 
 _marker = []  # Create a new marker object
+
+
+_first_indent = re.compile('(?m)^ *(?! |$)')
+_nonempty_line = re.compile('(?m)^(.*\S.*)$')
 
 # ###########################################################################
 # Product registration and Add support
@@ -119,8 +124,6 @@ class ControllerPythonScript(PythonScript, ControllerBase):
 
 
     def __init__(self, *args, **kwargs):
-        self.actions = FormActionContainer()
-        self.validators = FormValidatorContainer()
         return ControllerPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 
@@ -131,9 +134,6 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         return result
 
 
-_first_indent = re.compile('(?m)^ *(?! |$)')
-_nonempty_line = re.compile('(?m)^(.*\S.*)$')
+    def _getState(self):
+        return getToolByName(self, 'portal_form_controller').getState(self, is_validator=0)
 
-_nice_bind_names = {'context': 'name_context', 'container': 'name_container',
-                    'script': 'name_m_self', 'namespace': 'name_ns',
-                    'subpath': 'name_subpath'}
