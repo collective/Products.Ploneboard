@@ -10,7 +10,7 @@ from StringIO import StringIO
 from App.Common import package_home
 import os
 
-class SkinRegistrar:
+class PloneSkinRegistrar:
     """
     Controls (un)registering of a layer in the skins tool:
      - the layer in the content of the skin tool
@@ -43,13 +43,7 @@ class SkinRegistrar:
         self._prodglobals = prodglobals
         return
 
-    def getLayersToAdd(self):
-        layerName = self._prodglobals['__name__'].split('.')[-1]
-        layerpath = os.path.join(package_home(self._prodglobals),'skins',layerName)
-        subLayerNames=[p for p in os.listdir(layerpath) if os.path.isdir(os.path.join(layerpath,p)) and p != 'CVS']
-        return [layerName+'/'+l for l in subLayerNames] + [layerName]
-
-    def install(self, aq_obj):
+    def install(self, aq_obj,position=None,mode='after',layerName=None):
         """Installs and registers the skin resources
         @param aq_obj: object from which cmf site object is acquired
         @type aq_obj: any Zope object in the CMF
@@ -62,38 +56,43 @@ class SkinRegistrar:
 
         # Create the layer in portal_skins
 
-        if self._skinsdir not in skinstool.objectIds():
-            addDirectoryViews(skinstool, self._skinsdir, self._prodglobals)
-            rpt += 'Added "%s" directory view to portal_skins\n' % self._skinsdir
-        else:
+        try:
+            if self._skinsdir not in skinstool.objectIds():
+                addDirectoryViews(skinstool, self._skinsdir, self._prodglobals)
+                rpt += 'Added "%s" directory view to portal_skins\n' % self._skinsdir
+            else:
+                rpt += 'Warning: directory view "%s" already added to portal_skins\n' % self._skinsdir
+        except:
+            # ugh, but i am in stress
             rpt += 'Warning: directory view "%s" already added to portal_skins\n' % self._skinsdir
+
 
         # Insert the layer in all skins
         # XXX FIXME: Actually assumes only one layer directory with the name of the Product
         # (should be replaced by a smarter solution that finds individual Product's layers)
 
-        
-        layersToAdd=self.getLayersToAdd()
-        
+        if not layerName:
+            layerName = self._prodglobals['__name__'].split('.')[-1]
+
         skins = skinstool.getSkinSelections()
-        
+
         for skin in skins:
             layers = skinstool.getSkinPath(skin)
             layers = [layer.strip() for layer in layers.split(',')]
-            
-            for layerName in layersToAdd:
-                if layerName not in layers:
-                    try:
-                        layers.insert(layers.index('content'), layerName)
-                    except ValueError:
-                        layers.append(layerName)
-                    rpt += 'Added "%s" to "%s" skin\n' % (layerName, skin)
-                else:
-                    rpt += '! Warning: skipping "%s" skin, "%s" is already set up\n' % (skin, type)
+            if layerName not in layers:
+                try:
+                    pos=layers.index(position)
+                    if mode=='after': pos=pos+1
+                except ValueError:
+                    pos=len(layers)
 
-                skinstool.addSkinSelection(skin, ','.join(layers))
+                layers.insert(pos, layerName)
 
-
+                layers = ','.join(layers)
+                skinstool.addSkinSelection(skin, layers)
+                rpt += 'Added "%s" to "%s" skin\n' % (layerName, skin)
+            else:
+                rpt += '! Warning: skipping "%s" skin, "%s" is already set up\n' % (skin, type)
         return rpt
 
     def uninstall(self, aq_obj):
@@ -111,7 +110,9 @@ class SkinRegistrar:
         # XXX FIXME: Actually assumes only one layer directory with the name of the Product
         # (should be replaced by a smarter solution that finds individual Product's layers)
 
-        layerName = self._prodglobals['__name__'].split('.')[-1]
+        if not layerName:
+            layerName = self._prodglobals['__name__'].split('.')[-1]
+
         if layerName in skinstool.objectIds():
             skinstool.manage_delObjects([layerName])
             rpt += 'Removed "%s" directory view from portal_skins\n' % layerName
@@ -124,16 +125,12 @@ class SkinRegistrar:
         for skin in skins:
             layers = skinstool.getSkinPath(skin)
             layers = [layer.strip() for layer in layers.split(',')]
-            
-            for layerName in self.getLayersToAdd():
-                if layerName in layers:
-                    layers.remove(layerName)
-                    rpt += 'Removed "%s" from "%s" skin\n' % (layerName, skin)
-                else:
-                    rpt += 'Skipping "%s" skin, "%s" is already removed\n' % (skin, layerName)
-
-        skinstool.addSkinSelection(skin, ','.join(layers))
-
+            if layerName in layers:
+                layers.remove(layerName)
+                layers = ','.join(layers)
+                skinstool.addSkinSelection(skin, layers)
+                rpt += 'Removed "%s" to "%s" skin\n' % (layerName, skin)
+            else:
+                rpt += 'Skipping "%s" skin, "%s" is already removed\n' % (skin, layerName)
         return rpt
 # /class PloneSkinRegistrar
- 
