@@ -160,3 +160,12 @@ class TestInterface(ZopeTestCase.ZopeTestCase):
                 string.join(not_defined, ", "),
                 )
         
+
+def test_suite():
+    from unittest import TestSuite, makeSuite
+    suite = TestSuite()
+    #suite.addTest(makeSuite(TestInterface))
+    return suite
+
+if __name__ == '__main__':
+    framework()
