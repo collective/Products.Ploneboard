@@ -1,3 +1,34 @@
+2004-03-01 14:00 tag v0_5_3
+
+2004-03-01 12:17  longsleep
+                                                                                                 
+        * I18NContent.py, I18NLayer.py: support combined language codes
+        (eg. de-DE) with PloneLanguageTool
+                                                                                                 
+2004-02-26 16:48  longsleep
+                                                                                                 
+        * skins/i18n_layer/: i18ncontent_slot.pt,
+        i18nlayer_default_fallback.pt: content language selector now
+        includeable several times on a single page
+                                                                                                 
+2004-02-25 18:01  longsleep
+                                                                                                 
+        * i18n/: i18nlayer-actions-de.po, i18nlayer-actions.pot: added
+        translation for i18nlayer actions
+                                                                                                 
+2004-02-25 17:43  longsleep
+                                                                                                 
+        * I18NLayer.py, Extensions/Install.py,
+        skins/i18n_layer/i18nlayer_check4tab.py,
+        skins/i18n_layer/translate_sheet.py: added a tab to handle document
+        translation
+                                                                                                 
+2004-02-25 17:09  longsleep
+                                                                                                 
+        * skins/i18n_layer/i18nlayer_languages_form.pt: use
+        plonelanguagetool to get the available languages if possible use
+        radio buttons when less than 5 languages are available
+                                                                                                 
 2004-01-09 11:16  tag v0_5_2
 
 2003-12-22 12:12  longsleep
