@@ -4,7 +4,9 @@ from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_chain, aq_self, Implicit
 from Products.CMFCore.utils import getToolByName
 from FormAction import FormAction
-from globalVars import ANY_CONTEXT, ANY_BUTTON
+from globalVars import ANY_CONTEXT, ANY_BUTTON, STRING_TYPES
+
+from types import ListType, TupleType
 
 class ControllerState(AccessControl.Role.RoleManager):
     security = ClassSecurityInfo()
@@ -127,7 +129,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         err = {}
         for k,v in self.errors.items():
             # make allowances for old-style string errors
-            if type(v) == type('') or type(v) == type(u''):
+            if type(v) in STRING_TYPES:
                 err[k] = v
             else:
                 err[k] = v[0]
@@ -138,7 +140,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         err = {}
         for k,v in self.errors.items():
             # make allowances for old-style string errors
-            if type(v) == type('') or type(v) == type(u''):
+            if type(v) in STRING_TYPES:
                 err[k] = (v, None)
             else:
                 err[k] = v
@@ -150,7 +152,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.errors = {}
         # make allowances for old-style errors
         for k,v in errors.items():
-            if type(v) == type('') or type(v) == type(u''):
+            if type(v) in STRING_TYPES:
                 self.errors[k] = (v, None)
             else:
                 self.errors[k] = v
@@ -198,7 +200,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         if action is None:
             self.next_action = action
             return
-        if type(action) == type({}):
+        if type(action) == DictType:
             action_type = action['action_type']
             args = action['args']
         else:
@@ -230,7 +232,7 @@ class ControllerState(AccessControl.Role.RoleManager):
     def hasValidated(self, validators=[]):
         if validators is None:
             validators = []
-        elif type(validators) != type([]):
+        elif type(validators) != ListType:
             validators = [validators]
         for v in validators:
             if not self._validators.has_key(v):
