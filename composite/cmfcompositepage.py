@@ -28,7 +28,8 @@ class PackSlot(Slot):
         o2 = obj.dereference()
         icon = getIconURL(o2, icon_base_url)
         title = o2.title_and_id()
-        path = escape('/'.join(obj.getPhysicalPath()))
+        url_tool = getToolByName(self, 'portal_url')
+        path = escape(url_tool.getRelativeUrl(obj))
         composite_tool = getToolByName(self, TOOL_ID)
         viewlets_info = composite_tool.getViewletsFor(o2)
         allowed_viewlets_ids = []
