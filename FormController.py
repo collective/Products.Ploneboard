@@ -33,25 +33,25 @@ class FormController(UniqueObject, SimpleItemWithProperties):
 
     manage_options = ( ({'label':'Overview', 'action':'manage_overview'},
                         {'label':'Documentation', 'action':'manage_docs'},
-                        {'label': 'Validators', 'action': 'manage_formValidatorsForm'},
+                        {'label': 'Validation', 'action': 'manage_formValidatorsForm'},
                         {'label': 'Actions', 'action': 'manage_formActionsForm'},) +
                        SimpleItemWithProperties.manage_options)
 
     security.declareProtected(ManagePortal, 'manage_overview')
-    manage_overview = PageTemplateFile('www/manage_overview', globals())
+    manage_overview = PageTemplateFile(os.path.join('www','manage_overview'), globals())
     manage_overview.__name__ = 'manage_overview'
     manage_overview._need__name__ = 0
 
     security.declareProtected(ManagePortal, 'manage_docs')
-    manage_docs = PageTemplateFile('www/manage_docs', globals())
+    manage_docs = PageTemplateFile(os.path.join('www','manage_docs'), globals())
     manage_docs.__name__ = 'manage_docs'
 
     security.declareProtected(ManagePortal, 'manage_formActionsForm')
-    manage_formActionsForm = PageTemplateFile('www/manage_formActionsForm', globals())
+    manage_formActionsForm = PageTemplateFile(os.path.join('www','manage_formActionsForm'), globals())
     manage_formActionsForm.__name__ = 'manage_formActionsForm'
 
     security.declareProtected(ManagePortal, 'manage_formValidatorsForm')
-    manage_formValidatorsForm = PageTemplateFile('www/manage_formValidatorsForm', globals())
+    manage_formValidatorsForm = PageTemplateFile(os.path.join('www','manage_formValidatorsForm'), globals())
     manage_formValidatorsForm.__name__ = 'manage_formValidatorsForm'
 
     # some aliases

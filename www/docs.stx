@@ -171,6 +171,7 @@ Using the CMFFormController
 
             portal_form_controller.setValidators(id, context_type, button, validators)
 
+
          Here 'id' is the Id of the ControllerPageTemplate, 'context_type' is
             the class name for the class of the context object, 'button' is the name 
             of the button pressed, and validators is a comma-delimited string or a list

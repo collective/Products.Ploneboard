@@ -10,27 +10,8 @@
 
 <p>This tool lets you set or override the default sequence of validators that are 
 executed when a Controller Page Template is submitted or before a Controller
-Python Script is executed.</p>
+Python Script is executed.  <a href="#docs">Learn more</a>.</p>
 
-<ul>
-   <li><b>Template</b>: The Controller Page Template / Controller Python Script 
-       for which you are setting validators.  The form/script in question 
-       <i>must</i> be a Controller Page Template / Controller Python Script.
-       If it is an ordinary Python Script, Page Template, a DTML Method, or a 
-       DTML Document <i>these validators will be ignored!</i></li>
-   <li><b>Context</b>: The type of context object for which the given sequence
-       of validating scripts is executed.  This lets you set different validators
-       for different types of content objects.</li>
-   <li><b>Button</b>: The button for which the given sequence of validating 
-       scripts is executed.  This lets you set different validators depending
-       on which button on a form is pressed.  Leave the button field blank
-       to use the same validators for any button.  To use this functionality, you must name each button in the template
-       <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
-       in your page template, you can specify what happens when this button is pressed by
-       entering <i>button1</i> in the button field.</li>
-   <li><b>Validators</b>: A comma-delimited sequence of Controller Validator script ids.</li>
-</ul>
-       
 <hr/>
 
 <h3 class="form-help">Edit Form / Script Validator Overrides</h3>
@@ -231,5 +212,30 @@ Python Script is executed.</p>
 <p tal:condition="not:form_validators"><i>No validators have been specified</i></p>
 </div>
 </div>
+
+<hr />
+<a name="docs"></a>
+<h3>Definitions</h3>
+<ul>
+   <li><b>Template</b>: The Controller Page Template / Controller Python Script 
+       for which you are setting validators.  The form/script in question 
+       <i>must</i> be a Controller Page Template / Controller Python Script.
+       If it is an ordinary Python Script, Page Template, a DTML Method, or a 
+       DTML Document <i>these validators will be ignored!</i></li>
+   <li><b>Context</b>: The type of context object for which the given sequence
+       of validating scripts is executed.  This lets you set different validators
+       for different types of content objects.</li>
+   <li><b>Button</b>: The button for which the given sequence of validating 
+       scripts is executed.  This lets you set different validators depending
+       on which button on a form is pressed.  Leave the button field blank
+       to use the same validators for any button.  To use this functionality, you must name each button in the template
+       <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
+       in your page template, you can specify what happens when this button is pressed by
+       entering <i>button1</i> in the button field.</li>
+   <li><b>Validators</b>: A comma-delimited sequence of Controller Validator script ids.</li>
+</ul>
+       
+<a tal:attributes="href python:here.portal_url()+'/portal_form_controller/manage_docs'">Documentation</a>
+<hr />
 </div>
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

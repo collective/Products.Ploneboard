@@ -12,35 +12,7 @@
 
 <p>This tool lets you set or override the default actions that are 
 executed when a Controller Page Template is submitted or a Controller Python Script 
-returns.</p>
-
-<ul>
-   <li><b>Template/Script</b>: The Controller Page Template or Controller Python
-       Script for which you are setting actions.  Note that these <i>will only
-       affect</i> Controller Page Templates and Controller Python Scripts that return a
-       ControllerState object.  These actions <i>will be ignored</i> for ordinary 
-       PageTemplates, ordinary Python Scripts, DTML Methods and DTML Documents.</li>
-   <li><b>Status</b>: The status for which the given action is executed.  
-       Validators typically return 'success' or 'failure' as their status.</li>
-   <li><b>Context</b>: The type of context object for which the given action is 
-       executed.  This lets you set different actions for different types 
-       of content objects.</li>
-   <li><b>Button</b>: The button for which the given action is executed.  This 
-       lets you set different actions depending on which button on a form is 
-       pressed.  Leave the button field blank to use the same action for any 
-       button.  To use this functionality, you must name each button in the template
-       <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
-       in your Controller Page Template, you can specify what happens when this button is pressed by
-       entering <tt>button1</tt> in the button field.</li>
-   <li><b>Action</b>: The type of action to execute.  The available types of 
-       actions are as follows:
-       <ul>
-           <li tal:repeat="action_type action_types">
-              <b tal:content="action_type/getId" />: <span tal:replace="action_type/getDescription" />
-           </li>
-       </ul></li>
-   <li><b>Argument</b>: The argument for the specified action. This must be a TALES expression.</li>
-</ul>
+returns.  <a href="#docs">Learn more</a>.</p>
 
 <hr/>
 
@@ -285,6 +257,39 @@ returns.</p>
 </div>
 </div>
 
+<hr/>
+<a name="docs"></a>
+<h3>Definitions</h3>
+<ul>
+   <li><b>Template/Script</b>: The Controller Page Template or Controller Python
+       Script for which you are setting actions.  Note that these <i>will only
+       affect</i> Controller Page Templates and Controller Python Scripts that return a
+       ControllerState object.  These actions <i>will be ignored</i> for ordinary 
+       PageTemplates, ordinary Python Scripts, DTML Methods and DTML Documents.</li>
+   <li><b>Status</b>: The status for which the given action is executed.  
+       Validators typically return 'success' or 'failure' as their status.</li>
+   <li><b>Context</b>: The type of context object for which the given action is 
+       executed.  This lets you set different actions for different types 
+       of content objects.</li>
+   <li><b>Button</b>: The button for which the given action is executed.  This 
+       lets you set different actions depending on which button on a form is 
+       pressed.  Leave the button field blank to use the same action for any 
+       button.  To use this functionality, you must name each button in the template
+       <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
+       in your Controller Page Template, you can specify what happens when this button is pressed by
+       entering <tt>button1</tt> in the button field.</li>
+   <li><b>Action</b>: The type of action to execute.  The available types of 
+       actions are as follows:
+       <ul>
+           <li tal:repeat="action_type action_types">
+              <b tal:content="action_type/getId" />: <span tal:replace="action_type/getDescription" />
+           </li>
+       </ul></li>
+   <li><b>Argument</b>: The argument for the specified action. This must be a TALES expression.</li>
+</ul>
+
+<a tal:attributes="href python:here.portal_url()+'/portal_form_controller/manage_docs'">Documentation</a>
+<hr/>
 
 </div>
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
