@@ -123,10 +123,8 @@ class RecursiveWalker(Walker):
         self.list = []
 
     def walk(self):
-        """XXX Todo
         """
-        lst = []
-        append = lst.append
+        """
         self.recurse(self.base)
         return self.list
 

@@ -47,6 +47,27 @@ types and AT Folder requires some code from PloneFolder, too. It should be easy
 to seperate the dependecies if needed.
 
 
+=====================
+Optional Requirements
+=====================
+
+mxTidy
+------
+
+XXX
+http://www.egenix.com/files/python/mxTidy.html
+
+TextIndexNG2
+------------
+
+XXX
+
+PortalTransforms and helper applications
+----------------------------------------
+
+lynx pdftohtml python-docutils wv xsltproc tidy unrtf ppthtml xlhtml gs-common xpdf-utils
+
+
 ============
 Installation
 ============

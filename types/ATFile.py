@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.3 2004/03/16 13:58:36 tiran Exp $
+$Id: ATFile.py,v 1.4 2004/03/17 19:38:58 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,6 +30,8 @@ from urllib import quote
 from Products.ATContentTypes.config import ICONMAP
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
+from Products.PortalTransforms.utils import TransformException
+
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from schemata import ATFileSchema
@@ -144,17 +146,34 @@ class ATFile(BaseContent):
     content_type = ComputedAttribute(get_content_type, 1)
  
     security.declarePrivate('TXNG2_SearchableText')
-    def TXNG2_SearchableText(self):
+    def txng_get(self, attr):
         """Special searchable text source for text index ng 2
-        
-        Returns (content, mimetype) or None
         """
-        f = self.getFile()
-        if not f:
-            # empty file
-            return None
-        else:
-            return (f, f.getContentType())
+        if attr[0] != 'SearchableText':
+            # only a hook for searchable text
+            return
+
+        source   = ''
+        mimetype = 'text/plain'
+        encoding = 'utf-8'
+
+        # stage 1: get the searchable text and convert it to utf8
+        sp    = getToolByName(self, 'portal_properties').site_properties
+        stEnc = getattr(sp, 'default_charset', 'utf-8')
+        st    = self.SearchableText()
+        source+=unicode(st, stEnc).encode('utf-8')
+
+        # get the file and try to convert it to utf8 text
+        ptTool = getToolByName(self, 'portal_transforms')
+        f  = self.getFile()
+        mt = f.getContentType()
+        if f:
+            try:
+                result = ptTool.convertTo('text/plain', str(f), mimetype=mt)
+            except TransformException:
+                result = ''
+            source+=result
+
+        return source, mimetype, encoding
  
 registerType(ATFile, PROJECTNAME)
-

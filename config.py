@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.5 2004/03/16 20:33:23 tiran Exp $
+$Id: config.py,v 1.6 2004/03/17 19:38:57 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -44,6 +44,17 @@ except ImportError:
     HAS_PLONE2=0
 else:
     HAS_PLONE2=1
+
+# mxTidy available?
+try:
+    import mx.Tidy
+except ImportError:
+    HAS_MX_TIDY=0
+else:
+    HAS_MX_TIDY=1
+
+MX_TIDY_OPTIONS= {
+    }
 
 # Add attributes to be more CMF compatible?
 # XXX more docs here

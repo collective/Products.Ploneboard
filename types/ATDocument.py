@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATDocument.py,v 1.2 2004/03/17 19:38:58 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -75,11 +75,12 @@ class ATDocument(BaseContent):
         return self.getText()
 
     def setText(self, value, **kwargs):
-        """set text_format for backward compatibility with std cmf types"""
+        """Body text mutator
+        
+        * set text_format for backward compatibility with std cmf types
+        """
         field = self.getField('text')
         field.set(self, value, **kwargs)
-        bu = self.getRawText(maybe_baseunit=1)
-        if hasattr(bu, 'mimetype'):
-            self.text_format = str(bu.mimetype)
+        self.text_format = field.getContentType(self)
 
 registerType(ATDocument, PROJECTNAME)
