@@ -1,0 +1,24 @@
+1.4
+
+  - reinstall button
+
+    does the same as uninstall/install except that it does _not_ delete
+   objects that have been created on portal_level (portal_objects)
+
+  - product version info
+
+    added getProductVersion to the API
+    shows the version of the products
+   for installed products it also shows the version of the prod at install time
+
+  - By Andy McKay
+
+    Remove the except: pass from trying to make a External method, if there is an error in the import log the error to ZLOG. Unfortunately there is a string error we have to try and catch as well. That string error occurs when the module cant be found, so we should ignore that.
+
+  - content type registry support 
+
+    QuickInstaller now also tracks entries in the content_type_registry.
+
+  - if products have been removed from disc, mark them in the installed list as 'removed'
+
+  - added a ChangeLog :)
