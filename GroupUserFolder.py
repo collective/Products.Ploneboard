@@ -65,7 +65,7 @@ def unique(sequence):
     return tuple(ret)
 
 
-def manage_addGroupUserFolder(self,dtself=None,REQUEST=None,**ignored):
+def manage_addGroupUserFolder(self, dtself=None, REQUEST=None, **ignored):
     """ Factory method that creates a UserFolder"""
     f=GroupUserFolder()
     self=self.this()
@@ -394,6 +394,37 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
         return self.Users.acl_users._doDelUsers(names)
+
+
+    #                                   #
+    #           Groups interface        #
+    #                                   #
+
+
+    def _doAddGroup(self, name, roles, **kw):
+        """Create a new group. Password will be randomly created, and domain will be none"""
+
+        domains = ""
+        password = ""
+        for x in range(0, 10):  # Password will be 10 chars long
+            password = "%s%s" % (password, random.choice(string.lowercase), )
+        return self.Users.acl_users._doAddUser(
+            name, password, roles, domains, **kw
+            )
+
+    def _doChangeGroup(self, name, roles, **kw):
+        """Modify an existing group."""
+        domains = ""
+        password = ""
+        for x in range(0, 10):  # Password will be 10 chars long
+            password = "%s%s" % (password, random.choice(string.lowercase), )
+        return self.Groups.acl_users._doChangeUser(name, password, 
+                                                  roles, domains, **kw)
+
+    def _doDelGroup(self, names):
+        """Delete one or more users. This should be implemented by subclasses
+           to do the actual deleting of users."""
+        return self.Groups.acl_users._doDelUsers(names)
 
 
 
