@@ -1,6 +1,8 @@
 0.3-DEVEL - unreleased
 ======================
 
+ * migrate empty folder now
+
  * Local roles and Creator are kept when migration.
    [panjunyong]
 
