@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFolder.py,v 1.4 2004/06/13 21:49:19 tiran Exp $
+$Id: testATFolder.py,v 1.5 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -58,9 +58,9 @@ class TestSiteATFolder(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.compareAfterMigration(migrated)
-        self.compareDC(migrated, title=title, description=description, mod=mod,
-                       created=created)
+        self.compareAfterMigration(migrated, mod=mod, created=created)
+        self.compareDC(migrated, title=title, description=description)
+
                        
         # XXX more
 
@@ -76,24 +76,18 @@ class TestATFolderFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
         ATCTFieldTestCase.afterSetUp(self)
-        self._dummy = ATFolder.ATFolder(oid='dummy')
-        self._dummy.initializeArchetype()
-        # wrap dummy object in the acquisition context of the site
-        site = self.getPortal()
-        self._dummy = self._dummy.__of__(site)
-        # more
-
-    def test_somefield(self):
-        # Test a field
-        dummy = self._dummy
-        field = dummy.getField('somefield')
-        self.failUnless(1==1)
-
-    def beforeTearDown(self):
-        # more
-        ATCTFieldTestCase.beforeTearDown(self)
+        self._dummy = self.createDummy(klass=ATFolder.ATFolder)
 
 tests.append(TestATFolderFields)
+
+class TestATBTreeFolderFields(ATCTFieldTestCase):
+
+    def afterSetUp(self):
+        ATCTFieldTestCase.afterSetUp(self)
+        self._dummy = self.createDummy(klass=ATFolder.ATBTreeFolder)
+
+tests.append(TestATBTreeFolderFields)
+
 
 if __name__ == '__main__':
     framework()

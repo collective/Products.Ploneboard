@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.9 2004/06/20 15:13:20 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.10 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,6 +13,8 @@ import time
 from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
+from Acquisition import aq_base
+
 from common import dcEdit, EmptyValidator
 
 from Products.Archetypes.Storage import MetadataStorage
@@ -24,6 +26,7 @@ from Products.Archetypes.interfaces.layer import ILayerContainer
 from Products.Archetypes.tests import ArchetypesTestCase
 from Products.Archetypes.tests.test_baseschema import BaseSchemaTest
 from Products.ATContentTypes.Extensions.Install import install as installATCT
+from Products.ATContentTypes.Extensions.toolbox import isSwitchedToATCT
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.CMFCore.interfaces.DublinCore import DublinCore as IDublinCore
@@ -87,33 +90,44 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
         if second:
             title = second.Title()
             description = second.Description()
-            mod = second.ModificationDate()
-            created = second.CreationDate()
         else:
             title = kwargs.get('title')
             description = kwargs.get('description')
-            mod = kwargs.get('mod')
-            created = kwargs.get('created')
             
-        #XXX time.sleep(1.5)
         self.failUnlessEqual(first.Title(), title)
         self.failUnlessEqual(first.Description(), description)
-        self.failUnlessEqual(first.ModificationDate(), mod)
-        self.failUnlessEqual(first.CreationDate(), created)
         # XXX more
 
-    def compareAfterMigration(self, migrated):
+    def compareAfterMigration(self, migrated, mod=None, created=None):
         self.failUnless(isinstance(migrated, self.klass),
                         migrated.__class__)
         self.failUnlessEqual(migrated.getTypeInfo().getId(), self.portal_type)
+        self.failUnlessEqual(migrated.ModificationDate(), mod)
+        self.failUnlessEqual(migrated.CreationDate(), created)
+
 
     def beforeTearDown(self):
         # logout
         noSecurityManager()
 
 
-class ATCTFieldTestCase(ArchetypesTestCase.ArcheSiteTestCase, BaseSchemaTest):
+class ATCTFieldTestCase(BaseSchemaTest):
     """ ATContentTypes test including AT schema tests """
+    
+    def afterSetUp(self):
+        # initalize the portal but not the base schema test
+        # because we want to overwrite the dummy and don't need it
+        ArchetypesTestCase.ArcheSiteTestCase.afterSetUp(self)
+        self.setRoles(['Manager',])
+
+    def createDummy(self, klass, id='dummy'):
+        portal = self.portal
+        dummy = klass(oid=id)
+        # put dummy in context of portal
+        dummy = dummy.__of__(portal)
+        portal.dummy = dummy
+        dummy.initializeArchetype()
+        return dummy
     
     def test_description(self):
         dummy = self._dummy
@@ -149,13 +163,23 @@ def setupATCT(app, quiet=0):
     get_transaction().begin()
     _start = time.time()
     print "Installing at content types"
+    portal = app.portal
     if not quiet: ZopeTestCase._print('Installing ATContentTypes ... ')
 
     # login as manager
     user = app.acl_users.getUserById(ArchetypesTestCase.portal_owner).__of__(app.acl_users)
     newSecurityManager(None, user)
-    # add Archetypes
-    installATCT(app.portal)
+    # add ATCT
+    if hasattr(aq_base(portal), 'switchCMF2ATCT'):
+        ZopeTestCase._print('already installed ... ')
+    else:
+        installATCT(portal)
+    
+    if isSwitchedToATCT(portal):
+        # XXX right now ATCT unit tests don't run in ATCT mode.
+        # Switching to native mode
+        ZopeTestCase._print('switching to CMF mode ... ')
+        portal.switchATCT2CMF()
     
     # Log out
     noSecurityManager()

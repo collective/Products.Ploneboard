@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.28 2004/06/24 10:47:46 tiran Exp $
+$Id: ATContentType.py,v 1.29 2004/06/24 19:47:12 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -140,8 +140,8 @@ class ATCTMixin(TemplateMixin):
             _zlogger.log_exc()
             if DEBUG and str(msg) not in ('SESSION',):
                 # XXX debug code
-                #raise
-                _default_logger.log_exc()
+                raise
+                #_default_logger.log_exc()
 
     def _getPortalTypeName(self):
         """
@@ -149,6 +149,12 @@ class ATCTMixin(TemplateMixin):
         pt = getToolByName(self, 'portal_types')
         correct_pt = self.newTypeFor[0]
         fti = pt.getTypeInfo(correct_pt)
+        if fti is None:
+            # FTI is None which may happen in ATCT2CMF switching script
+            # in this case the self.portal_type aka self.__class__.__name__ 
+            # is right but test to be shure
+            assert(self.portal_type, self.__class__.__name__)
+            return self.portal_type
         if fti.Metatype() == self.meta_type:
             return correct_pt
         else:

@@ -32,6 +32,12 @@
 
  * Reindex only Type, portal_type and meta_type in switching script [tiran]
 
+ * Wrapped field tests in a portal to fix a problem with missing tools [tiran]
+
+ * Fixed migration problem of modified date and created date and also fixed
+   a problem with the unit test that was testing the right date. I was 
+   trying to compare the mod date after editing the objects. %-) [tiran]
+
 0.2-beta6 - 2004-06-20
 
  * Added max upload size validator to ATFile and ATImage [tiran]

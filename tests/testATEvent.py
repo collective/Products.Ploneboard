@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.9 2004/06/13 21:49:19 tiran Exp $
+$Id: testATEvent.py,v 1.10 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -113,10 +113,9 @@ class TestSiteATEvent(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.compareAfterMigration(migrated)
-        self.compareDC(migrated, title=title, description=description, mod=mod,
-                       created=created)
-                       
+        self.compareAfterMigration(migrated, mod=mod, created=created)
+        self.compareDC(migrated, title=title, description=description)
+
         self.failUnless(migrated.location == location, 'Location mismatch: %s / %s' \
                         % (migrated.location, location))
         self.failUnless(migrated.Subject() == ev_type, 'EventType mismatch: %s / %s' \
@@ -145,12 +144,7 @@ class TestATEventFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
         ATCTFieldTestCase.afterSetUp(self)
-        self._dummy = ATEvent.ATEvent(oid='dummy')
-        self._dummy.initializeArchetype()
-        # wrap dummy object in the acquisition context of the site
-        site = self.getPortal()
-        self._dummy = self._dummy.__of__(site)
-        # more
+        self._dummy = self.createDummy(klass=ATEvent.ATEvent)
 
     def test_locationField(self):
         dummy = self._dummy

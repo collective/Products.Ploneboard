@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.14 2004/06/20 15:13:19 tiran Exp $
+$Id: Migrator.py,v 1.15 2004/06/24 19:47:11 tiran Exp $
 """
 
 from copy import copy
@@ -109,9 +109,14 @@ class BaseMigrator:
     def getMigrationMethods(self):
         """
         """
-        methods     = []
-        lastmethods = []
+        beforeChange = []
+        methods      = []
+        lastmethods  = []
         for name in dir(self):
+            if name.startswith('beforeChange_'):
+                method = getattr(self, name)
+                if callable(method):
+                    beforeChange.append(method)
             if name.startswith('migrate_'):
                 method = getattr(self, name)
                 if callable(method):
@@ -120,15 +125,24 @@ class BaseMigrator:
                 method = getattr(self, name)
                 if callable(method):
                     lastmethods.append(method)
-        return methods+[self.custom]+lastmethods
+        
+        afterChange = methods+[self.custom]+lastmethods
+        return (beforeChange, afterChange, )
         
     def migrate(self, unittest=0):
         """Migrates the object
         """
+        beforeChange, afterChange = self.getMigrationMethods()
+
+        for method in beforeChange:
+            __traceback_info__ = (self, method, self.old, self.orig_id)
+            # may raise an exception, catch it later
+            method()
+
         self.renameOld()
         self.createNew()
 
-        for method in self.getMigrationMethods():
+        for method in afterChange:
             __traceback_info__ = (self, method, self.old, self.orig_id)
             # may raise an exception, catch it later
             method()
@@ -267,13 +281,19 @@ class BaseCMFMigrator(BaseMigrator):
           hasattr(self.new, 'isDiscussable'):
             self.new.isDiscussable(self.old.allowDiscussion())
 
+    def beforeChange_storeDates(self):
+        """Safe creation date and modification date
+        """
+        self.old_creation_date = self.old.CreationDate()
+        self.old_mod_date = self.old.ModificationDate()
+
     def last_migrate_date(self):
         """migrate creation / last modified date
         
         Must be called as *last* migration
         """
-        self.new.setModificationDate(DateTime(self.old.ModificationDate()))
-        self.new.creation_date = DateTime(self.old.CreationDate())
+        self.new.creation_date = DateTime(self.old_creation_date)
+        self.new.setModificationDate(DateTime(self.old_mod_date))
 
 class ItemMigrationMixin:
     """Migrates a non folderish object

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.10 2004/06/13 21:49:19 tiran Exp $
+$Id: testATDocument.py,v 1.11 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -73,6 +73,8 @@ class TestSiteATDocument(ATCTSiteTestCase):
         created     = old.CreationDate()
         body        = old.CookedBody()
 
+        time.sleep(1.5)
+        
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
         m = DocumentMigrator(old)
@@ -81,9 +83,8 @@ class TestSiteATDocument(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.compareAfterMigration(migrated)
-        self.compareDC(migrated, title=title, description=description, mod=mod,
-                       created=created)
+        self.compareAfterMigration(migrated, mod=mod, created=created)
+        self.compareDC(migrated, title=title, description=description)
 
         self.failUnless(migrated.CookedBody() == body, 'Body mismatch: %s / %s' \
                         % (migrated.CookedBody(), body))
@@ -108,12 +109,7 @@ class TestATDocumentFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
         ATCTFieldTestCase.afterSetUp(self)
-        self._dummy = ATDocument.ATDocument(oid='dummy')
-        self._dummy.initializeArchetype()
-        # wrap dummy object in the acquisition context of the site
-        site = self.getPortal()
-        self._dummy = self._dummy.__of__(site)
-        # more
+        self._dummy = self.createDummy(klass=ATDocument.ATDocument)
 
     def test_textField(self):
         dummy = self._dummy

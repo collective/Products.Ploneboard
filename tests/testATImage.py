@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATImage.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
+$Id: testATImage.py,v 1.8 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -58,9 +58,8 @@ class TestSiteATImage(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.compareAfterMigration(migrated)
-        self.compareDC(migrated, title=title, description=description, mod=mod,
-                       created=created)
+        self.compareAfterMigration(migrated, mod=mod, created=created)
+        self.compareDC(migrated, title=title, description=description)
                        
         # XXX more
 
@@ -76,12 +75,7 @@ class TestATImageFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
         ATCTFieldTestCase.afterSetUp(self)
-        self._dummy = ATImage.ATImage(oid='dummy')
-        self._dummy.initializeArchetype()
-        # wrap dummy object in the acquisition context of the site
-        site = self.getPortal()
-        self._dummy = self._dummy.__of__(site)
-        # more
+        self._dummy = self.createDummy(klass=ATImage.ATImage)
 
     def test_imageField(self):
         dummy = self._dummy

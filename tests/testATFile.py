@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFile.py,v 1.8 2004/06/14 00:37:49 tiran Exp $
+$Id: testATFile.py,v 1.9 2004/06/24 19:47:12 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -72,6 +72,8 @@ class TestSiteATFile(ATCTSiteTestCase):
         created     = old.CreationDate()
         file        = str(old)
 
+        time.sleep(1.5)
+
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
         m = FileMigrator(old)
@@ -79,9 +81,9 @@ class TestSiteATFile(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.compareAfterMigration(migrated)
-        self.compareDC(migrated, title=title, description=description, mod=mod,
-                       created=created)
+        self.compareAfterMigration(migrated, mod=mod, created=created)
+        self.compareDC(migrated, title=title, description=description)
+
         self.failUnlessEqual(file, str(migrated.getFile()))
         self.failIfEqual(migrated.data, None)
         self.failIfEqual(migrated.data, '')
@@ -98,12 +100,7 @@ class TestATFileFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
         ATCTFieldTestCase.afterSetUp(self)
-        self._dummy = ATFile.ATFile(oid='dummy')
-        self._dummy.initializeArchetype()
-        # wrap dummy object in the acquisition context of the site
-        site = self.getPortal()
-        self._dummy = self._dummy.__of__(site)
-        # more
+        self._dummy = self.createDummy(klass=ATFile.ATFile)
 
     def test_fileField(self):
         dummy = self._dummy
