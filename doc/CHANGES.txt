@@ -1,10 +1,12 @@
-0.21 (unreleased)
+0.22 (unreleased)
+
+    - schemas can be exported as text
+
+0.21 (2.11.2004)
 
     - added support for validators
 
     - fixed some missing parameters in redirection URLs
-
-    - schemas can be exported as text
 
 0.2 (1.10.2004)
 
