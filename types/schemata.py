@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.23 2004/05/12 15:53:16 tiran Exp $
+$Id: schemata.py,v 1.24 2004/05/18 20:40:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -86,7 +86,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
               required = 1,
               searchable = 1,
               primary = 1,
-              validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isTidyHtmlWithCleanup',) },
+              validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
               default_content_type = 'text/restructured',
               default_output_type = 'text/html',
@@ -132,7 +132,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='event_url',
-                validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isURL',) },
+                validators = ('isURL',),
                 widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
                                       description_msgid = "help_url",
                                       label = "Event URL",
@@ -172,7 +172,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_email',
-                validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isEmail',) },
+                validators = ('isEmail',),
                 widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
                                       description_msgid = "help_contact_email",
                                       label = "Contact E-mail",
@@ -182,7 +182,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_phone',
-                validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isInternationalPhoneNumber',) },
+                validators = ('isInternationalPhoneNumber',),
                 widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
                                       description_msgid = "help_contact_phone",
                                       label = "Contact Phone",
@@ -289,7 +289,7 @@ ATLinkSchema = ATContentTypeSchema + Schema((
                 required = 1,
                 searchable = 1,
                 primary=1,
-                validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isURL',) },
+                validators = ('isURL',),
                 widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
                                       description_msgid = "help_url",
                                       label = "URL",
@@ -305,7 +305,7 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
               required = 1,
               searchable = 1,
               primary = 1,
-              validators = {'strategy' : 'or', 'handlers' : ('isEmpty', 'isTidyHtmlWithCleanup',) },
+              validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
               default_content_type = 'text/restructured',
               default_output_type = 'text/html',
