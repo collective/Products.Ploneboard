@@ -1,19 +1,26 @@
-from Globals import InitializeClass, DTMLFile, DevelopmentMode
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+"""
+$Id: ControlTool.py,v 1.4 2004/04/19 06:15:42 k_vertigo Exp $
+"""
+from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass, DTMLFile, DevelopmentMode
 from OFS.SimpleItem import SimpleItem
 from OFS.Folder import Folder
+
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
 from Products.Archetypes.utils import findDict
 from Products.Archetypes.public import *
 from Products.Archetypes.Schema import FieldList
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
-from Products.CMFMember.MemberDataContainer import getMemberFactory
+
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore import CMFCorePermissions
 
+from Products.CMFMember.MemberDataContainer import getMemberFactory
 import Products.CMFMember as CMFMember
 
 import zLOG
@@ -305,15 +312,13 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1):
         """ perform the upgrade """
 
-        transaction = get_transaction().sub()
-        transaction.begin()
-        
+        get_transaction().commit(1)
+
         # keep it simple
         out = []
 
         self._check()
         
-        transaction.commit()
         if dry_run:
             out.append(("Dry run selected.", zLOG.INFO))
 
@@ -327,7 +332,13 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
         while newv is not None:
             out.append(("Attempting to upgrade from: %s" % newv, zLOG.INFO))
-            transaction.commit()
+            # commit work in progress between each version
+            get_transaction().commit(1)
+            # if we modify the portal root and commit a sub transaction
+            # the skin data will disappear, explicitly set it up on each
+            # subtrans, the alternative is to traverse again to the root on
+            # after each which will trigger the normal implicit skin setup.
+            aq_parent( aq_inner( self ) ).setupCurrentSkin()
             try:
                 newv, msgs = self._upgrade(newv)
                 if msgs:
@@ -355,7 +366,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                 newv = None
                 if swallow_errors:
                     # abort transaction to safe the zodb
-                    transaction.abort()
+                    get_transaction().abort(1)
                 else:
                     for msg, sev in out: log(msg, severity=sev)
                     raise
@@ -397,7 +408,9 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
         if dry_run:
             out.append(("Dry run selected, transaction aborted", zLOG.INFO))
-            transaction.abort()
+            # abort all work done in this transaction, this roles back work
+            # done in previous sub transactions
+            get_transaction().abort()
 
         # log all this to the ZLOG
         for msg, sev in out:
