@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.13 2003/10/05 14:03:15 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.14 2003/10/05 16:38:56 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class InstalledProduct(SimpleItem):
         self.uninstall()
         
     def __init__(self,id,types=[],skins=[],actions=[],portalobjects=[],
-        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',
+        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],installedversion='',logmsg='',status='installed',
         error=0,locked=0, hidden=0):
         self.id=id
         self.types=types
@@ -75,6 +75,7 @@ class InstalledProduct(SimpleItem):
         self.locked=locked
         self.hidden=hidden
         self.registrypredicates=registrypredicates
+        self.installedversion=installedversion
         
         if status:
             self.status=status
@@ -85,7 +86,7 @@ class InstalledProduct(SimpleItem):
 
     security.declareProtected(ManagePortal, 'update')
     def update(self,types=[],skins=[],actions=[],portalobjects=[],workflows=[],
-        leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
+        leftslots=[],rightslots=[],registrypredicates=[],installedversion='',logmsg='',status='installed',error=0,locked=0,hidden=0):
         updatelist(self.types,types)
         updatelist(self.skins,skins)
         updatelist(self.actions,actions)
@@ -97,6 +98,7 @@ class InstalledProduct(SimpleItem):
         self.transcript.insert(0,{'timestamp':DateTime(),'msg':logmsg})
         self.locked=locked
         self.hidden=hidden
+        self.installedversion=installedversion
         
         if status:
             self.status=status
@@ -235,5 +237,7 @@ class InstalledProduct(SimpleItem):
         if REQUEST and REQUEST.get('nextUrl',None):
             return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
         
-    
+    def getInstalledVersion(self):
+        ''' returns the version of the prod in the moment of installation '''
+        return getattr(self,'installedversion',None)    
     

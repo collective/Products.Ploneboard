@@ -23,12 +23,25 @@
     <form action="uninstallProducts" tal:attributes="action here/absolute_url" method="POST">
     
         <table>
-            <tr tal:repeat="product here/listInstalledProducts">
-                <td><input tal:condition="not:product/isLocked" type=checkbox name=products:list tal:attributes="value product/id"></td>
-                <td>
-                     <a tal:attributes="href product/id" tal:content="product/id" >product name</a>
-                </td>
+            <tr>
+                <td></td>
+                <th>Product</th>
+                <th>Version at Install time</th>
+                <th>Product version</th>
             </tr>
+            <tal:block tal:repeat="product here/listInstalledProducts" >
+                <tr tal:define="prodver python:here.getProductVersion(product['id'])">
+                    <td><input tal:condition="not:product/isLocked" type=checkbox name=products:list tal:attributes="value product/id"></td>
+                    <td>
+                         <a tal:attributes="href product/id" tal:content="product/id" >product name</a>
+                    </td>
+                    <td tal:content="product/installedVersion" >product version
+                    </td>
+                    <td> <font tal:attributes="color python:test(prodver != product['installedVersion'],'#ff0000','#000000')" tal:content="prodver" >product version</font>
+                    </td>
+                    
+                </tr>
+            </tal:block>
         </table>
         <input type=submit i18n:attributes="value" value="Uninstall" name="uninstallProducts:method">
         <input type=submit i18n:attributes="value" value="Reinstall" name="reinstallProducts:method">

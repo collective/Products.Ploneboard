@@ -97,4 +97,5 @@ class IInstalledProduct(Interface):
            
            if the Product has an uninstall() method in its Install.py it gets called automatically
         '''
-        
+    def getInstalledVersion(self):
+        ''' returns the version of the prod in the moment of installation '''

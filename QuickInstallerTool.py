@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.20 2003/10/05 15:34:30 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.21 2003/10/05 16:38:56 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -119,14 +119,14 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'listInstalledProducts')
     def listInstalledProducts(self, showHidden=0):
-        ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden)'''
+        ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden,installedVersion)'''
         pids = [o.id for o in self.objectValues() if o.isInstalled() and (o.isVisible() or showHidden )]
 
         res=[]
 
         for r in pids:
             p=self._getOb(r,None)
-            res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden()})
+            res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden(),'installedVersion':p.getInstalledVersion()})
 
         return res
 
@@ -149,7 +149,11 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'getProductVersion')
     def getProductVersion(self,p):
         ''' returns the version string stored in version.txt'''
-        return self.getProductFile(p,'version.txt')
+        res = self.getProductFile(p,'version.txt')
+        if res is not None:
+            res=res.strip()
+            
+        return res
 
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
@@ -234,16 +238,17 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         registrypredicates=[s for s in registrypredicatesafter if s not in registrypredicatesbefore]
 
         msg=str(res)
-
+        version=self.getProductVersion(p)
         #add the product
         if p in self.objectIds():
             p=getattr(self,p)
             p.update(types=types,skins=skins,actions=actions,portalobjects=portalobjects,workflows=workflows,
-                     leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,logmsg=res,status=status,error=error,locked=locked,
+                     leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,logmsg=res,status=status,error=error,locked=locked,
                      hidden=hidden)
         else:
             ip=InstalledProduct(p,types=types,skins=skins,actions=actions,portalobjects=portalobjects,
-                                workflows=workflows,leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,logmsg=res,
+                                workflows=workflows,leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,installedversion=version,
+                                logmsg=res,
                                 status=status,error=error,locked=locked,hidden=hidden)
             self._setObject(p,ip)
 
