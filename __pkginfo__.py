@@ -1,6 +1,6 @@
 
 modname     = 'ATContentTypes'
-version     = '0.2-rc1'
+version     = '0.2.0-rc1'
 # (major, minor, patchlevel, release info) where release info is:
 # -99 for alpha, -49 for beta, -19 for rc and 0 for final
 # increment the release info number by one e.g. -98 for alpha2

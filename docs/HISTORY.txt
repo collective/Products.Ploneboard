@@ -1,4 +1,4 @@
-0.2.0-rc1 - 2004-07-26
+0.2.0-rc1 - 2004-07-28
 
  * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 
 

@@ -1,3 +1,65 @@
+2004-07-28 19:54  tiran
+
+	* Extensions/toolbox.py: Circumvent strange problem with
+	  fixAfterRenameType which isn't easy to reproduce
+
+2004-07-25 09:45  tiran
+
+	* __init__.py, __pkginfo__.py, version.txt, debian/changelog,
+	  debian/control, docs/AUTHORS.txt, docs/HISTORY.txt,
+	  docs/INSTALL.txt: Depend on new AT 1.3.0-beta3 release Changed
+	  ZMI add name of topic related types to 'ATContentTypes Topic'
+	  Added Gotcha to team list Preparing 0.2.0-rc1 release
+
+2004-07-24 09:54  godchap
+
+	* docs/HISTORY.txt, types/ATTopic.py: Removed 'contents' tab and
+	  'add new item' menu
+
+2004-07-23 21:03  tiran
+
+	* QuotaSupport.py, Extensions/Install.py,
+	  interfaces/IQuotaSupport.py: Added quote support code to ATCT
+	  cvs. It's just the beginning of an idea but I need a place to
+	  back up the work and cvs is a good place :)
+
+2004-07-23 20:53  tiran
+
+	* types/: schemata.py, criteria/schemata.py: Reformatted schemata
+	  definition in source code to make it more readable Use
+	  Schema.copy() to define ATExt* from AT* equivalent
+
+2004-07-23 20:53  tiran
+
+	* types/ATContentType.py: changed comment
+
+2004-07-23 18:40  tiran
+
+	* Extensions/batchCreate.py: Added small toy for load tests
+
+2004-07-22 14:31  godchap
+
+	* skins/ATContentTypes/: atct_macros.pt, criterion_edit_form.cpt:
+	  i18n fix plus formatting
+
+2004-07-22 14:23  godchap
+
+	* skins/ATContentTypes/atct_macros.pt,
+	  skins/ATContentTypes/criterion_edit_form.cpt, docs/HISTORY.txt:
+	  change criteria tab to table UI
+
+2004-07-22 12:16  godchap
+
+	* docs/HISTORY.txt,
+	  skins/ATContentTypes/criterion_edit_form.cpt.metadata,
+	  skins/ATContentTypes/validate_remove_criterion.vpy: added message
+	  when clicking remove on criteria without selecting first
+
+2004-07-21 17:36  tiran
+
+	* version.txt, debian/changelog, debian/control, debian/rules,
+	  docs/CHANGELOG.txt, docs/HISTORY.txt: Preparing beta8 release
+
 2004-07-21 17:22  tiran
 
 	* types/ATImage.py, docs/HISTORY.txt, docs/INSTALL.txt: Added
