@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.20 2004/06/18 12:53:53 tiran Exp $
+$Id: ATContentType.py,v 1.21 2004/06/18 14:13:59 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -35,7 +35,9 @@ else:
     from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
 
 from Products.Archetypes.TemplateMixin import TemplateMixin
-from Products.Archetypes.debug import log_exc
+from Products.Archetypes.debug import _default_logger, _zlogger
+log_exc = _default_logger.log_exc
+#log_exc = _zlogger.log_exc
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
@@ -132,7 +134,7 @@ class ATCTMixin(TemplateMixin):
                 self.edit(**kwargs)
             self._signature = self.Schema().signature()
             self.mark_creation_flag()
-        except:
+        except Exception, msg:
             log_exc()
 
     security.declareProtected(CMFCorePermissions.View, 'getLayout')

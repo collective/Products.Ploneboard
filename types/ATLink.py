@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.11 2004/06/18 12:53:53 tiran Exp $
+$Id: ATLink.py,v 1.12 2004/06/18 14:13:59 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -68,7 +68,9 @@ class ATLink(ATCTContent):
         return self.getRemoteUrl()
 
     security.declarePrivate('cmf_edit')
-    def cmf_edit(self, remote_url, **kwargs):
+    def cmf_edit(self, remote_url=None, **kwargs):
+        if not remote_url:
+            remote_url = kwargs.get('remote_url', None)
         self.update(remoteUrl = remote_url, **kwargs)
 
 registerType(ATLink, PROJECTNAME)
