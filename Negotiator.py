@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """
 
-$Id: Negotiator.py,v 1.5 2003/11/20 16:14:51 tesdal Exp $
+$Id: Negotiator.py,v 1.6 2003/11/20 21:16:08 longsleep Exp $
 """
 
 try:
@@ -26,9 +26,32 @@ except NameError:
     True=1
     False=0
 
+
+_langPrefsRegistry = {}
+
+def getAcceptedHelper(self, request, kind='language'):
+    # this is patched on prefs classes which dont define the getAccepted classes
+    # but define the deprecated getPreferredLanguages method
+    return self.getPreferredLanguages()
+
+def registerLangPrefsMethod(prefs, kind='language'):
+    # check for correct format of prefs
+    if type(prefs) is not type({}): prefs = {'klass':prefs,'priority':0}
+    # add chain for kind
+    if not _langPrefsRegistry.has_key(kind): _langPrefsRegistry[kind]=[]
+    # backwards compatibilty monkey patch
+    if not hasattr(prefs['klass'], 'getAccepted'): prefs['klass'].getAccepted = getAcceptedHelper
+    # add this pref helper
+    _langPrefsRegistry[kind].append(prefs)
+    # sort by priority
+    _langPrefsRegistry[kind].sort(lambda x, y: cmp(x['priority'], y['priority']))
+
+def getLangPrefsMethod(env, kind='language'):
+    # get higest prio method for kind
+    return _langPrefsRegistry[kind][-1]['klass'](env)
+
 def lang_normalize(lang):
     return lang.replace('_', '-')
-
 
 def str_lower(aString):
     return aString.lower()
@@ -48,16 +71,16 @@ def lang_accepted(available, preferred):
 def _false(*a, **kw):
     pass
 
-class Negotiator:
+
+class BrowserAccept:
+
     filters = {
         'content-type': (str_lower,),
         'language': (str_lower, lang_normalize),
     }
 
-    tests = {
-        'content-type': type_accepted,
-        'language': lang_accepted,
-    }
+    def __init__(self, request):
+        pass
 
     def getAccepted(self, request, kind='content-type'):
         get = request.get
@@ -92,16 +115,16 @@ class Negotiator:
         i=0
         length=len(req_accepts)
         filters = self.filters.get(kind, ())
-        
+
         # parse quality strings and build a tuple 
         # like ((float(quality), lang), (float(quality), lang))
         # which is sorted afterwards
         # if no quality string is given then the list order
         # is used as quality indicator
-	for accept in req_accepts:
+        for accept in req_accepts:
             for normalizer in filters:
                 accept = normalizer(accept)
-	    if accept:
+            if accept:
                 l = accept.split(';', 2)
                 quality = []
 
@@ -113,18 +136,30 @@ class Negotiator:
                             quality = float(q)
                     except:
                         pass
-                                                                                
+
                 if quality == []:
                     quality = float(length-i)
-                                                                                
+
                 accepts.append((quality, l[0]))
                 i += 1
-                
+
         # sort and reverse it
         accepts.sort()
         accepts.reverse()
-        
+
         return [accept[1] for accept in accepts]
+
+
+registerLangPrefsMethod({'klass':BrowserAccept,'priority':10 }, 'language')
+registerLangPrefsMethod({'klass':BrowserAccept,'priority':10 }, 'content-type')
+
+
+class Negotiator:
+
+    tests = {
+        'content-type': type_accepted,
+        'language': lang_accepted,
+    }
 
     def negotiate(self, choices, request, kind='content-type'):
         choices = tuple(choices)
@@ -142,7 +177,9 @@ class Negotiator:
             return cache[choices]
 
     def _negotiate(self, choices, request, kind):
-        userchoices = self.getAccepted(request, kind)
+        
+        envprefs = getLangPrefsMethod(request, kind)
+        userchoices = envprefs.getAccepted(request, kind)
         # Prioritize on the user preferred choices.  Return the first user
         # preferred choice that the object has available.
         test = self.tests.get(kind, _false)
@@ -159,10 +196,12 @@ class Negotiator:
         return self.negotiate(langs, request, 'language')
 
     def getLanguages(self, request):
-        return self.getAccepted(request, 'language')
+        envprefs = getLangPrefsMethod(request, 'language')
+        return envprefs.getAccepted(request, 'language')
 
 
 negotiator = Negotiator()
 
 def negotiate(langs, request):
-    return negotiator.getLanguage(langs, request)
+    return negotiator.negotiate(langs, request, 'language')
+
