@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.19 2004/05/31 16:20:48 tiran Exp $
+$Id: ATDocument.py,v 1.20 2004/06/03 02:24:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -82,7 +82,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """
         return self.getText()
     
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'CookedBody')
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'EditableBody')
     def EditableBody(self):
         """
         """
