@@ -39,12 +39,7 @@ import GRUFUser
 from Products.PageTemplates import PageTemplateFile
 import class_utility
 
-DEBUG=1
-#import zLOG
-#
-#def log(message,summary='',severity=0):
-#    zLOG.LOG('GroupUserFolder: ',severity,summary,message)
-
+from interfaces.IUserFolder import IUserFolder
 
 ## Developers notes
 ##
@@ -103,6 +98,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     meta_type='Group User Folder'
     id       ='acl_users'
     title    ='Group-aware User Folder'
+
+    __implements__ = (IUserFolder, )
 
     isAnObjectManager=1
     isPrincipiaFolderish=1
@@ -692,6 +689,28 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
 
 
+    #                                                                           #
+    #                           REGULAR INTERFACE METHODS                       #
+    #                                                                           #
+
+    security.declareProtected(Permissions.manage_users, "userFolderDelGroups")
+    def userFolderDelGroups(self, groupnames):
+        """
+        userFolderDelGroups(self, groupnames) => Delete groups
+        """
+        return self._doDelGroups(groupnames)
+
+
+    security.declareProtected(Permissions.manage_users, "userFolderAddGroup")
+    def userFolderAddGroup(self, groupname, roles = [], groups = (), **kw):
+        """
+        Add a group.
+        """
+        return self._doAddGroup(groupname, roles, groups, **kw)
+
+
+
+
     #                                           #
     #      Pretty Management form methods       #
     #                                           #
@@ -702,7 +721,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/02/20 17:40:42 $"[7:-2]
+        rev_date = "$Date: 2004/02/27 14:50:43 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 

@@ -33,7 +33,8 @@ base = 'http://%s:%d/%s' %(host, port, ZopeTestCase._folder_name)
     
 # Get global vars
 #from Products.GroupUserFolder.global_symbols import *
-
+from Products.GroupUserFolder.interfaces import IUserFolder
+from Interface import Verify
 
 # Install our product
 ZopeTestCase.installProduct('GroupUserFolder')
@@ -356,6 +357,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless(self.compareGroups("group_compta", ('intranet', 'extranet', )))
     
 
+
     #                                                   #
     #               GRUF Interface testing              #
     #                                                   #
@@ -369,11 +371,33 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         #urllib.urlopen(base+'/acl_users/getGRUFId')
 
 
-    def test11GRUFAPI(self,):
-        """
-        Test that gruf API for adding, removing and changing users and groups is okay
-        """
-        pass            # XXX TODO
+##    def test11GRUFInterfaces(self,):
+##        """
+##        Test that gruf interfaces are okay
+##        """
+##        # Check UserFolder IF
+##        self.failUnless(
+##            Verify.verifyObject(
+##                IUserFolder.IUserFolder,
+##                self.folder.acl_users,
+##                ),
+##            )
+
+##        # Check User IF
+##        self.failUnless(
+##            Verify.verifyObject(
+##                IUserFolder.IUserFolder,
+##                self.folder.acl_users.getUser("u1"),
+##                ),
+##            )
+
+##        # Check group IF
+##        self.failUnless(
+##            Verify.verifyObject(
+##                IUserFolder.IUserFolder,
+##                self.folder.acl_users.getUser("g1"),
+##                ),
+##            )
 
 
     #                                                   #
