@@ -19,7 +19,7 @@
 
     <h4>Settings</h4>
     
-    <form action="" method="POST" tal:attributes="action template/absolute_url">
+    <form action="" method="POST" tal:attributes="action here/absolute_url">
       <tal:block tal:define="
         label_groups python:user.getGroups();
         label_groups_no_recurse python:user.getGroups(no_recurse = 1);

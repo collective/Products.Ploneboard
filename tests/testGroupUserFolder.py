@@ -32,7 +32,7 @@ base = 'http://%s:%d/%s' %(host, port, ZopeTestCase._folder_name)
 
     
 # Get global vars
-from Products.GroupUserFolder.global_symbols import *
+#from Products.GroupUserFolder.global_symbols import *
 
 
 # Install our product

@@ -3,7 +3,7 @@
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
   <h4>Users management</h4>
-  <form action="" method="POST" tal:attributes="action template/absolute_url">
+  <form action="" method="POST" tal:attributes="action here/absolute_url">
     <ol tal:define="users here/getPureUsers">
       <table cellspacing="10" width="90%">
         <tr>
