@@ -10,19 +10,29 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
 
 from Products.CMFCore.ActionInformation import ActionInformation
+from Products.CMFCore.ActionsTool import ActionsTool
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.Expression import Expression
 
-class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionProviderBase ):
-
-#    __implements__ = (ActionProviderBase.__implements__)
+class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool ):
 
     id = 'portal_contentpanels'
     meta_type = 'ContentPanels Tool'
     _actions = (ActionInformation(id='latest_updates_viewlet'
-                                , title='Latest Updates'
+                                , title='Recent Updates'
                                 , action=Expression(
                 text='string:here/viewlets_folder_recent/macros/base_portlet')
+                                , condition=Expression(
+                text='python: object.isPrincipiaFolderish')
+                                , permissions=('View',)
+                                , category='panel_viewlets'
+                                , visible=1
+                                 )
+               ,
+               ActionInformation(id='folder_list_viewlet'
+                                , title='Folder Listing'
+                                , action=Expression(
+                text='string:here/viewlets_folder_listing/macros/base_portlet')
                                 , condition=Expression(
                 text='python: object.isPrincipiaFolderish')
                                 , permissions=('View',)
@@ -164,6 +174,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionProvid
 
                )
 
+    action_providers = ('portal_contentpanels',)
     security = ClassSecurityInfo()
 
     manage_options = (ActionProviderBase.manage_options +

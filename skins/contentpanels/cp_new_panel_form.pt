@@ -5,6 +5,7 @@
                   pageIndex request/pageIndex; 
                   columnIndex request/columnIndex;
                   panelIndex request/panelIndex;
+                  isQuery request/isQuery | python: 0;
                   paramString string:cpPath=$cpPath&pageIndex=$pageIndex&panelIndex=$panelIndex&columnIndex=$columnIndex">
 
 <head tal:define="ztu modules/ZTUtils;">
@@ -19,94 +20,128 @@
 </style>
 </head>
       
-<body onload="focus();" style="margin: 4px;">
+<body onload="focus();">
 
-  <form class="group"
-        action="search" 
-        method="post" 
-        name="search" 
-        tal:define="DateTime python:modules['DateTime'].DateTime"
-        tal:attributes="action string: ${here/absolute_url}/${template/getId}">
+<div class="documentEditable">
 
-   <span i18n:translate="legend_search_terms">Search Terms</span>		 
-   <div class="field">
-    <input type="text" 
-           name="Title" 
-           size="25"
-           />
+    <!-- simulating views on the groups/user pages until we have real objects. -->
+    <ul class="contentViews">
+        <li class="" tal:attributes="class python:test(isQuery, '', 'selected')">
+            <a href=""
+               tal:attributes="href string: ${here/portal_url}/${template/getId}?$paramString"
+               i18n:translate="box_navigation">Navigation</a>
+        </li>
 
-    <input type="hidden" name="pageIndex" tal:attributes="value pageIndex"/>
-    <input type="hidden" name="columnIndex" tal:attributes="value columnIndex">
-    <input type="hidden" name="panelIndex" tal:attributes="value panelIndex">
+        <li class="selected" tal:attributes="class python:test(isQuery, 'selected', '')">
+            <a href=""
+               tal:attributes="href string: ${here/portal_url}/${template/getId}?$paramString&isQuery:int=1"
+               i18n:translate="">Search</a>
+        </li>
+    </ul>
 
-    <input tabindex=""
-           type="submit" 
-           name="submit" 
-           value="Search"
-           i18n:attributes="value" 
-           />
-   </div>                
-  </form>
+    <div class="contentActions">
+    &nbsp;
+    </div>
+    <!-- End of tabs -->
 
-  <tal:block 
-   tal:define="query_results python:[brain.getObject() for brain in here.queryCatalog()[:100]];">    
+    <div class="documentContent">
 
-   <div tal:condition="query_results">
-        <span i18n:translate="heading_search_results">Search results</span>
-   </div> 
+       <!-- naviagation page -->
+       <div tal:condition="not: isQuery">
 
-   <div tal:condition="not: query_results"
-        tal:define="breadcrumbs python:here.breadcrumbs(here)">
+          <div tal:define="breadcrumbs python:here.breadcrumbs(here)">
 
-     <a tal:attributes="href string:${here/portal_url}/${template/getId}?$paramString">Home /
-     </a>
+             <a tal:attributes="href string:${here/portal_url}/${template/getId}?$paramString">Home /</a>
+             <a tal:repeat="crumb python:breadcrumbs[:-1]"
+                tal:content="python: crumb[0] + ' / '"
+                tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
+             </a>
+             <span tal:content="python:breadcrumbs[-1][0]" tal:on-error="string:"/>
 
-     <a tal:repeat="crumb python:breadcrumbs[:-1]"
-        tal:content="python: crumb[0] + ' / '"
-        tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
-     </a>
+         </div>
 
-   </div>
+         <br/>
 
- 
- 
-   <tal:block tal:define="checkPermission python: here.portal_membership.checkPermission;
-                          results python: test(query_results, query_results,
-                                          [item for item in here.contentValues()
-                                          if checkPermission('View',item)]);">
+       </div>
 
-   <table tal:condition="results"
-          class="group" width="100%" cellspacing="0" cellpadding="2">
- 
-    <tbody>
-    <tal:block tal:repeat="item python:results[:100]">
-     <tr tal:define="oddrow repeat/item/odd"
-         tal:attributes="class python:test(oddrow, 'even', 'odd')" > 
-    
-      <td width="50%">
-        <a tal:condition="python: item.isPrincipiaFolderish and item<>here"
-           tal:attributes="href string: ${item/absolute_url}/${template/getId}?$paramString"
-           tal:content="item/title_or_id">Title</a>
-        
-        <b tal:condition="python: not item.isPrincipiaFolderish or item==here"
-           tal:content="item/title_or_id">Title</b>
-      </td>
+       <!-- search form -->
 
-      <td width="25%" 
-          i18n:translate="" 
-          tal:content="python:item.getTypeInfo().Title()">Metatype</td>      
-            
-      <td width="25%" 
-          tal:define="path python:here.portal_url.getRelativeContentURL(item);">
-        <input type="checkBox" 
-               tal:attributes="onclick string:opener.location.href='${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path';; window.close();;"/>
-      </td>
-     </tr>
-     </tal:block>
-    </tbody>
-   </table>
-  </tal:block>
- </tal:block> 
+       <form class="group"
+             tal:condition="isQuery"
+             action="search"
+             method="post"
+             name="search"
+             tal:define="DateTime python:modules['DateTime'].DateTime"
+             tal:attributes="action string: ${here/absolute_url}/${template/getId}">
+
+             <span i18n:translate="legend_search_terms">Search Terms</span>
+             <div class="field">
+                   <input name="SearchableText"
+                          size="25"
+                          tal:attributes="value request/SearchableText | nothing"
+                          />
+
+                  <input type="hidden" name="pageIndex" tal:attributes="value pageIndex"/>
+                  <input type="hidden" name="columnIndex" tal:attributes="value columnIndex">
+                  <input type="hidden" name="panelIndex" tal:attributes="value panelIndex">
+                  <input type="hidden" name="cpPath" tal:attributes="value cpPath">
+                  <input type="hidden" name="isQuery:int" value="1">
+
+                  <input tabindex=""
+                         type="submit"
+                         name="submit"
+                         value="Search"
+                         i18n:attributes="value"
+                         />
+           </div>
+      </form>
+
+      <!-- the list -->
+
+      <div tal:define="checkPermission python: here.portal_membership.checkPermission;
+                       results python:test(isQuery,[brain.getObject() for brain in here.queryCatalog()[:100]], 
+                              [item for item in here.contentValues() if checkPermission('View',item)])"
+          tal:repeat="item python:results[:100]"
+          style="text-align: right;"
+          tal:attributes="class python:test(repeat['item'].odd(), 'even', 'odd')" >
+
+          <div style="float:left">
+
+            <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+            <a tal:condition="python: item.isPrincipiaFolderish and item<>here"
+               tal:attributes="href string: ${item/absolute_url}/${template/getId}?$paramString"
+               tal:content="python:item.Title() or item.getId()">Title</a>
+
+            <b tal:condition="python: not item.isPrincipiaFolderish or item==here"
+               tal:content="python:item.Title() or item.getId()">Title</b>
+
+            <span class="discreet"
+                i18n:translate=""
+                tal:content="python:item.getTypeInfo() and item.getTypeInfo().Title()">Metatype</span>
+             
+          </div>
+
+          <select tal:define="path python:here.portal_url.getRelativeContentURL(item);
+                      viewlets python: here.portal_actions.listFilteredActionsFor(item).get('panel_viewlets', []);
+                      viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or item.absolute_url() != cpPath)];
+                      portlets python: here.portal_contentpanels.listFilteredActionsFor(item).get('panel_viewlets',[]);"
+                  onchange="if (this.options[this.selectedIndex].value != 'null') { opener.location.href=this.options[this.selectedIndex].value; window.close();}">
+               <option value="null">Select Viewlet:</option>
+               <option tal:repeat="viewlet_action viewlets"
+                 tal:content="viewlet_action/name"
+                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
+               </option>
+               <option value="null" tal:condition="viewlets">----</option>
+               <option tal:repeat="viewlet_action portlets"
+                 tal:content="viewlet_action/name"
+                 tal:attributes="value string:${cpPath}/contentpanels_config?addPanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&panelObjectPath=$path&panelObjectViewlet=${viewlet_action/id}"> viewlet
+               </option>
+          </select>
+
+      </div>
+
+    </div> 
+</div>
 </body>
 </html>
 

@@ -71,9 +71,12 @@ def install_Skins(self, out):
         out.write( 'Unable to add CMFContentpanels directory view to portal_skins.\n')
 
 def install_Actions(self, out):
-    # Set actions
+    # for upgrade: delete actions 
     portal_actions = getToolByName(self, 'portal_actions')
-    portal_actions.addActionProvider('portal_contentpanels')
+    try:
+        portal_actions.deleteActionProvider('portal_contentpanels')
+    except:
+        pass
 
     # global viewlet actions
     # latest_updates_viewlet / news_viewlet

@@ -13,7 +13,8 @@ panelObject = context.getPanelObject(objectPath)
 # get viewlet infomation
 defaultViewletPath = 'here/viewlet_default/macros/portlet'
 viewletPath = defaultViewletPath
-actions = context.portal_actions.listFilteredActionsFor(panelObject).get('panel_viewlets', [])
+actions = context.portal_actions.listFilteredActionsFor(panelObject).get('panel_viewlets', []) + \
+          context.portal_contentpanels.listFilteredActionsFor(panelObject).get('panel_viewlets', [])
 for action in actions:
     if action['id'] == panelObjectViewlet: 
       try:
