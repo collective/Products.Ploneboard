@@ -44,13 +44,6 @@
 	-->
       </script>
 
-      <span class="right">
-	<input type="button" 
-	       value="Start slideshow" 
-	       class="context"
-	       tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
-      </span>
-      
       <h1 tal:content="here/title_or_id">
 	Title or id
       </h1>
@@ -93,6 +86,12 @@
       </table>
     
     </div>
+
+    <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0);">
+      <a href="" tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;">
+        <img tal:attributes="src string:$portal_url/image_icon.gif" alt="Start slideshow" title="Start slideshow" />
+      </a>
+    </metal:block>
     
   </body>
   
