@@ -5,7 +5,7 @@
     Added zope 3 like locales directory support:
       Products/MyProduct/locales/${lang}/LC_MESSAGES/${domain}.po
 
-1.0fork-rc1 - 2004-02-11 (aka Plone 2.0final release)
+1.0fork-rc1 - 2004-02-11
 
     Fixed minors problems with python 2.1 compatibility
 
