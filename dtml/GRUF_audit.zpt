@@ -213,7 +213,7 @@
           </p>
           
           <ul>
-            <li>Read: Access content information</li>
+            <li>Read: View</li>
             <li>Write: Change Images and Files</li>
           </ul>
           <p>
@@ -222,9 +222,12 @@
           </p>
           
           <ul>
-            <li>Read: Access content information</li>
+            <li>Read: View</li>
             <li>Write: Modify portal content</li>
           </ul>
+          <p>
+            If you have <strong>a lot of users</strong>, rendering this audit can be very time-consuming.<br />
+              In such conditions, you can select only "roles" to make things a lot faster.
         </ol>
       </ol>
     </div>

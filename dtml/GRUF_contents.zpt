@@ -19,17 +19,29 @@
       <!-- Users selection -->
       <table bgcolor="#EEEEEE" tal:on-error="nothing">
         <tr>
-          <th class="list-header">Groups backend</th>
+          <th class="list-header">
+            <a href="Groups/acl_users/manage_main">
+              Groups backend
+            </a>
+          </th>
           <td>
-            <img src="" tal:attributes="src here/Groups/acl_users/icon">&nbsp;
-              <a href="Groups/acl_users/manage_main" tal:content="here/Groups/acl_users/meta_type">Type</a>
+            <div class="list-item">
+              <img src="" tal:attributes="src here/Groups/acl_users/icon">&nbsp;
+                (<span tal:content="here/Groups/acl_users/meta_type">Type</span>)
+            </div>
           </td>
         </tr>
         <tr>
-          <th class="list-header">Users backend</th>
+          <th class="list-header">
+            <a href="Users/acl_users/manage_main">
+              Users backend
+            </a>
+          </th>
           <td>
-            <img src="" tal:attributes="src here/Users/acl_users/icon">&nbsp;
-              <a href="Users/acl_users/manage_main" tal:content="here/Users/acl_users/meta_type">Type</a>
+            <div class="list-item">
+              <img src="" tal:attributes="src here/Users/acl_users/icon">&nbsp;
+                (<span tal:content="here/Users/acl_users/meta_type">Type</span>)
+            </div>
           </td>
         </tr>
       </table>

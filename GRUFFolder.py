@@ -219,9 +219,10 @@ class GRUFGroups(GRUFFolder):
         if not prefixed:
             return self.acl_users.getUserNames()
         else:
-            #XXX Please replace this w/ a sensible list comprehension    
-            return map(lambda x, self=self: "%s%s" % 
-              (self._group_prefix, x), self.acl_users.getUserNames())
+            ret = []
+            for grp in self.acl_users.getUserNames():
+                ret.append("%s%s" % (self._group_prefix, grp))
+            return ret
 
 
     def userdefined_roles(self):

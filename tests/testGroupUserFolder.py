@@ -174,7 +174,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
 ##        self.folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
 
-##        # Create a few folders to play with
+        # Create a few folders to play with
         self.folder.manage_addProduct['OFSP'].manage_addFolder('lr')
         self.folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
         self.folder.lr.manage_addLocalRoles("u3", ("r3", ))
@@ -195,6 +195,27 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
     #                                                   #
     #           Basic GRUF behaviour testing            #
     #                                                   #
+
+    def test00userNames(self,):
+        """
+        test00userNames(self,)
+        Basic test of user and group names.
+        """
+        un = self.folder.acl_users.getUserNames()
+        users = [
+            'group_g1', 'group_g2', "group_g3", "group_g4",
+            "group_ng1", "group_ng2", "group_ng3", "group_ng4", "group_ng5",
+            "manager",
+            "u1", "u2", "u3", "u4", "u5", "u6", "u7", "u8", "u9", "u10", "u11",
+            "group_extranet", "group_intranet", "group_compta",
+            ]
+        un.sort()
+        users.sort()
+        for u in users:
+            self.failUnless(u in un, "Invalid users list: '%s' is not in acl_users." % (u,))
+        for u in un:
+            self.failUnless(u in users, "Invalid users list: '%s' is in acl_users but shouldn't be there." % (u,))
+        
 
     def test01userRoles(self,):
         """

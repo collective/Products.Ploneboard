@@ -5,18 +5,18 @@
   <h4>Users management</h4>
   <form action="" method="POST" tal:attributes="action template/absolute_url">
     <ol tal:define="users here/getPureUsers">
-      <table cellspacing="10">
+      <table cellspacing="10" width="90%">
         <tr>
           <!-- Users selection -->
           <td valign="top">
-            <table bgcolor="#EEEEEE">
+            <table bgcolor="#EEEEEE" width="100%">
               <tr class="list-header" tal:condition="users">
                 <th>&nbsp;</th>
                 <th>User</th>
                 <th class="list-header">Member <br>of groups</th>
-                <th class="list-header">Implicitly <br>member <br>of groups</th>
+                <th class="list-header">Implicitly <br>member of*</th>
                 <th class="list-header">Has roles</th>
-                <th class="list-header">Implicitly <br>has roles <br>(from groups)</th>
+                <th class="list-header">Implicitly <br>has roles**</th>
               </tr>
               
               <tr 
@@ -88,26 +88,35 @@
               <tr>
                 <td><div class="list-item">&nbsp;</div></td>
                 <td><div class="list-item">Create users:<br /><textarea name="new_users:lines" cols="20" rows="3"></textarea></div></td>
-                <td><div class="list-item"></div></td>
+                <td colspan="4">
+                  <div class="list-item">
+                    Newly created users will be affected groups and roles according to the table below.
+                  </div>
+                </td>
               </tr>
               <tr>
-                <td colspan="4" align="center"><br>
-                    <input type="submit" name="changeOrCreateUsers:method" value="Create / Change" />
-                      &nbsp;
-                      <input type="submit" name="deleteUsers:method" value="Delete" />
-                        <br>&nbsp;
+                <td colspan="2" align="center">
+                  <input type="submit" name="changeOrCreateUsers:method" value="Create" />
+                    &nbsp;
+                    <input type="submit" name="deleteUsers:method" value="Delete" />
                 </td>
+              </tr>
             </table>
           </td>
-
-          <td valign="middle">
-            =>
+        </tr>
+        <tr>
+          <td align="center">
+            <div class="list-item">
+              Select one or more users in the upper table, select one or more groups / roles in the table below
+              and click "Change" to affect groups / roles to these users.
+            </div>
           </td>
-
-          <td valign="middle">
+        </tr>
+        <tr>
+          <td valign="top" align="center" colspan="6">
             <table  bgcolor="#EEEEEE">
               <tr>
-                <td>
+                <td valign="top">
                   <!-- Groups selection -->
                   <table width="100%">
                     <tr class="list-header">
@@ -129,9 +138,8 @@
                       <td><div class="list-item"><i>(None)</i></div></td>
                     </tr>
                   </table>
-                  
-                  <br>
-                    
+                </td>
+                <td valign="top">
                     <!-- Roles selection -->
                     <table width="100%">
                       <tr class="list-header">
@@ -155,6 +163,8 @@
                     </table>
                 </td>
               </tr>
+              <tr>
+                <td colspan="2" align="middle"><input type="submit" name="changeOrCreateUsers:method" value="Change" /></td>
             </table>
           </td>
         </tr>
@@ -165,6 +175,14 @@
           If you do not select any group, groups won't be reseted for the selected users.<br />
             To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
       </p>
+
+      <p class="form-help">
+        * According to the groups inheritance, this group is also recursively member of these groups. <br />This is what we call nested groups.
+      </p>
+      <p class="form-help">
+        ** Accorded to the groups inheritance, this group also has these roles - even if they are not defined explicitly on it.
+      </p>
+
     </ol>
   </form>
 

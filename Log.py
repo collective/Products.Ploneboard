@@ -76,6 +76,19 @@ def Log(level, *args):
 
         LOG_PROCESSOR[level](level, LOG_LABEL[level], pr, stackItems)
 
+def LogCallStack(level,):
+    """
+    LogCallStack(level,) => View the whole call stack for the specified call
+    """
+    # Format call stack
+    stack = []
+    stackItems = traceback.extract_stack()
+    space = ""
+    for stackItem in stackItems:
+        LOG_PROCESSOR[level](level, LOG_LABEL[level], "%s%s:%s:" % (space, os.path.basename(stackItem[0]), stackItem[1],), stackItems)
+        space = " %s" % space
+    
+
 
 def FormatStack(stack):
     """

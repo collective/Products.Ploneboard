@@ -5,18 +5,18 @@
   <h4>Groups management</h4>
   <form action="" method="POST" tal:attributes="action template/absolute_url">
     <ol>
-      <table cellspacing="10" tal:define="groups here/getGroups">
+      <table cellspacing="10" width="90%" tal:define="groups here/getGroups">
         <tr>
           <!-- Groups selection -->
           <td valign="top">
-            <table bgcolor="#EEEEEE">
+            <table bgcolor="#EEEEEE" width="100%">
               <tr class="list-header" tal:condition="groups">
                 <th>&nbsp;</th>
                 <th>Group</th>
                 <th class="list-header">Member <br>of groups</th>
-                <th class="list-header">Implicitly <br>member <br>of groups</th>
+                <th class="list-header">Implicitly <br>member of*</th>
                 <th class="list-header">Has roles</th>
-                <th class="list-header">Implicitly <br>has roles <br>(from groups)</th>
+                <th class="list-header">Implicitly <br>has roles**</th>
               </tr>
               
               <tr 
@@ -72,29 +72,97 @@
                 </div>
               </tr>
 
-              <!-- New group -->
+              <!-- New user -->
               <tr>
                 <td><div class="list-item">&nbsp;</div></td>
                 <td><div class="list-item">Create groups:<br /><textarea name="new_groups:lines" cols="20" rows="3"></textarea></div></td>
-                <td><div class="list-item"></div></td>
-                <td><div class="list-item"></div></td>
+                <td colspan="4">
+                  <div class="list-item">
+                    Newly created groups will be affected groups and roles according to the table below.
+                  </div>
+                </td>
               </tr>
               <tr>
-                <td colspan="4" class="list-item" align="center">
-                  <br />
-                    <input type="submit" name="changeOrCreateGroups:method" value="Create / Change" />
-                      &nbsp;
-                      <input type="submit" name="deleteGroups:method" value="Delete" />
-                        <br>&nbsp;
+                <td colspan="2" align="center">
+                  <input type="submit" name="changeOrCreateGroups:method" value="Create" />
+                    &nbsp;
+                    <input type="submit" name="deleteGroups:method" value="Delete" />
+                </td>
               </tr>
             </table>
           </td>
-
-          <td valign="middle">
-            =>
+        </tr>
+        <tr>
+          <td align="center">
+            <div class="list-item">
+              Select one or more users in the upper table, select one or more groups / roles in the table below
+              and click "Change" to affect groups / roles to these users.
+            </div>
           </td>
+        </tr>
+        <tr>
+          <td valign="top" align="center" colspan="6">
+            <table  bgcolor="#EEEEEE">
+              <tr>
+                <td valign="top">
+                  <!-- Groups selection -->
+                  <table width="100%">
+                    <tr class="list-header">
+                      <th colspan="2">Affect groups</th>
+                    </tr>
+                    
+                    <tr tal:repeat="group here/getGroups">
+                      <td>
+                        <input type="checkbox" name="nested_groups:list" value="" tal:attributes="value group">
+                      </td>
+                      <td>
+                        <div class="list-item" tal:content="structure group/asHTML"></div>
+                      </td>
+                    </tr>
+                    
+                    <!-- "(None)" item -->
+                    <tr>
+                      <td><div class="list-item"><input type="checkbox" name="nested_groups:list" value="__None__"></div></td>
+                      <td><div class="list-item"><i>(None)</i></div></td>
+                    </tr>
+                  </table>
+                </td>
+                <td valign="top">
+                    <!-- Roles selection -->
+                    <table width="100%">
+                      <tr class="list-header">
+                        <th colspan="2">Affect roles</th>
+                      </tr>
+                      
+                      <tr tal:repeat="role here/valid_roles">
+                        <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                          <input type="checkbox" name="roles:list" value="" tal:attributes="value role">
+                        </td>
+                        <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                          <div class="list-item"><font color="" tal:attributes="color here/role_color" tal:content="role">Role</font></div>
+                        </td>
+                      </tr>
+                      
+                      <!-- "(None)" item -->
+                      <tr>
+                        <td><div class="list-item"><input type="checkbox" name="roles:list" value="__None__"></div></td>
+                        <td><div class="list-item"><i>(None)</i></div></td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" align="middle"><input type="submit" name="changeOrCreateUsers:method" value="Change" /></td>
+            </table>
+          </td>
+        </tr>
+      </table>
 
-          <td valign="middle" bgcolor="#EEEEEE">
+
+
+
+        <tr tal:replace="nothing">
+          <td valign="top" bgcolor="#EEEEEE">
             <!-- Groups selection -->
             <table width="100%">
               <tr class="list-header">
@@ -142,11 +210,16 @@
           </td>
         </tr>
 
-      </table>
-
+      <p class="form-help">
+        * According to the groups inheritance, this group is also recursively member of these groups. <br />This is what we call nested groups.
+      </p>
+      <p class="form-help">
+        ** Accorded to the groups inheritance, this group also has these roles - even if they are not defined explicitly on it.
+      </p>
 
     </ol>
   </form>
+
 
   <h4>Instructions</h4>
   <ol>

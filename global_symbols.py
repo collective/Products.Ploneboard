@@ -34,6 +34,23 @@ if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/version.txt'):
 else:
     version__ = "(UNKNOWN)"
 
-# Max allowrd users or groups to enable tree view
-MAX_TREE_USERS_AND_GROUPS = 50
+# Batching range for ZMI pages
+MAX_USERS_PER_PAGE = 100
 
+# Max allowrd users or groups to enable tree view
+MAX_TREE_USERS_AND_GROUPS = 100
+
+# Users/groups tree cache time (in seconds)
+# This is used in management screens only
+TREE_CACHE_TIME = 10
+
+# List of user names that are likely not to be valid user names.
+# This list is for performance reasons in ZMI views. If some actual user names
+# are inside this list, management screens won't work for them but they
+# will still be able to authenticate.
+INVALID_USER_NAMES = [
+    'BASEPATH1', 'BASEPATH2', 'BASEPATH3', 'a_', 'URL', 'acl_users', 'misc_',
+    'management_view', 'management_page_charset', 'REQUEST', 'RESPONSE',
+    'MANAGE_TABS_NO_BANNER', 'tree-item-url', 'SCRIPT_NAME', 'n_', 'help_topic',
+    'Zope-Version', 'target', 
+    ]

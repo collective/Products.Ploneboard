@@ -33,7 +33,8 @@ import AccessControl.Role, webdav.Collection
 import Products
 import os
 import string
-import shutil
+import time
+import math
 import random
 from global_symbols import *
 import AccessControl.User
@@ -87,18 +88,6 @@ def manage_addGroupUserFolder(self, dtself=None, REQUEST=None, **ignored):
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
 
-# ...this is used for direct user access...
-# superGetAttr is assigned to whatever ObjectManager.__getattr__
-# used to do.
-try:
-    superGetAttr = ObjectManager.__getattr__
-except:
-    try:
-        superGetAttr = ObjectManager.inheritedAttribute('__getattr__')
-    except:
-        superGetAttr = None
-
-
 
 
 class GroupUserFolder(OFS.ObjectManager.ObjectManager, 
@@ -128,8 +117,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Item.manage_options )
 
     manage_main = OFS.ObjectManager.ObjectManager.manage_main
-    manage_overview = DTMLFile('dtml/GRUF_overview', globals())
-    manage_addUser = DTMLFile('dtml/addUser', globals())
+##    manage_overview = DTMLFile('dtml/GRUF_overview', globals())
+    manage_overview = PageTemplateFile.PageTemplateFile('dtml/GRUF_overview', globals())
     manage_audit = PageTemplateFile.PageTemplateFile('dtml/GRUF_audit', globals())
     manage_groups = PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
     manage_users = PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
@@ -152,6 +141,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     group_color = "#000099"
     role_color = "#660000"
     
+    # User and group images
+    img_user = ImageFile.ImageFile('www/GRUFUsers.gif', globals())
+    img_group = ImageFile.ImageFile('www/GRUFGroups.gif', globals())
 
     # ------------------------
     #    Various operations  #
@@ -238,11 +230,14 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Return a list of usernames (including groups).
         Fetch the list from GRUFUsers and GRUFGroups.
         """
+        # Do not fetch usernames if users or groups are invalid
         if not "acl_users" in self._getOb('Users').objectIds() or \
            not "acl_users" in self._getOb('Groups').objectIds():
-            return ()
+            return []
+
+        # Aggregate user and group names
         return self._getOb('Users').acl_users.getUserNames() + \
-               self._getOb('Groups').getGroupNames()
+               self.Groups.listGroups(prefixed = 1)
 
     security.declareProtected(Permissions.manage_users, "getUsers")
     def getUsers(self):
@@ -258,7 +253,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security.declareProtected(Permissions.manage_users, "getUser")
     def getUser(self, name):
-        """Return the named user object or None"""
+        """
+        Return the named user object or None
+
+        XXX Have to improve perfs here
+        """
         # Prevent infinite recursion when instanciating a GRUF 
         # without having sub-acl_users set
         if not "acl_users" in self.Users.objectIds() or \
@@ -274,7 +273,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         
         # If not found, fetch groups (then the user must be 
         # prefixed by 'group_' prefix)
-
         u = self.Groups.getGroup(name)
         if u:
             # We changed that because the previous code returned
@@ -320,8 +318,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Fetch the list from GRUFGroups.
         """
         if not "acl_users" in self.Groups.objectIds():
-            return ()
-        return self.Groups.listGroups(prefixed = prefixed)
+            return []
+        return self.Groups.listGroups(prefixed = 1)
 
     security.declareProtected(Permissions.manage_users, "getGroups")
     def getGroups(self):
@@ -355,7 +353,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if u:
             ret = GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
             return ret
-            # $$$ check security for this !
 
         # If still not found, well... we cannot do anything else.
         Log(LOG_DEBUG, "Didn't find group", name)
@@ -372,7 +369,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Fetch the list of actual users from GRUFUsers.
         """
         if not "acl_users" in self.Users.objectIds():
-            return ()
+            return []
         ret = self.Users.acl_users.getUserNames()
         return ret
 
@@ -640,7 +637,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/07/26 19:05:49 $"[7:-2]
+        rev_date = "$Date: 2003/07/31 08:55:27 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -923,6 +920,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         listUsersAndRoles(self,) => list of tuples
 
         This method is used by the Security Audit page.
+        XXX HAS TO BE OPTIMIZED
         """
         request = self.REQUEST
         display_roles = request.get('display_roles', 0)
@@ -942,22 +940,21 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 ret.append(('role', r, r, handle, r))
 
         # Collect users
-        for u in self.getUserNames():
-            obj = self.getUser(u)
-            if hasattr(obj, 'isGroup'):
-                if obj.isGroup():
-                    if display_groups:
-                        handle = "G%02d" % group_index
-                        html = obj.asHTML()
-                        group_index += 1
-                        ret.append(('group', u, obj.getUserNameWithoutGroupPrefix(), handle, html))
-                        continue
-
-            if display_users:
+        if display_users:
+            for u in self.getPureUserNames():
+                obj = self.getUser(u)
                 html = obj.asHTML()
                 handle = "U%02d" % user_index
                 user_index += 1
                 ret.append(('user', u, u, handle, html))
+
+        if display_groups:
+            for u in self.getGroupNames():
+                obj = self.getUser(u)
+                handle = "G%02d" % group_index
+                html = obj.asHTML()
+                group_index += 1
+                ret.append(('group', u, obj.getUserNameWithoutGroupPrefix(), handle, html))
 
         # Return list
         return ret
@@ -1069,14 +1066,22 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security.declarePrivate("tpValues")
     def tpValues(self):
         # Avoid returning HUUUUUUGE lists
+        # Use the cache at first
+        if self._v_no_tree and self._v_cache_no_tree > time.time():
+            return []        # Do not use the tree
+
+        # Then, use a simple computation to determine opportunity to use the tree or not
         ngroups = len(self.getGroupNames())
+        if ngroups > MAX_TREE_USERS_AND_GROUPS:
+            self._v_no_tree = 1
+            self._v_cache_no_tree = time.time() + TREE_CACHE_TIME
+            return []
         nusers = len(self.getUserNames())
-        if ngroups + nusers <= MAX_TREE_USERS_AND_GROUPS:
-            meth_list = self.getUsers
-        elif ngroups <= MAX_TREE_USERS_AND_GROUPS:
+        if ngroups + nusers > MAX_TREE_USERS_AND_GROUPS:
             meth_list = self.getGroups
         else:
-            return []
+            meth_list = self.getUsers
+        self._v_no_tree = 0
 
         # Get top-level user and groups list
         tree_dict = {}
@@ -1091,6 +1096,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Return this top-level list
         top_level.sort(lambda x, y: cmp(x.sortId(), y.sortId()))
+        Log(LOG_DEBUG, tree_dict)
         return top_level
         
 
@@ -1109,27 +1115,141 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         path = string.split(REQUEST.PATH_INFO, '/')[:-1]
         username = path[-1]
-        if username in self.getUserNames():
-            REQUEST.set('username', username)
-            REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
-            return self.restrictedTraverse('manage_user')()
-        else:
-            # Default management screen
-            return self.restrictedTraverse('manage_GRUFContents')()
+
+        # Use individual usr/grp management screen (only if name is passed along the mgt URL)
+        if username != "acl_users":
+            if username in self.getUserNames():
+                REQUEST.set('username', username)
+                REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
+                return self.restrictedTraverse('manage_user')()
+        
+        # Default management screen
+        return self.restrictedTraverse('manage_GRUFContents')()
 
 
-    def __getattr__(self, name):
-        '''
+    # Tree caching information
+    _v_no_tree =  0
+    _v_cache_no_tree = 0
+    _v_cache_tree = (0, [])
+
+
+    def __bobo_traverse__(self, request, name):
+        """
         Looks for the name of a user or a group.
-        '''
-        if name in self.getUserNames():
-            return self.restrictedTraverse('')
+        This applies only if users list is not huge.
+        """
+        # Check if it's an attribute
+        if hasattr(self, name, ):
+            return getattr(self, name)
+        
+        # It's not an attribute, maybe it's a user/group
+        # (this feature is used for the tree)
+        if name.startswith('_'):
+            pass        # Do not fetch users
+        elif name.startswith('manage_'):
+            pass        # Do not fetch users
+        elif name in INVALID_USER_NAMES:
+            pass        # Do not fetch users
+        else:
+            # Only try to get users is fetch_user is true.
+            # This is only for performance reasons.
+            # The following code block represent what we want to minimize
+            if self._v_cache_tree[0] < time.time():
+                un = self.getUserNames()            # This is the cost we want to avoid
+                self._v_cache_tree = (time.time() + TREE_CACHE_TIME, un, )
+            else:
+                un = self._v_cache_tree[1]
 
-        if superGetAttr is None:
-            raise AttributeError, name
-        return superGetAttr(self, name)
+            # Get the user if we can
+##            Log(LOG_DEBUG, "Cached tree", self._v_cache_tree)
+            if name in un:
+                self._v_no_tree = 0
+                return self
 
-   
+        # This will raise
+        return getattr(self, name, )
+
+
+
+
+    #                                                                                   #
+    #                           USERS / GROUPS BATCHING (ZMI SCREENS)                   #
+    #                                                                                   #
+
+    _v_batch_users = []
+
+    security.declareProtected(Permissions.view_management_screens, "listUsersBatches")
+    def listUsersBatches(self,):
+        """
+        listUsersBatches(self,) => return a list of (start, end) tuples.
+        Return None if batching is not necessary
+        """
+        # Time-consuming stuff !
+        un = self.getPureUserNames()
+        if len(un) <= MAX_USERS_PER_PAGE:
+            return None
+        un.sort()
+
+        # Split this list into small groups if necessary
+        ret = []
+        idx = 0
+        l_un = len(un)
+        nbatches = int(math.ceil(l_un / float(MAX_USERS_PER_PAGE)))
+        for idx in range(0, nbatches):
+            first = idx * MAX_USERS_PER_PAGE
+            last = first + MAX_USERS_PER_PAGE - 1
+            if last >= l_un:
+                last = l_un - 1
+            # Append a tuple (not dict) to avoid too much memory consumption
+            Log(LOG_DEBUG, first, last)
+            ret.append((first, last, un[first], un[last]))
+
+        # Cache & return it
+        self._v_batch_users = un
+        return ret
+
+    security.declareProtected(Permissions.view_management_screens, "getUsersBatchTable")
+    def listUsersBatchTable(self,):
+        """
+        listUsersBatchTable(self,) => Same a mgt screens but divided into sublists to
+        present them into 5 columns.
+        XXX have to merge this w/getUsersBatch to make it in one single pass
+        """
+        # Iterate
+        ret = []
+        idx = 0
+        current = []
+        for rec in (self.listUsersBatches() or []):
+            if not idx % 5:
+                if current:
+                    ret.append(current)
+                current = []
+            current.append(rec)
+            idx += 1
+        
+        if current:
+            ret.append(current)
+
+        return ret
+
+    security.declareProtected(Permissions.view_management_screens, "getUsersBatch")
+    def getUsersBatch(self, start):
+        """
+        getUsersBatch(self, start) => user list
+        """
+        # Rebuild the list if necessary
+        if not self._v_batch_users:
+            un = self.getPureUserNames()
+            self._v_batch_users = un
+
+        # Return the batch
+        end = start + MAX_USERS_PER_PAGE
+        ids = self._v_batch_users[start:end]
+        ret = []
+        for id in ids:
+            ret.append(self.getUser(id))
+        return ret
+        
 class treeWrapper:
     """
     treeWrapper: Wrapper around user/group objects for the tree

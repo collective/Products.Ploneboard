@@ -1,5 +1,13 @@
 TODO-LIST
 
+[v1.31 => Planned 2003-08-31]
+
+  * [Core] Fix impossible group removing in users view
+
+  * [ZMI] Optimize screens
+
+  * [CMF/Plone] Fix groups loss when changing pw
+
 [v1.4 => Planned 2003-08-31]
 
   * [Core] Implement multi-UserFolder-sources

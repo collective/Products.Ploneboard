@@ -191,7 +191,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def getUserName(self):
         """Return the username of a user"""
         if self.isGroup() and \
-          self._original_name[:len(grufprefix)]!=grufprefix:
+          not self._original_name[:len(grufprefix)] == grufprefix:
             return "%s%s" % (grufprefix, self._original_name )
         return self._original_name
 
@@ -395,21 +395,27 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     #               Underlying user object support              #
     #                                                           #
 
-    security.declarePublic('__getattr__')
+##    security.declarePublic('__getattr__')
+##    def __getattr__(self, name):
+##        # This will call the underlying object's methods
+##        # if they are not found in this user object.
+##        try:
+##            return self.__dict__['__underlying__'].restrictedTraverse(name)
+##        except AttributeError:
+##            # Use a try/except to fetch attributes from UserFolders that
+##            # do not handle restrictedTraverse
+##            try:
+##                return getattr(self.__dict__['__underlying__'], name)
+##            except:
+##                # Use acquisition regularily
+##                # XXX Have to check security on this !!!
+##                return self.inheritedAttribute(GRUFUser, name)
+
+
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.
-        try:
-            return self.__dict__['__underlying__'].restrictedTraverse(name)
-        except AttributeError:
-            # Use a try/except to fetch attributes from UserFolders that
-            # do not handle restrictedTraverse
-            try:
-                return getattr(self.__dict__['__underlying__'], name)
-            except:
-                # Use acquisition regularily
-                # XXX Have to check security on this !!!
-                return self.inheritedAttribute(GRUFUser, name)
+        return getattr(self.__dict__['__underlying__'], name, self.inheritedAttribute(GRUFUser, name))
 
 
     #                                                           #

@@ -1,0 +1,135 @@
+<div tal:replace="nothing"> -*- mode: dtml; dtml-top-element: "body" -*- </div>
+<div tal:replace="structure here/manage_page_header"></div>
+<div tal:replace="structure here/manage_tabs"></div>
+
+
+<!-- Help text -->
+<p class="form-help">Here is an overview of users, their groups and roles. See the legend below.</p>
+
+<!-- Users / Roles / Groups tabular view -->
+<h4>Users overview</h4>
+<ol>
+  <tal:block 
+    tal:define="
+    global batch python:test(request.has_key('start'), 0, here.listUsersBatchTable());
+    global start python:request.get('start', 0);
+    "
+    ></tal:block>
+
+    <tal:block tal:condition="batch">
+      <p class="form-help">
+        To avoid too much overhead on this display, it is not possible to show more than 100 users
+        per screen. Please click the range of users you want to see in the table below.
+      </p>
+
+      <table tal:replace="nothing" cellpadding="2" width="90%">
+          <tr tal:repeat="rows batch">
+            <td  width="25%" bgcolor="#DDDDDD" tal:repeat="col rows">
+              <table height="100%" width="100%" bgcolor="#FFFFFF">
+                  <tr>
+                    <td nowrap="1" align="center">
+                      <div class="list-item">
+                        <a href="" 
+                           tal:attributes="href python:'%s/manage_overview?start:int=%d' % (here.absolute_url(), col[0])">
+                          <img src="img_user" border="0" align="middle"><span tal:replace="python:col[2]" /> ...
+                            <span tal:replace="python:col[3]" />
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+              </table>
+            </td>
+          </tr>
+      </table>
+    </tal:block>
+    
+    <tal:block tal:condition="not:batch">
+      <tal:block tal:define="users python:here.getUsersBatch(start)">
+        <table width="90%" tal:condition="users">
+            <tr class="list-header">
+              <th>User</th>
+              <th>Group(s)</th>
+              <th>Role(s)</th>
+            </tr>
+            
+        <tal:block tal:repeat="user users">
+          <tr class="row-hilite"
+              tal:define="
+            label_groups python:user.getGroups();
+            label_groups_no_recurse python:user.getGroups(no_recurse = 1);
+            label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
+            groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
+            groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);
+            roles python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles());
+            roles_no_recurse python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getUserRoles());
+            roles_recurse python:filter(lambda x: x not in roles_no_recurse, roles)"
+            >
+            <td>
+              <div class="list-item">
+                <img src="img_user">&nbsp;<strong tal:content="structure user/asHTML"></strong>
+              </div>
+            </td>
+            <td>
+              <!-- Groups -->
+              <div class="list-item">
+                <span tal:repeat="group groups_no_recurse"
+                  ><span tal:replace="structure group/asHTML"></span><span tal:condition="not:repeat/group/end">, </span></span
+                  ><span tal:condition="python:groups_no_recurse and groups_recurse">,</span>
+                <span tal:repeat="group groups_recurse" >
+                  <span tal:replace="structure python:group.asHTML(implicit=1)"></span><span tal:condition="not:repeat/group/end">, </span>
+                </span>
+              </div>
+            </td>
+            <td>
+              <!-- Roles -->
+              <div class="list-item">
+                <span tal:repeat="role roles_no_recurse" >
+                  <font color=""
+                        tal:attributes="color here/role_color">
+                    <span tal:replace="role"></span><span tal:condition="not:repeat/role/end">, </span>
+                  </font>
+                </span>
+                <span tal:condition="python:roles_no_recurse and roles_recurse">, </span>
+                <span tal:repeat="role roles_recurse" >
+                  <font color=""
+                        tal:attributes="color here/role_color">
+                    <i><span tal:replace="role"></span></i><span tal:condition="not:repeat/role/end">, </span>
+                  </font>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tal:block>
+      </table>
+        
+        <table tal:condition="not:users">
+            <tr>
+              <td class="row-hilite" colspan="3">
+                <p>
+                  No user available. This happens either if you have no users defined or if
+                  the underlying UserFolder cannot retreive the entire users list.
+                </p>
+              </td>
+            </tr>
+        </table>
+      </tal:block>
+    </tal:block>
+</ol>
+
+
+<!-- Legend -->
+<h4>Legend</h4>
+<ol>
+    <p>
+      Just to make things clearer: <br>
+      &nbsp;<font color="" tal:attributes="color here/user_color"><img src="img_user">&nbsp;Users appear this way</font><br />
+      &nbsp;<font color="" tal:attributes="color here/group_color"><img src="img_group">&nbsp;Groups appear this way</font><br />
+    &nbsp;<font color="" tal:attributes="color here/group_color"><i><img src="img_group">&nbsp;Nested groups (ie. groups inside groups) appear this way</i></font><br />
+      &nbsp;<font color="" tal:attributes="color here/role_color">User roles appear this way</font><br />
+      &nbsp;<font color="" tal:attributes="color here/role_color"><i>Nested roles (ie. roles set on a group a user or group belongs to) appear this way</i></font><br />
+    </p>
+    <p class="form-help">In management forms, items only non-italic items can be set/unset directly. Italic items are dependencies.</p>
+</ol>
+
+<dtml-var manage_page_footer>
+
