@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.5 2004/05/30 14:13:40 godchap Exp $
+$Id: __init__.py,v 1.6 2004/06/01 12:18:29 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -62,7 +62,7 @@ class _CriterionRegistry(UserDict):
         self.criterion2index[id] = indices
         for index in indices:
             value = self.index2criterion.get(index, ())
-            self.index2criterion[index] = value + (index,)
+            self.index2criterion[index] = value + (id,)
         
         registerType(criterion, PROJECTNAME)
         
@@ -86,7 +86,6 @@ class _CriterionRegistry(UserDict):
     def criteriaByIndex(self, index):
         return self.index2criterion[index]
 
-        
 CriterionRegistry = _CriterionRegistry()
 registerCriterion = CriterionRegistry.register
 

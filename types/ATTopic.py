@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.17 2004/05/31 16:20:18 tiran Exp $
+$Id: ATTopic.py,v 1.18 2004/06/01 12:18:29 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -34,6 +34,7 @@ else:
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.CatalogTool import CatalogTool
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.types.ATContentType import ATCTFolder, updateActions
@@ -90,6 +91,18 @@ class ATTopic(ATCTFolder):
        )
     )
 
+    security.declareProtected(ChangeTopics, 'validateAddCriterion')
+    def validateAddCriterion(self, indexId, criteriaType):
+        """Is criteriaType acceptable criteria for indexId
+        """
+        return criteriaType in self.criteriaByIndexId(indexId)
+
+    def criteriaByIndexId(self, indexId):
+        catalog_tool = getToolByName(self, CatalogTool.id)
+        indexObj = catalog_tool.Indexes[indexId]
+        results = CriterionRegistry.criteriaByIndex(indexObj.meta_type)
+        return results
+      
     security.declareProtected(ChangeTopics, 'listCriteriaTypes')
     def listCriteriaTypes(self):
         """List available criteria types as dict

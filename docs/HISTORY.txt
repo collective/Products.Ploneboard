@@ -14,6 +14,8 @@
  
  * Added EditableBody method to ATDocument [tiran]
 
+ * Added validation of Criterion support for a specific index [gotcha]
+
 0.2-beta5
 
  * Fixed multiple small bugs and added features requested in the bug

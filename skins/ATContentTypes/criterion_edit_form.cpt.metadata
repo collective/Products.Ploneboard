@@ -2,6 +2,7 @@
 title=Edit Topic
 
 [validators]
+validators..AddCriterion = validate_add_criterion
 
 [actions]
 action.failure=traverse_to:string:criterion_edit_form
