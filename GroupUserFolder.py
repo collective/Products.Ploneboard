@@ -1315,7 +1315,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/11 11:34:13 $"[7:-2]
+        rev_date = "$Date: 2004/06/11 12:49:01 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2197,8 +2197,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                       message=sys.exc_info()[1],
                       action ='manage_main')
         ob=self._getOb(id)
-        if not ob.cb_isMoveable():
-            raise CopyError, eNotSupported % id
+##        if not ob.cb_isMoveable():
+##            raise "Copy Error", eNotSupported % id
 ##        self._verifyObjectPaste(ob)           # This is what we disable
         try:    ob._notifyOfCopyTo(self, op=1)
         except: raise CopyError, MessageDialog(

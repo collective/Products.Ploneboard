@@ -63,7 +63,18 @@ class LDAPGroupFolder(SimpleItem):
     security.declareProtected(manage_users, 'getLUF')
     def getLUF(self):
         """ """
-        return self.getGRUF().getUserSource(self._luf)
+        s = self.getGRUF().getUserSource(self._luf)
+        if getattr(s, 'meta_type', None) != "LDAPUserFolder":
+            # whoops, we moved LDAPUF... let's try to find it back
+            s = None
+            for src in self.getGRUF().listUserSources():
+                if src.meta_type == "LDAPUserFolder":
+                    self._luf = src.getPhysicalPath()[-2]
+                    s = src
+                    break
+            if not s:
+                raise RuntimeError, "You must change your groups source in GRUF if you do not have a LDAPUserFolder as a users source."
+        return s
 
 
     security.declareProtected(manage_users, 'getGroups')

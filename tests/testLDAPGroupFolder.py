@@ -216,6 +216,38 @@ class TestLDAPUserFolderGroups(testLDAPUserFolder.TestLDAPUserFolderAPI):
         self.gruf.userFolderAddGroup('extranet', (), ())
         self.gruf.userFolderAddGroup('intranet', (), ('extranet', ))
         self.gruf.userFolderAddGroup('compta', (), ('intranet', 'extranet' ))
+
+    def testLDAPSourceMove(self,):
+        """Ensure that LDAPGroupFolder will still work correctly if we move
+        a source. This caused core dumps or GRUF3Beta1.
+        """
+        # Initial conditions
+        self.failUnlessEqual(
+            self.gruf.Users.acl_users.meta_type,
+            "LDAPUserFolder",
+            )
+
+        # Add & swap
+        self.gruf.addUserSource(
+            "manage_addProduct/OFSP/manage_addUserFolder",
+            )
+        self.gruf.moveUserSourceUp("Users01")
+        self.failUnlessEqual(
+            self.gruf.Users.acl_users.meta_type,
+            "User Folder",
+            )
+
+        # Stress it
+        self.gruf.getUsers()
+        self.gruf.getUserNames()
+
+        # Put it back again
+        self.gruf.moveUserSourceUp("Users01")
+
+        # Stress it again
+        self.gruf.getUsers()
+        self.gruf.getUserNames()
+
         
     def test01_LDAPUp(self,):
         """Ensure LDAP is up and running
