@@ -1,3 +1,28 @@
+==============================================
+Quick switching instructions for the impatient
+==============================================
+
+ * Back up your data! Seriously! This thing may break your content, it is still
+   experimental!
+   
+ * You have to do two things to migrate the types and switch to the new ones:
+ 
+   * Go to the external method 'migrateFromCMFtoATCT' in the ZMI of your portal
+     root. Run it using the 'test' tab. This will move all your content to the
+     new types.
+     
+   * Go to the external method 'switchCMF2ATCT' in the ZMI of your portal
+     root. Run it using the 'test' tab. This will rename the AT-based content
+     types to the default type names - and rename/hide the CMF-based ones.
+
+  * Your types are now be transferred to the new AT-based variants, and set as
+    the default types.
+    
+  * Don't forget to report any migration failures in the ATCT bug tracker on SF:
+    http://tinyurl.com/5brwn - we need your bug report to make migration as smooth
+    as possible!
+    
+       
 ============
 Requirements
 ============
