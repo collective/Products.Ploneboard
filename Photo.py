@@ -11,6 +11,8 @@ from Products.CMFDefault.Image import Image
 
 import OFS.Image
 
+import exif
+
 from cStringIO import StringIO
 
 from BTrees.OOBTree import OOBTree
@@ -51,9 +53,15 @@ factory_type_information = {
           , 'action'        : 'portal_form/metadata_edit_form'
           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
           }
+      , { 'id'            : 'exif'
+          , 'name'          : 'Exifdata'
+          , 'action'        : 'photo_exif_view'
+          , 'permissions'   : (CMFCorePermissions.View, )
+        }      
       )
     }
 
+global verbose_opt
 
 def addPhoto( self
               , id
@@ -224,6 +232,35 @@ class Photo(Image):
         image.seek(0)
         return image
     
+# added by the_krow
+    security.declareProtected(CMFCorePermissions.View, 'get_exif')
+    def get_exif(self):
+        """
+	Extracts the exif metadata from the image and returns
+	it as a hashtable
+	"""
+#        verbose_opt = 3
+	im = str(self.data)
+	if im[0:4] == '\377\330\377\341' and im[6:10] == 'Exif':
+            # JPEG
+            ao = ord(im[4])          
+            bo = ord(im[5])
+            len = ao * 256 + bo
+#            print '%30s:  %d' % ("EXIF header length",len)
+            tiff = exif.Tiff(im[12:4+len])
+            value_map = exif.parse_tiff(tiff, 0)	
+#            print value_map
+	    return value_map
+	elif im[0:2] in [ 'II', 'MM' ] and ord(im[2]) == 42:
+            # TIFF
+	    tiff = exif.Tiff(im)
+	    tiff.seek(0)
+	    value_map = exif.parse_tiff_fortiff(tiff,0)
+	    return value_map
+	else:
+	    # unknown format
+            return None
+                
 
 InitializeClass(Photo)
 
