@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.7 2004/04/26 06:30:14 tiran Exp $
+$Id: ATContentType.py,v 1.8 2004/05/04 18:26:46 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -137,6 +137,22 @@ class ATCTFolder(ATCTMixin, BaseFolder):
     
     security       = ClassSecurityInfo()
 
+    actions = updateActions(ATCTMixin,
+        ({
+        'id'          : 'local_roles',
+        'name'        : 'Sharing',
+        'action'      : 'string:${object_url}/folder_localrole_form',
+        'permissions' : (CMFCorePermissions.ManageProperties,),
+         },
+        {
+        'id'          : 'view',
+        'name'        : 'View',
+        'action'      : 'string:${folder_url}/',
+        'permissions' : (CMFCorePermissions.View,),
+         },
+        )
+    )
+
 InitializeClass(ATCTFolder)
 
 class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
@@ -146,6 +162,23 @@ class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
     
     security       = ClassSecurityInfo()
 
+    actions = updateActions(ATCTMixin,
+        ({
+        'id'          : 'local_roles',
+        'name'        : 'Sharing',
+        'action'      : 'string:${object_url}/folder_localrole_form',
+        'permissions' : (CMFCorePermissions.ManageProperties,),
+         },
+        {
+        'id'          : 'view',
+        'name'        : 'View',
+        'action'      : 'string:${folder_url}/',
+        'permissions' : (CMFCorePermissions.View,),
+         },
+        )
+    )
+
+
 InitializeClass(ATCTOrderedFolder)
 
 class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
@@ -154,6 +187,23 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
     __implements__ = BaseBTreeFolder.__implements__, IATContentType
     
     security       = ClassSecurityInfo()
+
+    actions = updateActions(ATCTMixin,
+        ({
+        'id'          : 'local_roles',
+        'name'        : 'Sharing',
+        'action'      : 'string:${object_url}/folder_localrole_form',
+        'permissions' : (CMFCorePermissions.ManageProperties,),
+         },
+        {
+        'id'          : 'view',
+        'name'        : 'View',
+        'action'      : 'string:${folder_url}/',
+        'permissions' : (CMFCorePermissions.View,),
+         },
+        )
+    )
+
 
 InitializeClass(ATCTBTreeFolder)
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.9 2004/04/26 06:30:14 tiran Exp $
+$Id: ATFolder.py,v 1.10 2004/05/04 18:26:46 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -60,28 +60,16 @@ class ATFolderBase(ATCTOrderedFolder):
 
     security       = ClassSecurityInfo()
 
-    actions = updateActions(ATCTOrderedFolder,
-       ({
-       'id'          : 'folderContents',
-       'name'        : 'Contents',
-       'action'      : 'string:${folder_url}/folder_contents',
-       'permissions' : (CMFCorePermissions.ListFolderContents,),
-       'condition'   : 'python:object.displayContentsTab()'
-        },    
-       {
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${folder_url}/',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'local_roles',
-       'name'        : 'Local Roles',
-       'action'      : 'string:${folder_url}/folder_localrole_form',
-       'permissions' : (CMFCorePermissions.ManageProperties,),
-        },
-       )
-       )
+##    actions = updateActions(ATCTOrderedFolder,
+##        ({
+##         'id'          : 'folderContents',
+##         'name'        : 'Contents',
+##         'action'      : 'string:${folder_url}/folder_contents',
+##         'permissions' : (CMFCorePermissions.ListFolderContents,),
+##         'condition'   : 'python:object.displayContentsTab()'
+##          },    
+##        )
+##    )
 
 
 if HAS_PLONE2:
@@ -143,17 +131,6 @@ class ATBTreeFolder(ATCTBTreeFolder):
     __implements__ = ATCTBTreeFolder.__implements__, IATBTreeFolder
 
     security       = ClassSecurityInfo()
-
-    actions = updateActions(ATCTBTreeFolder,
-       (
-       {
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${folder_url}/',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       )
-       )
 
 registerType(ATBTreeFolder, PROJECTNAME)
 
