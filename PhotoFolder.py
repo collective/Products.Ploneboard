@@ -60,7 +60,7 @@ factory_type_information = {
           }
        ,{ 'id'            : 'settings' 
           , 'name'          : 'Settings'
-          , 'action'        : 'photofolder_settings_form'
+          , 'action'        : 'photo_settings_form'
           , 'permissions'   :
           (CMFCorePermissions.View,)
           , 'category'      : 'folder'

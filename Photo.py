@@ -133,6 +133,7 @@ class Photo(Image):
     
     security = ClassSecurityInfo()
 
+
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """
@@ -147,7 +148,25 @@ class Photo(Image):
 
         return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
 
+
     __call__ = index_html
+
+
+    security.declareProtected(CMFCorePermissions.View, 'get_size')
+    def get_size(self):
+        """Get the size of a file or image.
+
+        Returns the size of the file or image.
+        """
+        size = self.REQUEST.get('display', '')
+        photo = self._photos.get(size)
+        if photo:
+            return photo.get_size()
+        else:
+            return 'N/A'
+        
+        return Image.get_size(self)
+
 
     security.declareProtected(CMFCorePermissions.View, 'getDisplays')
     def getDisplays(self):
@@ -175,6 +194,7 @@ class Photo(Image):
         image.seek(0)
         self.manage_upload(image)
         self._photos = OOBTree()
+
         
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
