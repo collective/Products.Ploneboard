@@ -3,7 +3,7 @@
 1. add your viewlet css definition, for example, the zopezen skin:
 
 .zopezenPortletWrapper h5 {
-    background: &dtml-backgroundColor;;
+    background: & dtml-backgroundColor ;;
     font-style: normal;
     border: none;
     text-transform: capitalize;
