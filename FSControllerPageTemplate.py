@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.5 2003/12/02 08:10:40 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.6 2003/12/02 16:24:42 plonista Exp $
 """
 
 import copy
@@ -85,8 +85,8 @@ class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
         obj = ControllerPageTemplate(self.getId(), self._text, self.content_type)
         obj.expand = 0
         obj.write(self.read())
-        obj.validators = copy.copy(self.validators)
-        obj.actions = copy.copy(self.actions)
+        obj.validators = copy.copy(Acquisition.aq_base(self.validators))
+        obj.actions = copy.copy(Acquisition.aq_base(self.actions))
         return obj
 
 

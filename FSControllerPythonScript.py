@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.9 2003/11/12 23:11:37 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.10 2003/12/02 16:24:43 plonista Exp $
 """
 
 import re
@@ -110,8 +110,8 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControllerPythonScript(self.getId(), filepath=self.filepath)
         obj.write(self.read())
-        obj.validators = copy.copy(self.validators)  # XXX - don't forget to enable this
-        obj.actions = copy.copy(self.actions)
+        obj.validators = copy.copy(Acquisition.aq_base(self.validators))  # XXX - don't forget to enable this
+        obj.actions = copy.copy(Acquisition.aq_base(self.actions))
         return obj
 
 
