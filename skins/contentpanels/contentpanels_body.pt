@@ -16,7 +16,7 @@ l_url/contentpanelsCustom.css" />
       i18n:domain="contentpanels"
       i18n:attributes="title goto_this_contentpanels" 
       tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here)"
-      tal:attributes="href string:${here/absolute_url}" >
+      tal:attributes="href string:${here/absolute_url}/contentpanels_config_form" >
       <img tal:attributes="src string:${here/portal_url}/contentpanels_icon.gif"/>
    </a>
 </div>
