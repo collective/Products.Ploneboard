@@ -2,6 +2,27 @@ from Products.CMFCore.utils import getToolByName
 from tempfile import mktemp
 import os
 import sys
+from os.path import basename, splitext, join
+from config import bin_search_path
+
+
+# flowing 2 method is copied form PortalTranforms 
+class MissingBinary(Exception): pass
+
+def bin_search(binary):
+    """search the bin_search_path  for a given binary
+    returning its fullname or None"""
+    result = None
+    mode   = os.R_OK | os.X_OK
+    for p in bin_search_path:
+        path = join(p, binary)
+        if os.access(path, mode) == 1:
+            result = path
+            break
+    else:
+        raise MissingBinary('Unable to find binary "%s"' % binary)
+    return result
+
 
 def getPOT(self, wf_id=""):
     """ get the pot, copy from:
@@ -51,7 +72,7 @@ def getGraph(self, wf_id="", format="gif", REQUEST=None):
     f.write(pot)
     f.close()
     outfile = mktemp('.%s' % format)
-    os.system('/usr/bin/dot -T%s -o %s %s' % (format, outfile, infile))
+    os.system('%s -T%s -o %s %s' % (bin_search('dot'), format, outfile, infile))
     out = open(outfile, 'r')
     result = out.read()
     out.close()

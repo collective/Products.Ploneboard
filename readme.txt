@@ -31,3 +31,5 @@ Credits
     - "OpenFlowEditor":http://www.openflow.it/wwwopenflow/Download/OpenFlowEditor_0_4.tgz
 
     - "DCWorkflowDump":http://cvs.sourceforge.net/viewcvs.py/collective/DCWorkflowDump/
+
+    - "dot guide":http://www.research.att.com/sw/tools/graphviz/dotguide.pdf
