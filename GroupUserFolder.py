@@ -1062,9 +1062,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Invalidate user cache if necessary
         usr.clearCachedGroupsAndRoles()
-##        authenticated = getSecurityManager().getUser()
-##        if id == authenticated.getId() and hasattr(authenticated, 'clearCachedGroupsAndRoles'):
-##            authenticated.clearCachedGroupsAndRoles(self.getUserSource(src).getUser(id))
+        authenticated = getSecurityManager().getUser()
+        if id == authenticated.getId() and hasattr(authenticated, 'clearCachedGroupsAndRoles'):
+            authenticated.clearCachedGroupsAndRoles(self.getUserSource(src).getUser(id))
 
         return ret
 
@@ -1287,7 +1287,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/11/16 12:08:44 $"[7:-2]
+        rev_date = "$Date: 2004/12/05 23:08:17 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

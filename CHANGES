@@ -1,4 +1,7 @@
 
+  * Uncommented cache clearing code in _doChangeUser as it appears to be required.
+    [stefan]
+
   * Added a Plone 2.0 optional patch to improve LDAP and groups management. 
     It's basically a preview of what will be done in Plone 2.1 for users managment.
     For example, now, you can assign local roles to users in your LDAP directory,
