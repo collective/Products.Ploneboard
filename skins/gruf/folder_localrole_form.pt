@@ -172,6 +172,7 @@
 				    tabindex=""
 				    tal:attributes="tabindex tabindex/next;">
 				<option tal:repeat="lroles python:container.portal_membership.getCandidateLocalRoles(here)"
+					tal:attributes="value lroles"
 					tal:content="lroles"
 					i18n:translate="">
 				   Role name
