@@ -1,0 +1,82 @@
+# Messaggi in italiano per ATContentTypes.
+# Lele Gaifax, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: ATContentTypes CVS\n"
+"POT-Creation-Date: 2004-05-11 23:22+0000\n"
+"PO-Revision-Date: 2004-05-12 01:51+0200\n"
+"Last-Translator: Lele Gaifax <lele@seldati.net>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: it\n"
+"Language-Name: Italiano\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "help_date_criteria_operation"
+msgstr "Operazione da applicare ai valori"
+
+
+msgid "help_date_criteria_range"
+msgstr "Specifica se l'intervallo di tempo precede o segue la data di riferimento"
+
+
+msgid "help_date_criteria_value"
+msgstr "Data di riferimento"
+
+
+msgid "help_int_criteria_value"
+msgstr "Un numero intero."
+
+
+msgid "help_list_criteria_operator"
+msgstr "Operatore da utilizzare tra i diversi valori specificati."
+
+
+msgid "help_list_criteria_value"
+msgstr "Valori, uno per riga."
+
+
+msgid "help_string_criteria_value"
+msgstr "Una stringa."
+
+
+msgid "label_date_criteria_operation"
+msgstr "Operazione"
+
+
+msgid "label_date_criteria_range"
+msgstr "Intervallo di tempo"
+
+
+msgid "label_date_criteria_value"
+msgstr "Data"
+
+
+msgid "label_int_criteria_value"
+msgstr "Valore"
+
+
+msgid "label_list_criteria_operator"
+msgstr "Operatore"
+
+
+msgid "label_list_criteria_value"
+msgstr "Valori"
+
+
+msgid "label_string_criteria_value"
+msgstr "Valore"
+
+
+#: ./skins/ATContentTypes/atct_macros.pt
+#. <legend i18n:translate="legend_criteria_field">
+#.                Criterion for
+#.  ${fieldname}
+#. </legend>
+msgid "legend_criteria_field"
+msgstr "Criterio su ${fieldname}"
+

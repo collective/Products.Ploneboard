@@ -18,7 +18,7 @@
 
 	  <fieldset>
 
-	    <legend i18n:translate="">
+	    <legend i18n:translate="legend_criteria_field">
                Criterion for <span tal:content="criterion/Field"
                                    i18n:name="fieldname">Field Name</span>
             </legend>
