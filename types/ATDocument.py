@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.27 2004/08/04 15:00:44 tiran Exp $
+$Id: ATDocument.py,v 1.28 2004/08/16 01:08:25 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -167,6 +167,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         to discriminate the right thing to do in manage_afterAdd here
         below.
         """
+        ATCTContent._notifyOfCopyTo(self, container, op=0)
         self._v_renamed = 1
 
     security.declarePrivate('manage_afterAdd')

@@ -41,6 +41,9 @@
  * Added a findStaledObjects external method to ATCT to find staled objects. It
    is very useful to clean up a site before running the migration.
    [tiran]
+
+ * Fixed an ugly bug in ATDocument which was screwing up references on copy.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 
