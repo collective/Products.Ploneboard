@@ -365,6 +365,8 @@ class FormController(UniqueObject, SimpleItemWithProperties):
                 controller_state = mapply(obj, args, kwargs,
                                           call_object, 1, missing_name, dont_publish_class,
                                           REQUEST, bind=1)
+                if controller_state is None or getattr(controller_state, '__class__', None) != ControllerState:
+                    raise ValueError, 'Validator %s did not return the state object' % str(v)
                 controller_state._addValidator(v)
             except ValidationError, e:
                 # if a validator raises a ValidatorException, execution of

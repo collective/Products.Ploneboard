@@ -1,22 +1,31 @@
-2003-03-09  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2004-03-12  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added some error handling to better deal with validators that don't return
+     the state object.
+
+   * Fixed the version number 
+
+   * Released 1.0.1
+
+2004-03-09  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Cleaned up the example code, fixed license info, released 1.0!
 
-2003-03-05  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2004-03-05  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Got rid of some spurious warnings about "Unknown context type" when 
      installing new templates with .metadata specifying actions/validators for 
      all types.
 
-2003-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2004-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fix default scripts
 
-2003-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2004-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Minor cleanup, release RC3.
 
-2003-03-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2004-03-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fixes for 2773 (handling of image buttons) and 2779 (xml import problems)
 
