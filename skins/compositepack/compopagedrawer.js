@@ -1,10 +1,10 @@
-// $Id: compopagedrawer.js,v 1.7 2004/06/30 14:37:47 godchap Exp $
+// $Id: compopagedrawer.js,v 1.8 2004/07/04 10:58:08 godchap Exp $
 
 //----------------------------------------------------------------------------
 
 //  Depends on kupu 
 
-//  Compatible with rev 4186
+//  Compatible with ngo-stable revision 5414
 
 //----------------------------------------------------------------------------
 
