@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-##############################################################################
-#
-# Copyright (c) 2003-2004 Kupu Contributors. All rights reserved.
-#
-# This software is distributed under the terms of the Kupu
-# License. See LICENSE.txt for license text. For a list of Kupu
-# Contributors see CREDITS.txt.
-#
-##############################################################################
 
-XSL transformation from Kupu Library XML to HTML for the link library
+XSL transformation from Kupu Library XML to HTML for the select library
 drawer.
 
-$Id: selectdrawer.xsl.pt,v 1.1 2004/05/07 09:30:46 godchap Exp $
+$Id: selectdrawer.xsl.pt,v 1.2 2004/05/07 09:54:59 godchap Exp $
 -->
+
+<!-- 
+
+  Depends on kupu 
+
+  Compatible with rev 4186
+
+-->
+
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:tal="http://xml.zope.org/namespaces/tal"

@@ -1,3 +1,12 @@
+// $Id: compopagedrawer.js,v 1.3 2004/05/07 09:54:58 godchap Exp $
+
+//----------------------------------------------------------------------------
+
+//  Depends on kupu 
+
+//  Compatible with rev 4186
+
+//----------------------------------------------------------------------------
 
 function SelectDrawer(tool, xsluri, libsuri, searchuri, compopagepath,
 target_path) {

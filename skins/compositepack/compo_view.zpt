@@ -1,3 +1,9 @@
+<!--
+
+insertion of composite page in Plone user interface
+
+$Id: compo_view.zpt,v 1.2 2004/05/07 09:54:58 godchap Exp $
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       lang="en"
       metal:use-macro="here/main_template/macros/master"

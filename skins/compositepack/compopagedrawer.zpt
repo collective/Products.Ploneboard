@@ -9,6 +9,14 @@
     
     
 <h2>Drawer Test</h2>
+<!-- 
+
+  Depends on kupu 
+
+  Compatible with rev 4186
+
+-->
+
 <div metal:define-macro="compopagedrawer">
         <link href="#" tal:attributes="href
         string:${portal_url}/kupudrawerstyles.css"
