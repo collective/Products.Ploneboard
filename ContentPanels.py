@@ -79,10 +79,6 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
     meta_type = 'CMF Content Panels'
     effective_date = expiration_date = None
     
-    # the following 2 lines is to kill the default left and right slot in plone 
-    left_slots = []
-    right_slots = []
-    
     security = ClassSecurityInfo()
 
     def __init__(self, id, title='', description='', panelsConfig=[]):
