@@ -9,7 +9,7 @@
 """Plone Composite Page : 
    design view UI in line with Plone UI
 
-$Id: cmfcompositepage.py,v 1.18 2004/07/19 09:12:35 godchap Exp $
+$Id: cmfcompositepage.py,v 1.19 2004/07/19 09:32:14 godchap Exp $
 """
 from cgi import escape
 
@@ -116,6 +116,8 @@ class CMFCompositePage(BaseFolder, PackComposite):
 
     factory_type_information={
         'content_icon':'composite.gif',
+        'allowed_content_types':() ,
+        'filter_content_types':1,
         }
 
     cp_view = Composite.__call__
