@@ -491,6 +491,27 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doDelGroups(names)
 
 
+
+    #                                                                           #
+    #                               SEARCH METHODS                              #
+    #                                                                           #
+
+
+##    security.declareProtected(Permissions.manage_users, "searchUsersByName")
+##    def searchUsersByName(self, search_term):
+##        """Return users whose name match the specified search_term.
+##        If search_term is an empty string, behaviour depends on the underlying user folder:
+##        it may return all users, return only cached users (for LDAPUF) or return no users.
+##        """
+##        ret = []
+##        for src in self.listUserSources():
+##            # Use source-specific search methods if available
+##            if hasattr(src.aq_base, "findUser"):
+##                # LDAPUF
+##                users = src.findUser(
+##                    )
+
+
     #                                                                           #
     #                         SECURITY MANAGEMENT METHODS                       #
     #                                                                           #
@@ -771,7 +792,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # folder_localrole_form should be, in CMF, accessible only to those who have the
     # manage_users permissions instead of manage_properties permissions.
     # This is yet another one CMF bug we have to care about.
-    security.declarePrivate("getLocalRolesForDisplay")
+    security.declareProtected(Permissions.manage_users, "getLocalRolesForDisplay")
     def getLocalRolesForDisplay(self, object):
         ## This is used for plone's local roles display
         ## This method returns a tuple (massagedUsername, roles, userType, actualUserName)
@@ -1168,7 +1189,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/05/18 08:23:36 $"[7:-2]
+        rev_date = "$Date: 2004/05/28 12:49:45 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

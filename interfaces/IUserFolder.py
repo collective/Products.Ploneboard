@@ -83,6 +83,15 @@ class IUserFolder(Interface):
         all current User Folder implementations... except for GROUPS.]        
         """
 
+    # Search interface
+
+##    def searchUsersByName(search_term):
+##        """Return users whose name match the specified search_term.
+##        If search_term is an empty string, behaviour depends on the underlying user folder:
+##        it may return all users, return only cached users (for LDAPUF) or return no users.
+##        """
+
+
     # User access
 
     def getPureUserNames():

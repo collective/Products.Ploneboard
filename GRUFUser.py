@@ -404,7 +404,6 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
                     break
 
             # If we didn't find it, we skip it
-            Log(LOG_DEBUG, user_dn, ldapname, value)
             if ldapname is None:
                 raise KeyError, "Invalid LDAP attribute: '%s'." % (name, )
             

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.15 2004/05/18 08:23:36 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.16 2004/05/28 12:49:45 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -186,7 +186,10 @@ class GroupData (SimpleItem):
         md = self.portal_memberdata
         gd = self.portal_groupdata
         ret = []
-        for usr in self.getGroup().getGroupUsers():
+        for u_name in self.getGroup().getGroupMemberIds():
+            usr = self._getGRUF().getUserById(u_name)
+            if not usr:
+                raise AssertionError, "Cannot retreive a user by its id !"
             if usr.isGroup():
                 ret.append(gd.wrapGroup(usr))
             else:
