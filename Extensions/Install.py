@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.utils import getToolByName
 from StringIO import StringIO
 
 import Products.CMFMember as CMFMember
@@ -13,28 +14,56 @@ from Products.CMFMember.Extensions.Workflow import setupWorkflow, workflow_trans
 import pdb
 import sys
 
+TYPE_NAME = 'Member'
 
 def installMember(self, out):
     installTypes(self, out, CMFMember.listTypes(CMFMember.PKG_NAME), CMFMember.PKG_NAME)
+    wf_tool = getToolByName(self, 'portal_workflow')
+    memberdata_tool = getToolByName(self, 'portal_memberdata')
+    wf_tool.setChainForPortalTypes((TYPE_NAME,), 'member_workflow')
+    wf_tool.updateRoleMappings()
 
 
 def replaceTools(self, out, convert=1):
     portal = getToolByName(self, 'portal_url').getPortalObject()
     memberdata_tool = getToolByName(self, 'portal_memberdata')
     if memberdata_tool.__class__ != CMFMember.MemberDataTool:
+        # For a object to be displayed in contentValues it must be registered with the
+        # portal_types tool.  So lets do this and make the MemberDataTool not addable.
+        # XXX This seems kind of evil.
+        typestool=getToolByName(self, 'portal_types')
+        from Products.CMFCore.TypesTool import FactoryTypeInformation
+        typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
+          typeinfo_name='CMFCore: Portal Folder')
+        memberarea=typestool.MemberArea
+        memberarea.content_meta_type='CMFMember Tool'
+        _actions=memberarea._cloneActions()
+        for action in _actions:
+            if action['id']=='view':
+                action['action']='folder_contents'
+        memberarea._actions=_actions
+        memberarea.global_allow = 0  # make MemberArea not implicitly addable
+
+#        # purge orphans
+#        if memberdata_tool.getMemberDataContents()[0]['orphan_count'] > 0:
+#            memberdata_tool.pruneMemberDataContents()
+
         catalog = getToolByName(self, 'portal_catalog')
-
         _v_tempFolder = PortalFolder('temp').__of__(self)
+        factory = MemberDataTool.getMemberFactory(_v_tempFolder, TYPE_NAME)
 
-        factory = MemberDataTool.getMemberFactory(_v_tempFolder)
-
-        for u in portal.acl_users.getUsers():
-            old_member = memberdata_tool.wrapUser(u)
-            id = old_member.getMemberId()
-            factory(id)
-            new_member = getattr(_v_tempFolder, id)
-            new_member._migrate(old_member, out)
-            catalog.unindexObject(new_member)  # don't index stuff in temp folder
+#        membership_tool= getToolByName(self, 'portal_membership')
+#        user_list = membership_tool.listMemberIds()
+#        for u in user_list:
+        for u in memberdata_tool._members.keys():
+            user = _getUserById(self, u)
+            if user is not None:
+                old_member = memberdata_tool.wrapUser(user)
+                id = old_member.getMemberId()
+                factory(id)
+                new_member = getattr(_v_tempFolder, id)
+                new_member._migrate(old_member, ['portrait'], out)
+                catalog.unindexObject(new_member)  # don't index stuff in temp folder
 
         memberdata_tool = None
         # delete the old tools
@@ -59,59 +88,40 @@ def replaceTools(self, out, convert=1):
             member = memberdata_tool.get(m.id)
             catalog.reindexObject(member)
 
-        # XXX This seems kind of evil.
-        # For a object to be displayed in contentValues it must be registered with the
-        # portal_types tool.  So lets do this and make the MemberDataTool not addable.
-        typestool=getToolByName(self, 'portal_types')
-        from Products.CMFCore.TypesTool import FactoryTypeInformation
-        typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
-          typeinfo_name='CMFCore: Portal Folder')
-        memberarea=typestool.MemberArea
-        memberarea.content_meta_type='CMFMember Tool'
-        _actions=memberarea._cloneActions()
-        for action in _actions:
-            if action['id']=='view':
-                action['action']='folder_contents'
-        memberarea._actions=_actions
-        memberarea.allowed_content_types=(CMFMember.TYPE_NAME,)
-        memberarea.global_allow = 0  # make MemberArea not implicitly addable
         memberdata_tool._setPortalTypeName('MemberArea')
+        memberarea.allowed_content_types=(memberdata_tool.typeName,)
 
-# Migrate members when changing member type
-# 1) rename old member to some temp name
-# 2) create new member with old id
-# 3) transfer user assets to new member
-# 4) delete old member
-def migrateMembers(self):
-    portal = getToolByName(self, 'portal_url').getPortalObject()
-    memberdata_tool = getToolByName(self, 'portal_memberdata')
-    workflow_tool = getToolByName(self, 'portal_workflow')
-
-    factory = MemberDataTool.getMemberFactory(_v_tempFolder)
-    for m in memberdata_tool.objectIds():
-        old_member = memberdata_tool.get(m)
-        temp_id = m + 'temp_'
-        while memberdata_tool.get(temp_id):
-            temp_id = '_' + temp_id
-            
-        memberdata_tool.manage_renameObj(old_member, temp_id)
-        factory(m)
-        # copy over old member attributes
-        new_member._migrate(old_member, out)
-
-        # copy workflow state
-        old_member_state = workflow_tool.getInfoFor(old_member, 'review_state', '')
-        print >> out, 'state = %s' % (old_member_state,)
-        transitions = workflow_transfer.get(old_member_state, [])
-        print >> out, 'transitions = %s' % (str(transitions),)
-        for t in transitions:
-            workflow_tool.doActionFor(ob, t)
-
-        # transfer old user attributes
-        m._changeUserInfo(self, portal, temp_id, m)
-
-        memberdata_tool.manage_delObjects(temp_id)
     
+
+def _getUserFolderForUser(self, id=None):
+    f = getToolByName(self, 'portal_url').getPortalObject()
+    if id is None:
+        return f.acl_users
+    while 1:
+        if not hasattr(f, 'objectIds'):
+            return
+        if 'acl_users' in f.objectIds():
+            if hasattr(f.acl_users, 'getUser'):
+                user = f.acl_users.getUser(id)
+                if user is not None:
+                    return f.acl_users
+        if hasattr(f, 'getParentNode'):
+            f = f.getParentNode()
+        else:
+            return None
+
+
+def _getUserById(self, id):
+    """A utility method for finding a user by searching through
+    portal.acl_users as well as the acl_users folders for all
+    zope folders containing portal.
+    
+    Returns the user in the acquisition context of its containing folder"""
+    acl_users = _getUserFolderForUser(self, id)
+    if acl_users is None:
+        return None
+    return acl_users.getUser(id).__of__(acl_users)
+
 
 def setupRegistration(self):
     # Allow Anonymous to add objects to memberdata tool
@@ -129,8 +139,8 @@ def setupRegistration(self):
 def install(self):
     out=StringIO()
 
-    installMember(self, out)
     setupWorkflow(self, out)
+    installMember(self, out)
     replaceTools(self, out)
     
     print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME

@@ -13,7 +13,7 @@ from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.Archetypes.debug import log
 from Products.Archetypes import registerType
-from Products.CMFMember import TYPE_NAME, PKG_NAME
+from Products.CMFMember import PKG_NAME
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 import pdb
 
@@ -60,7 +60,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     ##IMPL DETAILS
     def __init__(self):
         BTreeFolder2Base.__init__(self, self.id)
-        self.typeName = TYPE_NAME  # The name used for the factory in types_tool
+        self.typeName = 'Member'  # The name used for the factory in types_tool
         self.setTitle('Member profiles')
 
     def __call__(self):
@@ -82,14 +82,17 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     def getMemberFactory(self):
         """Return a callable that is the registered object returning a
         contentish member object"""
-        return getMemberFactory(self)
+        return getMemberFactory(self, self.typeName)
+
 
     security.declarePrivate('_deleteMember')
     def _deleteMember(self, id):
         """Remove a member"""
         self._delObject(id)
+
     
     ##PORTAL_MEMBERDATA INTERFACE IMPL
+    # XXX fixme
     security.declarePrivate('getMemberDataContents')
     def getMemberDataContents(self):
         '''
@@ -103,7 +106,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         '''
 
         member_ids = [m.getUserName() for m in self.objectValues()]
-        user_ids = self.acl_users.getUserNames()
+        membership_tool= getToolByName(self, 'portal_membership')
+        user_ids = membership_tool.listMemberIds()
         oc = 0
         for id in member_ids:
             if id not in user_ids:
@@ -135,6 +139,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         return res
 
 
+    # XXX fixme
     security.declarePrivate('pruneMemberDataContents')
     def pruneMemberDataContents(self):
         '''
@@ -147,7 +152,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         '''
         
         member_ids = [m.getUserName() for m in self.objectValues()]
-        user_ids = self.acl_users.getUserNames()
+        membership_tool= getToolByName(self, 'portal_membership')
+        user_ids = membership_tool.listMemberIds()
 
         for id in members_ids:
             if id not in user_ids:
@@ -198,7 +204,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         default property values, etc."""
         if self._defaultMember is None:
             tempFolder = PortalFolder('temp').__of__(self)
-            getMemberFactory(tempFolder)('default')
+            getMemberFactory(tempFolder, self.typeName)('default')
             self._defaultMember = getattr(tempFolder,'default')
             getattr(tempFolder,'default').unindexObject()
             tempFolder.unindexObject() # don't store _defaultMember in the catalog
@@ -234,7 +240,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         ## XXX or define a real registration mechinism, same for
         ## XXX all_meta_types
         tt = getToolByName(self, 'portal_types')
-        ti = tt.getTypeInfo(TYPE_NAME)
+        ti = tt.getTypeInfo(self.typeName)
         return [ti]
 
     def filtered_meta_types(self, user=None):
@@ -268,6 +274,55 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         BTreeFolder2Base._checkId(self, id, allow_dup)
 
 
+    # register type type of Member object that the MemberDataTool will store
+    def registerType(self, new_type_name):
+        self.typeName = new_type_name
+        self._defaultMember = None # nuke the default member (which was of the old Member type)
+        typestool=getToolByName(self, 'portal_types')
+        typestool.MemberArea.allowed_content_types=(new_type_name,)
+
+
+    # Migrate members when changing member type
+    # 1) rename old member to some temp name
+    # 2) create new member with old id
+    # 3) transfer user assets to new member
+    # 4) delete old member
+    #
+    # new_type_name = meta_type for the new Member type
+    # workflow_transfer = dict mapping each state in old members to a list of transitions
+    #       that must be executed to move the new member to the old member's state
+    def migrateMembers(self, out, new_type_name, workflow_transfer={}):
+        
+        self.registerType(new_type_name)
+        factory = self.getMemberFactory()
+
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        workflow_tool = getToolByName(self, 'portal_workflow')
+
+        for m in self.objectIds():
+            old_member = self.get(m)
+            temp_id = 'temp_' + m
+            while self.get(temp_id):
+                temp_id = '_' + temp_id
+            old_member._migrating = 1
+            self.manage_renameObjects([m], [temp_id])
+            factory(m)
+            old_member = self.get(temp_id)
+            new_member = self.get(m)
+            # copy over old member attributes
+            new_member._migrate(old_member, [], out)
+
+            # copy workflow state
+            old_member_state = workflow_tool.getInfoFor(old_member, 'review_state', '')
+            print >> out, 'state = %s' % (old_member_state,)
+            transitions = workflow_transfer.get(old_member_state, [])
+            print >> out, 'transitions = %s' % (str(transitions),)
+            for t in transitions:
+                workflow_tool.doActionFor(ob, t)
+
+            self.manage_delObjects(temp_id)
+
+
     ##SUBCLASS HOOKS
     security.declarePrivate('pruneOrphan')
     def pruneOrphan(self, id):
@@ -279,14 +334,14 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
 # Put this outside the MemberData tool so that it can be used for
 # conversion of old MemberData during installation
-def getMemberFactory(self):
+def getMemberFactory(self, type_name):
     """return a callable that is the registered object returning a
     contentish member object"""
     # Assumptions: there is a types_tool type called Member, you
     # want one of these in the folder, changing this changes the
     # types of members in your site.
     types_tool = getToolByName(self, 'portal_types')
-    ti = types_tool.getTypeInfo(TYPE_NAME)
+    ti = types_tool.getTypeInfo(type_name)
 
     try:
         p = self.manage_addProduct[ti.product]

@@ -10,6 +10,7 @@ from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID
 
 from AccessControl import ClassSecurityInfo, Owned
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
+from Products import CMFCore
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
 from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
 from Products.Archetypes import registerType
@@ -27,7 +28,7 @@ def modify_fti(fti):
     fti['global_allow'] = 0  # only allow Members to be added where explicitly allowed
 
 
-content_schema = FieldList((
+id_schema = FieldList((
     StringField('id',
                 required=1,
                 accessor="getId",
@@ -41,7 +42,10 @@ content_schema = FieldList((
                                 description_msgid="help_name",
                                 i18n_domain="plone"),
                 ),
+    ))    
 
+
+contact_schema = FieldList((
     StringField('fullname',
                 default='',
                 mode='rw',
@@ -64,7 +68,10 @@ content_schema = FieldList((
                 widget=StringWidget(label='E-mail',
                                     description='Enter your e-mail address here.',)
                 ),
-    
+))
+
+
+plone_schema = FieldList((
     ObjectField('wysiwyg_editor',
                 mode='rw',
                 read_permission=VIEW_OTHER_PERMISSION,
@@ -122,7 +129,10 @@ content_schema = FieldList((
                                   description='To add a new portrait, click the <strong>Browse</strong> button and select ' + \
                                             'a picture of yourself. Recommended size is 75 pixels wide, 100 pixels tall)')
                ),
-    
+))
+
+
+security_schema = FieldList((
     StringField('password',
                 default=None,
                 mutator='_setPassword',
@@ -175,6 +185,10 @@ content_schema = FieldList((
                widget=LinesWidget(label='Domains',
                                   description='If you would like to restrict this user to logging in only from certain domains, enter those domains here.')
                ),
+))
+
+
+content_schema = id_schema + contact_schema + plone_schema + security_schema
 
 #    DateTimeField('login_time',
 #                  default='2000/01/01',  # for Plone 1.0.1 compatibility
@@ -193,7 +207,6 @@ content_schema = FieldList((
 #                  searchable=0,
 #                  widget=StringWidget(label="Last login time",
 #                                      visible=-1,)),
-    ))
 
 _marker = []
 
@@ -217,7 +230,7 @@ class Member(BaseContent):
     def dump(self, st=''):
         import sys
         sys.stdout.write(str(st)+'\n')
-        sys.stdout.write('_user = %s\n\n' % (str(aq_chain(self._user[0]))))
+        sys.stdout.write('_user = %s\n\n' % (str(self._userPath)))
     
     ##IMPL DETAILS
     def __init__(self, userid):
@@ -227,7 +240,7 @@ class Member(BaseContent):
         self.roles = ()
         self.domains = ()
         self._setPassword(self._generatePassword())
-        self._user = None
+        self._userPath = None
         self._has_user = None
         # for plone compatibility
         self.listed = 0
@@ -502,10 +515,54 @@ class Member(BaseContent):
 
     security.declarePublic('getUser')
     def getUser(self):
-        # note that we store user in a list so that its acquisition context is preserved
-        if self._user is None:
-            self._createUser(create_acl_user=0)
-        return self._user[0]
+        if self._userPath is None:
+            self._v_user = (self._createUser(create_acl_user=0),)
+            return self._v_user[0]
+        if not hasattr(self, '_v_user') or self._v_user is None:
+            if self._has_user:
+                self._v_user = (self._pathToUser(self._userPath),)
+            else:
+                acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users
+                self._v_user = (AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains).__of__(acl_users),)
+
+        return self._v_user[0]
+
+    def _absattr(self, attr):
+        if callable(attr): return attr()
+        return attr
+
+    def _userToPath(self, user):
+        if user is None:
+            return None
+        uid=user.getId()
+        if uid is None: return uid
+        db=user.aq_inner.aq_parent
+        path=[self._absattr(db.id)]
+        root=db.getPhysicalRoot()
+        while 1:
+            db=getattr(db,'aq_inner', None)
+            if db is None: break
+            db=db.aq_parent
+            if db is root: break
+            id=db.id
+            if type(id) is not type(''):
+                try: id=id()
+                except: id=str(id)
+            path.append(id)
+
+        path.reverse()
+        path.append(uid)
+        return path
+
+
+    def _pathToUser(self, path):
+        if not path:
+            return None
+        folder = self.getPhysicalRoot()
+        for p in path[:-1]:
+            folder = getattr(folder, p)
+        return folder.getUser(path[-1]).__of__(folder)
+
 
 
     def hasUser(self):
@@ -600,7 +657,7 @@ class Member(BaseContent):
         try:
             Member.inheritedAttribute('_notifyOfCopyTo')(self, container, op)
             if op:
-                self._v_old_user = self._user
+                self._v_old_user = [self.getUser()] # get user with aq context, store in a list to keep from stomping wrapper
         except:
             import traceback
             import sys
@@ -615,6 +672,9 @@ class Member(BaseContent):
         try:
             BaseContent.manage_afterAdd(self, object, container)
 
+            if hasattr(object, '_migrating'):
+                return
+            
             old_user = getattr(object, '_v_old_user', None)
             if old_user:
                 old_user = old_user[0]
@@ -670,6 +730,21 @@ class Member(BaseContent):
                 # if we are in the midst of a move, do nothing
                 return
 
+            if hasattr(self, '_migrating'):
+                # if we are in the midst of a migration, do nothing
+                return
+
+            # XXX FIXME this is a hack
+            # Here's what this addresses (I think): when a site is deleted,
+            # acl_users may be deleted before portal_memberdata.  The member
+            # object in portal_memberdata holds a reference to the user object
+            # in acl_users.  When acl_users gets deleted, the user object
+            # remains because its refcount is > 0, but it is now unwrapped.
+            # At this point we should just bail.
+            if self.getUser() == None:
+                self._v_user = None # remove references to user
+                return
+            
             BaseContent.manage_beforeDelete(self, item, container)
             portal = getToolByName(self, 'portal_url').getPortalObject()
 
@@ -681,8 +756,9 @@ class Member(BaseContent):
             
             # delete the User object if it's in the current portal's acl_users folder
             if self.getUser().aq_parent == portal.acl_users: 
-                self._user = None # remove references to user
-                portal.acl_users.userFolderDelUsers([self.id])
+                if portal.acl_users.getUser(self.id):
+                    portal.acl_users.userFolderDelUsers([self.id])
+            self._v_user = None # remove references to user
         except:
             import traceback
             import sys
@@ -694,18 +770,31 @@ class Member(BaseContent):
 
     security.declarePrivate('setUser')
     def setUser(self, user):
-        # re-wrap user
-        user = aq_base(user).__of__(aq_inner(aq_parent(user)))
+        # make sure the user is wrapped with an acquisition context
+        base = getattr(user, 'aq_base', None)
+        if base is None:
+            # look up the user by id
+            u = self._getUserById(user.getUserName())
+            if u:
+                # wrapped user found
+                user = u
+            else:
+                # user not found -- wrap it in portal.acl_users
+                user = user.__of__(getToolByName(self, 'portal_url').getPortalObject().acl_users)
+        else:
+            # re-wrap user to get portal_membership out of the aquisition chain
+            user = aq_base(user).__of__(aq_inner(aq_parent(user)))
+        self._userPath = self._userToPath(user)
+        assert self._userPath != []
+        acl_users = aq_parent(user)
+        self._has_user = acl_users.getUser(user.getUserName()) is not None
         assert(user.getUserName() == self.id)
+        if hasattr(self, '_v_user'):
+            delattr(self, '_v_user')  # remove the cached user
+
         self.password = user.__
         self.roles = user.roles
         self.domains = user.domains
-        if len(aq_chain(user)) > 0:
-            self._user = [user]
-        else:
-            self._user = [self._getUserById(user.getUserName())]
-        assert self._user != [None]
-        self._has_user = 1
 
 
     security.declarePrivate('_updateCredentials')
@@ -727,13 +816,16 @@ class Member(BaseContent):
     def _createUser(self, create_acl_user=0):
         acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users 
         if not create_acl_user:
-            self._user = [AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains).__of__(acl_users)]
+            user = AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains).__of__(acl_users)
             self._has_user = 0
         else:
             acl_users.userFolderAddUser(self.id, self.password, self.roles, self.domains)
-            self._user = [acl_users.getUser(self.id).__of__(acl_users)]
+            user = acl_users.getUser(self.id).__of__(acl_users)
             self._has_user = 1
-
+        self._userPath = self._userToPath(user)
+        if hasattr(self, '_v_user'):
+            delattr(self, '_v_user')
+        return user
 
     security.declarePrivate('_getUserFolderForUser')
     def _getUserFolderForUser(self, id=None):
@@ -881,21 +973,33 @@ class Member(BaseContent):
     # Migration methods.  Used to migrate CMFCore member data to Member
     # objects or to migrate from from one type of member objects to another.
         
-    def _migrate(self, old_member, out):
+    def _migrate(self, old_member, excluded_fields, out):
         """Set Member attributes using values from old_member"""
         fields = self.Schema().fields() + ['listed', 'last_login']
         for new_field in fields:
-            if new_field.name not in ['password', 'roles', 'domains']: # fields managed by user object
+            if hasattr(new_field, 'name'):
+                name = new_field.name
+            else:
+                name = new_field
+            if name not in ['password', 'roles', 'domains'] and \
+               name not in excluded_fields: # fields managed by user object
                 try:
-                    value = self._migrateGetOldValue(old_member, new_field.name, out)
-                    self._migrateSetNewValue(new_field.name, value, out)
-                    print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), new_field.name, str(value))
+                    value = self._migrateGetOldValue(old_member, name, out)
+                    self._migrateSetNewValue(name, value, out)
+                    print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), name, str(value))
                 except:
                     pass
-        if member.__class__ == CMFCore.MemberDataTool.MemberData:
+
+        # move the user over
+        self.setUser(old_member.getUser())
+
+        if old_member.__class__ == CMFCore.MemberDataTool.MemberData:
             membership_tool = getToolByName(self, 'portal_membership')
-            membership_tool.getPersonalPortrait()
-            
+            portrait = membership_tool.getPersonalPortrait()
+            if portrait:
+                self.portrait = portrait
+
+
     def _migrateGetOldValue(self, old, id, out):
         """Try to get a value from an old member object using a variety of
         methods."""
@@ -912,18 +1016,15 @@ class Member(BaseContent):
                 if accessor is not None:
                     return accessor()
         new_field = new_schema.get(id)
-        try:
-            accessor = getattr(old, new_field.accessor)
-            if callable(accessor):
+        accessor = getattr(old, new_field.accessor, None)
+        if callable(accessor):
+            try:
                 return accessor()
-            return accessor
-        except:
-            pass
-        
-        try:
-            return getattr(old_member, id)
-        except:
-            pass
+            except:
+                pass
+
+        if hasattr(old, id):
+            return getattr(old, id)
         
         print >> out, 'Unable to get property %s from member %s\n' % (new_field.name, old.getMemberId())
         raise ValueError

@@ -107,7 +107,7 @@ class CMFMemberTest( SecurityRequestTest ):
         SecurityRequestTest.tearDown(self)
 
 
-    def _test_user(self):
+    def test_user(self):
         # make sure all the member properties we set are correct
         self.failUnless(self.member != None)
         self.assertEqual(self.member.getMemberId(), self.id)

@@ -11,7 +11,6 @@ from MemberPermissions import ADD_PERMISSION
 
 PKG_NAME = "CMFMember"
 SKIN_NAME = "member"
-TYPE_NAME = "Member"  # Name of types_tool type used to hold member data
 
 global GLOBALS
 GLOBALS = globals()

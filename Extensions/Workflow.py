@@ -257,9 +257,6 @@ def setupWorkflow(portal, out):
                        props={'var_match_review_state':'pending',
                               'guard_permissions':p_review})
 
-
-    wf_tool.setChainForPortalTypes((CMFMember.TYPE_NAME,), 'member_workflow')
-    
     wf_tool.updateRoleMappings()
 
 # Transitions that need to be executed in order to move to a particular
