@@ -58,7 +58,7 @@
 <div metal:define-macro="news_list"
      tal:define="folderPath python:'/'.join(here.getPhysicalPath());
                  results python:container.portal_catalog(
-                          portal_type=['News Items', 'Document'],
+                          portal_type=['News Item', 'Document'],
                           sort_on='Date',
                           sort_order='reverse',
                           path=folderPath,);

@@ -20,8 +20,9 @@
     <div tal:condition="results"
          tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1);">
 
-        <p><strong i18n:translate="folder_change_list"> Content change list in 
-             <span i18n:name="name" tal:content="here/Title"> folder title </span> </strong>:</p>
+        <p><strong i18n:translate="folder_change_list"
+             i18n:domain="contentpanels"> Content change list in 
+             <span i18n:name="name" tal:content="here/Title"> folder title </span> </strong></p>
 
         <!-- Search results -->
 

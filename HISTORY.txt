@@ -11,6 +11,7 @@ V1.8.3
   - the popup panel configuration window is much better now
   - recent changes don't show the folder
   - added or activated much much more viewlets
+  - fixed a bug with context's relative path
 
 V1.8.2
 

@@ -133,8 +133,8 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         """ regenerate panelObjectPath, make it a relative path.
         path may be relative to this contentpanels or relate to the portal.
         - if panelObjectPath == '.', it means contentpanels it self
-        - if panelObjectPath start with './', it means relative to portal
-        - else, it means rlative to the folderish context of this contentpanels(can use acquisition)
+        - if panelObjectPath start with './', it means relative to the folderish context of this contentpanels
+        - else, it means rlative to portal
         see also: getPanelObject
         """
         panelContent = self.getPanelObject(panelObjectPath)
@@ -146,38 +146,40 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
             folderContext = self.aq_parent
 
         relativePath = self.portal_url.getRelativeContentURL(panelContent)
-        if panelContent == self:
+        if panelContent is self:
             relativePath = '.'
         else:
-            folderContextPath = self.portal_url.getRelativeContentURL(folderContext) + '/'
+            folderContextPath = self.portal_url.getRelativeContentURL(folderContext)
             if relativePath.startswith(folderContextPath):
-                relativePath = './' + panelObjectPath[len(folderContextPath):]
+                relativePath = './' + panelObjectPath[len(folderContextPath)+1:]
         return relativePath
 
     def getPanelObject(self, objectPath):
-      """get panel object by path.
-         if panelObjectPath == '.', it means contentpanels it self
-         if panelObejctPath start with './', it means relative to this contentpanels
-         else, it means rlative to the portal
-         see also: toRelativePath
-      """
-      panelObject = None
-      try:
-        if objectPath in ['.', '/']:  # '.'means the contentpanels it self
-          panelObject = self
-        elif objectPath.find('./') == 0:  # relative path to the folderish context
-          objectPath = objectPath[2:]
+        """get panel object by path.
 
-          folderContext = self
-          if not self.isPrincipiaFolderish:
-            folderContext = self.aq_parent
-
-          panelObject = folderContext.restrictedTraverse(objectPath) 
-        else :
-          panelObject = self.portal_url.getPortalObject().restrictedTraverse(objectPath)
-      except:
+        if panelObjectPath == '.', it means contentpanels it self
+        if panelObejctPath start with './', it means relative to folderish context of this contentpanels
+        else, it means rlative to the portal
+        see also: toRelativePath
+        """
         panelObject = None
-      return panelObject
+        try:
+            if objectPath in ['.', '/']:  # '.'means the contentpanels it self
+                panelObject = self
+            elif objectPath.find('./') == 0:  # relative path to the folderish context
+                objectPath = objectPath[2:]
+
+                if not self.isPrincipiaFolderish:
+                    folderContext = self.aq_parent
+                else:
+                    folderContext = self
+
+                panelObject = folderContext.restrictedTraverse(objectPath) 
+            else :
+                panelObject = self.portal_url.getPortalObject().restrictedTraverse(objectPath)
+        except:
+            panelObject = None
+        return panelObject
 
 
     security.declarePublic('getPanel')
