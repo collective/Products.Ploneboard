@@ -6,6 +6,8 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 
 from OFS.Folder import manage_addFolder
 
+from global_symbols import *
+
 SKIN_NAME = "gruf"
 _globals = globals()
 
@@ -13,8 +15,10 @@ def install_plone(self, out):
     pass
 
 def install_subskin(self, out, skin_name=SKIN_NAME, globals=groupuserfolder_globals):
+    print >>out, "  Installing subskin."
     skinstool=getToolByName(self, 'portal_skins')
     if skin_name not in skinstool.objectIds():
+        print >>out, "    Adding directory view for GRUF"
         addDirectoryViews(skinstool, 'skins', globals)
 
     for skinName in skinstool.getSkinSelections():
@@ -29,6 +33,7 @@ def install_subskin(self, out, skin_name=SKIN_NAME, globals=groupuserfolder_glob
 
         path = ','.join(path)
         skinstool.addSkinSelection( skinName, path)
+    print >>out, "  Done installing subskin."
 
 def walk(out, obj, operation):
     if obj.isPrincipiaFolderish:
@@ -37,15 +42,20 @@ def walk(out, obj, operation):
     operation(out, obj)
 
 
-def migrate_user_folder(out, obj):
+def migrate_user_folder(obj, out, ):
     """
     Move a user folder into a temporary folder, create a GroupUserFolder,
     and then move the old user folder into the Users portion of the GRUF.
     NOTE: You cant copy/paste between CMF and Zope folder.  *sigh*
     """
     id = obj.getId()
-    if id == 'acl_users' and not isinstance(obj, GroupUserFolder):
-        print >>out, "Migrating acl_users folder at %s to a GroupUserFolder" % ('/'.join( obj.getPhysicalPath() ), )
+    if id == 'acl_users':
+        if obj.__class__.__name__ == "GroupUserFolder":
+            # Avoid already-created GRUFs
+            print >>out, "    Do NOT migrate acl_users at %s, as it is already a GroupUserFolder" % ('/'.join( obj.getPhysicalPath() ), )
+            return out.getvalue()
+        
+        print >>out, "    Migrating acl_users folder at %s to a GroupUserFolder" % ('/'.join( obj.getPhysicalPath() ), )
         container = obj.aq_parent
         
         # move the existing acl_users into a temporary folder
@@ -56,30 +66,38 @@ def migrate_user_folder(out, obj):
         
         # create a GRUF
         container.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
-        container.acl_users.Users.manage_delObjects( 'acl_users' )
         
         # move the old acl_users folder into the GRUF
+        container.acl_users.Users.manage_delObjects( 'acl_users' )
         clipboard = container[tempid].manage_cutObjects( 'acl_users' )
         container.acl_users.Users.manage_pasteObjects( clipboard )
         
         # clean up our temp folder, and then we are done
         container.manage_delObjects( tempid )
+        
+    return out.getvalue()
     
 
 def migrate_plone_site_to_gruf(self, out = None):
-    if out is not None:
+    if out is None:
         out = StringIO()
-    print >>out, "Migrating UserFolders to GroupUserFolders."
+    print >>out, "  Attempting to migrate UserFolders to GroupUserFolders..."
     urltool=getToolByName(self, 'portal_url')
     plonesite = urltool.getPortalObject()
-    walk(out, plonesite, migrate_user_folder)
-    print >>out, "Done Migrating UserFolders to GroupUserFolders."
+    ## We disable the 'walk' operation because if the acl_users object is deep inside
+    ## the Plone site, that is a real problem. Furthermore, that may be because
+    ## we're already digging an GRUF and have the risk to update a GRUF/User/acl_users
+    ## object !
+##    walk(out, plonesite, migrate_user_folder)
+    for obj in plonesite.objectValues():
+        migrate_user_folder(obj, out, )
+    print >>out, "  Done Migrating UserFolders to GroupUserFolders."
     return out.getvalue()
     
 def install(self):
     out = StringIO()
     print >>out, "Installing GroupUserFolder"
-    
+
     install_subskin(self, out)
     install_plone(self, out)
     migrate_plone_site_to_gruf(self, out)
