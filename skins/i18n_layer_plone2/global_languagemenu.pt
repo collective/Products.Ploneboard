@@ -4,7 +4,7 @@
   <body>
 
     <metal:block metal:define-macro="languageMenu"
-                 tal:condition="context/checkObjectI18NProperties">
+                 tal:condition="here/checkObjectI18NProperties">
 
       <ul tal:define="current_lang python:test(here.insideI18NLayer(), here.currentI18NContentLanguage()[0], here.getI18NDefaultLanguage());
                       langs python:here.getI18NLanguages().items();
