@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.17 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: Install.py,v 1.18 2004/07/23 19:03:19 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,7 @@ __docformat__ = 'restructuredtext'
 from Products.Archetypes import listTypes
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from Products.CMFCore.utils import getToolByName
+from Products.ZCatalog.Catalog import CatalogError
 from StringIO import StringIO
 from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
 from Acquisition import aq_base
@@ -98,6 +99,9 @@ def install(self):
     registerTemplates(self, typeInfo, out)
 
     removeApplicationXPython(self, out)
+    
+    # for quota support
+    # addCatalog_get_size(self, out)
 
     return out.getvalue()
 
@@ -171,3 +175,19 @@ def removeApplicationXPython(self, out):
         print >>out, 'Unregistering application/x-python from mimetypes_registry'
     textpy = mtr.lookup('text/x-python')
     mtr.register_extension('py', textpy)
+
+def addCatalog_get_size(self, out):
+    """Add get_size metadata to catalog
+    """
+    cat = getToolByName(self, 'portal_catalog')
+    try:
+        cat.addColumn('get_size', default_value=0)
+    except CatalogError:
+        print >>out, 'portal_catalog already has get_size metadata, recreate it'
+        # readd the get_size metadata to make sure it has default_value=0
+        cat.delColumn('get_size')
+        cat.addColumn('get_size', default_value=0)
+    else:
+        print >>out, 'Added get_size metadata to portal_catalog'
+    cat.refreshCatalog()
+    
