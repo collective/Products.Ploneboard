@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: __init__.py,v 1.10 2004/07/19 11:57:36 godchap Exp $
+$Id: __init__.py,v 1.11 2004/08/18 19:50:34 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -31,17 +31,17 @@ from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion,
 
 ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
                'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex',
-               'ZCTextIndex',)
-               
+               'ZCTextIndex', 'NavtreeIndexNG')
+
 SORT_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex')
-# TextIndex, PathIndex, TopicIndex, ZCTextIndex, TextIndexNG2 
-# are not usable to sort 
+# TextIndex, PathIndex, TopicIndex, ZCTextIndex, TextIndexNG2, NavtreeIndexNG
+# are not usable to sort
 # as they do not have 'keyForDocument' attribute
 
 DATE_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex')
 
 STRING_INDICES = ('FieldIndex', 'KeywordIndex', 'PathIndex', 'TextIndex',
-                  'TextIndexNG2', 'ZCTextIndex', )
+                  'TextIndexNG2', 'ZCTextIndex', 'NavtreeIndexNG')
 
 LIST_INDICES = ('FieldIndex', 'KeywordIndex', )
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.22 2004/07/24 07:54:25 godchap Exp $
+$Id: ATTopic.py,v 1.23 2004/08/18 19:50:34 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -270,11 +270,18 @@ class ATTopic(ATCTFolder):
         if q is None:
             # empty query - do not show anything
             return []
-        kw.update( q )
-        pcatalog = getToolByName( self, 'portal_catalog' )
+        kw.update(q)
+        pcatalog = getToolByName(self, 'portal_catalog')
+        limit = self.getLimitNumber()
+        max_items = self.getItemCount()
+        if limit and self.hasSortCriterion():
+            # Sort limit helps Zope 2.6.1+ to do a faster query
+            # sorting when sort is involved
+            # See: http://zope.org/Members/Caseman/ZCatalog_for_2.6.1
+            kw.setdefault('sort_limit', max_items)
         results = pcatalog.searchResults(REQUEST, **kw)
-        if self.getLimitNumber():
-            results = results[:self.getItemCount()]
+        if limit:
+            return results[:max_items]
         return results
 
     security.declareProtected(ChangeTopics, 'addCriterion')

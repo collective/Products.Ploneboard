@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.37 2004/08/17 16:20:00 tiran Exp $
+$Id: ATContentType.py,v 1.38 2004/08/18 19:50:27 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -148,7 +148,7 @@ class ATCTMixin(TemplateMixin):
         """
         """
         ptTool = getToolByName(self, 'portal_types', None)
-        
+
         portal_type = self.portal_type
         if callable(portal_type):
                 portal_type = portal_type()
@@ -320,7 +320,7 @@ class ATCTFileContent(ATCTContent):
             return script(id)
         else:
             return False
-    
+
     security.declareProtected(CMFCorePermissions.View, 'post_validate')
     def post_validate(self, REQUEST=None, errors=None):
         """Validates upload file and id
@@ -365,14 +365,14 @@ class ATCTConstrainedFolderMixin(ConstrainTypesMixin, ATCTMixin):
 
     __implements__ = (ATCTMixin.__implements__,
                       ConstrainTypesMixin.__implements__)
-                      
+
     security       = ClassSecurityInfo()
-        
+
 if ENABLE_CONSTRAIN_TYPES_MIXIN:
     ATCTFolderMixin = ATCTConstrainedFolderMixin
 else:
     ATCTFolderMixin = ATCTMixin
-    
+
 InitializeClass(ATCTFolderMixin)
 
 class ATCTFolder(ATCTFolderMixin, BaseFolder):
