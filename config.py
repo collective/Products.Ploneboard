@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.1 2004/09/12 07:27:22 ajung Exp $
+$Id: config.py,v 1.2 2004/09/16 17:58:53 ajung Exp $
 """
 
 SKINS_DIR = 'skins'
@@ -16,4 +16,4 @@ GLOBALS = globals()
 PROJECT_NAME = 'ATSchemaEditorNG'
 
 # Permissions
-ManageSchema = 'ATSE: Manage schema'
+ManageSchemaPermission = 'ATSE: Manage schema'

@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.3 2004/09/16 17:56:22 ajung Exp $
+$Id: SchemaEditor.py,v 1.4 2004/09/16 17:58:53 ajung Exp $
 """
 
 import re
@@ -25,7 +25,7 @@ from Products.Archetypes.Widget import *
 from ManagedSchema import ManagedSchema
 
 import util
-from config import ManageSchema
+from config import ManageSchemaPermission
 
 id_regex = re.compile('^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$')
 allowed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/ ().,:;#+*=&%$§!'
@@ -38,7 +38,7 @@ class SchemaEditor:
 
     security = ClassSecurityInfo()
 
-    security.declareProtected(ManageSchema, 'atse_init')
+    security.declareProtected(ManageSchemaPermission, 'atse_init')
     def atse_init(self, schema, filtered_schemas=('default', 'metadata'), undeleteable_fields=[]):
         self._ms = ManagedSchema(schema.fields())
         self._filtered_schemas = filtered_schemas
@@ -68,7 +68,7 @@ class SchemaEditor:
     # Add/remove schematas
     ######################################################################
 
-    security.declareProtected(ManageSchema, 'atse_addSchemata')
+    security.declareProtected(ManageSchemaPermission, 'atse_addSchemata')
     def atse_addSchemata(self, name, RESPONSE=None):
         """ add a new schemata """
         if not name:
@@ -87,7 +87,7 @@ class SchemaEditor:
         util.redirect(RESPONSE, 'atse_editor', 
                       self.translate('atse_added', default='Schemata added'), schemata=name)
 
-    security.declareProtected(ManageSchema, 'atse_delSchemata')
+    security.declareProtected(ManageSchemaPermission, 'atse_delSchemata')
     def atse_delSchemata(self, name, RESPONSE=None):
         """ delete a schemata """
 
@@ -102,7 +102,7 @@ class SchemaEditor:
     # Field manipulation
     ######################################################################
 
-    security.declareProtected(ManageSchema, 'atse_delField')
+    security.declareProtected(ManageSchemaPermission, 'atse_delField')
     def atse_delField(self, name, RESPONSE=None):
         """ remove a field from a schemata"""
 
@@ -125,7 +125,7 @@ class SchemaEditor:
                       self.translate('atse_field_deleted', default='Field deleted'), schemata=return_schemata)
 
 
-    security.declareProtected(ManageSchema, 'atse_update')
+    security.declareProtected(ManageSchemaPermission, 'atse_update')
     def atse_update(self, fielddata,  REQUEST, RESPONSE=None):
         """ update a single field"""
 
@@ -258,7 +258,7 @@ class SchemaEditor:
     # Moving schematas and fields
     ######################################################################
 
-    security.declareProtected(ManageSchema, 'atse_schemataMoveLeft')
+    security.declareProtected(ManageSchemaPermission, 'atse_schemataMoveLeft')
     def atse_schemataMoveLeft(self, name, RESPONSE=None):
         """ move a schemata to the left"""
         self._ms.moveSchemata(name, -1)
@@ -266,7 +266,7 @@ class SchemaEditor:
         util.redirect(RESPONSE, 'atse_editor', 
                       self.translate('atse_moved_left', default='Schemata moved to left'), schemata=name)
 
-    security.declareProtected(ManageSchema, 'atse_schemataMoveRight')
+    security.declareProtected(ManageSchemaPermission, 'atse_schemataMoveRight')
     def atse_schemataMoveRight(self, name, RESPONSE=None):
         """ move a schemata to the right"""
         self._ms.moveSchemata(name, 1)
@@ -274,7 +274,7 @@ class SchemaEditor:
         util.redirect(RESPONSE, 'atse_editor', 
                       self.translate('atse_moved_right', default='Schemata moved to right'), schemata=name)
 
-    security.declareProtected(ManageSchema, 'atse_fieldMoveLeft')
+    security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveLeft')
     def atse_fieldMoveLeft(self, name, RESPONSE=None):
         """ move a field of schemata to the left"""
         self._ms.moveField(name, -1)
@@ -282,7 +282,7 @@ class SchemaEditor:
         util.redirect(RESPONSE, 'atse_editor', 
                       self.translate('atse_field_moved_up', default='Field moved up'), schemata=self._ms[name].schemata, field=name)
 
-    security.declareProtected(ManageSchema, 'atse_fieldMoveRight')
+    security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveRight')
     def atse_fieldMoveRight(self, name, RESPONSE=None):
         """ move a field of schemata down to the right"""
         self._ms.moveField(name, 1)
@@ -290,7 +290,7 @@ class SchemaEditor:
         util.redirect(RESPONSE, 'atse_editor', 
                       self.translate('atse_field_moved_down', default='Field moved down'), schemata=self._ms[name].schemata, field=name)
 
-    security.declareProtected(ManageSchema, 'atse_changeSchemataForField')
+    security.declareProtected(ManageSchemaPermission, 'atse_changeSchemataForField')
     def atse_changeSchemataForField(self, name, schemata_name, RESPONSE=None):
         """ move a field from the current fieldset to another one """
         self._ms.changeSchemataForField(name, schemata_name)
@@ -303,17 +303,17 @@ class SchemaEditor:
     # Hook for UI
     ######################################################################
 
-    security.declareProtected(ManageSchema, 'atse_getField')
+    security.declareProtected(ManageSchemaPermission, 'atse_getField')
     def atse_getField(self, name):
         """ return a field by its name """
         return self._ms[name]
 
-    security.declareProtected(ManageSchema, 'atse_getFieldType')
+    security.declareProtected(ManageSchemaPermission, 'atse_getFieldType')
     def atse_getFieldType(self, field):
         """ return the type of a field """
         return field.__class__.__name__
     
-    security.declareProtected(ManageSchema, 'atse_formatVocabulary')
+    security.declareProtected(ManageSchemaPermission, 'atse_formatVocabulary')
     def atse_formatVocabulary(self, field):
         """ format the DisplayList of a field to be display
             within a textarea.
@@ -329,7 +329,7 @@ class SchemaEditor:
             else: l.append('%s|%s' % (k,v))
         return '\n'.join(l)
 
-    security.declareProtected(ManageSchema, 'migrate_schema')
+    security.declareProtected(ManageSchemaPermission, 'migrate_schema')
     def migrate_schema(self):
         """ migrate to ManagedSchema """
 
@@ -344,7 +344,7 @@ class SchemaEditor:
                 self._ms.addField(field)
         self._p_changed = 1
 
-    security.declareProtected(ManageSchema, 'atse_schema_baseclass')
+    security.declareProtected(ManageSchemaPermission, 'atse_schema_baseclass')
     def atse_schema_baseclass(self):
         """ return name of baseclass """
         return str(self._ms.__class__)
