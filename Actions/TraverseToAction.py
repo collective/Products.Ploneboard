@@ -12,7 +12,7 @@ class TraverseToAction(BaseFormAction):
         action = self.getArg(controller_state)
         action_url = None
         try:
-        action_url = 'string:' + controller_state.getContext().getTypeInfo().getActionById(action)
+            action_url = 'string:' + controller_state.getContext().getTypeInfo().getActionById(action)
         except ValueError:
             actions = controller_state.getContext().portal_actions.listFilteredActionsFor(controller_state.getContext())
             # flatten the actions as we don't care where they are
