@@ -1,6 +1,5 @@
 <metal:block tal:define="viewletPath options/viewletPath;
-                         usemacro python:viewletPath.find('/macros/') != -1"
-             tal:on-error="structure here/cp_errorHandler" >
+                         usemacro python:viewletPath.find('/macros/') != -1">
 
     <metal:block use-macro="here/global_defines/macros/defines" />
 
