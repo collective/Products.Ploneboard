@@ -1,5 +1,9 @@
 TODO-LIST
 
+[v2.1]
+
+  * Allow LocalRole blacklisting
+
 [v2.xx => Not planned yet]
 
   * [GroupSpace] Provide a hook at instanciation time to create additional
