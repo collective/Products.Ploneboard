@@ -1,0 +1,9 @@
+[default]
+title=Manage Data provider
+
+[actions]
+action.success..Update=traverse_to:string:prefs_manage_dataprovider
+action.success..Remove=traverse_to:string:prefs_manage_dataprovider
+action.success..Add=traverse_to:string:add_dpmapping_script
+action.failure=traverse_to:string:prefs_manage_dataprovider
+
