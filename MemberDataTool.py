@@ -184,7 +184,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         # Create a temporary member if needed.
         prop=_marker
         m = self._getMemberInstance()
-        schema = self._getMemberInstance().schema
+        schema = self._getMemberInstance().Schema()
         field = schema.get(id, None)
 
         if field:

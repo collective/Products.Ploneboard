@@ -104,25 +104,25 @@ content_schema = FieldList((
                                        description='Choose the appearance of the site. Several styles are available.')
                 ),
     
-    PasswordField('password',
+    StringField('password',
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
                 read_permission=VIEW_SECURITY_PERMISSION,
                 write_permission=EDIT_PASSWORD_PERMISSION,
                 searchable=0,
-                widget=StringWidget(label='Password',
+                widget=PasswordWidget(label='Password',
                                       description='Enter a new password (leave blank to keep your current password)')
                 ),
 
-    PasswordField('confirm_password',
+    StringField('confirm_password',
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
                 read_permission=VIEW_SECURITY_PERMISSION,
                 write_permission=EDIT_PASSWORD_PERMISSION,
                 searchable=0,
-                widget=StringWidget(label='Confirm password',
+                widget=PasswordWidget(label='Confirm password',
                                       description='Confirm your new password')
                 ),
 
@@ -473,7 +473,6 @@ class Member(BaseContent):
         return self.portal_properties.site_properties.available_editors
 
     def valid_roles(self):
-        import pdb; pdb.set_trace()
         roles = list(self.getUser().valid_roles())
         # remove automatically added roles
         if 'Authenticated' in roles:
