@@ -1,4 +1,8 @@
-V1.71
+V1.7.2
+
+  - fix permission declare of getPageLayoutMode
+
+V1.7.1
 
   - support multi-rows now
 
