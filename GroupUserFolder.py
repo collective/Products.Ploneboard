@@ -14,7 +14,9 @@
 
 """GroupUserFolder product"""
 
-from Globals import MessageDialog, DTMLFile      # fakes a method from a DTML file
+# fakes a method from a DTML file
+from Globals import MessageDialog, DTMLFile
+
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Acquisition import Implicit
@@ -37,6 +39,7 @@ import AccessControl.User
 import GRUFFolder
 import GRUFUser
 
+DEBUG=1
 #import zLOG
 #
 #def log(message,summary='',severity=0):
@@ -52,7 +55,8 @@ def unique(sequence):
     ret = []
     lst = list(sequence)
     lst.sort()
-    prev = "THIS VALUE WILL SURELY BE UNIQUE IN ALL THE LISTS WE CAN IMAGINE ! :-)"
+    prev = "THIS VALUE WILL SURELY BE UNIQUE IN ALL THE LISTS " \
+           "WE CAN IMAGINE ! :-)"
     for item in lst:
         if item == prev:
             continue
@@ -61,9 +65,8 @@ def unique(sequence):
     return tuple(ret)
 
 
-
 def manage_addGroupUserFolder(self,dtself=None,REQUEST=None,**ignored):
-    """ """
+    """ Factory method that creates a UserFolder"""
     f=GroupUserFolder()
     self=self.this()
     try:    self._setObject('acl_users', f)
@@ -81,7 +84,8 @@ def manage_addGroupUserFolder(self,dtself=None,REQUEST=None,**ignored):
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
 
-class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicUserFolder, ):
+class GroupUserFolder(OFS.ObjectManager.ObjectManager, 
+                      AccessControl.User.BasicUserFolder ):
     """
     GroupUserFolder => User folder with groups management
     """
@@ -92,16 +96,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
     isAnObjectManager=1
     isPrincipiaFolderish=1
 
-    manage_options=(
-        OFS.ObjectManager.ObjectManager.manage_options
-        +(
-        {'label': 'Overview',
-         'action': 'manage_overview',
-         },
-        )
-        +RoleManager.manage_options
-        +Item.manage_options
-        )
+    manage_options=( OFS.ObjectManager.ObjectManager.manage_options + \
+        ( {'label':'Overview', 'action':'manage_overview'}, ) + \
+        RoleManager.manage_options + \
+        Item.manage_options )
 
     manage_main = OFS.ObjectManager.ObjectManager.manage_main
     manage_overview = DTMLFile('dtml/GroupUserFolder_overview', globals())
@@ -111,7 +109,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
     # ------------------------
     #    Various operations  #
     # ------------------------
-
+    #XXX if construction does nothing why show it?
     def __init__(self):
         """
         __init__(self) -> initialization method
@@ -121,7 +119,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
     def _post_init(self):
         """
-        _post_init(self) => meant to be called when the object is in the Zope tree
+        _post_init(self) => meant to be called when the 
+                            object is in the Zope tree
         """
         uf = GRUFFolder.GRUFUsers()
         gf = GRUFFolder.GRUFGroups()
@@ -131,6 +130,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
 
     def getGroupPrefix(self):
+        """ group prefix """
         return GRUFFolder.GRUFGroups._group_prefix
     
     def getLocalRolesForDisplay(self, object):
@@ -144,7 +144,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
             userType = 'user'
             if prefix:
                 #log('username is: "%s"' % (username,))
-                if self.getGroup(username) or self.getGroup('%s%s' % (prefix, username)):
+                if self.getGroup(username) or \
+                   self.getGroup('%s%s' % (prefix, username)):
                     #log('found group %s' % (username,))
                     if username.startswith(prefix):
                         massagedUsername = username[len(prefix):]
@@ -158,7 +159,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         return tuple(result)    
 
     def getGRUFPhysicalRoot(self,):
-        return self.getPhysicalRoot()           # $$$ trick meant to be used within fake_getPhysicalRoot (see __init__)
+        # $$$ trick meant to be used within 
+        # fake_getPhysicalRoot (see __init__)
+        return self.getPhysicalRoot()   
 
     def getGRUFId(self,):
         """
@@ -175,36 +178,48 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         Return a list of usernames (including groups).
         Fetch the list from GRUFUsers and GRUFGroups.
         """
-        if not "acl_users" in self.Users.objectIds() or not "acl_users" in self.Groups.objectIds():
+        if not "acl_users" in self.Users.objectIds() or \
+           not "acl_users" in self.Groups.objectIds():
             return ()
-        return self.Users.acl_users.getUserNames() + self.Groups.getGroupNames()
+        return self.Users.acl_users.getUserNames() + \
+               self.Groups.getGroupNames()
 
     def getUsers(self):
         """Return a list of user objects"""
         ret = []
         for n in self.getUserNames():
             ret.append(self.getUser(n))
-        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
+
+        return filter(None, ret)
+        # This prevents 'None' user objects to be returned. 
+        # This happens for example with LDAPUserFolder when a 
+        # LDAP query fetches too much records.
 
     def getUser(self, name):
         """Return the named user object or None"""
-        # Prevent infinite recursion when instanciating a GRUF without having sub-acl_users set
-        if not "acl_users" in self.Users.objectIds() or not "acl_users" in self.Groups.objectIds():
+        # Prevent infinite recursion when instanciating a GRUF 
+        # without having sub-acl_users set
+        if not "acl_users" in self.Users.objectIds() or \
+           not "acl_users" in self.Groups.objectIds():
             return None
         
         # Fetch users first
         u = self.Users.acl_users.getUser(name)
         if u:
             Log(LOG_DEBUG, "Returning a user object", name, u, u.__class__)
-            return GRUFUser.GRUFUser(u, self,).__of__(self)            # $$$ Check security for this !
+            return GRUFUser.GRUFUser(u, self,).__of__(self) 
+            # $$$ Check security for this !
         
-        # If not found, fetch groups (then the user must be prefixed by 'group_' prefix)
+        # If not found, fetch groups (then the user must be 
+        # prefixed by 'group_' prefix)
+
         u = self.Groups.getGroup(name)
         if u:
             Log(LOG_DEBUG, "Returning a group object", name, u)
-            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)            # $$$ check security for this ! and check against double GRUFUser wrapping (what getGroup() is called ?)
+            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
+            # $$$ check security for this! and check against double 
+            # GRUFUser wrapping (what getGroup() is called ?)
  
-        # If still not found, well... we cannot do anything else.
         return None
 
 
@@ -225,7 +240,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         ret = []
         for n in self.getGroupNames():
             ret.append(self.getGroup(n))
-        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
+        return filter(None, ret)                        
+        # This prevents 'None' user objects to be returned. 
+        # This happens for example with LDAPUserFolder when a LDAP 
+        # query fetches too much records.
 
     def getGroup(self, name, prefixed = 1):
         """Return the named user object or None"""
@@ -245,7 +263,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         # Fetch group
         u = self.Groups.acl_users.getUser(name)
         if u:
-            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)            # $$$ check security for this !
+            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
+            # $$$ check security for this !
 
         # If still not found, well... we cannot do anything else.
         Log(LOG_WARNING, "Didn't find group", name)
@@ -271,8 +290,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         ret = []
         for n in self.getPureUserNames():
             ret.append(self.getUser(n))
-        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
-
+        return filter(None, ret)                        
+        # This prevents 'None' user objects to be returned. 
+        # This happens for example with LDAPUserFolder when a 
+        # LDAP query fetches too much records.
 
 
     # ------------------------
@@ -282,14 +303,18 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
     def authenticate(self, name, password, request):
         """
-        Pass the request along to the underlying user-related UserFolder object
-        THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code in AccessControl/User.py
+        Pass the request along to the underlying user-related UserFolder 
+        object
+        THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code 
+        in AccessControl/User.py
         """
         if "acl_users" in self.Users.objectIds():
             u = self.Users.acl_users.authenticate(name, password, request)
             if u:
-                return GRUFUser.GRUFUser(u, self,).__of__(self)         # $$$ Check security for this !
-            return None                                                 # The user cannot be authenticated => we return None
+                return GRUFUser.GRUFUser(u, self,).__of__(self)         
+                # $$$ Check security for this !
+            return None                                                 
+            # The user cannot be authenticated => we return None
 
         # No acl_users in the Users folder => we refuse authentication
         return None
@@ -308,22 +333,22 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
            do the actual adding of a user. The 'password' will be the
            original input password, unencrypted. The implementation of this
            method is responsible for performing any needed encryption."""
-        return self.Users.acl_users._doAddUser(name, password, roles, domains, **kw)
+
+        return self.Users.acl_users._doAddUser(name, password, 
+                                               roles, domains, **kw)
 
     def _doChangeUser(self, name, password, roles, domains, **kw):
         """Modify an existing user. This should be implemented by subclasses
            to make the actual changes to a user. The 'password' will be the
            original input password, unencrypted. The implementation of this
            method is responsible for performing any needed encryption."""
-        return self.Users.acl_users._doChangeUser(name, password, roles, domains, **kw)
+        return self.Users.acl_users._doChangeUser(name, password, 
+                                                  roles, domains, **kw)
 
     def _doDelUsers(self, names):
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
         return self.Users.acl_users._doDelUsers(names)
-
-
-
 
    
 InitializeClass(GroupUserFolder) 

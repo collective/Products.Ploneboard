@@ -13,8 +13,9 @@
 ##############################################################################
 
 """GroupUserFolder product"""
+# fakes a method from a DTML File
+from Globals import MessageDialog, DTMLFile 
 
-from Globals import MessageDialog, DTMLFile      # fakes a method from a DTML file
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Acquisition import Implicit
@@ -22,7 +23,6 @@ from Globals import Persistent
 from AccessControl.Role import RoleManager
 from OFS.SimpleItem import Item
 from OFS.PropertyManager import PropertyManager
-import OFS
 from OFS import ObjectManager, SimpleItem
 from DateTime import DateTime
 from App import ImageFile
@@ -36,11 +36,15 @@ from global_symbols import *
 import AccessControl
 import GRUFFolder
 import GroupUserFolder
-from AccessControl.PermissionRole import _what_not_even_god_should_do, rolesForPermissionOn
+from AccessControl.PermissionRole \
+  import _what_not_even_god_should_do, rolesForPermissionOn
 
+#XXX PJ please get rid of this _what_not_even_god_should_do
 
+#GRUFPREFIX is a constant
+grufprefix=GRUFFolder.GRUFGroups._group_prefix
 
-class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
+class GRUFUser(AccessControl.User.BasicUser, Implicit): 
     """
     Base class for all GRUF-catched User objects.
     There's, alas, many copy/paste from AccessControl.BasicUser...
@@ -48,21 +52,26 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
     def _setUnderlying(self, user):
         """
-        _setUnderlying(self, user) => Set the GRUFUser properties to the underlying user's one.
-        Be careful that any change to the underlying user won't be reported here. $$$ We don't know yet if User object are transaction-persistant or not...
+        _setUnderlying(self, user) => Set the GRUFUser properties to 
+        the underlying user's one.
+        Be careful that any change to the underlying user won't be 
+        reported here. $$$ We don't know yet if User object are 
+        transaction-persistant or not...
         """
         self._original_name   = user.getUserName()
         self._original_password = user._getPassword()
         self._original_roles = user.getRoles()
         self._original_domains = user.getDomains()
         self._original_id = user.getId()
-        self.__underlying__ = user                              # $$$ Used only for authenticate()
+        self.__underlying__ = user                              
+        # $$$ Used only for authenticate()
 
 ##        self.__underlying__ = user
 ##        self.__underlying__.getPhysicalRoot = self._user_fake_getPhysicalRoot
 ##        self.__underlying__.id = "acl_users"  ##self.getGRUFId()
 
-##    def _user_fake_getPhysicalRoot(self,):                                      # $$$ Trick for getPhysicalRoot
+##    def _user_fake_getPhysicalRoot(self,):
+# $$$ Trick for getPhysicalRoot
 ##        Log(LOG_DEBUG, "within _user_fake_getPhysicalRoot", self.getId(), )
 ##        return "/"
 
@@ -85,6 +94,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
     # allowing access to public names in the User interface) would
     # probably break a lot of other User implementations with extended
     # functionality that we cant anticipate from the base scaffolding.
+
     def __allow_access_to_unprotected_subobjects__(self, name, value=None):
         deny_names=('name', '__', 'roles', 'domains', '_getPassword',
                     'authenticate', '_shared_roles')
@@ -97,7 +107,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
     def __init__(self, underlying_user, GRUF, isGroup = 0):
         self._setUnderlying(underlying_user)
-        self._isGroup = isGroup                         # Set it to TRUE if this user represents a group
+        # Set it to TRUE if this user represents a group
+        self._isGroup = isGroup   
         self._GRUF = GRUF
         self.id = self._original_id
 
@@ -105,13 +116,18 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
         """Return 1 if this user is a group abstraction"""
         return self._isGroup
 
-    def getGroups(self,):
+    def getGroups(self):
         """
         If this user is a user (uh, uh), get its groups.
-        $$$ BY NOW, WE DO NOT AUTHORIZE GROUPS TO BELONG TO GROUPS. This excludes 'group inheritance'.
-        Maybe we could authorize this one day, then we should modify this behaviour.
+        $$$ BY NOW, WE DO NOT AUTHORIZE GROUPS TO BELONG TO GROUPS. 
+        This excludes 'group inheritance'.
+        Maybe we could authorize this one day, then we should 
+        modify this behaviour.
         """
-        # List this user's roles. We consider that roles starting with _group_prefix are in fact groups, and thus are returned (prefixed).
+        # List this user's roles. We consider that roles starting 
+        # with _group_prefix are in fact groups, and thus are 
+        # returned (prefixed).
+
         ret = []
         prefix = GRUFFolder.GRUFGroups._group_prefix
         for role in self._original_roles:
@@ -121,28 +137,32 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
     def getUserNameWithoutGroupPrefix(self):
         """Return the username of a user without a group prefix"""
-        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] == GRUFFolder.GRUFGroups._group_prefix:
-            return self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)]
+        if self.isGroup() and \
+          self._original_name[:len(grufprefix)] == grufprefix:
+            return self._original_name[:len(grufprefix)]
         return self._original_name
 
     def getUserName(self):
         """Return the username of a user"""
-        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] != GRUFFolder.GRUFGroups._group_prefix:
-            return "%s%s" % (GRUFFolder.GRUFGroups._group_prefix, self._original_name, )
+        if self.isGroup() and \
+          self._original_name[:len(grufprefix)]!=grufprefix:
+            return "%s%s" % (grufprefix, self._original_name )
         return self._original_name
 
     def getId(self):
         """Get the ID of the user. The ID can be used, at least from
-        Python, to get the user from the user's
-        UserDatabase"""
-        # $$$ OUT TO DATE
+        Python, to get the user from the user's UserDatabase 
+        """
+
+# XXX OUT TO DATE - What does this mean?
 ##        # Prevent storage of a GRUFUser as underlying object
 ##        if not hasattr(self.__underlying__.aq_base, 'getGroups'):
 ##            return self._original_id
-
         # Return the right id
-        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] != GRUFFolder.GRUFGroups._group_prefix:
-            return "%s%s" % (GRUFFolder.GRUFGroups._group_prefix, self._original_name, )
+
+        if self.isGroup() and \
+          self._original_name[:len(grufprefix)] != grufprefix:
+            return "%s%s" % (grufprefix, self._original_name)
         return self._original_name
 
     def _getPassword(self):
@@ -160,7 +180,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
         # Get user roles
         for role in self._original_roles:
-            if string.find(role, prefix) != 0:
+            if string.find(role, grufprefix) != 0:
                 user.append(role)
 
         # Get group roles
@@ -180,7 +200,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
         for group in self.getGroups():
             if not group in groups:
                 Log("Group", group, "is invalid. Ignoring.")
-                continue                # This may occur when groups are deleted. Ignored silently
+                # This may occur when groups are deleted
+                # Ignored silently
+                continue  
             ret.extend(self._GRUF.acl_users.getGroup(group).getRoles())
             
         return GroupUserFolder.unique(ret)
@@ -210,7 +232,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
                 for groupid in self.getGroups():
                     for r in dict.get(groupid, []):
                         group_roles.append(r)
-##                        group_roles.extend(self._GRUF.getGroup(groupid).getRolesInContext(object))              #     $$$ Removed for performance reasons, seems to work ! ;-)
+
+#XXX Why is this still here PJ?  get rid of it if its not necessary
+##                        group_roles.extend(
+#   self._GRUF.getGroup(groupid).getRolesInContext(object))              
+#     $$$ Removed for performance reasons, seems to work ! ;-)
                     Log(LOG_DEBUG, "Group", groupid, "LR", group_roles)
 
             # Prepare next iteration
@@ -245,7 +271,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
         """Check whether the user has access to object. The user must
            have one of the roles in object_roles to allow access."""
 
-        if object_roles is _what_not_even_god_should_do: return 0
+        if object_roles is _what_not_even_god_should_do: 
+            return 0
 
         # Short-circuit the common case of anonymous access.
         if object_roles is None or 'Anonymous' in object_roles:
@@ -253,8 +280,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
         # Provide short-cut access if object is protected by 'Authenticated'
         # role and user is not nobody
-        if 'Authenticated' in object_roles and (
-            self.getUserName() != 'Anonymous User'):
+        if 'Authenticated' in object_roles and \
+            (self.getUserName() != 'Anonymous User'):
             return 1
 
         # Check for ancient role data up front, convert if found.
@@ -275,11 +302,14 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
                     return 1
                 return None
 
-        # Check violently against getRolesInContext ($$$ may have to copy/paste code here to improve performance)
+        # XXX huh? please explain all of htese "performance boosters" 
+        # Check violently against getRolesInContext ($$$ may have 
+        # to copy/paste code here to improve performance)
         for role in self.getRolesInContext(object):
             if role in object_roles:
                 return 1
 
+#XXX PJ this looks crufty and old - can you get rid of it?
 ##        # Still have not found a match, so check local roles. We do
 ##        # this manually rather than call getRolesInContext so that
 ##        # we can incur only the overhead required to find a match.
@@ -351,4 +381,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
         if not self.isGroup():
             raise TypeError,'This method only aplies to groups'
         
-        return [u for u in self.aq_parent.getUsers() if self.getId() in u.getGroups()]
+        return [u for u in self.aq_parent.getUsers() 
+                if self.getId() in u.getGroups()]
+

@@ -23,6 +23,10 @@ import AccessControl.User
 global groupuserfolder_globals
 groupuserfolder_globals=globals()
 
+#XXX PJ What the @#$@? 
+#    Please get rid of this .. this whole fake_getPhysicalRoot stuff is 
+#    quite scary.  if you arent using it throw it away
+
 ##################################
 ## CMF / Plone SUPPORT START... ##
 ##################################

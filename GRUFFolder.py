@@ -14,7 +14,9 @@
 
 """GroupUserFolder product"""
 
-from Globals import MessageDialog, DTMLFile      # fakes a method from a DTML file
+# fakes a method from a DTML file
+from Globals import MessageDialog, DTMLFile 
+
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Acquisition import Implicit
@@ -22,10 +24,11 @@ from Globals import Persistent
 from AccessControl.Role import RoleManager
 from OFS.SimpleItem import Item
 from OFS.PropertyManager import PropertyManager
-import OFS
 from OFS import ObjectManager, SimpleItem
 from DateTime import DateTime
 from App import ImageFile
+
+#XXX PJ DynaList is very hairy - why vs. PerstList?
 import DynaList
 import AccessControl.Role, webdav.Collection
 import Products
@@ -33,11 +36,6 @@ import os
 import string
 import shutil
 import random
-
-
-##def dummy_add():
-##    """ """
-##    return None
 
 
 
@@ -54,8 +52,6 @@ def manage_addGRUFUsers(self,dtself=None,REQUEST=None,**ignored):
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
-
-
 def manage_addGRUFGroups(self,dtself=None,REQUEST=None,**ignored):
     """ """
     f=GRUFGroups()
@@ -69,21 +65,18 @@ def manage_addGRUFGroups(self,dtself=None,REQUEST=None,**ignored):
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
-
-
-class GRUFFolder(OFS.ObjectManager.ObjectManager, OFS.SimpleItem.Item, ):
+class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
     isAnObjectManager=1
     isPrincipiaFolderish=1
     manage_main=DTMLFile('dtml/GRUFFolder_main', globals())
-    manage_options=(
-        {'label':'Contents', 'action':'manage_main',
-         },
-        ) + OFS.SimpleItem.Item.manage_options
+    manage_options=( {'label':'Contents', 'action':'manage_main'}, ) + \
+                     SimpleItem.Item.manage_options
 
 
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's view heading zone
+        header_text(self,) => Text that appears in the content's 
+                              view heading zone
         """
         return ""
 
@@ -93,12 +86,13 @@ class GRUFFolder(OFS.ObjectManager.ObjectManager, OFS.SimpleItem.Item, ):
         getUserFolder(self,) => get the underlying user folder, UNRESTRICTED !
         """
         if not "acl_users" in self.objectIds():
-            raise "ValueError", "Please put an acl_users in %s before using GRUF" % (self.getId(),)
+            raise "ValueError", "Please put an acl_users in %s " \
+                                "before using GRUF" % (self.getId(),)
         return self.acl_users
         
 
 
-class GRUFUsers(GRUFFolder):            #, RoleManager):
+class GRUFUsers(GRUFFolder): 
     """
     GRUFUsers : GRUFFolder that holds users
     """
@@ -127,13 +121,21 @@ class GRUFUsers(GRUFFolder):            #, RoleManager):
 
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's view heading zone
+        header_text(self,) => Text that appears in the content's view 
+                              heading zone
         """
         if not "acl_users" in self.objectIds():
-            return "Please put an acl_users here before ever starting to use this object."
+            return "Please put an acl_users here before ever " \
+                   "starting to use this object."
 
-        ret = """In this folder, groups are seen as ROLES from user's view. To put a user into a group, affect him a role that matches his group.<br />"""
+        ret = """In this folder, groups are seen as ROLES from user's 
+                 view. To put a user into a group, affect him a role 
+                 that matches his group.<br />"""
 
+        #XXX this looks potentially nasty storing self like this
+        #    is there a *good* reason PJ for doing this?
+        #    if this is acquisition wrapped it seems like you could 
+        #    be creating a cyclic reference
         self.__ac_roles__._target = self
         return ret
 
@@ -148,9 +150,6 @@ class GRUFUsers(GRUFFolder):            #, RoleManager):
     def userdefined_roles(self):
         "Return list of user-defined roles"
         return self.listGroups()
-
-
-
 
 
 class GRUFGroups(GRUFFolder):
@@ -168,13 +167,13 @@ class GRUFGroups(GRUFFolder):
 
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's view heading zone
+        header_text(self,) => Text that appears in the content's 
+                              view heading zone
         """
 	ret = ""
         if not "acl_users" in self.objectIds():
-            return "Please put an acl_users here before ever starting to use this object."
-
-        # Show groups
+            return "Please put an acl_users here before ever " \
+                   "starting to use this object."
         return ret
         
 
@@ -185,13 +184,11 @@ class GRUFGroups(GRUFFolder):
         """
         if without_prefix:
             return self.acl_users.getUserNames()
-        else:    
-            return map(lambda x, self=self: "%s%s" % (self._group_prefix, x), self.acl_users.getUserNames())
-
-
+        else:
+            #XXX Please replace this w/ a sensible list comprehension    
+            return map(lambda x, self=self: "%s%s" % 
+              (self._group_prefix, x), self.acl_users.getUserNames())
    
 InitializeClass(GRUFUsers) 
 InitializeClass(GRUFGroups) 
-
-
 
