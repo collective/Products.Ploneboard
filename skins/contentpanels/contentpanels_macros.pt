@@ -6,8 +6,6 @@
 <metal:block metal:define-macro="cpPages"
      tal:omit-tag=""
      tal:define="page_titles here/getPageTitles">
-<h5 class="hiddenStructure" tal:condition="page_titles"
-    i18n:translate="heading_views">Pages</h5>
 
 <ul class="cpPages" tal:condition="python: len(page_titles) > 1">
     <tal:pages repeat="pageTitle page_titles">
@@ -21,6 +19,7 @@
     </li>
     </tal:pages>
 </ul>
+
 </metal:block>
 
 </body>

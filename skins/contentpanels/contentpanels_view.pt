@@ -29,11 +29,10 @@ HEAD PAGE TITLES!!
     description
     </div>
 
-    <metal:block metal:define-macro="viewlet">
+    <div metal:define-macro="viewlet">
 
-      <table width="" align="" cellspacing="" cellpadding="" 
-              tal:define="pageIndex pageIndex | python:0"
-              tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
+      <table tal:define="pageIndex pageIndex | python:0"
+             tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
                        cellpadding python: here.getPageInfo(pageIndex, 'pageCellPad');
                        cellspacing python: here.getPageInfo(pageIndex, 'pageCellSpace');
                        align python: here.getPageInfo(pageIndex, 'pageAlign')">
@@ -62,7 +61,8 @@ panel should be here!!
         </tr>
 
       </table>
-    </metal:block>
+      
+    </div>
 
 </div>
 
