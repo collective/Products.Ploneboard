@@ -256,7 +256,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return filter(None, ret)
         # This prevents 'None' user objects to be returned. 
         # This happens for example with LDAPUserFolder when a 
-        # LDAP query fetches too much records.
+        # LDAP query fetches too many records.
 
     security.declareProtected(Permissions.manage_users, "getUser")
     def getUser(self, name):
@@ -673,7 +673,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/01/15 11:09:26 $"[7:-2]
+        rev_date = "$Date: 2004/01/20 18:07:03 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1305,7 +1305,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         listUserSources(self, ) => Return a list of userfolder objects
         Only return VALID (ie containing an acl_users) user sources if all is None
-        XXX HAS TO BE VERY OPTIMIZED !
+        XXX HAS TO BE OPTIMIZED VERY MUCH!
         """
         ret = []
         for src in self.objectValues(['GRUFUsers']):
