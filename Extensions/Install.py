@@ -97,6 +97,6 @@ def install(self):
 
     from Products.CMFContentPanels.config import actions
     p_cp=getToolByName(self, 'portal_contentpanels')
-    p_cp.installAction(actions)
+    p_cp.installActions(actions)
 
     return out.getvalue()

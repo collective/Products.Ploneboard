@@ -67,7 +67,7 @@
           href="#"
           tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
           i18n:translate=""
-          tal:content="viewlet/name">viewlet </a>
+          tal:content="viewlet/name ">viewlet </a>
    </div>
 </div>
 
@@ -79,7 +79,7 @@
           href="#"
           tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
           i18n:translate=""
-          tal:content="viewlet/name">viewlet </a>
+          tal:content="viewlet/name">viewlet</a>
    </div>
 </div>
 

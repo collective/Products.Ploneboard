@@ -40,7 +40,7 @@ actions=[
 '', "View","PT:Document",1),
 
 ('view_viewlet', 'Body',
-'string: here/viewlet_topic_body/macros/portlet', 
+'string: here/viewlets_topic_list/macros/base_portlet', 
 '', 'View', 'PT:Topic', 1),
 
 ('image_view','Body',
@@ -54,6 +54,10 @@ actions=[
 ('contentpanels_viewlet', 'Nested ContentPanels', 
 'string:here/viewlet_contentpanels_body/macros/portlet', 
 '', 'View','PT:ContentPanels', 1),
+
+('plonechat_viewlet', 'Recent Messages',
+'string:here/viewlet_plonechat_body/macros/portlet',
+'', 'View','PT:PloneChat', 1),
 
 ### GL: global viewlets
 

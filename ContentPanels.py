@@ -158,7 +158,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
                               panelSkin=panelSkin,
                               viewletPath=viewletPath)
         else:
-            return 'no viewlet'
+            return None
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPage' )
     def addPage(self, pageTitle='Untitled page', pageIndex=-1):
