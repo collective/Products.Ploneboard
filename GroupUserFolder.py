@@ -68,6 +68,10 @@ def manage_addGroupUserFolder(self,dtself=None,REQUEST=None,**ignored):
                    action ='%s/manage_main' % REQUEST['URL1'])
     self.__allow_groups__=f
     self.acl_users._post_init()
+
+    self.acl_users.Users.manage_addUserFolder()
+    self.acl_users.Groups.manage_addUserFolder()
+
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
