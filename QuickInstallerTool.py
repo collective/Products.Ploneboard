@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.3 2003/04/07 20:42:16 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.4 2003/05/24 17:22:14 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -48,6 +48,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     id='portal_quickinstaller'
     
     security = ClassSecurityInfo()
+    
     manage_options=(
         {'label':'install','action':'installForm'},
         ) +ObjectManager.manage_options
