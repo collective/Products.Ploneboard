@@ -156,18 +156,28 @@ class Photo(Image):
         h=self.height
 
         if height is None or width is None:
-            
+
             if size in self.displays.keys():
                 if not self._photos.has_key(size):
                     # This resized image isn't created yet.
                     # Calculate a size for it
                     x,y = self.displays.get(size)
-                    if self.width > self.height:
-                        w=x
-                        h=int(round(1.0/(float(self.width)/w/self.height)))
-                    else:
-                        h=y
-                        w=int(round(1.0/(float(self.height)/x/self.width)))
+                    try:
+                        if self.width > self.height:
+                            w=x
+                            h=int(round(1.0/(float(self.width)/w/self.height)))
+                        else:
+                            h=y
+                            w=int(round(1.0/(float(self.height)/x/self.width)))
+                    except ValueError:
+                        # OFS.Image only knows about png, jpeg and gif.
+                        # Other images like bmp will not have height and
+                        # width set, and will generate a ValueError here.
+                        # Everything will work, but the image-tag will render 
+                        # with height and width attributes.
+                        w=None
+                        h=None
+
                 else:
                     # The resized image exist, get it's size
                     photo = self._photos.get(size)
@@ -176,6 +186,7 @@ class Photo(Image):
 
         if height is None: height=h
         if width is None:  width=w
+
                 
         # Auto-scaling support
         xdelta = xscale or scale
