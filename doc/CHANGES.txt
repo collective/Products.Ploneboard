@@ -4,6 +4,8 @@
 
     - fixed some missing parameters in redirection URLs
 
+    - schemas can be exported as text
+
 0.2 (1.10.2004)
 
     - Added developer mode: Look @ config.py for information
