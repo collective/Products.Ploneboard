@@ -1,5 +1,9 @@
 V1.6.1
 
+  - better error handler
+
+  - new PloneChat viewlet
+
   - ContentPanels content can be a plone portlet now. See FAQ.txt
 
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl

@@ -28,7 +28,7 @@ You should reinstall CMFContentPanels.
    Say you have created a contentpanels named 'my-contentpanels'. You can add
    it to plone this way:
 
-   1. go to folder's ZMI, properties
+   1. go to the folder's ZMI, properties
    2. add a new lines property, with name left_slots or right_slots.
    3. add the contentpanels portlet:
 
