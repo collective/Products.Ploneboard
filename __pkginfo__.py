@@ -18,3 +18,8 @@ what a product creates during install.
 web = "http://www.sourceforge.net/projects/collective"
 ftp = ""
 mailing_list = "collective@lists.sourceforge.net"
+
+debian_name = "zope-cmfquickinstallertool"
+debian_maintainer = "Sylvain Thenault"
+debian_maintainer_email = "sylvain.thenault@logilab.fr"
+debian_handler = "zope"
