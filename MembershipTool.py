@@ -23,7 +23,8 @@ class MembershipTool( BaseTool ):
             member = memberdata_tool.get(member_id)
             if verifyPermission and not _checkPermission(VIEW_PUBLIC_PERMISSION, member):
                 return None
-            return apply(member.accessor('portrait'), ())
+            #member = apply(member.accessor('portrait'), portrait)
+            return member.getPortrait()
         except AttributeError:
             member = getattr(portal, self.default_portrait)
 #            member = portal.restrictedTraverse(self.default_portrait)
@@ -37,7 +38,9 @@ class MembershipTool( BaseTool ):
         memberdata_tool = getToolByName(self, 'portal_memberdata')
         member = memberdata_tool.get(member_id, None)
         if member:
-            apply(member.mutator('portrait'), portrait)
+            print member, type(member)
+            member.setPortrait(portrait)
+            #apply(member.mutator('portrait'), portrait)
 
 
     def searchForMembers( self, REQUEST=None, **kw ):
