@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.14 2003/08/14 12:45:32 dreamcatcher Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.15 2003/09/13 11:48:31 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -126,6 +126,21 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden()})
 
         return res
+
+    def getProductFile(self,p,fname='readme.txt'):
+        ''' returns a file of the product case-insensitive '''
+        prodspath=os.path.split(package_home(globals()))[:-1]
+        prodpath=os.path.join(os.path.join(os.path.join(*prodspath)),p)
+        #now list the directory to get the readme.txt case-insensitive
+        files=os.listdir(prodpath)
+        for f in files:
+            if f.lower()==fname:
+                return open(os.path.join(prodpath,f)).read()
+        
+        return None
+        
+    getProductReadme=getProductFile
+        
 
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):

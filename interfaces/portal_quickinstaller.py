@@ -23,6 +23,12 @@ class IQuickInstallerTool(Interface):
     def installProducts(products=[], stoponerror=0, REQUEST=None):
         ''' installs the products specified in the products list'''
 
+    def getProductFile(self,p,fname='readme.txt'):
+        ''' returns a file of the product case-insensitive '''
+
+    def getProductReadme(self,p):
+        ''' returns the readme file of the product case-insensitive '''
+
     def isProductInstalled(productname):
         ''' checks wether a product is installed (by name) '''
 
