@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.7 2004/04/19 11:03:49 k_vertigo Exp $
+$Id: ControlTool.py,v 1.8 2004/04/19 15:43:29 k_vertigo Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -312,13 +312,13 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1):
         """ perform the upgrade """
 
-        get_transaction().commit(1)
+        #get_transaction().commit(1)
 
         # keep it simple
         out = []
 
         self._check()
-        
+        failed = 0
         if dry_run:
             out.append(("Dry run selected.", zLOG.INFO))
 
@@ -333,7 +333,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
         while newv is not None:
             out.append(("Attempting to upgrade from: %s" % newv, zLOG.INFO))
             # commit work in progress between each version
-            get_transaction().commit(1)
+            #get_transaction().commit(1)
             # if we modify the portal root and commit a sub transaction
             # the skin data will disappear, explicitly set it up on each
             # subtrans, the alternative is to traverse again to the root on
@@ -364,9 +364,10 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                 # set newv to None
                 # to break the loop
                 newv = None
+                failed = 1
                 if swallow_errors:
                     # abort transaction to safe the zodb
-                    get_transaction().abort(1)
+                    get_transaction().abort()
                 else:
                     for msg, sev in out: log(msg, severity=sev)
                     raise
@@ -382,7 +383,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                          "instances are now up-to-date."), zLOG.INFO))
 
         # do this once all the changes have been done
-        if self.needRecatalog():
+        if not failed and self.needRecatalog():
             try:
                 self.portal_catalog.refreshCatalog()
                 self._needRecatalog = 0
@@ -394,7 +395,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                     for msg, sev in out: log(msg, severity=sev)
                     raise
 
-        if self.needUpdateRole():
+        if not failed and self.needUpdateRole():
             try:
                 self.portal_workflow.updateRoleMappings()
                 self._needUpdateRole = 0

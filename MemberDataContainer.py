@@ -82,7 +82,8 @@ class MemberDataContainer(BaseBTreeFolder):
     security=ClassSecurityInfo()
 
     id = 'portal_memberdata'
-    archetype_name = portal_type = meta_type = PKG_NAME + ' Container'
+    archetype_name = meta_type = PKG_NAME + ' Container'
+    portal_type = 'MemberDataContainer'
 
     global_allow = 0
 
@@ -122,7 +123,7 @@ class MemberDataContainer(BaseBTreeFolder):
             if not m:
                 ## XXX Delegate to the factory and create a new site specific
                 ## member object for this user
-                addMember=getMemberFactory(self, self.getTypeName())
+                addMember=getMemberFactory(self, 'Member')
                 addMember(name)
                 m = self.get(name)
                 m.setUser(user)
