@@ -13,19 +13,12 @@
 
 """Implement the content panels content type."""
 
-import string
-import urlparse
-
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base, aq_parent
 
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.PortalContent import PortalContent, NoWL
-from Products.CMFCore.PortalContent import ResourceLockedError
-from Products.CMFCore.WorkflowCore import WorkflowAction
-from Products.CMFCore.utils import keywordsplitter
-
+from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 
 factory_type_information = ( {'id': 'ContentPanels',
@@ -78,10 +71,6 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
                      )
 
     meta_type = 'CMF Content Panels'
-    effective_date = expiration_date = None
-    panelsConfig = []
-    customCSS = ''
-    
     security = ClassSecurityInfo()
 
     def __init__(self, id, title='', description=''):
