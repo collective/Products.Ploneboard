@@ -5,7 +5,8 @@
 <h3>DCWorkflow Graph</h3>
 
 <p> 
-You must install <a href="http://www.graphviz.org/">Graphviz</a> before use it.
+You must install <a href="http://www.graphviz.org/">Graphviz</a> before you will be able to see workflow graphs.
+If Graphviz is not installed, please install it now.
 </p>
 
 <img tal:attributes="src string:${here/absolute_url}/getGraph" />
