@@ -54,41 +54,22 @@ def migrate_user_folder(obj, out, ):
             return out.getvalue()
         
         print >>out, "    Migrating acl_users folder at %s to a GroupUserFolder" % ('/'.join( obj.getPhysicalPath() ), )
+
         container = obj.aq_parent
-        
-        # move the existing acl_users into a temporary folder
-        #tempid = 'temp_acl_users_' + str( int(obj.ZopeTime()) )
-        #manage_addFolder( container, tempid ) #dont use a CMF Folder
+
+        # Instead of using Copy/Paste we hold a reference to the acl_users 
+        # and use that reference instead of physically moving objects in ZODB
         tmp_users=container._getOb('acl_users')
         tmp_allow=container.__allow_groups__
-       
-        #del container.__allow_groups__ 
-        #container._delOb('acl_users')
-       
+
+        del container.__allow_groups__
         if 'acl_users' in container.objectIds():
             container.manage_delObjects('acl_users')
-            
-        #temp_fld=container._getOb(tempid)
-        #temp_fld.__allow_groups__ = aq_base(temp_grp)
-        #temp_fld._setOb('acl_users', aq_base(temp_obj))
 
-        #container[tempid].manage_pasteObjects( container.manage_cutObjects(id) )
-        #get_transaction().commit(1) #put in _p_jar, muhahaha!
-        
-        # create a GRUF
-        #import pdb; pdb.set_trace()
         container.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
-        
-        # move the old acl_users folder into the GRUF
         container.acl_users.Users.manage_delObjects( 'acl_users' )
-        #clipboard = container[tempid].manage_cutObjects( 'acl_users' )
-        #container.acl_users.Users.manage_pasteObjects( clipboard )
-        #XXX Thanks to tres for knocking me over the head for being a dult
         container.acl_users.Users.__allow_groups__ = aq_base(tmp_allow)
-        container.acl_users.Users._setOb('acl_users', aq_base(tmp_users))
-
-        # clean up our temp folder, and then we are done
-        #container.manage_delObjects( tempid )
+        container.acl_users.Users._setObject('acl_users', aq_base(tmp_users))
         
     return out.getvalue()
     
