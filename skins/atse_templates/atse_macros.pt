@@ -1,0 +1,190 @@
+<metal:div metal:define-macro="type">
+    <span class="label" i18n:translate="type">Type</span>
+    <div>
+      <select name="fielddata.type:record:string">
+        <span tal:repeat="item python: ('StringField', 'IntegerField', 'FloatField', 'FixedPointField', 'LinesField', 'DateTimeField', 'BooleanField')">
+          <option tal:attributes="value item;
+                                  selected python: item==here.atse_getFieldType(field)"
+                  tal:content="item" />
+        </span>
+      </select>
+    </div>
+
+</metal:div>
+            
+
+<metal:div metal:define-macro="widget">
+
+    <span class="label" i18n:translate="widget">Widget</span>
+    <div>
+
+      <select name="fielddata.widget:record:string">
+        <option value="String" 
+                tal:content="string:String"
+                tal:attributes="selected python: widget_name=='StringWidget'" />
+        <option value="Textarea" 
+                tal:content="string:Textarea"
+                tal:attributes="selected python: widget_name=='TextAreaWidget'" />
+        <option value="Radio" 
+                tal:content="string:Radio"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='radio'"/>
+        <option value="Select" 
+                tal:content="string:Select"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='select'"/>
+        <option value="Flex" 
+                tal:content="string:flexible Selection"
+                tal:attributes="selected python: widget_name=='SelectionWidget' and field.widget.format=='flex'"/>
+        <option value="Lines" 
+                tal:content="string:Lines"
+                tal:attributes="selected python: widget_name=='LinesWidget' "/>
+        <option value="Calendar" 
+                tal:content="string:Calendar"
+                tal:attributes="selected python: widget_name=='CalendarWidget' "/>
+        <option value="Boolean" 
+                tal:content="string:Boolean"
+                tal:attributes="selected python: widget_name=='BooleanWidget' "/>
+        <option value="MultiSelect" 
+                tal:content="string:MultiSelect"
+                tal:attributes="selected python: widget_name=='MultiSelectionWidget' "/>
+
+
+        <option value="Richtext" 
+                tal:content="string:Richtext"
+                tal:attributes="selected python: widget_name=='RichWidget' "/>
+        <option value="Password" 
+                tal:content="string:Password"
+                tal:attributes="selected python: widget_name=='PasswordWidget' "/>
+        <option value="Visual" 
+                tal:content="string:Visual"
+                tal:attributes="selected python: widget_name=='VisualWidget' "/>
+        <option value="Epoz" 
+                tal:content="string:Epoz"
+                tal:attributes="selected python: widget_name=='EpozWidget' "/>
+        <option value="Picklist"
+                tal:content="string:Picklist MultiSelect"
+                tal:attributes="selected python: widget_name=='PicklistWidget' "/>
+        <option value="InAndOut"
+                tal:content="string:InAndOut MultiSelect"
+                tal:attributes="selected python: widget_name=='InAndOutWidget' "/>
+
+        <tal:comment tal:replace="nothing">
+            <option value="Image" 
+                    tal:content="string:Image"
+                    tal:attributes="selected python: widget_name=='ImageWidget' "/>
+            <option value="Integer" 
+                    tal:content="string:Integer"
+                    tal:attributes="selected python: widget_name=='IntegerWidget' "/>
+            <option value="Decimal" 
+                    tal:content="string:Decimal"
+                    tal:attributes="selected python: widget_name=='DecimalWidget' "/>
+            <option value="Reference" 
+                    tal:content="string:Reference"
+                    tal:attributes="selected python: widget_name=='ReferenceWidget' "/>
+            <option value="Keywords" 
+                    tal:content="string:Keywords"
+                    tal:attributes="selected python: widget_name=='KeywordWidget' "/>
+        </tal:comment>
+
+      </select>
+    </div>
+</metal:div>
+
+<metal:div metal:define-macro="size">
+
+    <span class="label" i18n:translate="size">Size</span>
+    <div>
+          
+      <metal:block tal:condition="python: widget_name in ('TextAreaWidget', 'LinesWidget')">
+        <metal:block tal:condition="python: hasattr(widget, 'rows')">       
+          <span i18n:translate="rows">Rows</span>
+          <input type="text" size="3" name="fielddata.widgetrows:record:int" 
+                 tal:attributes="value widget/rows|string:10"/>
+        </metal:block>
+        <metal:block tal:condition="python: hasattr(widget, 'cols')">       
+          <br>
+          <span i18n:translate="cols">Cols</span>
+          <input type="text" size="3" name="fielddata.widgetcols:record:int" 
+                 tal:attributes="value widget/cols|string:60"/>
+        </metal:block>
+      </metal:block>
+
+      <metal:block tal:condition="not: python: widget_name in ('TextAreaWidget', 'LinesWidget')">
+         <span i18n:translate="size">Size</span>
+         <input type="text" size="3" name="fielddata.widgetsize:record:int" 
+                tal:attributes="value widget/size|string:60"/>
+      </metal:block>
+    </div>
+</metal:div>
+
+<metal:div metal:define-macro="maintenance">
+
+  <div class="portlet">
+    <h5 i18n:translate="maintenance">Maintenance</h5>
+    <div class="portletBody" id="atse_schema_editor_maintenance">
+      <div>
+        <a href="update_schema_for_issues?return_to=atse_editor" i18n:translate="update_schema_for_all_issues">Update schema for all issues</a>
+      </div>
+    </div>
+  </div>
+</metal:div>
+
+
+<metal:div metal:define-macro="fieldsets">
+  <div class="portlet" tal:condition="fieldsets">    <!-- Fieldsets -->
+    <h5 i18n:translate="schematas">Schematas</h5>
+    <div class="portletBody" id="atse_schema_editor_fieldsets">
+      <div tal:repeat="set fieldsets">
+        <div class="left">
+           <a tal:content="string: ${set}" 
+              tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${set};
+                             class python: test(set==fieldset, 'selected', '')"/>
+        </div>
+        <div class="right">
+            <a tal:attributes="href string:atse_schemataMoveLeft?name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
+            <a tal:attributes="href string:atse_schemataMoveRight?name=${set}"><img src="arrowDown.gif" title="Move down"></a> 
+            <a tal:attributes="href string:atse_delSchemata?name=${set}"><img src="delete.gif" title="Delete"></a> 
+        </div>
+        <div class="clear"> </div>
+      </div>
+
+      <div>
+        <form action="atse_addSchemata" method="post">
+         <input type="text" name="name" value="" >
+         <input type="image" src="add_icon.gif">
+        </form>
+      </div>
+    </div>
+  </div>
+</metal:div>
+
+
+<metal:div metal:define-macro="fields">
+  <div class="portlet" tal:condition="fieldsets">    <!-- Fields -->
+    <h5 i18n:translate="fields">Fields</h5>
+    <div class="portletBody" id="atse_schema_editor_fields">  
+      <div  tal:repeat="field python: here.atse_getSchemata(fieldset).fields()">
+        <div class="left">
+          <a tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${fieldset}&field=${field/getName};
+                             class python: test(field.getName() == request.get('field'), 'selected', '')"
+              tal:content="string: ${field/getName}" />
+        </div>
+        <div class="right">
+          <a tal:attributes="href string:atse_fieldMoveLeft?name=${field/getName}"><img src="arrowUp.gif" title="Move up"></a> 
+          <a tal:attributes="href string:atse_fieldMoveRight?name=${field/getName}"><img src="arrowDown.gif" title="Move down"></a> 
+          <a tal:attributes="href string:atse_delField?name=${field/getName}"><img src="delete.gif" title="Delete"></a> 
+        </div>
+        <div class="clear"> </div>
+      </div>
+
+      <div>
+        <form action="atse_update" method="post">
+          <input type="hidden" name="fielddata.schemata:record:string"    
+               tal:attributes="value fieldset" />
+            <input type="hidden" name="add_field" value="dummy"> 
+            <input type="text" name="name" value=""> 
+            <input type="image" src="add_icon.gif" value="Add">
+        </form>
+      </div>
+    </div>
+  </div>
+</metal:div>
