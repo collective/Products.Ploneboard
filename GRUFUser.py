@@ -520,6 +520,12 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
                             return 1
                         return None
 
+            # LocalRole blocking
+            obj = getattr(inner_obj, 'aq_base', inner_obj)
+            if getattr(obj, '__ac_local_roles_block__', None):
+                break
+
+            # Loop control
             inner = getattr(inner_obj, 'aq_inner', inner_obj)
             parent = getattr(inner, 'aq_parent', None)
             if parent is not None:

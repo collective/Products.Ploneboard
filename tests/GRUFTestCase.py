@@ -152,13 +152,27 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
                |                         /--
                |                         | group_g1              [x]
                |-- sublr2                | u3        (x)    x    [x]
-                   |                     | u6        (x)    x*   [x]
+               |   |                     | u6        (x)    x*   [x]
+               |   |                     \--
+               |   |
+               |   |                     /--
+               |   |                     | group_g1              [x]
+               |   |-- subsublr2         | u3        (x)   [x]   [x]
+               |                         | u6        (x)  [(x)]  [x]
+               |                         \--
+               |
+         (now we block local roles under this branch)
+               |
+               |                         /--
+               |                         | group_g1              
+               |-- sublr3                | u3        (x)    x    
+                   |                     | u6        (x)    x*   
                    |                     \--
                    |
                    |                     /--
-                   |                     | group_g1              [x]
-                   |-- subsublr2         | u3        (x)   [x]   [x]
-                                         | u6        (x)  [(x)]  [x]
+                   |                     | group_g1              
+                   |-- subsublr3         | u3        (x)   [x]   
+                                         | u6        (x)  [(x)]  
                                          \--
                                          
         *: u6 will have r2 as a localrole AND a userdefined role.
@@ -190,6 +204,11 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
         sublr2 = self.gruf_folder.lr.sublr2
         sublr2.manage_addProduct['OFSP'].manage_addFolder("subsublr2")
         subsublr2 = self.gruf_folder.lr.sublr2.subsublr2
+        lr.manage_addProduct['OFSP'].manage_addFolder("sublr3")
+        sublr3 = self.gruf_folder.lr.sublr3
+        sublr3.manage_addProduct['OFSP'].manage_addFolder("subsublr3")
+        subsublr3 = self.gruf_folder.lr.sublr3.subsublr3
+        self.gruf._acquireLocalRoles(sublr3, 0)
         lr.manage_addLocalRoles("group_g1", ("r3", ))
         lr.manage_addLocalRoles("u3", ("r3", ))
         lr.manage_addLocalRoles("u6", ("r3", ))
@@ -197,10 +216,14 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
         sublr.manage_addLocalRoles("u6", ("r2", ))
         sublr2.manage_addLocalRoles("u3", ("r2", ))
         sublr2.manage_addLocalRoles("u6", ("r2", ))
+        sublr3.manage_addLocalRoles("u3", ("r2", ))
+        sublr3.manage_addLocalRoles("u6", ("r2", ))
         self.lr = lr
         self.sublr = sublr
         self.sublr2 = sublr2
+        self.sublr3 = sublr3
         self.subsublr2 = subsublr2
+        self.subsublr3 = subsublr3
 
 
     def security_context_setup_users(self,):

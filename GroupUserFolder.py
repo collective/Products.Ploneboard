@@ -986,6 +986,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # => we refuse authentication
         return None
 
+
+
+
     #                                                                           #
     #                               GRUF'S GUTS :-)                             #
     #                                                                           #
@@ -1282,7 +1285,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/07/13 13:07:46 $"[7:-2]
+        rev_date = "$Date: 2004/07/20 10:02:54 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1589,6 +1592,122 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             merged[key] = value.keys()
         return merged
     
+
+
+    # Plone-specific security matrix computing method.
+    security.declarePublic("getAllLocalRoles")
+    def getPloneSecurityMatrix(self, object):
+        """getPloneSecurityMatrix(self, object): return a list of dicts of the current object
+        and all its parents. The list is sorted with portal object first.
+        Each dict has the following structure:
+        {
+          depth: (0 for portal root, 1 for 1st-level folders and so on),
+          id:
+          title:
+          icon:
+          absolute_url:
+          security_permission: true if current user can change security on this object
+          state: (workflow state)
+          acquired_local_roles: 0 if local role blocking is enabled for this folder
+          roles: {
+            'role1': {
+              'all_local_roles': [r1, r2, r3, ] (all defined local roles, including parent ones)
+              'defined_local_roles': [r3, ] (local-defined only local roles)
+              'permissions': ['Access contents information', 'Modify portal content', ] (only a subset)
+              'same_permissions': true if same permissions as the parent
+              'same_all_local_roles': true if all_local_roles is the same as the parent
+              'same_defined_local_roles': true if defined_local_roles is the same as the parent
+              },
+            'role2': {...},
+            },
+        }
+        """
+        # Perform security check on destination object
+        if not getSecurityManager().checkPermission(Permissions.access_contents_information, object):
+            raise Unauthorized(name = "getPloneSecurityMatrix")
+
+        # Basic inits
+        mt = self.portal_membership
+        
+        # Fetch all possible roles in the portal
+        all_roles = ['Anonymous'] + mt.getPortalRoles()
+
+        # Fetch parent folders list until the portal
+        all_objects = []
+        cur_object = object
+        while 1:
+            if not getSecurityManager().checkPermission(Permissions.access_contents_information, cur_object):
+                raise Unauthorized(name = "getPloneSecurityMatrix")
+            all_objects.append(cur_object)
+            if cur_object.meta_type == "Plone Site":
+                break
+            cur_object = object.aq_parent
+        all_objects.reverse()
+
+        # Scan those folders to get all the required information about them
+        ret = []
+        previous = None
+        count = 0
+        for obj in all_objects:
+            # Basic information
+            current = {
+                "depth": count,
+                "id": obj.getId(),
+                "title": obj.Title(),
+                "icon": obj.getIcon(),
+                "absolute_url": obj.absolute_url(),
+                "security_permission": getSecurityManager().checkPermission(Permissions.change_permissions, obj),
+                "acquired_local_roles": self.isLocalRoleAcquired(obj),
+                "roles": {},
+                "state": "XXX TODO XXX",         # XXX TODO
+                }
+            count += 1
+
+            # Workflow state
+            # XXX TODO
+
+            # Roles
+            all_local_roles = {}
+            local_roles = self._getAllLocalRoles(obj)
+            for user, roles in self._getAllLocalRoles(obj).items():
+                for role in roles:
+                    if not all_local_roles.has_key(role):
+                        all_local_roles[role] = {}
+                    all_local_roles[role][user] = 1
+            defined_local_roles = {}
+            if hasattr(obj.aq_base, 'get_local_roles'):
+                for user, roles in obj.get_local_roles():
+                    for role in roles:
+                        if not defined_local_roles.has_key(role):
+                            defined_local_roles[role] = {}
+                        defined_local_roles[role][user] = 1
+            
+            for role in all_roles:
+                all = all_local_roles.get(role, {}).keys()
+                defined = defined_local_roles.get(role, {}).keys()
+                all.sort()
+                defined.sort()
+                same_all_local_roles = 0
+                same_defined_local_roles = 0
+                if previous:
+                    if previous['roles'][role]['all_local_roles'] == all:
+                        same_all_local_roles = 1
+                    if previous['roles'][role]['defined_local_roles'] == defined:
+                        same_defined_local_roles = 1
+
+                current['roles'][role] = {
+                    "all_local_roles": all,
+                    "defined_local_roles": defined,
+                    "same_all_local_roles": same_all_local_roles,
+                    "same_defined_local_roles": same_defined_local_roles,
+                    "permissions": [],  # XXX TODO
+                    }
+
+            ret.append(current)
+            previous = current
+
+        return ret
+
 
     security.declareProtected(Permissions.manage_users, "computeSecuritySettings")
     def computeSecuritySettings(self, folders, actors, permissions, cache = {}):

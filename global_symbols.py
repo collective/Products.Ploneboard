@@ -57,3 +57,4 @@ INVALID_USER_NAMES = [
 LDAPUF_METHOD = "manage_addLDAPSchemaItem"      # sample method to determine if a uf is an ldapuf
 LDAP_GROUP_RDN = "cn"                           # rdn attribute for groups
 
+LOCALROLE_BLOCK_PROPERTY = "__ac_local_roles_block__"           # Property used for lr blocking

@@ -202,6 +202,13 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
         self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", "r3", )))
         self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", "r3", )))
 
+        self.failUnless(self.compareRoles(self.sublr3, "u2", ()))
+        self.failUnless(self.compareRoles(self.sublr3, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.sublr3, "u6", ("r1", "r2", )))
+
+        self.failUnless(self.compareRoles(self.subsublr3, "u2", ()))
+        self.failUnless(self.compareRoles(self.subsublr3, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr3, "u6", ("r1", "r2", )))
 
         
     def test05nestedGroups(self,):
@@ -369,7 +376,33 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
         allowed = list(allowed.keys())
         allowed.sort()
         self.failUnlessEqual(allowed, blocked_allowed)
-        
+
+
+    def test14Allowed(self,):
+        """Test if the allowed() method is working properly.
+        We check the roles on lr, and then on sublr2 after local role blocking tweaking.
+        """
+        u2 = self.gruf.getUser("u2")            # Belongs to group_g1
+        u3 = self.gruf.getUser("u3")
+        u6 = self.gruf.getUser("u6")
+
+        # Positive assertions
+        self.failUnless(u2.allowed(self.lr, ("r3", )))
+        self.failUnless(u3.allowed(self.lr, ("r1", "r3", )))
+        self.failUnless(u6.allowed(self.lr, ("r1", "r2", "r3", )))
+        self.failUnless(u2.allowed(self.subsublr2, ("r1", "r2", "r3", )))
+        self.failUnless(u3.allowed(self.subsublr2, ("r1", "r2", "r3", )))
+        self.failUnless(u6.allowed(self.subsublr2, ("r1", "r2", "r3", )))
+        self.failUnless(u3.allowed(self.subsublr3, ("r1", "r2", "r3", )))
+        self.failUnless(u6.allowed(self.subsublr3, ("r1", "r2", "r3", )))
+
+        # Negative assertions
+        self.failUnless(not u2.allowed(self.lr, ("r1", "r2", )))
+        self.failUnless(not u3.allowed(self.lr, ("r2", )))
+        self.failUnless(not u2.allowed(self.subsublr2, ("r1", "r2", )))
+        self.failUnless(not u2.allowed(self.subsublr3, ("r1", "r2", "r3", )))
+        self.failUnless(not u3.allowed(self.subsublr3, ("r3", )))
+        self.failUnless(not u6.allowed(self.subsublr3, ("r3", )))
         
 
 def _mergedLocalRoles(object):
@@ -377,7 +410,7 @@ def _mergedLocalRoles(object):
     __ac_local_roles__.
     This will call gruf's methods. It's made that may to mimic the
     usual CMF code."""
-    return object.acl_users.getAllLocalRoles(object)
+    return object.acl_users._getAllLocalRoles(object)
 
 
 #                                                   #
