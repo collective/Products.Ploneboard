@@ -6,15 +6,6 @@ Please override this class and define a data(self,) method that will return the 
 class DynaList:
     def __init__(self, initlist=None):
         pass
-##        self.data() = []
-##        if initlist is not None:
-##            # XXX should this accept an arbitrary sequence?
-##            if type(initlist) == type(self.data()):
-##                self.data()[:] = initlist
-##            elif isinstance(initlist, UserList):
-##                self.data()[:] = initlist.data()[:]
-##            else:
-##                self.data() = list(initlist)
 
     def __repr__(self): return repr(self.data())
     def __lt__(self, other): return self.data() <  self.__cast(other)
@@ -63,21 +54,12 @@ class DynaList:
             return self.__class__(list(other) + self.data())
     def __iadd__(self, other):
         raise NotImplementedError, "Not implemented"
-##        if isinstance(other, UserList):
-##            self.data() += other.data()
-##        elif isinstance(other, type(self.data())):
-##            self.data() += other
-##        else:
-##            self.data() += list(other)
-##        return self
     
     def __mul__(self, n):
         return self.__class__(self.data()*n)
     __rmul__ = __mul__
     def __imul__(self, n):
         raise NotImplementedError, "Not implemented"
-##        self.data() *= n
-##        return self
     def append(self, item): self.data().append(item)
     def insert(self, i, item): self.data().insert(i, item)
     def pop(self, i=-1): return self.data().pop(i)

@@ -39,7 +39,12 @@ import GroupUserFolder
 from AccessControl.PermissionRole \
   import _what_not_even_god_should_do, rolesForPermissionOn
 
-#XXX PJ please get rid of this _what_not_even_god_should_do
+# NOTE : _what_not_even_god_should_do is a specific permission defined by ZOPE
+# that indicates that something has not to be done within Zope.
+# This value is given to the ACCESS_NONE directive of a SecurityPolicy.
+# It's rarely used within Zope BUT as it is documented (in AccessControl)
+# and may be used by third-party products, we have to process it.
+
 
 #GRUFPREFIX is a constant
 grufprefix=GRUFFolder.GRUFGroups._group_prefix
@@ -63,22 +68,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self._original_roles = user.getRoles()
         self._original_domains = user.getDomains()
         self._original_id = user.getId()
-        self.__underlying__ = user                              
-        # $$$ Used only for authenticate()
+        self.__underlying__ = user # Used only for authenticate()
 
-##        self.__underlying__ = user
-##        self.__underlying__.getPhysicalRoot = self._user_fake_getPhysicalRoot
-##        self.__underlying__.id = "acl_users"  ##self.getGRUFId()
-
-##    def _user_fake_getPhysicalRoot(self,):
-# $$$ Trick for getPhysicalRoot
-##        Log(LOG_DEBUG, "within _user_fake_getPhysicalRoot", self.getId(), )
-##        return "/"
-
-##    def _user_fake_id(self,):
-##        """faking the 'id' attribute for Owned.py module / ownerInfo method"""
-##        Log(LOG_DEBUG, "Within fake_id")
-##        return """__VERY_BAD_VALUE__"""
 
     # ----------------------------
     # Public User object interface
@@ -101,9 +92,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         if name in deny_names:
             return 0
         return 1
-
-##    def __init__(self,name,password,roles,domains):
-##        raise NotImplemented
 
     def __init__(self, underlying_user, GRUF, isGroup = 0):
         self._setUnderlying(underlying_user)
@@ -153,13 +141,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """Get the ID of the user. The ID can be used, at least from
         Python, to get the user from the user's UserDatabase 
         """
-
-# XXX OUT TO DATE - What does this mean?
-##        # Prevent storage of a GRUFUser as underlying object
-##        if not hasattr(self.__underlying__.aq_base, 'getGroups'):
-##            return self._original_id
         # Return the right id
-
         if self.isGroup() and \
           self._original_name[:len(grufprefix)] != grufprefix:
             return "%s%s" % (grufprefix, self._original_name)
@@ -233,12 +215,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                     for r in dict.get(groupid, []):
                         group_roles.append(r)
 
-#XXX Why is this still here PJ?  get rid of it if its not necessary
-##                        group_roles.extend(
-#   self._GRUF.getGroup(groupid).getRolesInContext(object))              
-#     $$$ Removed for performance reasons, seems to work ! ;-)
-                    Log(LOG_DEBUG, "Group", groupid, "LR", group_roles)
-
             # Prepare next iteration
             inner = getattr(object, 'aq_inner', object)
             parent = getattr(inner, 'aq_parent', None)
@@ -302,41 +278,14 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                     return 1
                 return None
 
-        # XXX huh? please explain all of htese "performance boosters" 
-        # Check violently against getRolesInContext ($$$ may have 
-        # to copy/paste code here to improve performance)
+        # Check against getRolesInContext
+        # This is time-consuming, it may be possible to avoid several
+        # tests by copying the original allowed() implemetation from
+        # AccessControl.User and adapting it to GRUF needs.
+        # So, the following code works but can be optimized.
         for role in self.getRolesInContext(object):
             if role in object_roles:
                 return 1
-
-#XXX PJ this looks crufty and old - can you get rid of it?
-##        # Still have not found a match, so check local roles. We do
-##        # this manually rather than call getRolesInContext so that
-##        # we can incur only the overhead required to find a match.
-##        inner_obj = getattr(object, 'aq_inner', object)
-##        userid = self.getId()
-##        while 1:
-##            local_roles = getattr(inner_obj, '__ac_local_roles__', None)
-##            if local_roles:
-##                if callable(local_roles):
-##                    local_roles = local_roles()
-##                dict = local_roles or {}
-##                local_roles = dict.get(userid, [])
-##                for role in object_roles:
-##                    if role in local_roles:
-##                        if self._check_context(object):
-##                            return 1
-##                        return 0
-##            inner = getattr(inner_obj, 'aq_inner', inner_obj)
-##            parent = getattr(inner, 'aq_parent', None)
-##            if parent is not None:
-##                inner_obj = parent
-##                continue
-##            if hasattr(inner_obj, 'im_self'):
-##                inner_obj=inner_obj.im_self
-##                inner_obj=getattr(inner_obj, 'aq_inner', inner_obj)
-##                continue
-##            break
         return None
 
     def hasRole(self, *args, **kw):
@@ -352,29 +301,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             'you may have ment to use has_role.', DeprecationWarning)
         return self.allowed(*args, **kw)
 
-##    domains=[]
-
-##    def has_role(self, roles, object=None):
-##        """Check to see if a user has a given role or roles."""
-##        if type(roles)==type('s'):
-##            roles=[roles]
-##        if object is not None:
-##            user_roles = self.getRolesInContext(object)
-##        else:
-##            # Global roles only...
-##            user_roles=self.getRoles()
-##        for role in roles:
-##            if role in user_roles:
-##                return 1
-##        return 0
-
-##    def has_permission(self, permission, object):
-##        """Check to see if a user has a given permission on an object."""
-##        return getSecurityManager().checkPermission(permission, object)
-
-##    def __len__(self): return 1
-##    def __str__(self): return self.getUserName()
-##    __repr__=__str__
 
     def getGroupUsers(self):
         ''' returns the users belonging to this group '''

@@ -106,13 +106,23 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     manage_addUser = DTMLFile('dtml/addUser', globals())
 
 
+    __ac_permissions__=(
+        ('Manage users',
+         ('manage_users','getUserNames', 'getUser', 'getUsers',
+          'getUserById', 'user_names', 'setDomainAuthenticationMode',
+          'userFolderAddUser', 'userFolderEditUser', 'userFolderDelUsers',
+          'getUnwrappedUser', 'getUnwrappedGroup',
+          )
+         ),
+        )
+
     # ------------------------
     #    Various operations  #
     # ------------------------
-    #XXX if construction does nothing why show it?
     def __init__(self):
         """
         __init__(self) -> initialization method
+        We define it to prevend calling ancestor's __init__ methods.
         """
         pass
 
@@ -223,6 +233,35 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return None
 
 
+    def getUnwrappedUser(self, name):
+        """
+        getUnwrappedUser(self, name) => user object or None
+
+        This method is used to get a User object directly from the User's
+        folder acl_users, without wrapping it with group information.
+
+        This is useful for UserFolders that define additional User classes,
+        when you want to call specific methods on these user objects.
+
+        For example, LDAPUserFolder defines a 'getProperty' method that's
+        not inherited from the standard User object. You can, then, use
+        the getUnwrappedUser() to get the matching user and call this
+        method.
+        """
+        return self.Users.acl_users.getUser(name)
+
+
+    def getUnwrappedGroup(self, name):
+        """
+        getUnwrappedGroup(self, name) => user object or None
+
+        Same as getUnwrappedUser but for groups.
+        """
+        return self.Groups.acl_users.getUser(name)
+
+    
+
+
     # ------------------------
     # Group-specific operation
     # ------------------------
@@ -244,6 +283,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # This prevents 'None' user objects to be returned. 
         # This happens for example with LDAPUserFolder when a LDAP 
         # query fetches too much records.
+
 
     def getGroup(self, name, prefixed = 1):
         """Return the named user object or None"""

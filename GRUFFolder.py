@@ -29,6 +29,7 @@ from DateTime import DateTime
 from App import ImageFile
 
 #XXX PJ DynaList is very hairy - why vs. PerstList?
+# (see C__ac_roles__ class below for an explanation)
 import DynaList
 import AccessControl.Role, webdav.Collection
 import Products
@@ -106,6 +107,18 @@ class GRUFUsers(GRUFFolder):
         """
         __ac_roles__ dynastring.
         Do not forget to set _target to class instance.
+
+        XXX DynaList is surely not efficient but it's the only way
+        I found to do what I wanted easily. Someone should take
+        a look to PerstList instead to see if it's possible
+        to do the same ? (ie. having a list which elements are
+        the results of a method call).
+
+        However, even if DynaList is not performant, it's not
+        a critical point because this list is meant to be
+        looked at only when a User object is looked at INSIDE
+        GRUF (especially to set groups a user belongs to).
+        So in practice only used within ZMI.
         """
         def data(self,):
             return self.userdefined_roles()
@@ -132,11 +145,6 @@ class GRUFUsers(GRUFFolder):
                  view. To put a user into a group, affect him a role 
                  that matches his group.<br />"""
 
-        #XXX this looks potentially nasty storing self like this
-        #    is there a *good* reason PJ for doing this?
-        #    if this is acquisition wrapped it seems like you could 
-        #    be creating a cyclic reference
-        self.__ac_roles__._target = self
         return ret
 
 
@@ -170,7 +178,7 @@ class GRUFGroups(GRUFFolder):
         header_text(self,) => Text that appears in the content's 
                               view heading zone
         """
-	ret = ""
+        ret = ""
         if not "acl_users" in self.objectIds():
             return "Please put an acl_users here before ever " \
                    "starting to use this object."
@@ -188,6 +196,7 @@ class GRUFGroups(GRUFFolder):
             #XXX Please replace this w/ a sensible list comprehension    
             return map(lambda x, self=self: "%s%s" % 
               (self._group_prefix, x), self.acl_users.getUserNames())
+
    
 InitializeClass(GRUFUsers) 
 InitializeClass(GRUFGroups) 
