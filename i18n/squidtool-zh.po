@@ -22,17 +22,18 @@ msgid "description_squid"
 msgstr "在这里可进行Squid缓存的设置和清理操作"
 
 msgid "heading_squid_urls"
-msgstr "Squid缓存清理"
+msgstr "Squid服务器"
 
 msgid "description_squid_urls"
-msgstr "给出应该进行<strong>清除</strong>的所有squid缓存服务器的基URL.<br />"
-"每行给应该绝对URL地址。这个URL将放到对象的相对URL前面."
+msgstr "给出应该进行<strong>清除</strong>的所有squid缓存服务器的地址.<br />"
+"每行给一个服务器L地址，包括主机名和端口号，如: example.com, 或者example.com:8080, <br/>"
+"或者192.168.12.23:8989等。"
 
 msgid "heading_prune_url"
 msgstr "清除URL"
 
 msgid "description_prune_url"
-msgstr "输入一个需要被清除的URL. 他应该是相对网站的地址，如: 'search'."
+msgstr "输入一个需要被清除的URL. 他应该是最终用户访问的网站的地址，如: 'http://example.com/search'."
 
 msgid "Go!"
 msgstr "执行！"

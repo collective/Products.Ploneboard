@@ -3,8 +3,8 @@
 
     <form action="manage_setSquidSettings" tal:attributes="action python:here.absolute_url()+'/manage_setSquidSettings'" method="POST">
 
-        <h2>Squid URLs</h2>
-        <p>Give the base urls for all squid caches which should be contacted for each <strong>PRUNE</strong>.<br />Put an absolute url in each line. This url is put in front of the object url which is relative to the portal.</p>
+        <h2>Squid Cache Servers</h2>
+        <p>Give the host info for all squid caches which should be contacted for each <strong>PRUNE</strong>.<br />Put an host:port in each line. Eg: 'example.com:8080'.We will the these info to connect to the squid server</p>
         <p>
             <textarea name="urls"><tal:block tal:repeat="url here/squid_urls"><span tal:replace="url" />
 </tal:block></textarea>
@@ -16,7 +16,7 @@
     <form action="manage_pruneUrl" tal:attributes="action python:here.absolute_url()+'/manage_pruneUrl'" method="POST">
                                                              
         <h2>Prune URL</h2>
-        <p>Enter a URL which should be PRUNEed <em>now</em>. You have to give it relative to the portal. Eg: "search".</p>
+        <p>Enter a URL which should be PRUNEed <em>now</em>. You have to give the full url. Eg: 'http://example.com/search'</p>
         <p>
             <input type="text" name="url" size="40" />
         </p>

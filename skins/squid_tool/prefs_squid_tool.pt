@@ -32,8 +32,8 @@
       tal:condition="python: checkPermission('Manage portal', portal_squid)"
       tal:attributes="action python:portal_squid.absolute_url()+'/manage_setSquidSettings'" method="POST">
 
-<h2 i18n:translate="heading_squid_urls">Squid URLs</h2>
-<p i18n:translate="description_squid_urls">Give the base urls for all squid caches which should be contacted for each <strong>PRUNE</strong>.<br />Put an absolute url in each line. This url is put in front of the object url which is relative to the portal.</p>
+<h2 i18n:translate="heading_squid_urls">Squid Cache Servers</h2>
+<p i18n:translate="description_squid_urls"> Give the host info for all squid caches which should be contacted for each <strong>PRUNE</strong>.<br />Put an host:port in each line. Eg: 'example.com:8080'. We will the these info to connect to the squid server.  </p>
 <p>
     <textarea name="urls"><tal:block tal:repeat="url portal_squid/squid_urls"><span tal:replace="url" />
 </tal:block></textarea>
@@ -47,7 +47,9 @@
       tal:attributes="action python:portal_squid.absolute_url()+'/manage_pruneUrl'" method="POST">
 						     
 <h2 i18n:translate="heading_prune_url">Prune URL</h2>
-<p i18n:translate="description_prune_url">Enter a URL which should be PRUNEed <em>now</em>. You have to give it relative to the portal. Eg: "search".</p>
+<p i18n:translate="description_prune_url">
+Enter a URL which should be PRUNEed <em>now</em>. You have to give th
+e full url. Eg: 'http://example.com/search'.</p>
 <p>
     <input type="text" name="url" size="40" />
 </p>

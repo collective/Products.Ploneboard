@@ -21,20 +21,20 @@ msgid "description_squid"
 msgstr "Prune and set squid cache"
 
 msgid "heading_squid_urls"
-msgstr "Squid URLs"
+msgstr "Squid Cache Servers"
 
 msgid "description_squid_urls"
-msgstr "Give the base urls for all squid caches whic
-h should be contacted for each <strong>PRUNE</strong>.<br />Put an absolute url
-in each line. This url is put in front of the object url which is relative to th
-e portal."
+msgstr "Give the host info for all squid caches which should be contacted "
+       "for each <strong>PRUNE</strong>.<br />Put an host:port in each line."
+       " Eg: 'example.com:8080'. We will the these info to connect to the "
+       "squid server."
 
 msgid "heading_prune_url"
 msgstr "Prune URL"
 
 msgid "description_prune_url"
 msgstr "Enter a URL which should be PRUNEed <em>now</
-em>. You have to give it relative to the portal. Eg: 'search'."
+em>. You have to give the full url. Eg: 'http://example.com/search'."
 
 msgid "Go!"
 msgstr "Go!"

@@ -1,3 +1,13 @@
+2004-9-23 Pan Junyong <panjy at zopechina.com>
+
+   - I found PURGE wasn't always work. After a look at squid's client.c,
+     I found we should use HTTP/1.0, and use the full url when put request.
+
+     So I change the squid urls to squid hosts. And prune url should be 
+     the full absolute url, but not the relative path.
+ 
+   - don't use getObject, use getURL instead, which is more light weight
+
 2004-9-20 Pan Junyong <panjy at zopechina.com>
 
    - add i18n

@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.4 2004/09/22 13:33:38 panjunyong Exp $ (Author: $Author: panjunyong $)
+# $Id: SquidTool.py,v 1.5 2004/09/24 03:29:29 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 # make sockets non blocking
@@ -70,20 +70,23 @@ class SquidTool(UniqueObject, SimpleItem):
         # ob_url is a relative to portal url
 
         results = []
-        ob_url=urllib.quote(ob_url)
-        for url in self.squid_urls:
-            # if not url.endswith('/'): url=url+'/'
-            url = urlparse.urljoin(url, ob_url)
-            (scheme, host, path, params, query, fragment) = urlparse.urlparse(url)
-
+        for host in self.squid_urls:
             # XXX: probably put into seperate thread
             #      and setup a Queue
 
             try: 
                 conn = httplib.HTTPConnection(host)
-                conn.putrequest('PURGE', path)
+ 
+                # XXX hack to use HTTP/1.0 and the timeoutsocket
+                # NOTE: only HTTP/1.0 and the full url can make PURGE work
+                # You can see code from squid's client.c
+
+                conn._http_vsn = 10
+                conn_http_vsn_str = 'HTTP/1.0'
+                conn.putrequest('PURGE', ob_url) 
                 conn.endheaders()
                 conn.sock.set_timeout(2)
+
                 resp = conn.getresponse()
                 status = resp.status
                 xcache = resp.getheader('x-cache', '')
@@ -101,33 +104,34 @@ class SquidTool(UniqueObject, SimpleItem):
             #       if you are not allowed to PURGE status is 403
             #       see README.txt for details how to setup squid to allow PURGE
 
-            if REQUEST: REQUEST.RESPONSE.write('%s\t%s\t%s\n' % (status, url, xsquiderror))
+            if REQUEST: REQUEST.RESPONSE.write('%s\t%s\t%s\n' % (status, ob_url, xsquiderror))
 
         return results
 
-    security.declarePrivate('pruneObject')
+    security.declareProtected(PURGE_URL, 'pruneObject')
     def pruneObject(self, ob, REQUEST=None):
         # prune this object
-        portal_url = getToolByName(self, 'portal_url')
-        url = portal_url.getRelativeUrl(ob)
-        return self.pruneUrl(url, REQUEST=REQUEST)        
-
+        return self.pruneUrl(ob.absolute_url(), REQUEST=REQUEST)        
 
     security.declareProtected(PURGE_URL, 'manage_pruneUrl')
     def manage_pruneUrl(self, url, REQUEST=None):
         """ give a url which shall be pruned """
+        request = REQUEST or self.REQUEST
+        server_url = request['SERVER_URL']
+        if url[:4].lower() != 'http':
+            url =  urlparse.urljoin(server_url, url)
         return self.pruneUrl(url, REQUEST=REQUEST)
 
-
+    security.declareProtected(ManagePortal, 'manage_pruneAll')
     def manage_pruneAll(self, REQUEST=None):
         """ prune all objects in catalog """
         portal_catalog = getToolByName(self, 'portal_catalog')
         brains = portal_catalog()
         for brain in brains:
-            ob = brain.getObject()
+            url = brain.getURL()
             self.pruneObject(ob)
 
         return "finished"
-    
+ 
 InitializeClass(SquidTool)
 
