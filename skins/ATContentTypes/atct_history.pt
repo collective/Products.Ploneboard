@@ -25,7 +25,7 @@
        <dt>Comment</dt>
        <dd tal:content="history/description" />
        <dt>User</dt>
-       <dd tal:content="history/user" />
+       <dd tal:content="history/member/fullname | history/user" />
       </dl>
       <div class="atcontenttypes-diff"
            tal:content="structure python:here.formatHistoryDiff(history['lines'])">
