@@ -1,3 +1,10 @@
+2003-10-08  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added a missing import to Script.py
+
+   * Fixed the way redirect actions handle items in the query string.  There may
+     still be problems with anchors in the redirect -- need to check on this.
+
 2003-10-07  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Added more detailed error messages when next action can't be found.

@@ -84,7 +84,13 @@ class BaseFormAction(Role.RoleManager):
         # get the existing query string
         qs = parsed_url[4]
         # parse the query into a dict
-        dict = cgi.parse_qs(qs, 1)
+        d = cgi.parse_qs(qs, 1)
+        # XXX not sure if this is the right way to handle this
+        # parse_qs appears to return values in lists -- we concatenate them 
+        # with commas and combine into a single string
+        dict = {}
+        for (k,v) in d.items():
+            dict[k] = ','.join(v)
         # update the dict
         dict.update(kwargs)
         # re-encode the string
