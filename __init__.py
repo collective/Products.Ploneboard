@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: __init__.py,v 1.1.1.3 2003/04/02 20:59:45 zworkb Exp $
+# RCS-ID:      $Id: __init__.py,v 1.2 2003/07/15 03:09:31 runyaga Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -14,6 +14,7 @@
 
 from Products.CMFCore import utils
 import QuickInstallerTool
+from QuickInstallerTool import AlreadyInstalled
 
 import sys
 this_module = sys.modules[ __name__ ]

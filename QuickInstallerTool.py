@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.9 2003/07/10 18:10:05 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.10 2003/07/15 03:09:31 runyaga Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -34,6 +34,10 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from InstalledProduct import InstalledProduct
 
 from interfaces.portal_quickinstaller import IQuickInstallerTool
+
+class AlreadyInstalled(Exception):
+    """ Would be nice to say what Product was trying to be installed """
+    pass
 
 def addQuickInstallerTool(self,REQUEST=None):
     ''' '''
@@ -200,24 +204,31 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         actionsbefore=[a.id for a in portal_actions._actions]
         workflowsbefore=portal_workflow.objectIds()
         portalobjectsbefore=portal.objectIds()
-        error=0
-        
+        res=''
+        status=None
+        error=1
         install = self.getInstallMethod(p).__of__(portal)
 
         try:
-            tran=get_transaction()
-            res=install()
-            tran.commit()
-            status='installed'
-        except:
-            tran.abort()
-            tb=sys.exc_info()
-            res='failed:'+'\n'+'\n'.join(traceback.format_exception(tb[0],tb[1],tb[2]))
-            
-            status=None
-            error=1
-        
-        
+            #Some heursitics to figure out if its already been installed
+            try:
+                res=install()
+                status='installed'
+                error=1
+                #get_transaction().commit(1)
+            except:
+                tb=sys.exc_info()
+                if tb[1].endswith('already in use.'):
+                    self.error_log.raising(tb)
+                    raise AlreadyInstalled
+                res+='failed:'+'\n'+'\n'.join(traceback.format_exception(tb[0],tb[1],tb[2]))
+                self.error_log.raising(tb)
+                #get_transaction().abort()   #this is very naughty
+                raise
+        except AlreadyInstalled:
+            #Continue normal operation
+            pass
+
         typesafter=portal_types.objectIds()
         skinsafter=portal_skins.objectIds()
         actionsafter=portal_actions.objectIds()
@@ -239,9 +250,13 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         #add the product
         if p in self.objectIds():
             p=getattr(self,p)
-            p.update(types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error,locked,hidden)
+            p.update(types,skins,actions,portalobjects,workflows,
+                     leftslots,rightslots,res,status,error,locked,
+                     hidden)
         else:
-            ip=InstalledProduct(p,types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error,locked,hidden)
+            ip=InstalledProduct(p,types,skins,actions,portalobjects,
+                                workflows,leftslots,rightslots,res,
+                                status,error,locked,hidden)
             self._setObject(p,ip)
             
         return res
