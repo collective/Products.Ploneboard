@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.24 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATImage.py,v 1.25 2004/07/21 15:22:46 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -33,6 +33,7 @@ else:
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_parent
+from ComputedAttribute import ComputedAttribute
 
 from Products.ATContentTypes.types.ATContentType import ATCTFileContent, \
     cleanupFilename
@@ -80,6 +81,22 @@ class ATImage(ATCTFileContent):
         """cmf compatibility
         """
         return tag()
+    
+    security.declareProtected(CMFCorePermissions.View, 'getSize')
+    def getSize(self, scale=None):
+        field = self.getField('image')
+        return field.getSize(self, scale)
+    
+    security.declareProtected(CMFCorePermissions.View, 'getWidth')
+    def getWidth(self, scale=None):
+        return self.getSize(scale)[0]
+
+    security.declareProtected(CMFCorePermissions.View, 'getHeight')
+    def getHeight(self, scale=None):
+        return self.getSize(scale)[1]
+    
+    width = ComputedAttribute(getWidth)
+    height = ComputedAttribute(getHeight)
 
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, precondition='', file=None, title=None):

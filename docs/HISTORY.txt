@@ -1,5 +1,4 @@
 0.2-beta8
- * Added validation for setup of sort order on topics [gotcha]
 
  * Fixed validation problem with mx tidy validator and file uploads
    [tiran]
@@ -7,6 +6,11 @@
  * Changed time range ints in FriendlyDateCriterion to strings [tiran]
  
  * Reenable implicitly addable for ATFavorite [tiran]
+
+ * Added validation for setup of sort order on topics [gotcha]
+
+ * Added getSize, getHeight, getWidth methods and width/height attributes to
+   ATImage [tiran].
 
 0.2-beta7 - 2004-06-27
 
