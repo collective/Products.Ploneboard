@@ -78,8 +78,28 @@ VIEWLETS = [
 'string:here/viewlets_folder_recent/macros/base_portlet',
 '', 'View', 'GL:folder',1 ),
 
+('latest_updates_viewlet2', 'Recent changes(2)',
+'string:here/viewlets_folder_recent/macros/inline_description',
+'', 'View', 'GL:folder',1 ),
+
+('latest_updates_viewlet3', 'Recent changes(3)',
+'string:here/viewlets_folder_recent/macros/separate_line_description',
+'', 'View', 'GL:folder',1 ),
+
+('full_recent_changes', 'Full Recent changes',
+'string:here/viewlet_full_changes/macros/viewlet',
+'', 'View', 'GL:folder',1 ),
+
 ('folder_list_viewlet' , 'Folder listing',
 'string:here/viewlets_folder_listing/macros/base_portlet', 
+'', 'View', 'GL:folder', 1),
+
+('folder_list_viewlet2' , 'Folder listing(2)',
+'string:here/viewlets_folder_listing/macros/inline_description',
+'', 'View', 'GL:folder', 1),
+
+('folder_list_viewlet3' , 'Folder listing(3)',
+'string:here/viewlets_folder_listing/macros/separate_line_description',
 '', 'View', 'GL:folder', 1),
 
 ('portlet_calendar', 'Calendar', 
@@ -105,6 +125,10 @@ VIEWLETS = [
 ('image_folder_viewlet', 'Image folder',
 'string:here/viewlet_image_folder/macros/portlet',
 '', 'View', 'GL:folder', 1),
+
+('news_list', 'News discussion',
+'string:here/viewlet_news/macros/news_list',
+'', "View","GL:folder",1),
 
 ### global portlet
 

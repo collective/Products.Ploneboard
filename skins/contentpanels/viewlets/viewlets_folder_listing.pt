@@ -124,8 +124,8 @@
                       creator   08/19/2001 03:01 AM
                 </span>
 
-	        <div class="portletMore">
-                    <span tal:content="structure item/Description"/>...
+	        <div class="formHelp">
+                    <span tal:content="structure item/Description"/>
                 </div>
 
             </tal:block>

@@ -7,6 +7,7 @@
         global portal_object nocall:portal;
         global portal_url utool;
         global here_url here/absolute_url;
+        global site_properties portal/portal_properties/site_properties;
         global mtool nocall:portal/portal_membership;
         global gtool nocall:portal/portal_groups | nothing;
         global gdtool nocall:portal/portal_groupdata | nothing;

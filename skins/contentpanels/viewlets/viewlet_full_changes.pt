@@ -1,0 +1,65 @@
+<html lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+
+<div metal:define-macro="viewlet"
+     tal:define="theFolder python:test(here.isPrincipiaFolderish, here, here.aq_parent);
+                 folderPath python:'/'.join(theFolder.getPhysicalPath());
+                 results python:here.portal_catalog.searchResults(
+                                  portal_type=here.getDocumentTypes()
+                                   , path=folderPath
+                                   , sort_on='modified'
+                                   , sort_order='reverse');
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 DateTime python:modules['DateTime'].DateTime;
+                 b_size python:20;b_start python:0;b_start request/b_start | b_start;
+                 desc_length site_properties/search_results_description_length;
+                 desc_ellipsis string:...; ">
+
+    <div tal:condition="results"
+         tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1);">
+
+        <p><strong i18n:translate="folder_change_list"> Content change list in 
+             <span i18n:name="name" tal:content="here/Title"> folder title </span> </strong>:</p>
+
+        <!-- Search results -->
+
+        <dl>
+        <tal:results repeat="result batch">
+        <tal:entry define="result_url result/getURL;
+                           url string:$result_url/view;">
+            <dt>
+        <a href="#"
+                tal:attributes="href url">
+                <img src="#"
+                     height="16"
+                     width="16"
+                     alt=""
+                     tal:on-error="structure python:path('here/linkOpaque.gif')"
+                     tal:replace="structure python:path('here/%s' % result.getIcon)" /></a>&nbsp;<a
+                href="#" tal:attributes="href url"
+                tal:content="python:result.Title or result.getId" />
+
+                <span class="discreet" i18n:translate="results_by_author">
+                by <span tal:replace="result/Creator" i18n:name="author">Author</span>,
+                <span tal:replace="python:here.toLocalizedTime(result.ModificationDate, long_format=1)" i18n:name="date">Modification Date</span>
+                </span>
+
+            </dt>
+            
+            <dd tal:content="python:here.cropText(result.Description, desc_length, desc_ellipsis)"> Description </dd>
+
+        </tal:entry>
+        </tal:results>
+        </dl>
+         
+        <!-- Navigation -->
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+    </div>
+</div>
+
+
+</html>
+

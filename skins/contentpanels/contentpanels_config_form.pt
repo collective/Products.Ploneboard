@@ -108,7 +108,7 @@ columns
                           nextColumn python:repeat['column'].index+1;"
               tal:attributes="width python:test(column['columnWidth']=='0', '', column['columnWidth'])" >
 
-            <div class="smallTitle" style="white-space: nowrap; text-align: right">
+            <div class="cpTools" style="white-space: nowrap; text-align: right">
               <div style="float: left">
                 <span i18n:translate="Column Width">Width</span>
                 <input type="text" title="Column Width"
@@ -162,7 +162,7 @@ columns
                     <td  style="text-align: right"
                          tal:define="panelContent python:here.getPanelObject(panel['panelObjectPath']);
                                     panelContent python:test(panelContent is not None, panelContent, here)">
-                      <div class="smallTitle">
+                      <div>
                         <div style="float:left">
                           <img tal:attributes="src string:${here/portal_url}/${panelContent/getIcon}" />
                           <a tal:attributes="href panelContent/absolute_url" tal:content="panelContent/title_or_id"/>

@@ -85,7 +85,7 @@
              tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')">
 
             <tal:block tal:define="result_url item/getURL;
-                                   url string:$item_url/view;">
+                                   url string:$result_url/view;">
               <a href="#"
                 tal:attributes="href url">
                 <img src="#"
@@ -104,8 +104,8 @@
                       creator   08/19/2001 03:01 AM
                 </span>
 
-	        <div class="portletMore">
-                    <span tal:content="structure item/Description"/>...
+	        <div class="formHelp">
+                    <span tal:content="structure item/Description"/>
                 </div>
 
             </tal:block>

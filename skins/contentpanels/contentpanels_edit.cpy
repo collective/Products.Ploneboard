@@ -46,7 +46,7 @@ if oldPortletPos != portletsPos:
             folder.manage_addProperty(portletsPos, [new_portlet_name], 'lines')
         else:
             portlets = folder.getProperty(portletsPos)
-            portlets = [new_portlet_name] + list(portlets)
+            portlets = list(portlets) + [new_portlet_name]
             folder.manage_changeProperties({portletsPos:portlets})
 
 return state.set(status='success',\

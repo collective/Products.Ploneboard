@@ -11,7 +11,7 @@ l_url/contentpanelsCustom.css" />
         </style>
 </span>
 
-<div style="text-align: center; margin-top: -2em">
+<div style="text-align: center; margin-top: -1em">
    <a title="goto this conentpanels"
       i18n:domain="contentpanels"
       i18n:attributes="title goto_this_contentpanels" 

@@ -10,7 +10,8 @@
                  results python:here.portal_catalog.searchResults(
                                    path=folderPath
                                    , sort_on='modified'
-                                   , sort_order='reverse')[:5]"
+                                   , sort_order='reverse')[:6];
+                 results python:[result for result in results if result.getPath() != folderPath][:5]"
            tal:condition="results">
 
          <h5><a href="#"    
@@ -23,7 +24,8 @@
                 <metal:block metal:use-macro="here/content_list_macros/macros/description_in_title"/>
              </metal:block>
 
-             <div class="portletContent odd">
+             <div class="portletContent odd"
+                  tal:condition="python:len(results) &gt; 4">
 
                  <a href="#"
                     class="portletMore"
@@ -35,7 +37,6 @@
          </div>
      </div>
 </div>
-
 
 <div metal:define-macro="inline_description">
     <metal:block use-macro="here/viewlets_folder_recent/macros/base_portlet">

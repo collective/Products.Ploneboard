@@ -243,3 +243,7 @@ msgstr "goto this contentpanels"
 
 msgid "Document content"
 msgstr ""
+
+msgid "folder_change_list"
+msgstr "Content change list in ${name}:"
+

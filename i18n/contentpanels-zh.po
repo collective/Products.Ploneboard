@@ -246,3 +246,6 @@ msgstr "预览"
 msgid "label_panel"
 msgstr "面板"
 
+msgid "folder_change_list"
+msgstr "“${name}”的内容更改清单:"
+
