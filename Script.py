@@ -124,7 +124,7 @@ class FSPythonScript(BaseFSPythonScript, PythonScript):
     def __call__(self, *args, **kw):
         '''Calls the script.'''
         self._updateFromFS()
-        return Script.__call__(self, *args, **kw)
+        return BaseFSPythonScript.__call__(self, *args, **kw)
 
     def _write(self, text, compile):
         '''
