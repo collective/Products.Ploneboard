@@ -1,1 +1,8 @@
-History will start after the first official release of AT Content Types
+0.3-beta2
+
+ * Update validators to reflect the last changes and fixes of the archetypes and
+   validation packages.
+
+0.3-beta1 - 2004-04-09
+
+ * First official beta release for testing
