@@ -27,7 +27,7 @@ class ReferencesWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
-        'macro' : "widget_references",
+        'macro' : "widget_bibliolist",
         })
 
 registerWidget(ReferencesWidget)
