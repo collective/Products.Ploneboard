@@ -76,18 +76,20 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
 
         return result
 
+
     security.declarePrivate('PUT_factory')
     def PUT_factory( self, name, typ, body ):
         """
-        Dispatcher for PUT requests to non-existent IDs.  Returns
-        an object of the appropriate type (or None, if we don't
-        know what to do).
+        Dispatcher for PUT requests to non-existent IDs.
+        PhotoAlbums should always use photos for images.
         """
-        print name
-        print typ
-        print body
-        return PhotoAlbum.inheritedAttribute('PUT_factory')(self, name, typ, body)
+        if typ.startswith('image'):
+            self.invokeFactory( 'Photo', name )
 
+            # XXX: this is butt-ugly.
+            obj = aq_base( self._getOb( name ) )
+            self._delObject( name )
+            return obj
 
     
 def addPhotoAlbum( self, id, title='', description='', REQUEST=None ):
