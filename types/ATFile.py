@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.21 2004/05/26 07:52:36 tiran Exp $
+$Id: ATFile.py,v 1.22 2004/05/26 08:55:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,7 +38,7 @@ from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Products.PortalTransforms.utils import TransformException
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTFileContent, updateActions
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema
 
@@ -53,7 +53,7 @@ def cleanupFilename(filename):
             result+=s
     return result
 
-class ATFile(ATCTContent):
+class ATFile(ATCTFileContent):
     """A Archetype derived version of CMFDefault's File"""
 
     schema         =  ATFileSchema
@@ -71,35 +71,16 @@ class ATFile(ATCTContent):
     assocMimetypes = ('application/*', 'audio/*', 'video/*', )
     assocFileExt   = ()
 
-    __implements__ = ATCTContent.__implements__, IATFile
+    __implements__ = ATCTFileContent.__implements__, IATFile
 
     security       = ClassSecurityInfo()
-
-    actions = updateActions(ATCTContent,
-        ({
-        'id'          : 'download',
-        'name'        : 'Download',
-        'action'      : 'string:${object_url}',
-        'permissions' : (CMFCorePermissions.ModifyPortalContent,)
-         },
-        )
-    )
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """Download the file
         """
-        field    = self.getField('file')
-        file     = field.get(self)
-        filename = field.getFilename(self)
-        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
-        return file.index_html(REQUEST, RESPONSE)
-
-    security.declareProtected(CMFCorePermissions.View, 'download')
-    def download(self, REQUEST, RESPONSE):
-        """Download the file (use default index_html)
-        """
-        return self.index_html(REQUEST, RESPONSE)
+        field = self.getPrimaryField()
+        return field.download(self)
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setFile')
     def setFile(self, value, **kwargs):
@@ -157,31 +138,7 @@ class ATFile(ATCTContent):
         """
         return self.getIcon()
 
-    security.declareProtected(CMFCorePermissions.View, 'get_data')
-    def get_data(self):
-        """CMF compatibility method
-        """
-        return self.getFile()
-
-    data = ComputedAttribute(get_data, 1)
-
-    security.declareProtected(CMFCorePermissions.View, 'get_size')
-    def get_size(self):
-        """CMF compatibility method
-        """
-        f = self.getFile()
-        return f and f.get_size() or 0
-    
-    security.declareProtected(CMFCorePermissions.View, 'get_content_type')
-    def get_content_type(self):
-        """CMF compatibility method
-        """
-        f = self.getFile()
-        return f and f.getContentType() or 'text/plain' #'application/octet-stream'
-
-    content_type = ComputedAttribute(get_content_type, 1)
- 
-    #security.declarePrivate('TXNG2_SearchableText')
+    security.declarePrivate('txng_get')
     def txng_get(self, attr=('SearchableText',)):
         """Special searchable text source for text index ng 2
         """

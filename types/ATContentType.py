@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.10 2004/05/15 01:53:07 tiran Exp $
+$Id: ATContentType.py,v 1.11 2004/05/26 08:55:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -40,6 +40,7 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
 from AccessControl import ClassSecurityInfo
+from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
@@ -144,6 +145,60 @@ class ATCTContent(ATCTMixin, BaseContent):
 
 InitializeClass(ATCTContent)
 
+class ATCTFileContent(ATCTContent):
+    """Base class for content types containing a file like ATFile or ATImage
+    
+    The file field *must* be only primary field
+    """
+
+    security       = ClassSecurityInfo()
+    actions = updateActions(ATCTContent,
+        ({
+        'id'          : 'download',
+        'name'        : 'Download',
+        'action'      : 'string:${object_url}',
+        'permissions' : (CMFCorePermissions.ModifyPortalContent,)
+         },
+        )
+    )
+
+    security.declareProtected(CMFCorePermissions.View, 'download')
+    def download(self, REQUEST, RESPONSE):
+        """Download the file (use default index_html)
+        """
+        return self.index_html(REQUEST, RESPONSE)
+
+    security.declareProtected(CMFCorePermissions.View, 'get_data')
+    def get_data(self):
+        """CMF compatibility method
+        """
+        return self.getPrimaryField().get(self)
+
+    data = ComputedAttribute(get_data, 1)
+
+    security.declareProtected(CMFCorePermissions.View, 'get_size')
+    def get_size(self):
+        """CMF compatibility method
+        """
+        f = self.getPrimaryField().get(self)
+        return f and f.get_size() or 0
+
+    security.declareProtected(CMFCorePermissions.View, 'size')
+    def size(self):
+        """Get size (image_view.pt)
+        """
+        return self.get_size()
+
+    security.declareProtected(CMFCorePermissions.View, 'get_content_type')
+    def get_content_type(self):
+        """CMF compatibility method
+        """
+        f = self.getPrimaryField().get(self)
+        return f and f.getContentType() or 'text/plain' #'application/octet-stream'
+
+    content_type = ComputedAttribute(get_content_type, 1)
+
+InitializeClass(ATCTFileContent)
 
 class ATCTFolder(ATCTMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.14 2004/05/21 18:44:03 tiran Exp $
+$Id: ATImage.py,v 1.15 2004/05/26 08:55:54 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,7 +38,7 @@ from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Acquisition import aq_parent
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTFileContent, updateActions
 from Products.ATContentTypes.interfaces.IATImage import IATImage
 from Products.ATContentTypes.types.schemata import ATImageSchema, ATExtImageSchema
 from Products.ATContentTypes.types.ATFile import cleanupFilename
@@ -46,7 +46,7 @@ from Products.ATContentTypes.types.ATFile import cleanupFilename
 from OFS.Image import Image
 
 
-class ATImage(ATCTContent):
+class ATImage(ATCTFileContent):
     """An Archetypes derived version of CMFDefault's Image"""
 
     schema         =  ATImageSchema
@@ -64,29 +64,9 @@ class ATImage(ATCTContent):
     assocMimetypes = ('image/*', )
     assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
 
-    __implements__ = ATCTContent.__implements__, IATImage
+    __implements__ = ATCTFileContent.__implements__, IATImage
 
     security       = ClassSecurityInfo()
-
-    security.declareProtected(CMFCorePermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE):
-        """Download the image
-        """
-        field    = self.getField('image')
-        image    = field.get(self)
-        filename = field.getFilename(self)
-        RESPONSE.setHeader('Content-Disposition', 'filename="%s"' % filename)
-        return image.index_html(REQUEST, RESPONSE)
-
-    security.declareProtected(CMFCorePermissions.View, 'download')
-    def download(self, REQUEST, RESPONSE):
-        """Download the image (use default index_html)
-        """
-        field    = self.getField('image')
-        image    = field.get(self)
-        filename = field.getFilename(self)
-        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
-        return image.index_html(REQUEST, RESPONSE)
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setImage')
     def setImage(self, value, **kwargs):
@@ -103,32 +83,6 @@ class ATImage(ATCTContent):
             clean_filename = cleanupFilename(filename)
             if filename:
                 self.plone_utils.contentEdit(self, id=clean_filename)
-
-    security.declareProtected(CMFCorePermissions.View, 'get_data')
-    def get_data(self):
-        """CMF compatibility method
-        """
-        return self.getImage()
-
-    data = ComputedAttribute(get_data, 1)
-    
-    security.declareProtected(CMFCorePermissions.View, 'get_size')
-    def get_size(self):
-        """CMF compatibility method
-        """
-        img = self.getImage()
-        return img and img.get_size() or 0
-        
-    size = ComputedAttribute(get_size, 1)
-
-    security.declareProtected(CMFCorePermissions.View, 'get_content_type')
-    def get_content_type(self):
-        """CMF compatibility method
-        """
-        img = self.getImage()
-        return img and img.getContentType(self) or '' #'image/jpeg'
-
-    content_type = ComputedAttribute(get_content_type, 1)
 
     security.declareProtected(CMFCorePermissions.View, 'tag')
     def tag(self, *args, **kwargs):
@@ -153,6 +107,7 @@ class ATExtImage(ATImage):
 
     security       = ClassSecurityInfo()
 
+    security.declareProtected(CMFCorePermissions.View, 'getImage')
     def getImage(self, **kwargs):
         """return the image with proper content type"""
         field  = self.getField('image') 
@@ -162,10 +117,11 @@ class ATExtImage(ATImage):
         i      = Image(self.getId(), self.Title(), image, ct)
         return i.__of__(parent)
    
-    # make it directly viewable when entering the objects URL
+    security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
+        """make it directly viewable when entering the objects URL
+        """
         self.getImage(REQUEST=REQUEST, RESPONSE=RESPONSE).index_html(REQUEST, RESPONSE)
-
 
 if HAS_EXT_STORAGE:
     registerType(ATExtImage, PROJECTNAME)
