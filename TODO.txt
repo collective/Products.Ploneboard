@@ -1,5 +1,14 @@
 V2.0
 
+= performance
+
+  You can have a look at the base_panel.pt, perhaps this line is too expensive:
+
+    <metal:block use-macro="here/global_defines/macros/defines" />
+
+  Each panel will call all the defines.
+  I think we can define a small set of variables. 
+
 - make all viewlets defined at portal_contentpanels:
 
   Just make the Category of the actions indicates the portal_type
@@ -8,14 +17,14 @@ content type related.
 
 - update css to be more compatible with nested contentpanels
 
+- compatible with I18NLayer
+
   I18NLayer should be transparent. Here is some point in
 my mind now.
 
   1. Viewlets of the actual types belongs to the I18N container
   2. (howto?)Viewlet like recent changes only show the specific languge stuff
  but not the container and other stuff.
-
-- compatible with I18NLayer
 
 - submit to Plone as a portlet proposal
 
