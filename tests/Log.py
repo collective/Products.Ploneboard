@@ -39,14 +39,13 @@ import threading
 import traceback
 import os
 import pprint
-import StringIO
+import string
 
 LOG_STACK_DEPTH = [-2]
 
-def Log(level, *args, **kw):
+def Log(level, *args):
     """
-    Log(level, *args, **kw) => Pretty-prints data on the console with additional information.
-    Use a STACK_OFFSET paramter to lower the stack depth
+    Log(level, *args) => Pretty-prints data on the console with additional information.
     """
     if LOG_LEVEL and level <= LOG_LEVEL:
         if not level in LOG_PROCESSOR.keys():
@@ -55,16 +54,12 @@ def Log(level, *args, **kw):
         stack = ""
         stackItems = traceback.extract_stack()
         for depth in LOG_STACK_DEPTH:
-            stackItem = stackItems[depth - kw.get('STACK_OFFSET', 0)]
+            stackItem = stackItems[depth]
             stack = "%s%s:%s:" % (stack, os.path.basename(stackItem[0]), stackItem[1],)
-##        return "%s(%s)"%( os.path.basename(stackItem[0]), stackItem[1] )
-##        pr = "%s %s %010.02f %08d/%02d > " % (LOG_LABEL[level], time.ctime(time.time()), time.clock(), thread.get_ident(), threading.activeCount())
         pr = "%8s %s%s: " % (
             LOG_LABEL[level],
             stack,
             time.ctime(time.time()),
-##            thread.get_ident(),
-##            threading.activeCount()
             )
         for data in args:
             try:
@@ -76,7 +71,34 @@ def Log(level, *args, **kw):
                 data = pprint.pformat(data)
             pr = pr + data + " "
 
-        LOG_PROCESSOR[level](level, LOG_LABEL[level], pr, stackItems)
+        LOG_PROCESSOR[level](level, LOG_LABEL[level], pr, )
+
+def LogCallStack(level, *args):
+    """
+    LogCallStack(level, *args) => View the whole call stack for the specified call
+    """
+    if LOG_LEVEL and level <= LOG_LEVEL:
+        if not level in LOG_PROCESSOR.keys():
+            raise ValueError, "Invalid log level :", level
+
+        stack = string.join(traceback.format_list(traceback.extract_stack()[:-1]))
+        pr = "%8s %s:\n%s\n" % (
+            LOG_LABEL[level],
+            time.ctime(time.time()),
+            stack
+            )
+        for data in args:
+            try:
+                if "\n" in data:
+                    data = data
+                else:
+                    data = pprint.pformat(data)
+            except:
+                data = pprint.pformat(data)
+            pr = pr + data + " "
+
+        LOG_PROCESSOR[level](level, LOG_LABEL[level], pr, )
+
 
 
 def FormatStack(stack):
@@ -97,22 +119,19 @@ def LogException():
 
     Print an exception information on the console
     """
-    s = StringIO.StringIO()
-    Log(LOG_NOTICE, "EXCEPTION >>>", STACK_OFFSET = 1)
-    traceback.print_exc(file = s, )
-    s.seek(0)
-    Log(LOG_NOTICE, s.read())
-    Log(LOG_NOTICE, "<<< EXCEPTION", STACK_OFFSET = 1)
+    Log(LOG_NOTICE, "EXCEPTION >>>")
+    traceback.print_exc(file = LOG_OUTPUT)
+    Log(LOG_NOTICE, "<<< EXCEPTION")
 
 
 LOG_OUTPUT = stderr
-def LogFile(level, label, data, stack):
+def LogFile(level, label, data, ):
     """
     LogFile : writes data to the LOG_OUTPUT file.
     """
     LOG_OUTPUT.write(data+'\n')
     LOG_OUTPUT.flush()
-logFile = LogFile               # BCKW compatibility
+
 
 import zLOG
 
@@ -125,7 +144,7 @@ zLogLevelConverter = {
     LOG_DEBUG: zLOG.DEBUG,
     }
 
-def LogzLog(level, label, data, stack):
+def LogzLog(level, label, data, ):
     """
     LogzLog : writes data though Zope's logging facility
     """

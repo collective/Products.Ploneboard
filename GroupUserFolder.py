@@ -159,6 +159,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         So, there might be a collision between a user name and a group name.
         [NOTA: This method is time-expensive !]
         """
+        if __include_users__:
+            LogCallStack(LOG_DEBUG, "This call can be VERY expensive!")
         names = []
         ldap_sources = []
 
@@ -1189,7 +1191,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/07 15:08:29 $"[7:-2]
+        rev_date = "$Date: 2004/06/08 08:34:24 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

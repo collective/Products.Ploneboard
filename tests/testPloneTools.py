@@ -84,7 +84,6 @@ class GroupTestCase(PloneTestCase.PloneTestCase, ):
 
 
 
-
 class TestGroupsTool(GroupTestCase, testInterface.TestInterface):
     klasses = (        # tell which classes to check
         GroupsTool.GroupsTool,
