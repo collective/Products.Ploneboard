@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+    <div metal:fill-slot="main">
+
+        <h1 tal:content="here/title_or_id" class="documentFirstHeading">
+            Title or id
+        </h1>
+
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+        Up one level
+        </a>
+
+        <div class="documentDescription" tal:content="structure here/Description">
+            description
+        </div>
+
+        <metal:listingmacro define-macro="listing">
+
+        <tal:topiccontents define="topicContents here/queryCatalog">
+        <tal:listing condition="topicContents">
+
+            <dl>
+	        <tal:brain repeat="brain topicContents">
+                <tal:entry define="obj brain/getObject"> 
+
+                <dt metal:define-macro="list-item"
+                    tal:define="url python: obj.absolute_url()+test(obj.isPrincipiaFolderish,'/','');
+                                icon python: obj.getIcon(1)">
+                <a href="#" tal:attributes="href url">
+                        <img src="" alt=""
+                                        tal:attributes="src string:${utool}/${icon};alt here/title" />
+                </a>
+
+                <a href="#" tal:condition="python: obj.portal_type not in ['Link', 'Image']"
+                            tal:attributes="href url"
+                            tal:content="obj/title_or_id" />
+
+                <a href="#" tal:condition="python: obj.portal_type == 'Image'"
+                            tal:attributes="href python: url + '/view'"
+                            tal:content="obj/title_or_id" />
+
+                <a href="#" 
+                   tal:condition="python: obj.portal_type == 'Link'"
+                   tal:attributes="href obj/getRemoteUrl;"
+                   class="link-plain"
+                   tal:content="obj/title_or_id" />
+
+                <span class="discreet"
+                      tal:condition="python: obj.portal_type == 'Event'">
+    
+                    &nbsp;
+                    <span tal:replace="obj/location">Oslo</span>,
+                    <span tal:replace="python: obj.start().ISO()">from date</span> -
+                    <span tal:replace="python: obj.end().ISO()">to date</span>
+                    
+                </span>
+                </dt>
+
+                <dd>
+
+                    <span tal:content="structure python:test(obj.Description(), obj.Description(), '&nbsp;')"> description </span>
+                </dd>
+                    </tal:entry>
+		    </tal:brain>
+            </dl>
+
+        </tal:listing>
+        
+        <p class="discreet"
+           tal:condition="not: topicContents" i18n:translate="description_no_items_in_topic">
+         There are currently no results for this topic search.
+        </p>
+
+        </tal:topiccontents>
+        </metal:listingmacro>
+    </div>
+
+</body>
+</html>
+

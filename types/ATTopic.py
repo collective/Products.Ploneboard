@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.10 2004/05/11 22:56:00 lele Exp $
+$Id: ATTopic.py,v 1.11 2004/05/14 04:12:33 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -45,8 +45,8 @@ class ATTopic(ATCTFolder):
     content_icon   = 'topic_icon.gif'
     meta_type      = 'ATTopic'
     archetype_name = 'AT Topic'
-    immediate_view = 'topic_view'
-    default_view   = 'topic_view'
+    immediate_view = 'atct_topic_view'
+    default_view   = 'atct_topic_view'
     suppl_views    = ()
     newTypeFor     = ('Topic', 'Portal Topic')
     typeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
@@ -55,8 +55,6 @@ class ATTopic(ATCTFolder):
     assocMimetypes = ()
     assocFileExt   = ()
     
-    immediate_view = 'topic_view'
-
     filter_content_types  = 1
     allowed_content_types = 'ATTopic'
 
@@ -68,7 +66,7 @@ class ATTopic(ATCTFolder):
         {
         'id'          : 'view',
         'name'        : 'View',
-        'action'      : 'string:${folder_url}/topic_view',
+        'action'      : 'string:${folder_url}/atct_topic_view',
         'permissions' : (CMFCorePermissions.View,)
         },
         {
