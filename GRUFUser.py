@@ -121,7 +121,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 
     def getUserName(self):
         """Return the username of a user"""
-        if self.isGroup():
+        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] != GRUFFolder.GRUFGroups._group_prefix:
             return "%s%s" % (GRUFFolder.GRUFGroups._group_prefix, self._original_name, )
         return self._original_name
 
