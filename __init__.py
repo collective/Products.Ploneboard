@@ -11,7 +11,7 @@ z_bases = utils.initializeBasesPhase1(bases, this_module)
 
 photo_globals = globals()
 
-DirectoryView.registerDirectory('skins', globals())
+#DirectoryView.registerDirectory('skins', globals())
 
 def initialize(registrar):
     utils.initializeBasesPhase2(z_bases, registrar)
