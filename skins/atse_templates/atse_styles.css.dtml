@@ -1,0 +1,19 @@
+div.left{
+    float: left;
+    margin-right: 1em;
+}
+
+div.right {
+    float: right;
+}
+
+div.clear {
+    clear: both;
+}
+
+.portlet div#atse_fieldsets, 
+.portlet div#atse_fields, 
+.portlet div#atse_fieldeditor, 
+.portlet div#atse_maintenance {
+    padding: 0.5em;
+}
