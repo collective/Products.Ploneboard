@@ -9,9 +9,7 @@ Package: zope-cmfquickinstallertool
 Architecture: all
 Depends: zope, zope-cmf
 Description: A tool to manage installation of CMF products inside CMF sites
- This tool is independent from the former CMFQuickInstaller.
- The main difference to CMFQuickInstaller the tracking of
- what a product creates during install.
+ supports tracking of what a product creates during install.
  .
  Homepage: http://www.sourceforge.net/projects/collective
 
