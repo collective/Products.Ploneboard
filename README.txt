@@ -53,3 +53,8 @@ they created and see the logs of the install process.
 for Plone there will be an interface inside the portal so that
 it is not necessary to enter thr ZMI for priduct management
 
+Customized uninstall
+------------
+if there exists a method called 'uninstall' 
+in your Install.py this method is called before the
+standard removal of objects.
