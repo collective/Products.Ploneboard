@@ -1,0 +1,17 @@
+<metal:block tal:define="global panelObjectIsCP options/panelObjectIsCP;
+                       viewletPath options/viewletPath;
+                       usemacro python:viewletPath.find('/macros/') != -1"
+             tal:on-error="structure here/cp_errorHandler" >
+
+    <metal:block use-macro="here/global_defines/macros/defines" />
+
+    <div class="portlet-wrap" tal:attributes="class options/panelSkin" >
+        <metal:block tal:condition="usemacro">
+           <metal:block metal:use-macro="python:path(viewletPath)" />
+        </metal:block>
+        <metal:block tal:replace="structure python:path(viewletPath)" 
+                   tal:condition="not: usemacro"/>
+    </div>
+
+</metal:block>
+

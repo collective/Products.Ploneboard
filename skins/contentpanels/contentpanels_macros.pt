@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      i18n:domain="plone">
+
+<body>
+
+<metal:block metal:define-macro="cpPages"
+     tal:omit-tag=""
+     tal:define="page_titles here/getPageTitles">
+<h5 class="hiddenStructure" tal:condition="page_titles"
+    i18n:translate="heading_views">Pages</h5>
+
+<ul class="cpPages" tal:condition="python: len(page_titles) > 1">
+    <tal:pages repeat="pageTitle page_titles">
+    <li tal:define="selected python: pageIndex == repeat['pageTitle'].index;"
+        tal:attributes="class python:test(selected, 'selected', 'plain')">
+        <a class="" href=""
+           tal:attributes="href string:${here/absolute_url}/${template/id}?pageIndex=${repeat/pageTitle/index}"
+           i18n:attributes="accesskey">
+                <span tal:replace="pageTitle">dummy</span>
+        </a>
+    </li>
+    </tal:pages>
+</ul>
+</metal:block>
+
+</body>
+</html>

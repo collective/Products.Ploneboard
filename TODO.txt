@@ -1,0 +1,38 @@
+V2.0
+
+- i18n
+
+- add folder contents viewlet
+
+- compatible with I18NLayer
+
+- add to collective
+
+- submit to Plone as a portlet proposal
+
+- view refinement
+
+- (done) viewlet title should be clickable
+
+- description should add to document view 
+
+- bug: css refinement: bulleted list not work now
+
+- more choice (select viewlet) in the popup windows.
+
+- bug: empty folder will cause recent folder viewlet broken.
+
+- a new css which support content icon
+
+- > Also, you mention in the documentation that there are heirarchical content
+  panels - I assumed that when you click the 'add panel' button inside a panel
+you can do that, but actually it just adds the panel after the one you click.
+How do you put panels inside other panels?
+
+UI should be refined, how about this way:
+1. in the popup add panel window, user can select to add a new
+sub-contentpanels
+2. after that, the sub-contentpanels is auto-created in the same folder and
+added on the panel with the correct viewlet.
+
+It should be easier to use and the code is still very simple. 

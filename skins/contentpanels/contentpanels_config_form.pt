@@ -1,0 +1,245 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="contentpanels">
+
+  <span metal:fill-slot="base" tal:omit-tag="">
+    <base tal:attributes="href string:${here/absolute_url}/" />
+  </span>
+
+  <metal:block fill-slot="head_slot">
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels.css" />
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels_skins.css" />
+  </metal:block>
+
+<body>
+
+    <tal:block metal:fill-slot="main"
+         tal:omit-tag=""
+          tal:define="page request/pageIndex | python:'0';
+                      global pageIndex python:int(page)" >
+
+    <h1 tal:content="here/title_or_id">
+    Title or id
+    </h1>
+
+    <div style="float: right"
+         tal:define="lastPage python:pageIndex-1;
+                     nextPage python:pageIndex+1">
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addPage=1&pageIndex=$nextPage">
+         <img title="new page" alt="new page"
+              tal:attributes="src string:$portal_url/newPage.gif"/>
+      </a>
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&pageIndex=$pageIndex&toPage=$lastPage"
+         tal:condition="python: lastPage!=-1">
+         <img title="move left" alt="move left"
+              tal:attributes="src string:$portal_url/left.gif;"/>
+      </a>
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&pageIndex=$pageIndex&toPage=$nextPage" 
+         tal:condition="python: nextPage!=len(here.getPageTitles())">
+        <img title="move right" alt="move right"
+             tal:attributes="src string:$portal_url/right.gif;"/>
+      </a>
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePage=1&pageIndex=$pageIndex">
+         <img title="delete this page" alt="delete this page"
+              tal:attributes="src string:$portal_url/delete.gif;"/>
+      </a>
+    </div>
+
+    <metal:block metal:use-macro="here/contentpanels_macros/macros/cpPages"/>
+
+    <div class="documentDescription"
+         tal:content="here/Description">
+    description
+    </div>
+
+    <form method="get" action="contentpanels_config"
+          tal:attributes="action string:${here/absolute_url}/contentpanels_submit"
+          tal:define="page request/pageIndex | python:'0';
+                      global pageIndex python:int(page)">
+
+       <div style="text-align: right;">
+           <input type="hidden" name="pageIndex" value="#"
+                       tal:attributes="value pageIndex"/>
+           <span i18n:translate="label_title">Title:</span>
+           <input type="text" name="pageInfo.pageTitle:record" size="18" value=''
+             tal:attributes="value python: here.getPageInfo(pageIndex, 'pageTitle')"/>
+           <span i18n:translate="label_align">Align:</span>
+           <select name="pageInfo.pageAlign:record">
+             <option value="left" selected="#"
+               tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='left'"> left</option>
+             <option value="center" selected="#"
+               tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='center'"> Center</option>
+             <option value="right" selected="#"
+               tal:attributes="selected python: here.getPageInfo(pageIndex, 'pageAlign')=='right'"> right</option>
+           </select>
+           <span i18n:translate="label_width">Width: </span>
+           <input type="text" name="pageInfo.pageWidth:record" size="4" value="#" maxlength="4"
+               tal:attributes="value python: here.getPageInfo(pageIndex, 'pageWidth')"/>
+           <span i18n:translate="label_panel_space">Padding: </span>
+           <input type="text" name="pageInfo.pageCellPad:record" size="4" value="#" maxlength="4"
+               tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellPad')"/>
+           <input type="hidden" name="pageInfo.pageCellSpace:record" size="4" value="#" maxlength="4"
+               tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellSpace')"/>
+           <input type="submit" name="save" class="sameline" i18n:attributes="value"  value="Save"/>
+       </div>
+
+       <table width="" align="" cellspacing="" cellpadding="" 
+              tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
+                       cellpadding python: here.getPageInfo(pageIndex, 'pageCellPad');
+                       cellspacing python: here.getPageInfo(pageIndex, 'pageCellSpace');
+                       align python: here.getPageInfo(pageIndex, 'pageAlign')">
+
+<!--
+columns
+-->
+        <tr>  
+          <tal:block tal:repeat="column python:here.getPageInfo(pageIndex, 'pageColumns')">
+          <td width="#" valign="top" 
+              tal:define="columnIndex repeat/column/index;
+                          lastColumn python:repeat['column'].index-1;
+                          nextColumn python:repeat['column'].index+1;"
+              tal:attributes="width python:test(column['columnWidth']=='0', '', column['columnWidth'])" >
+
+            <div class="smallTitle" style="white-space: nowrap; text-align: right">
+              <div style="float: left">
+                <span i18n:translate="Column Width">Width</span>
+                <input type="text" title="Column Width"
+                       name="columnInfos.columnWidth:records" size="4" value=""
+                       i18n:attributes="title"
+                       tal:attributes="value column/columnWidth"/>
+                <input type="hidden" name="columnInfos.columnIndex:records" value="#"
+                           tal:attributes="value repeat/column/index" />
+              </div>
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addColumn=1&pageIndex=$pageIndex&columnIndex=$nextColumn">
+                    <img title="new column" alt="new column"
+                         tal:attributes="src string:$portal_url/newCol.gif"/>
+                </a>
+                <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                   <img title="new panel" alt="new panel"
+                         tal:attributes="src string:$portal_url/newPanel.gif"/>
+                </a>
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex&toColumn=$lastColumn"
+                   tal:condition="not: repeat/column/start">
+                    <img title="move left" alt="move left"
+                         tal:attributes="src string:$portal_url/left.gif"/>
+                </a>
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?moveColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex&toColumn=$nextColumn"
+                    tal:condition="not: repeat/column/end">
+                   <img title="move right" alt="move right"
+                         tal:attributes="src string:$portal_url/right.gif"/>
+                </a>
+                <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deleteColumn=1&pageIndex=$pageIndex&columnIndex=$columnIndex">
+                    <img title="delete column" alt="delete column"
+                         tal:attributes="src string:$portal_url/delete.gif"/>
+                </a>
+            </div>
+
+            <tal:block tal:define="panels python:column['columnPanels'];">
+
+              <div style="margin: 1em 0 0 0" tal:repeat="panel panels">
+
+              <table width="100%" border="1" cellspacing="0" cellpadding="2" 
+                     tal:define="panelIndex repeat/panel/index;
+                                 lastPanel python:repeat['panel'].index-1;
+                                 nextPanel python:repeat['panel'].index+1;"
+                     tal:condition="panel">
+
+                  <tr class="cpTools">
+                    <td  style="text-align: right"
+                         tal:define="panelContent python:here.getPanelObject(panel['panelObjectPath']);
+                                    panelContent python:test(panelContent is not None, panelContent, here)">
+                      <div class="smallTitle">
+                        <div style="float:left">
+                          <img tal:attributes="src string:${here/portal_url}/${panelContent/getIcon}" />
+                          <a tal:attributes="href panelContent/absolute_url" tal:content="panelContent/title_or_id"/>
+                        </div>
+                        <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$nextPanel', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                          <img title="new panel" alt="new panel"
+                             tal:attributes="src string:$portal_url/newPanel.gif"/>
+                        </a>
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toPanel=$lastPanel"
+                           tal:condition="not: repeat/panel/start">
+                          <img title="move up" alt="move up"
+                             tal:attributes="src string:$portal_url/up.gif"/>
+                        </a>
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toPanel=$nextPanel"
+                           tal:condition="not: repeat/panel/end">
+                          <img title="move down" alt="move down"
+                             tal:attributes="src string:$portal_url/down.gif"/>
+                        </a>
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toColumn=$lastColumn"
+                           tal:condition="not: repeat/column/start">
+                          <img title="move left" alt="move left"
+                             tal:attributes="src string:$portal_url/left.gif"/>
+                        </a>
+                        <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex&toColumn=$nextColumn"
+                           tal:condition="not: repeat/column/end">
+                          <img title="move right" alt="move right"
+                             tal:attributes="src string:$portal_url/right.gif"/>
+                        </a>
+                        <a href="#" tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePanel=1&pageIndex=$pageIndex&columnIndex=$columnIndex&panelIndex=$panelIndex">
+                          <img title="delete this panel" alt="delete this panel"
+                             tal:attributes="src string:$portal_url/delete.gif"/>
+                        </a>
+                      </div>
+                      <div style="margin-top: 5px">
+                        <select title="panel skin" name="panelSkin" width="6"
+                                i18n:attributes="title label_skin"
+                                tal:attributes="name string:CPI$columnIndex.panelSkin:records">
+                          <metal:block tal:repeat="skinInfo here/portal_contentpanels/getPanelSkins">
+                            <option value="slotpath"
+                                    tal:attributes="value python: skinInfo[1];
+                                             selected python: panel['panelSkin']==skinInfo[1];"
+                                    tal:content="python:skinInfo[0]"
+                                    i18n:translate="">slotpath</option>
+                          </metal:block>
+                        </select>
+                        <select name="panelObjectViewlet" title="content viewlet" width="6"
+                                i18n:attributes="title label_viewlet"
+                                tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records">
+                          <metal:block tal:repeat="viewletAction python:here.contentpanels_getViewletActions(panel['panelObjectPath'])"
+                                    tal:on-error="string: ">
+                             <option value="viewletActionId"
+                                   tal:attributes="value viewletAction/id;
+                                   selected python: panel['panelObjectViewlet']==viewletAction['id'];"
+                                   tal:condition="not: python:viewletAction['id']=='contentpanels_viewlet' and panelContent is here"
+                                   i18n:translate=""><span tal:replace="viewletAction/name"/></option>
+                          </metal:block>
+                        </select><br/>
+                        <input type="hidden" name="panelIndex" value="#"
+                               tal:attributes="value repeat/panel/index;
+                                               name string:CPI$columnIndex.panelIndex:records" />
+                        <input type="hidden" name="panelObjectPath" value="#"
+                               tal:attributes="value panel/panelObjectPath;
+                                               name string:CPI$columnIndex.panelObjectPath:records" />
+                     </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                     <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
+                         tal:on-error="string: This panel content is nolonger existed or you have no right to access it. We recommend you remove this panel."/>
+                    </td>
+                  </tr>
+              </table>
+              </div>
+            </tal:block>
+          </td>
+          </tal:block>
+        </tr>
+
+
+      </table>
+
+    </form>
+    </tal:block>
+
+</body>
+
+</html>
+
+
+
+

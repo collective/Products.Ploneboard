@@ -1,0 +1,8 @@
+[default]
+title = edit contentpanels properties
+
+[validators]
+validators..Save=validate_id
+
+[actions]
+action.success = traverse_to:string:contentpanels_edit

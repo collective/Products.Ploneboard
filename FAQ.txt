@@ -1,0 +1,11 @@
+1. I want to add viewlet like the default news viewlet, but I can't write any ZPT. How can i do?
+
+  You need not write any code. Just create a new Topic content to filter the content you need at any place you like. And add the Topic to your contentpanels and select the body viewlet. That is all. No code needed!
+
+2. I just installed 1.5 and looked at the screenshot
+http://www.plone.org/Members/panjunyong/ContentPanels/ContentPanels.JPG
+and wonder how can you have different number of columns on different
+rows?
+
+ In fact, it is a combination of 2 contentpanels.  One contentpanels can be a panel of another one.  The bottom panels are in another contentpanels content.
+
