@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<!-- howto debug a panel: use this url:
+     http://url_to_content/debug_panel?viewletPath=here/portlet_mychanges/macros/portlet&css=zopezenPortletWrap
+ -->
+<metal:main fill-slot="main">
+
+<metal:block tal:define=" viewletPath request/viewletPath;
+                          panelSkin request/css | nothing;
+                          usemacro python:viewletPath.find('/macros/') != -1">
+
+    <metal:block use-macro="here/global_defines/macros/defines" />
+
+    <div class="portlet-wrap" tal:attributes="class string:viewlet $panelSkin">
+        <metal:block tal:condition="usemacro">
+           <metal:block metal:use-macro="python:path(viewletPath)" />
+        </metal:block>
+        <metal:block tal:replace="structure python:path(viewletPath)"
+                   tal:condition="not: usemacro"/>
+    </div>
+
+</metal:block>
+
+</metal:main>
+
+</body>
+</html>
+

@@ -24,6 +24,5 @@ for action in actions:
 
 return panelObject.base_panel(panelObject, 
                               panelSkin=panelSkin, 
-                              viewletPath=viewletPath, 
-                              panelObjectIsCP = (panelObject == context) )
+                              viewletPath=viewletPath)
 
