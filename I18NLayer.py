@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.8 2003/08/18 14:03:34 longsleep Exp $
+$Id: I18NLayer.py,v 1.9 2003/09/30 11:31:06 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.8 $"
+__version__ = "$Revision: 1.9 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -137,9 +137,9 @@ class I18NLayer( BaseFolder ):
     security.declarePublic('retrieveExistingLanguages')
     def retrieveExistingLanguages(self, REQUEST=None):
         """ returns a list of existing languages """
-        return self.retrieveExistingLanguages()
+        return self.retrieveContentLayer(REQUEST).existingLanguages()
 
-
+    
     security.declarePublic('retrieveAcceptLanguages')
     def retrieveAcceptLanguages(self, REQUEST=None):
         """ returns a list of acceptable languages """
@@ -202,11 +202,28 @@ class I18NLayer( BaseFolder ):
         else:
             return view()
 
-    view = __call__
+    security.declarePublic('view')
+    def view(self, REQUEST, RESPONSE, **kw):
+        """
+        redirect to subobject when forcing language urls
+        """
+        ob = self.retrieveLanguageContent()
+        language_tool = getToolByName(self, 'portal_languages', None)
+        force_redir = getattr(language_tool, 'force_language_urls', 1)       
+        if force_redir and ob:
+            view = _getViewFor(ob, 'view')
+            url = "%s/%s" % (ob.absolute_url(), view.getId())
+            if REQUEST.get('QUERY_STRING', '').strip(): url="%s?%s" % (url, REQUEST.QUERY_STRING)
+            REQUEST.RESPONSE.redirect(url)
+            return "redirect view"
+        return apply(self.__call__, (REQUEST, RESPONSE,), kw)
+    
 
+    security.declarePublic('index_html')    
     def index_html(self, REQUEST, RESPONSE):
         """
         return content if subobject has index_html method
+        or redirect to subobjects index_html when forcing language urls
         """
         # NOTE: this implies for images and files which are returned directly when
         #       called with index_html.
@@ -215,13 +232,20 @@ class I18NLayer( BaseFolder ):
         ob = self.retrieveLanguageContent()
         if ob:
             klass=ob.__class__
+            language_tool = getToolByName(self, 'portal_languages', None)
+            force_redir = getattr(language_tool, 'force_language_urls', 1)
+            if force_redir:
+                url = "%s" % (ob.absolute_url())
+                if REQUEST.get('QUERY_STRING', '').strip(): url="%s?%s" % (url, REQUEST.QUERY_STRING)
+                REQUEST.RESPONSE.redirect(url)
+                return "redirect index"
             i=getattr(klass,'index_html', None)
             c=getattr(klass,'__call__', None)
             if i and c and i != c:
                 # XXX: probably we should set Content-Language somewhere here
                 return apply(ob.index_html, (REQUEST, RESPONSE,), {})
 
-        # no object so return view method
+        # no object so call us
         return apply(self.__call__, (REQUEST, RESPONSE,), {})
 
  

@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.4 2003/08/21 13:26:30 longsleep Exp $
+$Id: I18NContent.py,v 1.5 2003/09/30 11:31:06 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.4 $"
+__version__ = "$Revision: 1.5 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -157,7 +157,9 @@ class I18NContentLayer(I18NContentBase):
         layer=self.Layer()
         base = aq_base(layer)
 
-        fallback=1
+        language_tool = getToolByName(layer, 'portal_languages', None)
+        fallback = getattr(language_tool, 'allow_content_language_fallback', 1)        
+        
         fallenback=None
         #print "fallback, verify", fallback, verifypermission
         for lang in self.Languages():
