@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+  <div metal:fill-slot="main">
+
+      <div tal:replace="structure slot: first 'First slot'">
+        First slot elements here
+      </div>
+      
+      <hr />
+
+      <div tal:replace="structure slot: second 'Second slot'">
+        Second slot elements here
+      </div>
+      
+      <hr />
+
+      <div tal:replace="structure slot: third 'Third slot'">
+        Third slot elements here
+      </div>
+
+      
+  </body>
+</html>
