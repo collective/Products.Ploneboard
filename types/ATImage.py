@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.10 2004/05/15 01:53:07 tiran Exp $
+$Id: ATImage.py,v 1.11 2004/05/17 15:41:12 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -69,10 +69,23 @@ class ATImage(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
-        """Display the image, with or without standard_html_[header|footer],
-        as appropriate.
+        """Download the image
         """
-        return self.image.index_html(REQUEST, RESPONSE)
+        field    = self.getField('image')
+        image    = field.get(self)
+        filename = field.getFilename(self)
+        RESPONSE.setHeader('Content-Disposition', 'filename="%s"' % filename)
+        return image.index_html(REQUEST, RESPONSE)
+
+    security.declareProtected(CMFCorePermissions.View, 'download')
+    def download(self, REQUEST, RESPONSE):
+        """Download the image (use default index_html)
+        """
+        field    = self.getField('image')
+        image    = field.get(self)
+        filename = field.getFilename(self)
+        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
+        return image.index_html(REQUEST, RESPONSE)
 
     security.declareProtected(CMFCorePermissions.View, 'get_data')
     def get_data(self):

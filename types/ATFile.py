@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.15 2004/05/15 01:53:07 tiran Exp $
+$Id: ATFile.py,v 1.16 2004/05/17 15:41:12 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -82,7 +82,11 @@ class ATFile(ATCTContent):
     def index_html(self, REQUEST, RESPONSE):
         """Download the file
         """
-        return self.file.index_html(REQUEST, RESPONSE)
+        field    = self.getField('file')
+        file     = field.get(self)
+        filename = field.getFilename(self)
+        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
+        return file.index_html(REQUEST, RESPONSE)
 
     security.declareProtected(CMFCorePermissions.View, 'download')
     def download(self, REQUEST, RESPONSE):
