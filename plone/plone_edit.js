@@ -3,7 +3,7 @@
 // The variable "ui_url" is provided by common/header.pt.
 
 function plone_edit(element) {
-  var path = element.getAttribute("source_path");
+  var path = element.getAttribute("full_path");
   window.document.location = path + "/edit_compo_element"; 
 }
 
