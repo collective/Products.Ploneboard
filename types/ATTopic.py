@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.12 2004/05/14 11:40:15 godchap Exp $
+$Id: ATTopic.py,v 1.13 2004/05/14 12:07:17 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,11 @@ __docformat__ = 'restructuredtext'
 from types import ListType, TupleType, StringType
 
 from Products.Archetypes.public import *
+try:
+    from Products.LinguaPlone.public import *
+except ImportError:
+    # No multilingual support
+    pass
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
