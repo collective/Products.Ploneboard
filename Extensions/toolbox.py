@@ -17,18 +17,21 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.12 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: toolbox.py,v 1.13 2004/07/28 17:54:24 tiran Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from StringIO import StringIO
+import sys
+
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
     ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
 from Products.ATContentTypes.interfaces.IATImage import IATImage
 from Products.ATContentTypes.Extensions.utils import fixMimeTypes
+from zLOG import LOG, ERROR
 
 from Products.Archetypes import fixAfterRenameType
 
@@ -114,7 +117,12 @@ def _switchToCMF(portal, pt, cat, reg, klass, out):
     pt[atId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
     # fix some internal AT data after renaming
-    fixAfterRenameType(portal, id, atId)
+    try:
+        fixAfterRenameType(portal, id, atId)
+    except IndexError:
+        LOG('ATContentTypes', ERROR, 'Failed to fixAfterRenameType in switchToCMF',
+            error=sys.exc_info(), reraise=0)
+        pass
     # reassociate the content type registry predicates with the portal_type
     fixMimeTypes(portal, klass, atId)
     print >>out, '%s -> %s (%s)' % (id, atId, atTitle)
