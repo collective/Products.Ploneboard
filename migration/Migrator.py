@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.22 2005/01/24 18:26:58 tiran Exp $
+$Id: Migrator.py,v 1.23 2005/02/11 05:50:52 panjunyong Exp $
 """
 
 from copy import copy
@@ -214,7 +214,7 @@ class BaseMigrator:
         """Migrates the zope owner
         """
         # getWrappedOwner is not always available
-        if hasattr(self.old, 'getWrappedOwner'):
+        if hasattr(aq_base(self.old), 'getWrappedOwner'):
             owner = self.old.getWrappedOwner()
             self.new.changeOwnership(owner)
             LOG("changing owner via changeOwnership: %s" % str(self.old.getWrappedOwner()))
@@ -225,6 +225,17 @@ class BaseMigrator:
             # did not work, at least not with plone 1.x, at 1.0.1, zope 2.6.2
             LOG("changing owner via property _owner: %s" % str(self.old.getOwner(info = 1)))
             self.new._owner = self.old.getOwner(info = 1)
+
+    def migrate_localroles(self):
+        self.new.__ac_local_roles__ = None
+        # clean the auto-generated creators by Archetypes ExtensibleMeatadata
+        self.new.setCreators([])
+        local_roles = self.old.__ac_local_roles__
+        if not local_roles:
+            owner = self.old.getWrappedOwner()
+            self.new.manage_setLocalRoles(owner.getId(), ['Owner'])
+        else:
+            self.new.__ac_local_roles__ = copy(local_roles)
 
     def migrate_withmap(self):
         """Migrates other attributes from obj.__dict__ using a map
@@ -383,7 +394,7 @@ class FolderMigrationMixin(ItemMigrationMixin):
         #            self.old.absolute_url(1))
         #        continue
         #    id = obj.getId()
-        #    self.new._setObject(id, aq_base(obj))
+        #    self.new._setObject(id, aq_base(obj), set_owner=0)
         
         orderAble = IOrderedContainer.isImplementedBy(self.old)
         orderMap = {}
@@ -393,7 +404,7 @@ class FolderMigrationMixin(ItemMigrationMixin):
             obj = getattr(self.old.aq_inner.aq_explicit, id)
             if orderAble:
                 orderMap[id] = self.old.getObjectPosition(id)
-            self.new._setObject(id, aq_base(obj))
+            self.new._setObject(id, aq_base(obj), set_owner=0)
         
         # reorder items
         if orderAble:
