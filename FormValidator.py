@@ -17,9 +17,11 @@ class FormValidatorKey(Key):
     def __init__(self, object_id, context_type, button, controller=None):
         object_id = object_id.strip()
         if controller:
-            s = controller._checkId(object_id)
-            if s:
-                raise ValueError, 'Illegal template id: %s' % s
+            path_elements = object_id.split('/')
+            for p in path_elements:
+                s = controller._checkId(p)
+                if s:
+                    raise ValueError, 'Illegal template id: %s' % s
 
         if context_type:
             if controller:
@@ -61,9 +63,11 @@ class FormValidator(SimpleItem):
         validators = [v.strip() for v in validators if v]
         if controller:
             for v in validators:
-                s = controller._checkId(v)
-                if s:
-                    raise ValueError, 'Illegal validator id: %s' % s
+                path_elements = v.split('/')
+                for p in path_elements:
+                    s = controller._checkId(p)
+                    if s:
+                        raise ValueError, 'Illegal template id: %s' % s
         self.validators = validators
 
     def getObjectId(self):

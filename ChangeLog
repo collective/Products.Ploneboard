@@ -1,3 +1,8 @@
+2003-08-17  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Modified the validation of validators in FormValidator to allow for
+     validators in which a directory path is specified.
+
 2003-08-08  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Modified the way that ControllerState objects store the context.  For 
