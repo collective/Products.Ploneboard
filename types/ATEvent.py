@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.13 2004/06/09 13:59:19 tiran Exp $
+$Id: ATEvent.py,v 1.14 2004/06/10 09:00:39 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -104,7 +104,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         events = metatool.listAllowedSubjects(content_type = "Event")
         return events
 
-    def edit(self, title=None, description=None, eventType=None,
+    def cmf_edit(self, title=None, description=None, eventType=None,
              effectiveDay=None, effectiveMo=None, effectiveYear=None,
              expirationDay=None, expirationMo=None, expirationYear=None,
              start_time=None, startAMPM=None,
