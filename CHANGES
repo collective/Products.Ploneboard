@@ -1,5 +1,8 @@
 [v3.2 - ]
 
+  * Now your user sources (especially LUF) can have a 'portait' property which
+    will be used as your user's portrait. This works only in 'preview.txt'-mode.
+
   * You can put a 'notifyGroupAreaCreated' in your 'groups' folder as you would
     be able to put a 'notifyMemberAreaCreated' in your 'members' folder.
     So you can execute some code at group area creation. Thanks to F. Carlier !

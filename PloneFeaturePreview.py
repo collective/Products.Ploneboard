@@ -28,6 +28,7 @@
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 from OFS.SimpleItem import SimpleItem
+from OFS.Image import Image
 from Globals import InitializeClass, DTMLFile, MessageDialog
 from Acquisition import aq_base
 from AccessControl.User import nobody
@@ -178,11 +179,45 @@ def listAllowedMembers(self,):
     return allowed_members
 
 
+def _getPortrait(self, member_id):
+    """
+    return member_id's portrait if you can.
+    If it's not possible, just try to fetch a 'portait' property from the underlying user source,
+    then create a portrait from it.
+    """
+    # fetch the 'portrait' property
+    Log(LOG_DEBUG, "trying to fetch the portrait for the given member id")
+    portrait = self._former_getPortrait(member_id)
+    if portrait:
+        Log(LOG_DEBUG, "Returning the old-style portrait:", portrait, "for", member_id)
+        return portrait
+
+    # Try to find a portrait in the user source
+    member = self.portal_membership.getMemberById(member_id)
+    portrait = member.getUser().getProperty('portrait', None)
+    if not portrait:
+        Log(LOG_DEBUG, "No portrait available in the user source for", member_id)
+        return None
+
+    # Convert the user-source portrait into a plone-complyant one
+    Log(LOG_DEBUG, "Converting the portrait", type(portrait))
+    portrait = Image(id=member_id, file=portrait, title='')
+    membertool = self.portal_memberdata
+    membertool._setPortrait(portrait, member_id)
+
+    # Re-call ourself to retreive the real portrait
+    Log(LOG_DEBUG, "Returning the real portrait")
+    return self._former_getPortrait(member_id)
+
+
 # Monkeypatch it !
 if PREVIEW_PLONE21_IN_PLONE20_:
     from Products.CMFPlone import MembershipTool
+    from Products.CMFPlone import MemberDataTool
     MembershipTool.MembershipTool.searchForMembers = searchForMembers
     MembershipTool.MembershipTool.listAllowedMembers = listAllowedMembers
+    MemberDataTool.MemberDataTool._former_getPortrait = MemberDataTool.MemberDataTool._getPortrait
+    MemberDataTool.MemberDataTool._getPortrait = _getPortrait
     Log(LOG_NOTICE, "Applied GRUF's monkeypatch over Plone 2. Please remember this feature is experimental.")
 
 
