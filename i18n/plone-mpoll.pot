@@ -21,6 +21,9 @@ msgstr ""
 msgid "MPoll"
 msgstr ""
 
+msgid "Simple cookie-based poll."
+msgstr ""
+
 msgid "An error occured while processing your vote."
 msgstr ""
 
