@@ -1,5 +1,7 @@
 TODO-LIST
 
+* [2003-06-12] Wrap the original User and acl_users objects
+
 * Better documentation
 
 * Management interface cleaning and improving

@@ -1,6 +1,12 @@
 HOW TO USE THE GRUF WITH CMF/PLONE ?
 Last revision : 20021128
 
+  IMPORTANT NOTICE
+
+    Before reading this document, please take time to read README.txt, which contains information that
+    is applicable to Plone as well.
+
+
   ABSTRACT
 
     Right out of the box, GRUF works fine with Plone - it is used in several production environments.
