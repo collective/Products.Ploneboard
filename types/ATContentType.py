@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.34 2004/08/04 15:00:44 tiran Exp $
+$Id: ATContentType.py,v 1.35 2004/08/12 12:22:01 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -146,23 +146,33 @@ class ATCTMixin(TemplateMixin):
     def _getPortalTypeName(self):
         """
         """
-        pt = getToolByName(self, 'portal_types')
+        ptTool = getToolByName(self, 'portal_types', None)
+        
+        portal_type = self.portal_type
+        if callable(portal_type):
+                portal_type = portal_type()
+
+        if ptTool is None:
+            # this may when we don't have an acquisition context
+            return portal_type
+
         # make it easy to derive from atct:
         if hasattr(self,'newTypeFor') and self.newTypeFor:
             correct_pt = self.newTypeFor[0]
         else:
-            correct_pt = self.portal_type
-        fti = pt.getTypeInfo(correct_pt)
+            correct_pt = portal_type
+
+        fti = ptTool.getTypeInfo(correct_pt)
         if fti is None:
             # FTI is None which may happen in ATCT2CMF switching
             # script in this case the self.portal_type aka
             # self.__class__.__name__ is right but test to be sure
-            assert(self.portal_type, self.__class__.__name__)
-            return self.portal_type
+            assert(pt, self.__class__.__name__)
+            return portal_type
         if fti.Metatype() == self.meta_type:
             return correct_pt
         else:
-            return self.portal_type
+            return portal_type
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'edit')
     def edit(self, *args, **kwargs):
