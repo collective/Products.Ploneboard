@@ -9,9 +9,10 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: Install.py,v 1.1 2004/09/12 07:27:25 ajung Exp $
+$Id: Install.py,v 1.2 2004/09/12 08:57:38 ajung Exp $
 """
 
+from cStringIO import StringIO
 
 def install(self):                                       
     out = StringIO()
