@@ -23,6 +23,13 @@
    setting description to isMetadata = False.
    [tiran]
 
+ * Renamed tab from history to last changes. Added big warning that the history
+   is based on zodb revisions.
+   [tiran]
+   
+ * Added ExtendingType howto (more to follow)
+   [tiran]
+   
 0.2.0-rc1 - 2004-07-28
 
  * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 
