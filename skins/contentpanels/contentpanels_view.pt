@@ -10,10 +10,9 @@
 
 <body>
 
-    <td metal:fill-slot="main"
-	tal:omit-tag=""
-          tal:define="page request/pageIndex | python:'0';
-                      pageIndex python:int(page)" >
+<div metal:fill-slot="main"
+     tal:define="page request/pageIndex | python:'0';
+                 pageIndex python:int(page)" >
 
     <h1 tal:content="here/title_or_id">
     Title or id
@@ -65,9 +64,7 @@ panel should be here!!
       </table>
     </metal:block>
 
-    <br clear="all" />
-
-  </td>
+</div>
 
 </body>
 

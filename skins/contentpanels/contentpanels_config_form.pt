@@ -14,10 +14,9 @@
 
 <body>
 
-    <tal:block metal:fill-slot="main"
-         tal:omit-tag=""
-          tal:define="page request/pageIndex | python:'0';
-                      global pageIndex python:int(page)" >
+<div metal:fill-slot="main"
+     tal:define="page request/pageIndex | python:'0';
+                 global pageIndex python:int(page)" >
 
     <h1 tal:content="here/title_or_id">
     Title or id
@@ -234,7 +233,8 @@ columns
       </table>
 
     </form>
-    </tal:block>
+
+ </div>
 
 </body>
 
