@@ -12,17 +12,18 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControlledPageTemplate.py,v 1.1 2003/07/04 20:11:59 plonista Exp $
+$Id: FSControlledPageTemplate.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
 """
 
-from Products.CMFCore.FSPageTemplate import FSPageTemplate as BaseClass
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
+from Products.CMFCore.utils import expandpath
 from Products.CMFCore.FSPageTemplate import FSPageTemplate
+from Products.CMFCore.FSPageTemplate import FSPageTemplate as BaseClass
 from ControlledPageTemplate import ControlledPageTemplate
 from ControlledBase import ControlledBase
 from BaseControlledPageTemplate import BaseControlledPageTemplate
@@ -43,8 +44,31 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
 
+
+    def __init__(self, id, filepath, fullname=None, properties=None):
+        BaseClass.__init__(self, id, filepath, fullname, properties)
+        self._read_action_metadata(self.getId(), filepath)
+        self._read_validator_metadata(self.getId(), filepath)
+
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, object, container):
+        try:
+            BaseClass.manage_afterAdd(self, object, container)
+            # Re-read .metadata after adding so that we can do validation checks
+            # using information in portal_form_controller.  Since manage_afterAdd
+            # is not guaranteed to run, we also call these in __init__
+            object._read_action_metadata(object.getId(), object.filepath)
+            object._read_validator_metadata(object.getId(), object.filepath)
+        except:
+            import pdb
+            pdb.set_trace()
+            raise
+
+
     def __call__(self, *args, **kwargs):
         return self._call(FSControlledPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
+
 
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
@@ -52,6 +76,12 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
         obj.expand = 0
         obj.write(self.read())
         return obj
+
+
+    security.declarePublic('writableDefaults')
+    def writableDefaults(self):
+        """Can default actions and validators be modified?"""
+        return 0
 
 
 d = FSControlledPageTemplate.__dict__

@@ -12,7 +12,7 @@
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControlledPageTemplateFile.py,v 1.1 2003/07/18 14:23:23 plonista Exp $
+$Id: ControlledPageTemplateFile.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
 """
 
 import os
@@ -41,8 +41,32 @@ class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
     def __init__(self, filename, _prefix=None, **kw):
         if not os.path.splitext(filename)[1]:
             filename = filename + '.cpt'
+        self.filepath = filepath
+        self._read_action_metadata(self.getId(), filepath)
+        self._read_validator_metadata(self.getId(), filepath)
         return ControlledPageTemplateFile.inheritedAttribute('__init__')(self, filename, _prefix, **kw)
+
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, object, container):
+        try:
+            BaseClass.manage_afterAdd(self, object, container)
+            # Re-read .metadata after adding so that we can do validation checks
+            # using information in portal_form_controller.  Since manage_afterAdd
+            # is not guaranteed to run, we also call these in __init__
+            object._read_action_metadata(object.getId(), object.filepath)
+            object._read_validator_metadata(object.getId(), object.filepath)
+        except:
+            import pdb
+            pdb.set_trace()
+            raise
 
 
     def __call__(self, *args, **kwargs):
         return self._call(ControlledPageTemplateFile.inheritedAttribute('__call__'), *args, **kwargs)
+
+
+    security.declarePublic('writableDefaults')
+    def writableDefaults(self):
+        """Can default actions and validators be modified?"""
+        return 0

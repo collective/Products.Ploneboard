@@ -9,6 +9,8 @@ from ControlledBase import ControlledBase
 from ControllerState import ControllerState
 from ValidationError import ValidationError
 from BaseControlledPageTemplate import BaseControlledPageTemplate
+from FormAction import FormActionContainer
+from FormValidator import FormValidatorContainer
 
 import sys
 from urllib import quote
@@ -64,6 +66,11 @@ class ControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
         BaseClass.manage_options[2:])
 
     meta_type = 'Controlled Page Template'
+
+    def __init__(self, *args, **kwargs):
+        self.validators = FormValidatorContainer()
+        self.actions = FormActionContainer()
+        return ControlledPageTemplate.inheritedAttribute('__init__')(self, *args, **kwargs)
 
     def __call__(self, *args, **kwargs):
         return self._call(ControlledPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)

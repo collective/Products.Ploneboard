@@ -11,14 +11,19 @@
 # 
 ##########################################################################
 
+import os
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.utils import getToolByName
-from Globals import InitializeClass
+from Products.CMFCore.utils import getToolByName, expandpath
+from Products.CMFCore.FSMetadata import FSMetadata, CMFConfigParser
+from FormAction import FormActionType, FormAction, FormActionContainer
+from FormValidator import FormValidator, FormValidatorContainer
+from globalVars import ANY_CONTEXT, ANY_BUTTON
 
 class ControlledBase:
-    """Common functions for objects controlled by form_controller"""
+    """Common functions for objects controlled by portal_form_controller"""
      
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
@@ -35,59 +40,203 @@ class ControlledBase:
     security.declareProtected(ManagePortal, 'listActionTypes')
     def listActionTypes(self):
         """Return a list of available action types."""
-        return getToolByName(self, 'form_controller').listActionTypes()
+        return getToolByName(self, 'portal_form_controller').listActionTypes()
+
     
     security.declareProtected(ManagePortal, 'listFormValidators')
-    def listFormValidators(self, **kwargs):
+    def listFormValidators(self, override, **kwargs):
         """Return a list of existing validators.  Validators can be filtered by
            specifying required attributes via kwargs"""
-        return getToolByName(self, 'form_controller').listFormValidators(**kwargs)
+        controller = getToolByName(self, 'portal_form_controller')
+        if override:
+            return controller.validators.getFiltered(**kwargs)
+        else:
+            return self.validators.getFiltered(**kwargs)
+
         
     security.declareProtected(ManagePortal, 'listFormActions')
-    def listFormActions(self, **kwargs):
+    def listFormActions(self, override, **kwargs):
         """Return a list of existing actions.  Actions can be filtered by
            specifying required attributes via kwargs"""
-        return getToolByName(self, 'form_controller').listFormActions(**kwargs)
+        controller = getToolByName(self, 'portal_form_controller')
+        if override:
+            return controller.actions.getFiltered(**kwargs)
+        else:
+            return self.actions.getFiltered(**kwargs)
+
 
     security.declareProtected(ManagePortal, 'listContextTypes')
     def listContextTypes(self):
         """Return list of possible types for template context objects"""
-        return getToolByName(self, 'form_controller').listContextTypes()
+        return getToolByName(self, 'portal_form_controller').listContextTypes()
+
 
     security.declareProtected(ManagePortal, 'manage_editFormValidators')
     def manage_editFormValidators(self, REQUEST):
         """Process form validator edit form"""
-        getToolByName(self, 'form_controller').manage_editFormValidators(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.validators
+        else:
+            container = self.validators
+        controller._editFormValidators(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
+
 
     security.declareProtected(ManagePortal, 'manage_addFormValidators')
     def manage_addFormValidators(self, REQUEST):
         """Process form validator add form"""
-        getToolByName(self, 'form_controller').manage_addFormValidators(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.validators
+        else:
+            container = self.validators
+        controller._addFormValidators(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
+
 
     security.declareProtected(ManagePortal, 'manage_delFormValidators')
     def manage_delFormValidators(self, REQUEST):
         """Process form validator delete form"""
-        getToolByName(self, 'form_controller').manage_delFormValidators(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.validators
+        else:
+            container = self.validators
+        controller._delFormValidators(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
+
 
     security.declareProtected(ManagePortal, 'manage_editFormActions')
     def manage_editFormActions(self, REQUEST):
         """Process form action edit form"""
-        getToolByName(self, 'form_controller').manage_editFormActions(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.actions
+        else:
+            container = self.actions
+        controller._editFormActions(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formActionsForm')
+
 
     security.declareProtected(ManagePortal, 'manage_addFormAction')
     def manage_addFormAction(self, REQUEST):
         """Process form action add form"""
-        getToolByName(self, 'form_controller').manage_addFormAction(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.actions
+        else:
+            container = self.actions
+        controller._addFormAction(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formActionsForm')
+
 
     security.declareProtected(ManagePortal, 'manage_delFormActions')
     def manage_delFormActions(self, REQUEST):
         """Process form action delete form"""
-        getToolByName(self, 'form_controller').manage_delFormActions(REQUEST)
+        controller = getToolByName(self, 'portal_form_controller')
+        if REQUEST.form.get('override', 0):
+            container = controller.actions
+        else:
+            container = self.actions
+        controller._delFormActions(container, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formActionsForm')
 
+
+    def getNext(self, controller_state):
+        id = self.getId()
+        status = controller_state.getStatus()
+        context = controller_state.getContext()
+        REQUEST = context.REQUEST
+        context_type = getattr(context, '__class__', None)
+        if context_type:
+            context_type = getattr(context_type, '__name__', None)
+        button = controller_state.getButton()
+
+        controller = getToolByName(self, 'portal_form_controller')
+
+        next_action = None
+        try:
+            next_action = controller.actions.match(id, status, context_type, button)
+        except ValueError:
+            pass
+        if next_action is None:
+            try:
+                next_action = self.actions.match(id, status, context_type, button)
+            except ValueError:
+                pass
+            if next_action is None:
+                next_action = controller_state.getNextAction()
+                if next_action is None:
+                    # default for failure is to traverse to the form
+                    if status == 'failure':
+                        next_action=FormAction(id, status, ANY_CONTEXT, ANY_BUTTON, 'traverse_to', 'string:%s' % id, controller)
+                    if next_action is None:
+                        raise ValueError, 'No next action found for %s.%s.%s.%s' % (id, status, context_type, button)
+
+        REQUEST.set('controller_state', controller_state)
+        return next_action.getAction()(controller_state)
+
+    
+    def _read_action_metadata(self, id, filepath):
+        self.actions = FormActionContainer()
+        
+        metadata = FSMetadata(filepath)
+        cfg = CMFConfigParser()
+        filepath = expandpath(filepath)
+        if os.path.exists(filepath + '.metadata'):
+            cfg.read(filepath + '.metadata')
+            
+            try:
+                controller = getToolByName(self, 'portal_form_controller')
+            except AttributeError:
+                controller = None
+
+            actions = metadata._getSectionDict(cfg, 'actions')
+            for (k, v) in actions.items():
+                # action.STATUS.CONTEXT_TYPE.BUTTON = ACTION_TYPE:ACTION_ARG
+                component = k.split('.')
+                while len(component) < 4:
+                    component.append('')
+                if component[0] != 'action':
+                    raise ValueError, '%s: Format for .metadata actions is action.STATUS.CONTEXT_TYPE.BUTTON = ACTION_TYPE:ACTION_ARG (not %s)' % (filepath, k)
+                act = v.split(':',1)
+                while len(act) < 2:
+                    act.append('')
+                import sys
+                sys.stdout.write('form action: %s, %s, %s, %s, %s, %s\n' % (str(id), \
+                    str(component[1]), str(component[2]), str(component[3]),
+                    str(act[0]), str(act[1])))
+                self.actions.set(FormAction(id, component[1], component[2], component[3], act[0], act[1], controller))
+
+
+    def _read_validator_metadata(self, id, filepath):
+        self.validators = FormValidatorContainer()
+        
+        metadata = FSMetadata(filepath)
+        cfg = CMFConfigParser()
+        filepath = expandpath(filepath)
+        if os.path.exists(filepath + '.metadata'):
+            cfg.read(filepath + '.metadata')
+            
+            try:
+                controller = getToolByName(self, 'portal_form_controller')
+            except AttributeError:
+                controller = None
+                
+            validators = metadata._getSectionDict(cfg, 'validators')
+            for (k, v) in validators.items():
+                # validators.CONTEXT_TYPE.BUTTON = LIST
+                component = k.split('.')
+                while len(component) < 3:
+                    component.append('')
+                if component[0] != 'validators':
+                    raise ValueError, '%s: Format for .metadata validators is validators.CONTEXT_TYPE.BUTTON = LIST (not %s)' % (filepath, k)
+                self.validators.set(FormValidator(id, component[1], component[2], v, controller))
+
+    security.declarePublic('writableDefaults')
+    def writableDefaults(self):
+        """Can default actions and validators be modified?"""
+        return 1
+    
 InitializeClass(ControlledBase)

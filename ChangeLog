@@ -1,3 +1,8 @@
+2003-07-27  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Complete refactoring.  Default properties are now specified in .metadata
+      files when appropriate.
+
 2003-07-04  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Initial check-in

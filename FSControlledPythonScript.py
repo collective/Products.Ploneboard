@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.1 2003/07/04 20:11:59 plonista Exp $
+$Id: FSControlledPythonScript.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -21,12 +21,13 @@ from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
-from Products.CMFCore.FSPythonScript import FSPythonScript
+from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
 from ControlledPythonScript import ControlledPythonScript
+from ControllerState import ControllerState
 from ControlledBase import ControlledBase
 
 
-class FSControlledPythonScript (FSPythonScript, ControlledBase):
+class FSControlledPythonScript (BaseClass, ControlledBase):
     """FSControlledPythonScripts act like Controlled Python Scripts but are not 
     directly modifiable from the management interface."""
 
@@ -44,12 +45,41 @@ class FSControlledPythonScript (FSPythonScript, ControlledBase):
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
 
+    def __init__(self, id, filepath, fullname=None, properties=None):
+        BaseClass.__init__(self, id, filepath, fullname, properties)
+        self._read_action_metadata(self.getId(), filepath)
+
+    def __call__(self, *args, **kwargs):
+        result = FSControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+            return self.getNext(result)
+        return result
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, object, container):
+        try:
+            BaseClass.manage_afterAdd(self, object, container)
+            # Re-read .metadata after adding so that we can do validation checks
+            # using information in portal_form_controller.  Since manage_afterAdd
+            # is not guaranteed to run, we also call these in __init__
+            object._read_action_metadata(object.getId(), object.filepath)
+        except:
+            import pdb
+            pdb.set_trace()
+            raise
+
+
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControlledPythonScript(self.getId())
         obj.write(self.read())
         return obj
 
+
+    security.declarePublic('writableDefaults')
+    def writableDefaults(self):
+        """Can default actions and validators be modified?"""
+        return 0
 
 Globals.InitializeClass(FSControlledPythonScript)
 

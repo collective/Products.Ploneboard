@@ -3,6 +3,8 @@ import AccessControl
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_chain
 from Products.CMFCore.utils import getToolByName
+from FormAction import FormAction
+from globalVars import ANY_CONTEXT, ANY_BUTTON
 
 class ControllerState(AccessControl.Role.RoleManager):
     security = ClassSecurityInfo()
@@ -44,6 +46,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.setContext(context)
         self.setKwargs(kwargs)
         self.setNextAction(next_action)
+        self._is_validating = 0
 
 
     def set(self, **kwargs):
@@ -153,19 +156,19 @@ class ControllerState(AccessControl.Role.RoleManager):
 
     def getNextAction(self):
         """Get the default next action (this action can be overridden in 
-        form_controller).  The action will have the form 
+        portal_form_controller).  The action will have the form 
         {'action_type':action_type, 'args':args} where action_type is a string
-        (from form_controller.validActionTypes), and args is a string that will 
-        be passed to the constructor when generating an action object"""
+        (from portal_form_controller.validActionTypes), and args is a string 
+        that will be passed to the constructor when generating an action object"""
         return self.next_action
 
     def setNextAction(self, action):
         """Set the default next action (this action can be overridden in 
-        form_controller).  setNextAction can be called either with a dictionary
-        argument of the form {'action_type':action_type, 'args':args} or with a 
-        string of the form 'action_type:args'.  Here action_type is a string
-        (from form_controller.validActionTypes) and args is a string that will 
-        be passed to the constructor when generating an action object"""
+        portal_form_controller).  setNextAction can be called either with a 
+        dictionary argument of the form {'action_type':action_type, 'args':args}
+        or with a string of the form 'action_type:args'.  Here action_type is a
+        string (from form_controller.validActionTypes) and args is a string that
+        will be passed to the constructor when generating an action object"""
         if action is None:
             self.next_action = action
             return
@@ -179,11 +182,16 @@ class ControllerState(AccessControl.Role.RoleManager):
                 args = split_action[1].strip()
             else:
                 args = None
-        form_controller = getToolByName(self.getContext(), 'form_controller')
-        if not action_type in form_controller.validActionTypes():
+        controller = getToolByName(self.getContext(), 'portal_form_controller')
+        if not action_type in controller.validActionTypes():
             raise KeyError, 'Unknown action type %s\n' % action_type
-        self.next_action = {'action_type':action_type, 'args':args}
+        self.next_action = FormAction(self.getId(), self.getStatus(), ANY_CONTEXT, ANY_BUTTON, action_type, args, controller)
 
+    def _setValidating(self, is_validating):
+        self._is_validating = is_validating
+        
+    def _isValidating(self):
+        return self._is_validating
 
     def __str__(self):
         return 'id = %s\nstatus = %s\nbutton=%s\nerrors=%s\ncontext=%s\nkwargs=%s\nnext_action=%s\n' % \

@@ -3,8 +3,8 @@
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
 <div tal:define="availableContextTypes here/listContextTypes;
-                 fixed_template python:here.id=='form_controller' and None or here.id;
-                 filters python:fixed_template and {'template_id':fixed_template} or {};">
+                 fixed_object python:test(here.id=='portal_form_controller', None, here.id);
+                 filters python:fixed_object and {'object_id':fixed_object} or {};">
 
 <h3>Form Validators</h3>
 
@@ -31,12 +31,13 @@ executed when a Controlled Page Template is submitted.
        
 <hr/>
 
-<h3 class="form-help">Edit form validators</h3>
+<h3 class="form-help">Edit Form Validator Overrides</h3>
 
 <form method="POST"
       tal:attributes="action here/absolute_url" 
-      tal:define="form_validators python:here.listFormValidators(**filters);">
-<table border="0" tal:condition="form_validators">
+      tal:define="form_validators python:here.listFormValidators(1, **filters);">
+   <input type="hidden" name="override:int" value="1" />
+<table border="0" tal:condition="form_validators" metal:define-macro="edit_validators">
    <tr>
       <td>&nbsp;</td>
       <td class="form-label">Template</td>
@@ -49,48 +50,47 @@ executed when a Controlled Page Template is submitted.
           <input type="checkbox" 
                  tal:attributes="name python:'del_id_'+str(repeat['validator'].index);" />
           <input type="hidden" 
-                 tal:attributes="name python:'del_template_id_'+str(repeat['validator'].index);
-                                 value validator/template_id;" />
+                 tal:attributes="name python:'old_object_id_'+str(repeat['validator'].index);
+                                 value validator/getObjectId;" />
           <input type="hidden" 
-                 tal:attributes="name python:'del_context_type_'+str(repeat['validator'].index);
-                                 value validator/context_type;" />
+                 tal:attributes="name python:'old_context_type_'+str(repeat['validator'].index);
+                                 value validator/getContextType;" />
           <input type="hidden" 
-                 tal:attributes="name python:'del_button_'+str(repeat['validator'].index);
-                                 value validator/button;" />
+                 tal:attributes="name python:'old_button_'+str(repeat['validator'].index);
+                                 value validator/getButton;" />
        </td>
-       <td tal:condition="fixed_template">
-          <span tal:replace="validator/template_id" />
+       <td tal:condition="fixed_object">
+          <span tal:replace="validator/getObjectId" />
           <input type="hidden" 
-                 tal:attributes="name python:'template_id_'+str(repeat['validator'].index);
-                                 value validator/template_id" />
+                 tal:attributes="name python:'object_id_'+str(repeat['validator'].index);
+                                 value validator/getObjectId" />
        </td>
-       <td tal:condition="not:fixed_template" class="form-element">
+       <td tal:condition="not:fixed_object" class="form-element">
           <input type="text" 
-                 tal:attributes="name python:'template_id_'+str(repeat['validator'].index);
-                                 value validator/template_id" size="15" />
+                 tal:attributes="name python:'object_id_'+str(repeat['validator'].index);
+                                 value validator/getObjectId" size="15" />
        </td>
        <td class="form-element">
           <select tal:attributes="name python:'context_type_'+str(repeat['validator'].index);">
              <option value=""
-                     tal:attributes="selected python:test(validator['context_type'] is None, 'selected', None);">Any</option>
+                     tal:attributes="selected python:test(validator.getContextType() is None, 'selected', None);">Any</option>
              <option tal:repeat="context_type availableContextTypes"
                      tal:attributes="value context_type;
-                                     selected python:test(validator['context_type'] == context_type, 'selected', None);"
+                                     selected python:test(validator.getContextType() == context_type, 'selected', None);"
   		             tal:content="context_type" />
           </select>
        </td>
        <td class="form-element">
           <input type="text" 
                  tal:attributes="name python:'button_'+str(repeat['validator'].index);
-                                 value validator/button" size="10" />
+                                 value validator/getButton" size="10" />
        </td>
        <td class="form-element">
           <input type="text" 
                  tal:attributes="name python:'validators_'+str(repeat['validator'].index);
-                                 value python:validator['st_validators'];" size="50" />
+                                 value python:', '.join(validator.getValidators());" size="50" />
        </td>
    </tr>
-   <tr>
 </table>
 
 <p tal:condition="not:form_validators"><i>No validators have been specified</i></p>
@@ -105,20 +105,21 @@ executed when a Controlled Page Template is submitted.
 
 <hr />
 
-<h3 class="form-help">Add a form validator</h3>
+<h3 class="form-help">Add a New Form Validator Override</h3>
 
 <form method="POST"
       tal:attributes="action here/absolute_url">
-<table border="0">
+   <input type="hidden" name="override:int" value="1" />
+<table border="0" metal:define-macro="add_validators">
    <tr>
        <td class="form-label">Template</td>
-       <td tal:condition="fixed_template">
-          <span tal:replace="fixed_template" />
-          <input type="hidden" name="new_template_id"
-                 tal:attributes="value fixed_template" />
+       <td tal:condition="fixed_object">
+          <span tal:replace="fixed_object" />
+          <input type="hidden" name="new_object_id"
+                 tal:attributes="value fixed_object" />
        </td>
-       <td tal:condition="not:fixed_template" class="form-element">
-          <input type="text" name="new_template_id" size="15" />
+       <td tal:condition="not:fixed_object" class="form-element">
+          <input type="text" name="new_object_id" size="15" />
        </td>
    </tr>
    <tr>
@@ -153,5 +154,72 @@ executed when a Controlled Page Template is submitted.
 </table>
 </form>
 
+<hr/>
+
+<div tal:condition="here/writableDefaults">
+<h3 class="form-help">Edit Default Validators</h3>
+
+<form method="POST"
+      tal:attributes="action here/absolute_url" 
+      tal:define="form_validators python:here.listFormValidators(0, **filters);">
+   <input type="hidden" name="override:int" value="0" />
+<table border="0" tal:condition="form_validators" metal:use-macro="template/macros/edit_validators" />
+
+<p tal:condition="not:form_validators"><i>No validators have been specified</i></p>
+
+<table tal:condition="form_validators">
+<tr>
+   <td class="form-element"><input type="submit" name="manage_editFormValidators:method" value="Save"/></td>
+   <td class="form-element"><input type="submit" name="manage_delFormValidators:method" value="Delete"/></td>
+</tr>
+</table>
+</form>
+
+<hr/>
+
+<h3 class="form-help">Add Default Validator</h3>
+
+<form method="POST"
+      tal:attributes="action here/absolute_url">
+   <input type="hidden" name="override:int" value="0" />
+
+<table border="0" metal:use-macro="template/macros/add_validators" />
+
+<table>
+<tr>
+   <td class="form-element"><input type="submit" name="manage_addFormValidators:method" value="Add"/></td>
+</tr>
+</table>
+</form>
+
+</div>
+
+<div tal:condition="python:not here.writableDefaults() and fixed_object">
+<h3 class="form-help">Default Validators</h3>
+
+<div tal:define="form_validators python:here.listFormValidators(0, **filters);">
+<table border="0" tal:condition="form_validators">
+   <tr>
+      <td class="form-label">Template</td>
+      <td class="form-label">Context</td>
+      <td class="form-label">Button</td>
+      <td class="form-label">Validators</td>
+   </tr>
+   <tr tal:repeat="validator form_validators">
+       <td tal:content="validator/getObjectId" />
+       <td tal:define="context_type validator/getContextType">
+          <span tal:condition="context_type" tal:replace="context_type"/>
+          <span tal:condition="not:context_type" tal:omit-tag="">Any</span>
+       </td>
+       <td tal:define="button validator/getButton">
+          <span tal:condition="button" tal:replace="button"/>
+          <span tal:condition="not:button" tal:omit-tag="">Any</span>
+       </td>
+       <td tal:content="python: ', '.join(validator.getValidators())" />
+   </tr>
+</table>
+<p tal:condition="not:form_validators"><i>No validators have been specified</i></p>
+</div>
+</div>
 </div>
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

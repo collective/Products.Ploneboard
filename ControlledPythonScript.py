@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.1 $'[11:-2]
+__version__='$Revision: 1.2 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -113,6 +113,14 @@ class ControlledPythonScript(PythonScript, ControlledBase):
       'ZPythonScriptHTML_editAction',
       'ZPythonScript_setTitle', 'ZPythonScript_edit',
       'ZPythonScriptHTML_upload', 'ZPythonScriptHTML_changePrefs')
+
+
+    def __call__(self, *args, **kwargs):
+        result = ControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+            return self.getNext(result)
+        return result
+
 
 _first_indent = re.compile('(?m)^ *(?! |$)')
 _nonempty_line = re.compile('(?m)^(.*\S.*)$')
