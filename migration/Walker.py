@@ -89,7 +89,7 @@ class Walker:
             self.out.append(msg)
             #print msg
 
-            migrator = self.migrator(obj)
+            migrator = self.migrator(obj, **kwargs)
             try:
                 # run the migration
                 migrator.migrate()
@@ -160,6 +160,8 @@ class CatalogWalker(Walker):
             obj = brain.getObject()
             if obj:
                 yield obj
+                # XXX safe my butt
+                obj._p_deactivate()
 
 class CatalogWalkerWithLevel(Walker):
     """Walker using the catalog but only returning objects for a specific depth
@@ -211,6 +213,8 @@ class CatalogWalkerWithLevel(Walker):
             obj = brain.getObject()
             if obj:
                 yield obj
+                # XXX safe my butt
+                obj._p_deactivate()
             else:
                 LOG("Stale brain found at %s" % brain.getPath())
     

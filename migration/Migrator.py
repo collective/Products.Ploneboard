@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.20 2004/08/04 23:15:06 tiran Exp $
+$Id: Migrator.py,v 1.21 2004/10/14 22:30:52 tiran Exp $
 """
 
 from copy import copy
@@ -92,7 +92,7 @@ class BaseMigrator:
 
     subtransaction = 30
 
-    def __init__(self, obj):
+    def __init__(self, obj, **kwargs):
         self.old = obj
         self.orig_id = self.old.getId()
 
@@ -102,6 +102,8 @@ class BaseMigrator:
         self.new_id = self.orig_id
 
         self.parent = aq_parent(self.old)
+        
+        self.kwargs = kwargs
 
         # safe id generation
         while hasattr(aq_base(self.parent), self.old_id):
