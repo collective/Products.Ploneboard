@@ -1,0 +1,3 @@
+Initial code and concept: Ben Saller (bcsaller), Jonah (MrEnoch)
+Tons of additional functionality: Geoff Davis (geoffd / plonista)
+

@@ -1,0 +1,29 @@
+NOTES
+-----
+
+CMFMember uses workflow to control the fields available
+on base_view and base_edit.
+
+Here are the states:
+
+New: A member being created by Anonymous.  There is no
+object in acl_users corresponding to such a member.
+
+Pending: A locked member object awaiting approval.  Locking
+is done via an automatic workflow transition.  There is no
+object in acl_users corresponding to such a member.  If a
+Manager creates a new member, the member is automatically
+registered; otherwise members must be registered by a manager
+via a process analogous to document review.
+
+Registered - public: A registered member connected to a User
+object in acl_users.  The requisite object is created upon
+registration.  The member appears in catalog searches and people
+can access public information about the member (full name, email
+address, etc)
+
+Registered - private: A registered member connected to a User
+object in acl_users.  The requisite object is created upon
+registration.  The member does not appear in catalog searches 
+and people can NOT access public information about the member 
+(full name, email address, etc)

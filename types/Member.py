@@ -1,138 +1,251 @@
+import types
+import Products.CMFMember
+import AccessControl.User
 from AccessControl import ClassSecurityInfo
-from Products.CMFTypes import registerType
-from Products.CMFTypes.BaseContent import BaseContent
-from Products.CMFTypes.ExtensibleMetadata import ExtensibleMetadata
-from Products.CMFTypes.Field       import *
-from Products.CMFTypes.Form        import *
-from Products.CMFTypes.debug import log
-from Products.CMFTypes.Storage import IStorage
+from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
+from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
+from Products.CMFCore.utils import getToolByName
+from Products.Archetypes import registerType
+from Products.Archetypes.BaseContent import BaseContent
+from Products.Archetypes.interfaces.base import IBaseContent
+from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
+from Products.Archetypes.Field       import *
+from Products.Archetypes.Widget      import *
+from Products.Archetypes.debug import log
+# from Products.Archetypes.Storage import IStorage
 from DateTime import DateTime
+import Products.CMFMember as CMFMember
+from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
-def addMember(self, id, **kwargs):
-    o = Member(id, **kwargs)
-    # XXX
-    #self._setObject(id, o)
-    return o
 
-content_type = FieldList((
-    LinesField('roles',
-               mutator="setRoles",
-               accessor="getRoles",
-               vocabulary='valid_roles',
-               read_permission=CMFCorePermissions.ManagePortal,
-               write_permission=CMFCorePermissions.ManagePortal,
-               form_info=MultiSelectionInfo()), 
-    
-    LinesField('domains',
-               accessor="getDomains",
-               read_permission=CMFCorePermissions.ManagePortal,
-               write_permission=CMFCorePermissions.ManagePortal,
-               form_info=LinesInfo()),
+content_schema = FieldList((
+    StringField('id',
+                required=1,
+                accessor="getId",
+                mutator="setId",
+                mode='rw',
+                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
+                write_permission=CMFMember.EDIT_ID_PERMISSION,
+                default=None,
+                widget=IdWidget(label_msgid="label_name",
+                                description_msgid="help_name",
+                                i18n_domain="plone"),
+                ),
+
+    StringField('fullname',
+                default='',
+                mode='rw',
+                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
+                write_permission=CMFMember.EDIT_REGISTRATION_PERMISSION,
+                searchable=1,
+                widget=StringWidget(label='Full name',
+                                    description='Enter your full name here.',)
+                ),
 
     ObjectField('email',
+                required=1,
+                mode='rw',
+                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
+                write_permission=CMFMember.EDIT_REGISTRATION_PERMISSION,
                 searchable=1,
-                mode="rw"),
+                widget=StringWidget(label='E-mail',
+                                    description='Enter your e-mail address here.',)
+                ),
     
+    ObjectField('wysiwyg_editor',
+                mode='rw',
+                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                vocabulary='editors',
+                enforceVocabulary=1,
+                widget=SelectionWidget(format='pulldown',
+                                       label='Content editor',
+                                       description='Select the editor that you would like to use ' + \
+                                                   'for editing content more easily. Content editors ' + \
+                                                   'often have specific browser requirements.')
+                ),
+    
+    ObjectField('formtooltips',
+                 default=1,
+                 mode='rw',
+                 read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                 write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                 searchable=0,
+                 widget=BooleanWidget(label='Form help',
+                                      description='Indicate whether you want the form help pop-ups to be displayed.')
+                ),
+
+    ObjectField('visible_ids',
+                default=1,
+                mode='rw',
+                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                widget=BooleanWidget(label='Display names',
+                                     description='Indicate whether you want Names (also known as IDs) to be ' + \
+                                                 'visible and editable when editing contents. If you choose not ' + \
+                                                 'to display Names, they will be generated automatically.')
+                ),
+
     ObjectField('portal_skin',
+                mode='rw',
+                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
                 required=1,
                 searchable=0,
                 vocabulary='available_skins',
                 enforceVocabulary=1,
-                form_info=SingleSelectionInfo(format="pulldown",
-                                              label="Portal Skin")),
+                widget=SelectionWidget(format='pulldown',
+                                       label='Look',
+                                       description='Choose the appearance of the site. Several styles are available.')
+                ),
     
-    ObjectField('listed',
+    StringField('password',
+                mutator='_setPassword',
+                accessor='_getPassword',
+                mode='w',
+                read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
+                write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
                 searchable=0,
-                form_info=BooleanInfo(label="Listed")),
+                widget=PasswordWidget(label='Password',
+                                      description='Enter a new password (leave blank to keep your current password)')
+                ),
+
+    StringField('confirm_password',
+                mutator='_setPassword',
+                accessor='_getPassword',
+                mode='w',
+                read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
+                write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
+                searchable=0,
+                widget=PasswordWidget(label='Confirm password',
+                                      description='Confirm your new password')
+                ),
+
+    LinesField('roles',
+               mutator='setRoles',
+               accessor='getRoles',
+               vocabulary='valid_roles',
+               enforceVocabulary=1,
+               mode='rw',
+               read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
+               write_permission=CMFMember.EDIT_SECURITY_PERMISSION,
+               searchable=0,
+               widget=MultiSelectionWidget(label='Roles',
+                                           description='Select the security roles for this user')
+               ), 
+    
+    LinesField('domains',
+               mutator='setDomains',
+               accessor='getDomains',
+               mode='rw',
+               read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
+               write_permission=CMFMember.EDIT_SECURITY_PERMISSION,
+               searchable=0,
+               widget=LinesWidget(label='Domains',
+                                  description='If you would like to restrict this user to logging in only from certain domains, enter those domains here.')
+               ),
+
+#    ObjectField('listed',
+#                default=1,
+#                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+#                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+#                searchable=0,
+#                widget=BooleanWidget(label="Listed")),
 
     DateTimeField('login_time',
-                  accessor="getLoginTime",
-                  mutator="setLoginTime",
+                  default='2000/01/01',  # for Plone 1.0.1 compatibility
+                  mode='r',
+                  read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                  write_permission=CMFMember.EDIT_OTHER_PERMISSION,
                   searchable=0,
-                  form_info=DateTimeInfo(label="Login Time",
-                                         visible=-1,)),
+                  widget=StringWidget(label="Login time",
+                                      visible=-1,)),
     
     DateTimeField('last_login_time',
-                  accessor="getLastLoginTime",
-                  mutator="setLastLoginTime",
+                  default='2000/01/01',  # for Plone 1.0.1 compatibility
+                  mode='r',
+                  read_permission=CMFMember.VIEW_OTHER_PERMISSION,
+                  write_permission=CMFMember.EDIT_OTHER_PERMISSION,
                   searchable=0,
-                  form_info=DateTimeInfo(label="Last Login Time",
-                                         visible=-1,)),
-
-    ObjectField('wysiwyg_editor',
-                vocabulary='editors',
-                enforceVocabulary=1,
-                form_info=SingleSelectionInfo(format="pulldown",
-                                              label="WYSIWYG Editor")),
-    
-    ObjectField('visible_ids',
-                form_info=BooleanInfo(label="Show Names")
-                )
-    
+                  widget=StringWidget(label="Last login time",
+                                      visible=-1,)),
     ))
 
 _marker = []
 
 class Member(BaseContent):
     """A description of a member"""
+    __implements__ = IMemberData, IBaseContent
+
+    security = ClassSecurityInfo()
+
     portal_type = meta_type = "Member"
 
-    type = BaseContent.type + content_type + ExtensibleMetadata.type
+    # Note that we override BaseContent.schema
+    schema = content_schema + ExtensibleMetadata.schema
 
     ##IMPL DETAILS
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
         self.id = str(userid)
 
-        now = DateTime()
-        self.setLoginTime(now)
-        self.setLastLoginTime(now)
 
-    def getUser(self):
-        if not hasattr(self, '_v_user'):
-            self._v_user = self.acl_users.getUser(self.id).__of__(self.acl_users)
-            
-        return self._v_user
-    
-    def setUser(self, user):
-        self._v_user = user
+    security.declarePublic('getMemberId')
+    def getMemberId(self):
+        return self.getUserName()
 
-    ##USER INTERFACE IMPL
-    def getUserName(self):
-        """Return the username of a user"""
-        return self.getUser().getUserName()
 
-    def _getPassword(self):
-        """Return the password of the user."""
-        return self.getUser()._getPassword()
-
-    def getRoles(self):
-        """Return the list of roles assigned to a user."""
-        return self.getUser().getRoles() + getattr(self, '_roles', ())
-
-    def getDomains(self):
-        """Return the list of domain restrictions for a user"""
-        return self.getUser().getDomains()
+    security.declarePrivate('validate_id')
+    def validate_id(self, id):
+        # no change -- ignore
+        if self.id and id == self.id:
+            return None
+        
+        registration_tool = getToolByName(self, 'portal_registration')
+        if registration_tool.isMemberIdAllowed(id):
+            return None
+        else:
+            return 'The login name you selected is already ' + \
+                   'in use or is not valid. Please choose another.'
 
     
-    def setRoles(self, value):
-        if isinstance(roles, types.StringType):
-            value = roles.split('\n')
-            value = [v.strip() for v in value if v.strip()]
-            value = filter(None, value)
+    security.declarePrivate('validate_password')
+    def validate_password(self, password):
+        # no change -- ignore
+        if not password:
+            return None
 
-        self._roles = value
+        registration_tool = getToolByName(self, 'portal_registration')
+        return registration_tool.testPasswordValidity(password)
 
-    def setDomains(self, value):
-        self.getUser().setDomains(value)
-    
+
+    security.declarePrivate('validate_roles')
+    def validate_roles(self, roles):
+        roles = self._stringToList(roles)
+        valid = self.valid_roles()
+        for r in roles:
+            if r not in valid:
+                return '%s is not a valid role.' % (r)
+        return None
+
+
+    security.declarePrivate('post_validate')
+    def post_validate(self, REQUEST, errors):
+        if not(errors.get('password', None)) and not(errors.get('confirm_password', None)):
+            if REQUEST.get('password', None) != REQUEST.get('confirm_password', None):
+                errors['password'] = errors['confirm_password'] = \
+                    'Your password and confirmation did not match. ' \
+                     + 'Please try again.'
+
+
     ## Contract with portal_membership
     
+    security.declareProtected(CMFMember.EDIT_OTHER_PERMISSION, 'setProperties')
     def setProperties(self, mapping=None, **kwargs):
         """assign all the props to member attributes, we expect
         to be able to find a mutator for each of these props
         """
-        #We know this is a CMFTypes based object so we look for
+        #We know this is an Archetypes based object so we look for
         #mutators there first
         if kwargs:
             # mapping could be a request object thats not really a dict,
@@ -142,10 +255,9 @@ class Member(BaseContent):
                 data[k] = v
             data.update(kwargs)
             mapping = data
-            
 
         for key, value in mapping.items():
-            field = self.type.get(key)
+            field = self.schema.get(key)
             mutator = None
             if field:
                 mutator = getattr(self, field.mutator, None)
@@ -159,31 +271,200 @@ class Member(BaseContent):
                 # XXX fall back to properties? or attributes
                 pass
 
+
+    security.declarePrivate('setMemberProperties')
     def setMemberProperties(self, mapping):
         self.setProperties(mapping)
 
+
+    security.declarePublic('getProperty')
     def getProperty(self, id, default=_marker):
-        #assume CMFTypes attr here 
-        accessor = getattr(self, self.type[id].accessor, None)
+        #assume Archetypes attr here 
+        accessor = getattr(self, self.schema[id].accessor, None)
         try:
             value = accessor()
         except:
             if default is _marker:
-                raise AttributeError(id)
-            value = default
+                # member does not have a value for given property
+                # try memberdata_tool for default value
+                memberdata_tool = getToolByName(self, 'portal_memberdata')
+                try:
+                    value = memberdata_tool.getProperty(id)
+                except:
+                    raise AttributeError(id)
+            else:
+                value = default
 
         return value
+
+
+    security.declarePublic('getUser')
+    # XXX is this perm correct
+    def getUser(self):
+        acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users
+        if not hasattr(self, '_v_user'):
+            u = acl_users.getUser(self.id)
+            if u is not None:
+                self._v_user = u
+            else:
+                # create a temporary user - turn into a real user when register() is called
+                self._v_user = AccessControl.User.SimpleUser(self.id, None, None, None)
+        return aq_base(self._v_user).__of__(acl_users) # restore the proper context
+
+
+    security.declarePrivate('register')
+    def register(self):
+        registration_tool = getToolByName(self, 'portal_registration')
+        # Limit the granted roles.
+        # Anyone is always allowed to grant the 'Member' role.
+        registration_tool._limitGrantedRoles(roles, self, ('Member',))
+
+        # create a real user
+        if self.acl_users.getUser(self.id) is None:
+            self.acl_users.userFolderAddUser(self.id, self._getPassword(), self.getRoles(), self.getDomains())
+            self._v_user = self.acl_users.getUser(self.id)
+
+        # make the user the owner of the current member object
+        self.changeOwnership(self.getUser(), 1)
+
+        registration_tool.afterAdd(self, id, password, properties)
+
+
+    security.declarePrivate('disable')
+    def disable(self):
+        pass
+
+
+    security.declareProtected(CMFMember.EDIT_ID_PERMISSION, 'setId')
+    def setId(self, id):
+        if hasattr(self, '_v_user'):
+            old_user_id = self._v_user.getUserName()
+            # if a user with with id old_user_id exists, recurse through
+            # the portal and modify local roles and ownership
+            portal = getToolByName(self, 'portal_url').getPortalObject()
+            if portal.acl_users.getUser(old_user_id) is not None:
+                # delete local roles and content owned by this user
+                self._changeUserInfo(portal, old_user_id, id)
+                # create a new user with the appropriate id
+                portal.acl_users.userFolderAddUser(id, self._getPassword(), self.getRoles(), self.getDomains())
+                # delete the old user
+                portal.acl_users.userFolderDelUsers((old_user_id,))
+            delattr(self, '_v_user')
+
+        self.id = id
+
+    security.declareProtected(CMFMember.EDIT_REGISTRATION_PERMISSION, 'setId')
+    def setEmail(self, email):
+        self.email = email
+        # invoke any automated workflow transitions
+        # XXX this should really be in a manage_afterEdit method of some sort
+        # XXX need to add a hook into archetypes
+        triggerAutomaticTransitions(self)
+
+
+    security.declarePrivate('setUser')
+    def setUser(self, user):
+        # XXX -- make sure the right things happen if
+        # the new user has a different id than the current user
+        assert(user.getUserName() == self.id)
+        self._v_user = user
+
+
+    ##USER INTERFACE IMPL
+    security.declarePublic('Title')
+    def Title(self):
+        return self.id
+
+
+    security.declarePublic('getUserName')
+    def getUserName(self):
+        """Return the username of a user"""
+        return self.getUser().getUserName()
+
+
+    security.declarePrivate('_getPassword')
+    def _getPassword(self):
+        """Return the password of the user."""
+        return self.getUser()._getPassword()
+
+
+    security.declarePrivate('getRoles')
+    def getRoles(self):
+        """Return the list of roles assigned to a user."""
+        return self.getUser().getRoles()
+
+
+    security.declarePrivate('getDomains')
+    def getDomains(self):
+        """Return the list of domain restrictions for a user"""
+        return self.getUser().getDomains()
+
+
+    def _setPassword(self, password):
+        if password:
+            self.getUser().__ = password
+            # XXX - this is kind of ugly -- is there a better way?
+            # don't log out the current user
+            if self.REQUEST:
+                membership_tool = getToolByName(self, 'portal_membership')
+                if membership_tool.getAuthenticatedMember().getUserName() == self.getUserName():
+                    token = self.getUserName() + ':' + password
+                    token = encodestring(token)
+                    token = quote(token)
+                    self.REQUEST.response.setCookie('__ac', token, path='/')
+                    self.REQUEST['__ac']=token
+
+
+    def _stringToList(self, s):
+        # XXX May not need this anymoure
+        if s is None:
+            return []
+        if isinstance(s, types.StringType):
+            # split on , or \n and ignore \r
+            s = s.replace('\r','')
+            s = s.replace('\n',',')
+            s = s.split(',')
+            s= [v.strip() for v in s if v.strip()]
+            s = filter(None, s)
+        return s
+
+
+    security.declarePrivate('setRoles')
+    def setRoles(self, value):
+        value = self._stringToList(value)
+        self.getUser().roles = value
+
+
+    security.declarePrivate('setDomains')
+    def setDomains(self, value):
+        value = self._stringToList(value)
+        self.getUser().domains = value
+
     
-        
-    def getMemberId(self):
-        return self.getUserName()
+    security.declarePrivate('setSecurityProfile')
+    def setSecurityProfile(self, password=None, roles=None, domains=None):
+        """Set the user's basic security profile"""
+        if password is not None:
+            self._setPassword(password)
+        if roles is not None:
+            self.setRoles(roles)
+        if domains is not None:
+            self.setDomains(domains)
+
 
     #Vocab methods
     def editors(self):
         return self.portal_properties.site_properties.available_editors
+
     
     def valid_roles(self):
-        return self.getUser().valid_roles()
+        roles = list(self.getUser().valid_roles())
+        # remove automatically added roles
+        if 'Authenticated' in roles:
+            roles.remove('Authenticated')
+        if 'Anonymous' in roles:
+            roles.remove('Anonymous')
+        return tuple(roles)
 
     def available_skins(self):
         return self.portal_skins.getSkinSelections()
@@ -191,9 +472,67 @@ class Member(BaseContent):
     ##
     def __str__(self):
         return self.id
+
     
     def __call__(self, *args, **kwargs):
-        return ''
-    
-registerType(Member)
+        return self.id
 
+
+    # XXX REFACTOR ME
+    # This is used for a hack in MemberDataTool
+    def _getTypeName(self):
+        return 'CMFMember Content'
+
+
+    security.declarePrivate('manage_beforeDelete')
+    def manage_beforeDelete(self, item, container):
+        BaseContent.manage_beforeDelete(self, item, container)
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        # make sure the user with id old_user_id exists before recursing through
+        # the whole portal
+        if portal.acl_users.getUser(old_user_id) is not None:
+            # delete local roles and content owned by this user
+            self._changeUserInfo(portal, self.id)
+            portal.acl_users.userFolderDelUsers((old_user_id,))
+
+
+    security.declarePrivate('manage_afterClone')
+    def manage_afterClone(self):
+        BaseContent.manage_afterClone(self)
+        # Remove the link to the old object's user
+        # _v_user will be lazily regenerated
+        delattr(self, '_v_user')
+
+
+    # utility method for altering information related to a user
+    # when a member is renamed or deleted
+    def _changeUserInfo(self, context, old_user_id, new_user_id=None):
+        # remove any local roles the user may have had
+        if context.isPrincipiaFolderish:
+            for o in o.objectValues():
+                if self._changeUserInfo(o, old_user_id, new_user_id):
+                    # delete object if need be
+                    context.manage_delObjects((o.getId(),))
+                    
+            if new_user_id is not None:
+                # transfer local roles for old user to local roles for new user
+                roles = context.get_local_roles_for_userid(old_user_id)
+                context.manage_addLocalRoles(new_user_id, roles)
+                context.manage_delLocalRoles(old_user_id)
+            else:
+                # delete local roles for old user
+                context.manage_delLocalRoles(old_user_id)
+
+        # if this object is owned by the user that is being deleted,
+        # either change its ownership to new_owner or mark it for deletion
+        owner = context.getOwner(1)
+        if owner == old_user_id:
+            if new_user_id is not None:
+                context.changeOwnership(new_user_id)
+            else:
+                # mark this object for deletion
+                return 1
+        return 0
+
+
+registerType(Member)

@@ -1,23 +1,37 @@
+from Globals import InitializeClass
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from Acquisition import aq_base, aq_parent
 from BTrees.OOBTree import OOBTree
 from OFS.SimpleItem import SimpleItem
+from OFS.PropertyManager import PropertyManager
+from OFS.ObjectManager import ObjectManager
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.interfaces.portal_memberdata import portal_memberdata
 from Products.CMFCore.utils import UniqueObject, getToolByName
-from Products.CMFTypes.BaseFolder import BaseFolder
-from Products.CMFTypes.debug import log
-from Products.CMFTypes import registerType
+#from Products.Archetypes.BaseFolder import BaseFolder
+#from Products.Archetypes.interfaces.base import IBaseFolder
+from Products.Archetypes.debug import log
+from Products.Archetypes import registerType
+from Products.CMFMember import TYPE_NAME, PKG_NAME
+from Products.CMFCore.PortalFolder import PortalFolder
+from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
 
 
-class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
-    __implements__ = portal_memberdata
+_marker = []
+
+class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProviderBase):
+    __implements__ = (portal_memberdata, ActionProviderBase.__implements__)
 
     security=ClassSecurityInfo()
 
-    type = BaseFolder.type
-    meta_type = "MemberDataTool"
-    id = "portal_memberdata"
+    #    schema = BaseFolder.schema
+    id = 'portal_memberdata'
+    meta_type = PKG_NAME + ' Tool'
+    _actions = []
+
+    _defaultMember = None
+    
 
     actions = ({
         'id': 'view',
@@ -26,21 +40,24 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
         'permissions': (CMFCorePermissions.View,) 
         },)
 
-    manage_options = BaseFolder.manage_options
+    manage_options=( BTreeFolder2Base.manage_options +
+                     ActionProviderBase.manage_options
+    #                     + ({ 'label' : 'Overview'
+    #                        , 'action' : 'manage_overview'
+    #                        },
+    #                       )
+                   )
 
-    
+
     ##IMPL DETAILS
     def __init__(self):
-        BaseFolder.__init__(self, self.id)
-        
-        self.members  = OOBTree() #user.getUserName -> Member
-        self.typeName = "Member"  #The name used for the factory in
-                                  #types_tool
+        BTreeFolder2Base.__init__(self, self.id)
+        self.typeName = TYPE_NAME  # The name used for the factory in types_tool
+        self.setTitle('Member profiles')
+
 
     def __call__(self):
-        '''
-        Invokes the default view.
-        '''
+        """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
         if getattr(aq_base(view), 'isDocTemp', 0):
             return apply(view, (self, self.REQUEST))
@@ -48,45 +65,20 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
              return view()
 
 
-
+    security.declarePrivate('getMemberFactory')
     def getMemberFactory(self):
-        """return a callable that is the registered object returning a
+        """Return a callable that is the registered object returning a
         contentish member object"""
-        # Assumptions: there is a types_tool type called Member, you
-        # want one of these in the folder, changing this changes the
-        # types of members in your site.
-        types_tool = getToolByName(self, "portal_types")
-        ti = types_tool.getTypeInfo(self.typeName)
-        
-        p = self.manage_addProduct[ti.product]
-        action = getattr(p, ti.factory, None)
-        if action is None: raise ValueError, ('Invalid Factory for %s'
-                                              % ti.getId())
-        return action
+        return getMemberFactory(self)
 
 
+    security.declarePrivate('_deleteMember')
     def _deleteMember(self, id):
-        """remove a member"""
-        del self.members[id]
-        
+        """Remove a member"""
+        self._delObject(id)
     
     ##PORTAL_MEMBERDATA INTERFACE IMPL
-    def wrapUser(self, user):
-        '''
-        If possible, returns the Member object that corresponds
-        to the given User object.
-        '''
-        name = user.getUserName()
-        m = self.members.get(name)
-        if not m:
-            ## XXX Delegate to the factory and create a new site specific
-            ## member object for this user
-            m = self.getMemberFactory()(name)
-            self.members[name] = m
-        m.setUser(user)
-
-        return m.__of__(self)
-
+    security.declarePrivate('getMemberDataContents')
     def getMemberDataContents(self):
         '''
         Returns a list containing a dictionary with information 
@@ -98,7 +90,7 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
         The result is designed to be iterated over in a dtml-in
         '''
 
-        member_ids = [m.getUserName() for m in self.members.values()]
+        member_ids = [m.getUserName() for m in self.objectValues()]
         user_ids = self.acl_users.getUserNames()
         oc = 0
         
@@ -110,7 +102,27 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
             'orphan_count' : oc
             }]
 
-    def pruneMemberDataContents():
+    # This is a brain dead implementation as it does not use the catalog.  Fix!
+    security.declarePrivate( 'searchMemberDataContents' )
+    def searchMemberDataContents( self, search_param, search_term ):
+        """ Search members """
+        res = []
+
+        if search_param == 'username':
+            search_param = 'id'
+
+        for user_wrapper in self.objectValues():
+            searched = getattr( user_wrapper, search_param, None )
+            if searched is not None and searched.find(search_term) != -1:
+                res.append( { 'username' : getattr( user_wrapper, 'id' )
+                            , 'email' : getattr( user_wrapper, 'email', '' )
+                            }
+                          )
+
+        return res
+
+    security.declarePrivate('pruneMemberDataContents')
+    def pruneMemberDataContents(self):
         '''
         Compare the user IDs stored in the member data
         tool with the list in the actual underlying acl_users
@@ -120,13 +132,72 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
         like manage its workflow state. The default impl will remove.
         '''
         
-        member_ids = [m.getUserName() for m in self.members.values()]
+        member_ids = [m.getUserName() for m in self.objectValues()]
         user_ids = self.acl_users.getUserNames()
 
         for id in members_ids:
             if id not in user_ids:
                 self.pruneOrphan(id)
-                
+
+
+    security.declarePrivate('wrapUser')
+    def wrapUser(self, user):
+        '''
+        If possible, returns the Member object that corresponds
+        to the given User object.
+        '''
+        name = user.getUserName()
+        m = self.get(name, None)
+        if not m:
+            ## XXX Delegate to the factory and create a new site specific
+            ## member object for this user
+            self.getMemberFactory()(name)
+            m = self.get(name)
+        m.setUser(user)
+
+        # Return a wrapper with self as containment and
+        # the user as context following CMFCore portal_memberdata
+        return m.__of__(self).__of__(user)
+
+    security.declarePrivate('registerMemberData')
+    def registerMemberData(self, m, id):
+        '''
+        Adds the given member data to the _members dict.
+        This is done as late as possible to avoid side effect
+        transactions and to reduce the necessary number of
+        entries.
+        '''
+        self._setObject(id, m)
+
+    def _getMemberInstance(self):
+        """Get an instance of the Member class.  Used for extracting
+        default property values, etc."""
+        if self._defaultMember is None:
+            tempFolder = PortalFolder('temp').__of__(self)
+            getMemberFactory(tempFolder)('default')
+            self._defaultMember = getattr(tempFolder,'default')
+        return self._defaultMember
+
+    def getProperty(self, id, default=None):
+        """Get the property 'id', returning the optional second
+           argument or None if no such property is found."""
+        # Get the default value from the Member schema
+        # Create a temporary member if needed.
+#        import pdb
+#        pdb.set_trace()
+        m = self._getMemberInstance()
+        schema = self._getMemberInstance().schema
+        field = schema.get(id, None)
+        if field:
+            prop = getattr(field, 'default', _marker)
+        if prop != _marker:
+            return prop
+
+        # No default property 
+        if default is not None:
+            return default
+        raise AttributeError, id
+        
 
     ## Folderish Methods
     def allowedContentTypes(self):
@@ -134,12 +205,22 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
         ## XXX or define a real registration mechinism, same for
         ## XXX all_meta_types
         tt = getToolByName(self, 'portal_types')
-        ti = tt.getTypeInfo('Member')
+        ti = tt.getTypeInfo(TYPE_NAME)
         return [ti]
+
+    def filtered_meta_types(self, user=None):
+        # Filters the list of available meta types.
+        allowedTypes = [self._getMemberInstance()._getTypeName()]
+        meta_types = []
+        for meta_type in self.all_meta_types():
+            if meta_type['name'] in allowedTypes:
+                meta_types.append(meta_type)
+        return meta_types
+
 
     security.declareProtected(CMFCorePermissions.ListPortalMembers, 'contentValues')
     def contentValues(self, spec=None, filter=None):
-        objects = [v.__of__(self) for v in self.members.values()]
+        objects = [v.__of__(self) for v in self.objectValues()]
         l = []
         for v in objects:
             id = v.getId()
@@ -154,19 +235,42 @@ class MemberDataTool(UniqueObject, SimpleItem, BaseFolder):
         return self.acl_users.getUser(name).__of__(self.acl_users)
        
    
-    def __getattr__(self, id):
-        if self.members.has_key(id):
-            return self.members[id].__of__(self)
+    #    def __getattr__(self, id):
+    #        if self._members.has_key(id):
+    #            return self._members[id].__of__(self)
+    #        
+    #        return getattr(aq_parent(self), id)
+
+    def _checkId(self, id, allow_dup=0):
+        PortalFolder._checkId(self, id, allow_dup)
+        BTreeFolder2Base._checkId(self, id, allow_dup)
+
         
-        return getattr(aq_parent(self), id)
-
-
     ##SUBCLASS HOOKS
+    security.declarePrivate('pruneOrphan')
     def pruneOrphan(self, id):
         """Called when a member object exists for something not in the
         acl_users folder
         """
         self._deleteMember(id)
+
+
+# Put this outside the MemberData tool so that it can be used for
+# conversion of old MemberData during installation
+def getMemberFactory(self):
+    """return a callable that is the registered object returning a
+    contentish member object"""
+    # Assumptions: there is a types_tool type called Member, you
+    # want one of these in the folder, changing this changes the
+    # types of members in your site.
+    types_tool = getToolByName(self, 'portal_types')
+    ti = types_tool.getTypeInfo(TYPE_NAME)
+    
+    p = self.manage_addProduct[ti.product]
+    action = getattr(p, ti.factory, None)
+    if action is None: raise ValueError, ('Invalid Factory for %s'
+                                          % ti.getId())
+    return action
 
 
 from Products.CMFCore.utils import _verifyActionPermissions
@@ -198,4 +302,4 @@ def _getViewFor(obj, view='view', default=None):
                             '/'.join(obj.getPhysicalPath()))
 
 
-registerType(MemberDataTool)
+InitializeClass(MemberDataTool)
