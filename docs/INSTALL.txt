@@ -3,7 +3,9 @@ Quick switching instructions for the impatient
 ==============================================
 
  * Back up your data! Seriously! This thing may break your content, it is still
-   experimental!
+   experimental. But we need your feedback to make the migration perfect, so
+   please install and convert your site on a backup instance, and report any
+   failures/errors to us, so we can fix them.
    
  * You have to do two things to migrate the types and switch to the new ones:
  
