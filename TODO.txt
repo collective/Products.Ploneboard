@@ -3,22 +3,12 @@ TO DO
 I have gotten the code working at various points, but with all that 
 I've done recently, I'm not sure it still works.
 
-* check security on attributes  (e.g. can i get here/member/password?)
-
-* Make sure the code actually works.  Main untested code: member 
-deletion and renaming, all workflow methods.  There really should
-be unit tests.  I have started some (see tests/).
+* Debug pending member worklists.
 
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-
 created members lying around.)  Registration should be able to just
 use base_edit but we'll need to put in some explanatory text.
-
-
-* make sure that if existing user from parent folder acl_user is wrapped,
-  a new user is not created
-  
-* Create pending member worklists.
 
 * Put in a search page.  Ideally the search page will show up as
 portal_metadata's index_html page.  It would be nice if the results
@@ -27,43 +17,43 @@ delete them.  The search should make use of the catalog to the
 extent possible.  I think lalo is doing some automatic search page 
 generation stuff, so this might be really simple.
 
-* Additional delete options.  There should be a "do you really want
-to do this?" confirmation before you delete a member, since all their
-content gets nuked as well.  Additionally, there should be the option
-to assign ownership of their content to somebody else.
-
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
+
+* Make sure the code actually works.  Main untested code: member 
+deletion and renaming, all workflow methods.  There really should
+be unit tests.  I have started some (see tests/).
 
 * Add documentation to base_view, base_edit.  This will probably require
 some minor Archetypes mods, e.g. creating an EmptyField class.  [Ben has
 just added a better Description() method -- need to look into it as a
 better way.]
 
----
-* Auto-register an unregistered user when wrapUser is called since
-the user already exists in acl_users (I think).
+* Add portraits in. [WIRE PORTRAITS TO PLONE MACHINERY]
+
+* Additional delete options.  There should be a "do you really want
+to do this?" confirmation before you delete a member, since all their
+content gets nuked as well.  Additionally, there should be the option
+to assign ownership of their content to somebody else.
+
+* Set initial non-empty passwords [CHECK THIS]
+
+* Modify migration so that workflow variables are preserved
+
+* Add a disable member function.  Disabled members should not be able
+to log in. [CAN WE DISABLE FROM PENDING?  TEST DISABLE]
+
+------- this stuff is done but not tested -------------
 
 * Add listed in.  The listed variable can be set by the register()
   method and then by some method that is called after the make_public /
-  make_private transitions are executed.
-
-* Add portraits in.
-
-* Find out why workflow transitions are executing for partially
-  created Member objects
-* Grant Add Portal Content permission to anonymous within
-  portal_memberdata
-
-* Grant new CMFMember perms to appropriate roles  
-
-* Set initial non-empty passwords
+  make_private transitions are executed. [MAKE SURE LISTED IS SET
+  PROPERLY WHEN WE DISABLE.  TRY MAKING LISTED A COMPUTEDATTRIBUTE]
 
 * Modify registration tool's send password method to check Member perms.
 
-* Add a disable member function.  Disabled members should not be able
-to log in.
 
 * Create pending member worklists.
 
-* Find out why temp/ stuff remained in zodb
+* check security on attributes  (e.g. can i get here/member/password?)
+  

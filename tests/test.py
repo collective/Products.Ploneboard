@@ -172,62 +172,6 @@ class CMFMemberTest( SecurityRequestTest ):
         user = self.root.acl_users.getUser(self.root_id)
         self.failUnless(user != None)
         self.assertEqual(user, self.root_user)
-        return
-
-
-        newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
-
-        id = 'id1'
-        new_id = 'id2'
-        password = 'password'
-        roles = ('Manager','Reviewer','Member',)
-        domains = ('127.0.0.1',)
-
-        self.root.acl_users.userFolderAddUser(id, password, roles, domains)
-        user = self.root.acl_users.getUser(id)
-        self.testsite.portal_memberdata.wrapUser(user)
-
-        get_transaction().commit()
-        
-        newSecurityManager(None, self.root.acl_users.getUser(id).__of__(self.root.acl_users))
-        # get the member
-        member = self.testsite.portal_membership.getAuthenticatedMember()
-
-        get_transaction().commit()
-
-        # make sure all the member properties we set are correct
-        self.assertEqual(member.getMemberId(), id)
-        self.assertEqual(member._getPassword(), password)
-        self.assertEqual(member.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(member.getDomains(), domains)
-
-        self.testsite.portal_memberdata.manage_renameObjects((id,),(new_id,))
-
-        # make sure member has been moved
-        member = self.testsite.portal_memberdata.get(new_id, None)
-        self.failUnless(member != None)
-        self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), password)
-        self.assertEqual(member.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(member.getDomains(), domains)
-
-        # make sure old member is gone
-        member = self.testsite.portal_memberdata.get(id, None)
-        self.assertEqual(member, None)
-
-        # make sure member has been moved
-        user = self.root.acl_users.getUser(new_id)
-        self.assertEqual(user.__, password)
-        self.assertEqual(user.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(user.domains, domains)
-
-        # make sure old user is gone
-        user = self.root.acl_users.getUser(id)
-        self.assertEqual(user, None)
-
-        # clean up
-        get_transaction().commit()
-        self.testsite.portal_memberdata.manage_delObjects([new_id])
 
 
     def test_copy(self):
@@ -261,56 +205,41 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user.getRoles(), self.roles + ('Authenticated',))
         self.assertEqual(user.domains, self.domains)
 
-        return
 
-        # ########################
-        # a more complicated case -- the authenticated user lives in root.acl_users, not portal.acl_users
+    def test_copy_root(self):
+        cb_copy_data = self.testsite.portal_memberdata.manage_copyObjects((self.root_id,))
+        self.testsite.portal_memberdata.manage_pasteObjects(cb_copy_data)
 
-        id = 'id5'
-        new_id = 'id6'
+        # make sure old member and user are still there
+#        member = self.testsite.portal_membership.getMemberById(self.root_id)
+        member = self.testsite.portal_memberdata.get(self.root_id, None)
+        self.failUnless(member != None)
+        self.assertEqual(member.getMemberId(), self.root_id)
+        self.assertEqual(member._getPassword(), self.root_password)
+        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(member.getDomains(), self.root_domains)
 
-        self.root.acl_users.userFolderAddUser(id, password, roles, domains)
-        user = self.root.acl_users.getUser(id)
-        self.testsite.portal_memberdata.wrapUser(user)
+        user = self.root.acl_users.getUser(self.root_id)
+        self.assertEqual(user, self.root_user)
 
-        get_transaction().commit()
-        
-        newSecurityManager(None, self.root.acl_users.getUser(id).__of__(self.root.acl_users))
-        # get the member
-        member = self.testsite.portal_membership.getAuthenticatedMember()
-
-        get_transaction().commit()
-
-        # make sure all the member properties we set are correct
-        self.assertEqual(member.getMemberId(), id)
-        self.assertEqual(member._getPassword(), password)
-        self.assertEqual(member.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(member.getDomains(), domains)
-
-        self.testsite.portal_memberdata.manage_renameObjects((id,),(new_id,))
-
-        # make sure member has been moved
+        new_id = 'copy_of_' + self.root_id
+        # make sure member has been copied
+#        member = self.testsite.portal_membership.getMemberById(new_id)
         member = self.testsite.portal_memberdata.get(new_id, None)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), password)
-        self.assertEqual(member.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(member.getDomains(), domains)
+        self.assertEqual(member._getPassword(), self.root_password)
+        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(member.getDomains(), self.root_domains)
 
-        # make sure old member is gone
-        member = self.testsite.portal_memberdata.get(id, None)
-        self.assertEqual(member, None)
+        user = self.testsite.acl_users.getUser(new_id)
+        self.failUnless(user != None)
+        self.assertEqual(user.__, self.root_password)
+        self.assertEqual(user.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(user.domains, self.root_domains)
 
-        # make sure member has been moved
         user = self.root.acl_users.getUser(new_id)
-        self.assertEqual(user.__, password)
-        self.assertEqual(user.getRoles(), roles + ('Authenticated',))
-        self.assertEqual(user.domains, domains)
-
-        # make sure old user is gone
-        user = self.root.acl_users.getUser(id)
         self.assertEqual(user, None)
-
 
 def test_suite():
     return unittest.TestSuite((
