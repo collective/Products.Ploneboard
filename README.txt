@@ -1,5 +1,5 @@
 ATSchemaEditorNG is a work-in-progress framework to provide flexible
-schema editing for AT content-types
+schema editing for AT content-types.                               
 
 Author:
 
@@ -25,3 +25,7 @@ Installation:
 Documentation:
 
     to be written
+
+Credits:
+
+    Whit Morriss: examples and tests

@@ -1,4 +1,4 @@
-0.1 (unreleased)
+0.1 (17.09.2004)
 
     - initial release (backport from PloneCollectorNG)
 
