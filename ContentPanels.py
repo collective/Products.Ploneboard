@@ -30,7 +30,7 @@ from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 factory_type_information = ( {'id': 'ContentPanels',
                             'content_icon': 'contentpanels_icon.gif',
                             'meta_type': 'CMF Content Panels',
-                            'description': """ContentPanels is a portlets content to build composite page.""", 
+                            'description': """ContentPanels is a portlet content to build composite page.""", 
                             'product': 'CMFContentPanels',
                             'factory': 'addContentPanels',
                                 'immediate_view': 'contentpanels_edit_form',
