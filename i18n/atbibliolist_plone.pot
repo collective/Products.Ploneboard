@@ -1,0 +1,22 @@
+# Gettext Message File for ATBiblioList.
+# David Convent <david.convent@naturalsciences.be>, 2003-2004
+msgid ""
+msgstr ""
+"Project-Id-Version: ATBiblioList 0.1\n"
+"POT-Creation-Date: 2004-04-13 21:25+0000\n"
+"PO-Revision-Date: 2004-04-13 03:15-0300\n"
+"Last-Translator: David Convent <david.convent@naturalsciences.be>\n"
+"Language-Team: ATBiblioList i18n <mars@naturalsciences.be>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: en\n"
+"Language-name: English\n"
+"Domain: plone\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Preferred-encodings: utf-8 latin1\n"
+
+#: list_pt.pt
+#.     <h1 i18n:translate="heading_skins_folder_listing">Filesystem Directory View Listing</h1><br />
+msgid "heading_skins_folder_listing"
+msgstr "Filesystem Directory View Listing"

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+  <div metal:fill-slot="main"
+       tal:define="global props python:container.portal_properties;
+                   Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                   tabindex python:Iterator();">
+
+    <h1 i18n:translate="heading_pubref_download">Download Bibliographic Entries</h1>
+
+    <p i18n:translate="description_pubref_download"> 
+      Select the format from the drop-down list. Confirm by clicking 
+      <span i18n:name="download"><strong i18n:translate="">download</strong></span>.
+    </p>
+    
+    <form class="group"
+          name="download"
+          action="#"
+          method="post"
+          tal:define="absolute_url here/absolute_url"
+          tal:attributes="action string:${absolute_url}/listDownload">
+
+      <fieldset>
+
+        <legend i18n:translate="label_bibliography_download">Download / Export</legend>
+
+        <div class="field">
+          <label i18n:translate="label_bibliography_download_format">Download Format</label>
+
+          <div class="formHelp" i18n:translate="help_bibliography_download_format">
+            Please select the format.
+          </div>
+
+          <select name="format" size="1"
+                  tal:attributes="tabindex tabindex/next;">
+            <option tal:repeat="value python:here.portal_bibliography.getDownloadFormats()"
+                    tal:content="python:value[0]"
+                    tal:attributes="value python:value[1]"> dummy format
+            </option>
+          </select>
+        </div>
+
+        <div class="formControls">
+          <input class="context"
+                 tabindex=""
+                 type="submit"
+                 name="submit"
+                 value="Download"
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;" />
+        </div>
+
+      </fieldset>
+
+    </form>
+
+  </div>
+
+</body>
+
+</html>
+

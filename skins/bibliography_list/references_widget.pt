@@ -1,0 +1,114 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+  <head><title></title></head>
+  <body>
+
+    <!-- Authors Widget -->
+    <metal:view_macro define-macro="view">
+    
+      <tal:block tal:condition="python: here.getPresentationFormat() != 'none'"> 
+      <tal:block tal:condition="python:field.multiValued"
+               tal:repeat="reference_Obj python:[here.archetype_tool.lookupObject(uid = uid) for uid in (accessor() or [])]">
+	<span tal:replace="structure python:here.reformatReference(reference_Obj)"> representation of many references </span>
+	<br/>
+      </tal:block>
+      <tal:block tal:condition="python:not field.multiValued">
+	<span tal:replace="structure python:here.reformatReference(here.archetype_tool.lookupObject(uid = (accessor() or []) ))"> representation of one reference </span>
+	<br/>
+      </tal:block>
+      </tal:block>
+      
+      <tal:block tal:condition="python: here.getPresentationFormat() == 'none'"> 
+      <a href="#"
+	 tal:define="reference_Obj python:here.archetype_tool.lookupObject(uid = accessor());"
+	 tal:attributes="href reference_Obj/absolute_url"
+	 tal:content="python:reference_Obj.Title() or reference_Obj.absolute_url(relative=1)"
+         tal:condition="python:not field.multiValued and reference_Obj is not None"></a>
+      <ul>
+      <li tal:condition="python:field.multiValued"
+	  tal:repeat="reference_Obj python:[here.archetype_tool.lookupObject(uid = uid) for uid in (accessor() or [])]">
+
+	<span tal:replace="structure python:reference_Obj.Authors(withURL=1)" > Authors </span>, <span
+
+	      tal:replace="reference_Obj/publication_year">1900</span>: <a href="#"
+
+	      tal:attributes="href reference_Obj/absolute_url"
+	      tal:content="python:reference_Obj.Title() or reference_Obj.absolute_url(relative=1)"
+	      tal:condition="python:reference_Obj is not None">Title</a>. - <span tal:content="structure reference_Obj/Source">Source</span>
+
+	<br tal:condition="not: repeat/reference_Obj/end" />
+      </li>
+      </ul>
+      </tal:block> 
+      
+    </metal:view_macro>
+
+    <div metal:define-macro="edit">
+      <div metal:use-macro="here/widgets/field/macros/edit">
+	<div metal:fill-slot="widget_body"
+	     tal:define="searchterm python: request.get('searchterm','');
+	         references python: request.get('references',None);
+			 accessor python:getattr(here, field.accessor);
+			 old python:[here.archetype_tool.lookupObject(uid=uid) for uid in (accessor() or [])];">
+	  <p tal:condition="not:old">Nothing in the bibliography list yet</p>
+
+	  <div tal:condition="old"> <!-- Edit existing references -->
+	    <p>Bibliography list:</p>
+	    <table>
+	      <tr tal:repeat="item old">
+	        <td><input type="checkbox" name="delReferences:list" tal:attributes="value item/getId"/></td>
+	        <td>
+	          <a tal:attributes="href item/absolute_url" tal:content="item/title_or_id">item title or id</a>
+	        </td>
+	        <td>
+	          <span tal:replace="item/description|nothing">item description</span>
+	        </td>
+	      </tr>
+	    </table>
+	    <input type="submit" name="form.button.reference_delete" value="Delete"/>
+	    <input type="submit" name="form.button.reference_up" value="Up"/>
+	    <input type="submit" name="form.button.reference_down" value="Down"/>
+	    <br />
+	    
+	  </div> <!-- end editing existing references -->
+
+	  <div> <!-- Search, add new references -->
+	    <h4>Select new references</h4>
+	    <input name="searchterm" tal:attributes="value searchterm|nothing"/>
+	    <input type="submit" name="form.button.reference_search" value="Search"/>
+	    <tal:block tal:condition="searchterm">
+	      <tal:block tal:define="results python:here.searchMatchingReferences(searchterm)">
+
+        	<div tal:condition="results">
+		  <table> <!-- Table Header ??? -->
+		    <tr tal:repeat="item results">
+		      <tal:block tal:define="item item/getObject;">
+        	      <td><input type="checkbox"
+        	                 name="references:list"
+        	                 tal:attributes="value item/UID" /></td>
+		      <td><a tal:attributes="href item/absolute_url" tal:content="item/title_or_id">item title or Id</a></td>
+		      <td><span tal:replace="item/description|nothing"/></td>
+		      </tal:block>
+		    </tr>
+		  </table>
+		  <input type="submit" name="form.button.reference_add" value="Select"/>
+		</div>
+
+		<p tal:condition="not:results">No matching bibliographic reference found. Please try another search term.</p>
+	      </tal:block>
+	    </tal:block>
+	  </div> <!-- end search/add new references -->
+
+	</div>
+      </div>
+    </div>
+
+    <div metal:define-macro="search">
+      <div metal:use-macro="here/authors_widget/macros/edit"></div>
+    </div>
+
+</body>
+</html>

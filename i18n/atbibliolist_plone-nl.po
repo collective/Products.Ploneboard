@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ATBiblioList 0.1\n"
+"POT-Creation-Date: 2004-04-13 21:25+0000\n"
+"PO-Revision-Date: 2004-04-16 21:01+0100\n"
+"Last-Translator: David Convent <david.convent@naturalsciences.be>\n"
+"Language-Team: ATBiblioList i18n <mars@naturalsciences.be>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Domain: plone\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"X-Is-Fallback-For: nl-be\n"
+
+# metadata
+msgid "Export Bibliography List"
+msgstr "De bibliografische lijst exporteren"
+
+# Object names
+msgid "Bibliography presentation format"
+msgstr "Bibliografisch Voorstellingsformaat"
+
+msgid "Presentation Folder"
+msgstr "Voorstellings Map"
+
+msgid "Bibliography List"
+msgstr "Bibliografische Lijst"
+
+#: list_pt.pt
+#.     <h1 i18n:translate="heading_skins_folder_listing">Filesystem Directory View Listing</h1><br />
+msgid "heading_skins_folder_listing"
+msgstr "Filesystem map inhoud"
+
+
+#: ReferencePresentation.py
+msgid "label_references_list"
+msgstr "Referencies"
+
+#: ReferencePresentation.py
+msgid "help_references_list"
+msgstr "Kies les bibliographische verwijzingen die u in uw lijst wil plaatsen."
+
+#: ReferencePresentation.py
+msgid "label_presentation"
+msgstr "Presentatie formaat"
+
+#: ReferencePresentation.py
+msgid "help_presentation"
+msgstr "Kies het formaat van hoe uw uw lijst wil voorstellen."
+
+#: ReferencePresentation.py
+msgid "label_formatandorder"
+msgstr "Formaat"
+
+#: ReferencePresentation.py
+msgid "help_formatandorder"
+msgstr 'Geef het gewenste formaat voor de bibliographische verwijzingen. Om een "veld" voor te stellen gebruikt u de volgende symbolen: Auteur: %A, Titel: %T, Publicatiemaand: %m, Publicatiejaar: %y, Nieuwsblad: %J, Instelling: %I, Organisatie: %O, Titel van het boek: %T, Paginas: %p, Volumenummer: %v, Nummer: %n; Type verslag: %t, Redacteur(s): %E, Uitgever/Uitgeverij: %P, Adres: %a, Pmid: %i, Editie/druk: %e, Uitgavewijze: %h, Hoofdstuk: %c, School: %S, prepublicatie server: %r, Reeks: %s, "%" symbool: %%'
+
+#: ReferencePresentation.py
+msgid "label_nameorderformat"
+msgstr "Volgorde van Namen"
+
+#: ReferencePresentation.py
+msgid "help_nameorderformat"
+msgstr "Kies de volgorde waarin u de voornaamen en familienaam van een auteur wilt plaatsen."
+
+#: ReferencePresentation.py
+msgid "label_firstnameformat"
+msgstr "Voornaam van de auteur (in %A)"
+
+#: ReferencePresentation.py
+msgid "help_firstnameformat"
+msgstr "Kies een voorstellingswijze voor de voornaam van de auteur."
+
+#: ReferencePresentation.py
+msgid "label_2ndnameformat"
+msgstr "Andere voornamen van de auteur (in %A)"
+
+#: ReferencePresentation.py
+msgid "help_2ndnameformat"
+msgstr "Kies een voorstellingswijze voor de andere voornamen van de auteur."
+
+
+#: ReferencePresentation.py
+msgid "label_famillynameformat"
+msgstr "Famillienaam van de auteur (in %A)"
+
+#: ReferencePresentation.py
+msgid "help_famillynameformat"
+msgstr "Kies een voorstellingswijze voor de famillienaam van de auteur."
+
+#: ReferencePresentation.py
+msgid "label_nameseparatorformat"
+msgstr "Auteurs-scheidingsteken"
+
+#: ReferencePresentation.py
+msgid "help_nameseparatorformat"
+msgstr "Het scheidingsteken (of woord) dat tussen elk auteur komt te staan behalve de 2 laatste. (Spaties ingegrepen)"
+
+#: ReferencePresentation.py
+msgid "label_lastnameseparatorformat"
+msgstr "Laatste auteurs-scheidingsteken"
+
+#: ReferencePresentation.py
+msgid "help_lastnameseparatorformat"
+msgstr "Het scheidingsteken (of woord) dat tussen de 2 laatste auteurs komt te staan. (Spaties ingegrepen)"
+
+#: ReferencePresentation.py
+msgid "label_titleformat"
+msgstr "Titel van de publicatie(%T)"
+
+#: ReferencePresentation.py
+msgid "help_titleformat"
+msgstr "Kies een voorstellingswijze voor het titel van de publicatie."
+
+#: ReferencePresentation.py
+msgid "label_publicationYearformat"
+msgstr "Jaar van publicatie (%y)"
+
+#: ReferencePresentation.py
+msgid "help_publicationYearformat"
+msgstr "Kies een voorstellingswijze voor het jaar van publicatie."
+
+#: ReferencePresentation.py
+msgid "label_journalformat"
+msgstr "Nieuwsblad (%J)"
+
+#: ReferencePresentation.py
+msgid "help_journalformat"
+msgstr "Kies een voorstellingswijze voor de naam van het nieuwsblad."
+
+#: ReferencePresentation.py
+msgid "label_pagesformat"
+msgstr "Paginas (%p)"
+
+#: ReferencePresentation.py
+msgid "help_pagesformat"
+msgstr "Kies een voorstellingswijze voor de paginanummers."
+
+#: ReferencePresentation.py
+msgid "label_volumeformat"
+msgstr "Volumenummer (%v)"
+
+#: ReferencePresentation.py
+msgid "help_volumeformat"
+msgstr "Kies een voorstellingswijze voor het volumenummer."
+
+#: ReferencePresentation.py
+msgid "label_editionformat"
+msgstr "Uitgavenummer (%e)"
+
+#: ReferencePresentation.py
+msgid "help_editionformat"
+msgstr "Kies een voorstellingswijze voor het uitgavenummer."
+
+#: ReferencePresentation.py
+msgid "label_chapterformat"
+msgstr "Hoofdstuk (%c)"
+
+#: ReferencePresentation.py
+msgid "help_chapterformat"
+msgstr "Kies een voorstellingswijze voor het hoofdstuknummer."
+
+#: ReferencePresentation.py
+msgid "label_numberformat"
+msgstr "Nummer (%n)"
+
+#: ReferencePresentation.py
+msgid "help_numberformat"
+msgstr "Kies een voorstellingswijze voor het nummer van het magazine, journaal of rapport."
+
+#: ReferencePresentation.py
+msgid "label_seriesformat"
+msgstr "Reeks (%s)"
+
+#: ReferencePresentation.py
+msgid "help_seriesformat"
+msgstr "Kies een voorstellingswijze voor de naam van de reeks."
+
+#: ReferencePresentation.py
+msgid "label_howpublishedformat"
+msgstr "Publicatiemethode(%h)" 
+
+#: ReferencePresentation.py
+msgid "help_howpublishedformat"
+msgstr "Kies een voorstellingswijze voor de publicatiemethode."
+
+#: ReferencePresentation.py
+msgid "label_editorformat"
+msgstr "Redacteur(s)(%E)" 
+
+#: ReferencePresentation.py
+msgid "help_editorformat"
+msgstr "Kies een voorstellingswijze voor de naam/namen van de redacteur(s)."
+
+# *editorFlagformat 
+#    -EditorFlag (%F)
+#    -'Choose a fitting format for the editor flag.'
+
+#: ReferencePresentation.py
+msgid "label_publisherformat"
+msgstr "Uitgever (%P)" 
+
+#: ReferencePresentation.py
+msgid "help_publisherformat"
+msgstr "Kies een voorstellingswijze voor de naam van de uitgever/uitgeverij."
+
+#: ReferencePresentation.py
+msgid "label_booktitleformat"
+msgstr "Titel van het boek(%t)" 
+
+#: ReferencePresentation.py
+msgid "help_booktitleformat"
+msgstr "Kies een voorstellingswijze voor de titel van het boek."
+
+#: ReferencePresentation.py
+msgid "label_schoolformat"
+msgstr "School (%S)" 
+
+#: ReferencePresentation.py
+msgid "help_schoolformat"
+msgstr "Kies een voorstellingswijze voor de naam van de school."
+
+#: ReferencePresentation.py
+msgid "label_organisationformat"
+msgstr "Organisatie (%O)" 
+
+#: ReferencePresentation.py
+msgid "help_organistaionformat"
+msgstr "Kies een voorstellingswijze voor de naam van de organisatie."
+
+#: ReferencePresentation.py
+msgid "label_institutionformat"
+msgstr "Instituut (%I)" 
+
+#: ReferencePresentation.py
+msgid "help_institutionformat"
+msgstr "Kies een voorstellingswijze voor de naam van het instituut."
+
+# *typeformat 
+#     -Type of technical report (%t)
+#     -'Choose a fitting format for the field.'
