@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.9 2004/09/27 16:28:53 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.10 2004/09/27 16:34:53 spamsch Exp $
 """
 
 import types
@@ -134,7 +134,8 @@ class ParentManagedSchema:
             s = s + '}'
 
         s = s + '}'
-        return s
         
+        from md5 import md5
+        return md5(s).digest()
 
 InitializeClass(ParentManagedSchema)
