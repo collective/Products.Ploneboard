@@ -13,6 +13,12 @@
  * Fixed migration: Migration failed when there was a broken object in a folder
   [tiran]
 
+ * Fixed property migration: continue if the object already has this attribut
+   [tiran]
+   
+ * Added talkback discussion migration
+   [tiran]
+
 0.2.0-rc1 - 2004-07-28
 
  * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 

@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.18 2004/08/04 14:52:11 tiran Exp $
+$Id: Migrator.py,v 1.19 2004/08/04 15:13:45 tiran Exp $
 """
 
 from copy import copy
@@ -286,9 +286,18 @@ class BaseCMFMigrator(BaseMigrator):
     def migrate_allowDiscussion(self):
         """migrate allow discussion bit
         """
-        if hasattr(self.old, 'allowDiscussion') and \
-          hasattr(self.new, 'isDiscussable'):
+        if getattr(aq_explicit(self.old), 'allowDiscussion', _marker) is not _marker and \
+          getattr(aq_explicit(self.new), 'isDiscussable', _marker)  is not _marker:
             self.new.isDiscussable(self.old.allowDiscussion())
+
+    def migrate_discussion(self):
+        """migrate talkback discussion bit
+        """
+        talkback = getattr(self.old.aq_inner.aq_explicit, 'talkback', _marker)
+        if talkback is _marker:
+            return
+        else:
+            self.new.talkback = talkback
 
     def beforeChange_storeDates(self):
         """Safe creation date and modification date
