@@ -152,7 +152,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         ret = []
         for n in self.getUserNames():
             ret.append(self.getUser(n))
-        return ret
+        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
 
     def getUser(self, name):
         """Return the named user object or None"""
@@ -193,7 +193,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         ret = []
         for n in self.getGroupNames():
             ret.append(self.getGroup(n))
-        return ret
+        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
 
     def getGroup(self, name, prefixed = 1):
         """Return the named user object or None"""
@@ -230,7 +230,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         """
         if not "acl_users" in self.Users.objectIds():
             return ()
-        return self.Users.getUserFolder().getUserNames()
+        ret = self.Users.acl_users.getUserNames()
+        return ret
 
 
     def getPureUsers(self):
@@ -238,7 +239,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         ret = []
         for n in self.getPureUserNames():
             ret.append(self.getUser(n))
-        return ret
+        return filter(None, ret)                        # This prevents 'None' user objects to be returned. This happens for example with LDAPUserFolder when a LDAP query fetches too much records.
 
 
 
