@@ -1,6 +1,8 @@
 V2.0
 
-= performance
+- support mxmDynamicPage
+
+- performance
 
   You can have a look at the base_panel.pt, perhaps this line is too expensive:
 
@@ -14,6 +16,19 @@ V2.0
   Just make the Category of the actions indicates the portal_type
 of the specific content type. Also I can define a general Category which is not
 content type related. 
+
+- It looks like you made a better interface for this. Seems to function much
+better now, but it is still strange that you can select the "global"
+viewlets after you have selected a particular content item.
+
+It seems to me that these two types of viewlets should some how be
+distinguished from each other. One is a global viewlet (Plone portlets)
+which has no bearing on the context, whereas the other is a viewlet which is
+specific to the particular piece of content (or folder) that you have
+selected.
+
+Perhaps you should separate Viewlets from Portlets, because right now it is
+rather confusing.
 
 - update css to be more compatible with nested contentpanels
 
