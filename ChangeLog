@@ -1,3 +1,10 @@
+2004-03-03 16:54  tag v0_5_4
+
+2004-03-02 14:12  longsleep
+                                                                                                 
+        * I18NLayer.py, skins/i18n_layer/createLanguageObject.py: cant
+        believe that noone missed portal_factory support .. now its there
+
 2004-03-01 14:00 tag v0_5_3
 
 2004-03-01 12:17  longsleep
