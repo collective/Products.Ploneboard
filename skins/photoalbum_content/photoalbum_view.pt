@@ -76,11 +76,13 @@
 	      tal:repeat="album albums">
 	      <span style="width:0%;" class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
 		number_of_images python:len(images_in_album)">
-		<div tal:define="image python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail');"
-		     style="width: 130px; margin:0.5em;">
+		<div style="width: 130px; margin:0.5em;">
 		  <a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		    <img tal:replace="structure image" />
+		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail');" />
 		  </a>
+	          <a tal:condition="not:images_in_album" tal:attributes="href string:${album/absolute_url}/view">
+	            <p style="text-align: center;">Album is empty</p>
+	          </a>
 		  <br/>
 		  <span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
                 </div>
