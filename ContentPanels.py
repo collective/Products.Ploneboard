@@ -151,7 +151,9 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         else:
             folderContextPath = self.portal_url.getRelativeContentURL(folderContext)
             if relativePath.startswith(folderContextPath):
-                relativePath = './' + panelObjectPath[len(folderContextPath)+1:]
+                relativePath = panelObjectPath[len(folderContextPath):]
+                relativePath = relativePath.startswith('/') and  '.' or './'\
+                               + relativePath
         return relativePath
 
     def getPanelObject(self, objectPath):
@@ -166,7 +168,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         try:
             if objectPath in ['.', '/']:  # '.'means the contentpanels it self
                 panelObject = self
-            elif objectPath.find('./') == 0:  # relative path to the folderish context
+            elif objectPath.startswith('./'):  # relative path to the folderish context
                 objectPath = objectPath[2:]
 
                 if not self.isPrincipiaFolderish:
