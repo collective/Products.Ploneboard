@@ -1,3 +1,17 @@
+v1_1 - 20030702
+
+  * Security improvements
+
+  * Added an 'audit' tab to check what's going on
+
+  * GroupsTool and GroupDataTool added for Plone
+
+  * Improved Plone skins
+
+  * Improved Plone installation
+
+  * GRUF Users now 'inherit' from their underlying user object
+
 v1_0RC1 - 20030514
 
   * Code cleaning
