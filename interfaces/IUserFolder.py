@@ -59,17 +59,17 @@ class IUserFolder(Interface):
 
     # Security management
 
-    def setRolesOfUser(roles, name):
+    def setRolesOnUsers(roles, usernames):
         """Sets the users of a role"""
 
-    def setUsersOfRole(names, role):
+    def setUsersOfRole(usernames, role):
         """Sets the users of a role"""
 
     def getUsersOfRole(role):
         """Gets the users of a role"""
 
     def userFolderAddRole(role):
-        """Add a new role."""
+        """Add a new role. The role will be appended, in fact, in GRUF's surrounding folder."""
 
     def userFolderDelRoles(rolenames):
         """Delete roles."""
@@ -139,7 +139,8 @@ class IUser(Interface):
         
     # Group management
     def getParentGroups():
-        """Return the names of the groups that the user is a member of"""
+        """Return the names of the groups that the user is a member of.
+        Return an empty list if the user doesn't belong to any group."""
 
     def getAllParentGroups():
          """
@@ -147,7 +148,7 @@ class IUser(Interface):
          that the user is a member of
          """
 
-    def isMemberOfGroup(groupname):
+    def isMemberInGroup(groupname):
         """Return 1 if the user belongs to the specified groupname
         (including transitive groups)"""
 
@@ -164,12 +165,19 @@ class IGroup(Interface):
          Return the all the groups names (including transitive ones)  
          that the user is a member of
          """
+         
+    def hasMember(username):
+        """Return true if the specified username is in the group.
+        This is the contrary of user.isMemberInGroup(groupname)"""
+
+    def hasGroup(groupname):
+        """Same as hasMember for groups"""
 
     def getParentGroups():
         """Return the names of the groups that the group is a member of"""
 
-    def attachUser(user):
-         """Attach a user the the current group"""
+    def addUser(user):
+         """Add a user the the current group"""
          
     def removeUser(self, user):
          """Remove a user from the current group"""
