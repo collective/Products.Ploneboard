@@ -1,0 +1,47 @@
+  <h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+  <p class="form-help">
+    This form appear because you've just created some users.<br />
+      GRUF has generated random passwords for them: here they are.
+  </p>
+
+  <h3>Generated passwords</h3>
+  <ol>
+    <form action="" method="GET" tal:attributes="action string:${here/absolute_url}/manage_users">
+      <table>
+        <tr>
+          <td valign="top">
+            <table bgcolor="#EEEEEE">
+              <tr class="list-header">
+                <th>User name</th>
+                <th>Password</th>
+              </tr>
+              
+              <tr tal:repeat="user request/USER_PASSWORDS" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
+                <td>
+                  <div class="list-item">
+                    <img src="" tal:attributes="src here/Users/icon">
+                      <font color="" tal:attributes="color here/user_color">
+                        <span tal:content="user/name">User name</span>
+                      </font>
+                  </div>
+                </td>
+                <td>
+                  <div class="list-item" tal:content="user/password">
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Actions -->
+      <p align="left">
+        <input type="submit" name="changeOrCreateGroups:method" value="Ok" />
+      </p>
+    </form>
+  </ol>
+  
+
+  <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

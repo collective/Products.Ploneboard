@@ -1,24 +1,21 @@
 TODO-LIST
 
-[DONE]
+[Done]
 
-  * Wrap the original User and acl_users objects
-    (rejected wraping of acl_users objects, only did it for User object)
-
-  * Better documentation
-
-  * When released, update http://plone.org/development/current/projects/HowToBuildFromCvs
-
-  * Refresh bug on security audit !
-
-  * Management interface cleaning and improving
-
-  * Improve install procedure with CMF/Plone
-
-
-[v1.2 => Planned 2002-07-31]
-
-  * Improve performance.
+  * HTML documentation
 
   * Add a management tab on GRUF to allow users and groups to be created
     at this top-level management interface.
+
+[v1.2 => Planned 2002-07-31]
+
+[v1.3 => Not planned yet]
+
+  * Document the whole GRUF API
+
+  * Improve test plan
+
+  * Improve performance.
+
+  * Improve users/groups admin screens (roles icon, show permissions in some way)
+

@@ -1,0 +1,69 @@
+<dtml-comment> -*- mode: dtml; dtml-top-element: "body" -*- </dtml-comment>
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+
+
+<!-- Free text -->
+<dtml-if header_text>
+  <p class="form-help">
+    <dtml-var header_text>
+  </p>
+
+</dtml-if>
+
+<!-- Legend -->
+<p class="form-help">Here is an overview of users, their groups and roles.</p>
+<ol>
+    <p>
+      Just to make things clearer: <br>
+        &nbsp;<font color="<dtml-var user_color>"><img src="<dtml-var "Users.icon">">&nbsp;Users appear this way</font><br />
+        &nbsp;<font color="<dtml-var group_color>"><img src="<dtml-var "Groups.icon">">&nbsp;Groups appear this way</font><br />
+        &nbsp;<font color="<dtml-var role_color>">User roles appear this way</font><br />
+        &nbsp;<font color="<dtml-var role_color>"><i>Group roles appear this way</i></font><br />
+    </p>
+</ol>
+
+<!-- Users / Roles / Groups tabular view -->
+<table width="100%">
+    <tr class="list-header">
+      <th>User</th>
+      <th>Group(s)</th>
+      <th>Role(s)</th>
+    </tr>
+
+    <dtml-in getPureUsers>
+      <dtml-let user_obj="_['sequence-item']">
+        <tr <dtml-if sequence-odd>class="row-hilite"<dtml-else>class="row-normal"</dtml-if>>
+          <td>
+            <div class="list-item">
+              <img src="<dtml-var "Users.icon">">&nbsp;<font color="<dtml-var user_color>"><dtml-var getId></font>
+            </div>
+          </td>
+          <td>
+            <div class="list-item">
+              <dtml-in "_['sequence-item'].getGroupsWithoutPrefix()">
+                <font color="<dtml-var group_color>"><dtml-var sequence-item></font><dtml-unless sequence-end>,</dtml-unless>
+              </dtml-in>
+          </td>
+          <td>
+            <div class="list-item">
+              <dtml-in "_['sequence-item'].getRoles()">
+                <font color="<dtml-var role_color>">
+                  <dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"><i></dtml-if>
+                  <dtml-var sequence-item>
+                  <dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"></i></dtml-if>
+                </font>
+                <dtml-unless sequence-end>,</dtml-unless>
+              </dtml-in>
+            </div>
+          </td>
+        </tr>
+      </dtml-let>
+    </dtml-in>
+
+</table>
+
+
+<dtml-var manage_page_footer>
+

@@ -1,0 +1,162 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+  <h3>Users management</h3>
+  <form action="" method="POST" tal:attributes="action template/absolute_url">
+    <ol>
+      <table cellspacing="10">
+        <tr>
+          <!-- Users selection -->
+          <td valign="middle">
+            <table bgcolor="#EEEEEE">
+              <tr class="list-header">
+                <th>&nbsp;</th>
+                <th>User</th>
+                <th>Current role(s)*</th>
+                <th>Current group(s)</th>
+              </tr>
+              
+              <tr tal:repeat="user here/getPureUsers" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
+                <td><div class="list-item"><input type="checkbox" name="users:list" value="" tal:attributes="value user"></td>
+                <td>
+                  <div class="list-item">
+                    <img src="" tal:attributes="src here/Users/icon" />
+                    <font color="" tal:attributes="color here/user_color" tal:content="user">User name</font>
+                  </div>
+                </td>
+                <td>
+                  <div class="list-item">
+                    <span tal:repeat="role python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles())">
+                      <font color=""
+                            tal:attributes="color here/role_color">
+                        <span tal:condition="python: role not in user.getUserRoles()" tal:replace="role"></span><i tal:condition="python: role in user.getUserRoles()" tal:content="role"></i><span tal:condition="not:repeat/role/end">, </span>
+                      </font>
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div class="list-item">
+                    <font color="" tal:attributes="color here/group_color"
+                       tal:content="python:modules['string'].join(user.getGroupsWithoutPrefix(),', ')">
+                    Group, group, group, group, ...
+                      </font>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- New user -->
+              <tr>
+                <td><div class="list-item">&nbsp;</div></td>
+                <td><div class="list-item">Create users:<br /><textarea name="new_users:lines" cols="20" rows="3"></textarea></div></td>
+                <td><div class="list-item"></div></td>
+            </table>
+          </td>
+
+          <td valign="middle">
+            =>
+          </td>
+
+          <td valign="middle">
+            <table  bgcolor="#EEEEEE">
+              <tr>
+                <td>
+                  <!-- Groups selection -->
+                  <table>
+                    <tr class="list-header">
+                      <th>&nbsp;</th>
+                      <th>Affected groups</th>
+                    </tr>
+                    
+                    <tr tal:repeat="group here/getGroups">
+                      <td>
+                        <input type="checkbox" name="groups:list" value="" tal:attributes="value group">
+                      </td>
+                      <td>
+                        <div class="list-item"><font color="" tal:attributes="color here/group_color" tal:content="group/getUserNameWithoutGroupPrefix">Group (without prefix)</font></div>
+                      </td>
+                    </tr>
+                    
+                    <!-- "(None)" item -->
+                    <tr>
+                      <td><div class="list-item"><input type="checkbox" name="groups:list" value="__None__"></div></td>
+                      <td><div class="list-item"><i>(None)</i></div></td>
+                    </tr>
+                  </table>
+
+                  <br>
+
+                    <!-- Roles selection -->
+                    <table>
+                      <tr class="list-header">
+                        <th>&nbsp;</th>
+                        <th>Affected roles</th>
+                      </tr>
+                      
+                      <tr tal:repeat="role here/valid_roles">
+                        <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                          <input type="checkbox" name="roles:list" value="" tal:attributes="value role">
+                        </td>
+                        <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                          <div class="list-item"><font color="" tal:attributes="color here/role_color" tal:content="role">Role</font></div>
+                        </td>
+                      </tr>
+                      
+                      <!-- "(None)" item -->
+                      <tr>
+                        <td><div class="list-item"><input type="checkbox" name="roles:list" value="__None__"></div></td>
+                        <td><div class="list-item"><i>(None)</i></div></td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Actions -->
+      <p align="center">
+        <input type="submit" name="changeOrCreateUsers:method" value="Create / Change" />
+          &nbsp;
+          <input type="submit" name="deleteUsers:method" value="Delete" />
+      </p>
+      <p class="form-help">
+        If you do not select any role, roles won't be reseted for the selected users.<br />
+        If you do not select any group, groups won't be reseted for the selected users.<br />
+        To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
+      </p>
+      <p class="form-help">
+        * Remember than roles inherited from groups appear in itallics.
+      </p>
+    </ol>
+  </form>
+
+
+  <h3>Instructions</h3>
+  <ol>
+      <p class="form-help">
+        To change roles for one or several users, select them in the left form, 
+        select the roles you want to give them and the groups they belong to in the forms on the right and click "Change".<br />
+          You can also create one or several users by filling the text area (one user per line). 
+          The "Change" button will create them with the roles and group affectation you've selected. 
+          A random password will be generated for them, and it will be shown in a page so that you can click/paste them somewhere.<br />
+            If you want to kill some users, you can delete them by selecting them and clicking the "Delete" button.
+      </p>
+  </ol>
+
+  <h3>Important notice / disclaimer</h3>
+  
+  <ol>
+    <p class="form-help">
+      This form uses the regular Zope Security API from the underlying user folders. However, you may experience problems with some
+      of them, especially if they are not tuned to allow user adding. For example, an LDAPUserFolder can be configured to disable
+      users management. In case this form doesn't work, you'll have to do things by hand within the 'Users' and 'Groups' GRUF folders.
+    </p>
+
+    <p class="form-help">
+      This is not a GRUF limitation ! :-)
+    </p>
+  </ol>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

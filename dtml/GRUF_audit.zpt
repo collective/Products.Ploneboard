@@ -2,7 +2,6 @@
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-
   
   <div tal:condition="request/doIt | nothing">
     <h3>Audit results</h3>
@@ -22,8 +21,12 @@
           tal:repeat="s users_and_roles"
           tal:attributes="width string:$width%"
         >
-          <b tal:content="python:s[1]" /><br />
-          (<span tal:replace="python:s[0]" />)
+          <span tal:define="color python:test(s[0] == 'user', here.user_color, test(s[0] == 'group', here.group_color, here.role_color))">
+            <font color="" tal:attributes="color color">
+              <b tal:content="python:s[1]" /><br />
+            </font>
+                (<font color="" tal:attributes="color color"><span tal:replace="python:s[0]" /></font>)
+          </span>
         </td>
       </tr>
 
@@ -115,9 +118,9 @@
             <td><div class="list-item">Displayed actors</div></td>
             <td>
               <div class="list-item">
-                <input type="checkbox" name="display_roles" checked="1">Roles<br />
-                <input type="checkbox" name="display_groups" checked="1">Groups<br />
-                <input type="checkbox" name="display_users">Users
+                <input type="checkbox" name="display_roles" checked="1"><font color="" tal:attributes="color here/role_color">Roles</font><br />
+                <input type="checkbox" name="display_groups" checked="1"><font color="" tal:attributes="color here/group_color">Groups</font><br />
+                <input type="checkbox" name="display_users"><font color="" tal:attributes="color here/user_color">Users</font>
               </div>
             </td>
           </tr>

@@ -51,7 +51,8 @@ from ComputedAttribute import ComputedAttribute
 
 
 #GRUFPREFIX is a constant
-grufprefix=GRUFFolder.GRUFGroups._group_prefix
+grufprefix = GRUFFolder.GRUFGroups._group_prefix
+_group_prefix = GRUFFolder.GRUFGroups._group_prefix
 
 class GRUFUser(AccessControl.User.BasicUser, Implicit): 
     """
@@ -129,20 +130,31 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # List this user's roles. We consider that roles starting 
         # with _group_prefix are in fact groups, and thus are 
         # returned (prefixed).
-
         ret = []
         prefix = GRUFFolder.GRUFGroups._group_prefix
         for role in self._original_roles:
             if string.find(role, prefix) == 0:
                 ret.append(role)
         return tuple(ret)
-    
+
+
+    security.declarePrivate('getGroupsWithoutPrefix')
+    def getGroupsWithoutPrefix(self,):
+        """
+        Same as getGroups but return them without a prefix.
+        """
+        ret = []
+        for group in self.getGroups():
+          if group.startswith(grufprefix):
+            ret.append(group[len(grufprefix):])
+        return ret
+                
     security.declarePublic('getUserNameWithoutGroupPrefix')
     def getUserNameWithoutGroupPrefix(self):
         """Return the username of a user without a group prefix"""
         if self.isGroup() and \
           self._original_name[:len(grufprefix)] == grufprefix:
-            return self._original_name[:len(grufprefix)]
+            return self._original_name[len(grufprefix):]
         return self._original_name
 
     security.declarePublic('getUserName')

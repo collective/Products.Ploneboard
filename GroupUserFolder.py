@@ -48,6 +48,7 @@ DEBUG=1
 
 
 _group_prefix_len = len(GRUFFolder.GRUFGroups._group_prefix)
+_group_prefix = GRUFFolder.GRUFGroups._group_prefix
 
 def unique(sequence):
     """
@@ -101,15 +102,20 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     manage_options=( OFS.ObjectManager.ObjectManager.manage_options + \
         ( {'label':'Overview', 'action':'manage_overview'},
+          {'label':'Groups', 'action':'manage_groups'},
+          {'label':'Users', 'action':'manage_users'},
           {'label':'Audit', 'action':'manage_audit'},
           ) + \
         RoleManager.manage_options + \
         Item.manage_options )
 
     manage_main = OFS.ObjectManager.ObjectManager.manage_main
-    manage_overview = DTMLFile('dtml/GroupUserFolder_overview', globals())
+    manage_overview = DTMLFile('dtml/GRUF_overview', globals())
     manage_addUser = DTMLFile('dtml/addUser', globals())
     manage_audit = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_audit', globals())
+    manage_groups = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
+    manage_users = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
+    manage_newusers = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
 
     __ac_permissions__=(
         ('Manage users',
@@ -119,6 +125,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
           )
          ),
         )
+
+
+    # Color constants, only useful within GRUF management screens
+    user_color = "#006600"
+    group_color = "#000099"
+    role_color = "#660000"
+    
 
     # ------------------------
     #    Various operations  #
@@ -295,7 +308,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security.declareProtected(Permissions.manage_users, "getGroups")
     def getGroups(self):
-        """Return a list of user objects"""
+        """Return a list of user-like objects belonging to groups"""
         ret = []
         for n in self.getGroupNames():
             ret.append(self.getGroup(n))
@@ -416,13 +429,56 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             **kw)
 
     security.declarePrivate("_doChangeUser")
-    def _doChangeUser(self, name, password, roles, domains, **kw):
-        """Modify an existing user. This should be implemented by subclasses
-           to make the actual changes to a user. The 'password' will be the
-           original input password, unencrypted. The implementation of this
-           method is responsible for performing any needed encryption."""
+    def _doChangeUser(self, name, password, roles, domains, groups = (), **kw):
+        """
+        Modify an existing user. This should be implemented by subclasses
+        to make the actual changes to a user. The 'password' will be the
+        original input password, unencrypted. The implementation of this
+        method is responsible for performing any needed encryption.
+        
+        A None password should make it change (well, we hope so)
+        """
+        roles = list(roles)
+        groups = list(groups)
+        
+        # Change groups affectation
+        cur_groups = self.getGroups()
+        given_roles = tuple(self.getUser(name).getRoles()) + tuple(roles)
+        for group in groups:
+            if not group.startswith(_group_prefix, ):
+                group = "%s%s" % (_group_prefix, group, )
+            if not group in cur_groups and not group in given_roles:
+                roles.append(group)
+
+        # Change the user itself
         return self.Users.acl_users._doChangeUser(name, password, 
                                                   roles, domains, **kw)
+
+    security.declarePrivate("_updateUser")
+    def _updateUser(self, name, password = None, roles = None, domains = None, groups = None):
+        """
+        _updateUser(self, name, password = None, roles = None, domains = None, groups = None)
+        
+        Front-end to _doChangeUser, but with a better default value support.
+        We guarantee that None values will let the underlying UF keep the original ones.
+        This is not true for the password: some buggy UF implementation may not
+        handle None password correctly :-(
+        """
+        # Get the former values if necessary. Username must be valid !
+        usr = self.getUser(name)
+        if roles is None:
+            # Remove invalid roles and group names
+            roles = usr._original_roles
+            roles = filter(lambda x: not x.startswith(_group_prefix), roles)
+            roles = filter(lambda x: x not in ('Anonymous', 'Authenticated', 'Shared'), roles)
+        if domains is None:
+            domains = usr._original_domains
+        if groups is None:
+            groups = usr.getGroups()
+
+        # Change the user
+        Log(LOG_DEBUG, "Change User", name, password, roles, domains, groups)
+        return self._doChangeUser(name, password, roles, domains, groups)
 
     security.declarePrivate("_doDelUsers")
     def _doDelUsers(self, names):
@@ -450,6 +506,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security.declarePrivate("_doChangeGroup")
     def _doChangeGroup(self, name, roles, **kw):
         """Modify an existing group."""
+        # Remove prefix if given
+        if name.startswith(self.getGroupPrefix()):
+            name = name[_group_prefix_len:]
+
+        # Perform the change
         domains = ""
         password = ""
         for x in range(0, 10):  # Password will be 10 chars long
@@ -458,11 +519,147 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                                                   roles, domains, **kw)
 
     security.declarePrivate("_doDelGroup")
-    def _doDelGroup(self, names):
-        """Delete one or more users. This should be implemented by subclasses
-           to do the actual deleting of users."""
-        return self.Groups.acl_users._doDelUsers(names)
+    def _doDelGroup(self, name):
+        """Delete one user."""
+        # Remove prefix if given
+        if name.startswith(self.getGroupPrefix()):
+            name = name[_group_prefix_len:]
 
+        # Delete it
+        return self.Groups.acl_users._doDelUsers([name])
+
+    security.declarePrivate("_doDelGroups")
+    def _doDelGroups(self, names):
+        """Delete one or more users."""
+        for group in names:
+            self._doDelGroup(group)
+
+
+
+    #                                           #
+    #      Pretty Management form methods       #
+    #                                           #
+
+    reset_entry = "__None__"            # Special entry used for reset
+
+    security.declareProtected(Permissions.manage_users, "changeOrCreateUsers")
+    def changeOrCreateUsers(self, users = [], groups = [], roles = [], new_users = [], REQUEST = {}, ):
+        """
+        changeOrCreateUsers => affect roles & groups to users and/or create new users
+        
+        All parameters are strings or lists (NOT tuples !).
+        NO CHECKING IS DONE. This is an utility method !
+        """
+        # Manage roles / groups deletion
+        del_roles = 0
+        del_groups = 0
+        if self.reset_entry in roles:
+            roles.remove(self.reset_entry)
+            del_roles = 1
+        if self.reset_entry in groups:
+            groups.remove(self.reset_entry)
+            del_groups = 1
+        if not roles and not del_roles:
+            roles = None                # None instead of [] to avoid deletion
+            add_roles = []
+        else:
+            add_roles = roles
+        if not groups and not del_groups:
+            groups = None
+            add_groups = []
+        else:
+            add_groups = groups
+
+        # Passwords management
+        passwords_list = []
+        
+        # Create brand new users
+        for new in new_users:
+            # Strip name
+            name = string.strip(new)
+            if not name:
+                continue
+
+            # Avoid erasing former users
+            if name in self.getUserNames():
+                continue
+            
+            # Generate a random password
+            password = ""
+            for x in range(0, 8):  # Password will be 8 chars long
+                password = "%s%s" % (password, random.choice(string.lowercase + string.digits), )
+            self._doAddUser(name, password, add_roles, (), add_groups, )
+
+            # Store the newly created password
+            passwords_list.append({'name':name, 'password':password})
+        
+        # Update existing users
+        for user in users:
+            Log(LOG_DEBUG, "update", user, groups, roles)
+            self._updateUser(name = user, groups = groups, roles = roles, )
+
+        # Redirect if no users have been created
+        if not passwords_list:
+            if REQUEST.has_key('RESPONSE'):
+                return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_users")
+
+        # Show passwords form
+        REQUEST.set('USER_PASSWORDS', passwords_list)
+        return self.manage_newusers(None, self)
+
+
+    security.declareProtected(Permissions.manage_users, "deleteUsers")
+    def deleteUsers(self, users = [], REQUEST = {}):
+        """
+        deleteUsers => explicit
+        
+        All parameters are strings. NO CHECKING IS DONE. This is an utility method !
+        """
+        # Delete them
+        self._doDelUsers(users, )
+
+        # Redirect
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_users")
+
+
+    security.declareProtected(Permissions.manage_users, "changeOrCreateGroups")
+    def changeOrCreateGroups(self, groups = [], roles = [], new_groups = [], REQUEST = {}, ):
+        """
+        changeOrCreateGroups => affect roles to groups and/or create new groups
+        
+        All parameters are strings. NO CHECKING IS DONE. This is an utility method !
+        """
+        # Create brand new groups
+        for new in new_groups:
+            name = string.strip(new)
+            if not name:
+                continue
+            self._doAddGroup(name, roles)
+        
+        # Update groups
+        for group in groups:
+            self._doChangeGroup(group, roles, )
+
+        # Redirect
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_groups")
+
+
+    security.declareProtected(Permissions.manage_users, "deleteGroups")
+    def deleteGroups(self, groups = [], REQUEST = {}):
+        """
+        deleteGroups => explicit
+        
+        All parameters are strings. NO CHECKING IS DONE. This is an utility method !
+        """
+        # Delete groups
+        for group in groups:
+            self._doDelGroup(group, )
+
+        # Redirect
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_groups")
 
 
 
@@ -521,7 +718,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Avoid doing things twice
         kind = "role"
         if cache.get(path, {}).get((kind, actor), None) is not None:
-##            Log(LOG_DEBUG, "**** Returning from the cache ****")
             return cache[path][(kind, actor)]
 
         # Initilize cache structure

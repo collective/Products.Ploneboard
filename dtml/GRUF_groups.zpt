@@ -1,0 +1,107 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+  <h3>Groups management</h3>
+  <form action="" method="POST" tal:attributes="action template/absolute_url">
+    <ol>
+      <table cellspacing="10">
+        <tr>
+          <!-- Groups selection -->
+          <td valign="top">
+            <table bgcolor="#EEEEEE">
+              <tr class="list-header">
+                <th>&nbsp;</th>
+                <th>Group</th>
+                <th>Current role(s)</th>
+              </tr>
+              
+              <tr tal:repeat="group here/getGroups" class="" tal:attributes="class python:test(path('repeat/group/odd'), 'row-hilite', 'row-normal')">
+                <td><div class="list-item"><input type="checkbox" name="groups:list" value="" tal:attributes="value group"></td>
+                <td>
+                  <div class="list-item">
+                    <img src="" tal:attributes="src here/Groups/icon">
+                    <font color="" tal:attributes="color here/group_color">
+                      <span tal:content="group/getUserNameWithoutGroupPrefix">Group name</span>
+                    </font>
+                  </div>
+                </td>
+                <td>
+                  <div class="list-item">
+                    <i>
+                      <font color="" tal:attributes="color here/role_color" tal:content="python:modules['string'].join(filter(lambda x: x not in ('Authenticated', 'Shared'), group.getRoles()),', ')">
+                        Role, role, role, role, ...
+                      </font>
+                    </i>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- New group -->
+              <tr>
+                <td><div class="list-item">&nbsp;</div></td>
+                <td><div class="list-item">Create groups:<br /><textarea name="new_groups:lines" cols="20" rows="3"></textarea></div></td>
+                <td><div class="list-item"></div></td>
+            </table>
+          </td>
+
+          <td valign="middle">
+            =>
+          </td>
+
+          <!-- Roles selection -->
+          <td valign="middle">
+            <table bgcolor="#EEEEEE">
+              <tr class="list-header">
+                <th>&nbsp;</th>
+                <th>Affected roles</th>
+              </tr>
+              
+              <tr tal:repeat="role here/valid_roles">
+                <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                  <input type="checkbox" name="roles:list" value="" tal:attributes="value role">
+                </td>
+                <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
+                  <div class="list-item"><i><font color="" tal:attributes="color here/role_color" tal:content="role">Role</font></i></div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Actions -->
+      <p align="center">
+        <input type="submit" name="changeOrCreateGroups:method" value="Create / Change" />
+          &nbsp;
+          <input type="submit" name="deleteGroups:method" value="Delete" />
+      </p>
+
+    </ol>
+  </form>
+
+  <h3>Instructions</h3>
+  <ol>
+
+      <p class="form-help">
+        To change roles for one or several groups, select them in the left form, select the roles you want to give them in the form on the right and click "Change".<br />
+        You can also create one or several groups by filling the text area (one group per line). the "Change" button will create them with the roles you've selected.<br />
+        If you are fed up with some groups, you can delete them by selecting them and clicking the "Delete" button.
+      </p>
+  </ol>
+
+  <h3>Important notice / disclaimer</h3>
+  
+  <ol>
+    <p class="form-help">
+      This form uses the regular Zope Security API from the underlying user folders. However, you may experience problems with some
+      of them, especially if they are not tuned to allow user adding. For example, an LDAPUserFolder can be configured to disable
+      users management. In case this form doesn't work, you'll have to do things by hand within the 'Users' and 'Groups' GRUF folders.
+    </p>
+
+    <p class="form-help">
+      This is not a GRUF limitation ! :-)
+    </p>
+  </ol>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

@@ -144,4 +144,7 @@ BUGS
   as a new user, there is a Zope error "Unable to unpickle object"... I don't know how to fix that now.
   With Zope 2.6 there is no such bug.
 
+LICENCE
+
+  GRUF is released under the terms of the GNU Public Licence (GPL). Specific arrangements can be found for closed-source projects : please contact us.
 
