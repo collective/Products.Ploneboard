@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.23 2004/06/19 22:47:33 tiran Exp $
+$Id: ATContentType.py,v 1.24 2004/06/19 23:06:22 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -48,7 +48,7 @@ from Acquisition import aq_base
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
 
-DEBUG = True
+DEBUG = 0 
 
 def updateActions(klass, actions):
     """Merge the actions from a class with a list of actions
