@@ -440,13 +440,19 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security.declarePrivate("_doAddUser")
     def _doAddUser(self, name, password, roles, domains, groups = (), **kw):
-        """Create a new user. This should be implemented by subclasses to
-           do the actual adding of a user. The 'password' will be the
-           original input password, unencrypted. The implementation of this
-           method is responsible for performing any needed encryption."""
+        """
+        Create a new user. This should be implemented by subclasses to
+        do the actual adding of a user. The 'password' will be the
+        original input password, unencrypted. The implementation of this
+        method is responsible for performing any needed encryption.
+        """
+        prefix = GRUFFolder.GRUFGroups._group_prefix
+
+        # If starts with group prefix, create a group instead of a user
+        if name.startswith(prefix):
+            self._doAddGroup(name, roles, groups, **kw)
 
         # Prepare groups
-        prefix = GRUFFolder.GRUFGroups._group_prefix
         roles = list(roles)
         gruf_groups = self.getGroupNames()
         for group in groups:
@@ -667,7 +673,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/01/15 11:05:20 $"[7:-2]
+        rev_date = "$Date: 2004/01/15 11:09:26 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
