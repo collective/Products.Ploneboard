@@ -26,10 +26,9 @@ class PackSlot(Slot):
    
    def _render_editing(self, obj, text, icon_base_url):
         o2 = obj.dereference()
-        icon = getIconURL(o2, icon_base_url)
-        title = o2.title_and_id()
-        url_tool = getToolByName(self, 'portal_url')
-        path = escape(url_tool.getRelativeUrl(obj))
+        icon = escape(getIconURL(o2, icon_base_url).encode('utf8'))
+        title = escape(o2.title_and_id().encode('utf8'))
+        path = obj.absolute_url()
         composite_tool = getToolByName(self, TOOL_ID)
         viewlets_info = composite_tool.getViewletsFor(o2)
         allowed_viewlets_ids = []
@@ -40,12 +39,17 @@ class PackSlot(Slot):
             for viewlet in viewlets_info['viewlets']:
                 allowed_viewlets_ids.append(viewlet["id"])
                 allowed_viewlets_titles.append(viewlet["viewlet"].title_or_id())
-        return edit_tag % (path,
-                           escape(icon),
-                           escape(title),
-                           " ".join(allowed_viewlets_ids),
-                           "%".join(allowed_viewlets_titles),
+        allowed_viewlets_ids = " ".join(allowed_viewlets_ids)
+        allowed_viewlets_ids = allowed_viewlets_ids.encode('utf8')
+        allowed_viewlets_titles = "%".join(allowed_viewlets_titles)
+        allowed_viewlets_titles = allowed_viewlets_titles.encode('utf8')
+        result = edit_tag % (path,
+                           icon,
+                           title,
+                           allowed_viewlets_ids,
+                           allowed_viewlets_titles,
                            text)
+        return result
 
 class PackSlotGenerator(SlotGenerator):
     _slot_class = PackSlot

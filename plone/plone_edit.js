@@ -3,7 +3,7 @@
 // The variable "ui_url" is provided by common/header.pt.
 
 function plone_edit(element) {
-  var path = escape(element.getAttribute("source_path"));
+  var path = element.getAttribute("source_path");
   window.document.location = path + "/edit_compo_element"; 
 }
 
@@ -15,7 +15,7 @@ function plone_add(target) {
 
 function plone_change_viewlet(element, viewlet) {
   // Note that target_index is also available.
-  var path = escape(element.getAttribute("source_path"));
+  var path = element.getAttribute("source_path");
   window.document.location = path + "/change_viewlet?viewletId=" + viewlet;
 }
 
