@@ -17,7 +17,9 @@
         global member mtool/getAuthenticatedMember;
         global checkPermission nocall:mtool/checkPermission;" />
 
-    <div class="portlet-wrap" tal:attributes="class string:viewlet ${options/panelSkin}" >
+    <div class="portlet-wrap" 
+         tal:attributes="class string:viewlet ${options/panelSkin};
+                         id here/getId" >
         <metal:block tal:condition="usemacro">
            <metal:block metal:use-macro="python:path(viewletPath)" />
         </metal:block>

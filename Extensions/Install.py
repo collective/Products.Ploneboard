@@ -59,7 +59,6 @@ def install_Skins(self, out):
     try:
         install_SubSkin(self, out, 'contentpanels')
         install_SubSkin(self, out, 'contentpanels/viewlets')
-        install_SubSkin(self, out, 'contentpanels/box_skins')
         out.write('CMFContentPanels subskin successfully installed.\n')
     except:
         out.write('CMFContentPanels subskin failed to install.\n')

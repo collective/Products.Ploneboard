@@ -17,20 +17,22 @@
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd" 
-             tal:define="item item/getObject | nocall: item"
-             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
-             tal:condition="python:item != None and item.getTypeInfo()">
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')">
 
-            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
-                                   url python:item.absolute_url()+'/'+action;">
-                <a href="#"
-		   i18n:attributes="title"
-                   tal:attributes="href url;
-                                   title item/Description | nothing;">
-                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-                    <span tal:replace="item/Title | item/getId">Title</span>
-                </a>
-       
+            <tal:block tal:define="result_url item/getURL;
+                                   url string:$result_url/view;">
+
+              <a href="#"
+                tal:attributes="href url">
+	<img src="#"
+	     height="16"
+	     width="16"
+	     alt=""
+	     tal:on-error="structure python:path('here/linkOpaque.gif')"
+	     tal:replace="structure python:path('here/%s' % item.getIcon)" /></a>&nbsp;<a
+                href="#" tal:attributes="href url; title item/Description"
+                tal:content="python:item.Title or item.getId" />
+
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
                                   modificationDate python:here.toPortalTime(modificationDate)"
@@ -48,18 +50,20 @@
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd"
-             tal:define="item item/getObject | nocall:item"
-             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
-             tal:condition="python:item != None and item.getTypeInfo()">
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')" >
 
-            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
-                                   url python:item.absolute_url()+'/'+action;">
-                <a href="#"
-                   i18n:attributes="title"
-                   tal:attributes="href url;">
-                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-                    <span tal:replace="item/Title | item/getId">Title</span>
-                </a>
+            <tal:block tal:define="result_url item/getURL;
+                                   url string:$result_url/view;">
+              <a href="#"
+                tal:attributes="href url">
+                <img src="#"
+                     height="16"
+                     width="16"
+                     alt=""
+                     tal:on-error="structure python:path('here/linkOpaque.gif')"
+                     tal:replace="structure python:path('here/%s' % item.getIcon)" /></a>&nbsp;<a
+                href="#" tal:attributes="href url"
+                tal:content="python:item.Title or item.getId" />
 
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
@@ -78,18 +82,20 @@
     <tal:block tal:repeat="item results">
 
         <div class="portletContent odd"
-             tal:define="item item/getObject | nocall: item"
-             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
-             tal:condition="python:item != None and item.getTypeInfo()">
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')">
 
-            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
-                                   url python:item.absolute_url()+'/'+action;">
-                <a href="#"
-                   i18n:attributes="title"
-                   tal:attributes="href url;">
-                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-                    <span tal:replace="item/Title | item/getId">Title</span>
-                </a>
+            <tal:block tal:define="result_url item/getURL;
+                                   url string:$item_url/view;">
+              <a href="#"
+                tal:attributes="href url">
+                <img src="#"
+                     height="16"
+                     width="16"
+                     alt=""
+                     tal:on-error="structure python:path('here/linkOpaque.gif')"
+                     tal:replace="structure python:path('here/%s' % item.getIcon)" /></a>&nbsp;<a
+                href="#" tal:attributes="href url"
+                tal:content="python:item.Title or item.getId" />
 
                 <span class="discreet"
                       tal:define="modificationDate item/ModificationDate;
@@ -107,6 +113,30 @@
     </tal:block>
 </metal:block>
 
+<!-- 4. short title -->
+
+<metal:block metal:define-macro="title_only">
+    <tal:block tal:repeat="item results">
+
+        <div class="portletContent odd"
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')">
+
+            <tal:block tal:define="result_url item/getURL;
+                                   url string:$result_url/view;">
+              <a href="#"
+                tal:attributes="href url">
+                <img src="#"
+                     height="16"
+                     width="16"
+                     alt=""
+                     tal:on-error="structure python:path('here/linkOpaque.gif')"
+                     tal:replace="structure python:path('here/%s' % item.getIcon)" /></a>&nbsp;<a
+                href="#" tal:attributes="href url"
+                tal:content="python:item.Title or item.getId" />
+            </tal:block>
+        </div>
+    </tal:block>
+</metal:block>
 
 </body>
 

@@ -62,9 +62,8 @@ def addContentPanels( self
            , id
            , title=''
            , description=''
-            , panelsConfig=[]
            ):
-    o=ContentPanels( id, title, description, panelsConfig )
+    o=ContentPanels( id, title, description)
     self._setObject(id,o)
 
 
@@ -79,18 +78,20 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
 
     meta_type = 'CMF Content Panels'
     effective_date = expiration_date = None
+    panelsConfig = []
     
     security = ClassSecurityInfo()
 
-    def __init__(self, id, title='', description='', panelsConfig=[]):
+    def __init__(self, id, title='', description=''):
         DefaultDublinCoreImpl.__init__(self)
         self.id=id
         self.title=title
         self.description=description
-        import copy
-        self.panelsConfig = copy.deepcopy(panelsConfig)  # must deep copy!!
-        if self.panelsConfig == []:
-            self.addPage()
+        self.clearPanels()
+        self.addPage()
+
+    def clearPanels(self):
+        self.panelsConfig = []
         self._p_changed = 1
 
     security.declarePublic('toRelativePath')

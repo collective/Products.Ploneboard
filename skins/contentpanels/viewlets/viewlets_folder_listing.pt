@@ -13,12 +13,39 @@
 
          <h5><a href="#"    
                 tal:attributes="href here/absolute_url"
-                tal:content="here/title_or_id" >title</a></h5>
+                tal:content="python: here.Title() or here.getId()" >title</a></h5>
 
          <div class="portletBody">
 
              <metal:block metal:define-slot="body">
-                <metal:block metal:use-macro="here/content_list_macros/macros/description_in_title"/>
+
+    <tal:block tal:repeat="item results">
+
+        <div class="portletContent odd" 
+             tal:define="item item/getObject | nocall: item"
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
+             tal:condition="python:item != None and item.getTypeInfo()">
+
+            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
+                                   url python:item.absolute_url()+'/'+action;">
+                <a href="#"
+		   i18n:attributes="title"
+                   tal:attributes="href url;
+                                   title item/Description | nothing;">
+                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+                    <span tal:replace="item/Title | item/getId">Title</span>
+                </a>
+       
+                <span class="discreet"
+                      tal:define="modificationDate item/ModificationDate;
+                                  modificationDate python:here.toPortalTime(modificationDate)"
+                      tal:content="string:(${item/Creator}) $modificationDate">
+                      creator   08/19/2001 03:01 AM
+                </span>
+            </tal:block>
+        </div>
+    </tal:block>
+
              </metal:block>
 
              <div class="portletContent odd">
@@ -35,10 +62,37 @@
 </div>
 
 
+
 <div metal:define-macro="inline_description">
     <metal:block use-macro="here/viewlets_folder_listing/macros/base_portlet">
         <metal:block metal:fill-slot="body">
-            <metal:block metal:use-macro="here/content_list_macros/macros/inline_description"/>
+
+    <tal:block tal:repeat="item results">
+
+        <div class="portletContent odd"
+             tal:define="item item/getObject | nocall:item"
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
+             tal:condition="python:item != None and item.getTypeInfo()">
+
+            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
+                                   url python:item.absolute_url()+'/'+action;">
+                <a href="#"
+                   i18n:attributes="title"
+                   tal:attributes="href url;">
+                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+                    <span tal:replace="item/Title | item/getId">Title</span>
+                </a>
+
+                <span class="discreet"
+                      tal:define="modificationDate item/ModificationDate;
+                                  modificationDate python:here.toPortalTime(modificationDate)"
+                      tal:content="string:(${item/Creator}) ${item/Description} $modificationDate">
+                      creator   08/19/2001 03:01 AM
+                </span>
+            </tal:block>
+        </div>
+    </tal:block>
+
         </metal:block>
     </metal:block>
 </div>
@@ -46,11 +100,41 @@
 <div metal:define-macro="separate_line_description">
     <metal:block use-macro="here/viewlets_folder_listing/macros/base_portlet">
         <metal:block metal:fill-slot="body">
-            <metal:block metal:use-macro="here/content_list_macros/macros/separate_line_description"/>
+
+    <tal:block tal:repeat="item results">
+
+        <div class="portletContent odd"
+             tal:define="item item/getObject | nocall: item"
+             tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
+             tal:condition="python:item != None and item.getTypeInfo()">
+
+            <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
+                                   url python:item.absolute_url()+'/'+action;">
+                <a href="#"
+                   i18n:attributes="title"
+                   tal:attributes="href url;">
+                    <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+                    <span tal:replace="item/Title | item/getId">Title</span>
+                </a>
+
+                <span class="discreet"
+                      tal:define="modificationDate item/ModificationDate;
+                                  modificationDate python:here.toPortalTime(modificationDate)"
+                      tal:content="string:(${item/Creator}) $modificationDate">
+                      creator   08/19/2001 03:01 AM
+                </span>
+
+	        <div class="portletMore">
+                    <span tal:content="structure item/Description"/>...
+                </div>
+
+            </tal:block>
+        </div>
+    </tal:block>
+
         </metal:block>
     </metal:block>
 </div>
-
 
 </body>
 

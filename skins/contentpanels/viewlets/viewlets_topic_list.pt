@@ -5,15 +5,14 @@
 <body>
 
 <div metal:define-macro="base_portlet"
-     tal:define="results python:here.queryCatalog()[:5];
-                 results python:[item.getObject() for item in results]"
+     tal:define="results python:here.queryCatalog()[:5];"
      tal:condition="results">
 
      <div class="portlet">
 
          <h5><a href="#"    
                 tal:attributes="href here/absolute_url"
-                tal:content="here/title_or_id" > Topic title</a></h5>
+                tal:content="here/Title" > Topic title</a></h5>
 
          <div class="portletBody">
 
@@ -35,7 +34,7 @@
 </div>
 
 <div metal:define-macro="inline_description">
-    <metal:block use-macro="here/viewlets_topic/macros/base_portlet">
+    <metal:block use-macro="here/viewlets_topic_list/macros/base_portlet">
         <metal:block metal:fill-slot="body">
             <metal:block metal:use-macro="here/content_list_macros/macros/inline_description"/>
         </metal:block>
@@ -43,9 +42,17 @@
 </div>
 
 <div metal:define-macro="separate_line_description">
-    <metal:block use-macro="here/viewlets_topic/macros/base_portlet">
+    <metal:block use-macro="here/viewlets_topic_list/macros/base_portlet">
         <metal:block metal:fill-slot="body">
             <metal:block metal:use-macro="here/content_list_macros/macros/separate_line_description"/>
+        </metal:block>
+    </metal:block>
+</div>
+
+<div metal:define-macro="title_only">
+    <metal:block use-macro="here/viewlets_topic_list/macros/base_portlet">
+        <metal:block metal:fill-slot="body">
+            <metal:block metal:use-macro="here/content_list_macros/macros/title_only"/>
         </metal:block>
     </metal:block>
 </div>
@@ -53,6 +60,3 @@
 </body>
 
 </html>
-
-
-

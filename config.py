@@ -44,6 +44,10 @@ actions=[
 'string: here/viewlets_topic_list/macros/base_portlet', 
 '', 'View', 'PT:Topic', 1),
 
+('topic_title_only', 'title only',
+'string: here/viewlets_topic_list/macros/title_only',
+'', 'View', 'PT:Topic', 1),
+
 ('image_view','Body',
 'string:here/viewlet_image_body/macros/portlet',
 "","View","PT:Image", 1),

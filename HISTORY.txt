@@ -1,4 +1,6 @@
 V1.7
+
+  - much faster: just use catalogBrain and remove global_defines at base_panel
  
   - better UI
 
