@@ -1,0 +1,316 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <metal:border fill-slot="head_slot">
+    <tal:border define="dummy python:request.set('enable_border',1)" />
+  </metal:border>
+
+  <body>
+
+    <div metal:fill-slot="main"
+         tal:define="errors options/state/getErrors;
+                     langs here/getI18NLanguages;
+                     def_lang here/getI18NDefaultLanguage;
+                     getObjSize nocall:portal/getObjSize;
+                     getInfoFor python:wtool.getInfoFor;">
+
+      <h1 i18n:translate="heading_edit_languages_properties">Edit language properties</h1>
+      
+      <tal:block tal:condition="here/insideI18NLayer">
+        <tal:block tal:define="folder_contents python:here.getParentNode().getFolderContents(suppressHiddenFiles=1);
+                               undefined_langs python:here.getI18NUndefinedLanguages().items();
+                               defined_langs python:here.getI18NDefinedLanguages().items();">
+                               
+          <p i18n:translate="description_i18n_document">
+            Use this form to manage document languages properties
+          </p>  
+          
+          <form name="edit_form"
+                action="."
+                method="post"
+                enctype="multipart/form-data"
+                tal:attributes="action string:${here/getId}/${template/getId}" >
+    
+            <table class="listing"
+                   summary="Content listing"
+                   cellpadding="0" cellspacing="0">
+    
+              <thead>
+                <tr>
+                  <th>
+                     <input class="noborder"
+                            type="checkbox"
+                            src="select_all_icon.gif"
+                            name="selectButton"
+                            title="Select all items"
+                            onClick="toggleSelect(this);"
+                            tal:attributes="src string:$portal_url/select_all_icon.gif"
+                            alt="Select all items"
+                            i18n:attributes="title alt"/>
+                  </th>
+                    
+                  <th>
+                    &nbsp;
+                    <tal:title i18n:translate="listingheader_title">Title</tal:title>
+                    &nbsp;
+                  </th>
+                          
+                  <th>
+                    &nbsp;
+                    <tal:size i18n:translate="listingheader_size">Size</tal:size>
+                    &nbsp;
+                  </th>
+                          
+                  <th>
+                    &nbsp;
+                    <tal:modified i18n:translate="listingheader_modified">Modified</tal:modified>
+                    &nbsp;
+                  </th>
+                          
+                  <th>
+                    &nbsp;
+                    <tal:state i18n:translate="listingheader_status">State</tal:state>
+                    &nbsp;
+                  </th>
+                          
+                  <th>
+                    &nbsp;
+                    <span i18n:translate="listingheader_language">Language</span>
+                    &nbsp;
+                  </th>     
+                </tr>
+              </thead>
+    
+              <tbody tal:define="getRelativeContentURL nocall:utool/getRelativeContentURL">
+                <metal:block tal:repeat="item folder_contents">
+                  <tr tal:define="oddrow repeat/item/odd;
+                                  item_url item/absolute_url;
+                                  item_id item/getId;
+                                  item_title_or_id item/title_or_id;
+                                  item_typeinfo item/getTypeInfo;"
+                      tal:attributes="class python:test(oddrow, 'even', 'odd')">
+    
+                    <td>
+                      <input type="checkbox" 
+                             class="noborder" 
+                             name="ids:list" 
+                             id="#"
+                             value="#"
+                             tal:attributes="value item/getId;
+                                             id python: 'cb_'+item.getId();
+                                             checked request/ids_checked|nothing;
+                                             tabindex tabindex/next|nothing; alt string:Select $item_title_or_id;
+                                             title string:Select $item_title_or_id"/>
+                      <input type="hidden" name="obj_paths:list" value="#"
+                             tal:attributes="value python:getRelativeContentURL(item)" />
+                    </td>
+      
+                    <td tal:define="action python:item_typeinfo.immediate_view;
+                                    url python:item_url+'/'+action;">
+      
+                      <a href="#" 
+                         tal:attributes="href url; 
+                                         title item/Description;">
+    
+                        <img tal:define="icon python:item.getIcon(1); iconObject python:getattr(here,icon)"
+                             tal:attributes="src string:$portal_url/$icon; 
+                                             alt iconObject/title_or_id;
+                                             title item_typeinfo/Title"/>
+                        &nbsp;
+                        <span tal:replace="item/title_or_id">Title</span>
+                      </a>
+                    </td>
+      
+                    <td tal:define="folderish item/isPrincipiaFolderish|nothing">
+                      <span tal:condition="folderish"> &nbsp; </span>
+                      <span tal:condition="not: folderish"
+                        tal:define="size python:getObjSize(item)"
+                        tal:content="structure python:test(size, size, '&nbsp;')"> size </span>
+                    </td>
+      
+                    <td tal:content="item/ModificationDate">
+                    08/19/2001 03:01 AM
+                    </td>
+      
+                    <td class="private"
+                        tal:define="review_state python:getInfoFor(item, 'review_state', '')"
+                        tal:content="structure python:test(review_state, review_state, '&nbsp;')"
+                        tal:attributes="class python:test(review_state, 'state-'+review_state, 'state-private')"
+                        i18n:translate="">&nbsp;
+                    </td>
+                    
+                    <td tal:content="python:langs[item.getId()]">
+                      English
+                    </td>
+                  </tr>
+                </metal:block>
+              </tbody>
+            </table>          
+        
+        
+            <input type="hidden"
+                   name="id"
+                   tal:condition="python:not member.getProperty('visible_ids', '') or
+                                  not len(utool.getRelativeContentPath(here))"
+                   tal:define="id python:request.get('id', here.getId())"
+                   tal:attributes="value id"
+                   />
+  
+            <div>
+              <tal:block tal:condition="undefined_langs">
+                <select id="obj_language"
+                        name="obj_language"
+                        value=""
+                        tabindex=""
+                        tal:attributes="tabindex tabindex/next;">
+                       
+                  <tal:block tal:repeat="lang undefined_langs">
+                    <option value=""
+                            selected=""
+                            tal:attributes="value python:lang[0];"
+                            tal:content="python:lang[1]"/>
+                  </tal:block>
+                </select>         
+                <input class="context"
+                       tabindex=""
+                       type="submit"
+                       name="form.button.Add"
+                       value="Add"
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next;" />
+              </tal:block>
+               
+              <input class="context"
+                     tabindex=""
+                     type="submit"
+                     name="form.button.Delete"
+                     value="Delete"
+                     i18n:attributes="value"
+                     tal:attributes="tabindex tabindex/next;" />      
+  
+            </div>
+    
+            <input type="hidden" name="form.submitted" value="1" />
+    
+          </form> 
+          
+          <p i18n:translate="description_i18_to_simple_document">
+            Convert your multilingual document to a simple document.
+          </p>
+          
+          <form name="edit_form"
+                action="."
+                method="post"
+                enctype="multipart/form-data"
+                tal:attributes="action string:${here/getId}/${template/getId}" >
+            
+            <input type="hidden"
+                   name="id"
+                   tal:condition="python:not member.getProperty('visible_ids', '') or
+                                  not len(utool.getRelativeContentPath(here))"
+                   tal:define="id python:request.get('id', here.getId())"
+                   tal:attributes="value id"/>
+            
+            <div>
+              <select id="obj_language"
+                      name="obj_language"
+                      value=""
+                      tabindex=""
+                      tal:attributes="tabindex tabindex/next;">
+                     
+                <tal:block tal:repeat="lang defined_langs">
+                  <option value=""
+                          selected=""
+                          tal:attributes="value python:lang[0];
+                                          selected python:test(lang[0] == def_lang, 'selected', '')"
+                          tal:content="python:lang[1]"/>
+                </tal:block>
+                     
+              </select>
+    
+              <input class="context"
+                     tabindex=""
+                     type="submit"
+                     name="form.button.DeleteI18N"
+                     value="Convert"
+                     i18n:attributes="value"
+                     tal:attributes="tabindex tabindex/next;" />
+            </div>
+    
+            <input type="hidden" name="form.submitted" value="1" />
+    
+          </form>
+        </tal:block>
+      </tal:block>
+      
+      <tal:block tal:condition="not: here/insideI18NLayer">
+  
+        <p i18n:translate="description_i18nize_document">
+          Convert your document in a multilingual document.
+        </p>
+  
+        <form name="edit_form"
+              action="."
+              method="post"
+              enctype="multipart/form-data"
+              tal:attributes="action string:${here/getId}/${template/getId}" >
+  
+          <input type="hidden"
+                 name="id"
+                 tal:condition="python:not member.getProperty('visible_ids', '') or
+                                not len(utool.getRelativeContentPath(here))"
+                 tal:define="id python:request.get('id', here.getId())"
+                 tal:attributes="value id"
+                 />
+
+          <div class="field">
+
+            <label for="title" i18n:translate="label_language">Language</label>
+
+            <div class="formHelp" i18n:translate="help_i18nize_document">
+              Choose language in which your document will be converted.
+            </div>
+
+            <select id="obj_language"
+                    name="obj_language"
+                    value=""
+                    tabindex=""
+                    tal:attributes="tabindex tabindex/next;">
+                   
+              <tal:block tal:repeat="lang langs/items">
+                <option value=""
+                        selected=""
+                        tal:attributes="value python:lang[0];
+                                        selected python:test(lang[0] == def_lang, 'selected', '')"
+                        tal:content="python:lang[1]"/>
+              </tal:block>
+                   
+            </select>
+
+          </div>
+
+          <div class="formControls"
+               tal:define="process_creation request/process_creation|nothing;">
+            <input class="context"
+                   tabindex=""
+                   type="submit"
+                   name="form.button.ConvertToI18N"
+                   value="Convert"
+                   i18n:attributes="value"
+                   tal:attributes="tabindex tabindex/next;" />
+
+          </div>
+  
+          <input type="hidden" name="form.submitted" value="1" />
+  
+        </form>
+      </tal:block>
+    </div>
+
+  </body>
+</html>
+ 
+
+
