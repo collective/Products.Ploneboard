@@ -22,6 +22,7 @@ redirect=layer_url
 try: referrer=REQUEST.environ['HTTP_REFERER']
 except: referrer=hereurl
 
+print "lang", lang
 print "layer_url", layer_url
 print "referrer", referrer[:len(layer_url)]
 

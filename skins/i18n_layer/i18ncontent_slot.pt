@@ -15,13 +15,8 @@
 
             <div class="content odd">
 
-              <form name="i18ncontentselector" method="POST" action="setI18NContentCookie" tal:attributes="action string:${here/absolute_url}/setI18NContentCookie">
-                <input type="hidden" name="here_url" value="" tal:attributes="value here/absolute_url" />
-                <input type="hidden" name="layer_url" value="" tal:attributes="value here/retrieveI18NContentLayerURL" />
-                <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().keys()">
-	          <input type="hidden" name="available_languages:list" value="" tal:attributes="value lang" />
-                </tal:block>
-
+             <metal:block metal:define-macro="i18nContentChooser">
+              <form name="i18ncontentselector" method="GET" action="setI18NContentCookie" tal:attributes="action string:${here/absolute_url}/setI18NContentCookie">
 	        <select name="lang" onChange="i18ncontentselector.submit();">
                   <option value="" i18n:domain="plone" i18n:translate="label_choose_language">Choose Language</option>
 		  <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().items()">
@@ -29,6 +24,7 @@
                   </tal:block>
                 </select>
 	      </form>
+             </metal:block>
 
             </div>
 

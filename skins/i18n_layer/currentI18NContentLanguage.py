@@ -18,7 +18,7 @@ except:
 currentCookie=REQUEST.cookies.get('I18N_CONTENT_LANGUAGE', None)
 currentServed=REQUEST.get('I18N_CONTENT_SERVED_LANGUAGE', None)
 currentOnce=REQUEST.get('cl', None)
-fallback=1
+fallback=0
 
 print "here_url", here_url
 print "layer_url", layer_url
@@ -57,6 +57,7 @@ if not currentServed and fallback:
 
 name=available_languages.get(currentServed, None)
 lang=currentServed, name
+
 
 if not name or not currentServed:
     return None, None

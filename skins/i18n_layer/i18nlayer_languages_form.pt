@@ -42,8 +42,8 @@
             <tal:block tal:repeat="lang existing_languages">
 		<tal:block tal:define="dummy python:batch.append(getattr(here,lang))" />
             </tal:block>
-	 
-            <div class="row"><div i18nl:translate="label_list" class="label">List</div>
+
+            <div class="row"><div i18n:translate="label_list" class="label">List</div>
               <metal metal:use-macro="here/folder_contents/macros/folder_listing" />
 	    </div>
 
@@ -76,7 +76,7 @@
 			    tal:attributes="tabindex tabindex/next;"
 			    tal:define="available_languages python:list(here.availableLanguages()); sorted python:available_languages.sort( lambda x,y: cmp(x[1], y[1]) )">
 			    
-			    <option value="" i18n:translate="label_choose_language">Choose Language</option>
+			    <option value="" i18n:domain="plone" i18n:translate="label_choose_language">Choose Language</option>
 			    <tal:block tal:repeat="language available_languages">
 			      <option tal:condition="python:test(language[0] not in existing_languages, 1,0)" tal:attributes="value python:language[0]"
 			              tal:content="structure python:language[1]">Language</option>
