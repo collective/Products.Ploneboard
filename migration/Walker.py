@@ -14,13 +14,13 @@ class Walker:
     """Walks through the system and migrates every object it finds
     """
     
-    def __init__(self, migrator, portal=None):
+    def __init__(self, migrator, portal):
         self.migrator = migrator
+        self.portal = portal
         self.fromType = self.migrator.fromType
         self.toType = self.migrator.toType
         self.subtransaction = self.migrator.subtransaction
         self.out = []
-        self.portal = portal
         
     def go(self):
         """runner
@@ -96,6 +96,7 @@ class Walker:
                 msg = 'ERROR: \n%s' % tb
                 LOG(msg)
                 self.out[-1]+=msg
+                print msg
 
                 # stop migration process after an error
                 # the transaction was already aborted by the migrator itself
@@ -122,10 +123,10 @@ class CatalogWalker(Walker):
     """Walker using portal_catalog
     """
     
-    def __init__(self, migrator, catalog, portal=None):
-        Walker.__init__(self, migrator)
+    def __init__(self, migrator, catalog):
+        portal = aq_parent(catalog)
+        Walker.__init__(self, migrator, portal)
         self.catalog = catalog
-        self.portal = aq_parent(catalog)
         
     def walk(self):
         """Walks around and returns all objects which needs migration
@@ -146,12 +147,11 @@ class RecursiveWalker(Walker):
     """Walk recursivly through a directory stucture
     """
 
-    def __init__(self, migrator, base, checkMethod, portal=None):
-        Walker.__init__(self, migrator)
-        self.base=base
+    def __init__(self, migrator, portal, checkMethod):
+        Walker.__init__(self, migrator, portal=portal)
+        self.base=portal
         self.checkMethod = checkMethod
         self.list = []
-        self.portal = base
 
     def walk(self):
         """
