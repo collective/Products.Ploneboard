@@ -36,7 +36,7 @@
             <dl>
 	        <tal:brain repeat="brain topicContents">
                 <tal:entry define="obj brain/getObject"
-                           condition="obj"> 
+                           condition="nocall:obj"> 
 
                 <dt metal:define-macro="list-item"
                     tal:define="url python: obj.absolute_url()+test(obj.isPrincipiaFolderish,'/','');
