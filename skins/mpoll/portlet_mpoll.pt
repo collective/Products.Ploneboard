@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="mpoll">
+
+<body>
+
+<!-- The vote box -->
+
+<div metal:define-macro="portlet"
+     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')[:1]">
+
+    <div tal:condition="results" class="portlet">
+    
+        <h5 i18n:translate="box_poll">Poll</h5>
+
+        <div class="portletBody">
+
+            <tal:block tal:repeat="result results">
+                <div class="portletContent even" tal:define="obj result/getObject">
+	            <span style="font-weight: bold"  tal:content="obj/getQuestion"></span>
+                </div>
+
+                <div class="portletContent odd" tal:define="obj result/getObject">
+                    <form method="post"
+                          tal:attributes="action string:${obj/absolute_url}/portal_form/mpoll_slot">
+                          <div style="padding-bottom: 10px;" tal:repeat="item obj/getAnswers">
+                              <input tal:attributes="value repeat/item/number;
+                                                     checked python:test(repeat['item'].start, 'checked', '')"
+                                     type="radio"
+                                     name="answer"
+                                     class="noborder" />&nbsp;<span tal:content="item"></span>
+                          </div>
+
+                          <input type="submit"
+                                 class="context"
+                                 i18n:attributes="value"
+                                 value="Vote" />
+                          <input type="hidden" name="form_submitted" value="1" value="mpoll_slot" />
+
+                    </form>
+
+                    <div class="portletContent odd" align="right"><a tal:attributes="href obj/absolute_url" i18n:translate="label_view_results">View results</a>|<a href="mpoll_list" i18n:translate="all_mpolls">All mpolls</a></div>
+                </div>
+            </tal:block>
+        
+        </div>
+
+    </div>
+        
+</div>
+
+</body>
+
+</html>
+
+
