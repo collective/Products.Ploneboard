@@ -36,7 +36,7 @@ class ActionParser:
         
     def parse(self,product_name):
         """parse the actions to a list consisting dictionaries with the action data"""
-        os.chdir(os.path.join(os.environ['INSTANCE_HOME'], 'Products',product_name,'Extensions'))
+        os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
         try:
             self.lines=open('actions').readlines()
         except:
@@ -90,7 +90,7 @@ class PropertyParser:
         
     def parse(self,product_name):
         """parse the properties to a list consisting dictionaries with the property data"""
-        os.chdir(os.path.join(os.environ['INSTANCE_HOME'], 'Products',product_name,'Extensions'))
+        os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
         try:
             self.lines=open('properties').readlines()
         except:
