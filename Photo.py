@@ -126,6 +126,16 @@ class Photo(Image):
                 }
 
 
+    security.declareProtected(CMFCorePermissions.View, 'getDisplays')
+    def getDisplays(self):
+        result = []
+
+        for name, size in self.displays.items():
+            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
+
+        return result
+
+    
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE, size=None):
         """Return the image data."""
