@@ -9,8 +9,6 @@
     Presentation format to convert a bibliographic references list
     in a html format ready for publishing
 """
-import roman
-
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
@@ -26,6 +24,12 @@ from BiblioListFormatter import IBiblioListFormatter
 
 from Products.ATBiblioList.config import *
 #from Products.ATBiblioList.dummy_refs import dummy_refs
+
+try:
+    import roman
+    HAVEDOCUTILS = 1
+except ImportError:
+    HAVEDOCUTILS = None
 
 schema = BaseSchema + Schema((
     TextField('refDisplay',
@@ -165,7 +169,9 @@ schema = BaseSchema + Schema((
                           description_msgid="help_refpresentation_journalformat",
                           description='Choose a format on how to present the Journal name.',
                           i18n_domain="plone"),
-                ),
+                ),))
+if HAVEDOCUTILS:
+    schema = schema + Schema((
     StringField('pagesFormat',
                 searchable=0, 
                 multivalued=0,
@@ -220,7 +226,8 @@ schema = BaseSchema + Schema((
                           description='Choose a format on how to present the number.',
                           description_msgid="help_refpresentation_numberformat",
                           i18n_domain="plone"),
-                ),
+                ),))
+schema = schema + Schema((
     StringField('seriesFormat',
                 searchable=0, 
                 multivalued=0,
