@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.6 2004/04/19 10:55:44 k_vertigo Exp $
+$Id: ControlTool.py,v 1.7 2004/04/19 11:03:49 k_vertigo Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -322,7 +322,10 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
         if dry_run:
             out.append(("Dry run selected.", zLOG.INFO))
 
-        newv = REQUEST.get('force_instance_version', self.getInstanceVersion())
+        if REQUEST is not None:
+            newv = REQUEST.get('force_instance_version', self.getInstanceVersion())
+        else:
+            newv = self.getInstanceVersion()
 
         out.append(("Starting the migration from "
                     "version: %s" % newv, zLOG.INFO))
