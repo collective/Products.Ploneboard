@@ -41,6 +41,7 @@ except ImportError:
 
 from types import UnicodeType, StringType
 from TAL.TALInterpreter import _write_ValueError
+from Globals import get_request
 
 class FasterStringIO:
     """class FasterStringIO([buffer])
