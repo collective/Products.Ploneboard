@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.1 2003/02/16 11:29:36 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.2 2003/02/16 13:09:22 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -20,7 +20,7 @@ from OFS.SimpleItem import SimpleItem
 from OFS.ObjectManager import ObjectManager
 
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_parent
+from Acquisition import aq_base, aq_inner, aq_parent,Implicit
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore import CMFCorePermissions
@@ -46,8 +46,8 @@ class InstalledProduct(SimpleItem):
     index_html=ZopePageTemplate('installForm',open(os.path.join(package_home(globals()),'forms','installed_product_overview.pt')).read())
     security = ClassSecurityInfo()
 
-    left_slots=[]
-    right_slots=[]
+    leftslots=[]
+    rightslots=[]
     transcript=[]
     error=0 #error flag
     
@@ -55,15 +55,15 @@ class InstalledProduct(SimpleItem):
         print 'beforedel'
         self.uninstall()
         
-    def __init__(self,id,types,skins,actions,portalobjects,workflows,left_slots,right_slots,logmsg,status='installed',error=0):
+    def __init__(self,id,types,skins,actions,portalobjects,workflows,leftslots,rightslots,logmsg,status='installed',error=0):
         self.id=id
         self.types=types
         self.skins=skins
         self.actions=actions
         self.portalobjects=portalobjects
         self.workflows=workflows
-        self.left_slots=left_slots
-        self.right_slots=right_slots
+        self.leftslots=leftslots
+        self.rightslots=rightslots
         self.transcript=[{'timestamp':DateTime(),'msg':logmsg}]
         
         if status:
@@ -74,14 +74,14 @@ class InstalledProduct(SimpleItem):
         self.error=error
 
     security.declareProtected(ManagePortal, 'update')
-    def update(self,types,skins,actions,portalobjects,workflows,left_slots,right_slots,logmsg,status='installed',error=0):
+    def update(self,types,skins,actions,portalobjects,workflows,leftslots,rightslots,logmsg,status='installed',error=0):
         updatelist(self.types,types)
         updatelist(self.skins,skins)
         updatelist(self.actions,actions)
         updatelist(self.portalobjects,portalobjects)
         updatelist(self.workflows,workflows)
-        updatelist(self.left_slots,left_slots)
-        updatelist(self.right_slots,right_slots)
+        updatelist(self.leftslots,leftslots)
+        updatelist(self.rightslots,rightslots)
         self.transcript.insert(0,{'timestamp':DateTime(),'msg':logmsg})
         
         if status:
@@ -119,13 +119,13 @@ class InstalledProduct(SimpleItem):
         return self.workflows
     
     def getLeftSlots(self):
-        return self.left_slots
+        return self.leftslots
     
     def getRightSlots(self):
-        return self.right_slots
+        return self.rightslots
     
     def getSlots(self):
-        return self.left_slots+self.right_slots
+        return self.leftslots+self.rightslots
     
     def getTranscriptAsText(self):
         if getattr(self,'transcript',None):
@@ -161,10 +161,10 @@ class InstalledProduct(SimpleItem):
             portal_workflow.manage_delObjects(self.workflows)
             
         if 'slots' in cascade:
-            if self.left_slots: 
-                portal.left_slots=[s for s in portal.left_slots if s not in self.left_slots]
-            if self.right_slots:
-                portal.right_slots=[s for s in portal.right_slots if s not in self.right_slots]
+            if self.leftslots: 
+                portal.leftslots=[s for s in portal.leftslots if s not in self.leftslots]
+            if self.rightslots:
+                portal.rightslots=[s for s in portal.rightslots if s not in self.rightslots]
             
         self.status='uninstalled'
         
