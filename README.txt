@@ -1,8 +1,6 @@
 What is CMFContentPanels?
 
-  CMFContentPanels is a cmf/plone portlets product. You can create a new
-content which is composed of other contents as configurable 'content panels'.
-You can change the layout, the panel skin and the content viewlet through the web.
+  CMFContentPanels is a plone portlets product to build composite pages. You can create a new content which is composed of other contents as configurable 'content panels'.  You can change the layout, the panel skin and the content viewlet through the web.
 
  <a
 href="http://www.plone.org/Members/panjunyong/ContentPanels/ContentPanels.JPG"
