@@ -37,9 +37,8 @@
                     </td>
                     <td tal:content="product/installedVersion" >product version
                     </td>
-                    <td> <font tal:attributes="color python:test(prodver != product['installedVersion'],'#ff0000','#000000')" tal:content="prodver" >product version</font>
-                    </td>
-                    
+                    <td tal:condition="python:here.isProductAvailable(product['id'])"> <font tal:attributes="color python:test(prodver != product['installedVersion'],'#ff0000','#000000')" tal:content="prodver" >product version</font></td>
+                    <td tal:condition="python:not here.isProductAvailable(product['id'])"> <font color="#ff0000"  >removed from Products folder</font></td>
                 </tr>
             </tal:block>
         </table>

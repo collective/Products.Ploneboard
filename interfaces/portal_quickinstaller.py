@@ -13,6 +13,12 @@ class IQuickInstallerTool(Interface):
     def listInstalledProducts(showHidden=0):
         ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden)'''
 
+    def isProductInstallable(productname):
+        ''' is the product directory present and ready for installation '''
+
+    def isProductAvailable(productname):
+        ''' is the product directory present (to check if it has been deleted from the Filesystem '''
+        
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name 
             throws AlreadyInstalled exception, if components of the product are already installed
@@ -24,7 +30,7 @@ class IQuickInstallerTool(Interface):
         ''' installs the products specified in the products list'''
 
     def getProductFile(self,p,fname='readme.txt'):
-        ''' returns a file of the product case-insensitive '''
+        ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
 
     def getProductReadme(self,p):
         ''' returns the readme file of the product case-insensitive '''

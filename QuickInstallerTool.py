@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.21 2003/10/05 16:38:56 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.22 2003/10/13 01:36:16 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -90,6 +90,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'isProductInstallable')
     isProductInstallable=getInstallMethod
 
+    security.declareProtected(ManagePortal, 'isProductAvailable')
+    isProductAvailable=getInstallMethod
+
     security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
@@ -132,11 +135,15 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'getProductFile')
     def getProductFile(self,p,fname='readme.txt'):
-        ''' returns a file of the product case-insensitive '''
+        ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
         prodspath=os.path.split(package_home(globals()))[:-1]
         prodpath=os.path.join(os.path.join(os.path.join(*prodspath)),p)
         #now list the directory to get the readme.txt case-insensitive
-        files=os.listdir(prodpath)
+        try:
+            files=os.listdir(prodpath)
+        except OSError:
+            return None
+        
         for f in files:
             if f.lower()==fname:
                 return open(os.path.join(prodpath,f)).read()
@@ -149,12 +156,14 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'getProductVersion')
     def getProductVersion(self,p):
         ''' returns the version string stored in version.txt'''
+        
         res = self.getProductFile(p,'version.txt')
         if res is not None:
             res=res.strip()
             
         return res
 
+    
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name '''
