@@ -152,23 +152,36 @@ class LDAPGroupFolder(SimpleItem):
         # THIS MAY BE EXPENSIVE AND HAS TO BE OPTIMIZED...
         grps = self.getLUF().getGroups()
         valid_roles = self.userFolderGetRoles()
-        for n, dn in grps:
-            if not n == name:
-                continue
+        dn = None
+        for n, g_dn in grps:
+            if n == name:
+                dn = g_dn
+                break
+        if not dn:
+            return None
 
-            groups = list(self.getLUF().getGroups(dn=dn, attr='cn', ))
-            roles = self.getLUF()._mapRoles(groups)
-            actual_roles = []
-            for r in roles:
-                if r in valid_roles:
-                    actual_roles.append(r)
-                elif "%s%s" % (GROUP_PREFIX, r) in valid_roles:
-                    actual_roles.append("%s%s" % (GROUP_PREFIX, r))
-            user = GroupUser(n, '', actual_roles, [])
-            self._cache.set(name, user)
-            return user
+        # Current mapping
+        roles = self.getLUF()._mapRoles([name])
 
-        return None
+        # Nested groups
+        groups = list(self.getLUF().getGroups(dn=dn, attr='cn', ))
+        roles.extend(self.getLUF()._mapRoles(groups))
+
+        # !!! start test
+        Log(LOG_DEBUG, name, "roles", groups, roles)
+        Log(LOG_DEBUG, name, "mapping", getattr(self.getLUF(), '_groups_mappings', {}))
+        # !!! end test
+
+        actual_roles = []
+        for r in roles:
+            if r in valid_roles:
+                actual_roles.append(r)
+            elif "%s%s" % (GROUP_PREFIX, r) in valid_roles:
+                actual_roles.append("%s%s" % (GROUP_PREFIX, r))
+        Log(LOG_DEBUG, name, "actual roles", actual_roles)
+        user = GroupUser(n, '', actual_roles, [])
+        self._cache.set(name, user)
+        return user
         
     security.declareProtected(manage_users, 'getUserNames')
     def getUserNames(self):
@@ -183,8 +196,14 @@ class LDAPGroupFolder(SimpleItem):
         grps = self.getLUF().getGroups()
         valid_roles = self.userFolderGetRoles()
         for n, dn in grps:
+            # Group mapping
+            roles = self.getLUF()._mapRoles([n])
+            
+            # nested groups
             groups = list(self.getLUF().getGroups(dn=dn, attr='cn', ))
-            roles = self.getLUF()._mapRoles(groups)
+            roles.extend(self.getLUF()._mapRoles(groups))
+
+            # computation
             actual_roles = []
             for r in roles:
                 if r in valid_roles:
@@ -255,7 +274,7 @@ class LDAPGroupFolder(SimpleItem):
             for g in all_groups:
                 groups[g[0]] = g[1]
 
-            # LDAPUF does the stupid mistake of adding possibly invalid roles to the user roles
+            # LDAPUF does the mistake of adding possibly invalid roles to the user roles
             # (for example, adding the cn of a group additionnaly to the mapped zope role).
             # So we must remove from our 'roles' list all roles which are prefixed by group prefix
             # but are not actually groups.

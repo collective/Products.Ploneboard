@@ -11,8 +11,205 @@ Overview
   not possible to nest groups nor to set specific roles on groups.
 
   GRUF 3.0 solves part of this problem - and it's not been easy !
-  This document explains how GRUF 3 handles LDAPUserFolder sources.
+  This document explains how GRUF 3 handles LDAPUserFolder sources. 
+  More generally, this document explains how to have Plone + GRUF + LDAPUserFolder 
+  and beeing happy.
 
+LDAP Considerations
+
+  Introduction
+
+    An LDAP directory is not a very simple thing to use. You have to have a basic knowledge
+    of how it works before going any further. Especially, you have to precisely know what is:
+
+    * A key
+
+    * A class
+
+    * A schema
+
+    * An attribute / a value
+
+    * A DN, a RDN
+
+  LDAPUserFolder requirements
+
+    Users
+
+      By default, LDAPUserFolder expects your user class to have the following structure::
+
+        (root) o=Organization, c=US
+        |
+        |-- ou=people
+            |
+            |-- cn=User1's name
+            |     cn: User1's name
+            |     objectClass: top, person
+           ...
+
+      You can easily change some of there parameters in LDAPUserFolder configuration.
+      Especially, you can configure the attributes used to fetch or name users:
+
+      * Login name attribute: (Zope side) That's the attribute used to determine the login name 
+        (ie. the name the user types-in to identify himself when he is prompted to do so in Zope or 
+        Plone). Never set that to the user's common name ! Whitespaces and commas are not
+        common as login names, so use a short, easily remeberable attribute such as the email radical
+        or the sn if it is proven that it will be unique, or an identifier of some kind.
+
+      * userid attribute: (Zope side) That's the attribute used to handle the
+        user's id everywhere EXCEPT for the login. For obvious
+        reasons, it's better to have this attribute set to the same value
+        as "login name".
+
+      * rdn attribute:  (LDAP side) That's the attribute used as the rdn (it's easy !). Use
+        what is set as such in your LDAP schema or, if you have the choice, set your RDN as
+        a unique user id (a reference, a login name, but certainly not a common name !)
+
+      Ok. Now, the rest is just a matter of tuning things in. It will enventually work, as
+      this is the simplest case - if you cannot manage to make this part work, don't even
+      go further in this document :^)
+
+      Once again: you _need_ basic LDAP knowledge and basic Zope knowledge to make this work.
+      Don't do things if you don't understand them ! :^)
+
+    Groups
+
+      LDAP interaction is an easy thing until you want to manage your groups in LDAP. That's 
+      where the things get complicated because there are several options and many elements in
+      the chain to handle this properly.
+
+      First of all, you MUST set "groups stored on LDAP server" in LDAPUF configuration
+      to have your groups stored in LDAP. Otherwise, a user/role mapping is stored in the
+      LDAPUF object, which is in fact very convenient as well.
+      
+      LDAP Groups function differently with or without GRUF. Without GRUF, LDAP groups are 
+      mapped to Zope ROLES. With GRUF, well... it depends :-) (this is explained below)
+
+      But in any case, you groups schema must conform to something like this::
+
+        (root) o=Organization, c=US
+        |
+        |-- ou=people
+        |   |
+        |   |-- cn=User1's name
+        |   |     cn: User1's name
+        |   |     objectClass: top, person
+        /  ...
+        |
+        |-- ou=groups
+            |
+            |-- cn=Group's name
+            |    cn: Group's name
+            |    objectClass: groupOfUniqueNames
+           ...
+ 
+      You cannot set a group's RDN to something else than 'cn' with LDAPUserFolder without
+      patching the code. 
+
+      When creating groups from Zope, you may be able to set the class to something else than 
+      'groupOfUniqueNames' but I cannot predict it will work (either with LDAPUF alone or
+      with GRUF) and, furthermore, I don't know where to change that (it's a parameter
+      to manage_addGroup method, but I cannot remember where this method is called).
+
+      When reading groups, they can belong to one of the following classes : "groupOfUniqueNames",
+      "groupOfNames", "accessGroup" or "group". Depending on that class, the attribute holding
+      group members changes. Here's the mapping, as defined is LDAPUserFolder.utils::
+
+        GROUP_MEMBER_MAP = {
+                     'groupOfUniqueNames' : 'uniqueMember'
+                   , 'groupOfNames' : 'member'
+                   , 'accessGroup' : 'member'
+                   , 'group' : 'member'
+                   }
+
+      This shema implies a very important thing: user/group mapping is stored on the
+      **group** key and **not** on the user key. This is something you must keep in mind
+      while managing your LDAP directory.
+
+    Encoding
+
+      The encoding used to return LDAP values to Zope is Latin 1. Id est, even if your
+      LDAP directory manages UTF8 perfectly, you are bound to Latin1 encoding in your Zope
+      application (unless you edit LDAPUserFolder.utils.encoding).
+
+  GRUF binding
+
+    Once you're happy with your LDAP structure, and once you've **tested** your configuration
+    with LDAPUF alone (id est in an empty folder, without GRUF), you can proceed with GRUF.
+
+    Plan it
+
+      The main choice you have to do, when using GRUF+LDAP, is wether to store groups in LDAP
+      or in ZODB. There are pro and cons :
+
+      Groups in LDAP
+
+        Pros
+        
+        * all user information stored in the same place
+
+        * groups can be shared across several applications (they can connect LDAP to have
+        the information)
+
+        * mentally satisfying :^)
+
+        Cons
+
+        * group management in LDAP is not very precisely standardized (several possible classes, ...)
+
+        * Additional LDAP skills required to set this up. Furthermore, you need more LDAP rights to
+        use your Zope setup, and every role/group change will require GROUP write access in LDAP.
+
+        * No simple way (if not no way) to permanently give some roles to an LDAP Group. That
+        means that all your LDAP groups will have the SAME role unless you define local roles
+        on them.
+
+        * As GRUF doesn't (yet?) support multi-sources groups, ALL your groups must be defined
+        in LDAP. You cannot have Zope-specific groups in ZODB. On the other hands, you LDAP groups
+        can be used with ANY user sources (eg. you can have a user in a SimpleUserFolder using
+        your LDAP groups transparently in GRUF).
+
+        * You cannot freely give zope roles to your LDAP Users. You can give only ONE role
+        per LDAP group, through the 'group mapping' interface from LDAPUF. And this mapping won't
+        be stored in LDAP but in ZODB. And you cannot do this with regular UserFolder API.
+
+        * Nested groups are not explicitly supported by LDAP.
+
+      Groups in ZODB
+
+        Pros
+
+        * Easy to set up
+
+        * Possibility to freely define your groups (and their role) inside Zope.
+
+        * Possibility to easily have nested groups.
+
+        Cons
+
+        * Two places (ZODB and LDAP) to store the same kind of information (user management)
+        is not very satisfying
+
+        * May not satisfy situations where your LDAP directory is already set up.
+
+    Do it
+
+      Here is the way to configure your GRUF+LDAPUF 
+      to store groups in LDAP.
+
+      * Create a GRUF
+
+      * Inside GRUF, add an LDAPUserFolder user source. Configure it according to
+      your LDAP Schema, for BOTH users and groups. GRUF should work at this point,
+      WITHOUT groups. Test it twice. Be careful about LDAP cache issues.
+
+      * Now, go back to GRUF sources and replace the groups source by a LDAPGroupFolder
+      object. There's nothing special to configure inside it (just indicate which is
+      your original LDAPUserFolder object). Now, both users AND groups should work with
+      GRUF: double-check with the 'Overview' tab.
+      
+      * If you want to give **one** (and only one) role to a group, use the "mapping" 
+      section of the LDAPGroupFolder object.
 
 Issues
 
