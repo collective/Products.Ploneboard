@@ -98,7 +98,6 @@ class Photo(Image):
                 'xlarge': (1024,1024)
                 }
 
-
     def __init__( self
                 , id
                 , title=''
@@ -137,6 +136,15 @@ class Photo(Image):
 
         return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
 
+    security.declareProtected(CMFCorePermissions.View, 'getDisplays')
+    def getDisplays(self):
+        result = []
+
+        for name, size in self.displays.items():
+            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
+
+        return result
+    
         
     def _resize(self, size, quality=100):
         """Resize and resample photo."""

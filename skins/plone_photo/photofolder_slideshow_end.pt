@@ -27,35 +27,9 @@
 
 <body style="margin:1em;">
 
-    <div metal:define-macro="photos"
-                     tal:define="photos here/contentValues;
-                     start request/start|python:0;
-                     batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
-                     previous python:batch.previous;
-                     next python:batch.next;
-                     size python:test(request.get('size'), '&size=%s' % request.get('size'), '')">
+  <h1 style="text-align:center;">The End</h1>
 
-        <div tal:repeat="image batch">
-
-            <div class="contentHeader">
-            <h1 tal:content="image/title_or_id">Title or id</h1>
-            </div>
-   
-            <img tal:condition="image/size"
-                 src="#" 
-                 tal:attributes="src python:image.absolute_url()+test(request.get('size'), '?size=%s' % request.get('size'), '')" />
-
-        
-            <span class="description" tal:content="structure image/Description">
-            Description
-            </span>
-        </div>
-
-        <META tal:condition="next" HTTP-EQUIV=Refresh tal:attributes="CONTENT string:${request/delay};; URL=${request/URL0}?start:int=${next/first}&delay=${request/delay}$size">
-
-        <META tal:condition="not:next" HTTP-EQUIV=Refresh tal:attributes="CONTENT string:${request/delay};; URL=${request/URL1}/photofolder_slideshow_end">
-
-    </div>
+  <div style="text-align:center;"><a href="javascript:window.close()">Close window</a></div>
 
 </body>
 </html>
