@@ -41,6 +41,7 @@ install: build
 			-iname 'license*' -or \
 			-iname 'changelog*' -or \
 			-iname 'authors*' -or \
+			-iname '*.txt' -or \
 			-name 'README*' -or \
 			-name 'INSTALL**' -or \
 			-name 'TODO*' -or \
@@ -66,8 +67,8 @@ binary-indep: build install
 	
 	
 	
-	gzip -9 -c ChangeLog > changelog.gz
-	dh_installdocs -A README changelog.gz 
+	dh_installdocs -A docs/*.txt
+	dh_installdocs -A docs/*.pdf
 	dh_installchangelogs
 	
 	dh_link

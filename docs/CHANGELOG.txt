@@ -1,3 +1,128 @@
+2004-07-21 17:22  tiran
+
+	* types/ATImage.py, docs/HISTORY.txt, docs/INSTALL.txt: Added
+	  getSize, getHeight, getWidth methods and width/height attributes
+	  to ATImage
+
+2004-07-19 14:01  godchap
+
+	* docs/HISTORY.txt, types/criteria/ATSortCriterion.py: cosmetics
+
+2004-07-19 13:57  godchap
+
+	* docs/HISTORY.txt,
+	  skins/ATContentTypes/criterion_edit_form.cpt.metadata,
+	  types/criteria/ATSortCriterion.py, types/criteria/__init__.py,
+	  skins/ATContentTypes/validate_set_sort.vpy: Added validation for
+	  setup of sort order on topics
+
+2004-07-13 15:12  dreamcatcher
+
+	* ATContentTypes.py, CalendarSupport.py, HistoryAware.py,
+	  Permissions.py, RestrainTypesMixin.py, Validators.py,
+	  __init__.py, config.py, Extensions/Install.py,
+	  Extensions/__init__.py, Extensions/migrateFromCMF.py,
+	  Extensions/migrateFromCPT.py, Extensions/toolbox.py,
+	  Extensions/utils.py, interfaces/IATContentType.py,
+	  interfaces/IATDocument.py, interfaces/IATEvent.py,
+	  interfaces/IATFavorite.py, interfaces/IATFile.py,
+	  interfaces/IATFolder.py, interfaces/IATImage.py,
+	  interfaces/IATLink.py, interfaces/IATNewsItem.py,
+	  interfaces/IATTopic.py, interfaces/IHistoryAware.py,
+	  interfaces/IRestrainTypes.py, interfaces/__init__.py,
+	  interfaces/interface.py, migration/ATCTMigrator.py,
+	  migration/CPTMigrator.py, migration/Migrator.py,
+	  migration/Walker.py, migration/common.py,
+	  skins/ATContentTypes/formatHistoryDiff.py,
+	  skins/ATContentTypes/isATCTbased.py, tests/ATCTSiteTestCase.py,
+	  tests/framework.py, tests/testATDocument.py,
+	  tests/testATEvent.py, tests/testATFavorite.py,
+	  tests/testATFile.py, tests/testATFolder.py, tests/testATImage.py,
+	  tests/testATLink.py, tests/testATNewsItem.py,
+	  types/ATContentType.py, types/ATDocument.py, types/ATEvent.py,
+	  types/ATFavorite.py, types/ATFile.py, types/ATFolder.py,
+	  types/ATImage.py, types/ATLink.py, types/ATNewsItem.py,
+	  types/ATTopic.py, types/__init__.py, types/schemata.py,
+	  types/criteria/ATBaseCriterion.py,
+	  types/criteria/ATDateCriteria.py,
+	  types/criteria/ATListCriterion.py,
+	  types/criteria/ATPortalTypeCriterion.py,
+	  types/criteria/ATSimpleIntCriterion.py,
+	  types/criteria/ATSimpleStringCriterion.py,
+	  types/criteria/ATSortCriterion.py, types/criteria/__init__.py,
+	  types/criteria/schemata.py: Remove interface.py backwards compat.
+	  We probably require zope 2.7 anyway for Archetypes and Plone by
+	  the time this gets released. Reindent some too long lines.
+	  Cleanup style in some places, though not all.
+
+2004-07-12 12:15  godchap
+
+	* types/criteria/__init__.py: FieldIndex for created or modified
+	  was not known among DATE_INDICES
+
+2004-07-11 20:31  tiran
+
+	* docs/HISTORY.txt, types/ATFavorite.py: Reenable implicitly
+	  addable for ATFavorite Updated HISTORY
+
+2004-07-11 20:30  tiran
+
+	* types/criteria/schemata.py: Changed time range ints in
+	  FriendlyDateCriterion to strings
+
+2004-07-11 20:28  tiran
+
+	* Validators.py: Fixed validation problem with mx tidy validator
+	  and file uploads
+
+2004-07-09 01:09  shh42
+
+	* migration/Walker.py: Comment a debug print.
+
+2004-07-05 00:34  tiran
+
+	* types/ATDocument.py: fixed wrong copy 'n paste
+
+2004-07-05 00:09  tiran
+
+	* types/ATDocument.py: Fixed ugly bug: the content type got lost
+	  when copying a portal
+
+2004-07-04 19:25  tiran
+
+	* types/schemata.py: Reverted limi's changes because the impacts
+	  and problems doesn't equiponderate the benefits. Thumbnails are
+	  generated at image upload time.
+
+2004-07-04 16:05  limi
+
+	* types/schemata.py: Oops, forgot to change one of the
+	  thumb->thumbnail references.
+
+2004-07-04 03:05  limi
+
+	* types/schemata.py: Changed the "thumb" format name to be
+	  "thumbnail" instead. None of the other names were abbreviated, so
+	  to minimize confusion, it's better this way. :)
+
+2004-06-28 23:00  godchap
+
+	* types/criteria/__init__.py: added unregisterCriterion
+
+2004-06-28 13:57  godchap
+
+	* skins/ATContentTypes/atct_topic_view.pt: added missing document
+	  actions
+
+2004-06-27 18:59  tiran
+
+	* __pkginfo__.py, version.txt, debian/changelog, docs/HISTORY.txt,
+	  docs/INSTALL.txt: Preparing 0.2beta7
+
+2004-06-27 18:41  tiran
+
+	* docs/: CHANGELOG.txt, HISTORY.txt: Updated documentation
+
 2004-06-27 18:39  tiran
 
 	* types/ATEvent.py: Fixed doc strings

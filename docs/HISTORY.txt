@@ -1,4 +1,4 @@
-0.2-beta8
+0.2-beta8 - 2004-07-21
 
  * Fixed validation problem with mx tidy validator and file uploads
    [tiran]
