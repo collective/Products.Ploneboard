@@ -44,11 +44,15 @@
 	-->
       </script>
 
-      <h1 tal:content="here/title_or_id">
-	Title or id
-      </h1>
+      <div class="contentHeader">
+        <h1 tal:content="here/title_or_id">Title or id</h1>
+      </div>
       
       <div metal:use-macro="here/batch_macros/macros/navigation"></div>
+
+      <p style="margin-top: 2em;" tal:content="here/Description">
+	Description
+      </p>
 	
       <table style="width: 100%;">
 	<tr>
@@ -57,7 +61,7 @@
 	      tal:repeat="image batch">
 	      <span class="card" style="background: white; border-color: white; height: 130px; width:130px; margin: 0.5em;">
 		<a tal:define="id python:int(b_start)+int(repeat['image'].number()-1)" tal:attributes="href string:${here/absolute_url}/photoalbum_photo_view?b_start=$id">
-		  <img tal:replace="structure python:image.tag(size='thumbnail')" />
+		  <img tal:replace="structure python:image.tag(size='thumbnail', title=image.Description())" />
 		</a>
 		</span>
 	    </tal:block>
@@ -71,7 +75,7 @@
 		number_of_images python:len(images_in_album)">
 		<div>
 		  <a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail');" />
+		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail', title=album.Description());" />
 		  </a>
 	          <a tal:condition="not:images_in_album" tal:attributes="href string:${album/absolute_url}/view">
 	            <p style="text-align: center;">Album is empty</p>
