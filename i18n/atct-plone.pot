@@ -163,3 +163,22 @@ msgstr "Select one or more types, that should be allowed to "
        "add inside this folder and its subfolders. Choose "
        "nothing will allow all types."
 
+####################
+# ATTopic
+#######################
+
+msgid "label_limit_number"
+msgstr "Limit Number of Items"
+
+msgid "help_limit_number"
+msgstr "Toggles limitation of number of items displayed. "
+       "If selected, only the first 'Number of Items' "
+       "will be displayed."
+
+msgid "label_item_count"
+msgstr "Number of Items"
+
+msgid "help_item_count"
+msgstr "If 'Limit Number of Items' is "
+       "selected, only the first 'Number of Items' will be displayed "
+

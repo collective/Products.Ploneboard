@@ -73,7 +73,7 @@ msgstr "条件的值为一个字符串"
 
 # These are the standard field names. No field_ possible. :/
 msgid "id"
-msgstr "标识ID"
+msgstr "英文ID"
 
 msgid "Creator"
 msgstr "创建人"
@@ -82,7 +82,7 @@ msgid "Subject"
 msgstr "分类"
 
 msgid "Type"
-msgstr "类型"
+msgstr "内容类型"
 
 msgid "created"
 msgstr "创建时间"
@@ -150,16 +150,33 @@ msgstr "由大到小进行排序"
 #################
 
 msgid "label_enable_constrain_allowed_types"
-msgstr "定义允许添加的内容类型"
+msgstr "定制允许添加的内容类型"
 
 msgid "description_enable_constrain_allowed_types"
-msgstr "定义内容添加下拉菜单中的内容类型"
+msgstr "定制“添加下拉菜单”菜单中的内容类型"
 
 msgid "label_constrain_allowed_types"
-msgstr "设置允许添加的内容类型"
+msgstr "允许添加的内容类型"
 
 msgid "description_constrain_allowed_types"
 msgstr "选择一个或者多个内容类型, 他们将能够被"
        "添加到这个文件夹和其子文件夹中。"
        "如果不选，将允许添加所有的内容类型。"
+
+
+####################
+# ATTopic
+#######################
+
+msgid "label_limit_number"
+msgstr "限制结果数量"
+
+msgid "help_limit_number"
+msgstr "限制显示条目的数量. 如果选中，仅仅显示前面部分"
+
+msgid "label_item_count"
+msgstr "显示数量"
+
+msgid "help_item_count"
+msgstr "如果“限制结果数量”选中，仅仅显示设置的数量"
 
