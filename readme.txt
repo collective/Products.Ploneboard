@@ -19,7 +19,7 @@ How to use it:
 
 Credits
 
-    Author: panjunyong(panjy@zopechina.com, http://www.zopechinac.com)
+    Author: panjunyong (panjy@zopechina.com, http://www.zopechina.com)
 
     Most idea and codes comes from the following resources:
 
