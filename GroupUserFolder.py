@@ -667,7 +667,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/22 10:35:51 $"[7:-2]
+        rev_date = "$Date: 2004/01/15 11:05:20 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1278,7 +1278,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ids = self._v_batch_users[start:end]
         ret = []
         for id in ids:
-            ret.append(self.getUser(id))
+            usr = self.getUser(id)
+            if usr:                     # Prevent adding invalid users
+                ret.append(usr)
         return ret
 
 
