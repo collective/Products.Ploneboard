@@ -44,7 +44,7 @@ def install(self):
 
     site_props = getToolByName(self, 'portal_properties').site_properties
     use_folder_tabs = site_props.getProperty('use_folder_tabs')
-    site_props._updateProperty('use_folder_tabs', use_folder_tabs + ('Photo Album',))
+    site_props._updateProperty('use_folder_tabs', tuple(use_folder_tabs) + ('Photo Album',))
 
 #    nav.manage_addProperty('photoalbum.folder_edit_form.success','script:folder_edit','string');
 #    nav.manage_addProperty('photoalbum.folder_edit_form.failure','folder_edit_form','string');
