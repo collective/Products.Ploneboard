@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.31 2003/12/22 15:39:30 dreamcatcher Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.32 2004/01/06 12:12:43 dpunktnpunkt Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -227,7 +227,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 self.error_log.raising(tb)
                 res='this product has already been installed without Quickinstaller!'
                 if not swallowExceptions:
-                    raise AlreadyInstalled
+                    raise AlreadyInstalled, tb[1]
 
             res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
             self.error_log.raising(tb)
