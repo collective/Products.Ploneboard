@@ -4,3 +4,6 @@ GLOBALS = globals()
 
 TOOL_ID = 'composite_tool'
 TOOL_NAME = 'CompositePack Tool'
+
+COMPOSABLE_TYPES = ['ATDocument', 'ATImage']
+COMPOSABLE = 'composable'
