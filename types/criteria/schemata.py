@@ -16,7 +16,7 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.4 2004/05/30 14:13:40 godchap Exp $
+$Id: schemata.py,v 1.5 2004/07/11 18:30:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,17 +30,17 @@ from Products.ATContentTypes.Permissions import ChangeTopics
 ###
 
 DateOptions = DisplayList((
-                    (     0, 'Now'      )
-                  , (     1, '1 Day'    )
-                  , (     2, '2 Days'   )
-                  , (     5, '5 Days'   )
-                  , (     7, '1 Week'   )
-                  , (    14, '2 Weeks'  )
-                  , (    31, '1 Month'  )
-                  , (  31*3, '3 Months' )
-                  , (  31*6, '6 Months' )
-                  , (   365, '1 Year'   )
-                  , ( 365*2, '2 years'  )
+                    (     str(0), 'Now'      )
+                  , (     str(1), '1 Day'    )
+                  , (     str(2), '2 Days'   )
+                  , (     str(5), '5 Days'   )
+                  , (     str(7), '1 Week'   )
+                  , (    str(14), '2 Weeks'  )
+                  , (    str(31), '1 Month'  )
+                  , (  str(31*3), '3 Months' )
+                  , (  str(31*6), '6 Months' )
+                  , (   str(365), '1 Year'   )
+                  , ( str(365*2), '2 years'  )
     ))
 
 CompareOperations = DisplayList((
