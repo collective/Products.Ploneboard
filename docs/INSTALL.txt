@@ -29,7 +29,7 @@ Archetypes
 
 AT Content Types is tested with the following AT versions
 
- * AT CVS HEAD (aka 1.3) after 2004-05-03
+ * AT CVS HEAD (aka 1.3) after 2004-05-24 (with seperate MimetypesRegistry product)
    
    Note: Please use the version of AT that is bundled with AT Content Types.
          It's the latest developer checkout.

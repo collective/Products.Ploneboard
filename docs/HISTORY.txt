@@ -1,5 +1,10 @@
 0.2-beta5
 
+ * Fixed multiple small bugs and added features requested in the bug
+   tracker on sf.net [tiran]
+ 
+ * Auto set id from filename for ATImage and ATFile
+ 
  * Fixed python 2.1 compatibility problem with CMFCore/WorkflowTool. Thx to
    Tiziano Lattisi [tiran]
 
