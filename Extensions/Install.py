@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.3 2003/12/12 01:35:47 alienoid Exp $
+$Id: Install.py,v 1.4 2004/03/14 22:17:42 limi Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the
@@ -34,7 +34,7 @@ from StringIO import StringIO
 
 configlets = \
 ( { 'id'         : 'Ploneboard'
-  , 'name'       : 'Configure Ploneboard'
+  , 'name'       : 'Ploneboard Setup'
   , 'action'     : 'string:${portal_url}/prefs_ploneboard_form'
   , 'category'   : 'Products'
   , 'appId'      : 'Ploneboard'
