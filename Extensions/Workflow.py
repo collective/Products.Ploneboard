@@ -32,7 +32,8 @@ def setupWorkflow(portal, out):
     for t in ('trigger', 'make_pending', 'auto_register',
               'register_public', 'register_private',
               'make_private', 'make_public',
-              'disable', 'enable_pending', 'enable_public', 'enable_private'):
+              'disable', 'enable_pending', 'enable_public', 'enable_private',
+              'migrate'):
         wf.transitions.addTransition(t)
 
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
@@ -44,6 +45,10 @@ def setupWorkflow(portal, out):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('disable', 'Disable a Member', 'CMFMember.Workflow', 'disable')
     if not 'enable' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Enable a Member', 'CMFMember.Workflow', 'enable')
+    if not 'makePublic' in wf.scripts.objectIds():
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('makePublic', 'Make a Member profile public', 'CMFMember.Workflow', 'makePublic')
+    if not 'enable' in wf.scripts.objectIds():
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Make a Member profile private', 'CMFMember.Workflow', 'makePrivate')
 
     perms = {}
     for p in (MemberPermissions.REGISTER_PERMISSION,
@@ -70,7 +75,7 @@ def setupWorkflow(portal, out):
     state = wf.states['new']
     state.setProperties(
         title='Newly created member',
-        transitions=('trigger', 'make_pending',))
+        transitions=('trigger', 'make_pending', 'migrate'))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager','Anonymous',))
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager','Anonymous',))
@@ -158,6 +163,15 @@ def setupWorkflow(portal, out):
 
     # TRANSITIONS
 
+    # registration for migration -- don't execute the register script
+    transition = wf.transitions['migrate']
+    transition.setProperties(
+        title='Migrate member from CMF MemberData',
+        actbox_name='Migrate member from CMF MemberData',
+        new_state_id='public',
+        props={'guard_roles':'Manager'},
+        after_script_name='makePublic')
+
     # dummy transition used to trigger automatic transitions    
     transition = wf.transitions['trigger']
     transition.setProperties(
@@ -167,14 +181,15 @@ def setupWorkflow(portal, out):
         props={}, # no guard roles or expressions
     ) 
 
-    # change permissions as soon as user fills in member info
+    # change permissions as soon as user fills in required member info
+    # (or before if the user already exists in another acl_users)
     transition = wf.transitions['make_pending']
     transition.setProperties(
         title='Lock member properties until registered',
         actbox_name='Lock member properties until registered',
         new_state_id='pending',
         trigger_type=TRIGGER_AUTOMATIC,
-        props={'guard_expr':'here/isValid'})
+        props={'guard_expr':'python:here.hasUser() or here.isValid()'})
 
     # if Manager creates a member, automatically register the member
     transition = wf.transitions['auto_register']

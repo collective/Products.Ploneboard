@@ -529,7 +529,12 @@ class Member(BaseContent):
 
 
     def available_skins(self):
-        return getToolByName(self, 'portal_skins').getSkinSelections()
+        skins_tool = getToolByName(self, 'portal_skins')
+        if skins_tool.getAllowAny():
+            return getToolByName(self, 'portal_skins').getSkinSelections()
+        else:
+            return self.getPortalSkin()
+
 
     def getDefaultSkin(self):
         return getToolByName(self, 'portal_skins').getDefaultSkin()

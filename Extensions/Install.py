@@ -103,10 +103,13 @@ def replaceTools(self, out, convert=1):
 
         factory = MemberDataTool.getMemberFactory(memberdata_tool, TYPE_NAME)
 
+        workflow_tool = getToolByName(self, 'portal_workflow')
         for id in oldMemberData.keys():
             factory(id)
             new_member = memberdata_tool.get(id)
             new_member._migrate(oldMemberData[id], ['portrait'], out)
+            workflow_tool.doActionFor(new_member, 'migrate') # put member in registered state without sending registration mail
+
 
     memberarea.allowed_content_types=(memberdata_tool.typeName,)
     
