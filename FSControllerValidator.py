@@ -1,19 +1,19 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 # THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.6 2004/03/10 01:21:08 plonista Exp $
+$Id: FSControllerValidator.py,v 1.7 2004/05/04 22:02:10 dreamcatcher Exp $
 """
 
 import copy
@@ -32,7 +32,7 @@ from ControllerBase import ControllerBase
 from utils import logException
 
 class FSControllerValidator (BaseClass, ControllerBase):
-    """FSControllerValidators act like Controller Python Scripts but are not 
+    """FSControllerValidators act like Controller Python Scripts but are not
     directly modifiable from the management interface."""
 
     meta_type = 'Filesystem Controller Validator'
@@ -44,7 +44,7 @@ class FSControllerValidator (BaseClass, ControllerBase):
            ) + Cacheable.manage_options)
 
     is_validator = 1
-    
+
     # Use declarative security
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)

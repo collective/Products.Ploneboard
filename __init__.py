@@ -1,6 +1,6 @@
-# $Id: __init__.py,v 1.5 2003/10/16 15:18:50 plonista Exp $
+# $Id: __init__.py,v 1.6 2004/05/04 22:02:10 dreamcatcher Exp $
 # $Source: /home/hazmat/projects/psvn/collective/CMFFormController/__init__.py,v $
-__version__ = "$Revision: 1.5 $"[11:-2]
+__version__ = "$Revision: 1.6 $"[11:-2]
 """Initialize CMFFormController"""
 
 import sys
@@ -48,4 +48,3 @@ def initialize(context):
                  'www/cpy.gif', globals())
     registerIcon(FSControllerValidator.FSControllerValidator,
                  'www/vpy.gif', globals())
-

@@ -1,19 +1,19 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 # THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.11 2004/03/10 01:21:08 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.12 2004/05/04 22:02:10 dreamcatcher Exp $
 """
 
 import re
@@ -34,7 +34,7 @@ from utils import log, logException
 
 
 class FSControllerPythonScript (BaseClass, ControllerBase):
-    """FSControllerPythonScripts act like Controller Python Scripts but are not 
+    """FSControllerPythonScripts act like Controller Python Scripts but are not
     directly modifiable from the management interface."""
 
     meta_type = 'Filesystem Controller Python Script'
@@ -44,11 +44,11 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             {'label':'Customize', 'action':'manage_main'},
             {'label':'Test', 'action':'ZScriptHTML_tryForm'},
             {'label':'Validation','action':'manage_formValidatorsForm'},
-            {'label':'Actions','action':'manage_formActionsForm'},             
+            {'label':'Actions','action':'manage_formActionsForm'},
            ) + Cacheable.manage_options)
 
     is_validator = 0
-    
+
     # Use declarative security
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
@@ -81,7 +81,7 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             argdict[param_names[index]] = a
             index += 1
         argdict.update(kwargs)
-        
+
         controller_state = controller.validate(controller_state, REQUEST, validators, argdict)
 
         if controller_state.getStatus() == 'success':

@@ -18,7 +18,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.6 $'[11:-2]
+__version__='$Revision: 1.7 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -95,7 +95,7 @@ class ControllerValidator(PythonScript, ControllerBase):
         {'label':'Test',
          'action':'ZScriptHTML_tryForm',
          'help': ('PythonScripts', 'PythonScript_test.stx')},
-#        {'label':'Actions','action':'manage_formActionsForm'},             
+#        {'label':'Actions','action':'manage_formActionsForm'},
         {'label':'Proxy',
          'action':'manage_proxyForm',
          'help': ('OFSP','DTML-DocumentOrMethod_Proxy.stx')},
@@ -103,7 +103,7 @@ class ControllerValidator(PythonScript, ControllerBase):
         Cacheable.manage_options
 
     is_validator = 1
-    
+
     security = AccessControl.ClassSecurityInfo()
     security.declareObjectProtected('View')
 

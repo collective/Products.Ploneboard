@@ -1,19 +1,19 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 # THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControllerPageTemplateFile.py,v 1.3 2004/03/10 01:21:08 plonista Exp $
+$Id: ControllerPageTemplateFile.py,v 1.4 2004/05/04 22:02:10 dreamcatcher Exp $
 """
 
 import os
@@ -27,7 +27,7 @@ from utils import logException
 
 class ControllerPageTemplateFile(BaseClass, BaseControllerPageTemplate):
     """Wrapper for Controller Page Template"""
-     
+
     meta_type = 'Controller Page Template (File)'
 
     manage_options=(

@@ -29,6 +29,6 @@ class TraverseToAction(BaseFormAction):
             raise ValueError, 'No %s action found for %s' % (action, controller_state.getContext().getId())
         return TraverseTo.TraverseTo(action_url)(controller_state)
 
-registerFormAction('traverse_to_action', 
-                   factory, 
+registerFormAction('traverse_to_action',
+                   factory,
                    'Traverse to the action specified in the argument (a TALES expression) for the current context object (e.g. string:view)')

@@ -58,7 +58,7 @@ class ControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
-    
+
     manage_options = (BaseClass.manage_options[:2] + \
         ({'label':'Validation',
           'action':'manage_formValidatorsForm'},

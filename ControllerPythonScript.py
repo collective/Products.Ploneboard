@@ -18,7 +18,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.8 $'[11:-2]
+__version__='$Revision: 1.9 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -104,7 +104,7 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         {'label':'Validation',
          'action':'manage_formValidatorsForm'},
         {'label':'Actions',
-         'action':'manage_formActionsForm'},             
+         'action':'manage_formActionsForm'},
         {'label':'Proxy',
          'action':'manage_proxyForm',
          'help': ('OFSP','DTML-DocumentOrMethod_Proxy.stx')},
@@ -112,7 +112,7 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         Cacheable.manage_options
 
     is_validator = 0
-    
+
     security = AccessControl.ClassSecurityInfo()
     security.declareObjectProtected('View')
 
@@ -152,7 +152,7 @@ class ControllerPythonScript(PythonScript, ControllerBase):
             argdict[param_names[index]] = a
             index += 1
         argdict.update(kwargs)
-        
+
         controller_state = controller.validate(controller_state, REQUEST, validators, argdict)
 
         if controller_state.getStatus() == 'success':
@@ -166,4 +166,3 @@ class ControllerPythonScript(PythonScript, ControllerBase):
 
     def _getState(self):
         return getToolByName(self, 'portal_form_controller').getState(self, is_validator=0)
-

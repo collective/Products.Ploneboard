@@ -1,14 +1,14 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 # THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##############################################################################
 
@@ -28,9 +28,9 @@ defaultBindings = {'name_context': 'context',
                    'name_subpath': 'traverse_subpath',
                    'name_state': 'state'}
 
-_nice_bind_names = {'context': 'name_context', 
+_nice_bind_names = {'context': 'name_context',
                     'container': 'name_container',
-                    'script': 'name_m_self', 
+                    'script': 'name_m_self',
                     'namespace': 'name_ns',
                     'subpath': 'name_subpath',
                     'state': 'name_state'}

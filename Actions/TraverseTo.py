@@ -23,6 +23,6 @@ class TraverseTo(BaseFormAction):
                                REQUEST, bind=1)
 
 
-registerFormAction('traverse_to', 
-                   factory, 
+registerFormAction('traverse_to',
+                   factory,
                    'Traverse to the URL specified in the argument (a TALES expression).  The URL can either be absolute or relative.')

@@ -5,12 +5,12 @@ from zLOG import LOG, INFO, WARNING
 
 def log(summary='', text='', log_level=INFO):
     LOG('Plone Debug', log_level, summary, text)
-    
+
 # Enable scripts to get the string value of an exception
 # even if the thrown exception is a string and not a
 # subclass of Exception.
 def exceptionString():
-    s = sys.exc_info()[:2]  # don't assign the traceback to s 
+    s = sys.exc_info()[:2]  # don't assign the traceback to s
                             # (otherwise will generate a circular reference)
     if s[0] == None:
         return None

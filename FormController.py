@@ -109,8 +109,8 @@ class FormController(UniqueObject, SimpleItemWithProperties):
             if hasattr(portal, 'portal_properties') and \
                 hasattr(portal.portal_properties, 'site_properties') and \
                 hasattr(portal.portal_properties.site_properties, 'invalid_ids'):
-                    if id in portal.portal_properties.site_properties.invalid_ids:
-                        return '\'%s\' is a reserved id' % (id)
+                if id in portal.portal_properties.site_properties.invalid_ids:
+                    return '\'%s\' is a reserved id' % (id)
 
 
     # Web-accessible methods

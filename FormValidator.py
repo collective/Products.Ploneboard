@@ -12,10 +12,10 @@ _marker = []
 
 # ##############################################################################
 class FormValidatorKey(Key):
-    
+
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
-    
+
     def __init__(self, object_id, context_type, button, controller=None):
         object_id = object_id.strip()
         if controller:
@@ -51,10 +51,10 @@ class FormValidatorKey(Key):
 
     def getContextType(self):
         return self.key[1]
-    
+
     def getButton(self):
         return self.key[2]
-    
+
 InitializeClass(FormValidatorKey)
 
 
@@ -63,7 +63,7 @@ class FormValidator(SimpleItem):
 
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
-    
+
     def __init__(self, object_id, context_type, button, validators, controller=None):
         self.key = FormValidatorKey(object_id, context_type, button, controller)
 
@@ -87,13 +87,13 @@ class FormValidator(SimpleItem):
 
     def getContextType(self):
         return self.key.getContextType()
-    
+
     def getButton(self):
         return self.key.getButton()
 
     def getValidators(self):
         return self.validators
-    
+
     def getKey(self):
         return self.key
 
@@ -107,7 +107,7 @@ class FormValidatorContainer(SimpleItem):
 
     def __init__(self):
         self.validators = {}
-    
+
     def __copy__(self):
         newobj = FormValidatorContainer()
         for v in self.validators.values():
@@ -117,14 +117,14 @@ class FormValidatorContainer(SimpleItem):
     def set(self, validator):
         self.validators[aq_base(validator.getKey())] = aq_base(validator)
         self._p_changed = 1
-        
+
     def get(self, key):
         return self.validators[key]
 
     def delete(self, key):
         del self.validators[key]
         self._p_changed = 1
-    
+
     def match(self, object_id, context_type, button):
         controller = getToolByName(self, 'portal_form_controller')
         validator = None
@@ -152,7 +152,7 @@ class FormValidatorContainer(SimpleItem):
             pass
         return None
 
-    def getFiltered(self, object_id=_marker, context_type=_marker, 
+    def getFiltered(self, object_id=_marker, context_type=_marker,
                     button=_marker, validators=_marker):
         filtered = []
         keys = self.validators.keys()

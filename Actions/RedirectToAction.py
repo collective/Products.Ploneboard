@@ -25,6 +25,6 @@ class RedirectToAction(BaseFormAction):
             raise ValueError, 'No %s action found for %s' % (action, controller_state.getContext().getId())
         return RedirectTo.RedirectTo(action_url)(controller_state)
 
-registerFormAction('redirect_to_action', 
-                   factory, 
+registerFormAction('redirect_to_action',
+                   factory,
                    'Redirect to the action specified in the argument (a TALES expression) for the current context object (e.g. string:view)')

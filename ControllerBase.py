@@ -1,14 +1,14 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 ##########################################################################
 
 import os
@@ -25,7 +25,7 @@ from utils import log
 
 class ControllerBase:
     """Common functions for objects controlled by portal_form_controller"""
-     
+
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
 
@@ -43,7 +43,7 @@ class ControllerBase:
         """Return a list of available action types."""
         return getToolByName(self, 'portal_form_controller').listActionTypes()
 
-    
+
     security.declareProtected(ManagePortal, 'listFormValidators')
     def listFormValidators(self, override, **kwargs):
         """Return a list of existing validators.  Validators can be filtered by
@@ -54,7 +54,7 @@ class ControllerBase:
         else:
             return self.validators.getFiltered(**kwargs)
 
-        
+
     security.declareProtected(ManagePortal, 'listFormActions')
     def listFormActions(self, override, **kwargs):
         """Return a list of existing actions.  Actions can be filtered by
@@ -154,7 +154,7 @@ class ControllerBase:
             context_type = getattr(context, '__class__', None)
             if context_type:
                 context_type = getattr(context_type, '__name__', None)
-                
+
         button = controller_state.getButton()
         controller = getToolByName(self, 'portal_form_controller')
 
@@ -183,7 +183,7 @@ class ControllerBase:
         REQUEST.set('controller_state', controller_state)
         return next_action.getAction()(controller_state)
 
-    
+
     def getButton(self, controller_state, REQUEST):
         buttons = []
         for k in REQUEST.form.keys():
@@ -197,7 +197,7 @@ class ControllerBase:
                 buttons.sort(lambda x, y: cmp(len(x), len(y)))
             controller_state.setButton(buttons[0][len('form.button.'):])
         return controller_state
-        
+
 
     def getValidators(self, controller_state, REQUEST):
         controller = getToolByName(self, 'portal_form_controller')
@@ -223,13 +223,13 @@ class ControllerBase:
 
     def _read_action_metadata(self, id, filepath):
         self.actions = FormActionContainer()
-        
+
         metadata = FSMetadata(filepath)
         cfg = CMFConfigParser()
         filepath = expandpath(filepath)
         if os.path.exists(filepath + '.metadata'):
             cfg.read(filepath + '.metadata')
-            
+
             try:
                 controller = getToolByName(self, 'portal_form_controller')
             except AttributeError:
@@ -262,18 +262,18 @@ class ControllerBase:
 
     def _read_validator_metadata(self, id, filepath):
         self.validators = FormValidatorContainer()
-        
+
         metadata = FSMetadata(filepath)
         cfg = CMFConfigParser()
         filepath = expandpath(filepath)
         if os.path.exists(filepath + '.metadata'):
             cfg.read(filepath + '.metadata')
-            
+
             try:
                 controller = getToolByName(self, 'portal_form_controller')
             except AttributeError:
                 controller = None
-                
+
             validators = metadata._getSectionDict(cfg, 'validators')
             if validators is None:
                 validators = {}
@@ -299,5 +299,5 @@ class ControllerBase:
     def writableDefaults(self):
         """Can default actions and validators be modified?"""
         return 1
-    
+
 InitializeClass(ControllerBase)

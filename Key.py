@@ -3,7 +3,7 @@ import OFS
 class Key(OFS.SimpleItem.SimpleItem):
     key = None
 
-    
+
     def __init__(self, key):
         self.key = key
 
@@ -25,12 +25,12 @@ class Key(OFS.SimpleItem.SimpleItem):
         if k2 == None:
             return -1
         return cmp(k1, k2)
-    
+
     def getKey(self):
         return self.key
-        
+
     def __hash__(self):
         return hash(self.key)
-    
+
     def __eq__(self, k):
         return self.key == k.key
