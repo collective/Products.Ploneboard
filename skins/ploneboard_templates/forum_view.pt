@@ -35,6 +35,7 @@
             <thead>
                 <tr>
                     <th>Conversation</th>
+                    <th>Replies</th>
                     <th>Most Recent Comment</th>
                 </tr>
             </thead>
@@ -55,9 +56,20 @@
                             </span>
                         </a>
                     </td>
+                    
+                    <td class="listingCheckbox"
+                        tal:condition="conversation/getNumberOfReplies"
+                        tal:content="conversation/getNumberOfReplies">
+                    12 messages
+                    </td>
     
+                    <td class="listingCheckbox"
+                        tal:condition="not: conversation/getNumberOfReplies">
+                    No replies
+                    </td>
+
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                    <td class="listingDetails">
+                    <td>
                         <span>
                             by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span>
                         </span>

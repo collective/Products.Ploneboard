@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.2 2004/03/19 17:01:04 tesdal Exp $
+$Id: PloneboardConversation.py,v 1.3 2004/03/20 06:17:51 limi Exp $
 """
 
 from random import randint
@@ -146,9 +146,16 @@ class PloneboardConversation(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getNumberOfMessages')
     def getNumberOfMessages(self):
         """
-        Returns the number of messages to this conversation.
+        Returns the number of messages in this conversation.
         """
         return len(self._index)
+
+    security.declareProtected(ViewBoard, 'getNumberOfReplies')
+    def getNumberOfReplies(self):
+        """
+        Returns the number of replies for this conversation.
+        """
+        return len(self._index)-1
 
     security.declareProtected(ViewBoard, 'getLastMessageDate')
     def getLastMessageDate(self):
