@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.2 2004/05/06 03:30:01 tiran Exp $
+$Id: CalendarSupport.py,v 1.3 2004/05/06 12:14:28 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -41,11 +41,21 @@ DATE = "%Y%m%dT%H%M%SZ"
 
 PRODID = "-//AT Content Types//AT Event//EN"
 
+# iCal header and footer
 ICS_HEADER = """\
 BEGIN:VCALENDAR
 PRODID:%(prodid)s
 VERSION:2.0
 
+"""
+
+ICS_FOOTER = """\
+
+END:VCALENDAR
+"""
+
+# iCal event
+ICS_EVENT_START = """\
 BEGIN:VEVENT
 DTSTAMP:%(dtstamp)s
 CREATED:%(created)s
@@ -57,20 +67,28 @@ DTSTART:%(startdate)s
 DTEND:%(enddate)s
 """
 
-ICS_FOOTER = """\
+ICS_EVENT_END = """\
 CLASS:PUBLIC
 PRIORITY:3
 TRANSP:OPAQUE
 END:VEVENT
 
-END:VCALENDAR
 """
 
+# vCal header and footer
 VCS_HEADER = """\
 BEGIN:VCALENDAR
 PRODID:%(prodid)s
 VERSION:1.0
+"""
 
+VCS_FOOTER = """\
+
+END:VCALENDAR
+"""
+
+# vCal event
+VCS_EVENT_START = """\
 BEGIN:VEVENT
 DTSTART:%(startdate)s
 DTEND:%(enddate)s
@@ -81,12 +99,11 @@ LAST-MODIFIED:%(modified)s
 SUMMARY:%(summary)s
 """
 
-VCS_FOOTER = """\
+VCS_EVENT_END = """\
 PRIORITY:3
 TRANSP:0
 END:VEVENT
 
-END:VCALENDAR
 """
 
 class CalendarSupportMixin:
@@ -100,26 +117,23 @@ class CalendarSupportMixin:
     actions = ({
         'id'          : 'ics',
         'name'        : 'iCalendar',
-        'action'      : 'string:${object_url}/ics',
+        'action'      : 'string:${object_url}/ics_view',
         'permissions' : (CMFCorePermissions.View, )
          },
          {
         'id'          : 'vcs',
         'name'        : 'vCalendar',
-        'action'      : 'string:${object_url}/vcs',
+        'action'      : 'string:${object_url}/vcs_view',
         'permissions' : (CMFCorePermissions.View, )
          },
     )
-    
-    security.declareProtected(CMFCorePermissions.View, 'ics')
-    def ics(self, REQUEST, RESPONSE):
-        """iCalendar output
+
+    security.declareProtected(CMFCorePermissions.View, 'getICal')
+    def getICal(self):
+        """get iCal data
         """
-        RESPONSE.setHeader('Content-Type', 'text/calendar')
-        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.ics"' % self.getId())
         out = StringIO()
         map = { 
-            'prodid'    : PRODID,
             'dtstamp'   : DateTime().strftime(DATE),
             'created'   : DateTime(self.CreationDate()).strftime(DATE),
             'uid'       : self.UID(),
@@ -128,7 +142,7 @@ class CalendarSupportMixin:
             'startdate' : self.start().strftime(DATE),
             'enddate'   : self.end().strftime(DATE),
             }
-        out.write(ICS_HEADER % map)
+        out.write(ICS_EVENT_START % map)
         description = self.Description()
         if description:
             out.write('DESCRIPTION:%s\n' % description)
@@ -141,18 +155,28 @@ class CalendarSupportMixin:
         # XXX todo
         #ORGANIZER;CN=%(name):MAILTO=%(email)
         #ATTENDEE;CN=%(name);ROLE=REQ-PARTICIPANT:mailto:%(email)
+        out.write(ICS_EVENT_END)
+        return out.getvalue()
+
+    
+    security.declareProtected(CMFCorePermissions.View, 'ics_view')
+    def ics_view(self, REQUEST, RESPONSE):
+        """iCalendar output
+        """
+        RESPONSE.setHeader('Content-Type', 'text/calendar')
+        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.ics"' % self.getId())
+        out = StringIO()
+        out.write(ICS_HEADER % { 'prodid' : PRODID, })
+        out.write(self.getICal())
         out.write(ICS_FOOTER)
         return n2rn(out.getvalue())
 
-    security.declareProtected(CMFCorePermissions.View, 'vcs')
-    def vcs(self, REQUEST, RESPONSE):
-        """vCalendar output
+    security.declareProtected(CMFCorePermissions.View, 'getVCal')
+    def getVCal(self):
+        """get vCal data
         """
-        RESPONSE.setHeader('Content-Type', 'text/x-vCalendar')
-        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.vcs"' % self.getId())
         out = StringIO()
         map = { 
-            'prodid'    : PRODID,
             'dtstamp'   : DateTime().strftime(DATE),
             'created'   : DateTime(self.CreationDate()).strftime(DATE),
             'uid'       : self.UID(),
@@ -161,14 +185,25 @@ class CalendarSupportMixin:
             'startdate' : self.start().strftime(DATE),
             'enddate'   : self.end().strftime(DATE),
             }
-        out.write(VCS_HEADER % map)
+        out.write(VCS_EVENT_START % map)
         description = self.Description()
         if description:
             out.write('DESCRIPTION:%s\n' % description)
         location = self.getLocation()
         if location:
             out.write('LOCATION:%s\n' % location)
+        out.write(VCS_EVENT_END)
         # XXX todo
+
+    security.declareProtected(CMFCorePermissions.View, 'vcs_view')
+    def vcs_view(self, REQUEST, RESPONSE):
+        """vCalendar output
+        """
+        RESPONSE.setHeader('Content-Type', 'text/x-vCalendar')
+        RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.vcs"' % self.getId())
+        out = StringIO()
+        out.write(VCS_HEADER % { 'prodid' : PRODID, })
+        out.write(self.getVCal())
         out.write(VCS_FOOTER)
         return n2rn(out.getvalue())
 
