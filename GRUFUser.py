@@ -719,29 +719,40 @@ class GRUFGroup(GRUFUserAtom):
         """
         return self.getId()[len(GROUP_PREFIX):]
     
-    security.declarePrivate("getMemberIds")
-    def getMemberIds(self, ):
+    def _getMemberIds(self, users = 1, groups = 1, transitive = 1, ):
         """Return the member ids (users and groups) of the atoms of this group"""
+        # Initial parameters
         gruf = self.aq_parent
+        if transitive:
+            method = "getAllGroupIds"
+        else:
+            method = "getGroupIds"
+        if users and not groups:
+            lst = gruf.getPureUserIds()
+        elif groups and not users:
+            lst = gruf.getGroupIds()
+        else:
+            lst = gruf.getUserIds()
+
+        # Extraction
         groupid = self.getId()
         return [u for u in gruf.getUserIds()
-                if groupid in gruf.getUser(u).getAllGroupIds()]
+                if groupid in getattr(gruf.getUser(u), method)()]
+
+    security.declarePrivate("getMemberIds")
+    def getMemberIds(self, transitive = 1, ):
+        "Return member ids of this group, including or not transitive groups."
+        return self._getMemberIds(transitive = transitive)
 
     security.declarePrivate("getUserMemberIds")
-    def getUserMemberIds(self, ):
+    def getUserMemberIds(self, transitive = 1, ):
         """Return the member ids (users only) of the users of this group"""
-        gruf = self.aq_parent
-        groupid = self.getId()
-        return [u for u in gruf.getPureUserIds()
-                if groupid in gruf.getUser(u).getAllGroupIds()]
+        return self._getMemberIds(groups = 0, transitive = transitive)
     
     security.declarePrivate("getGroupMemberIds")
-    def getGroupMemberIds(self, ):
+    def getGroupMemberIds(self, transitive = 1, ):
         """Return the members ids (groups only) of the groups of this group"""
-        gruf = self.aq_parent
-        groupid = self.getId()
-        return [u for u in gruf.getGroupIds()
-                if groupid in gruf.getUser(u).getAllGroupIds()]
+        return self._getMemberIds(users = 0, transitive = transitive)
     
     security.declarePrivate("hasMember")
     def hasMember(self, id):

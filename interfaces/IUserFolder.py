@@ -529,14 +529,14 @@ class IGroup(Interface):
     """
     A group is a user atom other atoms can belong to.
     """
-    def getMemberIds():
+    def getMemberIds(transitive = 1, ):
         """Return the member ids (users and groups) of the atoms of this group.
         This method can be very expensive !"""
 
-    def getUserMemberIds():
+    def getUserMemberIds(transitive = 1, ):
         """Return the member ids (users only) of the users of this group"""
 
-    def getGroupMemberIds():
+    def getGroupMemberIds(transitive = 1, ):
         """Return the members ids (groups only) of the groups of this group"""
 
     def hasMember(id):

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.18 2004/06/08 10:26:03 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.19 2004/06/09 13:45:59 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -185,10 +185,38 @@ class GroupData (SimpleItem):
         return map(lambda x: x.getMemberId(), self.getGroupMembers())
 
 
+    security.declarePublic("getAllGroupMemberIds")
+    def getAllGroupMemberIds(self,):
+        """
+        Return a list of group member ids
+        """
+        return map(lambda x: x.getMemberId(), self.getAllGroupMembers())
+
     security.declarePublic('getGroupMembers')
-    def getGroupMembers(self):
+    def getGroupMembers(self, ):
         """
         Returns a list of the portal_memberdata-ish members of the group.
+        This doesn't include TRANSITIVE groups/users.
+        """
+        md = self.portal_memberdata
+        gd = self.portal_groupdata
+        ret = []
+        for u_name in self.getGroup().getMemberIds(transitive = 0, ):
+            usr = self._getGRUF().getUserById(u_name)
+            if not usr:
+                raise AssertionError, "Cannot retreive a user by its id !"
+            if usr.isGroup():
+                ret.append(gd.wrapGroup(usr))
+            else:
+                ret.append(md.wrapUser(usr))
+        return ret
+
+
+    security.declarePublic('getAllGroupMembers')
+    def getAllGroupMembers(self, ):
+        """
+        Returns a list of the portal_memberdata-ish members of the group.
+        This will include transitive groups / users
         """
         md = self.portal_memberdata
         gd = self.portal_groupdata

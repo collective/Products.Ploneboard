@@ -50,8 +50,16 @@ class GroupData(Interface):
     def getGroupMembers():
         """ Return a list of the portal_memberdata-ish members of the group."""
 
+    def getAllGroupMembers():
+        """ Return a list of the portal_memberdata-ish members of the group
+        including transitive ones (ie. users or groups of a group in that group)."""
+
     def getGroupMemberIds():
         """ Return a list of the user ids of the group."""
+
+    def getAllGroupMemberIds():
+        """ Return a list of the user ids of the group.
+        including transitive ones (ie. users or groups of a group in that group)."""
 
     def addMember(id):
         """ Add the existing member with the given id to the group"""

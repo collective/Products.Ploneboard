@@ -325,12 +325,41 @@ class TestGroupData(GroupTestCase, testInterface.TestInterface):
         self.failUnlessEqual(g1.getGroupName(), "g1")
 
     def test_getGroupMembers(self,):
+        # Flat group members
         g1 = self.groups.getGroupById("g1")
         members = map(lambda x: x.getMemberId(), g1.getGroupMembers())
         members.sort()
         self.failUnlessEqual(
             members,
             ["u2", "u3", "u4", ]
+            )
+
+        # Multiple level group members (ie. nested groups)
+        g1.addMember("g2")
+        members = map(lambda x: x.getMemberId(), g1.getGroupMembers())
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["g2", "u2", "u3", "u4", ]
+            )
+
+    def test_getAllGroupMembers(self,):
+        # Flat group members
+        g1 = self.groups.getGroupById("g1")
+        members = map(lambda x: x.getMemberId(), g1.getAllGroupMembers())
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u2", "u3", "u4", ]
+            )
+
+        # Multiple level group members (ie. nested groups)
+        g1.addMember("g2")
+        members = map(lambda x: x.getMemberId(), g1.getAllGroupMembers())
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["g2", "u2", "u3", "u4", "u5", ]
             )
 
     def test_getGroupMemberIds(self,):
@@ -341,6 +370,35 @@ class TestGroupData(GroupTestCase, testInterface.TestInterface):
             members,
             ["u2", "u3", "u4", ]
             )
+
+        # Multiple level group members (ie. nested groups)
+        g1.addMember("g2")
+        members = g1.getGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["g2", "u2", "u3", "u4", ]
+            )
+
+    def test_getAllGroupMemberIds(self,):
+        g1 = self.groups.getGroupById("g1")
+        members = g1.getAllGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u2", "u3", "u4", ]
+            )
+
+
+        # Multiple level group members (ie. nested groups)
+        g1.addMember("g2")
+        members = g1.getAllGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["g2", "u2", "u3", "u4", "u5", ]
+            )
+
 
     def test_addMember(self,):
         g1 = self.groups.getGroupById("g1")
