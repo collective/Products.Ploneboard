@@ -7,6 +7,7 @@ except:
 import types
 import AccessControl.User
 import copy
+import urllib
 
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
@@ -18,6 +19,7 @@ from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, Owned
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
 from Products import CMFCore
 from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
+from Products.CMFCore.Expression import createExprContext
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
 from Products.Archetypes.interfaces.base import IBaseContent
@@ -118,7 +120,7 @@ plone_schema = FieldList((
                                       description='Indicate whether you want the form help pop-ups to be displayed.')
                 ),
 
-    ObjectField('visible_ids',
+    BooleanField('visible_ids',
                 default=1,
                 mode='rw',
                 read_permission=VIEW_OTHER_PERMISSION,
@@ -155,6 +157,7 @@ plone_schema = FieldList((
                                   description='To add a new portrait, click the <strong>Browse</strong> button and select ' + \
                                             'a picture of yourself. Recommended size is 75 pixels wide, 100 pixels tall)')
                ),
+
 ))
 
 
@@ -196,6 +199,22 @@ security_schema = FieldList((
                widget=MultiSelectionWidget(label='Roles',
                                            description='Select the security roles for this user')
                ), 
+
+    LinesField('groups',
+               default=(),
+               mutator='setGroups',
+               accessor='getGroups',
+               mode='rw',
+               read_permission=VIEW_SECURITY_PERMISSION,
+               write_permission=EDIT_SECURITY_PERMISSION,
+               vocabulary='valid_groups',
+#               enforceVocabulary=1, # don't enforce vocabulary because getRoles() adds some extra roles
+               multiValued=1,
+               searchable=0,
+               index='KeywordIndex',
+               widget=MultiSelectionWidget(label='Groups',
+                                           description='Select groups this user')
+               ), 
     
     LinesField('domains',
                default=(),
@@ -210,6 +229,8 @@ security_schema = FieldList((
                widget=LinesWidget(label='Domains',
                                   description='If you would like to restrict this user to logging in only from certain domains, enter those domains here.')
                ),
+
+               
 ))
 
 
@@ -294,7 +315,9 @@ class Member(BaseContent):
             for action in actions:
                 if action.id == 'view':
                     if _verifyActionPermissions(self, action):
-                        action = self.restrictedTraverse(action.action(self))
+                        url=action.action(createExprContext(self.aq_parent,getToolByName(self,'portal_url').getPortalObject(),self))
+                        path=urllib.splithost(urllib.splittype(url)[1])[1]
+                        action = self.restrictedTraverse(path)
                         if action is not None:
                             return action(**kwargs)
 
@@ -340,16 +363,20 @@ class Member(BaseContent):
         """Return the list of roles assigned to a user."""
         roles=()
         try:
-            roles=self.getUser().getRoles()
+            user=self.getUser()
+            if hasattr(user,'getUserRoles'):
+                roles=user.getUserRoles()
+            else:
+                roles=user.getRoles()
         except TypeError:
             #XXX The user is not in this acl_users so we get None
             if self.getUser().roles is None:
                 self.getUser().roles=('Member',)
             roles=self.getUser().getRoles()
-        return roles
-#        # filter out Authenticated, etc
-#        allowed = self.valid_roles()
-#        return tuple([r for r in roles if r in allowed])
+            
+        # filter out Authenticated, etc
+        allowed = self.valid_roles()
+        return tuple([r for r in roles if r in allowed])
 
 
     security.declarePrivate('getDomains')
@@ -428,6 +455,9 @@ class Member(BaseContent):
         if self.hasUser():
             # if our user lives in a user folder, do this the right way
             self.getUser().aq_parent.userFolderEditUser(self.id, password, roles, domains)
+
+            if hasattr(self, '_v_user'):
+                delattr(self, '_v_user')  # remove the cached user
         else:
             # we have a temporary user in hand -- set its attributes by hand
             self.getUser().__ = password
@@ -446,7 +476,71 @@ class Member(BaseContent):
         except AttributeError:
             return self.portal_skin
 
+    ######################################
+    # group management methods
+    
+    security.declarePrivate('setGroups')
+    def setGroups(self,groups):
+        '''assigns the groups to the user using GroupUserFolder'''
+        
+        acl_users=getToolByName(self,'acl_users')
+        groups=self._stringToList(groups) #clean out the empty ones
+        
+        if not hasattr(acl_users,'getGroupPrefix'):
+            return # do nothing if GRUF is not installed
 
+        pref=acl_users.getGroupPrefix()
+        
+        roles=tuple([r for r in self.getRoles() if not r.startswith(pref) ])+tuple([pref+g for g in groups])
+        self.setSecurityProfile(roles=roles)
+        self.getUser()
+        
+        
+    def getGroups(self):
+        ''' fetches the groups from GRUF '''
+        acl_users=getToolByName(self,'acl_users')
+        
+        user=self.getUser()
+        
+        if not hasattr(user,'getGroups'): #return empty list if user comes another acl_user
+            return []
+        
+        groups=user.getGroups()
+        try:
+            res = [g.getUserNameWithoutGroupPrefix() for g in groups if g.getUserNameWithoutGroupPrefix()]
+        except AttributeError:
+            # then the groups come as array of strings
+            pref=acl_users.getGroupPrefix()
+            res = [g[len(pref):] for g in groups if g != pref]
+            
+        return res
+    
+    def getRawGroups(self):
+        '''fetches the Group names from GRUF with prefix '''
+        user=self.getUser()
+        if not hasattr(user,'getGroups'): #return empty list if user comes another acl_user
+            return []
+
+        acl_users=getToolByName(self,'acl_users')
+        pref=acl_users.getGroupPrefix()
+        
+        groups=user.getGroups()
+        try:
+            res = [g.getId() for g in groups if g.getId() != pref]
+        except AttributeError:
+            res = [g for g in groups if g != pref]
+        return res
+        
+    def valid_groups(self):
+        acl_users=getToolByName(self,'acl_users')
+        if not hasattr(acl_users,'getGroups'):
+            return []
+        groups=acl_users.getGroups()
+        res = [g.id for g in groups if g.id]
+        return res
+    
+    
+    
     # ########################################################################
     # Validators and vocabulary methods
 
@@ -477,7 +571,8 @@ class Member(BaseContent):
     security.declarePrivate('validate_roles')
     def validate_roles(self, roles):
         roles = self._stringToList(roles)
-        valid = self.valid_roles() + ('Authenticated',)
+        valid = self.valid_roles() + ('Authenticated',) + tuple(self.getRawGroups())
+        
         for r in roles:
             if r not in valid:
                 return '%s is not a valid role.' % (r)
@@ -500,8 +595,8 @@ class Member(BaseContent):
         # make sure object has required data and metadata
         self.Schema().validate(self, None, errors, 1, 1)
         if errors:
-#            import sys
-#            sys.stdout.write('isValid, errors = %s\n' % (str(errors)))
+            import sys
+            sys.stdout.write('isValid, errors = %s\n' % (str(errors)))
             return 0
         return 1
 
@@ -1075,7 +1170,7 @@ class Member(BaseContent):
             s = s.split(',')
         s= [v.strip() for v in s if v.strip()]
         s = filter(None, s)
-        return s
+        return [o for o in s if o]
 
 
     # XXX REFACTOR ME
