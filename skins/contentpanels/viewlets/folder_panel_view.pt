@@ -82,13 +82,6 @@
                     <tr tal:define="oddrow repeat/item/odd"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')" > 
                       <td>
-                        <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(item)" >
-                             <span tal:omit-tag="" 
-                                 tal:define="replyCount python:here.portal_discussion.getDiscussionFor(item).replyCount(item)"
-			         tal:condition="python: replyCount > 0"
-                                 tal:replace="python: '[%d]'% replyCount"> 8
-                             </span>
-                        </span> 
                         <span tal:define="action python:item.getTypeInfo().getActionById('view');
                                         use_folder_contents here/portal_properties/site_properties/use_folder_contents;
                                         url python:test(item.getTypeInfo().getId() in use_folder_contents, 

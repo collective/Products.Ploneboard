@@ -24,6 +24,8 @@ V2.0
 
 - (done)a new css which support content icon
 
+- compatible with quickinstaller
+
 - > Also, you mention in the documentation that there are heirarchical content
   panels - I assumed that when you click the 'add panel' button inside a panel
 you can do that, but actually it just adds the panel after the one you click.

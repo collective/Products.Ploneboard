@@ -32,13 +32,6 @@ Topic title</a></h5>
                             tal:attributes="href url;
                                             title python:item.Description() or  None;">
                          <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-                         <tal:block tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(item)" >
-                           <span tal:omit-tag=""
-                               tal:define="replyCount python:here.portal_discussion.getDiscussionFor(item).replyCount(item)"
-                               tal:condition="python: replyCount > 0"
-                               tal:replace="python: '[%d]'% replyCount"> 8
-                           </span>
-                         </tal:block>
                         <span tal:replace="python:item.Title() or item.getId()">Title</span>
                       </a>
        
