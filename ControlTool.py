@@ -98,6 +98,10 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     def __init__(self, oid = None):
         if not oid: oid = self.id
         BaseBTreeFolder.__init__(self, oid)
+        try:
+            self.setSchemaCollector('type')
+        except :
+            pass
         
     # Add a visual note
     def om_icons(self):
@@ -300,22 +304,30 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     security.declareProtected(ManagePortal, 'upgrade')
     def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1):
         """ perform the upgrade """
+
+        transaction = get_transaction().sub()
+        transaction.begin()
+        
         # keep it simple
         out = []
 
         self._check()
-
+        
+        transaction.commit()
         if dry_run:
             out.append(("Dry run selected.", zLOG.INFO))
 
-        # either get the forced upgrade instance or the current instance
-        newv = getattr(REQUEST, "force_instance_version",
-                       self.getInstanceVersion())
+        if REQUEST:
+            newv = REQUEST.get("force_instance_version")
+        else:
+            newv = self.getInstanceVersion()
 
         out.append(("Starting the migration from "
                     "version: %s" % newv, zLOG.INFO))
+
         while newv is not None:
             out.append(("Attempting to upgrade from: %s" % newv, zLOG.INFO))
+            transaction.commit()
             try:
                 newv, msgs = self._upgrade(newv)
                 if msgs:
@@ -341,12 +353,12 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                 # set newv to None
                 # to break the loop
                 newv = None
-                if not swallow_errors:
+                if swallow_errors:
+                    # abort transaction to safe the zodb
+                    transaction.abort()
+                else:
                     for msg, sev in out: log(msg, severity=sev)
                     raise
-                else:
-                    # abort transaction to safe the zodb
-                    get_transaction().abort()
 
         out.append(("End of upgrade path, migration has finished", zLOG.INFO))
 
@@ -385,7 +397,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
         if dry_run:
             out.append(("Dry run selected, transaction aborted", zLOG.INFO))
-            get_transaction().abort()
+            transaction.abort()
 
         # log all this to the ZLOG
         for msg, sev in out:

@@ -241,22 +241,7 @@ def migrateCustomMemberData(portal):
     mdTool = portal.portal_memberdata
     actual_md_dict = mdTool.propdict()
     customFields = [md for md in actual_md_dict.keys() if md not in defaultFields]
-    typesMap = {'boolean':('BooleanField', ''),
-                'date':('DateTimeField', ''),
-                'float':('FloatField', ''),
-                'int':('IntegerField', ''),
-                'lines':('LinesField', ''),
-                'long':('IntegerField', ''),
-                'string':('StringField', ''),
-                'ustring':('StringField', ''),
-                'text':('TextField', ''),
-                'tokens':('LinesField', 'StringWidget'),
-                'utext':('TextField',''),
-                'utokens':('LinesField', 'StringWidget'),
-                'ulines':('LinesField', ''),
-                'selection':('StringField', 'SelectionWidget'),
-                'multiple selection':('LinesField', 'MultiSelectionWidget'),
-               }
+    from Products.CMFMember.utils import TYPESMAP as typesMap
     custSchema = ""
     for custField in customFields:
         fieldType, widgetType = typesMap[actual_md_dict[custField]['type']]

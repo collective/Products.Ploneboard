@@ -1,3 +1,15 @@
+2004-04-16  Rob Miller and Whit Morriss <ra@burningman.com, whit@burningman.com> (rafrombrc, brcwhit)
+
+    * Lots of improvements to the migration unit tests to
+      make sure the custom memberdata migration works correctly.
+      The test passes, but there are still some known issues
+      with some of the weirder property types (tokens, etc.)
+
+2004-04-14  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Modified the Plone->1.0 migration code to migrate custom
+      memberdata into the schema of CMFMember's Member class.
+
 2004-04-06  Bill Schindler <bill@bitranch.com> (bitranch)
 
     * Moved mail password logic from Member to RegistrationTool to kill the

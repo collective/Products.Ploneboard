@@ -25,6 +25,7 @@ from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 from Products.CMFMember.Member import Member
 from Products.CMFMember.utils import logException, changeOwnership
 
+
 _marker = []
 
 schema = BaseFolderSchema + Schema((
@@ -76,7 +77,7 @@ class MemberDataContainer(BaseBTreeFolder):
 
     schema = schema
     filter_content_types = 1
-    allowed_content_types = ['Member']
+    allowed_content_types = ['Member', 'ZCatalog']
     
     security=ClassSecurityInfo()
 
@@ -246,10 +247,11 @@ class MemberDataContainer(BaseBTreeFolder):
         self._delObject(id)
 
     # XXX This is untested implementation.
+    ### and what uses this? should I test it?
     security.declarePrivate( 'searchMemberDataContents' )
     def searchMemberDataContents( self, search_param, search_term ):
         """ Search members """
-        
+
         results=[]
         if search_param == 'username':
             search_param = 'getId'
@@ -269,39 +271,36 @@ class MemberDataContainer(BaseBTreeFolder):
 
 
     def searchForMembers( self, REQUEST=None, **kw ):
-        """ """
+        """ do a catalog search on a sites members.
+            if the keyword brains is set to a non zero/null value, search will return only member_catalog metadata.
+            Otherwise, memberdata objects returned. """
+        
         if REQUEST:
-            dict = REQUEST
+            search_dict = getattr(REQUEST, 'form', REQUEST)
         else:
-            dict = kw
+            REQUEST = {}
+            search_dict = kw
+
         results=[]
         catalog=getToolByName(self, search_catalog)
         indexes=catalog.indexes()
+
         query={}
 
-        import logging;
-        logging.error('XXX %s' %search_catalog)
-        
-        for i in indexes:
-            v=dict.get(i, None)
-            if v:
-                query.update({i:v})
-        
-        if dict.has_key('form'):
-            notRawIndexFields=[k for k in dict.form.keys() if k not in query.keys()]
-            if notRawIndexFields:
-                for k in notRawIndexFields:
-                    if k.endswith('_usage'): 
-                        query.update({k:dict.get(k)})
+        if search_dict:
+            for i in indexes:
+                val=search_dict.get(i, None)
+                if type(val) == type([]):
+                    val.remove('')
+                if val:
+                    query.update({i:val})
+                    
+        results=catalog.search(query)
 
-        if query:
-            query['portal_type'] = getToolByName(self, 'portal_types').MemberDataContainer.allowed_content_types
-            results=catalog(query)
-        
-        if not ( REQUEST.get('brains', None) or kw.get('brains', None) ): results = [r.getObject() for r in results]
-        
+        if results and not (search_dict.has_key('brains') or REQUEST.get('brains', None)):
+            results = [r.getObject() for r in results]
+
         return results
-
 
     security.declarePrivate('registerMemberData')
     def registerMemberData(self, m, id):

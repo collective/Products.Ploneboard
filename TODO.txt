@@ -12,10 +12,7 @@ default Plone user management scenarios (e.g. anybody can register and
 set their own passwords immediately; anybody can register, but passwords
 are mailed to them; private site)
 
-* Build in a real search that uses the catalog.  The current search
-just uses the existing plone member search mechanism, which is dog slow.
-I think lalo is doing some automatic search page generation stuff, so
-this might be really simple.
+* Improve search ui.
 
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
