@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.28 2004/12/10 07:17:04 ajung Exp $
+$Id: SchemaEditor.py,v 1.29 2005/01/07 16:58:23 spamsch Exp $
 """
 
 import re
@@ -128,6 +128,7 @@ class SchemaEditor:
         S._undeleteable_schematas = undeleteable_schematas 
         S._i18n_domain = domain
         self._schemas[schema_id] = S
+        self._p_changed = 1
 
     def atse_registerObject(self, obj,
                             filtered_schemas=(), 
@@ -168,6 +169,7 @@ class SchemaEditor:
         if not self._schemas.has_key(schema_id):
             raise SchemaEditorError('No such schema: %s' % schema_id)
         del self._schemas[schema_id]
+        self._p_changed = 1
 
     security.declareProtected(ManageSchemaPermission, 'atse_reRegisterSchema')
     def atse_reRegisterSchema(self, schema_id, schema):
