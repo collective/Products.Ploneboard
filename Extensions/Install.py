@@ -40,8 +40,12 @@ def replaceTools(self, out, convert=1):
         memberarea.icon = 'folder_icon.gif'
         _actions=memberarea._cloneActions()
         for action in _actions:
-            if action['id']=='view':
-                action['action']='folder_contents'
+            try:
+                if action['id']=='view':
+                    action['action']='folder_contents'
+            except AttributeError:
+                if action.id=='view':
+                    action.action='string:folder_contents'
         memberarea._actions=_actions
         memberarea.global_allow = 0  # make MemberArea not implicitly addable
 

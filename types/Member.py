@@ -691,8 +691,7 @@ class Member(BaseContent):
             import traceback
             import sys
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            import pdb
-            pdb.set_trace()
+            #import pdb;pdb.set_trace()
             raise
 
 
@@ -733,8 +732,7 @@ class Member(BaseContent):
             import traceback
             import sys
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            import pdb
-            pdb.set_trace()
+            #import pdb; pdb.set_trace()
             raise
 
     security.declarePrivate('manage_afterClone')
@@ -747,8 +745,7 @@ class Member(BaseContent):
             import traceback
             import sys
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            import pdb
-            pdb.set_trace()
+            #import pdb;pdb.set_trace()
             raise
 
 
@@ -792,8 +789,7 @@ class Member(BaseContent):
             import traceback
             import sys
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            import pdb
-            pdb.set_trace()
+            #import pdb; pdb.set_trace()
             raise
 
 
