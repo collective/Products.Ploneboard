@@ -12,8 +12,8 @@ import Products.CMFMember as CMFMember
 import Products.CMFMember.MemberDataTool as MemberDataTool
 from Products.CMFMember.Extensions.Workflow \
     import setupWorkflow, workflow_transfer
-from Products.CMFMember.Extensions.SimpleWorkflow \
-    import setupWorkflow
+#from Products.CMFMember.Extensions.SimpleWorkflow \
+#    import setupWorkflow
 
 import sys
 
