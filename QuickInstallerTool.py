@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.30 2003/11/27 17:32:46 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.31 2003/12/22 15:39:30 dreamcatcher Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -52,6 +52,7 @@ def addQuickInstallerTool(self,REQUEST=None):
 
 
 class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
+    """ A tool to ease installing/uninstalling all sorts of products """
 
     __implements__ = IQuickInstallerTool
 
