@@ -87,6 +87,12 @@ class PloneboardComment(BaseBTreeFolder):
         # Archetypes doesn't set values on creation from kwargs
         self._attachments_ids = []
 
+    security.declareProtected(EditComment, 'edit')
+    def edit(self, **kwargs):
+        """Alias for update()
+        """
+        self.update(**kwargs)
+
     security.declareProtected(AddComment, 'addReply')
     def addReply(self,
                  comment_subject,

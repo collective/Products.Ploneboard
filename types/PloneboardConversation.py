@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
+$Id: PloneboardConversation.py,v 1.3 2004/09/27 10:32:54 tesdal Exp $
 """
 
 from random import randint
@@ -92,6 +92,12 @@ class PloneboardConversation(BaseBTreeFolder):
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._index = ConversationIndex()
+
+    security.declareProtected(ManageConversation, 'edit')
+    def edit(self, **kwargs):
+        """Alias for update()
+        """
+        self.update(**kwargs)
 
     security.declareProtected(ViewBoard, 'getConversation')
     def getConversation(self):

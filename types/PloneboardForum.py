@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
+$Id: PloneboardForum.py,v 1.3 2004/09/27 10:32:54 tesdal Exp $
 """
 
 from random import randint
@@ -102,6 +102,12 @@ class PloneboardForum(BaseBTreeFolder):
         self._index = ForumIndex()
         self._comment_count = Length()
         self._moderated = 0
+
+    security.declareProtected(ManageForum, 'edit')
+    def edit(self, **kwargs):
+        """Alias for update()
+        """
+        self.update(**kwargs)
 
     security.declareProtected(ViewBoard, 'getForum')
     def getForum(self):

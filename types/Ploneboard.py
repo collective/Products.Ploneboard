@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
+$Id: Ploneboard.py,v 1.3 2004/09/27 10:32:54 tesdal Exp $
 """
 
 import Globals
@@ -75,6 +75,12 @@ class Ploneboard(BaseBTreeFolder):
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._setupInternalCatalog()
+
+    security.declareProtected(ManageBoard, 'edit')
+    def edit(self, **kwargs):
+        """Alias for update()
+        """
+        self.update(**kwargs)
 
     security.declareProtected(ViewBoard, 'getBoard')
     def getBoard(self):
