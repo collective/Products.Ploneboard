@@ -1,3 +1,0 @@
-[actions]
-action.failure=traverse_to:string:criterion_edit_form
-action.success=redirect_to:string:criterion_edit_form

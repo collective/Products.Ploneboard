@@ -1,4 +1,0 @@
-The current development and its todos are planned in the Plone Development Wiki
-
-see: http://plone.org/development/teams/developer/ATContentTypes
-
