@@ -3,6 +3,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from Testing import ZopeTestCase
+ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('CMFMember')
 ZopeTestCase.installProduct('PortalTransforms')
 ZopeTestCase.installProduct('Archetypes')
