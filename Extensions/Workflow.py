@@ -105,7 +105,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager'))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
     state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Manager',))
 
