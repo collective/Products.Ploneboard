@@ -1303,7 +1303,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/12/15 10:41:39 $"[7:-2]
+        rev_date = "$Date: 2004/12/16 18:54:58 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2137,7 +2137,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         self._v_batch_users = un
         return ret
 
-    security.declareProtected(Permissions.view_management_screens, "getUsersBatchTable")
+    security.declareProtected(Permissions.view_management_screens, "listUsersBatchTable")
     def listUsersBatchTable(self,):
         """
         listUsersBatchTable(self,) => Same a mgt screens but divided into sublists to
@@ -2462,7 +2462,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         self._setObject(new_id, ob, set_owner=0)
 
 
-    security.declareProtected(Permissions.manage_users, "replaceUserSources")
+    security.declareProtected(Permissions.manage_users, "replaceUserSource")
     def replaceUserSource(self, id = None, new_factory = None, REQUEST = {}, *args, **kw):
         """
         replaceUserSource(self, id = None, new_factory = None, REQUEST = {}, *args, **kw) => perform user source replacement
