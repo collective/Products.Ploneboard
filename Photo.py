@@ -151,8 +151,10 @@ class Photo(Image):
 
         return Photo.inheritedAttribute('index_html')(self, REQUEST, RESPONSE)
 
-    def tag(self, size='original'):
-        """ Return an HTML img tag """
+    security.declareProtected(CMFCorePermissions.View, 'tag')
+    def tag(self, height=None, width=None, alt=None,
+            scale=0, xscale=0, yscale=0, css_class=None, title=None, size='original', **args):
+        """ Return an HTML img tag (See OFS.Image)"""
         try:
             if size in self.displays.keys():
                 # Create resized copy, if it doesnt already exist
@@ -166,12 +168,8 @@ class Photo(Image):
         except KeyError:
             photo = self
 
-        return '<img src="%s?size=%s" alt="%s" width="%s" height="%s" />' % (self.absolute_url(),
-                                                                             size,
-                                                                             self.title_or_id(),
-                                                                             photo.width,
-                                                                             photo.height)
-
+        return Image.tag(photo, height, width, alt, scale, xscale, yscale, css_class, title, **args)
+        
 
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
