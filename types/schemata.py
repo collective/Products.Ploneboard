@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.50 2004/09/13 16:09:23 tiran Exp $
+$Id: schemata.py,v 1.51 2004/09/13 16:21:19 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -109,7 +109,7 @@ ATDocumentSchema = ATContentTypeSchema.copy() + Schema((
 # AT Content Type Event
 ###
 
-ATEventSchema = ATContentTypeSchema.copy + Schema((
+ATEventSchema = ATContentTypeSchema.copy() + Schema((
     StringField('location',
                 searchable=True,
                 write_permission = ChangeEvents,
