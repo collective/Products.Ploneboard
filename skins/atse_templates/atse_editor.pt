@@ -39,7 +39,7 @@
 
         <div class="portlet" id="atse_field_editor" tal:condition="request/field|nothing"> 
           <h5 i18n:translate="field_definition">Field definition for <b tal:content="request/field"/></h5>
-          <div class="portletBody" id="atse_schema_editor_fieldeditor">
+          <div class="portletBody" id="atse_fieldeditor">
 
             <form action="atse_update" method="post"
                   tal:define="field python: here.atse_getField(request['field']);

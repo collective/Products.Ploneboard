@@ -120,7 +120,7 @@
 
   <div class="portlet">
     <h5 i18n:translate="maintenance">Maintenance</h5>
-    <div class="portletBody" id="atse_schema_editor_maintenance">
+    <div class="portletBody" id="atse_maintenance">
       <div>
         <a href="update_schema_for_issues?return_to=atse_editor" i18n:translate="update_schema_for_all_issues">Update schema for all issues</a>
       </div>
@@ -132,7 +132,7 @@
 <metal:div metal:define-macro="fieldsets">
   <div class="portlet" tal:condition="fieldsets">    <!-- Fieldsets -->
     <h5 i18n:translate="schematas">Schematas</h5>
-    <div class="portletBody" id="atse_schema_editor_fieldsets">
+    <div class="portletBody" id="atse_fieldsets">
       <div tal:repeat="set fieldsets">
         <div class="left">
            <a tal:content="string: ${set}" 
@@ -161,7 +161,7 @@
 <metal:div metal:define-macro="fields">
   <div class="portlet" tal:condition="fieldsets">    <!-- Fields -->
     <h5 i18n:translate="fields">Fields</h5>
-    <div class="portletBody" id="atse_schema_editor_fields">  
+    <div class="portletBody" id="atse_fields">  
       <div  tal:repeat="field python: here.atse_getSchemata(fieldset).fields()">
         <div class="left">
           <a tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${fieldset}&field=${field/getName};
