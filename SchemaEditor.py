@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.16 2004/09/27 12:39:15 spamsch Exp $
+$Id: SchemaEditor.py,v 1.17 2004/09/27 13:24:20 spamsch Exp $
 """
 
 import re
@@ -158,13 +158,31 @@ class SchemaEditor:
             raise SchemaEditorError('No such schema: %s' % schema_id)
         del self._schemas[schema_id]
         
-
     security.declareProtected(View, 'atse_getSchemaById')
     def atse_getSchemaById(self, schema_id):
         """ return a schema by its schema_id """
         if not self._schemas.has_key(schema_id):
             raise SchemaEditorError('No such schema: %s' % schema_id)
         return self._schemas[schema_id]
+
+    security.declareProtected(View, 'atse_getSchemaById')
+    def atse_getRegisteredSchemata(self):
+        """
+        Returns all registered schemata
+        """
+
+        return self._schemas.keys()
+
+    security.declareProtected(View, 'atse_getSchemaById')
+    def atse_selectRegisteredSchema(self, REQUEST=None):
+        """
+        Redirection
+        """
+
+        req = REQUEST or self.REQUEST
+        sel = req.form['selection']
+        return util.redirect(req.RESPONSE, 'atse_editor',
+                      self.translate('Now editing schema for %s' % sel), schema_id=sel)
 
     security.declareProtected(View, 'atse_isSchemaRegistered')
     def atse_isSchemaRegistered(self, schema_id):

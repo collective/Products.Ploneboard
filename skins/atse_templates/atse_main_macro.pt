@@ -1,4 +1,5 @@
-<div metal:define-macro="schema_editor">
+<span metal:define-macro="schema_editor">
+ <div style="margin: 15px 1px 1px 1px;">
 
   <!-- portlets left side -->
   <div class="left" style="width: 25%"
@@ -10,6 +11,7 @@
       <span tal:define="dummy python: request.set('schemata', fieldsets[0])" /> 
     </metal:block>
 
+    <tal:div metal:use-macro="here/atse_macros/macros/selection" />
     <tal:div metal:use-macro="here/atse_macros/macros/fieldsets" />
     <tal:div metal:use-macro="here/atse_macros/macros/fields" />
     <tal:div metal:use-macro="here/atse_macros/macros/maintenance" />
@@ -20,5 +22,8 @@
     <tal:div metal:use-macro="here/atse_macros/macros/fieldeditor" />
   </div>
 
+ 
   <div class="clear"> </div>
-</div>
+
+ </div>
+</span>

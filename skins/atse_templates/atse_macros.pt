@@ -1,3 +1,23 @@
+<metal:div metal:define-macro="selection">
+  <div class="portlet">
+    <h5 i18n:translate="selection">Registered Objects</h5>
+    <div class="portletBody">
+     <div style="margin: 5px 1px 5px 1px;">
+      <form method="POST" action="atse_selectRegisteredSchema">
+      <select name="selection:string">
+        <span tal:repeat="item here/atse_getRegisteredSchemata">
+          <option tal:attributes="value item;
+                                  selected python: item == SCHEMA_ID"
+                  tal:content="item" />
+        </span>
+      </select>
+      <input type="submit" value="select" name="submit">
+      </form>
+    </div>
+   </div>
+  </div>
+</metal:div>
+
 <metal:div metal:define-macro="type">
     <span class="label" i18n:translate="type">Type</span>
     <div>
@@ -256,6 +276,7 @@
           </div>
         </div>
 
+	<br/>
         <div>
           <span class="label" i18n:translate="label">Label</span>
           <div>
@@ -265,6 +286,7 @@
           </div>
         </div>
       
+        <br/>
         <div>
           <div class="left">
             <span class="label" i18n:translate="visible_edit">Visible (Edit)</span >
@@ -304,6 +326,7 @@
           <div class="clear"> </div>
         </div>
 
+	<br/>
         <div> 
           <div class="field">
             <input type="submit" value="Save changes" class="standalone" i18n:attributes="value">
