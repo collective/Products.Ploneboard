@@ -57,67 +57,59 @@
         </li>
     </ul>
 
-    <div class="contentActions">
-    &nbsp;
-    </div>
-    <!-- End of tabs -->
+    <div class="contentActions"
+           tal:condition="not: isQuery">
+        <ul>
 
-    <div class="documentContent">
-
-       <!-- naviagation page -->
-       <div tal:condition="not: isQuery">
-
-          <div tal:define="breadcrumbs python:here.breadcrumbs(here)">
-
-             <a tal:repeat="crumb python:breadcrumbs[:-2]"
-                tal:content="python: crumb[0] + ' / '"
-                tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
-             </a>
-         </div>
-
-          <h1 class="documentFirstHeading" tal:content="here/Title"></h1>
-
-          <div class="discreet" tal:content="here/Description"></div>
-
-
-<div style="margin-top: 1em"><b>related portlets: </b></div>
-<div class="contentActions">
-<ul>
-
-   <tal:block tal:repeat="menu python:(
+          <tal:block tal:repeat="menu python:(
                      {'viewlets':gn_personal_viewlets, 'title':'personal related', 'id':'gn_personal_viewlets'},
                      {'viewlets':gn_portal_viewlets, 'title':'site wide', 'id':'gn_portal_viewlets'},
                      {'viewlets':gl_viewlets, 'title':'content related', 'id':'globalViewlets'},
                      {'viewlets':pt_viewlets, 'title':'content specific', 'id':'typesSpecific'},
                      )">
 
-      <li tal:condition="menu/viewlets">
-        <div class="menuPosition">
-            <a href="#"
-               tal:attributes="onclick string:return buttonClick(event, '${menu/id}');;;
+          <li tal:condition="menu/viewlets">
+            <div class="menuPosition">
+              <a href="#"
+                 tal:attributes="onclick string:return buttonClick(event, '${menu/id}');;;
                                onmouseover string:buttonMouseover(event, '${menu/id}');;;">
-               <span i18n:translate=""
-                     tal:content="menu/title">types specific</span></a>
+                 <span i18n:translate=""
+                     tal:content="menu/title">types specific</span>
+              </a>
 
-            <ul class="actionMenu" style=" display: block;"
-                tal:attributes="id menu/id"
-                onmouseover="menuMouseover(event)">
-                <metal:block tal:repeat="viewlet menu/viewlets">
-                <li>
+              <ul class="actionMenu" style=" display: block;"
+                  tal:attributes="id menu/id"
+                  onmouseover="menuMouseover(event)">
+                  <metal:block tal:repeat="viewlet menu/viewlets">
+                  <li>
                     <a href="#"
                        onMouseUp="if (activeButton != null) resetButton(activeButton);"
                        tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
                        tal:content="viewlet/name">viewlet </a>
-                </li>
-                </metal:block>
-            </ul>
-        </div>
-    </li>
-
-  </tal:block>
-</ul>
-</div>
+                  </li>
+                  </metal:block>
+              </ul>
+            </div>
+         </li>
+         </tal:block>
+       </ul>
      </div>
+
+   <div class="documentContent">
+
+    <tal:block tal:condition="not: isQuery">
+     <div tal:define="breadcrumbs python:here.breadcrumbs(here)">
+        <a tal:repeat="crumb python:breadcrumbs[:-2]"
+           tal:content="python: crumb[0] + ' / '"
+           tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
+        </a>
+     </div>
+
+     <h1 class="documentFirstHeading" tal:content="here/Title"></h1>
+
+     <div class="discreet" tal:content="here/Description"></div>
+
+    </tal:block>
 
        <!-- search form -->
 
