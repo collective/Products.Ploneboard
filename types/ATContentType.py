@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.2 2004/03/29 16:44:20 tiran Exp $
+$Id: ATContentType.py,v 1.3 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -82,7 +82,7 @@ class ATCTMixin(TemplateMixin):
 
     security.declareProtected(CMFCorePermissions.View, 'getLayout')
     def getLayout(self, **kw):
-        """Use the default layout if no layout is given
+        """Get the current layout or the default layout if the current one is None
         """
         if kw.has_key('schema'):
             schema = kw['schema']
@@ -97,7 +97,7 @@ class ATCTMixin(TemplateMixin):
 
     security.declareProtected(CMFCorePermissions.View, 'getDefaultLayout')
     def getDefaultLayout(self):
-        """
+        """Get the default layout used for TemplateMixin
         """
         return self.immediate_view
 

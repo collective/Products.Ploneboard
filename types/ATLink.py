@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
+$Id: ATLink.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -55,7 +55,8 @@ class ATLink(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'remote_url')
     def remote_url(self):
-        """backward compatibility with std cmf types"""
+        """CMF compatibility method
+        """
         return self.getRemoteUrl()
 
 registerType(ATLink, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.5 2004/03/29 07:21:00 tiran Exp $
+$Id: ATTopic.py,v 1.6 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -78,13 +78,13 @@ class ATTopic(ATCTFolder):
 
     security.declareProtected(ChangeTopics, 'listCriteriaTypes')
     def listCriteriaTypes(self):
-        """
+        """List available criteria types as dict
         """
         return [ {'name': ctype} for ctype in self.listCriteriaMetaTypes() ]
 
     security.declareProtected(ChangeTopics, 'listCriteriaMetaTypes')
     def listCriteriaMetaTypes(self):
-        """
+        """List available criteria
         """
         val = CriterionRegistry.listTypes()
         val.sort()

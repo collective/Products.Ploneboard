@@ -18,10 +18,12 @@
 #
 """
 
-$Id: ATEvent.py,v 1.4 2004/03/29 07:21:00 tiran Exp $
+$Id: ATEvent.py,v 1.5 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
+
+from types import StringType
 
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
@@ -53,16 +55,43 @@ class ATEvent(ATCTContent):
 
     security       = ClassSecurityInfo()
 
-    # XXX event type is alias for Subject!
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setEventType')
+    def setEventType(self, value, alreadySet=False, **kw):
+        """CMF compatibility method
+        
+        Changing the event type changes also the subject. 
+        """
+        f = self.getField('eventType')
+        f.set(self, value, **kw)
+        if not alreadySet:
+            self.setSubject(value, alreadySet=True, **kw)
 
-    # XXX contact_* are string and not methods in the original API
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setSubject')
+    def setSubject(self, value, alreadySet=False, **kw):
+        """CMF compatibility method
+        
+        Changing the subject changes also the event type.
+        """
+        f = self.getField('subject')
+        f.set(self, value, **kw)
 
-    # fetch a list of the available event types
-    # from the vocabulary
+        # set the event type to the first subject
+        if type(value) is StringType:
+            v = (value, )
+        elif v:
+            v = v[0]
+        else:
+            v = ()
+
+        if not alreadySet:
+            self.setEventType(v, alreadySet=True, **kw)
+
     security.declareProtected(CMFCorePermissions.View, 'getEventTypes')
     def getEventTypes(self):
-        metadata = getToolByName(self, "portal_metadata")
-        events = metadata.listAllowedSubjects(content_type = "Event")
+        """fetch a list of the available event types from the vocabulary
+        """
+        metatool = getToolByName(self, "portal_metadata")
+        events = metatool.listAllowedSubjects(content_type = "Event")
         return events
 
 registerType(ATEvent, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
+$Id: ATImage.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -58,20 +58,23 @@ class ATImage(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
-        """
-        Display the image, with or without standard_html_[header|footer],
+        """Display the image, with or without standard_html_[header|footer],
         as appropriate.
         """
         return self.image.index_html(REQUEST, RESPONSE)
 
     security.declareProtected(CMFCorePermissions.View, 'get_data')
     def get_data(self):
+        """CMF compatibility method
+        """
         return self.getImage()
 
     data = ComputedAttribute(get_data, 1)
     
     security.declareProtected(CMFCorePermissions.View, 'get_size')
     def get_size(self):
+        """CMF compatibility method
+        """
         img = self.getImage()
         return img and img.get_size() or 0
         
@@ -79,6 +82,8 @@ class ATImage(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'get_content_type')
     def get_content_type(self):
+        """CMF compatibility method
+        """
         img = self.getImage()
         return img and img.getContentType(self) or '' #'image/jpeg'
 
@@ -86,6 +91,8 @@ class ATImage(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'tag')
     def tag(self, *args, **kwargs):
-        return self.getImage().tag(*args, **kwargs)
+        """Generate image tag using the api of the ImageField
+        """
+        return self.image.tag(*args, **kwargs)
 
 registerType(ATImage, PROJECTNAME)

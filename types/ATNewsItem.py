@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
+$Id: ATNewsItem.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -58,11 +58,13 @@ class ATNewsItem(ATCTContent):
 
     security.declarePublic('CookedBody')
     def CookedBody(self, stx_level='ignored'):
-        """Dummy attribute to allow drop-in replacement of Document"""
+        """CMF compatibility method
+        """
         return self.getText()
 
     def setText(self, value, **kwargs):
-        """set text_format for backward compatibility with std cmf types"""
+        """CMF compatibility method
+        """
         field = self.getField('text')
         field.set(self, value, **kwargs)
         bu = self.getRawText(maybe_baseunit=1)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.11 2004/04/02 21:30:26 tiran Exp $
+$Id: ATDocument.py,v 1.12 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -72,7 +72,8 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
 
     security.declareProtected(CMFCorePermissions.View, 'CookedBody')
     def CookedBody(self, stx_level='ignored'):
-        """Dummy attribute to allow drop-in replacement of Document"""
+        """CMF compatibility method
+        """
         return self.getText()
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setText')
@@ -93,6 +94,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         field.set(self, value, **kwargs)
         self.setContentType(kwargs.get('mimetype', None), skipField=True)
 
+    security.declarePrivate('setContentType')
     def setContentType(self, mimetype, skipField=False):
         """Set the mime type of the text field and the text_format
         """
@@ -110,6 +112,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         
         self.text_format = mimetype
 
+    security.declarePrivate('guessMimetypeOfText')
     def guessMimetypeOfText(self):
         """For ftp/webdav upload: get the mimetype from the id and data
         """

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.4 2004/03/29 07:21:00 tiran Exp $
+$Id: ATFavorite.py,v 1.5 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -61,14 +61,14 @@ class ATFavorite(ATCTContent):
         """returns the remote URL of the Link
         """
         # need to check why this is different than PortalLink
-        portal_url = getToolByName(self, 'portal_url')
-        url = self._getRemoteUrl()
-        if url:
-            if url.startswith('/'):
-                url = url[1:]
-            return '%s/%s' % (portal_url(), url)
+        utool  = getToolByName(self, 'portal_url')
+        remote = self._getRemoteUrl()
+        if remote:
+            if remote.startswith('/'):
+                remote = remote[1:]
+            return '%s/%s' % (utool(), url)
         else:
-            return portal_url()
+            return utool()
         
     remote_url = ComputedAttribute(getRemoteUrl, 1)
         
@@ -77,9 +77,10 @@ class ATFavorite(ATCTContent):
         """Instead of a static icon, like for Link objects, we want
         to display an icon based on what the Favorite links to.
         """
-        try:
-            return self.getObject().getIcon(relative_to_portal)
-        except Exception, msg: # XXX iiigh except all
+        obj =  self.getObject()
+        if obj:
+            return obj.getIcon(relative_to_portal)
+        else:
             return 'favorite_broken_icon.gif'
 
     security.declareProtected(CMFCorePermissions.View, 'getObject')
@@ -87,7 +88,13 @@ class ATFavorite(ATCTContent):
         """Return the actual object that the Favorite is
         linking to
         """
-        portal_url = getToolByName(self, 'portal_url')
-        return portal_url.getPortalObject().restrictedTraverse(self._getRemoteUrl())
+        utool  = getToolByName(self, 'portal_url')
+        portal = utool.getPortalObject()
+        remote = self._getRemoteUrl()
+        try:
+            obj = portal.restrictedTraverse(remote)
+        except KeyError:
+            obj = None
+        return obj
 
 registerType(ATFavorite, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
+$Id: ATFile.py,v 1.8 2004/04/04 21:48:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -66,6 +66,7 @@ class ATFile(ATCTContent):
          },
         )
     )
+
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """Download the file
@@ -80,38 +81,46 @@ class ATFile(ATCTContent):
 
     security.declarePublic('getIcon')   
     def getIcon(self, relative_to_portal=0):
+        """Calculate the icon using the mime type of the file
         """
-        """
-        try: 
-            mimetype_registry=getToolByName(self,'mimetypes_registry',None)
-            contenttype = self.getField('file').getContentType(self)
-            if ICONMAP.has_key(contenttype):
-                icon = quote(ICONMAP[contenttype])
-            elif ICONMAP.has_key(contenttype.split('/')[0]):
-                icon = quote(ICONMAP[contenttype.split('/')[0]])
-            elif (mimetype_registry!=None):                	    	
-               	mimetypeitem=mimetype_registry.lookup(contenttype)                                             
-               	if (mimetypeitem==None):
-               	   return BaseContent.getIcon(self, relative_to_portal)
-            	icon=mimetypeitem[0].icon_path                        	            	
-            if relative_to_portal:
-                return icon
-            else:
-                # Relative to REQUEST['BASEPATH1']
-                portal_url = getToolByName( self, 'portal_url' )
-                res = portal_url(relative=1) + '/' + icon
-                while res[:1] == '/':
-                    res = res[1:]
-                return res
-        except Exception, msg: # XXX iiigh except all!
+        field = self.getField('file')
+        if not field:
             return BaseContent.getIcon(self, relative_to_portal)
+        
+        contenttype       = field.getContentType(self)
+        contenttype_major = contenttype.split('/')[0]
 
-    security.declarePublic('icon')
-    icon = getIcon  # For the ZMI     
+        mtr   = getToolByName(self,'mimetypes_registry',None)
+        utool = getToolByName( self, 'portal_url' )
+        
+        if ICONMAP.has_key(contenttype):
+            icon = quote(ICONMAP[contenttype])
+        elif ICONMAP.has_key(contenttype_major):
+            icon = quote(ICONMAP[contenttype_major])
+        else:
+           	mimetypeitem = mtr.lookup(contenttype)                                             
+           	if not mimetypeitem:
+           	   return BaseContent.getIcon(self, relative_to_portal)
+        	icon = mimetypeitem[0].icon_path                        	            	
+
+        if relative_to_portal:
+            return icon
+        else:
+            # Relative to REQUEST['BASEPATH1']
+            res = utool(relative=1) + '/' + icon
+            while res[:1] == '/':
+                res = res[1:]
+            return res
+
+    security.declareProtected(CMFCorePermissions.View, 'icon')
+    def icon(self):
+        """for ZMI
+        """
+        return self.getIcon()
 
     security.declareProtected(CMFCorePermissions.View, 'get_data')
     def get_data(self):
-        """
+        """CMF compatibility method
         """
         return self.getFile()
 
@@ -119,17 +128,17 @@ class ATFile(ATCTContent):
 
     security.declareProtected(CMFCorePermissions.View, 'get_size')
     def get_size(self):
-        """
+        """CMF compatibility method
         """
         f = self.getFile()
         return f and f.get_size() or 0
     
     security.declareProtected(CMFCorePermissions.View, 'get_content_type')
     def get_content_type(self):
-        """
+        """CMF compatibility method
         """
         f = self.getFile()
-        return f and f.getContentType() or '' #'application/octet-stream'
+        return f and f.getContentType() or 'text/plain' #'application/octet-stream'
 
     content_type = ComputedAttribute(get_content_type, 1)
  
