@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.15 2003/10/30 15:39:15 runyaga Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.16 2003/11/14 23:02:42 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -56,6 +56,7 @@ class InstalledProduct(SimpleItem):
     rightslots=[]
     transcript=[]
     error=0 #error flag
+    default_cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates']
     
     def manage_beforeDelete(self,object,container):
         self.uninstall()
@@ -183,7 +184,7 @@ class InstalledProduct(SimpleItem):
         return None
 
     security.declareProtected(ManagePortal, 'uninstall')
-    def uninstall(self,cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
+    def uninstall(self,cascade=default_cascade,REQUEST=None):
         '''uninstalls the prod and removes its deps'''
 
         portal=getToolByName(self,'portal_url').getPortalObject()

@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.25 2003/10/25 00:59:24 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.26 2003/11/14 23:02:42 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -315,12 +315,12 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
 
     security.declareProtected(ManagePortal, 'uninstallProducts')
-    def uninstallProducts(self, products, REQUEST=None):
+    def uninstallProducts(self, products, cascade=InstalledProduct.default_cascade, REQUEST=None):
         ''' removes a list of products '''
 
         for pid in products:
             prod=getattr(self,pid)
-            prod.uninstall()
+            prod.uninstall(cascade=cascade)
 
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
@@ -331,7 +331,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         if type(products) in (type(''),type(u'')):
             products=[products]
             
-        self.uninstallProducts(products)
+        #only delete everything EXCEPT portaöobjects (tools etc) for reinstall
+        cascade=[c for c in InstalledProduct.default_cascade if c != 'portalobjects']
+        self.uninstallProducts(products,cascade)
         self.installProducts(products)
         
         if REQUEST:
