@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.35 2004/06/20 15:13:21 tiran Exp $
+$Id: schemata.py,v 1.36 2004/06/24 09:10:12 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -232,6 +232,7 @@ ATFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
               required = 1,
               primary=1,
+              languageIndependent=True,
               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
                                   description_msgid = "help_file",
@@ -245,6 +246,7 @@ ATExtFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
               required = 1,
               primary=1,
+              languageIndependent=True,
               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
               storage=ExternalStorage(prefix='atct', archive=False),
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
@@ -261,13 +263,15 @@ ATExtFileSchema = ATContentTypeSchema + Schema((
 ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema 
 ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
 
- ###
+###
 # AT Content Type Image
 ###
+
 ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
+               languageIndependent=True,
                sizes= {'preview' : (400, 400),
                        'thumb'   : (128, 128),
                        'tile'    :  (64, 64),
@@ -286,6 +290,7 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
+               languageIndependent=True,
                storage=ExternalStorage(prefix='atct', archive=False),
                sizes= {'preview' : (400, 400),
                        'thumb'   : (128, 128),
