@@ -12,5 +12,4 @@ bin_search_path = [
 DOT_EXE = 'dot'
 
 if os.name == 'nt':
-  DOT_exe = 'dot.exe'
-
+    DOT_EXE = 'dot.exe'
