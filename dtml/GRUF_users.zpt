@@ -229,8 +229,8 @@
       </table>
 
       <p class="form-help">
-        If you do not select any role, roles won't be reseted for the selected users.<br />
-          If you do not select any group, groups won't be reseted for the selected users.<br />
+        If you do not select a role, roles won't be reset for the selected users.<br />
+          If you do not select a group, groups won't be reset for the selected users.<br />
             To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
       </p>
 
