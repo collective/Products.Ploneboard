@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.17 2004/08/04 14:48:47 tiran Exp $
+$Id: Migrator.py,v 1.18 2004/08/04 14:52:11 tiran Exp $
 """
 
 from copy import copy
@@ -30,6 +30,8 @@ from Persistence import PersistentMapping
 from OFS.Uninstalled import BrokenClass
 
 from common import *
+
+_marker=[]
 
 fieldList = [
     # (accessor, mutator, field),
@@ -197,6 +199,11 @@ class BaseMigrator:
                 self.new._delProperty(id)
             LOG("property: " + str(self.new.getProperty(id)))
             __traceback_info__ = (self.new, id, value, type)
+             
+            # continue if the object already has this attribute
+            if getattr(aq_base(self.new), id, _marker) is not _marker:
+                continue
+             
             self.new.manage_addProperty(id, value, type)
 
     def migrate_owner(self):
