@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 """
 ATSchemaEditorNG
 
@@ -9,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: util.py,v 1.6 2004/09/29 14:57:19 spamsch Exp $
+$Id: util.py,v 1.7 2004/12/10 07:17:04 ajung Exp $
 """
 
 import urllib

@@ -1,6 +1,19 @@
+# -*- coding: iso-8859-1 -*-
+
 """
-$Id: 
+ATSchemaEditorNG
+
+(C) 2003,2004, Andreas Jung, ZOPYX Software Development and Consulting
+and Contributors
+D-72070 Tübingen, Germany
+
+Contact: andreas@andreas-jung.com
+
+License: see LICENSE.txt
+
+$Id: interfaces.py,v 1.2 2004/12/10 07:17:04 ajung Exp $
 """
+
 from Interface import Interface
 
 class IParentManagedSchema(Interface):

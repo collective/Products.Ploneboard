@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 """
 ATSchemaEditorNG
 
@@ -9,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.27 2004/11/19 18:09:10 ajung Exp $
+$Id: SchemaEditor.py,v 1.28 2004/12/10 07:17:04 ajung Exp $
 """
 
 import re

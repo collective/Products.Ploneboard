@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 """
 ATSchemaEditorNG
 
@@ -9,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.19 2004/11/07 21:52:49 brcwhit Exp $
+$Id: ParentManagedSchema.py,v 1.20 2004/12/10 07:17:04 ajung Exp $
 """
 
 from Globals import InitializeClass

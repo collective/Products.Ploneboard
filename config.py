@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 """
 ATSchemaEditorNG
 
@@ -9,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.7 2004/11/07 21:52:50 brcwhit Exp $
+$Id: config.py,v 1.8 2004/12/10 07:17:04 ajung Exp $
 """
 
 SKINS_DIR = 'skins'
