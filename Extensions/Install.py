@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.7 2004/03/27 22:22:34 tiran Exp $
+$Id: Install.py,v 1.8 2004/03/29 07:20:52 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -79,6 +79,9 @@ def install(self):
     
     # setup content type registry
     setupMimeTypes(self, typeInfo, out)
+    
+    # bind templates for TemplateMixin
+    registerTemplates(self, typeInfo, out)
 
     return out.getvalue()
 
@@ -206,3 +209,25 @@ def getFileExtOf(klass):
     """
     name = '%s_ext' % klass.meta_type
     return (name, klass.assocFileExt)
+
+def registerTemplates(self, typeInfo, out):
+    """
+    """
+    atTool = getToolByName(self, 'archetype_tool')
+    for t in typeInfo:
+        klass          = t['klass']
+        meta_type      = klass.meta_type
+        immediate_view = getattr(klass, 'immediate_view', 'base_view')
+        suppl_views    = getattr(klass, 'suppl_views', ())
+
+        views = ['base_view',]
+
+        if immediate_view != 'base_view':
+            atTool.registerTemplate(immediate_view)
+            views.append(immediate_view)
+
+        for view in suppl_views:
+            atTool.registerTemplate(view)
+            views.append(view)
+
+        atTool.bindTemplate(meta_type, views)

@@ -18,20 +18,23 @@
 #
 """
 
-$Id: ATLink.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: ATLink.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import BaseContent, registerType
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
+
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATLink import IATLink
-from schemata import ATLinkSchema
+from Products.ATContentTypes.types.schemata import ATLinkSchema
 
 
-class ATLink(BaseContent):
+class ATLink(ATCTContent):
     """An Archetypes derived version of CMFDefault's Link"""
 
     schema         =  ATLinkSchema
@@ -39,28 +42,16 @@ class ATLink(BaseContent):
     content_icon   = 'link_icon.gif'
     meta_type      = 'ATLink'
     archetype_name = 'AT Link'
+    immediate_view = 'link_view'
+    suppl_views    = ()
     newTypeFor     = 'Link'
     TypeDescription= ''
     assocMimetypes = ()
     assocFileExt   = ('link', 'url', )
 
-    __implements__ = BaseContent.__implements__, IATLink
+    __implements__ = ATCTContent.__implements__, IATLink
 
     security       = ClassSecurityInfo()
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/link_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
 
     security.declareProtected(CMFCorePermissions.View, 'remote_url')
     def remote_url(self):

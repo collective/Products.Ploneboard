@@ -18,26 +18,27 @@
 #
 """
 
-$Id: ATFile.py,v 1.6 2004/03/27 22:21:36 tiran Exp $
+$Id: ATFile.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
+from urllib import quote
+
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.public import BaseContent, registerType
-from urllib import quote
-from Products.ATContentTypes.config import ICONMAP
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Products.PortalTransforms.utils import TransformException
 
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATFile import IATFile
-from schemata import ATFileSchema
+from Products.ATContentTypes.types.schemata import ATFileSchema
 
 
-class ATFile(BaseContent):
+class ATFile(ATCTContent):
     """A Archetype derived version of CMFDefault's File"""
 
     schema         =  ATFileSchema
@@ -45,41 +46,26 @@ class ATFile(BaseContent):
     content_icon   = 'file_icon.gif'
     meta_type      = 'ATFile'
     archetype_name = 'AT File'
+    immediate_view = 'file_view'
+    suppl_views    = ()
     newTypeFor     = 'File'
     TypeDescription= ''
     assocMimetypes = ('application/*', 'audio/*', 'video/*', )
     assocFileExt   = ()
 
-    __implements__ = BaseContent.__implements__, IATFile
+    __implements__ = ATCTContent.__implements__, IATFile
 
     security       = ClassSecurityInfo()
 
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/file_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'download',
-       'name'        : 'Download',
-       'action'      : 'string:${object_url}',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       {
-       'id'          : 'external_edit',
-       'name'        : 'External Edit',
-       'action'      : 'string:${object_url}/external_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
-
+    actions = updateActions(ATCTContent,
+        ({
+        'id'          : 'download',
+        'name'        : 'Download',
+        'action'      : 'string:${object_url}',
+        'permissions' : (CMFCorePermissions.View,)
+         },
+        )
+    )
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """Download the file

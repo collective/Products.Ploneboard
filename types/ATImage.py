@@ -18,26 +18,26 @@
 #
 """
 
-$Id: ATImage.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: ATImage.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.CMFCore import CMFCorePermissions
-from Products.Archetypes.public import BaseSchema, Schema, MetadataSchema
-from Products.Archetypes.public import TextField, ImageField
-from Products.Archetypes.public import TextAreaWidget, ImageWidget
-from Products.Archetypes.public import BaseContent, registerType
-from Products.CMFCore.utils import getToolByName
 from urllib import quote
+
+from Products.Archetypes.public import *
+from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
+
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATImage import IATImage
-from schemata import ATImageSchema
+from Products.ATContentTypes.types.schemata import ATImageSchema
 
 
-class ATImage(BaseContent):
+class ATImage(ATCTContent):
     """An Archetypes derived version of CMFDefault's Image"""
 
     schema         =  ATImageSchema
@@ -45,34 +45,16 @@ class ATImage(BaseContent):
     content_icon   = 'image_icon.gif'
     meta_type      = 'ATImage'
     archetype_name = 'AT Image'
+    immediate_view = 'image_view'
+    suppl_views    = ()
     newTypeFor     = 'Image'
     TypeDescription= ''
     assocMimetypes = ('image/*', )
     assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
 
-    __implements__ = BaseContent.__implements__, IATImage
+    __implements__ = ATCTContent.__implements__, IATImage
 
     security       = ClassSecurityInfo()
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/image_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       {
-       'id'          : 'external_edit',
-       'name'        : 'External Edit',
-       'action'      : 'string:${object_url}/external_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):

@@ -39,3 +39,6 @@ Volker Bachschneider:
 
 Markus Koelle:
  * bug reporting
+
+Christian Theune:
+ * document history function

@@ -18,27 +18,27 @@
 #
 """
 
-$Id: ATTopic.py,v 1.4 2004/03/20 16:08:53 tiran Exp $
+$Id: ATTopic.py,v 1.5 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import *
-from Products.Archetypes.BaseFolder import BaseFolderMixin
-from Products.CMFCore import CMFCorePermissions
-from AccessControl import ClassSecurityInfo
-from Products.CMFCore.utils import getToolByName
-
-from Products.ATContentTypes.types.criteria import CriterionRegistry
-from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
-from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATTopic import IATTopic
-from schemata import ATTopicSchema
-
 from types import ListType, TupleType, StringType
 
+from Products.Archetypes.public import *
+from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
+from AccessControl import ClassSecurityInfo
 
-class ATTopic(BaseFolderMixin):
+from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTFolder, updateActions
+from Products.ATContentTypes.interfaces.IATTopic import IATTopic
+from Products.ATContentTypes.types.criteria import CriterionRegistry
+from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
+from Products.ATContentTypes.types.schemata import ATTopicSchema
+
+
+class ATTopic(ATCTFolder):
     """A topic folder"""
 
     schema         =  ATTopicSchema
@@ -46,6 +46,8 @@ class ATTopic(BaseFolderMixin):
     content_icon   = 'topic_icon.gif'
     meta_type      = 'ATTopic'
     archetype_name = 'AT Topic'
+    immediate_view = 'topic_view'
+    suppl_views    = ()
     newTypeFor     = 'Topic'
     TypeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
                      'criteria you specify. Topics may also contain sub-topics.'
@@ -55,35 +57,24 @@ class ATTopic(BaseFolderMixin):
     filter_content_types  = 1
     allowed_content_types = 'ATTopic'
 
-    __implements__ = BaseFolderMixin.__implements__, IATTopic
+    __implements__ = ATCTFolder.__implements__, IATTopic
 
     security       = ClassSecurityInfo()
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/topic_view',
-       'permissions' : (CMFCorePermissions.View,)
+    actions = updateActions(ATCTFolder,
+        ({
+        'id'          : 'criteria', 
+        'name'        : 'Criteria',
+        'action'      : 'string:${object_url}/criterion_edit_form',
+        'permissions' : (ChangeTopics,)
+         },
+        {
+        'id'          : 'subtopics',
+        'name'        : 'Subtopics',
+        'action'      : 'string:${object_url}/topic_subtopics_form',
+        'permissions' : (ChangeTopics,)
         },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       {
-       'id'          : 'criteria', 
-       'name'        : 'Criteria',
-       'action'      : 'string:${object_url}/criterion_edit_form',
-       'permissions' : (ChangeTopics,)
-        },
-       {
-       'id'          : 'subtopics',
-       'name'        : 'Subtopics',
-       'action'      : 'string:${object_url}/topic_subtopics_form',
-       'permissions' : (ChangeTopics,)
-       }
        )
+    )
 
     security.declareProtected(ChangeTopics, 'listCriteriaTypes')
     def listCriteriaTypes(self):

@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: IATContentType.py,v 1.3 2004/03/29 07:20:53 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -29,6 +29,7 @@ class IATContentType(Interface):
     """Marker interface for AT Content Types
     """
 
+    suppl_views = Attribute('''Supplementary views - used for TemplateMixin''')
     newTypeFor = Attribute('''Used to get the meta type of the original implementation''')
     TypeDescription = Attribute('''A short description used for the edit screen''')
     assocMimetypes = Attribute('''A tuple of mimetypes that are associated
@@ -37,4 +38,12 @@ class IATContentType(Interface):
     assocFileExt = Attribute('''A tuple of file extensions that are associated
                                 with this type. Format: ('jpeg', 'png',)
                              ''')
+
+    def getLayout(**kw):
+        """Get the current layout or the default layout if the current one is None
+        """
+
+    def getDefaultLayout():
+        """Get the default layout used for TemplateMixin
+        """
     

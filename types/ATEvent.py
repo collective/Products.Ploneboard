@@ -18,21 +18,23 @@
 #
 """
 
-$Id: ATEvent.py,v 1.3 2004/03/20 16:08:53 tiran Exp $
+$Id: ATEvent.py,v 1.4 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from AccessControl import ClassSecurityInfo
-from Products.Archetypes.public import BaseContent, registerType
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
+from AccessControl import ClassSecurityInfo
+
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATEvent import IATEvent
-from schemata import ATEventSchema
+from Products.ATContentTypes.types.schemata import ATEventSchema
 
 
-class ATEvent(BaseContent):
+class ATEvent(ATCTContent):
     """An Archetype derived version of CMFCalendar's Event"""
 
     schema         =  ATEventSchema
@@ -40,28 +42,16 @@ class ATEvent(BaseContent):
     content_icon   = 'event_icon.gif'
     meta_type      = 'ATEvent'
     archetype_name = 'AT Event'
+    immediate_view = 'event_view'
+    suppl_views    = ()
     newTypeFor     = 'Event'
     TypeDescription= ''
     assocMimetypes = ()
     assocFileExt   = ('event', )
 
-    __implements__ = BaseContent.__implements__, IATEvent
+    __implements__ = ATCTContent.__implements__, IATEvent
 
     security       = ClassSecurityInfo()
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/event_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
 
     # XXX event type is alias for Subject!
 

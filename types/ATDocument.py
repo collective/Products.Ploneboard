@@ -18,21 +18,30 @@
 #
 """
 
-$Id: ATDocument.py,v 1.6 2004/03/20 16:08:53 tiran Exp $
+$Id: ATDocument.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import BaseContent, registerType
+import difflib
+from DateTime import DateTime
+from OFS.History import historicalRevision
+from DocumentTemplate.DT_Util import html_quote
+from Acquisition import aq_parent
+
+from Products.Archetypes.public import *
+from Products.Archetypes.TemplateMixin import TemplateMixin
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATDocument import IATDocument
-from schemata import ATDocumentSchema
+from Products.ATContentTypes.types.schemata import ATDocumentSchema
 
 
-class ATDocument(BaseContent):
+class ATDocument(ATCTContent):
     """An Archetypes derived version of CMFDefault's Document"""
 
     schema         =  ATDocumentSchema
@@ -40,45 +49,38 @@ class ATDocument(BaseContent):
     content_icon   = 'document_icon.gif'
     meta_type      = 'ATDocument'
     archetype_name = 'AT Document'
+    immediate_view = 'document_view'
+    suppl_views    = ()
     newTypeFor     = 'Document'
     TypeDescription= ''
     assocMimetypes = ('application/pdf', 'application/xhtml+xml',
                       'application/msword', 'message/rfc822', 'text/*',
                      )
-    assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', )
+    assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', 'py' )
 
-    __implements__ = BaseContent.__implements__, IATDocument
+    __implements__ = ATCTContent.__implements__, IATDocument
 
     security       = ClassSecurityInfo()
 
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/document_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       {
-       'id'          : 'external_edit',
-       'name'        : 'External Edit',
-       'action'      : 'string:${object_url}/external_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
+    actions = updateActions(ATCTContent,
+        ({
+        'id'          : 'history',
+        'name'        : 'History',
+        'action'      : 'string:${object_url}/atdocument_history',
+        'permissions' : (CMFCorePermissions.View,)
+         },
+        )
+    )
     
     # backward compat
     text_format = 'text/plain'
 
-    security.declarePublic('CookedBody')
+    security.declareProtected(CMFCorePermissions.View, 'CookedBody')
     def CookedBody(self, stx_level='ignored'):
         """Dummy attribute to allow drop-in replacement of Document"""
         return self.getText()
 
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setText')
     def setText(self, value, **kwargs):
         """Body text mutator
         

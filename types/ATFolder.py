@@ -18,21 +18,22 @@
 #
 """
 
-$Id: ATFolder.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
+$Id: ATFolder.py,v 1.6 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import OrderedBaseFolder, BaseFolder, registerType
+from Acquisition import aq_base, aq_inner, aq_parent
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
-from OFS.ObjectManager import REPLACEABLE
-from ComputedAttribute import ComputedAttribute
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_parent
+from OFS.ObjectManager import REPLACEABLE
+from ComputedAttribute import ComputedAttribute
+
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
-from schemata import ATFolderSchema, ATBTreeFolderSchema
+from Products.ATContentTypes.types.schemata import ATFolderSchema, ATBTreeFolderSchema
 
 
 class ATFolderBase(OrderedBaseFolder):
@@ -43,6 +44,7 @@ class ATFolderBase(OrderedBaseFolder):
     content_icon   = 'folder_icon.gif'
     meta_type      = 'ATFolder'
     archetype_name = 'AT Folder'
+    suppl_views    = ()
     newTypeFor     = 'Folder'
     TypeDescription= ''
     assocMimetypes = ()
@@ -132,6 +134,7 @@ class ATBTreeFolder(BaseBTreeFolder):
     meta_type      = 'ATBTreeFolder'
     archetype_name = 'AT BTree Folder'
     immediate_view = 'folder_listing'
+    suppl_views    = ()
     global_allow   = 0
     newTypeFor     = 'Plone Large Folder'
     TypeDescription= ''

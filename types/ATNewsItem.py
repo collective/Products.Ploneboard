@@ -18,20 +18,23 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: ATNewsItem.py,v 1.3 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import BaseContent, registerType
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
+
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATNewsItem import IATNewsItem
-from schemata import ATNewsItemSchema
+from Products.ATContentTypes.types.schemata import ATNewsItemSchema
 
 
-class ATNewsItem(BaseContent):
+class ATNewsItem(ATCTContent):
     """An Archetypes derived version of CMFDefault's Document"""
 
     schema         =  ATNewsItemSchema
@@ -39,31 +42,19 @@ class ATNewsItem(BaseContent):
     content_icon   = 'newsitem_icon.gif'
     meta_type      = 'ATNewsItem'
     archetype_name = 'AT News Item'
+    immediate_view = 'newsitem_view'
+    suppl_views    = ()
     newTypeFor     = 'NewsItem'
     TypeDescription= ''
     assocMimetypes = ()
     assocFileExt   = ('news', )
 
-    __implements__ = BaseContent.__implements__, IATNewsItem
+    __implements__ = ATCTContent.__implements__, IATNewsItem
 
     security       = ClassSecurityInfo()
     
     # backward compat
     text_format = 'text/plain'
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/newsitem_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
 
     security.declarePublic('CookedBody')
     def CookedBody(self, stx_level='ignored'):

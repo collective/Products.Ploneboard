@@ -1,4 +1,3 @@
-
 #  ATContentTypes http://sf.net/projects/collective/
 #  Archetypes reimplementation of the CMF core types
 #  Copyright (c) 2003-2004 AT Content Types development team
@@ -19,22 +18,21 @@
 #
 """
 
-$Id: schemata.py,v 1.6 2004/03/19 17:19:27 tiran Exp $
+$Id: schemata.py,v 1.7 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
+from Products.Archetypes.TemplateMixin import schema as TemplateMixinSchema
 from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
 #from Products.ATContentTypes.config import NEWS_TYPES
 from Products.ATContentTypes import Validators
-from Products.Archetypes.BaseBTreeFolder import has_btree
-if has_btree:
-    from Products.Archetypes.public import BaseBTreeFolder
 
-ATContentTypeSchema = BaseSchema + Schema((
+
+ATContentTypeBaseSchema = BaseSchema + Schema((
     TextField('description',
               default='',
               searchable=1,
@@ -46,7 +44,27 @@ ATContentTypeSchema = BaseSchema + Schema((
                                       label_msgid = "label_description",
                                       rows = 5,
                                       i18n_domain = "plone")),
-            ))
+    ))
+    
+ATContentTypeSchema = ATContentTypeBaseSchema + Schema((    
+    # TemplateMixin
+    StringField('layout',
+                accessor="getLayout",
+                mutator="setLayout",
+                default_method="getDefaultLayout",
+                vocabulary="templates",
+                #enforceVocabulary=1,
+                widget=SelectionWidget(#description="",
+                                       #description_msgid = "",
+                                       #label = "",
+                                       #label_msgid = "",
+                                       i18n_domain = "plone",
+                                       visible={'view' : 'invisible',
+                                                'edit' : 'visible'},
+                                       )),
+    ))
+    
+
 ###
 # AT Content Type Document
 ###
@@ -57,12 +75,13 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
               primary = 1,
               validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
-              default_content_type = 'text/structured',
+              default_content_type = 'text/restructured',
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',
                                          'text/restructured',
                                          'text/html',
-                                         'text/plain'),
+                                         'text/plain',
+                                         'text/x-python',),
               widget = RichWidget(description = "The body text of the document.",
                                   description_msgid = "help_body_text",
                                   label = "Body text",
@@ -184,9 +203,9 @@ ATFileSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type Folder
 ###
-ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeSchema
+ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeBaseSchema
 
-ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
+ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeBaseSchema
 
 ###
 # AT Content Type Image
@@ -195,6 +214,9 @@ ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
+               sizes= {'thumb':(128,128),
+                       'icon':(32,32)
+                      },
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
                                     label= "Image",

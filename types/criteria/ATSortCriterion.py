@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATSortCriterion.py,v 1.2 2004/03/13 19:14:04 tiran Exp $
+$Id: ATSortCriterion.py,v 1.3 2004/03/29 07:21:01 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -24,35 +24,22 @@ __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
+from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import CriterionRegistry
 from Products.ATContentTypes.Permissions import ChangeTopics
-from Products.ATContentTypes.config import *
-from ATBaseCriterion import ATBaseCriterion, ATBaseCriterionSchema
+from Products.ATContentTypes.interfaces.IATTopic import IATTopicCriterion
+from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
+from Products.ATContentTypes.types.criteria.schemata import ATSortCriterionSchema
 
-schema = ATBaseCriterionSchema + Schema((
-    BooleanField('reversed',
-                required=0,
-                mode="rw",
-                write_permission=ChangeTopics,
-                default=0,
-                widget=BooleanWidget(
-                                label="Reverse",
-                                #label_msgid="label_criterion_field_name",
-                                #description="Should not contain spaces, underscores or mixed case. "\
-                                #            "Short Name is part of the item's web address.",
-                                #description_msgid="help_criterion_field_name",
-                                i18n_domain="plone"),
-                ),
-
-    ))
 
 class ATSortCriterion(ATBaseCriterion):
     """A simple string criterion"""
 
     security       = ClassSecurityInfo()
-    schema         = schema
+    schema         = ATSortCriterionSchema
     meta_type      = 'ATSortCriterion'
     archetype_name = 'AT Sort Criterion'
 

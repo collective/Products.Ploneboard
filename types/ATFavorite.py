@@ -18,21 +18,23 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.3 2004/03/20 16:08:53 tiran Exp $
+$Id: ATFavorite.py,v 1.4 2004/03/29 07:21:00 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.Archetypes.public import BaseContent, registerType
+from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATFavorite import IATFavorite
 from ComputedAttribute import ComputedAttribute
-from schemata import ATFavoriteSchema
 
-class ATFavorite(BaseContent):
+from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.interfaces.IATFavorite import IATFavorite
+from Products.ATContentTypes.types.schemata import ATFavoriteSchema
+
+class ATFavorite(ATCTContent):
     """An Archetypes derived version of CMFDefault's Favorite"""
 
     schema         =  ATFavoriteSchema
@@ -40,6 +42,8 @@ class ATFavorite(BaseContent):
     content_icon   = 'favorite_icon.gif'
     meta_type      = 'ATFavorite'
     archetype_name = 'AT Favorite'
+    immediate_view = 'favorite_view'
+    suppl_views    = ()
     include_default_actions = 0
     #global_allow   = 0
     newTypeFor     = 'Favorite'
@@ -47,23 +51,9 @@ class ATFavorite(BaseContent):
     assocMimetypes = ()
     assocFileExt   = ('fav', )
 
-    __implements__ = BaseContent.__implements__, IATFavorite
+    __implements__ = ATCTContent.__implements__, IATFavorite
 
     security       = ClassSecurityInfo()
-
-    actions = ({
-       'id'          : 'view',
-       'name'        : 'View',
-       'action'      : 'string:${object_url}/favorite_view',
-       'permissions' : (CMFCorePermissions.View,)
-        },
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${object_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
-       )
 
     # Support for preexisting api
     security.declareProtected(CMFCorePermissions.View, 'getRemoteUrl')
