@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.1 2004/04/02 21:30:25 tiran Exp $
+$Id: HistoryAware.py,v 1.2 2004/04/04 21:47:10 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -115,7 +115,8 @@ class HistoryAwareMixin:
 
             oldText  = oldObj.getHistorySource().split("\n")
             newText  = newObj.getHistorySource().split("\n")
-            member = mTool.getMemberById(newUser)
+            # newUser is a string 'user' or 'folders to acl_users user'
+            member   = mTool.getMemberById(newUser.split(' ')[-1])
 
             lines = [
                      html_quote(line)
