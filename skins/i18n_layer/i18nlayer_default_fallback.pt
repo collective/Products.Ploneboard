@@ -20,11 +20,12 @@
 
     <p i18n:translate="please_choose_another_language">Please choose another Language ...</p>
 
-    <!--<table border="0" tal:define="current python:(None, None)">
-    <div metal:use-macro="here/i18ncontent_slot/macros/i18nContentChooser" />
-    </table>-->
+    <table border="0" tal:define="current python:(None, None); chooserName string:fallbackchooser">
+      <div metal:use-macro="here/i18ncontent_slot/macros/i18nContentChooser" />
+    </table>
 
-    <p><span tal:omit-tag="" i18n:translate="start_from_beginning">.. or start from the beginning in your currently selected language.</span>&nbsp;&nbsp;-->&nbsp;
+    <p>
+      <span tal:omit-tag="" i18n:translate="start_from_beginning">.. or start from the beginning in your currently selected language.</span>
       <a tal:content="python:here.portal_url.getPortalObject().Title()" href="" tal:attributes="href here/portal_url">welcome</a>
     </p>
     
