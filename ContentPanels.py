@@ -93,14 +93,20 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self.addPage()
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'edit')
-    def edit(self, customCSS=''):
+    def edit(self, customCSS='', pageLayoutMode='tab'):
         self.customCSS = customCSS
+        self.pageLayoutMode = pageLayoutMode
 
     security.declarePublic('getCustomCSS')
     def getCustomCSS(self):
         """ get custom css """
         customCSS = getattr(aq_base(self), 'customCSS', '')
         return customCSS.strip()
+
+    security.declarePublic('getCustomCSS')
+    def getPageLayoutMode(self):
+        """ get page layout: tiled page, tab page """
+        return getattr(aq_base(self), 'pageLayoutMode', 'tab')
 
     security.declarePublic('getPortletsPos')
     def getPortletsPos(self):

@@ -2,6 +2,10 @@ V1.71
 
   - move the viewlet selection drop down menu to the top-right
 
+  - fix bug with setting portlet position
+
+  - support multi-row now: using the 'tile' page layout mode, you can set each page as a row
+
 V1.7
 
   - much faster: just use catalogBrain and remove global_defines at base_panel

@@ -22,5 +22,40 @@
 
 </metal:block>
 
+
+<div metal:define-macro="viewlet"
+     tal:omit-tag="">
+
+      <table tal:define="pageIndex pageIndex | python:0"
+             tal:attributes="width python: here.getPageInfo(pageIndex, 'pageWidth');
+                       cellpadding python: here.getPageInfo(pageIndex, 'pageCellPad');
+                       cellspacing python: here.getPageInfo(pageIndex, 'pageCellSpace');
+                       align python: here.getPageInfo(pageIndex, 'pageAlign')">
+<!--
+columns
+-->
+        <tr>
+          <td width="#" valign="top"
+              tal:repeat="column python:here.getPageInfo(pageIndex, 'pageColumns')"
+              tal:attributes="width python:test(column['columnWidth']=='0', '', column['columnWidth'])" >
+            <tal:block tal:define="panels column/columnPanels;
+                                   isEmptyColumn python: len(column['columnPanels']) == 0">
+              <div tal:repeat="panel panels">
+<!--
+panel should be here!!
+-->
+                 <div tal:content="structure python: here.getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
+                      />
+
+              </div>
+
+            </tal:block>
+          </td>
+        </tr>
+      </table>
+
+</div>
+
+
 </body>
 </html>

@@ -125,6 +125,26 @@ ContentPanels is designed to build a complex view out of a combination of portle
      </div>
 
      <div class="field">
+      <label i18n:translate=""  i18n:domain="contentpanels">page layout mode</label>
+
+      <div class="formHelp" i18n:translate="help_page_layout" i18n:domain="contentpanels">
+         You can choose 'tile mode' or 'tab mode'. With 'tile mode', all pages are shown directly as rows. 
+         It is useful for you to make very complex composite page. With 'tab mode', you can switch pages using
+         the top-right tab links.
+      </div>
+
+      <select name="pageLayoutMode" tal:define="pageLayoutMode here/getPageLayoutMode">
+         <option value="tile"
+                 tal:attributes="selected python:pageLayoutMode == 'tile'">
+                 tile mode</option>
+         <option value="tab"
+                 tal:attributes="selected python:pageLayoutMode == 'tab'">
+                 tab mode</option>
+      </select>
+     </div>
+
+
+     <div class="field">
       <label i18n:translate=""  i18n:domain="contentpanels">left/right portlets</label>
 
       <div class="formHelp" i18n:translate="help_portlet_pos" i18n:domain="contentpanels">
