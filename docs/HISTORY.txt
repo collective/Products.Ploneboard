@@ -4,6 +4,15 @@
 
  * Changed permission for download tab an ATFile. Dont confuse the average
    user with the green edit frame [jensens]
+   
+ * Added a new class ATCTFileContent which contains some code for ATFile
+   and ATImage [tiran]
+   
+ * Set title from the filename of an uploaded file (ATImage, ATFile) [tiran]
+ 
+ * Added limit for ATTopic [gotcha]
+ 
+ * Added EditableBody method to ATDocument [tiran]
 
 0.2-beta5
 
