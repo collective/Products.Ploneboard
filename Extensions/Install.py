@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.4 2004/03/14 22:17:42 limi Exp $
+$Id: Install.py,v 1.5 2004/03/25 09:00:45 tesdal Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the
@@ -72,6 +72,19 @@ def setupAdditionalTypes(self, out):
         typesTool._setObject(f['id'], cfm)
         out.write('Type "%s" registered with the types tool\n' % (f['id']))
 
+def registerNavigationTreeSettings(self, out):
+    data = ['PloneboardConversation','PloneboardMessage']
+    pp=getToolByName(self,'portal_properties')
+    p = getattr(pp , 'navtree_properties', None)
+    mdntl = list(p.getProperty('metaTypesNotToList', []))
+    if not mdntl:
+        p._setProperty('metaTypesNotToList', data)
+    else:
+        for t in data:
+            if t not in mdntl:
+                mdntl.append(t)
+        p._updateProperty('metaTypesNotToList', mdntl)
+
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
     if 'ploneboard_message_workflow' in wf_tool.objectIds():
@@ -139,6 +152,8 @@ def install(self):
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
     
     setupAdditionalTypes(self, out)
+    
+    registerNavigationTreeSettings(self, out)
     
     # Here we exclude our types to be cataloged in portal_catalog by archetypes
     # we need only UID_CATALOG from archetypes
