@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.8 2004/03/29 16:44:20 tiran Exp $
+$Id: ATDocument.py,v 1.9 2004/03/31 11:04:51 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,6 +28,7 @@ from DateTime import DateTime
 from OFS.History import historicalRevision
 from DocumentTemplate.DT_Util import html_quote
 from Acquisition import aq_parent
+from ZPublisher.HTTPRequest import HTTPRequest
 
 from Products.Archetypes.public import *
 from Products.Archetypes.TemplateMixin import TemplateMixin
@@ -89,8 +90,7 @@ class ATDocument(ATCTContent):
         field = self.getField('text')
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator
-        tidyAttribute = '%s_tidier_data' % field.getName()
-        tidyOutput    = self.REQUEST.get(tidyAttribute, None)
+        tidyOutput = self.getTidyOutput(field)
         if tidyOutput:
             value = tidyOutput
         
@@ -100,6 +100,28 @@ class ATDocument(ATCTContent):
         bu = self.getRawText(maybe_baseunit=1)
         if hasattr(bu, 'mimetype'):
             self.text_format = str(bu.mimetype)
+
+    security.declarePrivate('getTidyOutput')
+    def getTidyOutput(self, field):
+        """
+        """
+        request = self.REQUEST
+        tidyAttribute = '%s_tidier_data' % field.getName()
+        if isinstance(request, HTTPRequest):
+            return self.request.get(tidyAttribute, None)
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, item, container):
+        """Fix test when created througt webdav
+        """
+        ATCTContent.manage_afterAdd(self, item, container)
+
+        field = self.getField('text')
+
+        # hook for mxTidy / isTidyHtmlWithCleanup validator
+        tidyOutput = self.getTidyOutput(field)
+        if tidyOutput:
+            field.set(self, tidyOutput)
 
     security.declarePrivate('getHistories')
     def getHistories(self, max=10):
