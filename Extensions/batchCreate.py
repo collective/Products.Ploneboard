@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: batchCreate.py,v 1.1 2004/07/23 16:40:36 tiran Exp $
+$Id: batchCreate.py,v 1.2 2004/08/09 07:44:05 tiran Exp $
 """ 
 
 __author__  = 'Christian Heimes'
@@ -55,12 +55,15 @@ def batchCreate(self):
         base.invokeFactory('Folder', fid)
         folder = getattr(base, fid)
         folder.edit(description=description, title=fid)
+        #folder.edit(title=fid)
         for dno in range(OBJ_PER_FOLDER):
             did = id % { 'type' : 'Document', 'no' : dno }
             folder.invokeFactory('Document', did)
             document = getattr(folder, did)
             document.edit(description=description, title=did, text=text)
             document.setContentType(content_type)
+            #document.setTitle(did)
+            #document.edit(text, content_type)
             print fno, dno
         get_transaction().commit(1)
         print fno

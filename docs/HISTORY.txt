@@ -29,6 +29,18 @@
    
  * Added ExtendingType howto (more to follow)
    [tiran]
+
+ * Recoded migration walkers to use a generator instead returning a list to
+   make them much more memory efficient.
+   [tiran]
+
+ * Rewritten folder migration to use the depth inside the folder structur
+   instead of recursing into the full side.
+   [tiran]
+
+ * Added a findStaledObjects external method to ATCT to find staled objects. It
+   is very useful to clean up a site before running the migration.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 

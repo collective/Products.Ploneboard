@@ -17,32 +17,33 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.7 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: CPTMigrator.py,v 1.8 2004/08/09 07:44:09 tiran Exp $
 """
 
 from common import *
-from Walker import CatalogWalker, RecursiveWalker
+from Walker import CatalogWalker, CatalogWalkerWithLevel, StopWalking
 from Migrator import CMFItemMigrator, CMFFolderMigrator
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
+from Products.ATContentTypes.Extensions.toolbox import _fixLargePloneFolder
 
-def isPloneFolder(obj, ob=None):
-    if ob:
-        # called as instance method
-        obj = ob
-    # We can't use the type information because they are FU!
-    mtobj = getattr(obj, 'meta_type', None)
-    mtp   = getattr(aq_parent(obj), 'meta_type', None)
-    return mtobj == 'PloneFolder' and mtp != 'PloneFolder'
-
-def isPloneBTreeFolder(obj, ob=None):
-    if ob:
-        # called as instance method
-        obj = ob
-    # We can't use the type information because they are FU!
-    mtobj = getattr(obj, 'meta_type', None)
-    mtp   = getattr(aq_parent(obj), 'meta_type', None)
-    return mtobj == 'PloneBTreeFolder' and mtp != 'PloneBTreeFolder'
+##def isPloneFolder(obj, ob=None):
+##    if ob:
+##        # called as instance method
+##        obj = ob
+##    # We can't use the type information because they are FU!
+##    mtobj = getattr(obj, 'meta_type', None)
+##    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+##    return mtobj == 'PloneFolder' and mtp != 'PloneFolder'
+##
+##def isPloneBTreeFolder(obj, ob=None):
+##    if ob:
+##        # called as instance method
+##        obj = ob
+##    # We can't use the type information because they are FU!
+##    mtobj = getattr(obj, 'meta_type', None)
+##    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+##    return mtobj == 'PloneBTreeFolder' and mtp != 'PloneBTreeFolder'
 
 
 class DocumentMigrator(CMFItemMigrator):
@@ -127,28 +128,34 @@ migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
              ImageMigrator, LinkMigrator, NewsItemMigrator
             )
 
-folderMigrators = ( (FolderMigrator,isPloneFolder), (LargeFolderMigrator,isPloneBTreeFolder)
-            )
+folderMigrators = ( FolderMigrator, LargeFolderMigrator)
 
 
 def migrateAll(portal):
     catalog = getToolByName(portal, 'portal_catalog')
-    out = 'Migration: \n'
+    out = []
+    out.append('Migration: ')
     for migrator in migrators:
-        out+='\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType)
+        out.append('\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType))
         w = CatalogWalker(migrator, catalog)
         out+= w.go()
-    for migrator, checkMethod in folderMigrators:
-        out+='\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType)
+    for migrator in folderMigrators:
+        out.append('\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType))
         while 1:
             # loop around until we got 'em all :]
-            w = RecursiveWalker(migrator, portal, checkMethod)
-            o=w.go()
-            out+=o
-            if not o.strip():
+            w = CatalogWalkerWithLevel(migrator, catalog, depth)
+            try:
+                o=w.go()
+            except StopWalking:
+                depth=2
+                out.append(w.getOutput())
                 break
+            else:
+                out.append(o)
+                depth+=1
+
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')
     count = wf.updateRoleMappings()
-    out+='\n\n\n*** Workflow: %d object(s) updated. *** \n' % count
-    return out
+    out.append('\n\n*** Workflow: %d object(s) updated. ***\n' % count)
+    return '\n'.join(out)

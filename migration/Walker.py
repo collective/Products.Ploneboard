@@ -3,6 +3,9 @@ import sys, traceback, StringIO
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
 
+class StopWalking(Exception):
+    pass
+
 class MigrationError(RuntimeError):
     def __init__(self, obj, migrator, tb):
         self.fromType = migrator.fromType
@@ -29,7 +32,7 @@ class Walker:
         self.subtransaction = self.migrator.subtransaction
         self.out = []
 
-    def go(self):
+    def go(self, **kwargs):
         """runner
 
         Call it to start the migration
@@ -38,14 +41,14 @@ class Walker:
         """
         self.enableGlobalAddable()
         try:
-            self.migrate(self.walk())
+            self.migrate(self.walk(**kwargs), **kwargs)
         finally:
             self.resetGlobalAddable()
         return self.getOutput()
 
     __call__ = go
 
-    def walk(self):
+    def walk(self, **kwargs):
         """Walks around and returns all objects which needs migration
 
         :return: objects (with acquisition wrapper) that needs migration
@@ -75,10 +78,9 @@ class Walker:
         ftiTo.global_allow = self.toGlobalAllow
         ftiFrom.global_allow = self.fromGlobalAllow
 
-    def migrate(self, objs):
+    def migrate(self, objs, **kwargs):
         """Migrates the objects in the ist objs
         """
-
         for obj in objs:
             msg=('Migrating %s from %s to %s ... ' %
                             ('/'.join(obj.getPhysicalPath()),
@@ -137,13 +139,12 @@ class CatalogWalker(Walker):
         Walker.__init__(self, migrator, portal)
         self.catalog = catalog
 
-    def walk(self):
+    def walk(self, **kwargs):
         """Walks around and returns all objects which needs migration
 
         :return: objects (with acquisition wrapper) that needs migration
-        :rtype: list of objects
+        :rtype: generator
         """
-        ret = []
         LOG("fromType: " + str(self.fromType))
         catalog = self.catalog
 
@@ -158,28 +159,73 @@ class CatalogWalker(Walker):
         for brain in brains:
             obj = brain.getObject()
             if obj:
-                ret.append(obj)
-        return ret
+                yield obj
 
-class RecursiveWalker(Walker):
-    """Walk recursivly through a directory stucture
+class CatalogWalkerWithLevel(Walker):
+    """Walker using the catalog but only returning objects for a specific depth
     """
 
-    def __init__(self, migrator, portal, checkMethod):
-        Walker.__init__(self, migrator, portal=portal)
-        self.base=portal
-        self.checkMethod = checkMethod
-        self.list = []
+    def __init__(self, migrator, catalog, depth=2):
+        portal = aq_parent(catalog)
+        Walker.__init__(self, migrator, portal)
+        self.catalog = catalog
+        self.depth=depth
 
-    def walk(self):
-        """
-        """
-        self.recurse(self.base)
-        return self.list
+    def walk(self, **kwargs):
+        """Walks around and returns all objects which needs migration
 
-    def recurse(self, folder):
-        for obj in folder.objectValues():
-            if self.checkMethod(obj):
-                self.list.append(obj)
-            if obj.isPrincipiaFolderish:
-                self.recurse(obj)
+        :return: objects (with acquisition wrapper) that needs migration
+        :rtype: generator
+        """
+        depth = self.depth
+        
+        LOG("fromType: %s, level %s" % (self.fromType, depth))
+        catalog = self.catalog
+
+        if HAS_LINGUA_PLONE:
+            # usage of Language is required for LinguaPlone
+            brains = catalog(portal_type = self.fromType,
+                             Language = catalog.uniqueValuesFor('Language'),
+                            )
+        else:
+            brains = catalog(portal_type = self.fromType)
+        
+        if len(brains) == 0:
+            # no objects left, stop iteration
+            raise StopWalking
+
+        toConvert = []
+        for brain in brains:
+            # physical path lenght
+            pplen = brain.getPath().count('/')
+            if pplen == depth:
+                # append brains to a list to avoid some problems with lazy lists
+                toConvert.append(brain)
+
+        for brain in toConvert:
+            obj = brain.getObject()
+            if obj:
+                yield obj
+    
+
+##class RecursiveWalker(Walker):
+##    """Walk recursivly through a directory stucture
+##    """
+##
+##    def __init__(self, migrator, portal, checkMethod):
+##        Walker.__init__(self, migrator, portal=portal)
+##        self.base=portal
+##        self.checkMethod = checkMethod
+##        #self.list = []
+##
+##    def walk(self, **kwargs):
+##        """
+##        """
+##        return self.recurse(self.base)
+##
+##    def recurse(self, folder):
+##        for obj in folder.objectValues():
+##            if self.checkMethod(obj):
+##                yield obj
+##            if obj.isPrincipiaFolderish:
+##                self.recurse(obj)
