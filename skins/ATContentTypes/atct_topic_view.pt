@@ -37,7 +37,7 @@
 	        <tal:brain repeat="obj topicContents">
                 <dt metal:define-macro="list-item"
                     tal:define="url obj/getURL;
-                                icon python:portal_url+'/'+'/'.join(obj.getIcon.split('/')[1:]);
+                                icon python:portal_url+'/'+'/'.join([x for x in obj.getIcon.split('/') if x]);
                                 title_or_id python:obj.Title or obj.getId">
                 <a href="#" tal:attributes="href url">
                     <img src="#"
