@@ -979,7 +979,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # UF errors such as SQL or LDAP shutdown
             u = src.authenticate(name, password, request)
             if u:
-                return GRUFUser.GRUFUser(u, self, isGroup = 0, source_id = src.getId()).__of__(self)
+                return GRUFUser.GRUFUser(u, self, isGroup = 0, source_id = src.getUserSourceId()).__of__(self)
 
         # No acl_users in the Users folder or no user authenticated
         # => we refuse authentication
@@ -1284,7 +1284,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/08/31 08:18:50 $"[7:-2]
+        rev_date = "$Date: 2004/09/06 09:44:47 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

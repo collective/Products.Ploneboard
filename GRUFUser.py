@@ -387,6 +387,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
         v = getattr(self.__underlying__, name, _marker)
         if v is _marker:
             raise AttributeError, name
+        return v
 
     security.declarePrivate("hasProperty")
     def hasProperty(self, name):
