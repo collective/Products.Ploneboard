@@ -1,5 +1,5 @@
 """
-$Id: MPoll.py,v 1.2 2003/04/04 11:46:52 magnusheino Exp $
+$Id: MPoll.py,v 1.3 2003/04/04 13:32:07 magnusheino Exp $
 """
 from Products.Archetypes.public import *
 from BTrees.IOBTree import IOBTree
@@ -8,6 +8,7 @@ from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 import types
 import operator
+from DateTime import DateTime
 
 schema = ExtensibleMetadata.schema + Schema((
     StringField('id',
@@ -37,9 +38,9 @@ schema = ExtensibleMetadata.schema + Schema((
                                   i18n_domain="mpoll"),
                ),
     BooleanField('open',
-                 required=1,
                  accessor='isOpen',
-                 default=None,
+                 mutator='setOpen',
+                 default=1,
                  widget=BooleanWidget(description="Check this option to make the poll open, accepting votes from users.",
                                       label_msgid="label_open",
                                       description_msgid="help_open",
@@ -63,6 +64,21 @@ class MPoll(BaseContent):
     def __init__(self, id, **kwargs):
         BaseContent.__init__(self, id, **kwargs)
         self._votes = IOBTree()
+
+    security.declareProtected(CMFCorePermissions.View, 'isOpen')
+    def isOpen(self):
+        """Is poll open or closed?"""
+        return self.Schema()['open'].get(self) and self.isEffective(DateTime())
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setOpen')
+    def setOpen(self, value):
+        """Open/Close poll"""
+        if value == '0':
+            self.setExpirationDate(DateTime())
+        else:
+            self.setExpirationDate(None)
+            
+        return self.Schema()['open'].set(self, value)
 
     security.declareProtected(CMFCorePermissions.View, 'vote')
     def vote(self, answer):
