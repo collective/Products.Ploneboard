@@ -4,11 +4,18 @@ from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
 
 class MigrationError(RuntimeError):
-    def __init__(self, msg):
-        self.msg = msg
+    def __init__(self, obj, migrator, tb):
+        self.fromType = migrator.fromType
+        self.toType = migrator.toType
+        self.tb = tb
+        if hasattr(obj, 'absolute_url'):
+            self.id = obj.absolute_url(1)
+        else:
+            self.id = repr(obj)
         
     def __str__(self):
-        return 'MigrationError: %s' % self.msg
+        return "MigrationError for obj %s (%s -> %s):\n
+               "%s" % (self.id, self.fromType, self.toType, self.tb
 
 class Walker:
     """Walks through the system and migrates every object it finds
@@ -93,14 +100,15 @@ class Walker:
                 traceback.print_tb(exc[2], limit=None, file=out)
                 tb = '%s\n%s\n' % (err, out.getvalue())
 
-                msg = 'ERROR: \n%s' % tb
+                error = MigrationError(obj, migrator, tb)
+                msg = str(error)
                 LOG(msg)
                 self.out[-1]+=msg
                 print msg
 
                 # stop migration process after an error
                 # the transaction was already aborted by the migrator itself
-                raise MigrationError(tb)
+                raise error
             else:
                 LOG('done')
                 self.out[-1]+='done'
