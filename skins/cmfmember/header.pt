@@ -162,7 +162,8 @@
                tal:attributes="href string:${here/portal_membership/getHomeUrl}">
                 <img tal:replace="structure here/user.gif" />
             
-                <span tal:replace="user/getUserName">john</span>
+                <span tal:content="user/getUserName"
+                      class="case_sensitive">john</span>
             </a>
 
             <span tal:condition="here/portal_membership/isAnonymousUser" i18n:translate="you_are_not_logged_in">You are not logged in</span>

@@ -535,10 +535,10 @@ class Member(BaseContent):
     security.declarePublic('getProperty')
     def getProperty(self, id, default=_marker):
         #assume Archetypes attr here 
-        accessor = getattr(self, self.schema[id].accessor, None)
         try:
+            accessor = getattr(self, self.schema[id].accessor, None)
             value = accessor()
-        except:
+        except (KeyError, AttributeError):
             if default is _marker:
                 # member does not have a value for given property
                 # try memberdata_tool for default value

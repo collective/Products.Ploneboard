@@ -18,16 +18,15 @@ class MembershipTool( BaseTool ):
             return getattr(portal, self.default_portrait)
 
         memberdata_tool = getToolByName(self, 'portal_memberdata')
-        member = memberdata_tool.get(member_id, None)
-
-        if verifyPermission and not _checkPermission(VIEW_PUBLIC_PERMISSION, member):
-            return None
-            
-        if not member:
-            return getattr(portal, self.default_portrait)
-        
-        apply(member.accessor('portrait'), ())
-
+        member = None
+        try:
+            member = memberdata_tool.get(member_id)
+            if verifyPermission and not _checkPermission(VIEW_PUBLIC_PERMISSION, member):
+                return None
+            return apply(member.accessor('portrait'), ())
+        except AttributeError:
+            member = getattr(portal, self.default_portrait)
+        return member
 
     def changeMemberPortrait(self, portrait, member_id=None):
         """Override Plone's changeMemberPortrait method to use
