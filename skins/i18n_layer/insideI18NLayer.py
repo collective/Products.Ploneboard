@@ -1,5 +1,5 @@
 ## Script (Python) "insideI18NLayer"
-##title=
+##title=helper to check if inside an i18nlayer
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -13,7 +13,9 @@ try:
 except:
     parent = None
 
-if parent and getattr(parent, 'meta_type', None) == 'I18NLayer':
-    return 1
-else:
-   return 0
+try: 
+    if parent and getattr(parent, 'meta_type', None) == 'I18NLayer':
+        return 1
+except: pass
+
+return 0

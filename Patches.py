@@ -18,10 +18,10 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.2 2003/06/01 16:39:11 longsleep Exp $
+$Id: Patches.py,v 1.3 2003/08/18 09:54:53 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.2 $"
+__version__ = "$Revision: 1.3 $"
 
 
 ####################
@@ -44,6 +44,7 @@ __version__ = "$Revision: 1.2 $"
 #
 
 from thread import get_ident
+from Acquisition import aq_parent
 from ZPublisher import Publish, mapply
 
 def get_request():
@@ -174,5 +175,33 @@ if not hasattr(PortalContent, 'i18nContent_language'):
     patch3 = 1
 
 
+# PATCH 4
+#
+# patch title_or_id to not return the translated document id
+# patch in PortalContent and PortalFolder
+
+def new_title_or_id(self):
+    """
+    Utility that returns the title if it is not blank 
+    and the id of the layer if inside one otherwise.
+    """
+    title=self.title
+    if callable(title):
+        title=title()
+    if title: return title
+    try:
+        parent=aq_parent(self)
+        if getattr(parent, 'meta_type', None) == 'I18NLayer':
+            return parent.getId()
+    except: pass
+    return self.getId()    
+
+from Products.CMFCore.PortalContent import PortalContent
+from Products.CMFCore.PortalFolder import PortalFolder
+patch4 = 0
+PortalContent.title_or_id = new_title_or_id
+PortalFolder.title_or_id = new_title_or_id
+
+        
 # </finished patches>
 #####################
