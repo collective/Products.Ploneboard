@@ -12,6 +12,7 @@ import random
 
 from DateTime import DateTime
 
+from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, User
 from AccessControl.PermissionRole import rolesForPermissionOn
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
@@ -385,16 +386,17 @@ content_schema = id_schema + contact_schema + plone_schema + security_schema \
 
 _marker = []
 
-class Member(VariableSchemaSupport, BaseContent):
-    """A description of a member"""
-
-    if memberdata_interface:
-        __implements__ = IMemberData, IBaseContent
-    else:
-        __implements__ = IBaseContent
+class BaseMember:
 
     security = ClassSecurityInfo()
+
+    if memberdata_interface:
+        __implements__ = (IMemberData,)
+    else:
+        __implements__ = ()
+
     archetype_name = portal_type = meta_type = 'Member'
+    base_archetype = None
 
     # Give a nice icon
     content_icon = "user.gif"
@@ -416,7 +418,6 @@ class Member(VariableSchemaSupport, BaseContent):
     bogus = 'bogus'
 
     def __init__(self, userid):
-        BaseContent.__init__(self, userid)
         self.id = str(userid)
         self._userInfo = None
         self.password = ''
@@ -1240,7 +1241,7 @@ class Member(VariableSchemaSupport, BaseContent):
     def update(self, **kwargs):
         membership_tool = getToolByName(self, 'portal_membership')
         updateSelf = membership_tool.getAuthenticatedMember().getUserName() == self.getUserName()
-        ret = BaseContent.update(self, **kwargs)
+        ret = self.base_archetype.update(self, **kwargs)
         if updateSelf:
             self._updateCredentials()
         # invoke any automated workflow transitions after update
@@ -1251,7 +1252,7 @@ class Member(VariableSchemaSupport, BaseContent):
     def processForm(self, data=1, metadata=0):
         membership_tool = getToolByName(self, 'portal_membership')
         updateSelf = membership_tool.getAuthenticatedMember().getUserName() == self.getUserName()
-        ret = BaseContent.processForm(self, data, metadata)
+        ret = self.base_archetype.processForm(self, data, metadata)
         if updateSelf:
             self._updateCredentials()
         # invoke any automated workflow transitions after update
@@ -1397,7 +1398,7 @@ class Member(VariableSchemaSupport, BaseContent):
 
     def _notifyOfCopyTo(self, container, op=0):
         try:
-            Member.inheritedAttribute('_notifyOfCopyTo')(self, container, op)
+            self.base_archetype._notifyOfCopyTo(self, container, op)
             if op:
                 self._v_old_user = [self.getUser()] # get user with aq context, store in a list to keep from stomping wrapper
         except:
@@ -1408,7 +1409,7 @@ class Member(VariableSchemaSupport, BaseContent):
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, object, container):
         try:
-            BaseContent.manage_afterAdd(self, object, container)
+            self.base_archetype.manage_afterAdd(self, object, container)
 
             if hasattr(object, '_migrating'):
                 return
@@ -1514,7 +1515,7 @@ class Member(VariableSchemaSupport, BaseContent):
                 if portal.acl_users.getUser(self.id):
                     portal.acl_users.__class__.userFolderDelUsers(portal.acl_users, [self.id])
             self._v_user = None # remove references to user
-            BaseContent.manage_beforeDelete(self, item, container)
+            self.base_archetype.manage_beforeDelete(self, item, container)
         except:
             logException()
             raise
@@ -1680,9 +1681,39 @@ class Member(VariableSchemaSupport, BaseContent):
             out.append('Unable to set property %s from member %s\n' % (id, self.getMemberId()))
             raise ValueError
 
-
     def getSchema(self):
         md_tool = getToolByName(self, 'portal_memberdata')
         return md_tool.getMemberSchema()
 
+InitializeClass(BaseMember)
+
+class Member(BaseMember, VariableSchemaSupport, BaseContent):
+    """A description of a member"""
+
+    __implements__ = (BaseMember.__implements__ +
+                      BaseContent.__implements__)
+
+    security = ClassSecurityInfo()
+    base_archetype = BaseContent
+
+    def __init__(self, userid):
+        BaseContent.__init__(self, userid)
+        BaseMember.__init__(self, userid)
+
 registerType(Member)
+InitializeClass(Member)
+
+class FolderishMember(BaseMember, VariableSchemaSupport, BaseFolder):
+    """A description of a member"""
+
+    __implements__ = (BaseMember.__implements__ +
+                      BaseFolder.__implements__)
+
+    security = ClassSecurityInfo()
+    base_archetype = BaseFolder
+
+    def __init__(self, userid):
+        BaseFolder.__init__(self, userid)
+        BaseMember.__init__(self, userid)
+
+InitializeClass(FolderishMember)

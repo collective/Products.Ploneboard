@@ -1,0 +1,100 @@
+NAME=CMFMember
+DOMAIN=plone
+MAJOR_VERSION=0.1
+MINOR_VERSION=0
+RELEASE_TAG=
+PACKAGE_NAME=${NAME}-${MAJOR_VERSION}.${MINOR_VERSION}${RELEASE_TAG}
+
+PYTHON="/usr/bin/python"
+TMPDIR=~/tmp
+
+CURDIR=~/src/projects/${NAME}
+BASE_DIR=${CURDIR}/..
+SOFTWARE_HOME=/home/sidnei/src/zope/2_7/lib/python
+INSTANCE_HOME=/home/sidnei/src/instance/change
+ZOPE_CONFIG=${INSTANCE_HOME}/etc/zope.conf.test
+PACKAGES=${NAME}
+
+I18NDUDE=i18ndude
+RM=rm -f
+RMRF=rm -rf
+FIND=find
+XARGS=xargs
+CD=cd
+LN=ln -sfn
+CP=cp
+TAR=tar
+MKDIR=mkdir -p
+
+FINDLANGS=$(FIND) *  -type d -maxdepth 0 | egrep -v 'CVS|.svn'
+TEMPLATES=$(FIND) . -iregex '.*\..?pt'
+
+.PHONY : clean test reindent reindent_clean sdist
+.PHONY : default
+
+# default:     The default step (invoked when make is called without a target)
+default: clean test
+
+clean :
+	$(FIND) . \( -name '*~' -o -name '*.py[co]' -o -name '*.bak' -o -name '\.#*' \) -exec $(RM) {} \; -print
+	$(RM) report.txt
+
+reindent :
+	~/src/reindent.py -r -v .
+
+check_translations :
+	$(CD) locales && \
+        for lang in `$(FINDLANGS)`; do \
+	if ! [ -f $$lang/LC_MESSAGES/$(DOMAIN).po ]; then \
+		$(CP) $(DOMAIN).pot $$lang/LC_MESSAGES/$(DOMAIN).po; \
+	fi \
+	done
+
+
+update_translations : check_translations
+	$(CD) locales && \
+        for lang in `$(FINDLANGS)`; do \
+		msgmerge -U $$lang/LC_MESSAGES/$(DOMAIN).po $(DOMAIN).pot; \
+	done
+
+compile_translations : update_translations
+	$(CD) locales && \
+        for lang in `$(FINDLANGS)`; do \
+		($(CD) $$lang/LC_MESSAGES && \
+                msgfmt -o $(DOMAIN).mo $(DOMAIN).po;) \
+	done
+
+i18ndude :
+	$(I18NDUDE) rebuild-pot --pot locales/$(DOMAIN).pot --create $(DOMAIN) `$(TEMPLATES)` 2> report.txt
+
+
+test :
+	export INSTANCE_HOME=${INSTANCE_HOME}; \
+	export SOFTWARE_HOME=${SOFTWARE_HOME}; \
+	$(CD) ${CURDIR}/tests && ${PYTHON} -O runalltests.py
+
+# sdist:       Create a source distribution file (implies clean).
+#
+sdist: reindent clean sdist_tgz
+
+# sdist_tgz:   Create a tgz archive file as a source distribution.
+#
+sdist_tgz:
+	echo -n "${MAJOR_VERSION}.${MINOR_VERSION}${RELEASE_TAG}" >\
+          ${CURDIR}/version.txt
+	${MKDIR} ${TMPDIR}/${PACKAGE_NAME}
+	${CD} ${TMPDIR}/${PACKAGE_NAME} && \
+          for package in ${PACKAGES}; do ${LN} ${BASE_DIR}/$$package .; done && \
+          ${CD} ${TMPDIR} && ${TAR} czfh ${BASE_DIR}/${PACKAGE_NAME}.tgz ${PACKAGE_NAME} \
+           --exclude=${PACKAGE_NAME}.tgz\
+           --exclude=CVS \
+           --exclude=.svn \
+           --exclude=.cvsignore \
+           --exclude=makefile \
+           --exclude=Makefile \
+           --exclude=*.pyc \
+           --exclude=TAGS \
+           --exclude=*~ \
+           --exclude=.#*
+	${RMRF} ${TMPDIR}/${PACKAGE_NAME}
+
