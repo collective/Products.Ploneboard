@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="atamazon">
+
+<div metal:fill-slot="main"
+     tal:define="author python:request.get('author','');
+                 title python:request.get('title','');
+                 subject python:request.get('subject','');
+                 isbn python:request.get('isbn','');
+                 publisher python:request.get('publisher','');
+                 results here/searchSimilarItems;
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 DateTime python:modules['DateTime'].DateTime;
+                 b_size python:30;b_start python:0;b_start request/b_start | b_start;
+                 desc_length site_properties/search_results_description_length;
+                 desc_ellipsis site_properties/ellipsis;
+                 global ztutils modules/ZTUtils;">
+
+    <h1 i18n:translate="search_amazon">Similar Items</h1>
+
+    <p><a tal:attributes="href python:context.absolute_url()+'/search_amazon?'+ztutils.make_query(author=author, title=title, subject=subject, isbn=isbn, publisher=publisher)" >Search again.</a></p>
+    
+    <div tal:condition="not: results">
+        <p><strong i18n:translate="description_no_results_found">No similar items were found</strong></p>
+    </div>
+
+    <div tal:condition="results"
+          tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1);">
+
+        <strong>
+        <span i18n:translate="batch_x_items_matching_your_criteria"><span i18n:name="number" tal:content="python:len(results)">234</span> similar items</span>
+        </strong>
+
+        <!-- Search results -->
+
+        <dl>
+        <tal:results repeat="result batch">
+          <dt>
+            <a target="_blank" tal:attributes="href python:'http://www.amazon.com/exec/obidos/ASIN/'+result.getAsin()+'/'+result.getAmazonAssociateId()"><span tal:content="result/Title" /></a>
+          </dt>
+          <dd tal:define="authors result/getAuthors">
+            <a target="_blank" tal:attributes="href python:'http://www.amazon.com/exec/obidos/ASIN/'+result.getAsin()+'/'+result.getAmazonAssociateId()">
+              <img alt="" border="0" hspace="3" vspace="2" style="float: left;" align="left" tal:attributes="src result/getImageUrlSmall" />
+            </a>
+            <em>Author<span tal:replace="string:s" tal:condition="python:len(authors)!=1" />:</em> 
+              <tal:authors tal:repeat="author authors">
+                <a tal:attributes="href python:context.absolute_url()+'/search_amazon_results?'+ztutils.make_query(author=author)" tal:content="author" />
+              </tal:authors><br />
+            <em>Publisher:</em> <span tal:content="result/getManufacturer" /><br />
+            <em>Media:</em> <span tal:content="result/getMedia" /><br />
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/base_edit?id='+here.getAmazonInitialId(result)"
+              >[Add]</a>
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/'"
+              >[View]</a>
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/search_amazon_similar'"
+              >[Similar]</a>
+          </dd>
+        </tal:results>
+        </dl>
+         
+        <!-- Navigation -->
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+    </div>
+</div>
+</html>
