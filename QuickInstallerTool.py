@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.32 2004/01/06 12:12:43 dpunktnpunkt Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.33 2004/02/17 15:50:48 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -75,8 +75,12 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
 
-        productInCP = self.Control_Panel.Products[productname]
-
+        try:
+            productInCP = self.Control_Panel.Products[productname]
+        except KeyError:
+            #in the case a product has been deleted from the ControlPanel
+            return None
+        
         for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
 
             if mod in productInCP.objectIds():
@@ -108,7 +112,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
-        pids=self.Control_Panel.Products.objectIds()
+        Products=self.Control_Panel.Products
+        pids=Products.objectIds()
 
         import sys
         sys.stdout.flush()
@@ -141,6 +146,10 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
         for r in pids:
             p=self._getOb(r,None)
+            #for thse products that have been deleted from the ControlPanel using the ZMI
+            if not hasattr(self.Control_Panel.Products.aq_base,p.getId()):
+                continue
+            
             res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden(),'installedVersion':p.getInstalledVersion()})
 
         return res
@@ -148,7 +157,12 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'getProductFile')
     def getProductFile(self,p,fname='readme.txt'):
         ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
-        prodpath=self.Control_Panel.Products._getOb(p).home
+        try:
+            prodpath=self.Control_Panel.Products._getOb(p).home
+        except:
+            #necessary for products that have been removed from FS but are still registered in 
+            #the ZODB
+            return None
         
         #now list the directory to get the readme.txt case-insensitive
         try:
