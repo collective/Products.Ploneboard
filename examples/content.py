@@ -8,7 +8,13 @@ schema = BaseSchema
 schema1= BaseSchema + Schema( StringField('additionalField'), )
 
 class Container(SchemaEditor, BaseFolder):
-    """ Container to act as host for schema editing"""
+    """
+    Container to act as host for schema editing.
+
+    **update_all_schemas** ::
+
+       this method is required but not implemented by SchemaEditor
+    """
 
     def update_all_schemas(self, meta_type='Target1', return_to=None, REQUEST=None, RESPONSE=None):
         """ update stored issue schema for all issues """
