@@ -213,9 +213,9 @@ msgid "label_page_layout_mode"
 msgstr "page layout mode"
 
 msgid "help_page_layout_mode"
-msgstr "You can choose 'tile mode' or 'tab mode'. With 'tile mode', all pages are shown directly as rows.
-         It is useful for you to make very complex composite page. With 'tab mode', you can switch pages using
-         the top-right tab links."
+msgstr "You can choose 'tile mode' or 'tab mode'. With 'tile mode', all pages are shown directly as rows."
+       "It is useful for you to make very complex composite page. With 'tab mode', you can switch pages using"
+       " the top-right tab links."
 
 msgid "page_layout_tile"
 msgstr "tile"
