@@ -16,7 +16,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.4 2003/11/24 20:43:46 longsleep Exp $
+$Id: __init__.py,v 1.5 2004/01/07 09:33:44 longsleep Exp $
 '''.strip()
 
 from OFS.Application import get_products
@@ -96,13 +96,25 @@ def initialize(context):
 
     # sweep products
     log('products: %r' % get_products(), zLOG.BLATHER)
+    ploneDir = None
     for prod in get_products():
         # prod is a tuple in the form:
         #(priority, dir_name, index, base_dir) for each Product directory
+        if prod[1] == 'CMFPlone':
+            plone_i18n = os.path.join(prod[3], prod[1], 'i18n')
         cp_ts._load_dir(os.path.join(prod[3], prod[1], 'i18n'))
 
     # sweep the i18n directory for local catalogs
-    cp_ts._load_dir(os.path.join(INSTANCE_HOME, 'i18n'))
+    instance_i18n = os.path.join(INSTANCE_HOME, 'i18n')
+    if os.path.isdir(plone_i18n):
+        if os.path.isdir(instance_i18n):
+            # found both CMFPlone/i18n and INSTANCE_HOME/i18n but we
+            # need only one directory so just load CMFPlone/i18n
+            log('PTS found a CMFPlone i18n directory at %s and a global i18n directory at %s, but we need only one directory. PTS is loading only the CMFPlone i18n files to avoid double loading.' % (plone_i18n, instance_i18n),
+                zLOG.PROBLEM)
+    else:
+        cp_ts._load_dir(instance_i18n)
+        
 
     # didn't found any catalogs
     if not cp_ts.objectIds():

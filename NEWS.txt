@@ -1,3 +1,13 @@
+1.0fork-beta3 - 2003-12-26
+
+    Added a builtin mo compiler based on the msgfmt tool from the python source
+    package. No need to compile the po files to mo files.
+
+    Do not load INSTANCE_HOME/i18n if CMFPlone/i18n is available to avoid double
+    loading of po files.
+
+    Christian 'Tiran' Heimes <ch@comlounge.net>
+
 1.0fork-beta2 - 2003-11-24
 
     No longer register a persistent service to zope translation
