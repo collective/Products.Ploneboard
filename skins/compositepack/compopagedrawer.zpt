@@ -21,13 +21,9 @@
         <script type="text/javascript"
                 tal:attributes="src string:${portal_url}/kupubasetools.js"> </script>
         <script type="text/javascript"
-                tal:attributes="src string:${portal_url}/kupudrawertool.js"> </script>
-        <script type="text/javascript"
-                tal:attributes="src string:${portal_url}/kupulibrarydrawer.js"> </script>
+                tal:attributes="src string:${portal_url}/kupudrawers.js"> </script>
         <script type="text/javascript"
                 tal:attributes="src string:${portal_url}/compopagedrawer.js"> </script>
-        <script type="text/javascript"
-                tal:attributes="src string:${portal_url}/compopagedrawerinit.js"> </script>
         <div id="kupu-librarydrawer" class="kupu-drawer">
         </div>
 
@@ -36,12 +32,13 @@
                             search_prefix string:${portal_url}/kupusearch.xml?resource_type=;
                             link_libraries_uri  string:${lib_prefix}composable;
                             search_links_uri    string:${search_prefix}composable;
+                            link_xsl_uri string:${portal_url}/compopagedrawers/selectdrawer.xsl;
                             compopage nocall:options/composite;
                             phypath_from_portal
                             python:compopage.getPhysicalPath()[len(portal_object.getPhysicalPath()):];
                             compo_page_path
                             python:'/'.join(phypath_from_portal);"
-                tal:content="string:cp_initdrawer('$link_libraries_uri',
+                tal:content="string:cp_initdrawer('$link_xsl_uri', '$link_libraries_uri',
                 '$search_links_uri', '$compo_page_path');">
         </script>    
         <!--input type="submit" value="Open Drawer"
