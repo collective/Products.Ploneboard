@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.19 2004/05/21 18:44:03 tiran Exp $
+$Id: ATFile.py,v 1.20 2004/05/24 19:10:51 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -80,7 +80,7 @@ class ATFile(ATCTContent):
         'id'          : 'download',
         'name'        : 'Download',
         'action'      : 'string:${object_url}',
-        'permissions' : (CMFCorePermissions.View,)
+        'permissions' : (CMFCorePermissions.ModifyPortalContent,)
          },
         )
     )
