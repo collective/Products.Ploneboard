@@ -4,17 +4,18 @@ from AccessControl import ClassSecurityInfo, ModuleSecurityInfo, Owned
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
 from Products import CMFCore
 from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, \
-                                   _verifyActionPermissions
+     _verifyActionPermissions
 from Products.CMFCore.Expression import createExprContext
+from Products.CMFCore import CMFCorePermissions
+
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
 from Products.Archetypes.interfaces.base import IBaseContent
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
-from Products.Archetypes.Field       import *
-from Products.Archetypes.Widget      import *
-from Products.Archetypes.Schema import Schemata
+from Products.Archetypes.Field import *
+from Products.Archetypes.Widget import *
+from Products.Archetypes.Schema import Schemata, getSchemata
 from Products.Archetypes.ClassGen import ClassGenerator, Generator
-from Products.Archetypes.utils import OrderedDict
 
 from Globals import InitializeClass
 
@@ -54,7 +55,6 @@ class VarClassGen (ClassGenerator):
                     self.handle_mode(klass, generator, type, field, 'm')
 
         InitializeClass(klass)
-        InitializeClass(klass)
     
 schemadict={}
 
@@ -69,35 +69,45 @@ class VariableSchemaSupport:
             return some schema definition...
         
     '''
+
+    security = ClassSecurityInfo()
+  
+    security.declareProtected(CMFCorePermissions.View,
+                              'Schemata')
     def Schemata(self):
-        schema = self.getAndPrepareSchema()
-        schemata = OrderedDict()
-        for f in schema.fields():
-            sub = schemata.get(f.schemata, Schemata(name=f.schemata))
-            sub.addField(f)
-            schemata[f.schemata] = sub
-        return schemata
-    
+        return getSchemata(self)
+
+    security.declareProtected(CMFCorePermissions.View,
+                              'Schema')
     def Schema(self):
         return self.getAndPrepareSchema()
 
+    security.declareProtected(CMFCorePermissions.ManagePortal,
+                              'getAndPrepareSchema')
     def getAndPrepareSchema(self):
         s = self.getSchema()
         
         # create a hash value out of the schema
-        hash=sha.new(str([f._properties for f in s.values()])).hexdigest()
+        hash = sha.new(str([f._properties for f in s.values()]) + \
+               str(self.__class__)).hexdigest()
 
-        if schemadict.has_key(hash): #ok we had that shema already, so take it
-            schema=schemadict[hash]
+        if schemadict.has_key(hash): #ok we had that schema already, so take it
+            schema = schemadict[hash]
         else: #make a new one and store it using the hash key
-            schemadict[hash]=s
-            schema=schemadict[hash]
-            g=VarClassGen(schema)
+            schemadict[hash] = s
+            schema = schemadict[hash]
+            g = VarClassGen(schema)
             g.generateClass(self.__class__) #generate the methods
         
         return schema
     
     # supposed to be overloaded. here the object can return its own schema
+    security.declareProtected(CMFCorePermissions.View,
+                              'getSchema')
     def getSchema(self):
         return self.schema
-    
+      
+    security.declareProtected(CMFCorePermissions.ManagePortal,
+                              'setSchema')
+    def setSchema(self, schema):
+        self.schema = schema
