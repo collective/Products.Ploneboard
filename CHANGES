@@ -1,3 +1,7 @@
+[v3.2RC1 - 20041215]
+
+  * Updated API to have a better conformance to the original Zope API.
+    Thanks to Stefan H Holek for this clever advice.
 
   * Uncommented cache clearing code in _doChangeUser as it appears to be required.
     [stefan]

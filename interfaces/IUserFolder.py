@@ -72,12 +72,12 @@ class IUserFolder(Interface):
 
     def getUserById(id, default):
         """Return the user atom corresponding to the given id.
-        If default is provided, return default if no user found, else raise an exception
+        If default is provided, return default if no user found, else return None.
         """
 
     def getUserByName(name, default):
         """Same as getUserById() but works with a name instead of an id.
-        If default is provided, return default if no user found, else raise an exception
+        If default is provided, return default if no user found, else return None.
         [NOTA: Theorically, the id is a handle, while the name is the actual login name.
         But difference between a user id and a user name is unsignificant in
         all current User Folder implementations... except for GROUPS.]        
@@ -200,6 +200,11 @@ class IUserFolder(Interface):
         attributes.
         Groups can be specified by name or by id (preferabily by name)."""
 
+    def userFolderUpdateUser(name, password, roles, domains, groups, **kw):
+        """Same as userFolderEditUser, but with all arguments except name
+        being optional.
+        """
+
     def userFolderDelUsers(names):
         """API method for deleting one or more user atom objects. Note that not
         all user folder implementations support deletion of user objects."""
@@ -210,6 +215,11 @@ class IUserFolder(Interface):
         
     def userFolderEditGroup(name, roles, groups, **kw):
         """API method for changing group object attributes.
+        """
+
+    def userFolderUpdateGroup(name, roles, groups, **kw):
+        """Same as userFolderEditGroup but with all arguments (except name) being
+        optinal.
         """
 
     def userFolderDelGroups(names):

@@ -137,9 +137,8 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.failUnless(self.gruf.getUserById("g1", default = None) is None)
 
         # check exception raising & default values
-        try: self.gruf.getUserById("ZORGLUB")
-        except ValueError: pass
-        else: raise "AssertionError", "Should raise"
+        ret = self.gruf.getUserById("ZORGLUB")
+        self.failUnlessEqual(ret, None, "getUserById should return None")
         self.failUnless(self.gruf.getUserById("ZORGLUB", default = "bla") == "bla")
 
     def test_getUserByName(self):
@@ -151,9 +150,8 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.failUnless(self.gruf.getUserByName("group_g1", None).getId() == "group_g1")
 
         # Check exception raising
-        try: self.gruf.getUserByName("ZORGLUB")
-        except ValueError: pass
-        else: raise "AssertionError", "Should raise"
+        ret = self.gruf.getUserByName("ZORGLUB")
+        self.failUnlessEqual(ret, None, "getUserByName should return None")
         self.failUnless(self.gruf.getUserByName("ZORGLUB", default = "bla") == "bla")
 
 
@@ -297,9 +295,10 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.failUnless(grp is None)
 
         # Check raise if user/group not found
-        try: self.gruf.getGroupById("ZORGLUB")
-        except ValueError: pass
-        else: raise "AssertionError", "Should raise"
+        self.failUnlessEqual(
+            self.gruf.getGroupById("ZORGLUB"),
+            None,
+            )
         self.failUnless(self.gruf.getGroupById("ZORGLUB", default = "bla") == "bla")
 
     def test_getGroupByName(self):
@@ -315,9 +314,10 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.failUnless(self.gruf.getGroupByName("u1", default = None) is None)
 
         # Check raise if user/group not found
-        try: self.gruf.getGroupByName("ZORGLUB")
-        except ValueError: pass
-        else: raise "AssertionError", "Should raise"
+        self.failUnlessEqual(
+            self.gruf.getGroupByName("ZORGLUB"),
+            None,
+            )
         self.failUnless(self.gruf.getGroupByName("ZORGLUB", default = "bla") == "bla")
 
 
@@ -329,6 +329,7 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             password = "secret",
             roles = [],
             groups = [],
+            domains = (),
             )
         self.failUnless(self.gruf.getUser("created_user"))
         self.gruf.userFolderAddUser(
@@ -336,6 +337,7 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             password = "secret",
             roles = [],
             groups = [],
+            domains = (),
             )
         self.failUnless(self.gruf.getUser("group_test_prefix"))
         self.failIf(self.gruf.getUser("group_test_prefix").isGroup())
@@ -346,14 +348,29 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             password = "secret2",
             roles = ["r1", ],
             groups = ["g1", ],
+            domains = (),
             )
         self.compareRoles(None, "u1", ['r1',], )
+
+    def test_userFolderUpdateUser(self):
+        self.gruf.userFolderUpdateUser(
+            name = "u5",
+            roles = ["r2", ],
+            )
+        self.compareRoles(None, "u5", ['r1', 'r2',], )
+        self.compareGroups("u5", ['g2', 'g3'], )
+        self.gruf.userFolderUpdateUser(
+            name = "u6",
+            roles = None,
+            )
+        self.compareRoles(None, "u6", ['r1', 'r2', ], )
 
     def test_userFolderDelUsers(self):
         self.gruf.userFolderAddUser(
             name = "created_user",
             password = "secret",
             roles = [],
+            domains = (),
             groups = [],
             )
         self.gruf.userFolderDelUsers(['created_user', ])
@@ -400,6 +417,33 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             )
         self.failUnless(
             "g2" in self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            )
+
+        
+    def test_userFolderUpdateGroup(self):
+        self.gruf.userFolderAddGroup(
+            name = "created_group",
+            roles = [],
+            groups = [],
+            )
+        self.gruf.userFolderUpdateGroup(
+            name = "created_group",
+            roles = ["r1", ],
+            groups = ["group_g1", ],
+            )
+        self.compareRoles(None, "created_group", ['r1',], )
+        self.failUnless(
+            "g1" in self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            self.gruf.getGroupByName("created_group").getAllGroupNames(),
+            )
+        self.gruf.userFolderUpdateGroup(
+            name = "created_group",
+            roles = ["r1", ],
+            groups = None,
+            )
+        self.failUnless(
+            "g1" in self.gruf.getGroupByName("created_group").getAllGroupNames(),
             self.gruf.getGroupByName("created_group").getAllGroupNames(),
             )
 
@@ -478,6 +522,8 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.gruf.userFolderAddUser(
             name = "created_user",
             password = "secret",
+            domains = (),
+            roles = (),
             groups = [],
             )
         self.gruf.userSetGroups("created_user", ["g1", "g2", ], )
@@ -491,8 +537,13 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             name = "created_user",
             password = "secret",
             groups = ["g2", ],
+            roles = (),
+            domains = (),
             )
-        self.gruf.userAddGroup("created_user", "g1", )
+        self.gruf.userAddGroup(
+            "created_user",
+            "g1",
+            )
         self.compareGroups("created_user", ["g1", "g2", ], )
 
     def test_userRemoveGroup(self):
@@ -502,6 +553,8 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             name = "created_user",
             password = "secret",
             groups = ["g2", "g1", ],
+            domains = (),
+            roles = (),
             )
         self.gruf.userRemoveGroup("created_user", "g1", )
         self.compareGroups("created_user", ["g2", ], )
@@ -801,7 +854,6 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
 
 
     # Local roles management
-
     def test_acquireLocalRoles(self,):
         """
         We block LR acquisition on sublr2.

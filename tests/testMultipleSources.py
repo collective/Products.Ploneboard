@@ -186,7 +186,7 @@ class TestMultipleSources(ZopeTestCase.ZopeTestCase):
 
     def test05AvailableTypes(self,):
         "test available user folders"
-        self.setRoles(["Manager"])
+        self.setRoles(["Manager", ])
         self.failUnless(getSecurityManager().getUser().has_role("Manager"))
         sources = self.folder.acl_users.listAvailableUserSources(filter_permissions = 0, filter_classes = 1)
         self.failUnless(

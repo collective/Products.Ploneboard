@@ -279,7 +279,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                         GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId(), isGroup = 0).__of__(self)
                         )
 
-        return ret
+        return tuple(ret)
 
     security.declareProtected(Permissions.manage_users, "getUser")
     def getUser(self, name, __include_users__ = 1, __include_groups__ = 1, __force_group_id__ = 0):
@@ -336,7 +336,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ret = self.getUser(id, __force_group_id__ = 1)
         if not ret:
             if default is _marker:
-                raise ValueError, "Invalid user or group id: '%s'" % (id, )
+                return None
             ret = default
         return ret
 
@@ -427,7 +427,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ret = self.getUser(id, __include_users__ = 0, __force_group_id__ = 1)
         if not ret:
             if default is _marker:
-                raise ValueError, "Invalid user: '%s'" % (id, )
+                return None
             ret = default
         return ret
 
@@ -438,7 +438,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ret = self.getUser(name, __include_users__ = 0, __force_group_id__ = 0)
         if not ret:
             if default is _marker:
-                raise ValueError, "Invalid user: '%s'" % (name, )
+                return None
             ret = default
         return ret
 
@@ -449,7 +449,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #                                                                           #
 
     security.declareProtected(Permissions.manage_users, "userFolderAddUser")
-    def userFolderAddUser(self, name, password, roles = (), domains = (), groups = (), **kw):
+    def userFolderAddUser(self, name, password, roles, domains, groups = (), **kw):
         """API method for creating a new user object. Note that not all
         user folder implementations support dynamic creation of user
         objects.
@@ -457,10 +457,20 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddUser(name, password, roles, domains, groups, **kw)
     
     security.declareProtected(Permissions.manage_users, "userFolderEditUser")
-    def userFolderEditUser(self, name, password = None, roles = None, domains = None, groups = None, **kw):
+    def userFolderEditUser(self, name, password, roles, domains, groups = (), **kw):
         """API method for changing user object attributes. Note that not
         all user folder implementations support changing of user object
-        attributes."""
+        attributes.
+        Arguments ARE required.
+        """
+        return self._doChangeUser(name, password, roles, domains, groups, **kw)
+
+    security.declareProtected(Permissions.manage_users, "userFolderUpdateUser")
+    def userFolderUpdateUser(self, name, password = None, roles = None, domains = None, groups = None, **kw):
+        """API method for changing user object attributes. Note that not
+        all user folder implementations support changing of user object
+        attributes.
+        Arguments are optional"""
         return self._updateUser(name, password, roles, domains, groups, **kw)
 
     security.declareProtected(Permissions.manage_users, "userFolderDelUsers")
@@ -470,7 +480,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doDelUsers(names)
 
     security.declareProtected(Permissions.manage_users, "userFolderAddGroup")
-    def userFolderAddGroup(self, name, roles = (), groups = (), **kw):
+    def userFolderAddGroup(self, name, roles, groups = (), **kw):
         """API method for creating a new group.
         """
         while name.startswith(GROUP_PREFIX):
@@ -478,10 +488,16 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddGroup(name, roles, groups, **kw)
         
     security.declareProtected(Permissions.manage_users, "userFolderEditGroup")
-    def userFolderEditGroup(self, name, roles = None, groups = None, **kw):
+    def userFolderEditGroup(self, name, roles, groups, **kw):
         """API method for changing group object attributes.
         """
-        return self._updateGroup(name, roles, groups = groups, **kw)
+        return self._doChangeGroup(name, roles = roles, groups = groups, **kw)
+
+    security.declareProtected(Permissions.manage_users, "userFolderUpdateGroup")
+    def userFolderUpdateGroup(self, name, roles = None, groups = None, **kw):
+        """API method for changing group object attributes.
+        """
+        return self._updateGroup(name, roles = roles, groups = groups, **kw)
 
     security.declareProtected(Permissions.manage_users, "userFolderDelGroups")
     def userFolderDelGroups(self, names):
@@ -1287,7 +1303,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/12/05 23:08:17 $"[7:-2]
+        rev_date = "$Date: 2004/12/15 10:41:39 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

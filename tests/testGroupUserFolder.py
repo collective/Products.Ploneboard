@@ -118,6 +118,7 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
             password = 'secret',
             roles = ('userrole', ),
             groups = ('gtest', ),
+            domains = (),
             )
 
         # Check if the user has the right roles
@@ -431,6 +432,36 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
             self.failUnless(u in un, "Invalid users list: '%s' is not in acl_users." % (u,))
         for u in un:
             self.failUnless(u in users, "Invalid users list: '%s' is in acl_users but shouldn't be there." % (u,))
+
+
+    # Special security checks
+    def test16groupManager(self,):
+        """
+        test16groupManager(self,) => Test that group management methods
+        will be available only for users having the 'manage_users' permission
+        """
+        pass
+
+        
+
+##    #                                                                                   #
+##    #                              Permissions.manage_users                             #
+##    #                                                                                   #
+
+# Those tests are not completed yet. That's why they're disabled by now ;)
+
+##    def test16manage_users_permission(self,):
+##        """This test checks that any user with the only 'manage_users' role can
+##        handle all users and grant them nothing more than the roles he already has.
+##        """
+##        # Create the role we're going to test
+##        role_name = "UserManager"
+##        self.lr._addRole(role_name)
+##        perms = self.permissionsOfRole(role_name)
+##        Log(LOG_DEBUG, perms)
+##        permissions = [ perm['name'] for perm in perms if perm['selected'] ]
+##        Log(LOG_DEBUG, permissions)
+##        self.manage_role(role_name, permissions + [Permissions.manage_users, ])
         
 
 def _mergedLocalRoles(object):

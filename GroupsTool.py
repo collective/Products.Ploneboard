@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.34 2004/11/16 12:03:59 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.35 2004/12/15 10:41:39 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -105,7 +105,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
 
     security.declareProtected(ViewGroups, 'getGroupsByUserId')
     def getGroupsByUserId(self, userid):
-        """Returns a list of the groups the user corresponding to 'userid' belongs to."""
+        """Return a list of the groups the user corresponding to 'userid' belongs to."""
         #log("getGroupsByUserId(%s)" % userid)
         user = self.acl_users.getUser(userid)
         #log("user '%s' is in groups %s" % (userid, user.getGroups()))
@@ -117,17 +117,17 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
 
     security.declareProtected(ViewGroups, 'listGroups')
     def listGroups(self):
-        """Returns a list of the available portal_groupdata-ish objects."""
+        """Return a list of the available portal_groupdata-ish objects."""
         return [self.wrapGroup(elt) for elt in self.acl_users.getGroups()]
 
     security.declareProtected(ViewGroups, 'listGroupIds')
     def listGroupIds(self):
-        """Returns a list of the available groups' ids as entered (without group prefixes)."""
+        """Return a list of the available groups' ids as entered (without group prefixes)."""
         return self.acl_users.getGroupNames()
 
     security.declareProtected(ViewGroups, 'listGroupNames')
     def listGroupNames(self):
-        """Returns a list of the available groups' ids as entered (without group prefixes)."""
+        """Return a list of the available groups' ids as entered (without group prefixes)."""
         return self.acl_users.getGroupNames()
 
     security.declarePublic("isGroup")

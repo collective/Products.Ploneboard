@@ -373,6 +373,8 @@ class TestUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterface):
             name = "created_user",
             password = "secret",
             groups = [],
+            roles = (),
+            domains = (),
             )
         u = self.gruf.getUser("created_user")
         u.setGroups(["g1", "g2", ], )
@@ -424,7 +426,13 @@ class TestUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterface):
 
     def test_getDomains(self,):
         """Return the list of domain restrictions for a user"""
-        self.gruf.userFolderAddUser("test_crea", "secret", [], ["a", 'b', 'c'], [])
+        self.gruf.userFolderAddUser(
+            "test_crea",
+            "secret",
+            [],
+            ["a", 'b', 'c'],
+            [],
+            )
         u = self.gruf.getUser("test_crea")
         d = list(u.getDomains())
         d.sort()

@@ -1,5 +1,5 @@
 HOW TO USE THE GRUF WITH CMF/PLONE ?
-Last revision : $Date: 2004/11/16 12:03:59 $
+Last revision : $Date: 2004/12/15 10:41:39 $
 
 
 PLONE 2 INSTRUCTIONS
@@ -23,7 +23,6 @@ PLONE 2 INSTRUCTIONS
   method. That means that, with LDAPUserFolder, you will be able to
   search only users which are in the CACHE. This may be fixed in Plone
   later (2004-08-31: still not fixed).
-
 
   Plone 2.1 will work even better with GRUF. You can already gain
   benefit from some GRUF-for-Plone21 features:

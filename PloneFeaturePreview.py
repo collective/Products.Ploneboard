@@ -162,13 +162,27 @@ def searchForMembers( self, REQUEST=None, **kw ):
     return res
 
 
+def listAllowedMembers(self,):
+    """listAllowedMembers => list only members which belong
+    to the same groups/roles as the calling user.
+    """
+    user = self.REQUEST['AUTHENTICATED_USER']
+    caller_roles = user.getRoles()              # Have to provide a hook for admins
+    current_members = self.listMembers()
+    allowed_members =[]
+    for member in current_members:
+        for role in caller_roles:
+            if role in member.getRoles():
+                allowed_members.append(member)
+                break
+    return allowed_members
 
 
-# Monkeypatch !
-
+# Monkeypatch it !
 if PREVIEW_PLONE21_IN_PLONE20_:
     from Products.CMFPlone import MembershipTool
     MembershipTool.MembershipTool.searchForMembers = searchForMembers
+    MembershipTool.MembershipTool.listAllowedMembers = listAllowedMembers
     Log(LOG_NOTICE, "Applied GRUF's monkeypatch over Plone 2. Please remember this feature is experimental.")
 
 
