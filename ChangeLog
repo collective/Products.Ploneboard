@@ -1,3 +1,11 @@
+2003-10-20  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added nicer methods for programmatically adding actions and validators
+
+2003-10-18  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Improved error handling for errors in traverse_to
+
 2003-10-17  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Added documentation into ZMI tab

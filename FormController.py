@@ -173,6 +173,12 @@ class FormController(UniqueObject, SimpleItemWithProperties):
                 container.set(FormValidator(object_id, context_type, button, validators, self))
 
 
+    # Method for programmatically adding validators
+    security.declareProtected(ManagePortal, 'addFormValidators')
+    def addFormValidators(self, object_id, context_type, button, validators):
+        self.validators.set(FormAction(object_id, context_type, button, validators))
+
+
     security.declareProtected(ManagePortal, 'manage_addFormValidators')
     def manage_addFormValidators(self, REQUEST):
         """Process form validator add form"""
@@ -231,6 +237,12 @@ class FormController(UniqueObject, SimpleItemWithProperties):
                 action_type = REQUEST.form.get('action_type_'+n)
                 action_arg = REQUEST.form.get('action_arg_'+n)
                 container.set(FormAction(object_id, status, context_type, button, action_type, action_arg, self))
+
+
+    # Method for programmatically adding actions
+    security.declareProtected(ManagePortal, 'addFormAction')
+    def addFormAction(self, object_id, status, context_type, button, action_type, action_arg):
+        self.actions.set(FormAction(object_id, status, context_type, button, action_type, action_arg, self))
 
 
     security.declareProtected(ManagePortal, 'manage_addFormAction')
