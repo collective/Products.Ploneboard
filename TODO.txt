@@ -2,7 +2,7 @@ V2.0
 
 - i18n
 
-- add folder contents viewlet
+- (done)add folder contents viewlet
 
 - compatible with I18NLayer
 
@@ -18,19 +18,19 @@ V2.0
 
 - (done)bug: css refinement: bulleted list not work now
 
-- more choice (select viewlet) in the popup windows.
+- (done)more choice (select viewlet) in the popup windows.
 
-- bug: empty folder will cause recent folder viewlet broken.
+- (refuse)bug: empty folder will cause recent folder viewlet broken.
 
 - (done)a new css which support content icon
 
-- compatible with quickinstaller
+- (done)compatible with quickinstaller
 
 - Local published event/Local published news viewlet
 
 - modify portlet permissions, only manager role can see portlets
 
-- > Also, you mention in the documentation that there are heirarchical content
+- Also, you mention in the documentation that there are heirarchical content
   panels - I assumed that when you click the 'add panel' button inside a panel
 you can do that, but actually it just adds the panel after the one you click.
 How do you put panels inside other panels?

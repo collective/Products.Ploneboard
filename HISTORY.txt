@@ -1,4 +1,4 @@
-V1.5.1
+V1.6
 
   1. Items in recent updates open in the same window.
 
@@ -22,6 +22,10 @@ contentpanelsCostom.css.dtml
 and clean
 
   10. add debug_panel for panel debug
+
+  11. more viewlets: folder listing, various folder list viewlets
+
+  12. UI refinement
 
 V1.5.0
 
