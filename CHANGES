@@ -1,3 +1,15 @@
+v1_0RC1 - 20030514
+
+  * Code cleaning
+
+  * Documentation improving
+
+  * API improving (added a few utility methods)
+
+  * UI improving (see skins changes)
+
+  * getId() bug fixing (see ChangeLog)
+
 v0_2 - 20030331
 
   * Users are now acquired correctly, which prevents you from hotfixing anything !!! :-)
