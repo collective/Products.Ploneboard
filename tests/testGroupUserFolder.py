@@ -182,6 +182,14 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
 
         We just check that people has the right roles
         """
+        self.failUnless(self.compareRoles(self.gruf_folder, "u1", ()))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u2", ()))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u3", ("r1", )))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u4", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u5", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u6", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.gruf_folder, "u7", ("r1", "r2", "r3", )))
+
         self.failUnless(self.compareRoles(self.lr, "u1", ()))
         self.failUnless(self.compareRoles(self.lr, "u2", ("r3", )))
         self.failUnless(self.compareRoles(self.lr, "u3", ("r1", "r3", )))
@@ -403,6 +411,26 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
         self.failUnless(not u2.allowed(self.subsublr3, ("r1", "r2", "r3", )))
         self.failUnless(not u3.allowed(self.subsublr3, ("r3", )))
         self.failUnless(not u6.allowed(self.subsublr3, ("r3", )))
+
+
+    def test15user_names(self,):
+        """test15user_names(self,) => check if the user_names() method return user IDS and
+        not user NAMES... This is an inconsistency in Zope's code...
+        """
+        un = self.gruf.user_names()
+        users = [
+            'group_g1', 'group_g2', "group_g3", "group_g4",
+            "group_ng1", "group_ng2", "group_ng3", "group_ng4", "group_ng5",
+            "manager",
+            "u1", "u2", "u3", "u4", "u5", "u6", "u7", "u8", "u9", "u10", "u11",
+            "group_extranet", "group_intranet", "group_compta",
+            ]
+        un.sort()
+        users.sort()
+        for u in users:
+            self.failUnless(u in un, "Invalid users list: '%s' is not in acl_users." % (u,))
+        for u in un:
+            self.failUnless(u in users, "Invalid users list: '%s' is in acl_users but shouldn't be there." % (u,))
         
 
 def _mergedLocalRoles(object):

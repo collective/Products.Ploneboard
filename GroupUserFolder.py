@@ -152,6 +152,18 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #                             OFFICIAL INTERFACE                            #
     #                                                                           #
     
+    security.declareProtected(Permissions.manage_users, "user_names")
+    def user_names(self,):
+        """
+        user_names() => return user IDS and not user NAMES !!!
+        Due to a Zope inconsistency, the Role.get_valid_userids return user names
+        and not user ids - which is bad. As GRUF distinguishes names and ids, this
+        will cause it to break, especially in the listLocalRoles form. So we change
+        user_names() behaviour so that it will return ids and not names.
+        """
+        return self.getUserIds()
+        
+
     security.declareProtected(Permissions.manage_users, "getUserNames")
     def getUserNames(self, __include_groups__ = 1, __include_users__ = 1, __groups_prefixed__ = 0):
         """
@@ -1285,7 +1297,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/07/20 10:02:54 $"[7:-2]
+        rev_date = "$Date: 2004/08/04 15:36:49 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

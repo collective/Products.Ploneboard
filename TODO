@@ -1,5 +1,11 @@
 TODO-LIST
 
+  * Virer lien cliquable onglet "Users" sur utilisateurs qui ne sont PAS dans
+    getUserNames()
+
+  * check caches ?
+
+
 [v3.1]
 
   * Allow LocalRole blacklisting

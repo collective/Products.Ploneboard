@@ -109,7 +109,7 @@ def _mangleRoles(self, name, roles):
         if not role in all_roles:
             continue                        # Do not allow propagation of invalid roles
         if role.startswith(GROUP_PREFIX):
-            role = role[GROUP_PREFIX_LEN:]            # Remove group prefix : groups are stored WITHOUT prefix in LDAP
+            role = role[GROUP_PREFIX_LEN:]          # Remove group prefix : groups are stored WITHOUT prefix in LDAP
             if role in all_roles:
                 continue                            # HERE IT IS
         r = groups.get(role, None)
@@ -117,6 +117,7 @@ def _mangleRoles(self, name, roles):
             Log(LOG_WARNING, "LDAP Server doesn't provide a '%s' group (required for user '%s')." % (role, name, ))
         role_dns.append(r)
 
+    Log(LOG_DEBUG, name, role_dns)
     return role_dns
 
 

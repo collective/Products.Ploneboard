@@ -80,7 +80,7 @@ GRUF AND SimpleUserFolder
   GRUF's one, which  tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and 
   finds GRUF's one, which  tries to call SimpleUserFolder's one which tries (see what I mean ?)
 
-  To avoid this, just create a getUserNames() object (according to SimpleUserFolder specification) in the folder
+  To avoid this, just create a new_getUserNames() object (according to SimpleUserFolder specification) in the folder
   where you put your SimpleUserFolder in (ie. one of 'Users' or 'Groups' folders).
 
   GRUF also implies that the SimpleUserFolder methods you create are defined in the 'Users' or 'Groups' folder.
