@@ -16,6 +16,8 @@ now. (thanks Marc Lindahl)
   7. now contentpanels_skins.css.dtml is renamed to
 contentpanelsCostom.css.dtml
 
+  8. better listing view now. thanks Nate Aune
+
 V1.5.0
 
   This version has a new viewlet/skin structure. Simpler code and more flexible

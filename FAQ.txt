@@ -9,3 +9,10 @@ rows?
 
  In fact, it is a combination of 2 contentpanels.  One contentpanels can be a panel of another one.  The bottom panels are in another contentpanels content.
 
+3.  How can I disable the possibility of adding the Review List, Language, 
+  Login, etc. from the Viewlets dropdown? Can we have some sort of 
+  permission by which site admins can add any
+  viewlet, while normal members can only add a subset of these viewlets?
+
+  Yes, you can.  See ZMI portal_contentpanels. They are just actions. 
+  You can define who can use the actions(use permission). 
