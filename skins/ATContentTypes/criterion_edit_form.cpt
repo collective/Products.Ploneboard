@@ -22,14 +22,25 @@
                      "
           tal:condition="criteria">
 
-        <fieldset>
+        <table class="listing" style="font-size: 100%;" >
+            <thead>
 
-            <legend i18n:translate="legend_criteria_details">Criteria Details</legend>
+            <tr><th>&nbsp;</th><th>Field</th><th i18n:translate="legend_criteria_details">Criteria
+            Details</th></tr>
 
-            <metal:block tal:repeat="criterion criteria">
+            </thead>
+        <tbody>    
+
+            <tal:criteria repeat="criterion criteria">
+                <tr tal:define="oddrow repeat/criterion/odd;" 
+                    tal:attributes="class python:test(oddrow, 'even', 'odd')"
+                    style="vertical-align: top;">
                   <span metal:use-macro="here/atct_macros/macros/criterion_edit" />
-            </metal:block>
+                </tr>  
+            </tal:criteria>
 
+        </tbody>
+      </table>
 	    <input type="hidden" name="form.submitted" value="1" />
 
         <div class="formControls">
@@ -59,7 +70,6 @@
                  tal:attributes="tabindex tabindex/next;"
                  />
         </div>
-      </fieldset>
 
      </form>
 

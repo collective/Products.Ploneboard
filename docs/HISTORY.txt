@@ -1,4 +1,6 @@
 0.2-beta9
+ * Change criteria tab to table UI [gotcha]
+
  * Added message when clicking remove on criteria without selecting first
    [gotcha]
 

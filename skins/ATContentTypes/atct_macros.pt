@@ -4,7 +4,7 @@
       i18n:domain="plone">
 
 <body>
-
+<table><tr>
 <metal:criterion metal:define-macro="criterion_edit">
    <tal:define-block tal:define="
                 schematas criterion/Schemata;
@@ -16,14 +16,7 @@
                 criterionid criterion/getId;
                ">
 
-	  <fieldset>
-
-	    <legend i18n:translate="legend_criteria_field">
-               Criterion for <span tal:content="criterion/Field"
-                                   i18n:name="fieldname">Field Name</span>
-            </legend>
-
-        <div tal:content="criterion/Description" />
+	  <td style="padding: 0.5em; align: center;">
 
         <input class="noborder"
                type="checkbox" 
@@ -34,10 +27,12 @@
                                id string:cb_${criterionid}"
                />
 
-        <label for=""
-               tal:attributes="for string:cb_${criterionid}">
-            <span tal:content="criterion/Field">Field</span>
-        </label>
+      </td>         
+      <td style="padding: 0.5em;" tal:content="criterion/Field" />
+      <td style="padding: 0.5em;">
+      
+        <div tal:content="criterion/Description" />
+
 
         <div id="" 
              i18n:translate=""
@@ -63,10 +58,11 @@
           </tal:editable>
 	    </tal:fields>
 
-      </fieldset>
+      </td>
 
   </tal:define-block>
 </metal:criterion>
+</tr></table>
 
 <metal:typedescription metal:define-macro="typedescription">
         <tal:description tal:define="msgid here/typeDescMsgId | nothing;
