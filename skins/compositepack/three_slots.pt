@@ -4,7 +4,7 @@
       i18n:domain="plone">
 
 <tal:template_id metal:fill-slot="head_slot"
-    define="request_url request/url;
+    define="request_url request/URL;
             global template_id python:request_url.split('/')[-1]"
     content="nothing">
 
