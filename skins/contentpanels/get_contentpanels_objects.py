@@ -9,9 +9,8 @@
 
 from Products.CMFContentPanels.ContentPanels import getCopyedObjectsInfo
 
-portlets_found = context.portal_catalog( {'portal_type': ['CMFForum', 'KnowlegeBase']})                                                
-purl = context.portal_url()
-content_boxes = [ (brain.getPath(),brain.Title )for brain in portlets_found]
+folder_contents = context.listFolderContents()
+content_boxes = [ (item.id, item.Title() )for item in folder_contents]
 
 return content_boxes + getCopyedObjectsInfo(context, context.REQUEST)
 

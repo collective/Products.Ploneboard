@@ -10,6 +10,8 @@
 try:
     if objectPath == 'None':
         panelObject = context
+    elif objectPath[0] != '/':
+        panelObject = getattr(context.aq_parent, objectPath)
     else :
         panelObject = context.restrictedTraverse(objectPath)
 

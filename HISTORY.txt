@@ -1,6 +1,6 @@
 1.1 
 
-  - 
+  - support relative path contents in the same folder now
 
   - anonymous can't view folder_contents and edit icon now
  
