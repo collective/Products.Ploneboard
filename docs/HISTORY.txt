@@ -1,3 +1,12 @@
+0.2-beta8
+
+ * Fixed validation problem with mx tidy validator and file uploads
+   [tiran]
+   
+ * Changed time range ints in FriendlyDateCriterion to strings [tiran]
+ 
+ * Reenable implicitly addable for ATFavorite [tiran]
+
 0.2-beta7 - 2004-06-27
 
  * Moved around some code from ATFolder to ATContentType [tiran]

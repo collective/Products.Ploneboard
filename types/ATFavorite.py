@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.12 2004/06/20 15:13:20 tiran Exp $
+$Id: ATFavorite.py,v 1.13 2004/07/11 18:31:04 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -51,7 +51,9 @@ class ATFavorite(ATCTContent):
     default_view   = 'favorite_view'
     suppl_views    = ()
     include_default_actions = 0
-    global_allow   = 0
+    global_allow   = 1
+    filter_content_types  = 1
+    allowed_content_types = ()
     newTypeFor     = ('Favorite', 'Favorite')
     typeDescription= ''
     typeDescMsgId  = ''
