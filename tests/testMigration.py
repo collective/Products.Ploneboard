@@ -114,7 +114,7 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         errors = self.compareProperties(user_a)
         self.failIf(len(errors) > 0, string.join(errors, '\n'))
 
-    def xtestMigrationPlone2CMFMember2(self):
+    def testMigrationPlone2CMFMember2(self):
         self.makeMembers()
         # check that we have what we should have before migration
         self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
