@@ -41,7 +41,6 @@ class LDAPGroupFolder(SimpleItem):
     def __setstate__(self, v):
         """ """
         LDAPGroupFolder.inheritedAttribute('__setstate__')(self, v)
-
         self._cache = SimpleCache()
         self._cache.setTimeout(600)
         self._cache.clear()
@@ -143,6 +142,11 @@ class LDAPGroupFolder(SimpleItem):
     security.declareProtected(manage_users, 'getUser')
     def getUser(self, name):
         """ """
+        # Prevent locally stored groups
+        luf = self.getLUF()
+        if luf._local_groups:
+            return []
+
         # Get the group from the cache
         user = self._cache.get(name, '')
         if user:
@@ -186,11 +190,22 @@ class LDAPGroupFolder(SimpleItem):
     security.declareProtected(manage_users, 'getUserNames')
     def getUserNames(self):
         """ """
-        return [g[0] for g in self.getLUF().getGroups()]
+        Log(LOG_DEBUG, "getUserNames", )
+        LogCallStack(LOG_DEBUG)
+        # Prevent locally stored groups
+        luf = self.getLUF()
+        if luf._local_groups:
+            return []
+        return [g[0] for g in luf.getGroups()]
 
     security.declareProtected(manage_users, 'getUsers')
     def getUsers(self, authenticated=1):
         """ """
+        # Prevent locally stored groups
+        luf = self.getLUF()
+        if luf._local_groups:
+            return []
+
         data = []
         
         grps = self.getLUF().getGroups()

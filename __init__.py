@@ -69,7 +69,7 @@ def initialize(context):
             LDAPGroupFolder.LDAPGroupFolder,
             permission='Add GroupUserFolders',
             constructors=(LDAPGroupFolder.addLDAPGroupFolderForm, LDAPGroupFolder.manage_addLDAPGroupFolder,),
-            icon='www/GroupUserFolder.gif',
+            icon='www/LDAPGroupFolder.gif',
             )
 
 

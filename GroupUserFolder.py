@@ -234,6 +234,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         With cache-support UserFolders, such as LDAPUserFolder, the getUser() method will
         return only cached user objects instead of fetching all possible users.
         """
+        Log(LOG_DEBUG, "getUsers")
         ret = []
         names = []
 
@@ -303,6 +304,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         XXX Have to improve perfs here
         """
+        Log(LOG_DEBUG, "getUser", name)
         # Basic check
         if name is None:
             return None
@@ -1326,7 +1328,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2005/01/04 15:21:12 $"[7:-2]
+        rev_date = "$Date: 2005/01/07 10:48:57 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1345,7 +1347,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
 
         if REQUEST.has_key('RESPONSE'):
-            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/" + obj.getId() + "/manage_workspace")
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/" + obj.getId() + "/manage_workspace?FORCE_USER=1")
 
     security.declareProtected(Permissions.manage_users, "deleteUser")
     def deleteUser(self, user, REQUEST = {}, ):
@@ -2123,8 +2125,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # This will raise if it's not possible to acquire 'name'
         return getattr(self, name, )
 
-
-
+    
 
     #                                                                                   #
     #                           USERS / GROUPS BATCHING (ZMI SCREENS)                   #
