@@ -1,0 +1,125 @@
+Presentation 
+
+  These spaces make it possible for team to work on given subjects. They must be able to be created or removed in an easy way. 
+  
+  We propose that these spaces are managed by the Administrator of the site via the management tool of the groups (accessible in space from administration). With each creation of a new group, a space of group dedicated to the group in question is created under "/GroupWorkspaces", as for the "Member folders". 
+
+
+Definitions 
+
+  ** Group ** : Set of users and/or groups connected within a logical entity present in one To use Folder. A group used within the framework of GroupSpace thus does not correspond inevitably to a group GRUF. 
+    
+  ** GroupSpace ** : Connect of a site (IE folderish) whose active members (contributors, reviewers...) belong to the same group. 
+  
+  ** Workspace ** : Synonym of GroupSpace. 
+  
+  ** Workgroup **: Concept general and abstracted from collaboratif work. This concept is concretized in Plone by a whole of components (GRUF, groups_tool and types of contents of the GroupSpace type). 
+
+  
+Use Cases
+
+  Here are the primary use cases [Details later...] :
+
+  * Site administrator creates a group (through the Control Panel). This results in the instanciation of a groupspace.
+
+  * A site member adds a groupspace (like a regular folder) in a location where he has the required privileges (for example, the Owner role).
+
+  * A groupspace member adds content inside the groupspace.
+  
+  * A groupspace member publishes content inside the groupspace.
+
+ 
+Technical design of a workspace 
+
+  Taking into account the uses cases presented above: 
+  
+    - the **content type** used for the workspaces will be a folderish type (called GroupSpace) : 
+    
+      - Its workflow is specific and provided. 
+      
+      - The workspace object can be "Implicitly Addable" to make it possible to members of the site to create their own groupspaces (at arbitrary locations).
+
+      - It is possible besides to specify in portal_types, for this type, the authorized types of contents within a groupspace.
+      
+    - the following **roles** should be added to the site and used on a groupspace as **local roles** : 
+    
+      - ** GroupMember **: a role which contains the necessary permissions to create, modify, and publish contents ** and ** to invite members to collaborate... 
+
+      - ** GroupReviewer **: same as the Reviewer role but in the context of a group. Is this role really relevant ?  
+      
+      - ** GroupGuest **: a role which would carry same the permissions as GroupMember ** less ** the possibility of inviting other members - ** DEPRECATED ** 
+      
+    - the Owner role: the usual role of the owner of the workspace objet. It gives the possibility of changing the workflow state of the GroupSpace. 
+    
+    - NOTE: Managing **hierarchies or nested workspaces** is out of the scope of this implementation.
+
+
+Additional services 
+
+  This section lists the services with strong added value that the groupspaces management component could bring. 
+
+  * Creation of default content when instanciating a groupspace.
+
+    * Default Homepage
+
+    * Wiki
+
+    * ...
+
+    There should be a facility to make these contents configurable using the portal_groups tool.
+
+  * **Notification** : For example, sending a notification mail to the groupspace members each time something is published within the groupspace.
+
+  * Group **Mailing-list** : Allowing people to send a mail to the related group (via a form accessible from within the groupspace).
+
+  * Possibility of "exporting" an object published within the GS (groupspace) to a precise location of the site **(not a priority) **.
+
+  * **Recent additions** slot showing the recent additions within a groupspace.
+
+  * **Slots** :
+
+    * Recent activities on a workspace (or on all workspaces of a user ?)
+
+    * Workspaces I'm involved into
+
+    * Send email to group
+
+
+Deliverables
+
+  The implementation will be done inside de GroupUserFolder product.
+
+  * 1 content type called GroupSpace 
+
+  * A specific workflow called GroupSpaceWorkflow
+
+  * A skin providing the needed portlets, etc...
+
+  * An install script that does the following :
+
+    * Set the additional needed roles
+
+    * Change on the groups_tool (via ZMI) the content type that is used
+
+    * Setup the type, skin, and workflow
+
+  * DOCUMENTATION
+
+
+Resources
+
+  * API of GRUF: http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.html
+
+  * API of GRUF/GroupsTool: http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.docs.html#GroupsTool
+
+  * cf http://www.plone.org/development/current/projects/GroupSpace = > other thoughts on the concept of groupspaces with the following proposal:
+
+    * Default groups security model :
+
+      * Additional roles : ** GroupMember ** and ** GroupReviewer **
+
+      * A new ** portal_workflow tool ** which would be group-aware and would provide specific workflows to groups in the context of groupspaces. (IMHO, this approach would add unnecessary complexity.)
+
+    * ** GroupProjectSpace ** which is GroupSpace that can be instanciated anywhere, making it possible for example to create "sub-groupspaces"
+
+    * ** Portlet widgets ** (calendar, events, news, CMFMessenger...) specific to groups.
