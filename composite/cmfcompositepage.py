@@ -9,13 +9,21 @@
 """Plone Composite Page : 
    design view UI in line with Plone UI
 
-$Id: cmfcompositepage.py,v 1.17 2004/06/22 07:47:46 godchap Exp $
+$Id: cmfcompositepage.py,v 1.18 2004/07/19 09:12:35 godchap Exp $
 """
 from cgi import escape
 
 from OFS.Folder import Folder
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import *
+
+try:
+    from Products.LinguaPlone.public import registerType
+    from Products.LinguaPlone.public import BaseFolder
+except ImportError:
+    from Products.Archetypes.public import registerType
+    from Products.Archetypes.public import BaseFolder
+
 from Products.CompositePage.interfaces import IComposite
 from Products.CompositePage.composite import Composite, SlotGenerator
 from Products.CompositePage.slot import Slot, getIconURL
