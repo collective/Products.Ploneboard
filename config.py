@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.9 2004/03/19 17:19:27 tiran Exp $
+$Id: config.py,v 1.10 2004/03/19 17:50:22 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -72,11 +72,13 @@ MX_TIDY_MIMETYPES = (
 # read http://www.egenix.com/files/python/mxTidy.html for more informations
 MX_TIDY_OPTIONS= {
     'drop_font_tags' : 1,
-    'input_xml' : 0,
-    'output_xhtml' : 1,
-    'quiet' : 1,
-    'show_warnings' : 1, # -v
-    'tab_size' : 4,
+    'input_xml'      : 0,
+    'output_xhtml'   : 1,
+    'quiet'          : 1,
+    'show_warnings'  : 1, # -v
+    'tab_size'       : 4,
+    'indent'         : 'auto',
+    'char_encoding'  : 'raw',
     }
 
 # Add attributes to be more CMF compatible?
