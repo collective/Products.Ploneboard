@@ -127,7 +127,18 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(len(msg.getReplies()), 2)
         self.failUnless(r.getId() in map(lambda x: x.getId(), msg.getReplies()))
         self.failUnless(r2.getId() in map(lambda x: x.getId(), msg.getReplies()))
-        
+
+    def testTransforms(self):
+        self.loginPortalOwner()
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        text = 'Smiley :)'
+        msg.setText(text)
+        self.failUnless(msg.getText())
+        self.failIfEqual(msg.getText(), text)
+        self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), msg.getText())
+
+
 if __name__ == '__main__':
     framework()
 else:

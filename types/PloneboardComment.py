@@ -349,28 +349,23 @@ class PloneboardComment(BaseBTreeFolder):
     
 
     ############################################
+    security.declareProtected(ViewBoard, 'getText')
     def getText(self, mimetype=None, **kwargs):
         """  """
-        # Maybe we need to set cashing for transform?
+        # Maybe we need to set caching for transform?
         
         orig = self.text.getRaw()
         
         pb_tool = getToolByName(self, 'portal_ploneboard')
-        transform_tool = getToolByName(self, 'portal_transforms')
-        
-        # This one is very important, because transform object has no 
-        # acquisition context inside it, so we need to pass it our one
-        kwargs.update({ 'context' : self })
-        
-        data = transform_tool._wrap('text/plain')
-        
-        for transform in map(lambda x: x[1], pb_tool.getEnabledTransforms()):
-            data = transform.convert(orig, data, **kwargs)
-            orig = data.getData()
-            transform_tool._setMetaData(data, transform)
-        
-        orig = orig.replace('\n', '<br/>')
-        return orig
+        return pb_tool.performCommentTransform(orig, context=self)
+
+    security.declareProtected(ViewBoard, 'Description')
+    def Description(self, **kwargs):
+        """We have to override Description here to handle arbitrary
+        arguments since PortalFolder defines it."""
+        if kwargs.get('mimetype', None) is None:
+            kwargs['mimetype'] = 'text/plain'
+        return self.getField('text').get(self, **kwargs)
 
     def __nonzero__(self):
         return 1

@@ -24,7 +24,8 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
 
         self.assertEqual(board.forum.getId(), 'forum')
         self.assertEqual(board.forum.Title(), 'title')
-        self.assertEqual(board.forum.Description(), '<p>description</p>')
+        self.assertEqual(board.forum.Description(), 'description')
+        self.assertEqual(board.forum.Description(mimetype='text/html'), '<p>description</p>')
      
     def testRemoveForum(self):
         """

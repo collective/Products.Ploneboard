@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.3 2004/09/27 10:32:54 tesdal Exp $
+$Id: Ploneboard.py,v 1.4 2005/02/06 00:29:50 tesdal Exp $
 """
 
 import Globals
@@ -48,8 +48,8 @@ factory_type_information = \
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
               searchable = 1,
-              default_content_type = 'text/plain',
-              default_output_type = 'text/html',
+              default_content_type = 'text/html',
+              default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the board.",
                                       description_msgid = "help_description",
                                       label = "Description",

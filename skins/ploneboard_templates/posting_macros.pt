@@ -120,8 +120,10 @@
             Subject
         </h2>
 
-        <div tal:define="nl2br python:modules['Products.PythonScripts.standard'].newline_to_br"
-             tal:content="structure python:nl2br(request.get('text', '(no text)'))">
+        <div tal:define="nl2br python:modules['Products.PythonScripts.standard'].newline_to_br;
+                         text python:request.get('text', '(no text)');
+                         text python:here.portal_ploneboard.performCommentTransform(text, context=here);"
+             tal:content="structure text">
             Cooked Body
         </div>
 
