@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.11 2004/04/05 14:56:55 tiran Exp $
+$Id: Migrator.py,v 1.12 2004/04/26 06:28:43 tiran Exp $
 """
 
 from copy import copy, deepcopy
@@ -70,6 +70,13 @@ def copyPermMap(old):
         new[k] = v
     return new
 
+def getTypeOf(obj):
+    """returns the type info of a wrapper object or None
+    """
+    ttool = getToolByName(obj, 'portal_types')
+    tinfo = ttool.getTypeInfo(obj)
+    if tinfo:
+        return tinfo.getId()
     
 class BaseMigrator:
     """Migrates an object to the new type

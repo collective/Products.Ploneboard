@@ -18,35 +18,40 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.5 2004/03/18 13:17:09 tiran Exp $
+$Id: ATCTMigrator.py,v 1.6 2004/04/26 06:28:43 tiran Exp $
 """
 
 from common import *
 from Walker import CatalogWalker, RecursiveWalker
-from Migrator import CMFItemMigrator, CMFFolderMigrator#, NestedATFolderMigration
+from Migrator import CMFItemMigrator, CMFFolderMigrator, getTypeOf
 from Products.CMFCore.utils import getToolByName
-from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
 from Acquisition import aq_parent
 
+from Products.ATContentTypes.types import ATDocument, ATEvent, \
+    ATFavorite, ATFile, ATFolder, ATImage, ATLink, ATNewsItem
 
 def isPloneFolder(obj, ob=None):
     if ob:
         # called as instance method
         obj = ob
-    return getattr(obj, 'meta_type', None) == 'Plone Folder' and \
-           getattr(aq_parent(obj), 'meta_type', None) != 'Plone Folder'
+    # We can't use the type information because they are FU for the members folder!
+    mtobj = getattr(obj, 'meta_type', None)
+    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+    return mtobj == 'Plone Folder' and mtp != 'Plone Folder'
 
 def isLargePloneFolder(obj, ob=None):
     if ob:
         # called as instance method
         obj = ob
-    return getattr(obj, 'meta_type', None) == 'Large Plone Folder' and \
-           getattr(aq_parent(obj), 'meta_type', None) != 'Large Plone Folder'
+    # We can't use the type information because they are FU for the members folder!
+    mtobj = getattr(obj, 'meta_type', None)
+    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+    return mtobj == 'Large Plone Folder' and mtp != 'Large Plone Folder'
 
 
 class DocumentMigrator(CMFItemMigrator):
-    fromType = 'Document'
-    toType   = 'ATDocument'
+    fromType = ATDocument.ATDocument.newTypeFor[0]
+    toType   = ATDocument.ATDocument.__name__
     # mapped in custom()
     # map = {'text' : 'setText'}
     
@@ -62,8 +67,8 @@ class DocumentMigrator(CMFItemMigrator):
         self.new.setText(oldText, mimetype = newFormat)
 
 class EventMigrator(CMFItemMigrator):
-    fromType = 'Event'
-    toType   = 'ATEvent'
+    fromType = ATEvent.ATEvent.newTypeFor[0]
+    toType   = ATEvent.ATEvent.__name__
     map = {
             'location'      : 'setLocation',
             'Subject'       : 'setEventType',
@@ -76,8 +81,8 @@ class EventMigrator(CMFItemMigrator):
           }
 
 class FileMigrator(CMFItemMigrator):
-    fromType = 'File'
-    toType   = 'ATFile'
+    fromType = ATFile.ATFile.newTypeFor[0]
+    toType   = ATFile.ATFile.__name__
     # mapped in custom()
     # map = { 'file' : 'setFile' }
 
@@ -87,8 +92,8 @@ class FileMigrator(CMFItemMigrator):
         self.new.setFile(file, mimetype = ctype)
 
 class ImageMigrator(CMFItemMigrator):
-    fromType = 'Image'
-    toType   = 'ATImage'
+    fromType = ATImage.ATImage.newTypeFor[0]
+    toType   = ATImage.ATImage.__name__
     # mapped in custom()
     # map = {'image':'setImage'}
     
@@ -100,32 +105,32 @@ class ImageMigrator(CMFItemMigrator):
         self.new.setImage(image, mimetype = ctype)
 
 class LinkMigrator(CMFItemMigrator):
-    fromType = 'Link'
-    toType   = 'ATLink'
+    fromType = ATLink.ATLink.newTypeFor[0]
+    toType   = ATLink.ATLink.__name__
     map = {'remote_url' : 'setRemoteUrl'}
 
 class FavoriteMigrator(LinkMigrator):
-    fromType = 'Favorite'
-    toType   = 'ATFavorite'
+    fromType = ATFavorite.ATFavorite.newTypeFor[0]
+    toType   = ATFavorite.ATFavorite.__name__
     # see LinkMigrator
     # map = {'remote_url' : 'setRemoteUrl'}
 
 class NewsItemMigrator(DocumentMigrator):
-    fromType = 'News Item' 
-    toType   = 'ATNewsItem'
+    fromType = ATNewsItem.ATNewsItem.newTypeFor[0]
+    toType   = ATNewsItem.ATNewsItem.__name__
     # see DocumentMigrator
     # map = {'text' : 'setText'}
 
 class FolderMigrator(CMFFolderMigrator):
-    fromType = 'Folder'
-    toType   = 'ATFolder'
+    fromType = ATFolder.ATFolder.newTypeFor[0]
+    toType   = ATFolder.ATFolder.__name__
     # XXX checkMethod = isPloneFolder
     # no other attributes to migrate
     map = {}
 
 class LargeFolderMigrator(CMFFolderMigrator):
-    fromType = 'Large Plone Folder'
-    toType   = 'ATBTreeFolder'
+    fromType = ATFolder.ATBTreeFolder.newTypeFor[0]
+    toType   = ATFolder.ATBTreeFolder.__name__
     # no other attributes to migrate
     map = {}
 

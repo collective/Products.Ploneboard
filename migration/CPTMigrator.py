@@ -17,13 +17,33 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.3 2004/04/09 22:28:01 tiran Exp $
+$Id: CPTMigrator.py,v 1.4 2004/04/26 06:28:43 tiran Exp $
 """
 
 from common import *
-from Walker import CatalogWalker
-from Migrator import CMFItemMigrator, CMFFolderMigrator
+from Walker import CatalogWalker, RecursiveWalker
+from Migrator import CMFItemMigrator, CMFFolderMigrator, getTypeOf
 from Products.CMFCore.utils import getToolByName
+from Acquisition import aq_parent
+
+def isPloneFolder(obj, ob=None):
+    if ob:
+        # called as instance method
+        obj = ob
+    # We can't use the type information because they are FU!
+    mtobj = getattr(obj, 'meta_type', None)
+    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+    return mtobj == 'PloneFolder' and mtp != 'PloneFolder'
+
+def isPloneBTreeFolder(obj, ob=None):
+    if ob:
+        # called as instance method
+        obj = ob
+    # We can't use the type information because they are FU!
+    mtobj = getattr(obj, 'meta_type', None)
+    mtp   = getattr(aq_parent(obj), 'meta_type', None)
+    return mtobj == 'PloneBTreeFolder' and mtp != 'PloneBTreeFolder'
+
 
 class DocumentMigrator(CMFItemMigrator):
     fromType = 'PloneDocument'
@@ -104,9 +124,12 @@ class LargeFolderMigrator(CMFFolderMigrator):
     map = {}
 
 migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
-             ImageMigrator, LinkMigrator, NewsItemMigrator, FolderMigrator,
-             LargeFolderMigrator,
+             ImageMigrator, LinkMigrator, NewsItemMigrator
             )
+
+folderMigrators = ( (FolderMigrator,isPloneFolder), (LargeFolderMigrator,isPloneBTreeFolder)
+            )
+
 
 def migrateAll(portal):
     catalog = getToolByName(portal, 'portal_catalog')
