@@ -23,6 +23,10 @@ def flattenList(lst):
     flattenList => transform a (deep) sequence into a simple sequence
     """
     ret = []
+
+    if type(lst) not in (type(()), type([])):
+        return (lst, )
+
     for item in lst:
         if type(item) in (type(()), type([]), ):
             ret.extend(flattenList(item))

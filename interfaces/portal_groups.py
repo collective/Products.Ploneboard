@@ -29,7 +29,7 @@ class portal_groups(Interface):
         """Returns a list of the available portal_groupdata-ish objects."""
 
     def listGroupIds():
-        """Returns a list of the available groups' ids (ie. with prefixes)."""
+        """Returns a list of the available groups' ids (WITHOUT prefixes)."""
 
     def listGroupNames():
         """Returns a list of the available groups' names (ie. without prefixes)."""

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.26 2004/05/28 14:14:57 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.27 2004/06/07 14:10:06 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -27,10 +27,7 @@ from GroupsToolPermissions import SetGroupOwnership
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from interfaces.portal_groups import portal_groups as IGroupsTool
 
-#import zLOG
 
-#def log(message,summary='',severity=0):
-#    zLOG.LOG('GroupUserFolder: ',severity,summary,message)
 
 class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     """ This tool accesses group data through a GRUF acl_users object.
@@ -123,7 +120,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     security.declareProtected(ViewGroups, 'listGroupIds')
     def listGroupIds(self):
         """Returns a list of the available groups' ids as entered (without group prefixes)."""
-        return self.acl_users.getGroupIds()
+        return self.acl_users.getGroupNames()
 
     security.declareProtected(ViewGroups, 'listGroupNames')
     def listGroupNames(self):
@@ -200,7 +197,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         return res
 
     security.declareProtected(AddGroups, 'addGroup')
-    def addGroup(self, id, roles = [], groups = [], ):
+    def addGroup(self, id, roles = [], groups = [], *args, **kw):
         """Create a group, and a group workspace if the toggle is on, with the supplied id, roles, and domains.
 
         Underlying user folder must support adding users via the usual Zope API.
@@ -209,7 +206,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         self.createGrouparea(id)
 
     security.declareProtected(ManageGroups, 'editGroup')
-    def editGroup(self, id, roles = [], groups = [], ):
+    def editGroup(self, id, roles = [], groups = [], *args, **kw):
         """Edit the given group with the supplied password, roles, and domains.
 
         Underlying user folder must support editing users via the usual Zope API.

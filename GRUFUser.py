@@ -261,12 +261,12 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
         return self.getUserNameWithoutGroupPrefix()
     
     security.declarePublic('getId')
-    def getId(self):
+    def getId(self, unprefixed = 0):
         """Get the ID of the user. The ID can be used, at least from
         Python, to get the user from the user's UserDatabase
         """
         # Return the right id
-        if self.isGroup() and not self._original_name.startswith(GROUP_PREFIX):
+        if self.isGroup() and not self._original_name.startswith(GROUP_PREFIX) and not unprefixed:
             return "%s%s" % (GROUP_PREFIX, self._original_name)
         return self._original_name
 

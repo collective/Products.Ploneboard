@@ -18,7 +18,7 @@ class portal_groupdata(Interface):
     """ A helper tool for portal_groups that transparently adds
     properties to groups and provides convenience methods"""
 
-    id = Attribute('id', "Must be set to 'portal_groupdata'")
+##    id = Attribute('id', "Must be set to 'portal_groupdata'")
 
     def wrapGroup(g):
         """ Returns an object implementing the GroupData interface"""
@@ -28,22 +28,26 @@ class GroupData(Interface):
     """ An abstract interface for accessing properties on a group object"""
 
     def setProperties(properties=None, **kw):
-        """ Allows setting of group properties en masse """
+        """Allows setting of group properties en masse.
+        Properties can be given either as a dict or a keyword parameters list"""
 
     def getProperty(id):
-        """ Returns the value of the property specified by 'id' """
+        """ Return the value of the property specified by 'id' """
 
     def getProperties():
-        """ Returns the properties of this group. Properties are as usual in Zope."""
+        """ Return the properties of this group. Properties are as usual in Zope."""
 
     def getGroupId():
-        """ Returns the string id of this group."""
+        """ Return the string id of this group, WITHOUT group prefix."""
 
     def getGroupName():
-        """ Returns the name of the group."""
+        """ Return the name of the group."""
 
     def getGroupMembers():
-        """ Returns a list of the portal_memberdata-ish members of the group."""
+        """ Return a list of the portal_memberdata-ish members of the group."""
+
+    def getGroupMemberIds():
+        """ Return a list of the user ids of the group."""
 
     def addMember(id):
         """ Add the existing member with the given id to the group"""

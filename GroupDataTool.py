@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.16 2004/05/28 12:49:45 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.17 2004/06/07 14:10:06 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -22,6 +22,7 @@ from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import SetOwnProperties
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
+from AccessControl import Permissions
 
 # Try/except around this to avoid import errors on Plone 1.0.3
 # XXX jcc => can you check this, please ?
@@ -35,6 +36,9 @@ from interfaces.portal_groupdata import portal_groupdata as IGroupDataTool
 from interfaces.portal_groupdata import GroupData as IGroupData
 
 _marker = []  # Create a new marker object.
+
+from global_symbols import *
+
 
 
 class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBase):
@@ -80,7 +84,6 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
         # Create the default properties.
         self._setProperty('description', '', 'text')
         self._setProperty('email', '', 'string')
-        self._setProperty('listed', '', 'boolean')
 
     #
     #   'portal_groupdata' interface methods
@@ -135,6 +138,9 @@ class GroupData (SimpleItem):
 
     security = ClassSecurityInfo()
 
+    id = None
+    _tool = None
+
     def __init__(self, tool, id):
         self.id = id
         # Make a temporary reference to the tool.
@@ -178,6 +184,7 @@ class GroupData (SimpleItem):
         """
         return map(lambda x: x.getMemberId(), self.getGroupMembers())
 
+
     security.declarePublic('getGroupMembers')
     def getGroupMembers(self):
         """
@@ -186,7 +193,7 @@ class GroupData (SimpleItem):
         md = self.portal_memberdata
         gd = self.portal_groupdata
         ret = []
-        for u_name in self.getGroup().getGroupMemberIds():
+        for u_name in self.getGroup().getMemberIds():
             usr = self._getGRUF().getUserById(u_name)
             if not usr:
                 raise AssertionError, "Cannot retreive a user by its id !"
@@ -218,27 +225,18 @@ class GroupData (SimpleItem):
         """
         self._getGroup().removeMember(id)
 
-    security.declareProtected(SetOwnProperties, 'setProperties')
+    security.declareProtected(Permissions.manage_users, 'setProperties')
     def setProperties(self, properties=None, **kw):
-        '''Allows the authenticated member to set his/her own properties.
+        '''Allows the manager group to set his/her own properties.
         Accepts either keyword arguments or a mapping for the "properties"
         argument.
         '''
         if properties is None:
             properties = kw
-        membership = getToolByName(self, 'portal_groups')
-        registration = getToolByName(self, 'portal_registration', None)
-        if not membership.isAnonymousUser():
-            member = membership.getAuthenticatedMember()
-            if registration:
-                failMessage = registration.testPropertiesValidity(properties, member)
-                if failMessage is not None:
-                    raise 'Bad Request', failMessage
-            member.setMemberProperties(properties)
-        else:
-            raise 'Bad Request', 'Not logged in.'
+        return self.setGroupProperties(properties)
 
-    security.declarePublic('setGroupProperties')
+
+    security.declareProtected(Permissions.manage_users, 'setGroupProperties')
     def setGroupProperties(self, mapping):
         '''Sets the properties of the member.
         '''
@@ -253,10 +251,23 @@ class GroupData (SimpleItem):
                         if type_converters.has_key(proptype):
                             value = type_converters[proptype](value)
                     setattr(self, id, value)
+                    
         # Hopefully we can later make notifyModified() implicit.
         self.notifyModified()
 
-    # XXX: s.b., getPropertyForMember(member, id, default)?
+    security.declarePublic('getProperties')
+    def getProperties(self, ):
+        """ Return the properties of this group. Properties are as usual in Zope."""
+        tool = self.getTool()
+        ret = {}
+        for pty in tool.propertyIds():
+            try:
+                ret[pty] = self.getProperty(pty)
+            except ValueError:
+                # We ignore missing ptys
+                continue
+        return ret
+
 
     security.declarePublic('getProperty')
     def getProperty(self, id, default=_marker):
@@ -310,11 +321,12 @@ class GroupData (SimpleItem):
         """Return the name of the group, without any special decorations (like GRUF prefixes.)"""
         return self.getGroup().getName()
 
-    security.declarePublic('getId')
+    security.declarePublic('getGroupId')
     def getGroupId(self):
-        """Get the ID of the user. The ID can be used, at least from
-        Python, to get the user from the user's UserDatabase"""
-        return self.getGroup().getId()
+        """Get the ID of the group. The ID can be used, at least from
+        Python, to get the user from the user's UserDatabase.
+        Within Plone, all group ids are UNPREFIXED."""
+        return self.getGroup().getId(unprefixed = 1)
 
     security.declarePublic('getRoles')
     def getRoles(self):

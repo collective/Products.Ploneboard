@@ -47,14 +47,9 @@ import testInterface
 from Log import *
 
 
-class TestGroupsTool(PloneTestCase.PloneTestCase, testInterface.TestInterface):
-    klasses = (        # tell which classes to check
-        GroupsTool.GroupsTool,
-        )
-    ignore_interfaces = (
-        ActionProviderBase.__implements__,
-    )
 
+class GroupTestCase(PloneTestCase.PloneTestCase, ):
+    
     def afterSetUp(self):
         # Basic assignements
         self.membership = self.portal.portal_membership
@@ -87,6 +82,17 @@ class TestGroupsTool(PloneTestCase.PloneTestCase, testInterface.TestInterface):
         self.gruf.addMember("g3", "u6")
         self.gruf.addMember("g4", "u7")
 
+
+
+
+class TestGroupsTool(GroupTestCase, testInterface.TestInterface):
+    klasses = (        # tell which classes to check
+        GroupsTool.GroupsTool,
+        )
+    ignore_interfaces = (
+        ActionProviderBase.__implements__,
+    )
+
     def test_getGroupById(self, ):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
@@ -114,7 +120,7 @@ class TestGroupsTool(PloneTestCase.PloneTestCase, testInterface.TestInterface):
         """Returns a list of the available groups' ids."""
         ids = self.groups.listGroupIds()
         ids.sort()
-        self.failUnless(ids == ["group_g1", "group_g2", "group_g3", "group_g4", "group_grp", ], "Invalid groups list: '%s'" % (ids, ))
+        self.failUnless(ids == ["g1", "g2", "g3", "g4", "grp", ], "Invalid groups list: '%s'" % (ids, ))
 
     def test_listGroupNames(self, ):
         """Returns a list of the available groups' ids."""
@@ -193,13 +199,154 @@ class TestGroupsTool(PloneTestCase.PloneTestCase, testInterface.TestInterface):
 
     def test_getGroupareaURL(self, ):
         """Returns the full URL to the group's work area."""
-    
 
-class TestGroupDataTool(PloneTestCase.PloneTestCase, testInterface.TestInterface):
+
+    
+class TestGroupDataTool(GroupTestCase, testInterface.TestInterface):
     klasses = (        # tell which classes to check
         GroupDataTool.GroupDataTool,
         )
+    ignore_interfaces = (
+        ActionProviderBase.__implements__,
+        )
 
+    
+
+    def test_wrapGroup(self,):
+        """Test group wrapping"""
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(g1.__class__.__name__, "GroupData")
+        self.failUnlessEqual(g1.getGroupName(), "g1")
+        g1 = self.groups.getGroupById("group_g1")
+        self.failUnlessEqual(g1.__class__.__name__, "GroupData")
+        self.failUnlessEqual(g1.getGroupName(), "g1")
+
+
+
+
+class TestGroupData(GroupTestCase, testInterface.TestInterface):
+    klasses = (        # tell which classes to check
+        GroupDataTool.GroupData,
+        )
+    ignore_interfaces = (
+        ActionProviderBase.__implements__,
+    )
+
+    
+    def test_setProperties(self, properties = None, **kw):
+        """We set some properties on groups
+        """
+        g = self.groups.getGroupById("g1")
+
+        # Regular property setting
+        g.setProperties({
+            "email": "test@toto.com",
+            "description": "azer",
+            })
+        self.failUnlessEqual(g.getProperty("email"), "test@toto.com", )
+        self.failUnlessEqual(g.getProperty("description"), "azer", )
+        
+        # Keyword property setting
+        g.setProperties(email = "other@toto.com", description = "Bloub.")
+        self.failUnlessEqual(g.getProperty("email"), "other@toto.com", )
+        self.failIfEqual(g.getProperty("name"), "Bloub.")
+
+        # The Hacky Touch
+        g.setProperties(id = "INVALID")
+        self.failIfEqual(g.getProperty("id"), "g1")
+
+
+    def test_getProperty(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(g1.getProperty("name"), "g1")
+
+
+    def test_getProperties(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(
+            g1.getProperties(),
+            {"email": "", "description": "", "title": ""},
+            )
+        g1.setProperties(email = "test@toto.com", description = "marih", title = "Hello")
+        self.failUnlessEqual(
+            g1.getProperties(),
+            {
+            "email": "test@toto.com",
+            "description": "marih",
+            "title": "Hello",
+            },
+            )
+
+    def test_getGroupId(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(g1.getGroupId(), "g1")
+
+    def test_getGroupName(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(g1.getGroupName(), "g1")
+
+    def test_getGroupMembers(self,):
+        g1 = self.groups.getGroupById("g1")
+        members = map(lambda x: x.getMemberId(), g1.getGroupMembers())
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u2", "u3", "u4", ]
+            )
+
+    def test_getGroupMemberIds(self,):
+        g1 = self.groups.getGroupById("g1")
+        members = g1.getGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u2", "u3", "u4", ]
+            )
+
+    def test_addMember(self,):
+        g1 = self.groups.getGroupById("g1")
+
+        # Valid user
+        g1.addMember("u1")
+        members = g1.getGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u1", "u2", "u3", "u4", ]
+            )
+
+        # Invalid user
+        self.failUnlessRaises(
+            ValueError,
+            g1.addMember,
+            "bloubbloub",
+            )
+
+    def test_removeMember(self,):
+        g1 = self.groups.getGroupById("g1")
+
+        # Valid user
+        g1.removeMember("u2")
+        members = g1.getGroupMemberIds()
+        members.sort()
+        self.failUnlessEqual(
+            members,
+            ["u3", "u4", ]
+            )
+
+        # Invalid user
+        self.failUnlessRaises(
+            ValueError,
+            g1.removeMember,
+            "bloubbloub",
+            )
+
+    def test_getGroup(self,):
+        g1 = self.groups.getGroupById("g1")
+        self.failUnlessEqual(
+            g1.getGroup().__class__.__name__,
+            "GRUFGroup",
+            )
 
 
 
@@ -209,6 +356,8 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestGroupsTool ))
+        suite.addTest(unittest.makeSuite(TestGroupsTool))
+        suite.addTest(unittest.makeSuite(TestGroupDataTool))
+        suite.addTest(unittest.makeSuite(TestGroupData))
         return suite
 

@@ -316,10 +316,10 @@ class IUserAtom(Interface):
     """
     # Accessors
     
-    def getId():
+    def getId(unprefixed = 0):
         """Get the ID of the user. The ID can be used, at least from
-        Python, to get the user from the user's
-        UserDatabase"""
+        Python, to get the user from the user's UserDatabase.
+        If unprefixed, remove all prefixes in any case."""
 
     def getUserName():
         """Alias for getName()
