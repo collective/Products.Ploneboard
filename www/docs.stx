@@ -349,8 +349,8 @@ Using the CMFFormController
 
       You can also pass keyword arguments to the state object via the set method. These
       arguments will get passed along by the action. The 'traverse_to' action places
-      these keyword arguments in the REQUEST. The 'redirect_top' action adds them to 
-      the query string of the URL to which it is redirecting.  
+      these keyword arguments in the REQUEST. The 'redirect_to' action adds them to 
+      the query string of the URL to which it is redirecting. 
 
       Finally, we return the state object.
 
@@ -365,11 +365,19 @@ Using the CMFFormController
 
       state = context.portal_form_controller.getState(script, is_validator=0)
       context.n = context.REQUEST.get('n')
-      # (Optional) set the default next action (this can be overridden in the ZMI)
+
+      # Optionally set the default next action (this can be overridden in the ZMI)
       state.setNextAction('redirect_to:string:view')
+
+      # Optionally pass a message to display to the user
+      state.setKwargs( {'portal_status_message':'You set context.n to %s.' % str(context.n)} )
+
       return state
 
-   The first thing that happens is that we get a state object from the 'portal_form_controller'.  
+   Note that you will usually want to use the 'traverse_to' action to call your script. This
+      will ensure that form variables set in the REQUEST object are available to your script.
+
+      The first thing that happens is that we get a state object from the 'portal_form_controller'.  
       When you are writing a non-validation script, you *must* pass in the argument 'is_validator=0'
       to the getState method.
 

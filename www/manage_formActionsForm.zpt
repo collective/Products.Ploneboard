@@ -10,29 +10,28 @@
 
 <h3>Form and Script Actions</h3>
 
-This tool lets you set or override the default actions that are 
+<p>This tool lets you set or override the default actions that are 
 executed when a Controlled Page Template is submitted or a Controlled Python Script 
-returns.
+returns.</p>
 
 <ul>
    <li><b>Template/Script</b>: The Controlled Page Template or Controlled Python
-       Script for which you are setting actions.  Note that these will <i>only</i>
-       affect Controlled Page Templates and Python Scripts that return a
-       ControllerState object.  <i>These actions will be ignored</i> for ordinary 
-       PageTemplates, DTML pages, or scripts that do not return a Controlled Python
-       Script.</li>
+       Script for which you are setting actions.  Note that these <i>will only
+       affect</i> Controlled Page Templates and Controlled Python Scripts that return a
+       ControllerState object.  These actions <i>will be ignored</i> for ordinary 
+       PageTemplates, ordinary Python Scripts, DTML Methods and DTML Documents.</li>
    <li><b>Status</b>: The status for which the given action is executed.  
-       Validators typically return 'success' or the 'failure' as their status.</li>
+       Validators typically return 'success' or 'failure' as their status.</li>
    <li><b>Context</b>: The type of context object for which the given action is 
-       executed.  This lets you set different form actions for different types 
+       executed.  This lets you set different actions for different types 
        of content objects.</li>
    <li><b>Button</b>: The button for which the given action is executed.  This 
        lets you set different actions depending on which button on a form is 
        pressed.  Leave the button field blank to use the same action for any 
        button.  To use this functionality, you must name each button in the template
-       form.button.NAME.  For example, if you have &lt;input name="form.button.button1" type="submit"&gt; in 
-       your page template, you can specify what happens when this button is pressed by
-       entering <i>button1</i> in the button field.</li>
+       <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
+       in your Controlled Page Template, you can specify what happens when this button is pressed by
+       entering <tt>button1</tt> in the button field.</li>
    <li><b>Action</b>: The type of action to execute.  The available types of 
        actions are as follows:
        <ul>
@@ -40,7 +39,7 @@ returns.
               <b tal:content="action_type/getId" />: <span tal:replace="action_type/getDescription" />
            </li>
        </ul></li>
-   <li><b>Argument</b>: The argument for the specified action.</li>
+   <li><b>Argument</b>: The argument for the specified action. This must be a TALES expression.</li>
 </ul>
 
 <hr/>
