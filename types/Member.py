@@ -524,7 +524,7 @@ class Member(BaseContent):
     def _changeUserInfo(self, context, old_user_id, new_user_id=None):
         # remove any local roles the user may have had
         if context.isPrincipiaFolderish:
-            for o in o.objectValues():
+            for o in context.objectValues():
                 if self._changeUserInfo(o, old_user_id, new_user_id):
                     # delete object if need be
                     context.manage_delObjects((o.getId(),))
@@ -532,7 +532,8 @@ class Member(BaseContent):
             if new_user_id is not None:
                 # transfer local roles for old user to local roles for new user
                 roles = context.get_local_roles_for_userid(old_user_id)
-                context.manage_addLocalRoles(new_user_id, roles)
+                if roles:
+                    context.manage_addLocalRoles(new_user_id, roles)
                 context.manage_delLocalRoles(old_user_id)
             else:
                 # delete local roles for old user
