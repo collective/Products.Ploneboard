@@ -34,7 +34,7 @@ class CompositeTool(Folder, BaseTool):
                       Folder.manage_options[1:])
 
     _viewlets_by_type = None # PersistentMapping
-    _default_viewlets = ('default_viewlet', )
+    _default_viewlets = ('default_viewlet', 'link_viewlet')
     _default_default = 'default_viewlet'
     
     #def __init__(self):
