@@ -44,7 +44,7 @@ returns.</p>
 
 <hr/>
 
-<h3 class="form-help">Edit Form Action Overrides</h3>
+<h3 class="form-help">Edit Form/Script Action Overrides</h3>
 
 <form method="POST"
       tal:attributes="action here/absolute_url" 

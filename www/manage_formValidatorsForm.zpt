@@ -6,16 +6,18 @@
                  fixed_object python:test(here.id=='portal_form_controller', None, here.id);
                  filters python:fixed_object and {'object_id':fixed_object} or {};">
 
-<h3>Form Validators</h3>
+<h3>Form and Script Validators</h3>
 
 <p>This tool lets you set or override the default sequence of validators that are 
-executed when a Controller Page Template is submitted.</p>
+executed when a Controller Page Template is submitted or before a Controller
+Python Script is executed.</p>
 
 <ul>
-   <li><b>Template</b>: The Controller Page Template for which you are setting
-       validators.  The form in question <i>must</i> be a Controller Page Template.
-       If it is an ordinary Page Template, a DTML Method, or a DTML Document 
-       <i>these validators will be ignored!</i></li>
+   <li><b>Template</b>: The Controller Page Template / Controller Python Script 
+       for which you are setting validators.  The form/script in question 
+       <i>must</i> be a Controller Page Template / Controller Python Script.
+       If it is an ordinary Python Script, Page Template, a DTML Method, or a 
+       DTML Document <i>these validators will be ignored!</i></li>
    <li><b>Context</b>: The type of context object for which the given sequence
        of validating scripts is executed.  This lets you set different validators
        for different types of content objects.</li>
@@ -26,12 +28,12 @@ executed when a Controller Page Template is submitted.</p>
        <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
        in your page template, you can specify what happens when this button is pressed by
        entering <i>button1</i> in the button field.</li>
-   <li><b>Validators</b>: A comma-delimited sequence of script ids.</li>
+   <li><b>Validators</b>: A comma-delimited sequence of Controller Validator script ids.</li>
 </ul>
        
 <hr/>
 
-<h3 class="form-help">Edit Form Validator Overrides</h3>
+<h3 class="form-help">Edit Form / Script Validator Overrides</h3>
 
 <form method="POST"
       tal:attributes="action here/absolute_url" 
@@ -105,7 +107,7 @@ executed when a Controller Page Template is submitted.</p>
 
 <hr />
 
-<h3 class="form-help">Add a New Form Validator Override</h3>
+<h3 class="form-help">Add a New Form / Script Validator Override</h3>
 
 <form method="POST"
       tal:attributes="action here/absolute_url">

@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.3 $'[11:-2]
+__version__='$Revision: 1.4 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -84,7 +84,7 @@ class ControllerValidator(PythonScript, ControllerBase):
     not attempt to use the "exec" statement or certain restricted builtins.
     """
 
-    meta_type='Controller Python Script'
+    meta_type='Controller Validator'
 
     manage_options = (
         {'label':'Edit',

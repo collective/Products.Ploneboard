@@ -1,6 +1,6 @@
-# $Id: __init__.py,v 1.4 2003/09/23 20:05:39 limi Exp $
+# $Id: __init__.py,v 1.5 2003/10/16 15:18:50 plonista Exp $
 # $Source: /home/hazmat/projects/psvn/collective/CMFFormController/__init__.py,v $
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 """Initialize CMFFormController"""
 
 import sys
@@ -13,6 +13,8 @@ import ControllerPythonScript, FSControllerPythonScript
 import ControllerValidator, FSControllerValidator
 import FormController
 from Actions import RedirectTo, TraverseTo, RedirectToAction, TraverseToAction
+
+GLOBALS = globals()
 
 # Make the skins available as DirectoryViews
 # registerDirectory('skins', globals())

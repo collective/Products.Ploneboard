@@ -1,3 +1,10 @@
+2003-10-15  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Fixed metadata type for Controller Validators
+
+   * Added validators and UI for validators to python scripts
+
+
 2003-10-08  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Added a missing import to Script.py

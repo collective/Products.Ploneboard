@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.4 $'[11:-2]
+__version__='$Revision: 1.5 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -100,7 +100,10 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         {'label':'Test',
          'action':'ZScriptHTML_tryForm',
          'help': ('PythonScripts', 'PythonScript_test.stx')},
-        {'label':'Actions','action':'manage_formActionsForm'},             
+        {'label':'Validation',
+         'action':'manage_formValidatorsForm'},
+        {'label':'Actions',
+         'action':'manage_formActionsForm'},             
         {'label':'Proxy',
          'action':'manage_proxyForm',
          'help': ('OFSP','DTML-DocumentOrMethod_Proxy.stx')},
@@ -128,10 +131,20 @@ class ControllerPythonScript(PythonScript, ControllerBase):
 
 
     def __call__(self, *args, **kwargs):
-        result = ControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
-        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result, self.REQUEST)
-        return result
+        REQUEST = self.REQUEST
+        controller = getToolByName(self, 'portal_form_controller')
+        controller_state = controller.getState(self, is_validator=0)
+        controller_state = self.getButton(controller_state, REQUEST)
+        validators = self.getValidators(controller_state, REQUEST).getValidators()
+        controller_state = controller.validate(controller_state, REQUEST, validators)
+
+        if controller_state.getStatus() == 'success':
+            result = ControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+            if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+                return self.getNext(result, self.REQUEST)
+            return result
+        else:
+            return self.getNext(controller_state, self.REQUEST)
 
 
     def _getState(self):

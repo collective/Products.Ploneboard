@@ -37,6 +37,9 @@ class ControllerState(AccessControl.Role.RoleManager):
     # e.g. something like (id, default string) 
     kwargs = {}
 
+    # a dict of ids of validators already executed
+    _validators = {}
+
     def __init__(self, id=None, context=None, button=None, status='success', \
                  errors={}, next_action=None, **kwargs):
         self.setId(id)
@@ -47,6 +50,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.setKwargs(kwargs)
         self.setNextAction(next_action)
         self._is_validating = 0
+        self._validators = {}
 
 
     def set(self, **kwargs):
@@ -192,6 +196,30 @@ class ControllerState(AccessControl.Role.RoleManager):
             raise KeyError, 'Unknown action type %s\n' % action_type
         self.next_action = FormAction(self.getId(), self.getStatus(), ANY_CONTEXT, ANY_BUTTON, action_type, args, controller)
 
+    # indicate that a validator has been executed
+    def _addValidator(self, validator):
+        self._validators[validator] = 1
+        
+    # remove a validator from the list of already-executed validators
+    def clearValidator(self, validator):
+        if self._validators.has_key(validator):
+            del self._validators[validator]
+
+    # clear the list of already-executed validators
+    def clearValidators(self):
+        self._validators = {}
+        
+    # see if given validators have been executed
+    def hasValidated(self, validators=[]):
+        if validators is None:
+            validators = []
+        elif type(validators) != type([]):
+            validators = [validators]
+        for v in validators:
+            if not self._validators.has_key(v):
+                return 0
+        return 1
+        
     def _setValidating(self, is_validating):
         self._is_validating = is_validating
         

@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.3 2003/09/27 22:51:07 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.4 2003/10/16 15:18:50 plonista Exp $
 """
 
 import re
@@ -42,6 +42,7 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
            (
             {'label':'Customize', 'action':'manage_main'},
             {'label':'Test', 'action':'ZScriptHTML_tryForm'},
+            {'label':'Validation','action':'manage_formValidatorsForm'},
             {'label':'Actions','action':'manage_formActionsForm'},             
            ) + Cacheable.manage_options)
 
@@ -58,10 +59,20 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
 
 
     def __call__(self, *args, **kwargs):
-        result = FSControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
-        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result, self.REQUEST)
-        return result
+        REQUEST = self.REQUEST
+        controller = getToolByName(self, 'portal_form_controller')
+        controller_state = controller.getState(self, is_validator=0)
+        controller_state = self.getButton(controller_state, REQUEST)
+        validators = self.getValidators(controller_state, REQUEST).getValidators()
+        controller_state = controller.validate(controller_state, REQUEST, validators)
+
+        if controller_state.getStatus() == 'success':
+            result = FSControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+            if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+                return self.getNext(result, self.REQUEST)
+            return result
+        else:
+            return self.getNext(controller_state, self.REQUEST)
 
 
     security.declarePrivate('manage_afterAdd')

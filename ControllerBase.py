@@ -180,6 +180,36 @@ class ControllerBase:
         return next_action.getAction()(controller_state)
 
     
+    def getButton(self, controller_state, REQUEST):
+        for k in REQUEST.form.keys():
+            if k.startswith('form.button.'):
+                controller_state.setButton(k[len('form.button.'):])
+                return controller_state
+        return controller_state
+        
+
+    def getValidators(self, controller_state, REQUEST):
+        controller = getToolByName(self, 'portal_form_controller')
+        context = controller_state.getContext()
+        context_type = controller._getTypeName(context)
+        button = controller_state.getButton()
+
+        validators = None
+        try:
+            validators = controller.validators.match(self.id, context_type, button)
+            if validators is not None:
+                return validators
+        except ValueError:
+            pass
+        try:
+            validators = self.validators.match(self.id, context_type, button)
+            if validators is not None:
+                return validators
+        except ValueError:
+            pass
+        return FormValidator(self.id, ANY_CONTEXT, ANY_BUTTON, [])
+
+
     def _read_action_metadata(self, id, filepath):
         self.actions = FormActionContainer()
         

@@ -1,15 +1,19 @@
 form_action_types = {}
 
-import string
+import os, string
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+import Globals
 from OFS.ObjectManager import bad_id
-from Products.CMFCore.utils import getToolByName, UniqueObject, SimpleItemWithProperties
+from ZPublisher.Publish import call_object, missing_name, dont_publish_class
+from ZPublisher.mapply import mapply
+from Products.CMFFormController import GLOBALS as fc_globals
+from Products.CMFCore.utils import getToolByName, UniqueObject, SimpleItemWithProperties, format_stx
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFFormController.ControllerState import ControllerState
 from FormAction import FormActionType, FormActionKey, FormAction, FormActionContainer
 from FormValidator import FormValidatorKey, FormValidator, FormValidatorContainer
+from ValidationError import ValidationError
 from globalVars import ANY_CONTEXT, ANY_BUTTON
 
 _marker = []
@@ -28,14 +32,19 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     meta_type= 'Form Controller Tool'
 
     manage_options = ( ({'label':'Overview', 'action':'manage_overview'},
-                        {'label': 'Form Validators', 'action': 'manage_formValidatorsForm'},
-                        {'label': 'Form Actions', 'action': 'manage_formActionsForm'},) +
+                        {'label':'Documentation', 'action':'manage_docs'},
+                        {'label': 'Validators', 'action': 'manage_formValidatorsForm'},
+                        {'label': 'Actions', 'action': 'manage_formActionsForm'},) +
                        SimpleItemWithProperties.manage_options)
 
     security.declareProtected(ManagePortal, 'manage_overview')
     manage_overview = PageTemplateFile('www/manage_overview', globals())
     manage_overview.__name__ = 'manage_overview'
     manage_overview._need__name__ = 0
+
+    security.declareProtected(ManagePortal, 'manage_docs')
+    manage_docs = PageTemplateFile('www/manage_docs', globals())
+    manage_docs.__name__ = 'manage_docs'
 
     security.declareProtected(ManagePortal, 'manage_formActionsForm')
     manage_formActionsForm = PageTemplateFile('www/manage_formActionsForm', globals())
@@ -52,11 +61,24 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'index_html')
     index_html = None
 
+    wwwpath = os.path.join(Globals.package_home(fc_globals), 'www')
+    f = open(os.path.join(wwwpath, 'docs.stx'), 'r')
+    _docs = f.read()
+    f.close()
+    _docs = format_stx(_docs)
+
+
     def __init__(self):
         self.actions = FormActionContainer()
         self.validators = FormValidatorContainer()
 
 
+    security.declarePublic('docs')
+    def docs(self):
+        """Returns FormController docs formatted as HTML"""
+        return self._docs
+
+    
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, object, container):
         portal = getToolByName(object, 'portal_url').getPortalObject()
@@ -292,9 +314,51 @@ class FormController(UniqueObject, SimpleItemWithProperties):
         return controller_state
 
 
+    def validate(self, controller_state, REQUEST, validators):
+        context = controller_state.getContext()
+        if validators is None:
+            REQUEST.set('controller_state', controller_state)
+            return controller_state
+        for v in validators:
+            REQUEST.set('controller_state', controller_state)
+            if controller_state.hasValidated(v):
+                continue
+            try:
+                obj = context.restrictedTraverse(v)
+                REQUEST = controller_state.getContext().REQUEST
+                controller_state = mapply(obj, REQUEST.args, REQUEST,
+                                          call_object, 1, missing_name, dont_publish_class,
+                                          REQUEST, bind=1)
+                controller_state._addValidator(v)
+            except ValidationError, e:
+                # if a validator raises a ValidatorException, execution of
+                # validators is halted and the controller_state is set to
+                # the controller_state embedded in the exception
+                controller_state = e.controller_state
+                state_class = getattr(controller_state, '__class__', None)
+                if state_class != ControllerState:
+                    raise Exception, 'Bad ValidationError state (type = %s)' % str(state_class)
+                break
+            state_class = getattr(controller_state, '__class__', None)
+            if state_class != ControllerState:
+                raise Exception, 'Bad validator return type from validator %s (%s)' % (str(v), str(state_class))
+            REQUEST.set('controller_state', controller_state)
+
+        REQUEST.set('controller_state', controller_state)
+        return controller_state
+
+
     security.declarePublic('writableDefaults')
     def writableDefaults(self):
         """Can default actions and validators be modified?"""
         return 0
 
-InitializeClass(FormController)
+
+    def _getTypeName(self, obj):
+        type_name = getattr(obj, '__class__', None)
+        if type_name:
+            type_name = getattr(type_name, '__name__', None)
+        return type_name
+
+
+Globals.InitializeClass(FormController)
