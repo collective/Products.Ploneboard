@@ -18,52 +18,52 @@ class portal_groups(Interface):
     Parallels the portal_membership interface of CMFCore"""
     id = Attribute('id','Must be set to "portal_groups"')
 
-    def getGroupById(self, id):
+    def getGroupById(id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
 
-    def getGroupsByUserId(self, userid):
+    def getGroupsByUserId(userid):
         """Returns a list of the groups the user corresponding to 'userid' belongs to."""
 
-    def listGroups(self):
+    def listGroups():
         """Returns a list of the available portal_groupdata-ish objects."""
 
-    def listGroupIds(self):
+    def listGroupIds():
         """Returns a list of the available groups' ids."""
 
-    def getPureUserNames(self):
+    def getPureUserNames():
         """Get the usernames (ids) of only users. """
 
-    def getPureUsers(self):
+    def getPureUsers():
         """Get the actual (unwrapped) user objects of only users. """
 
-    def searchForGroups(self, REQUEST, **kw):    # maybe searchGroups()?
+    def searchForGroups(REQUEST, **kw):    # maybe searchGroups()?
         """Return a list of groups meeting certain conditions. """
         # arguments need to be better refined?
 
-    def addGroup(self, id, password, roles, domains):
+    def addGroup(id, password, roles, domains):
         """Create a group with the supplied id, roles, and domains.
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
 
-    def editGroup(self, id, password, roles, permissions):
+    def editGroup(id, password, roles, permissions):
         """Edit the given group with the supplied password, roles, and domains.
 
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
 
-    def removeGroups(self, ids, keep_workspaces=0):
+    def removeGroups(ids, keep_workspaces=0):
         """Remove the group in the provided list (if possible).
 
         Will by default remove this group's GroupWorkspace if it exists. You may
         turn this off by specifying keep_workspaces=true.
         Underlying user folder must support removing users via the usual Zope API."""
 
-    def setGroupOwnership(self, group, object):
+    def setGroupOwnership(group, object):
     	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""
 
-    def setGroupWorkspacesFolder(self, id=""):
+    def setGroupWorkspacesFolder(id=""):
     	""" Set the location of the Group Workspaces folder by id.
 
     	The Group Workspaces Folder contains all the group workspaces, just like the
@@ -73,40 +73,40 @@ class portal_groups(Interface):
      	but for the moment it's only an id for a folder in the portal root, just like the
      	corresponding MembershipTool functionality. """
 
-    def getGroupWorkspacesFolderId(self):
+    def getGroupWorkspacesFolderId():
 	""" Get the Group Workspaces folder object's id.
 
     	The Group Workspaces Folder contains all the group workspaces, just like the
     	Members folder contains all the member folders. """
 
-    def getGroupWorkspacesFolder(self):
+    def getGroupWorkspacesFolder():
 	""" Get the Group Workspaces folder object.
 
     	The Group Workspaces Folder contains all the group workspaces, just like the
     	Members folder contains all the member folders. """
 
-    def toggleGroupWorkspacesCreation(self):
+    def toggleGroupWorkspacesCreation():
     	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
         use of the group. """
 
-    def getGroupWorkspacesCreationFlag(self):
+    def getGroupWorkspacesCreationFlag():
     	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
         upon the next use of the group (if one doesn't exist). """
 
-    def getGroupWorkspaceType(self):
+    def getGroupWorkspaceType():
 	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
 
-    def setGroupWorkspaceType(self, type):
+    def setGroupWorkspaceType(type):
 	"""Set the Type (as in TypesTool) to make the GroupWorkspace. Expects the name of a Type."""
 
-    def createGrouparea(self, id):
+    def createGrouparea(id):
         """Create a space in the portal for the given group, much like member home
         folders."""
 
-    def getGroupareaFolder(self, id):
+    def getGroupareaFolder(id):
         """Returns the object of the group's work area."""
 
-    def getGroupareaURL(self, id):
+    def getGroupareaURL(id):
         """Returns the full URL to the group's work area."""
 
     # and various roles things...
