@@ -16,3 +16,7 @@ UPGRADE
 
 - Contentpanels 1.1 is not compatible with contentpanels 1.0, and no
 migration at present.
+
+- 1.6 -> 1.7, you must delete portal_contentpanels before you try to reinstall 1.7.
+
+  NOTE: the action Category in portal_contentpanels is defferent since 1.7. see config.py for more
