@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.15 2004/08/22 21:51:37 tiran Exp $
+$Id: toolbox.py,v 1.16 2004/09/13 15:25:12 tiran Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -151,8 +151,8 @@ def _changePortalType(cat, old, new):
     """
     """
     brains = cat(portal_type = old)
-    objs = [brain.getObject() for brain in brains ]
-    for obj in objs:
+    for brain in brains:
+        obj = brain.getObject()
         if not obj:
             continue
         __traceback_info__ = (obj, getattr(obj, '__class__', 'no class'),
