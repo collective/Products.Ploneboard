@@ -1,6 +1,0 @@
-[validators]
-validators = validate_base
-
-[actions]
-action.success = traverse_to:string:registered
-action.pending = traverse_to:string:pending
