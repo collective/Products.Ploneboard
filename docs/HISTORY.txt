@@ -1,4 +1,4 @@
-0.2-beta7
+0.2-beta7 - 2004-06-27
 
  * Moved around some code from ATFolder to ATContentType [tiran]
 
@@ -45,6 +45,9 @@
    switching from or to ATCT mode. [tiran]
    
  * Added validation to ATEvent: end date must be after start date [tiran]
+
+ * First release with all unit tests of Archetypes, ATCT and CMFPlone
+   tiran-atct-integration branch passing!
 
 0.2-beta6 - 2004-06-20
 
