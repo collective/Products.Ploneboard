@@ -60,5 +60,18 @@ def install(self):
 	catalogtool.addColumn('i18nContent_language')
         print >> out, 'Added i18nContent_language to portal catalogs columns.\n'
     except: pass
+
+    # add i18nlayer language slot
+    slot = "here/i18ncontent_slot/macros/i18nContentBox"
+
+    left_slots=getattr(self,'left_slots', None)
+    right_slots=getattr(self, 'right_slots', ())
+
+    if left_slots != None:
+        if slot not in left_slots and slot not in right_slots:
+            left_slots=left_slots+[slot,]
+            self.left_slots=left_slots
+            print >> out, 'Added i18nContent slot to left_slots property.\n'
+
     return out.getvalue()
 
