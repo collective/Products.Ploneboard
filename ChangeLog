@@ -1,3 +1,8 @@
+2003-07-30  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * .metadata files didn't load properly if they didn't contain both an actions
+     section and a validators section.  Fixed.
+
 2003-07-30 Kevin Teague <kevin@bud.ca> (Wheat)
 
    * Prettied up the ZMI tables for Default Actions and Default Validators

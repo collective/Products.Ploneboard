@@ -193,6 +193,8 @@ class ControlledBase:
                 controller = None
 
             actions = metadata._getSectionDict(cfg, 'actions')
+            if actions is None:
+                actions = {}
             for (k, v) in actions.items():
                 # action.STATUS.CONTEXT_TYPE.BUTTON = ACTION_TYPE:ACTION_ARG
                 component = k.split('.')
@@ -221,6 +223,8 @@ class ControlledBase:
                 controller = None
                 
             validators = metadata._getSectionDict(cfg, 'validators')
+            if validators is None:
+                validators = {}
             for (k, v) in validators.items():
                 # validators.CONTEXT_TYPE.BUTTON = LIST
                 component = k.split('.')
