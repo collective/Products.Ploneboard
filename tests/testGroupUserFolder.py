@@ -190,6 +190,18 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         """
         pass
 
+    #                                                   #
+    #               GRUF Interface testing              #
+    #                                                   #
+
+    def test03GRUFMethods(self,):
+        """
+        test03GRUFMethods(self,) => We test that GRUF's API is well protected
+        """
+        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
+        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
+        urllib.urlopen(base+'/acl_users/getGRUFId')
+
 
     #                                                   #
     #              Classical security testing           #

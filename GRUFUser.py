@@ -17,6 +17,7 @@
 from Globals import MessageDialog, DTMLFile 
 
 from AccessControl import ClassSecurityInfo
+from AccessControl import Permissions
 from Globals import InitializeClass
 from Acquisition import Implicit, aq_inner, aq_parent, aq_base
 from Globals import Persistent
@@ -58,15 +59,18 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     There's, alas, many copy/paste from AccessControl.BasicUser...
     """
 
-    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
-        # This is get back from AccessControl.User.BasicUser
-        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
-                    'authenticate', '_shared_roles', 'changePassword',
-                    "_setUnderlying", "__init__", )
-        if name in deny_names:
-            return 0
-        return 1
+    security = ClassSecurityInfo()
 
+##    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
+##        # This is get back from AccessControl.User.BasicUser
+##        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
+##                    'authenticate', '_shared_roles', 'changePassword',
+##                    "_setUnderlying", "__init__", )
+##        if name in deny_names:
+##            return 0
+##        return 1
+
+    security.declarePrivate('_setUnderlying')
     def _setUnderlying(self, user):
         """
         _setUnderlying(self, user) => Set the GRUFUser properties to 
@@ -98,13 +102,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     # probably break a lot of other User implementations with extended
     # functionality that we cant anticipate from the base scaffolding.
 
-    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
-        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
-                    'authenticate', '_shared_roles')
-        if name in deny_names:
-            return 0
-        return 1
-
+    security.declarePrivate('__init__')
     def __init__(self, underlying_user, GRUF, isGroup = 0):
         # When calling, set isGroup it to TRUE if this user represents a group
         self._setUnderlying(underlying_user)
@@ -112,10 +110,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self._GRUF = GRUF
         self.id = self._original_id
 
+    security.declarePublic('isGroup')
     def isGroup(self,):
         """Return 1 if this user is a group abstraction"""
         return self._isGroup
 
+    security.declarePrivate('getGroups')
     def getGroups(self):
         """
         If this user is a user (uh, uh), get its groups.
@@ -123,6 +123,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         This excludes 'group inheritance'.
         Maybe we could authorize this one day, then we should 
         modify this behaviour.
+
+        This method is private and should remain so.
         """
         # List this user's roles. We consider that roles starting 
         # with _group_prefix are in fact groups, and thus are 
@@ -134,7 +136,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             if string.find(role, prefix) == 0:
                 ret.append(role)
         return tuple(ret)
-
+    
+    security.declarePublic('getUserNameWithoutGroupPrefix')
     def getUserNameWithoutGroupPrefix(self):
         """Return the username of a user without a group prefix"""
         if self.isGroup() and \
@@ -142,6 +145,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             return self._original_name[:len(grufprefix)]
         return self._original_name
 
+    security.declarePublic('getUserName')
     def getUserName(self):
         """Return the username of a user"""
         if self.isGroup() and \
@@ -149,6 +153,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             return "%s%s" % (grufprefix, self._original_name )
         return self._original_name
 
+    security.declarePublic('getId')
     def getId(self):
         """Get the ID of the user. The ID can be used, at least from
         Python, to get the user from the user's UserDatabase 
@@ -159,10 +164,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             return "%s%s" % (grufprefix, self._original_name)
         return self._original_name
 
+    security.declarePrivate('_getPassword')
     def _getPassword(self):
         """Return the password of the user."""
         return self._original_password
 
+    security.declarePublic('getRoles')
     def getRoles(self):
         """
         Return the list (tuple) of roles assigned to a user.
@@ -183,6 +190,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # Return user and groups roles
         return GroupUserFolder.unique(tuple(user) + tuple(groups))
 
+    security.declarePublic('getUserRoles')
     def getUserRoles(self):
         """
         returns the roles defined for the user without the group roles
@@ -190,6 +198,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         prefix=GRUFFolder.GRUFGroups._group_prefix
         return [r for r in self._original_roles if not r.startswith(prefix)]
 
+    security.declarePublic("getGroupRoles")
     def getGroupRoles(self,):
         """
         Return the tuple of roles belonging to this user's group(s)
@@ -207,7 +216,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             
         return GroupUserFolder.unique(ret)
     
-
+    security.declarePublic('getRolesInContext')
     def getRolesInContext(self, object, userid = None):
         """Return the list of roles assigned to the user,
            including local roles assigned in context of
@@ -249,6 +258,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         Log(LOG_DEBUG, "Roles", roles)
         return GroupUserFolder.unique(roles)
 
+    security.declarePublic('getDomains')
     def getDomains(self):
         """Return the list of domain restrictions for a user"""
         return self._original_domains
@@ -257,6 +267,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     # Internal User object interface
     # ------------------------------
 
+    security.declarePrivate('authenticate')
     def authenticate(self, password, request):
         # We prevent groups from authenticating
         if self._isGroup():
@@ -264,6 +275,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         return self.__underlying__.authenticate(password, request)
 
 
+    security.declarePublic('allowed')
     def allowed(self, object, object_roles=None):
         """Check whether the user has access to object. The user must
            have one of the roles in object_roles to allow access."""
@@ -309,6 +321,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 return 1
         return None
 
+    security.declarePublic('hasRole')
     def hasRole(self, *args, **kw):
         """hasRole is an alias for 'allowed' and has been deprecated.
 
@@ -322,9 +335,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             'you may have ment to use has_role.', DeprecationWarning)
         return self.allowed(*args, **kw)
 
-
+    security.declareProtected(Permissions.manage_users, 'getGroupUsers')
     def getGroupUsers(self):
-        ''' returns the users belonging to this group '''
+        '''
+        returns the users belonging to this group.
+        '''
         if not self.isGroup():
             raise TypeError,'This method only aplies to groups'
         
@@ -332,49 +347,18 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 if self.getId() in u.getGroups()]
 
 
-    #                                                           #
-    #                   Password management hack                #
-    #                                                           #
-
-    ## This hack is necessary to make GRUF comply with CMF <= 1.4
-    ## There's a hack in setSecurityProfile() that makes CMF incompatible
-    ## with something else than standard User Folder, or, at least,
-    ## with something that doesn't have the (clear) password stored
-    ## in a "__" attribute.
-
-    ## The following hacks define a __ attribute that makes password
-    ## changing possible with it.
-
-    def changePassword(self, password): 
-        """Set the user's password""" 
-        # don't spam the user's roles with group roles and Authenticaed 
-        roles = self.getUserRoles() 
-        roles = filter(lambda x: x != 'Authenticated', roles) 
-
-        # set the profile on the user folder 
-        self.userFolderEditUser(
-            self.getUserName(),
-            password,
-            roles,
-            self.getDomains(),
-            )
-
-    def __setattr__(self, name, value):
-        # This is required password-changing support
-        if name == "__":
-            self.changePassword(value)
-        else:
-            self.__dict__[name] = value
 
     #                                                           #
     #               Underlying user object support              #
     #                                                           #
 
+    security.declarePublic('__getattr__')
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.
         if hasattr(self.__dict__['__underlying__'], name):
-            return getattr(self.__dict__['__underlying__'], name)
+            return self.__dict__['__underlying__'].restrictedTraverse(name)
         else:
-            # Use acquisition
+            # Use acquisition regularily
+            # XXX Have to check security on this !!!
             return self.inheritedAttribute(GRUFUser, name)

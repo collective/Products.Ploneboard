@@ -18,6 +18,7 @@
 from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
+from AccessControl import Permissions
 from Globals import InitializeClass
 from Acquisition import Implicit
 from Globals import Persistent
@@ -96,6 +97,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     isAnObjectManager=1
     isPrincipiaFolderish=1
 
+    security = ClassSecurityInfo()
+
     manage_options=( OFS.ObjectManager.ObjectManager.manage_options + \
         ( {'label':'Overview', 'action':'manage_overview'},
           {'label':'Audit', 'action':'manage_audit'},
@@ -110,11 +113,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     __ac_permissions__=(
         ('Manage users',
-         ('manage_users','getUserNames', 'getUser', 'getUsers',
+         ('manage_users',
           'getUserById', 'user_names', 'setDomainAuthenticationMode',
           'userFolderAddUser', 'userFolderEditUser', 'userFolderDelUsers',
-          'getUnwrappedUser', 'getUnwrappedGroup',
-          'manage_audit', 'listUsersAndRoles', 'getSiteTree', 'getSecuritySetting',
           )
          ),
         )
@@ -130,6 +131,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         pass
 
 
+    security.declarePrivate('_post_init')
     def _post_init(self):
         """
         _post_init(self) => meant to be called when the 
@@ -141,11 +143,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         self._setObject('Groups', gf)
         self.id = "acl_users"
 
-
+    security.declarePublic('getGroupPrefix')
     def getGroupPrefix(self):
         """ group prefix """
         return GRUFFolder.GRUFGroups._group_prefix
-    
+
+    security.declareProtected(Permissions.change_permissions, "getLocalRolesForDisplay")
     def getLocalRolesForDisplay(self, object):
         ## This is used for plone's local roles display
         ## This method returns a tuple (massagedUsername, roles, userType, actualUserName)
@@ -173,11 +176,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             result.append((massagedUsername, roles, userType, username))
         return tuple(result)    
 
+    security.declarePrivate('getGRUFPhysicalRoot')
     def getGRUFPhysicalRoot(self,):
         # $$$ trick meant to be used within 
         # fake_getPhysicalRoot (see __init__)
         return self.getPhysicalRoot()   
 
+    security.declareProtected(Permissions.view, 'getGRUFId')
     def getGRUFId(self,):
         """
         Alias to self.getId()
@@ -188,6 +193,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Public UserFolder object interface
     # ----------------------------------
 
+    security.declareProtected(Permissions.manage_users, "getUserNames")
     def getUserNames(self):
         """
         Return a list of usernames (including groups).
@@ -199,6 +205,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self.Users.acl_users.getUserNames() + \
                self.Groups.getGroupNames()
 
+    security.declareProtected(Permissions.manage_users, "getUsers")
     def getUsers(self):
         """Return a list of user objects"""
         ret = []
@@ -210,6 +217,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # This happens for example with LDAPUserFolder when a 
         # LDAP query fetches too much records.
 
+    security.declareProtected(Permissions.manage_users, "getUser")
     def getUser(self, name):
         """Return the named user object or None"""
         # Prevent infinite recursion when instanciating a GRUF 
@@ -239,7 +247,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
  
         return None
 
-
+    security.declareProtected(Permissions.manage_users, "getUnwrappedUser")
     def getUnwrappedUser(self, name):
         """
         getUnwrappedUser(self, name) => user object or None
@@ -257,7 +265,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         return self.Users.acl_users.getUser(name)
 
-
+    security.declareProtected(Permissions.manage_users, "getUnwrappedGroup")
     def getUnwrappedGroup(self, name):
         """
         getUnwrappedGroup(self, name) => user object or None
@@ -266,13 +274,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         return self.Groups.acl_users.getUser(name)
 
-    
-
-
     # ------------------------
     # Group-specific operation
     # ------------------------
 
+    security.declareProtected(Permissions.manage_users, "getGroupNames")
     def getGroupNames(self, prefixed = 1):
         """
         Fetch the list from GRUFGroups.
@@ -281,6 +287,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             return ()
         return self.Groups.listGroups(prefixed = prefixed)
 
+    security.declareProtected(Permissions.manage_users, "getGroups")
     def getGroups(self):
         """Return a list of user objects"""
         ret = []
@@ -291,7 +298,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # This happens for example with LDAPUserFolder when a LDAP 
         # query fetches too much records.
 
-
+    security.declareProtected(Permissions.manage_users, "getGroup")
     def getGroup(self, name, prefixed = 1):
         """Return the named user object or None"""
         # Performance tricks
@@ -322,6 +329,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Group-specific operation
     # ------------------------
 
+    security.declareProtected(Permissions.manage_users, "getPureUserNames")
     def getPureUserNames(self, ):
         """
         Fetch the list of actual users from GRUFUsers.
@@ -331,7 +339,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ret = self.Users.acl_users.getUserNames()
         return ret
 
-
+    security.declareProtected(Permissions.manage_users, "getPureUsers")
     def getPureUsers(self):
         """Return a list of pure user objects"""
         ret = []
@@ -347,7 +355,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Authentication interface
     # ------------------------
 
-
+    security.declarePrivate("authenticate")
     def authenticate(self, name, password, request):
         """
         Pass the request along to the underlying user-related UserFolder 
@@ -375,6 +383,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Private User Folder interface
     # -----------------------------
 
+    security.declarePrivate("_doAddUser")
     def _doAddUser(self, name, password, roles, domains, groups = (), **kw):
         """Create a new user. This should be implemented by subclasses to
            do the actual adding of a user. The 'password' will be the
@@ -400,6 +409,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             domains,
             **kw)
 
+    security.declarePrivate("_doChangeUser")
     def _doChangeUser(self, name, password, roles, domains, **kw):
         """Modify an existing user. This should be implemented by subclasses
            to make the actual changes to a user. The 'password' will be the
@@ -408,6 +418,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self.Users.acl_users._doChangeUser(name, password, 
                                                   roles, domains, **kw)
 
+    security.declarePrivate("_doDelUsers")
     def _doDelUsers(self, names):
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
@@ -418,7 +429,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #           Groups interface        #
     #                                   #
 
-
+    security.declarePrivate("_doAddGroup")
     def _doAddGroup(self, name, roles, **kw):
         """Create a new group. Password will be randomly created, and domain will be none"""
 
@@ -430,6 +441,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             name, password, roles, domains, **kw
             )
 
+    security.declarePrivate("_doChangeGroup")
     def _doChangeGroup(self, name, roles, **kw):
         """Modify an existing group."""
         domains = ""
@@ -439,6 +451,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self.Groups.acl_users._doChangeUser(name, password, 
                                                   roles, domains, **kw)
 
+    security.declarePrivate("_doDelGroup")
     def _doDelGroup(self, names):
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
@@ -451,7 +464,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Security audit methods
     # ----------------------
 
-
+    security.declareProtected(Permissions.manage_users, "computeSecuritySettings")
     def computeSecuritySettings(self, folders, actors, permissions, cache = {}):
         """
         computeSecuritySettings(self, folders, actors, permissions, cache = {}) => return a structure that is suitable for security audit Page Template.
@@ -494,6 +507,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return cache
 
 
+    security.declareProtected(Permissions.manage_users, "computeSetting")
     def computeSetting(self, path, folder, actor, permissions, cache):
         """
         computeSetting(......) => used by computeSecuritySettings to populate the cache for ROLES
@@ -547,8 +561,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Log(LOG_DEBUG, "Returning", cache[path][(kind, actor)])
         return cache[path][(kind, actor)]
 
-    
-
+    security.declareProtected(Permissions.manage_users, "listUsersAndRoles")
     def listUsersAndRoles(self,):
         """
         listUsersAndRoles(self,) => list of tuples
@@ -582,7 +595,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Return list
         return ret
 
-
+    security.declareProtected(Permissions.manage_users, "getSiteTree")
     def getSiteTree(self, obj=None, depth=0):
         """
         getSiteTree(self, obj=None, depth=0) => special structure
@@ -613,7 +626,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         return ret
 
-
+    security.declareProtected(Permissions.manage_users, "listAuditPermissions")
     def listAuditPermissions(self,):
         """
         listAuditPermissions(self,) => return a list of eligible permissions
@@ -621,6 +634,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ps = self.permission_settings()
         return map(lambda p: p['name'], ps)
 
+    security.declareProtected(Permissions.manage_users, "getDefaultPermissions")
     def getDefaultPermissions(self,):
         """
         getDefaultPermissions(self,) => return default R & W permissions for security audit.

@@ -73,14 +73,15 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
     manage_options=( {'label':'Contents', 'action':'manage_main'}, ) + \
                      SimpleItem.Item.manage_options
 
+    security = ClassSecurityInfo()
 
+    security.declarePublic('header_text')
     def header_text(self,):
         """
         header_text(self,) => Text that appears in the content's 
                               view heading zone
         """
         return ""
-
 
     def getUserFolder(self,):
         """
@@ -89,7 +90,7 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
         if not "acl_users" in self.objectIds():
             raise "ValueError", "Please put an acl_users in %s " \
                                 "before using GRUF" % (self.getId(),)
-        return self.acl_users
+        return self.restrictedTraverse('acl_users')
         
 
 
@@ -152,7 +153,7 @@ class GRUFUsers(GRUFFolder):
         """
         listGroups(self,) => return a list of groups defined as roles
         """
-        return self.Groups.listGroups()
+        return self.Groups.restrictedTraverse('listGroups')()
 
 
     def userdefined_roles(self):
