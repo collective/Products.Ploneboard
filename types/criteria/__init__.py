@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: __init__.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: __init__.py,v 1.10 2004/07/19 11:57:36 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -32,6 +32,11 @@ from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion,
 ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
                'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex',
                'ZCTextIndex',)
+               
+SORT_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex')
+# TextIndex, PathIndex, TopicIndex, ZCTextIndex, TextIndexNG2 
+# are not usable to sort 
+# as they do not have 'keyForDocument' attribute
 
 DATE_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex')
 

@@ -1,4 +1,5 @@
 0.2-beta8
+ * Added validation for setup of sort order on topics
 
  * Fixed validation problem with mx tidy validator and file uploads
    [tiran]
@@ -98,7 +99,7 @@
  
  * Added iCal/vCal export to AT Event [tiran]
   
- * Added PloneLingua support [gotcha]
+ * Added LinguaPlone support [gotcha]
 
 0.2-beta4
 
