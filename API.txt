@@ -1,0 +1,90 @@
+
+Binding API Usage Examples
+
+   # cmf accessor
+   metadata_system = getToolByName(content, 'portal_metadata')
+   # silva accessor
+   metadata_system = content.service_metadata
+
+   # get a metadata binding
+   binding = metadata_system.getMetadata(content)
+
+   ## definition introspection
+   #
+
+   # find a set's name by its uri namespace
+   set_name = binding.getSetNameByURI('http://purl.org/dc/elements/1.1/')
+
+   # find a set's element names
+   element_names = binding.getElementNames(set_name)
+
+   element_name = element_names.pop()
+
+   # determine if an element is editable by the current user
+   is_editable = binding.isEditable(set_name, element_name)
+
+   # determine if an element is viewable by the current user
+   is_viewable = binding.isViewable(set_name, element_name)
+
+   # show all the acquired elements for this content object
+   # returns a list of tuples (set_id, element_id)
+   acquired_elements = binding.listAcquired()
+
+
+   ## views
+   #
+
+   # render an xml serialization of an object's metadata
+   binding.renderXML()
+
+   # render a form widget for an element
+   binding.renderElementEdit('dublincore', 'subject')
+
+   # render a view widget for an element
+   binding.renderElementView('dublincore', 'subject')
+
+
+   ## data access
+   #
+
+   # get all of an object's dublin core metadata data
+   binding['dublincore']
+
+   # get the title element of dublincore
+   binding['dublincore']['title']
+
+   # get an element's value with out using acquisition or defaults
+   binding.get('dublincore', 'title', acquire=0, defaults=0)
+
+   ## validation
+   #
+
+   # validation against a dictionary
+   errors = {}
+   data = binding.validate(mydict, errors, 'dublincore')
+
+   # validate against the request, when no errors dict, passed..
+   # errors will be raised.
+   data = binding.validateRequest(request, set_id='dublincore')
+
+
+   ## store
+   #
+
+   # set values from the request
+   binding.setValuesFromRequest(REQUEST)
+
+   # set values from dictionary and reindex modified data
+   binding.setValues('dublincore', data, reindex=1)
+
+
+   ## advanced runtime
+   # 1. delegation on object level
+   # 2. mutation events
+
+   # the binding will now get its metadata from the object returned by invoking
+   # delegator method.
+   binding.setObjectDelegate(DublinCore, 'Subject', delegator='getRealObject')
+
+   # the binding will now invoke invalidateTitleCache whenever title is changed.
+   binding.setMutationTrigger('dublincore', 'title', 'invalidateTitleCache')

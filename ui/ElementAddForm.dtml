@@ -1,0 +1,82 @@
+<dtml-var manage_page_header>
+
+<dtml-var "manage_form_title(this(), _,
+           form_title='Add Metadata Element',
+           )">
+
+<p class="form-help">
+An Element
+</p>
+
+<form action="addMetadataElement" method="POST">
+
+  <table>
+
+   <tr><td>ID</td>
+       <td><input type="text" name="id"></td>
+       </tr>
+
+   <tr><td>Field Type</td>
+       <td>
+           <select name="field_type">
+           <dtml-in listFieldTypes prefix="ft">
+           <option value="<dtml-var ft_item>"><dtml-var ft_item></option>
+           </dtml-in>
+           </select>
+       </td>
+       </tr>
+
+   <dtml-comment>
+   <tr><td>Required</td>
+       <td>
+           <select name="required_p:int">
+           <option value="1">Yes</option>
+           <option value="0">No</option>
+           </select>
+       </td>
+       </tr>
+   </dtml-comment>
+
+   <tr><td>Index Field</td>
+       <td>
+           <select name="index_p:int">
+           <option value="1">Yes</option>
+           <option value="0">No</option>
+           </select>
+       </td>
+       </tr>
+
+   <tr><td>Index Type</td>
+       <td>
+           <select name="index_type">
+           <dtml-in listIndexTypes prefix="idx">
+            <option value="<dtml-var idx_item>"><dtml-var idx_item></option>
+           </dtml-in>
+       </tr>
+
+   <dtml-comment>
+   <tr><td>Use Default</td>
+       <td>
+           <select name="use_default_p:int">
+           <option value="1">Yes</option>
+           <option value="0">No</option>
+           </select>
+       </td>
+       </tr>
+
+   <tr><td>Default</td>
+       <td><input type="text" name="default"></td>
+       </tr>
+   </dtml-comment>
+
+
+   <tr><td colspan="2">
+       <input type="submit" value="add metadata element">
+       </td></tr>
+
+  </table>
+
+
+</form>
+
+<dtml-var manage_page_footer>

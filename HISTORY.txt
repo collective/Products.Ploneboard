@@ -1,0 +1,65 @@
+Copyright (c) 2003 Infrae. All rights reserved.
+See also LICENSE.txt
+$Revision: 1.1 $
+
+SilvaMetadata changes
+
+   0.7.5
+
+     Bugs fixed
+
+       - XML import with unrecognized metadata sets now skips these
+         sets silently.
+
+       - XML export for integers and floats should now work properly
+         when Python 2.1 is used.
+
+       - Make SilvaMetadata field editing work with Formulator 1.6.0.
+
+   0.7.4 
+
+     Bugs fixed
+
+        - XML import would fail with a NameError if a metadata set is
+          imported that is not registered. Now it fails with a more
+          informative error... What *should* be happening is that this
+          unrecognized metadata is skipped, instead.
+
+   0.7.3
+
+     Features added
+
+        - icon for service_metadata.
+
+     Bugs fixed
+
+        - XML import of complex lists for items now works.
+
+        - Indexing with XML import now works.
+       
+   0.7.2
+
+     Bugs fixed
+
+       - getMetadataValue was buggy and didn't really work. Fixed.
+
+   0.7.1
+
+     Features added
+
+       - Added Infrae standard release documentation.
+
+     Bugs fixed
+
+       - Avoid quadratic behavior while indexing. Previously, for n
+         elements that are indexed, for each element indexing the data
+         for the n indexes was accessed, resulting in quadratic
+         behavior while indexing (n * n values were accessed per
+         object).
+
+   0.5
+
+     Initial public release of SilvaMetadata.
+
+
+

@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+
+<metadata_set id="dc" ns_uri="http://purl.org/dc/elements/1.1" ns_prefix="dc">
+  <metadata_element id="Title">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="A name given to the resource.  Typically, a Title will be a name by which the resource is formally known." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Title" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Creator">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="An entity primarily responsible for making the content of the resource.  Examples of a Creator include a person, an organisation, or a service. Typically, the name of a Creator should be used to indicate the entity." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Creator" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Description">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="An account of the content of the resource. Description may include but is not limited to: an abstract, table of contents, reference to a graphical representation of content or a free-text account of the content." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Description" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Subject">
+   <index_type>ZCTextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>TextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="The topic of the content of the resource.  Typically, a Subject will be expressed as keywords, key phrases or classification codes that describe a topic of the resource. Recommended best practice is to select a value from a controlled vocabulary or formal classification scheme." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="title" type="str" value="Subject and Keywords" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_length" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="extra"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="title"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
+     <value key="max_length"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+     <value key="index_type">Cosine Measure</value>
+     <value key="doc_attr">proxy_value</value>
+     <value key="lexicon_id">silva_lexicon</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Publisher">
+   <index_type>KeywordIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="An entity responsible for making the resource available. Examples of a Publisher include a person, an organisation, or a service. Typically, the name of a Publisher should be used to indicate the entity." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Publisher" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Contributor">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="" />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Date">
+   <index_type>DateIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>DateTimeField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="date_only" type="int" value="0" />
+        <value key="hidden" type="int" value="0" />
+        <value key="description" type="str" value="A date associated with an event in the life cycle of the resource. Typically, Date will be associated with the creation or availability of the resource. Recommended best practice for encoding the date value is defined in a profile of ISO 8601 [W3CDTF] and follows the YYYY-MM-DD format." />
+        <value key="title" type="str" value="Date" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="ampm_time_style" type="int" value="0" />
+        <value key="external_validator" type="str" value="" />
+        <value key="date_separator" type="str" value="/" />
+        <value key="default_now" type="int" value="0" />
+        <value key="time_separator" type="str" value=":" />
+        <value key="input_order" type="str" value="ymd" />
+        <value key="input_style" type="str" value="text" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="date_only"></value>
+     <value key="start_datetime"></value>
+     <value key="hidden"></value>
+     <value key="description"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="ampm_time_style"></value>
+     <value key="external_validator"></value>
+     <value key="end_datetime"></value>
+     <value key="date_separator"></value>
+     <value key="default_now"></value>
+     <value key="time_separator"></value>
+     <value key="input_order"></value>
+     <value key="input_style"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="not_datetime">You did not enter a valid date and time.</message>
+     <message name="datetime_out_of_range">The date and time you entered were out of range.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Type">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>ListField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="The nature or genre of the content of the resource.  Type includes terms describing general categories, functions, genres, or aggregation levels for content. Recommended best practice is to select a value from a controlled vocabulary (for example, the DCMI Type Vocabulary [DCMITYPE]). To describe the physical or digital manifestation of the resource, use the Format element." />
+        <value key="first_item" type="int" value="0" />
+        <value key="title" type="str" value="Resource Type" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="items" type="list" value="[]" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="size" type="int" value="5" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="first_item"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="extra"></value>
+     <value key="external_validator"></value>
+     <value key="unicode"></value>
+     <value key="items"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+     <value key="size"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="unknown_selection">You selected an item that was not in the list.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Format">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>ListField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="The physical or digital manifestation of the resource. Typically, Format may include the media-type or dimensions of the resource. Format may be used to determine the software, hardware or other equipment needed to display or operate the resource. Examples of dimensions include size and duration. Recommended best practice is to select a value from a controlled vocabulary (for example, the list of Internet Media Types [MIME] defining computer media formats)." />
+        <value key="first_item" type="int" value="0" />
+        <value key="title" type="str" value="Format" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="items" type="list" value="[]" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="size" type="int" value="5" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="first_item"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="extra"></value>
+     <value key="external_validator"></value>
+     <value key="unicode"></value>
+     <value key="items"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+     <value key="size"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="unknown_selection">You selected an item that was not in the list.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Identifier">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="An unambiguous reference to the resource within a given context.  Recommended best practice is to identify the resource by means of a string or number conforming to a formal identification system. Example formal identification systems include the Uniform Resource Identifier (URI) (including the Uniform Resource Locator (URL)), the Digital Object Identifier (DOI) and the International Standard Book Number (ISBN)." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Identifier" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="vocabulary">silva_vocabulary</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Source">
+   <index_type>TextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="A reference to a resource from which the present resource is derived. The present resource may be derived from the Source resource in whole or in part. Recommended best practice is to reference the resource by means of a string or number conforming to a formal identification system." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Source" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="vocabulary">silva_vocabulary</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Language">
+   <index_type>FieldIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>ListField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="A language of the intellectual content of the resource. Recommended best practice is to use RFC 3066 [RFC3066], which, in conjunction with ISO 639 [ISO639], defines two- and three-letter primary language tags with optional subtags. Examples include &amp;quot;en&amp;quot; or &amp;quot;eng&amp;quot; for English, &amp;quot;akk&amp;quot; for Akkadian, and &amp;quot;en-GB&amp;quot; for English used in the United Kingdom." />
+        <value key="first_item" type="int" value="0" />
+        <value key="title" type="str" value="Language" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="extra" type="str" value="" />
+        <value key="external_validator" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="items" type="list" value="[]" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+        <value key="size" type="int" value="5" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="first_item"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="extra"></value>
+     <value key="external_validator"></value>
+     <value key="unicode"></value>
+     <value key="items"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+     <value key="size"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="unknown_selection">You selected an item that was not in the list.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Relation">
+   <index_type>KeywordIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>LinesField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="A reference to a related resource.  Recommended best practice is to reference the resource by means of a string or number conforming to a formal identification system." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="list" value="[]" />
+        <value key="css_class" type="str" value="" />
+        <value key="title" type="str" value="Relation" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_length" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="extra"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="title"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
+     <value key="max_length"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Coverage">
+   <index_type>TextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>RawTextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="extra" type="str" value="" />
+        <value key="description" type="str" value="The extent or scope of the content of the resource. Coverage will typically include spatial location (a place name or geographic coordinates), temporal period (a period label, date, or date range) or jurisdiction (such as a named administrative entity). Recommended best practice is to select a value from a controlled vocabulary (for example, the Thesaurus of Geographic Names [TGN]) and that, where appropriate, named places or time periods be used in preference to numeric identifiers such as sets of coordinates or date ranges." />
+        <value key="truncate" type="int" value="0" />
+        <value key="title" type="str" value="Coverage" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="required" type="int" value="1" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_length" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="extra"></value>
+     <value key="description"></value>
+     <value key="truncate"></value>
+     <value key="title"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="required"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_length"></value>
+     <value key="unicode"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_long">Too much input was given.</message>
+   </field_messages>
+   <index_args>
+     <value key="vocabulary">silva_vocabulary</value>
+   </index_args>
+  </metadata_element>
+  <metadata_element id="Rights">
+   <index_type>TextIndex</index_type>
+   <index_p>1</index_p>
+   <field_type>TextAreaField</field_type>
+   <read_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </read_guard>
+   <write_guard>
+     <roles></roles>
+     <permissions></permissions>
+     <expr></expr>
+   </write_guard>
+   <field_values>
+        <value key="required" type="int" value="1" />
+        <value key="description" type="str" value="Information about rights held in and over the resource.  Typically, a Rights element will contain a rights management statement for the resource, or reference a service providing such information. Rights information often encompasses Intellectual Property Rights (IPR), Copyright, and various Property Rights. If the Rights element is absent, no assumptions can be made about the status of these and other rights with respect to the resource." />
+        <value key="extra" type="str" value="" />
+        <value key="default" type="str" value="" />
+        <value key="css_class" type="str" value="" />
+        <value key="title" type="str" value="Rights Management" />
+        <value key="height" type="int" value="5" />
+        <value key="external_validator" type="str" value="" />
+        <value key="width" type="int" value="40" />
+        <value key="max_lines" type="str" value="" />
+        <value key="max_linelength" type="str" value="" />
+        <value key="unicode" type="int" value="1" />
+        <value key="max_length" type="str" value="" />
+        <value key="hidden" type="int" value="0" />
+        <value key="alternate_name" type="str" value="" />
+   </field_values>
+   <field_tales>
+     <value key="required"></value>
+     <value key="description"></value>
+     <value key="extra"></value>
+     <value key="default"></value>
+     <value key="css_class"></value>
+     <value key="title"></value>
+     <value key="height"></value>
+     <value key="external_validator"></value>
+     <value key="width"></value>
+     <value key="max_lines"></value>
+     <value key="max_linelength"></value>
+     <value key="unicode"></value>
+     <value key="max_length"></value>
+     <value key="hidden"></value>
+     <value key="alternate_name"></value>
+   </field_tales>
+   <field_messages>
+     <message name="external_validator_failed">The input failed the external validator.</message>
+     <message name="required_not_found">Input is required but no input given.</message>
+     <message name="too_many_lines">You entered too many lines.</message>
+     <message name="line_too_long">A line was too long.</message>
+     <message name="too_long">You entered too many characters.</message>
+   </field_messages>
+   <index_args>
+     <value key="vocabulary">silva_vocabulary</value>
+   </index_args>
+  </metadata_element>
+</metadata_set>

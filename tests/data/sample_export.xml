@@ -1,0 +1,12 @@
+<metadata xmlns:dublincore="http://purl.org/dc/elements/1.1"
+          xmlns="http://www.infrae.com/xml"
+          xmlns:silvan="http://www.infrae.com/xml/metadata">
+    <dublincore:title>The Magical Mystery Tour</dublincore:title>
+    <dublincore:subject>Earth, Geology, Science</dublincore:subject>
+    <dublincore:description>
+        A journey to the center of the earth
+    </dublincore:description>
+
+    <silvan:tree>A Tree is a tree </silvan:tree>
+    <silvan:origin> Chicken And Eggs </silvan:origin>
+</metadata>
