@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.38 2004/08/18 19:50:27 dreamcatcher Exp $
+$Id: ATContentType.py,v 1.39 2004/08/20 00:19:25 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -244,16 +244,24 @@ class ATCTFileContent(ATCTContent):
     )
 
     security.declareProtected(CMFCorePermissions.View, 'download')
-    def download(self, REQUEST, RESPONSE):
+    def download(self, REQUEST=None, RESPONSE=None):
         """Download the file (use default index_html)
         """
+        if REQUEST is None:
+            REQUEST = self.REQUEST
+        if RESPONSE is None:
+            RESPONSE = REQUEST.RESPONSE
         field = self.getPrimaryField()
         return field.download(self, REQUEST, RESPONSE)
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE):
+    def index_html(self, REQUEST=None, RESPONSE=None):
         """Make it directly viewable when entering the objects URL
         """
+        if REQUEST is None:
+            REQUEST = self.REQUEST
+        if RESPONSE is None:
+            RESPONSE = REQUEST.RESPONSE
         field = self.getPrimaryField()
         data  = field.getAccessor(self)(REQUEST=REQUEST, RESPONSE=RESPONSE)
         if data:
