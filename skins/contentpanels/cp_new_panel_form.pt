@@ -43,7 +43,7 @@
 <body onload="focus();">
 <div class="documentContent">
 
-    <table class="listing" border="1" style="font-size: 100%">
+    <table class="listing" border="1">
         <tbody>
         <tr>
           <th i18n:translate="viewlet_context"> related content </th>

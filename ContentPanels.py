@@ -136,9 +136,9 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         if panelContent is None: 
             return '.'
 
-        folderContext = self
-        if not self.isPrincipiaFolderish:
-            folderContext = self.aq_parent
+        folderContext = aq_inner(self)
+        if not folderContext.isPrincipiaFolderish:
+            folderContext = aq_parent(folderContext)
 
         relativePath = self.portal_url.getRelativeContentURL(panelContent)
         if panelContent is self:
@@ -169,9 +169,9 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
                 if not self.isPrincipiaFolderish:
                     folderContext = aq_parent(aq_inner(self))
                 else:
-                    folderContext = self
+                    folderContext = aq_inner(self)
 
-                panelObject = folderContext.restrictedTraverse(objectPath) 
+                panelObject = folderContext.restrictedTraverse(objectPath)
             else:
                 panelObject = self.portal_url.getPortalObject().restrictedTraverse(objectPath)
         except:
