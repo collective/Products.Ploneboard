@@ -37,3 +37,9 @@ rows?
 5. how to debug my new viewlet? I can't see the traceback from the errorlog.
 
    see contentpanels_error.py, uncoment the first line(just raise the exception)
+
+6. may I divide a panel in two or more colums ? If not may you consider
+   it as a change request ?
+
+   you can difine different numbers of column in different CP pages and use 
+   the 'tile' display mode(in the 'edit' tab) to make them in one page.
