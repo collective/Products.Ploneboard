@@ -67,7 +67,6 @@ class CMFCompositePage(BaseFolder, PackComposite):
     __implements__ = BaseFolder.__implements__ + (IComposite,)
     meta_type = portal_type = 'CMF Composite Page'
     archetype_name = 'Navigation Page'
-    immediate_view = 'design_view'
 
     security = ClassSecurityInfo()
     
