@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.11 2004/09/23 16:22:41 ajung Exp $
+$Id: SchemaEditor.py,v 1.12 2004/09/23 16:33:03 ajung Exp $
 """
 
 import re
@@ -239,7 +239,7 @@ class SchemaEditor:
             fieldset = FD.schemata    
             field = StringField(R['name'], schemata=fieldset, widget=StringWidget)
             S.addField(field)
-            self._p_changed = 1
+            self._schemas[schema_id] = S
             util.redirect(RESPONSE, schema_template,
                           self.translate('atse_field_added', 
                                          default='Field added'), 
