@@ -21,7 +21,7 @@
 Copy customconfig.py.example to customconfig.py and change the values in the
 user options section below.
 
-$Id: customconfig.py.example,v 1.9 2004/09/28 22:53:21 tiran Exp $
+$Id: customconfig.py.example,v 1.10 2004/10/19 20:47:11 dtremea Exp $
 """ 
 
 from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
@@ -56,6 +56,10 @@ MX_TIDY_OPTIONS= {
     'word_2000'        : 1,
     'char_encoding'    : 'raw',
     }
+
+## enable external storage
+## requires ExternalStorage from Christian Scholz
+EXT_STORAGE_ENABLE = False
 
 ## use TemplateMixin?
 ## if enabled users can choose between different view templates for each object
