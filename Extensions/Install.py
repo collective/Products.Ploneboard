@@ -69,7 +69,7 @@ def install(self):
 
     if left_slots != None:
         if slot not in left_slots and slot not in right_slots:
-            left_slots=left_slots+[slot,]
+            left_slots=list(left_slots)+[slot,]
             self.left_slots=left_slots
             print >> out, 'Added i18nContent slot to left_slots property.\n'
 

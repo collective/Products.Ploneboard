@@ -23,7 +23,7 @@
                         tal:omit-tag="">Item type</span>
             </span>
         </h1>
-        
+
         <p i18n:translate="description_languages_sheet">
         Add new languages for this I18NLayer here.
         </p>  
@@ -57,11 +57,12 @@
    
         <form class="group"
               name="edit_form"
-              action="createLanguageObject" 
+              action="createLanguageObject"
+              tal:attributes="action string:${here/absolute_url}/createLanguageObject"
               method="get">
- 
+
             <span class="legend" i18n:translate="">create new language</span>
-         
+
             <div class="row">
                 <div class="label">
                 
