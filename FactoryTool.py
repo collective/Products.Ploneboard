@@ -4,7 +4,7 @@ from Acquisition import aq_parent, aq_base, aq_inner, aq_chain
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from DateTime import DateTime
-from CMFCore import CMFCorePermissions
+from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalFolder import PortalFolder
 from DateTime import DateTime
 import urllib
