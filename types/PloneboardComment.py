@@ -85,9 +85,6 @@ class PloneboardComment(BaseBTreeFolder):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self.creation_date = DateTime()
         # Archetypes doesn't set values on creation from kwargs
-        self.setTitle(kwargs.get('title', ''))
-        self._creator = kwargs.get('creator', '')
-        self.setText(kwargs.get('text', ''))
         self._attachments_ids = []
 
     security.declareProtected(AddComment, 'addReply')
@@ -109,9 +106,10 @@ class PloneboardComment(BaseBTreeFolder):
                   'text' : comment_body
                   }
         #comment = PloneboardComment(id, comment_subject, comment_body, creator)
-        comment = PloneboardComment(id, **kwargs)
+        comment = PloneboardComment(id)
         self.aq_inner.aq_parent._setObject(id, comment)
         m = getattr(self.aq_inner.aq_parent, id)
+        m.initializeArchetype(**kwargs)
         m._setPortalTypeName('PloneboardComment')
         m.notifyWorkflowCreated()
         m.setInReplyTo(self)

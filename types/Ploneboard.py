@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
+$Id: Ploneboard.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
 """
 
 import Globals
@@ -107,10 +107,10 @@ class Ploneboard(BaseBTreeFolder):
                 , description ):
         """Add a forum to the board."""
         kwargs = {'title' : title, 'description' : description}
-        forum = PloneboardForum(id, **kwargs)
+        forum = PloneboardForum(id)
         self._setObject(id, forum)
-        
         forum = getattr(self, id)
+        forum.initializeArchetype(**kwargs)
         forum._setPortalTypeName('PloneboardForum')
         forum.notifyWorkflowCreated()
         #forum.setDescription(description)

@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
+$Id: PloneboardForum.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
 """
 
 from random import randint
@@ -99,8 +99,6 @@ class PloneboardForum(BaseBTreeFolder):
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         # Archetypes doesn't set values on creation from kwargs
-        self.setTitle(kwargs.get('title', ''))
-        self.setDescription(kwargs.get('description', ''))
         self._index = ForumIndex()
         self._comment_count = Length()
         self._moderated = 0
@@ -127,9 +125,10 @@ class PloneboardForum(BaseBTreeFolder):
         # Only create comment if body is not None
         id = self.generateId(conversation=1)
         kwargs = {'title' : subject, 'creator' : creator}
-        conversation = PloneboardConversation(id, **kwargs)
+        conversation = PloneboardConversation(id)
         self._setObject(id, conversation)
         conversation = getattr(self, id)
+        conversation.initializeArchetype(**kwargs)
         conversation._setPortalTypeName('PloneboardConversation')
         conversation.notifyWorkflowCreated()
         if body:

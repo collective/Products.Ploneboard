@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
+$Id: PloneboardConversation.py,v 1.2 2004/08/30 14:57:48 tesdal Exp $
 """
 
 from random import randint
@@ -92,10 +92,6 @@ class PloneboardConversation(BaseBTreeFolder):
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._index = ConversationIndex()
-        # Archetypes doesn't set values on creation from kwargs
-        self.setTitle(kwargs.get('title', ''))
-        self._creator = kwargs.get('creator', '')
-       
 
     security.declareProtected(ViewBoard, 'getConversation')
     def getConversation(self):
@@ -118,9 +114,10 @@ class PloneboardConversation(BaseBTreeFolder):
                   'text' : comment_body
                   }
         #comment = PloneboardComment(id, comment_subject, comment_body, creator)
-        comment = PloneboardComment(id, **kwargs)
+        comment = PloneboardComment(id)
         self._setObject(id, comment)
         m = getattr(self, id)
+        m.initializeArchetype(**kwargs)
         m._setPortalTypeName('PloneboardComment')
         m.notifyWorkflowCreated()
         return m

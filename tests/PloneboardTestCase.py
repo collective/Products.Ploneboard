@@ -9,7 +9,8 @@ import time
 import utils
 
 ZopeTestCase.installProduct('Archetypes')
-ZopeTestCase.installProduct('PortalTransforms')
+ZopeTestCase.installProduct('PortalTransforms', quiet=1)
+ZopeTestCase.installProduct('MimetypesRegistry')
 ZopeTestCase.installProduct('Ploneboard')
 
 
