@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.13 2004/06/09 22:31:39 yenzenz Exp $
+$Id: ATContentType.py,v 1.14 2004/06/10 08:25:34 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -133,7 +133,7 @@ class ATCTMixin(TemplateMixin):
                 # we are trying to
                 return self.cmf_edit(**kwargs)
         # standard AT edit - redirect to update()
-        return self.update(self, **kwargs)
+        return self.update(**kwargs)
 
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, *args, **kwargs):
