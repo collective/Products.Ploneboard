@@ -106,7 +106,8 @@ class MemberDataContainer(BaseBTreeFolder):
 
     manage_options=( BaseBTreeFolder.manage_options +
                      ActionProviderBase.manage_options
-                   )  +({'label':'Schema','action':'schemaForm'}, ) 
+                   )  +({'label':'Schema','action':'schemaForm'}, )
+    security.declareProtected(CMFCorePermissions.ManageProperties, 'schemaForm')
     schemaForm = DTMLFile('dtml/schemaForm',globals())
 
     # Methods: wrapUser, getMemberDataContents and pruneMemberDataContents
@@ -476,7 +477,7 @@ class MemberDataContainer(BaseBTreeFolder):
         """
         self._deleteMember(id)
 
-
+    security.declareProtected(CMFCorePermissions.ManageProperties, 'setMemberSchema')
     def setMemberSchema(self,member_schema,REQUEST=None):
         ''' '''
         member_schema=member_schema.strip().replace('\r','')
