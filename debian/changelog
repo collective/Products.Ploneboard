@@ -1,0 +1,6 @@
+zope-cmfquickinstallertool (1.3pre-1) unstable; urgency=low
+
+  * Initial debian package. 
+
+ -- Sylvain Thénault <sylvain.thenault@logilab.fr>  Tue, 5 Aug 2003 14:42:05 +0200
+
