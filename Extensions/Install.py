@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.18 2004/07/23 19:03:19 tiran Exp $
+$Id: Install.py,v 1.19 2005/01/24 18:18:44 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -37,8 +37,11 @@ from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.Extensions.utils import setupMimeTypes, registerTemplates
-from Products.ATContentTypes.Extensions.toolbox import switchATCT2CMF, isSwitchedToATCT
+from Products.ATContentTypes.Extensions.utils import setupMimeTypes
+from Products.ATContentTypes.Extensions.utils import registerTemplates
+from Products.ATContentTypes.Extensions.utils import registerActionIcons
+from Products.ATContentTypes.Extensions.toolbox import switchATCT2CMF
+from Products.ATContentTypes.Extensions.toolbox import isSwitchedToATCT
 
 def install(self):
     out = StringIO()
@@ -97,6 +100,9 @@ def install(self):
 
     # bind templates for TemplateMixin
     registerTemplates(self, typeInfo, out)
+    
+    # register action icons
+    registerActionIcons(self, typeInfo, out)
 
     removeApplicationXPython(self, out)
     

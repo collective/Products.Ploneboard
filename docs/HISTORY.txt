@@ -1,3 +1,9 @@
+0.3-DEVEL - unreleased
+======================
+
+ * Fixed [ 1047878 ] For ical and vcal export, use action icons instead of tabs
+   [tiran]
+
 0.2.0-rc4 - Unreleased
 ======================
 

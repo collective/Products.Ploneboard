@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.7 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: CalendarSupport.py,v 1.8 2005/01/24 18:18:42 tiran Exp $
 """
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -115,16 +115,35 @@ class CalendarSupportMixin:
     actions = ({
         'id'          : 'ics',
         'name'        : 'iCalendar',
-        'action'      : 'string:${object_url}/ics_view',
-        'permissions' : (CMFCorePermissions.View, )
+        # XXX 'action'      : 'python: "%s/ics_view" % object_url.replace("http://", "webcal://")',
+        'action'      : 'python:${object_url}/ics_view',
+        'permissions' : (CMFCorePermissions.View, ),
+        'category'    : 'document_actions',
          },
          {
         'id'          : 'vcs',
         'name'        : 'vCalendar',
         'action'      : 'string:${object_url}/vcs_view',
-        'permissions' : (CMFCorePermissions.View, )
+        'permissions' : (CMFCorePermissions.View, ),
+        'category'    : 'document_actions',
          },
     )
+    
+    _at_action_icons = ({
+        'category'  : 'plone',
+        'action_id' : 'ics',
+        'icon_expr' : 'ical_icon.gif',
+        'title'     : 'iCalendar export',
+        'priority'  : 0,
+        },
+        {
+        'category'  : 'plone',
+        'action_id' : 'vcs',
+        'icon_expr' : 'vcal_icon.gif',
+        'title'     : 'vCalendar export',
+        'priority'  : 0,
+        },
+        )
 
     security.declareProtected(CMFCorePermissions.View, 'getICal')
     def getICal(self):

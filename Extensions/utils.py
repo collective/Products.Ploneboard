@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: utils.py,v 1.6 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: utils.py,v 1.7 2005/01/24 18:18:45 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -141,3 +141,25 @@ def registerTemplatesForClass(self, klass, portal_type):
         views.append(view)
 
     atTool.bindTemplate(portal_type, views)
+
+def registerActionIcons(self, typeInfo, out):
+    """
+    """
+    aitool = getToolByName(self, 'portal_actionicons')
+    for t in typeInfo:
+        klass        = t['klass']
+        portal_type  = klass.portal_type
+        action_icons = getattr(klass, '_at_action_icons', None)
+        if action_icons:
+            for icon in action_icons:
+                info = (icon['category'], icon['action_id'], portal_type)
+                try:
+                    aitool.addActionIcon(**icon)
+                except KeyError:
+                    print >>out, 'Action icon %s:%s for %s is already defined'\
+                                 ', reinstalling' % info
+                    aitool.removeActionIcon(icon['category'], icon['action_id'])
+                    aitool.addActionIcon(**icon)
+                else:
+                    print >>out, 'Added action icon %s:%s for %s' % info
+                    
