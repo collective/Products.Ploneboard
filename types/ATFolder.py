@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.4 2004/03/16 20:33:24 tiran Exp $
+$Id: ATFolder.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -31,7 +31,6 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base, aq_inner, aq_parent
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
 from schemata import ATFolderSchema, ATBTreeFolderSchema
 
@@ -45,11 +44,13 @@ class ATFolderBase(OrderedBaseFolder):
     meta_type      = 'ATFolder'
     archetype_name = 'AT Folder'
     newTypeFor     = 'Folder'
-    immediate_view = 'folder_listing'
-    
     TypeDescription= ''
+    assocMimetypes = ()
+    assocFileExt   = ()
 
-    __implements__ = OrderedBaseFolder.__implements__, IATContentType, IATFolder
+    immediate_view = 'folder_listing'
+
+    __implements__ = OrderedBaseFolder.__implements__, IATFolder
 
     security       = ClassSecurityInfo()
 
@@ -134,8 +135,11 @@ class ATBTreeFolder(BaseBTreeFolder):
     global_allow   = 0
     newTypeFor     = 'Plone Large Folder'
     TypeDescription= ''
+    assocMimetypes = ()
+    assocFileExt   = ()
 
-    __implements__ = BaseBTreeFolder.__implements__, IATContentType, IATBTreeFolder
+
+    __implements__ = BaseBTreeFolder.__implements__, IATBTreeFolder
 
     security       = ClassSecurityInfo()
 

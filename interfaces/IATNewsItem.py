@@ -16,25 +16,16 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
-"""AT Content Types general interface
+"""AT News Item interface
 
-$Id: IATContentType.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: IATNewsItem.py,v 1.1 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from interface import Interface, Attribute
+from IATContentType import IATContentType
 
-class IATContentType(Interface):
-    """Marker interface for AT Content Types
+class IATNewsItem(IATContentType):
+    """AT News Item interface
     """
-
-    newTypeFor = Attribute('''Used to get the meta type of the original implementation''')
-    TypeDescription = Attribute('''A short description used for the edit screen''')
-    assocMimetypes = Attribute('''A tuple of mimetypes that are associated
-                                  with this type. Format: ('bar/foo', 'foo/*',)
-                               ''')
-    assocFileExt = Attribute('''A tuple of file extensions that are associated
-                                with this type. Format: ('jpeg', 'png',)
-                             ''')
-    

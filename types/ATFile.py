@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.4 2004/03/17 19:38:58 tiran Exp $
+$Id: ATFile.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -33,7 +33,7 @@ from ComputedAttribute import ComputedAttribute
 from Products.PortalTransforms.utils import TransformException
 
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATFile import IATFile
 from schemata import ATFileSchema
 
 
@@ -47,8 +47,10 @@ class ATFile(BaseContent):
     archetype_name = 'AT File'
     newTypeFor     = 'File'
     TypeDescription= ''
+    assocMimetypes = ('application/*', 'audio/*', 'video/*', )
+    assocFileExt   = ()
 
-    __implements__ = BaseContent.__implements__, IATContentType
+    __implements__ = BaseContent.__implements__, IATFile
 
     security       = ClassSecurityInfo()
 

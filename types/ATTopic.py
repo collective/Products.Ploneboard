@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.3 2004/03/16 13:58:36 tiran Exp $
+$Id: ATTopic.py,v 1.4 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,7 +32,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types.criteria import CriterionRegistry
 from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic
 from schemata import ATTopicSchema
 
@@ -50,10 +49,13 @@ class ATTopic(BaseFolderMixin):
     newTypeFor     = 'Topic'
     TypeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
                      'criteria you specify. Topics may also contain sub-topics.'
+    assocMimetypes = ()
+    assocFileExt   = ()
+
     filter_content_types  = 1
     allowed_content_types = 'ATTopic'
 
-    __implements__ = BaseFolderMixin.__implements__, IATContentType, IATTopic
+    __implements__ = BaseFolderMixin.__implements__, IATTopic
 
     security       = ClassSecurityInfo()
 

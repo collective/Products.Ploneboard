@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.2 2004/03/16 13:58:36 tiran Exp $
+$Id: ATFavorite.py,v 1.3 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,7 +28,7 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATFavorite import IATFavorite
 from ComputedAttribute import ComputedAttribute
 from schemata import ATFavoriteSchema
 
@@ -44,8 +44,10 @@ class ATFavorite(BaseContent):
     #global_allow   = 0
     newTypeFor     = 'Favorite'
     TypeDescription= ''
+    assocMimetypes = ()
+    assocFileExt   = ('fav', )
 
-    __implements__ = BaseContent.__implements__, IATContentType
+    __implements__ = BaseContent.__implements__, IATFavorite
 
     security       = ClassSecurityInfo()
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATImage.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -33,7 +33,7 @@ from urllib import quote
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATImage import IATImage
 from schemata import ATImageSchema
 
 
@@ -47,8 +47,10 @@ class ATImage(BaseContent):
     archetype_name = 'AT Image'
     newTypeFor     = 'Image'
     TypeDescription= ''
+    assocMimetypes = ('image/*', )
+    assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
 
-    __implements__ = BaseContent.__implements__, IATContentType
+    __implements__ = BaseContent.__implements__, IATImage
 
     security       = ClassSecurityInfo()
 

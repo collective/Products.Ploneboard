@@ -16,19 +16,20 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
-"""Topic and criterion interface
+"""AT Folder interface
 
-$Id: IATFolder.py,v 1.1 2004/03/18 13:17:09 tiran Exp $
+$Id: IATFolder.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from interface import Interface, Attribute
+from IATContentType import IATContentType
 
-class IATFolder(Interface):
-    """AT Folder marker interface
+class IATFolder(IATContentType):
+    """AT Folder interface
     """
 
-class IATBTreeFolder(Interface):
-    """AT BTree Folder marker interface
+class IATBTreeFolder(IATContentType):
+    """AT BTree Folder interface
     """

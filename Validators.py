@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.6 2004/03/19 17:19:27 tiran Exp $
+$Id: Validators.py,v 1.7 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -252,12 +252,12 @@ def unwrappedValueFromHTML(value):
     lines = value.split('\n')
     lines = lines[7:]   # remove <!DOCTYPE ... <body>
     lines = lines[:-4] # remove </body></html>\n\n
-    return ''.join(lines)
+    return '\n'.join(lines)
 
 def parseErrorData(data, removeWarnings=0):
     """Parse the error data to change some stuff
     """
-    lines  = data.split('\n')
+    lines  = data.split('\n'    )
     nlines = []
     for line in lines:
         # substract 11 lines from line

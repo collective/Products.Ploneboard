@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.4 2004/03/18 13:17:09 tiran Exp $
+$Id: Install.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -33,6 +33,7 @@ from Acquisition import aq_base
 from Products.Archetypes.interfaces.base import IBaseFolder, IBaseContent
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATFile import IATFile
 
 from Products.ATContentTypes.config import *
 
@@ -72,8 +73,12 @@ def install(self):
         'Migrate from CMFDefault types to ATContentTypes',    
         PROJECTNAME+'.migrateFromCMF', 
         'migrate')    
+
     # changing workflow
     setupWorkflows(self, typeInfo, out)
+    
+    # setup content type registry
+    setupMimeTypes(self, typeInfo, out)
 
     return out.getvalue()
 
@@ -123,3 +128,65 @@ def setupWorkflows(self, typeInfo, out):
             wftool.setChainForPortalTypes(portal_type, WORKFLOW_DEFAULT)
         else:
             print >>out, 'NOT assigning %s' % portal_type
+
+    # update workflow settings
+    count = wftool.updateRoleMappings()
+
+def setupMimeTypes(self, typeInfo, out):
+    reg = getToolByName(self, 'content_type_registry')
+    
+    old = ('link', 'news', 'document', 'file', 'image')
+    moveDown = []
+
+    for o in old:
+        # remove old
+        if reg.getPredicate(o):
+            reg.removePredicate(o)
+    
+    for t in typeInfo:
+        klass       = t['klass']
+        portal_type = t['portal_type']
+
+        if not IATContentType.isImplementedByInstancesOf(klass):
+            # not a AT ContentType (maybe criterion) - skip
+            continue
+        
+        # major minor
+        for name, mm in getMajorMinorOf(klass):
+            if reg.getPredicate(name):
+                reg.removePredicate(name)
+            reg.addPredicate(name, 'major_minor')
+            reg.getPredicate(name).edit(**mm)
+            reg.assignTypeName(name, portal_type)
+            if IATFile.isImplementedByInstancesOf(klass):
+                moveDown.append(name)
+        # extensions
+        name, extlist = getFileExtOf(klass)
+        if extlist:
+            if reg.getPredicate(name):
+                reg.removePredicate(name)
+            reg.addPredicate(name, 'extension')
+            reg.getPredicate(name).edit(extlist)
+            reg.assignTypeName(name, portal_type)
+            if IATFile.isImplementedByInstancesOf(klass):
+                moveDown.append(name)
+
+    # move ATFile to the bottom because ATFile is a fallback
+    for name in moveDown:
+        reg.reorderPredicate(name, len(reg.listPredicates())-1)
+
+def getMajorMinorOf(klass):
+    retval = []
+    for mt in klass.assocMimetypes:
+        ma, mi = mt.split('/')
+        if mi == '*':
+            mi   = ''
+            name = '%s' % ma
+        else:
+            name = '%s_%s' % (ma, mi)
+        retval.append( (name, {'major' : ma, 'minor' : mi}) )
+    return retval
+
+def getFileExtOf(klass):
+    name = '%s_ext' % klass.meta_type
+    return (name, klass.assocFileExt)

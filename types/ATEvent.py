@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.2 2004/03/16 17:34:50 tiran Exp $
+$Id: ATEvent.py,v 1.3 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,7 +28,7 @@ from Products.Archetypes.public import BaseContent, registerType
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATEvent import IATEvent
 from schemata import ATEventSchema
 
 
@@ -42,8 +42,10 @@ class ATEvent(BaseContent):
     archetype_name = 'AT Event'
     newTypeFor     = 'Event'
     TypeDescription= ''
+    assocMimetypes = ()
+    assocFileExt   = ('event', )
 
-    __implements__ = BaseContent.__implements__, IATContentType
+    __implements__ = BaseContent.__implements__, IATEvent
 
     security       = ClassSecurityInfo()
 

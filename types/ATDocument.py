@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.5 2004/03/19 17:19:27 tiran Exp $
+$Id: ATDocument.py,v 1.6 2004/03/20 16:08:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,7 +28,7 @@ from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.ATContentTypes.interfaces.IATDocument import IATDocument
 from schemata import ATDocumentSchema
 
 
@@ -42,8 +42,12 @@ class ATDocument(BaseContent):
     archetype_name = 'AT Document'
     newTypeFor     = 'Document'
     TypeDescription= ''
+    assocMimetypes = ('application/pdf', 'application/xhtml+xml',
+                      'application/msword', 'message/rfc822', 'text/*',
+                     )
+    assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', )
 
-    __implements__ = BaseContent.__implements__, IATContentType
+    __implements__ = BaseContent.__implements__, IATDocument
 
     security       = ClassSecurityInfo()
 
