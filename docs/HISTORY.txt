@@ -51,6 +51,13 @@
 
  * Fixed [ 1013853 ] File upload image shows mime-type in widget
    [tiran]
+
+ * Removed call to markCreationFlag()
+   [tiran]
+
+ * Fixed problem with ATFavorite: Migration to ATFavorite failed when the object
+   was gone or the user wasn't allowed to access it.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 

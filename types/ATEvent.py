@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.22 2004/08/04 15:00:44 tiran Exp $
+$Id: ATEvent.py,v 1.23 2004/09/10 15:09:22 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -51,8 +51,8 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     content_icon   = 'event_icon.gif'
     meta_type      = 'ATEvent'
     archetype_name = 'AT Event'
-    immediate_view = 'event_view'
     default_view   = 'event_view'
+    immediate_view = 'event_view'
     suppl_views    = ()
     newTypeFor     = ('Event', 'CMF Event')
     typeDescription= 'Fill in the details of the event you want to add.'

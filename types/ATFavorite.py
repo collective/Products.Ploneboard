@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.14 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATFavorite.py,v 1.15 2004/09/10 15:09:22 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -33,7 +33,11 @@ else:
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
+from AccessControl import Unauthorized
 from ComputedAttribute import ComputedAttribute
+from ZODB.POSException import ConflictError
+
+from Products.Archetypes.debug import _zlogger
 
 from Products.ATContentTypes.types.ATContentType import ATCTContent
 from Products.ATContentTypes.interfaces.IATFavorite import IATFavorite
@@ -47,8 +51,8 @@ class ATFavorite(ATCTContent):
     content_icon   = 'favorite_icon.gif'
     meta_type      = 'ATFavorite'
     archetype_name = 'AT Favorite'
-    immediate_view = 'favorite_view'
     default_view   = 'favorite_view'
+    immediate_view = 'favorite_view'
     suppl_views    = ()
     include_default_actions = 0
     global_allow   = 1
@@ -102,7 +106,10 @@ class ATFavorite(ATCTContent):
         remote = self._getRemoteUrl()
         try:
             obj = portal.restrictedTraverse(remote)
-        except KeyError:
+        except ConflictError:
+            raise
+        except (KeyError, AttributeError, Unauthorized, 'Unauthorized', ):
+            _zlogger.log_exc()
             obj = None
         return obj
 

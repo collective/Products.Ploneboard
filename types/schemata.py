@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.48 2004/08/22 20:20:26 tiran Exp $
+$Id: schemata.py,v 1.49 2004/09/10 15:09:22 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -255,7 +255,7 @@ ATFileSchema = ATContentTypeSchema + Schema((
                         label= "File",
                         label_msgid = "label_file",
                         i18n_domain = "plone",
-                        show_content_type = False,))
+                        show_content_type = False,)),
     ), marshall=PrimaryFieldMarshaller())
 
 ATExtFileSchema = ATFileSchema.copy()
@@ -295,7 +295,7 @@ ATImageSchema = ATContentTypeSchema + Schema((
                         label= "Image",
                         label_msgid = "label_image",
                         i18n_domain = "plone",
-                        show_content_type = False,))
+                        show_content_type = False,)),
     ), marshall=PrimaryFieldMarshaller())
 
 ATExtImageSchema = ATImageSchema.copy()

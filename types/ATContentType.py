@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.39 2004/08/20 00:19:25 dreamcatcher Exp $
+$Id: ATContentType.py,v 1.40 2004/09/10 15:09:17 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -29,14 +29,19 @@ from Products.ATContentTypes.ConstrainTypesMixin import ConstrainTypesMixin
 from copy import copy
 
 if HAS_LINGUA_PLONE:
-    from Products.LinguaPlone.public import BaseContent, BaseFolder
-    from Products.LinguaPlone.public import OrderedBaseFolder,BaseBTreeFolder
+    from Products.LinguaPlone.public import BaseContent
+    from Products.LinguaPlone.public import BaseFolder
+    from Products.LinguaPlone.public import OrderedBaseFolder
+    from Products.LinguaPlone.public import BaseBTreeFolder
 else:
-    from Products.Archetypes.public import BaseContent, BaseFolder
-    from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
+    from Products.Archetypes.public import BaseContent
+    from Products.Archetypes.public import BaseFolder
+    from Products.Archetypes.public import OrderedBaseFolder
+    from Products.Archetypes.public import BaseBTreeFolder
 
 from Products.Archetypes.TemplateMixin import TemplateMixin
-from Products.Archetypes.debug import _default_logger, _zlogger
+from Products.Archetypes.debug import _default_logger
+from Products.Archetypes.debug import _zlogger
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
@@ -47,7 +52,10 @@ if HAS_PLONE2:
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass
-from Acquisition import aq_base, aq_inner, aq_parent
+from Acquisition import aq_base
+from Acquisition import aq_inner
+from Acquisition import aq_parent
+from ExtensionClass import Base
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
@@ -88,6 +96,7 @@ def translateMimetypeAlias(alias):
     assert(mime) # shouldn't be empty
     return mime
 
+
 class ATCTMixin(TemplateMixin):
     """Mixin class for AT Content Types"""
     schema         =  ATContentTypeSchema
@@ -96,7 +105,6 @@ class ATCTMixin(TemplateMixin):
     meta_type      = 'ATContentType'
     archetype_name = 'AT Content Type'
     immediate_view = 'base_view'
-    default_view   = 'base_view'
     suppl_views    = ()
     newTypeFor     = ()
     typeDescription= ''
@@ -136,7 +144,6 @@ class ATCTMixin(TemplateMixin):
             if kwargs:
                 self.edit(**kwargs)
             self._signature = self.Schema().signature()
-            self.markCreationFlag()
         except Exception, msg:
             _zlogger.log_exc()
             if DEBUG and str(msg) not in ('SESSION',):
