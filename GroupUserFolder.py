@@ -457,7 +457,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddUser(name, password, roles, domains, groups, **kw)
     
     security.declareProtected(Permissions.manage_users, "userFolderEditUser")
-    def userFolderEditUser(self, name, password, roles, domains, groups = (), **kw):
+    def userFolderEditUser(self, name, password, roles, domains, groups = None, **kw):
         """API method for changing user object attributes. Note that not
         all user folder implementations support changing of user object
         attributes.
@@ -488,7 +488,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return self._doAddGroup(name, roles, groups, **kw)
         
     security.declareProtected(Permissions.manage_users, "userFolderEditGroup")
-    def userFolderEditGroup(self, name, roles, groups, **kw):
+    def userFolderEditGroup(self, name, roles, groups = None, **kw):
         """API method for changing group object attributes.
         """
         return self._doChangeGroup(name, roles = roles, groups = groups, **kw)
@@ -1043,7 +1043,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             **kw)
 
     security.declarePrivate("_doChangeUser")
-    def _doChangeUser(self, name, password, roles, domains, groups = (), **kw):
+    def _doChangeUser(self, name, password, roles, domains, groups = None, **kw):
         """
         Modify an existing user. This should be implemented by subclasses
         to make the actual changes to a user. The 'password' will be the
@@ -1052,13 +1052,19 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         A None password should not change it (well, we hope so)
         """
+        # Get actual user name and id
+        usr = self.getUser(name)
+        if usr is None:
+            raise ValueError, "Invalid user: '%s'" % (name,)
+        id = usr.getRealId()
+
+        # Don't lose existing groups
+        if groups is None:
+            groups = usr.getGroups()
+
         roles = list(roles)
         groups = list(groups)
         
-        # Get actual user name and id
-        usr = self.getUser(name)
-        id = usr.getRealId()
-
         # Change groups affectation
         cur_groups = self.getGroups()
         given_roles = tuple(usr.getRoles()) + tuple(roles)
@@ -1195,11 +1201,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             )
 
     security.declarePrivate("_doChangeGroup")
-    def _doChangeGroup(self, name, roles, groups = (), **kw):
+    def _doChangeGroup(self, name, roles, groups = None, **kw):
         """Modify an existing group."""
-        roles = list(roles or [])
-        groups = list(groups or [])
-
         # Remove prefix if given
         if name.startswith(self.getGroupPrefix()):
             name = name[GROUP_PREFIX_LEN:]
@@ -1208,6 +1211,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         grp = self.getGroup(name, prefixed = 0)
         if grp is None:
             raise ValueError, "Invalid group: '%s'" % (name,)
+
+        # Don't lose existing groups
+        if not groups:
+            groups = grp.getGroups()
+
+        roles = list(roles or [])
+        groups = list(groups or [])
 
         # Change groups affectation
         cur_groups = self.getGroups()
@@ -1303,7 +1313,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/12/16 18:54:58 $"[7:-2]
+        rev_date = "$Date: 2004/12/18 15:33:49 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

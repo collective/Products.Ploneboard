@@ -1,5 +1,9 @@
 [v3.2RC1 - 20041215]
 
+  * _doChangeUser and _doChangeGroup lost existing groups if the groups argument
+    was omitted. Fixed these and the Zope 2.5-style APIs accordingly.
+    [stefan]
+
   * Updated API to have a better conformance to the original Zope API.
     Thanks to Stefan H Holek for this clever advice.
 
