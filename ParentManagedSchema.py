@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.4 2004/09/23 19:10:16 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.5 2004/09/23 19:18:10 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -39,9 +39,9 @@ class ParentManagedSchema:
         # acquisition and assign it to a volatile attribute for performance
         # reasons
 
-        schema = getattr(self, '_v_schema', None)
-        if schema is None:
-            schema = self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
+        self._v_schema = getattr(self, '_v_schema', None)
+        if self._v_schema is None:
+            self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
 
             for field in self._v_schema.fields():
 
