@@ -367,7 +367,10 @@ class PloneboardMessage(BaseBTreeFolder):
         
         orig = orig.replace('\n', '<br/>')
         return orig
-        
+
+    def __nonzero__(self):
+        return 1
+
 registerType(PloneboardMessage, PROJECTNAME)
 Globals.InitializeClass(PloneboardMessage)
 

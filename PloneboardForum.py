@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.4 2004/03/24 15:50:15 tesdal Exp $
+$Id: PloneboardForum.py,v 1.5 2004/03/24 16:19:42 tesdal Exp $
 """
 
 from random import randint
@@ -302,6 +302,9 @@ class PloneboardForum(BaseBTreeFolder):
     
     def _getBoardCatalog(self):
         return self.getBoard().getInternalCatalog()
+
+    def __nonzero__(self):
+        return 1
 
 registerType(PloneboardForum, PROJECTNAME)
 Globals.InitializeClass(PloneboardForum)

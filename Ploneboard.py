@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.5 2004/03/24 15:50:15 tesdal Exp $
+$Id: Ploneboard.py,v 1.6 2004/03/24 16:19:42 tesdal Exp $
 """
 
 import Globals
@@ -173,6 +173,9 @@ class Ploneboard(BaseBTreeFolder):
         Returns number of allowed attachments
         """
         return self._number_of_attachments
+
+    def __nonzero__(self):
+        return 1
 
 registerType(Ploneboard, PROJECTNAME)
 Globals.InitializeClass(Ploneboard)
