@@ -13,7 +13,7 @@
         <a tal:attributes="href here/absolute_url"
            tal:content="here/Title">Title</a>
     </h5>
-    <div class="body" tal:content="structure here/contentpanels_renderObject">
+    <div class="body" style="padding:5px" tal:content="structure here/contentpanels_renderObject">
       content
     </div>
   </div>

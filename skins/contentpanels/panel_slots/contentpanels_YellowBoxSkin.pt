@@ -8,7 +8,7 @@
 
 <tal:block metal:define-macro="skinslot">
   <br/>
-  <TABLE cellSpacing="0" cellPadding="0" width="100%" border="1" bordercolorlight="#000000" bordercolordark="#FFFFFF">
+  <TABLE cellSpacing="0" cellPadding="5" width="100%" border="1" bordercolorlight="#000000" bordercolordark="#FFFFFF">
      <TR valign="middle" bgColor="#959500" >
        <TD width="100%" height="18">
          <font color="#ffffff">

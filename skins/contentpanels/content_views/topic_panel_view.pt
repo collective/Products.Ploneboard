@@ -1,13 +1,13 @@
-<table width="100%">
+<table width="100%" i18n:domain="plone">
  <tbody tal:repeat="item python:here.queryCatalog()[:5]">
   <tr class="odd" 
-       tal:attributes="class python:test(repeat['item'].index % 2, 'even', 'odd')">
-    <td tal:define="contentObject item/getObject" tal:condition="contentObject">
+       tal:attributes="class python:test(repeat['item'].index % 2, 'even', 'odd')"
+       tal:define="contentObject item/getObject" >
+    <td tal:condition="python:contentObject">
 
 
         <span tal:define="action python:contentObject.getTypeInfo().getActionById('view');
                         url python:test(contentObject.absolute_url()+'/'+action);">
-
              <a href="#" tal:attributes="href url" target="_blank">
                 <img src="#" tal:attributes="src string:${here/portal_url}/${contentObject/getIcon}" />&nbsp;
                 <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(contentObject)" >

@@ -17,8 +17,11 @@ try:
 
     return panelObject.object_skin_panel(panelObject, panelSkin=panelSkin)
 
-except:
+except Exception,e:
     print 'Sorry, Object in this panel was Deleted!<br/>'
     print 'Please delete this panel. '
+    #from zLOG import LOG, INFO
+    #LOG(script.id,INFO,str(e))
+    #raise
     return printed
 

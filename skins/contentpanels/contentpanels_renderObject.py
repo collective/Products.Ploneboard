@@ -24,13 +24,17 @@ except:
 
 # 3. can't find, use default ugly panel viwer
 if panel_viewer == '':
-  panel_viewer = 'contentpanels_defualt_panelviewer'
+  panel_viewer = 'contentpanels_default_panelviewer'
 
 # panelcontent = apply(context.restrictedTraverse(panel_viewer), (context, None) )
-
+from zLOG import LOG, INFO
 try:
+  #LOG(script.id,INFO, 'panel_viewer is "%s" ' % panel_viewer)
+  #LOG(script.id,INFO, 'id of context is "%s"' % context.getId())
   panelcontent = apply(context.restrictedTraverse(panel_viewer), (context, None) )
-except:
+except Exception,e:
+  
+  #LOG(script.id,INFO,str(e))
   panelcontent = 'Sorry, Exception while render this Page.'
-
+  #raise
 return panelcontent
