@@ -13,14 +13,6 @@ needs to be wired up to the auto_register, register_public, and
 register_private transitions.  The methods just needs to invoke
 the Member object's register method.
 
-*** Add a manage_afterEdit hook to Archetypes.  I've set things up
-to trigger automatic workflow transitions when you modify email,
-but I think that's fundamentally broken.  I am guessing that what may
-happen is that email will get changed, a state change will be triggered,
-then an authorization exception will occur because the permissions have
-now changed.  The trigger transitions method should just be moved to
-manage_afterEdit and the setEmail() method should be nuked.
-
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-
 created members lying around.)  Registration should be able to just

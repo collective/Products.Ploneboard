@@ -1,6 +1,7 @@
 import types
 import Products.CMFMember
 import AccessControl.User
+import base64
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
@@ -195,6 +196,13 @@ class Member(BaseContent):
         return self.getUserName()
 
 
+    def update(self, **kwargs):
+        ret = BaseObject.update(self, **kwargs)
+        # invoke any automated workflow transitions after update
+        triggerAutomaticTransitions(self)
+        return ret
+
+
     security.declarePrivate('validate_id')
     def validate_id(self, id):
         # no change -- ignore
@@ -353,14 +361,6 @@ class Member(BaseContent):
 
         self.id = id
 
-    security.declareProtected(CMFMember.EDIT_REGISTRATION_PERMISSION, 'setId')
-    def setEmail(self, email):
-        self.email = email
-        # invoke any automated workflow transitions
-        # XXX this should really be in a manage_afterEdit method of some sort
-        # XXX need to add a hook into archetypes
-        triggerAutomaticTransitions(self)
-
 
     security.declarePrivate('setUser')
     def setUser(self, user):
@@ -403,16 +403,19 @@ class Member(BaseContent):
     def _setPassword(self, password):
         if password:
             self.getUser().__ = password
-            # XXX - this is kind of ugly -- is there a better way?
             # don't log out the current user
             if self.REQUEST:
                 membership_tool = getToolByName(self, 'portal_membership')
                 if membership_tool.getAuthenticatedMember().getUserName() == self.getUserName():
-                    token = self.getUserName() + ':' + password
-                    token = encodestring(token)
-                    token = quote(token)
-                    self.REQUEST.response.setCookie('__ac', token, path='/')
-                    self.REQUEST['__ac']=token
+                    # XXX make sure this works -- replaces commented out code below
+                    cookie_crumbler = getToolByName(self, 'cookie_crumbler')
+                    cookie_crumbler.credentialsChanged(self.getUser(), self.getUserName(), password)
+#                    # XXX - this is kind of ugly -- is there a better way?
+#                    token = self.getUserName() + ':' + password
+#                    token = base64.encodestring(token)
+#                    token = quote(token)
+#                    self.REQUEST.response.setCookie('__ac', token, path='/')
+#                    self.REQUEST['__ac']=token
 
 
     def _stringToList(self, s):
