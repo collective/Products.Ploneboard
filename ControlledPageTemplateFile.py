@@ -12,7 +12,7 @@
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControlledPageTemplateFile.py,v 1.3 2003/07/29 15:16:56 plonista Exp $
+$Id: ControlledPageTemplateFile.py,v 1.4 2003/08/01 05:12:28 plonista Exp $
 """
 
 import os
@@ -40,12 +40,16 @@ class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
     security.declareObjectProtected(View)
 
     def __init__(self, filename, _prefix=None, **kw):
+        filename = os.path.normpath(filename)
         if not os.path.splitext(filename)[1]:
             filename = filename + '.cpt'
-        self.filepath = filepath
-        self._read_action_metadata(self.getId(), filepath)
-        self._read_validator_metadata(self.getId(), filepath)
-        return ControlledPageTemplateFile.inheritedAttribute('__init__')(self, filename, _prefix, **kw)
+        retval = ControlledPageTemplateFile.inheritedAttribute('__init__')(self, filename, _prefix, **kw)
+
+        self.id = os.path.splitext(os.path.basename(filename))[0]
+        self.filepath = self.filename
+        self._read_action_metadata(self.getId(), self.filepath)
+        self._read_validator_metadata(self.getId(), self.filepath)
+        return retval
 
 
     security.declarePrivate('manage_afterAdd')

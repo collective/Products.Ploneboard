@@ -1,5 +1,11 @@
 2003-07-30  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
+   * Things now work if the validators section of the .metadata file is empty.
+     Also fixed problem with ControlledPageTemplateFile not getting the right
+     path to the .metadata file.
+
+2003-07-30  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
    * Added instructions for making CMFFormController work with CMF 1.3 to the
      README file.
 

@@ -10,8 +10,9 @@ from Products.CMFCore.utils import getToolByName
 from ControlledBase import ControlledBase
 from ControllerState import ControllerState
 from ValidationError import ValidationError
-from FormValidator import FormValidatorKey
+from FormValidator import FormValidatorKey, FormValidator
 from FormAction import FormActionKey, FormAction
+from globalVars import ANY_CONTEXT, ANY_BUTTON
 
 import sys
 from urllib import quote
@@ -35,6 +36,8 @@ class BaseControlledPageTemplate(ControlledBase):
         form_submitted = REQUEST.form.get('form.submitted', None)        
         if form_submitted:
             controller_state = self.getButton(controller_state)
+            import pdb
+            pdb.set_trace()
             validators = self.getValidators(controller_state).getValidators()
             controller_state = self.validate(controller_state, validators)
             del REQUEST.form['form.submitted']
@@ -70,9 +73,11 @@ class BaseControlledPageTemplate(ControlledBase):
             pass
         try:
             validators = self.validators.match(self.id, context_type, button)
+            if validators is not None:
+                return validators
         except ValueError:
             pass
-        return validators
+        return FormValidator(self.id, ANY_CONTEXT, ANY_BUTTON, [])
 
 
     def _getTypeName(self, obj):
