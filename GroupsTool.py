@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.4 2003/06/27 19:23:00 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.5 2003/07/14 23:45:00 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -56,6 +56,8 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
+	if id==None:
+		return None
         prefix = self.acl_users.getGroupPrefix()
         g = self.acl_users.getGroup(id, prefixed=id.startswith(prefix))
         if g is not None:
@@ -70,10 +72,55 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         """Returns a list of the available groups' ids as entered (without group prefixes)."""
         return self.acl_users.getGroupNames(prefixed=0)
 
-    def searchForGroups(self, REQUEST, **kw):    # maybe searchGroups()?
+    def searchForGroups(self, REQUEST, **kw):
 	"""Return a list of groups meeting certain conditions. """
 	# arguments need to be better refined?
-	pass
+        if REQUEST:
+            dict = REQUEST
+        else:
+            dict = kw
+
+        name = dict.get('name', None)
+        email = dict.get('email', None)
+        roles = dict.get('roles', None)
+        last_login_time = dict.get('last_login_time', None)
+        #is_manager = self.checkPermission('Manage portal', self)
+
+        if name:
+            name = name.strip().lower()
+        if not name:
+            name = None
+        if email:
+            email = email.strip().lower()
+        if not email:
+            email = None
+
+        res = []
+        portal = self.portal_url.getPortalObject()
+        for g in portal.portal_groups.listGroups():
+            #if not (g.listed or is_manager):
+            #    continue
+            if name:
+                if (g.getGroupName().lower().find(name) == -1) and (g.getGroupId().lower().find(name) == -1):
+                    continue
+            if email:
+                if g.email.lower().find(email) == -1:
+                    continue
+            if roles:
+                group_roles = g.getRoles()
+                found = 0
+                for r in roles:
+                    if r in group_roles:
+                        found = 1
+                        break
+                if not found:
+                    continue
+            if last_login_time:
+                if g.last_login_time < last_login_time:
+                    continue
+            res.append(g)
+
+        return res
 
     def addGroup(self, id, password, roles, domains):
         """Create a group with the supplied id, roles, and domains.
