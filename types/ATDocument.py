@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.3 2004/03/17 20:46:44 tiran Exp $
+$Id: ATDocument.py,v 1.4 2004/03/18 01:24:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,7 @@ __docformat__ = 'restructuredtext'
 from Products.Archetypes.public import BaseContent, registerType
 from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
+
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from schemata import ATDocumentSchema

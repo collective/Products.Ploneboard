@@ -54,18 +54,34 @@ Optional Requirements
 mxTidy
 ------
 
-XXX
-http://www.egenix.com/files/python/mxTidy.html
+Install egenix mxTidy to enable the validation of the body text of ATDocument.
+The text is checked and is rejected if it contains wrong xhtml syntax that may
+break the user interface of plone. 
+You can download mxTidy from http://www.egenix.com/files/python/mxTidy.html
 
-TextIndexNG2
-------------
 
-XXX
+TextIndexNG 2.0.6+
+------------------
+
+If you want to use TextIndexNG to index the SearchableText attribute you should
+install version 2.0.6 or higher. Only newer versions uses the special hook that
+allows indexing the containment of ATFile.
+You can download TextIndexNG from http://zope.org/Members/ajung/TextIndexNG/
+
 
 PortalTransforms and helper applications
 ----------------------------------------
 
-lynx pdftohtml python-docutils wv xsltproc tidy unrtf ppthtml xlhtml gs-common xpdf-utils
+You should install all helpers application for PortalTransforms.
+For debian users:
+apt-get install lynx pdftohtml python-docutils wv xsltproc tidy \
+                unrtf ppthtml xlhtml gs-common xpdf-utils catdoc
+
+Python Imaging Library (PIL)
+----------------------------
+
+In order to enable the auto resizing feature of ATImage (Archetypes ImageField)
+you have to install PIL.
 
 
 ============

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.7 2004/03/17 20:46:43 tiran Exp $
+$Id: config.py,v 1.8 2004/03/18 01:24:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,33 +30,46 @@ SKINS_DIR = 'skins'
 
 GLOBALS = globals()
 
+try:
+    True
+except NameError:
+    True  = 1
+    False = 0
+
 # Load the validation package from Products.validation (1) or from the
 # python site-packages (0)
 # Archetypes 1.2.x requires:  0
 # Archetypes 1.2.5+ requires: 1
 # Archetypes 1.3.x requires:  1 
-VALIDATION_IN_PRODUCTS = 1
+VALIDATION_IN_PRODUCTS = True
 
 # using special plone 2 stuff?
 try:
     from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 except ImportError:
-    HAS_PLONE2=0
+    HAS_PLONE2 = False
 else:
-    HAS_PLONE2=1
+    HAS_PLONE2 = True
 
 # mxTidy available?
 try:
     import mx.Tidy
 except ImportError:
-    HAS_MX_TIDY=0
+    HAS_MX_TIDY = False
 else:
-    HAS_MX_TIDY=1
+    HAS_MX_TIDY = True
 
+# enable mxTidy for ATDocument?
+MX_TIDY_ENABLED = True
+
+# tidy only these document types
 MX_TIDY_MIMETYPES = (
     'text/html',
+    'text/structured', # may contain unquoted html entities
      )
 
+# options for mxTidy
+# read http://www.egenix.com/files/python/mxTidy.html for more informations
 MX_TIDY_OPTIONS= {
     'drop_font_tags' : 1,
     'input_xml' : 0,
@@ -66,15 +79,20 @@ MX_TIDY_OPTIONS= {
     'tab_size' : 4,
     }
 
+# experimental feature: Use mxTidy to clean up the data from the request
+# XXX not implemented
+# MX_TIDY_CLEANUP_VALUE = False
+
 # Add attributes to be more CMF compatible?
 # XXX more docs here
 CMF_COMPATIBILITY_ATTRIBUTS=1
 
-# workflow mapping
+# workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'
 WORKFLOW_FOLDER   = 'folder_workflow'
 WORKFLOW_TOPIC    = 'folder_workflow'
 WORKFLOW_CRITERIA = ''
 
+# icon map used for overwriting ATFile icons
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}
