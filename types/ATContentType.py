@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.4 2004/04/09 22:02:20 tiran Exp $
+$Id: ATContentType.py,v 1.5 2004/04/11 19:44:17 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -109,15 +109,16 @@ class ATCTContent(ATCTMixin, BaseContent):
     __implements__ = BaseContent.__implements__, IATContentType
     
     security       = ClassSecurityInfo()
-##    actions = updateActions(ATCTMixin,
-##        ({
-##        'id'          : 'external_edit',
-##        'name'        : 'External Edit',
-##        'action'      : 'string:${object_url}/external_edit',
-##        'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-##         },
-##        )
-##    )
+    actions = updateActions(ATCTMixin,
+        ({
+          'id'          : 'external_edit',
+          'name'        : 'External Edit',
+          'action'      : 'string:${object_url}/external_edit',
+          'permissions' : (CMFCorePermissions.ModifyPortalContent,),
+          'visible'     : 0,
+         },
+        )
+    )
 
 InitializeClass(ATCTContent)
 
