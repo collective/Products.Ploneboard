@@ -19,9 +19,11 @@ while p != portal:
 parents.reverse()
 
 # some variables
+factory_tool = context.portal_factory
 published = context.REQUEST.get('PUBLISHED', None)
 published_id = None
 checkPermission=context.portal_membership.checkPermission
+dont_show_metatypes = ['TempFolder',] # metatypes of objects we wont show
 dont_show = ['talkback',] # objects we wont show
 
 if published is not None and hasattr(published, 'getId'):
@@ -44,6 +46,11 @@ for o in parents:
         id = getattr(o, 'id', '')
     if id in dont_show: # I'm sorry ;(
         # talkbacks would clutter our precious breadcrumbs
+        continue
+    if getattr(o, 'meta_type', None) in dont_show_metatypes:
+        continue
+    # don't show links for temporary objects
+    if factory_tool.isTemporary(o):
         continue
 
     if o.isPrincipiaFolderish and \
