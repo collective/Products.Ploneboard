@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.13 2004/09/23 16:43:03 tesdal Exp $
+$Id: testATDocument.py,v 1.14 2004/12/14 21:52:32 ctheune Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -157,7 +157,7 @@ class TestATDocumentFields(ATCTFieldTestCase):
         self.failUnless(tuple(vocab) == (), 'Value is %s' % str(tuple(vocab)))
 
         self.failUnless(field.primary == 1, 'Value is %s' % field.primary)
-        self.failUnless(field.default_content_type == 'text/restructured',
+        self.failUnless(field.default_content_type == 'text/html',
                         'Value is %s' % field.default_content_type)
         self.failUnless(field.default_output_type == 'text/html',
                         'Value is %s' % field.default_output_type)

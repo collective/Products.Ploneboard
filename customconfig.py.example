@@ -21,7 +21,7 @@
 Copy customconfig.py.example to customconfig.py and change the values in the
 user options section below.
 
-$Id: customconfig.py.example,v 1.10 2004/10/19 20:47:11 dtremea Exp $
+$Id: customconfig.py.example,v 1.11 2004/12/14 21:52:31 ctheune Exp $
 """ 
 
 from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
@@ -91,6 +91,6 @@ MAX_IMAGE_SIZE = 0.0
 # ATDOCUMENT_CONTENT_TYPE = 'text/plain'       # plain text
 # ATDOCUMENT_CONTENT_TYPE = 'text/plain-pre'   # plain text preformated
 # ATDOCUMENT_CONTENT_TYPE = 'text/structured'  # structured text
-# ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
-ATDOCUMENT_CONTENT_TYPE = 'text/restructured' # restructured text (reST)
+ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
+# ATDOCUMENT_CONTENT_TYPE = 'text/restructured' # restructured text (reST)
 

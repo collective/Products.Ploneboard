@@ -18,19 +18,19 @@
 #
 """
 
-$Id: utils.py,v 1.2 2004/09/17 14:19:33 tiran Exp $
+$Id: utils.py,v 1.3 2004/12/14 21:52:31 ctheune Exp $
 """
 
 import datetime
 from DateTime import DateTime
 
 def dt2DT(date):
-    """convert Zope's DateTime to python's datetime
+    """Convert Python's datetime to Zope's DateTime
     """
     return DateTime(*date.timetuple()[:6])
 
 def DT2dt(date):
-    """convert python's datetime to Zope's DateTime
+    """Convert Zope's DateTime to Pythons's datetime
     """
     # seconds (parts[6]) is a float, so we map to int
     args = map(int, date.parts()[:6])
@@ -44,6 +44,6 @@ def toTime(date):
     return date.Time()
 
 def toSeconds(td):
-    """Converts a timedelta to an integer representing the number of minutes
+    """Converts a timedelta to an integer representing the number of seconds 
     """
     return td.seconds + td.days * 86400

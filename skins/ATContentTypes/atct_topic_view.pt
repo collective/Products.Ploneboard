@@ -34,48 +34,43 @@
         <tal:listing condition="topicContents">
 
             <dl>
-	        <tal:brain repeat="brain topicContents">
-                <tal:entry define="obj brain/getObject"
-                           condition="nocall:obj"> 
-
+	        <tal:brain repeat="obj topicContents">
                 <dt metal:define-macro="list-item"
-                    tal:define="url python: obj.absolute_url()+test(obj.isPrincipiaFolderish,'/','');
-                                icon python: obj.getIcon(1)">
+                    tal:define="url obj/getURL;
+                                icon python:portal_url+'/'+'/'.join(obj.getIcon.split('/')[1:]);
+                                title_or_id python:obj.Title or obj.getId">
                 <a href="#" tal:attributes="href url">
-                        <img src="" alt=""
-                                        tal:attributes="src string:${utool}/${icon};alt here/title" />
+                        <img src="" alt="" tal:attributes="src icon; alt obj/Title" />
                 </a>
 
-                <a href="#" tal:condition="python: obj.portal_type not in ['Link', 'Image']"
+                <a href="#" tal:condition="python:obj.portal_type not in ['Link', 'Image']"
                             tal:attributes="href url"
-                            tal:content="obj/title_or_id" />
+                            tal:content="title_or_id" />
 
-                <a href="#" tal:condition="python: obj.portal_type == 'Image'"
-                            tal:attributes="href python: url + '/view'"
-                            tal:content="obj/title_or_id" />
+                <a href="#" tal:condition="python:obj.portal_type == 'Image'"
+                            tal:attributes="href string:${url}/view"
+                            tal:content="title_or_id" />
 
                 <a href="#" 
-                   tal:condition="python: obj.portal_type == 'Link'"
+                   tal:condition="python:obj.portal_type == 'Link'"
                    tal:attributes="href obj/getRemoteUrl;"
                    class="link-plain"
-                   tal:content="obj/title_or_id" />
+                   tal:content="title_or_id" />
 
                 <span class="discreet"
-                      tal:condition="python: obj.portal_type == 'Event'">
+                      tal:condition="python:obj.portal_type == 'Event'">
     
                     &nbsp;
                     <span tal:replace="obj/location">Oslo</span>,
-                    <span tal:replace="python: obj.start().ISO()">from date</span> -
-                    <span tal:replace="python: obj.end().ISO()">to date</span>
+                    <span tal:replace="obj/start/ISO">from date</span> -
+                    <span tal:replace="obj/end/ISO">to date</span>
                     
                 </span>
                 </dt>
 
                 <dd>
-
-                    <span tal:content="structure python:test(obj.Description(), obj.Description(), '&nbsp;')"> description </span>
+                    <span tal:content="structure python:test(obj.Description, obj.Description, '&nbsp;')"> description </span>
                 </dd>
-                    </tal:entry>
 		    </tal:brain>
             </dl>
 

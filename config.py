@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.34 2004/09/28 22:53:21 tiran Exp $
+$Id: config.py,v 1.35 2004/12/14 21:52:31 ctheune Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -74,31 +74,21 @@ ENABLE_TEMPLATE_MIXIN = False
 ## TemplateMixin write permission. Only if the member has this permission he
 ## is allowed to choose another template then the default permission
 TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
-# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
-# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 
 ## use ConstrainedMixin?
 ## if enabled you can constrain allowed types on an ATCT Folder
 ENABLE_CONSTRAIN_TYPES_MIXIN = False
 CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
-#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
-#CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 
 ## Document History view permission
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ReviewPortalContent
-# HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
-# HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
 
 ## maximum upload size for ATImage and ATFile in MB. 0 is infinitiv
 MAX_FILE_SIZE = 0.0
 MAX_IMAGE_SIZE = 0.0
 
-## default content type für ATDocument and ATNewsItem
-# ATDOCUMENT_CONTENT_TYPE = 'text/plain'       # plain text
-# ATDOCUMENT_CONTENT_TYPE = 'text/plain-pre'   # plain text preformated
-# ATDOCUMENT_CONTENT_TYPE = 'text/structured'  # structured text
-# ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
-ATDOCUMENT_CONTENT_TYPE = 'text/restructured' # restructured text (reST)
+## Default content type for ATDocument and ATNewsItem
+ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
 
 ###############################################################################
 ## private options
