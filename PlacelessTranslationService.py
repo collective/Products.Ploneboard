@@ -13,7 +13,7 @@
 ##############################################################################
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.1 2003/01/02 15:29:12 lalo Exp $
+$Id: PlacelessTranslationService.py,v 1.2 2003/01/02 19:58:48 lalo Exp $
 """
 
 from Negotiator import negotiator
@@ -65,12 +65,24 @@ class PlacelessTranslationService(SimpleTranslationService):
         self._fallbacks = fallbacks
 
 
+    def getLanguages(self, domain=None):
+        """Get available languages"""
+        if domain is not None:
+            return [m[0] for m in self._catalogs.keys() if m[1] == domain]
+        # no domain, so user wants 'em all
+        langs = [m[0] for m in self._catalogs.keys()]
+        # uniquify
+        d = {}
+        for l in langs:
+            d[l] = 1
+        return d.keys()
+
+
     def translate(self, domain, msgid, mapping=None, context=None,  
                   target_language=None, default=None):
         """
         """
 
-        print 'translating', domain, msgid, target_language, default
         if not msgid:
             # refuse to translate an empty msgid
             return default or msgid
@@ -79,9 +91,8 @@ class PlacelessTranslationService(SimpleTranslationService):
             if context is None:
                 raise TypeError, 'No destination language'
             else:
-                langs = [m[0] for m in self._catalogs.keys()]
+                langs = [m[0] for m in self._catalogs.keys() if m[1] == domain]
                 target_language = negotiator.getLanguage(langs, context)
-            print 'negotiated target:', target_language
 
 
         # Get the translation. Use the specified fallbacks if this fails
