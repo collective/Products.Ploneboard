@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.26 2003/11/14 23:02:42 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.27 2003/11/14 23:47:25 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         #only delete everything EXCEPT portaöobjects (tools etc) for reinstall
         cascade=[c for c in InstalledProduct.default_cascade if c != 'portalobjects']
         self.uninstallProducts(products,cascade)
-        self.installProducts(products)
+        self.installProducts(products,stoponerror=1)
         
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
