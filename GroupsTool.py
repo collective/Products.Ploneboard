@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.35 2004/12/15 10:41:39 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.36 2005/02/04 09:15:06 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -343,7 +343,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
                 portal_catalog = getToolByName( self, 'portal_catalog' )
                 portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
                 workspaces._setProperty('right_slots', (), 'lines')
-
+                
             if workspaces is not None and not hasattr(workspaces, id):
                 # add workspace to GroupWorkspaces folder
                 pt.constructContent(
@@ -364,6 +364,13 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
                 else:
                     space.manage_delLocalRoles(space.users_with_local_role('Owner'))
                     self.setGroupOwnership(self.getGroupById(id), space)
+
+                # Hook to allow doing other things after grouparea creation.
+                notify_script = getattr(workspaces, 'notifyGroupAreaCreated', None)
+                if notify_script is not None:
+                    notify_script()
+
+                # Re-indexation
                 portal_catalog = getToolByName( self, 'portal_catalog' )
                 portal_catalog.reindexObject(space)
  

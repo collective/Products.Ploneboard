@@ -1,5 +1,9 @@
 [v3.2 - ]
 
+  * You can put a 'notifyGroupAreaCreated' in your 'groups' folder as you would
+    be able to put a 'notifyMemberAreaCreated' in your 'members' folder.
+    So you can execute some code at group area creation. Thanks to F. Carlier !
+
   * Added a helper table on the sources tab to help managing LUF group mappings
 
   * Fixed a bug in Zope 2.7 preventing the zope quickstart page to show up.
