@@ -1,9 +1,0 @@
-[default]
-title = Search Amazon.com
-
-[validators]
-validators=search_amazon_validate
-
-[actions]
-action.success=traverse_to:string:search_amazon_results
-action.failure=traverse_to:string:search_amazon
