@@ -43,8 +43,11 @@
 <body onload="focus();">
 <div class="documentContent">
 
-    <fieldset>
-        <legend i18n:translate="viewlet_context">viewlet context</legend>
+    <table class="listing" border="1" style="font-size: 100%">
+        <tbody>
+        <tr>
+          <th i18n:translate="viewlet_context"> related content </th>
+          <td style="padding: 0.5em">
     <div tal:define="breadcrumbs python:here.breadcrumbs(here)" style="white-space:nowrap;">
         <a tal:repeat="crumb python:breadcrumbs[:-2]"
            tal:content="python: crumb[0] + ' / '"
@@ -53,12 +56,13 @@
         <img src="#"  i18n:attributes="title"
                tal:attributes="src string:${here/portal_url}/${here/getIcon};
                                title python:here.getTypeInfo().Title()"/>
-        <strong tal:content="here/Title"/>
+        <span style="white-space:nowrap; background-color: lightgreen" 
+              tal:content="here/Title"/>
     </div>
 
     <div tal:condition="here/isPrincipiaFolderish"
          class="discreet">
-    
+
       <span style="white-space:nowrap;"
             tal:repeat="item python:here.contentValues()[:100]">
           <img src="#"  i18n:attributes="title"
@@ -68,10 +72,8 @@
              tal:content="python:item.Title() or item.getId()">Title</a>
       </span>
     </div>
-    </fieldset>
-
-    <table class="listing" border="1" style="font-size: 100%">
-        <tbody>
+          </td>
+        </tr>
         <tr>
           <th i18n:translate="label_viewlet" style="white-space:nowrap;">viewlet</th>
           <td style="padding: 0.5em">
