@@ -101,3 +101,18 @@ Last revision : 20030923
     This is for PLONE only (because of the skin structure) but it is
     the same principle for CMF. You should probably check with Plone
     for the most recent skins.
+
+
+  GROUPSPACES
+
+    We recently added GroupSpaces support for Plone. To gain benefit
+    from it, you just have to run the Install script (NOT USING
+    CMFQUICKINSTALLER) from a fresh (or used !) Plone2 website.
+    This will install:
+
+    * A content type called GroupSpace
+
+    * A few useful slots
+
+    * A groupspace-specific workflow.
+
