@@ -89,7 +89,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
     # functionality that we cant anticipate from the base scaffolding.
 
     security.declarePrivate('__init__')
-    def __init__(self, underlying_user, GRUF, isGroup = 0, source_id = 'Users', ):
+    def __init__(self, underlying_user, GRUF, isGroup, source_id, ):
         # When calling, set isGroup it to TRUE if this user represents a group
         self._setUnderlying(underlying_user)
         self._isGroup = isGroup

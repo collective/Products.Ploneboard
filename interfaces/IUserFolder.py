@@ -83,13 +83,29 @@ class IUserFolder(Interface):
         all current User Folder implementations... except for GROUPS.]        
         """
 
-    # Search interface
+    # Search interface for users; they won't return groups in any case.
 
-##    def searchUsersByName(search_term):
-##        """Return users whose name match the specified search_term.
-##        If search_term is an empty string, behaviour depends on the underlying user folder:
-##        it may return all users, return only cached users (for LDAPUF) or return no users.
-##        """
+    def searchUsersByName(search_term):
+        """Return user ids which match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        """
+
+    def searchUsersById(search_term):
+        """Return users whose id match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        """
+        
+    def searchUsersByAttribute(attribute, search_term):
+        """Return user ids whose 'attribute' match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        This will return all users whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON USER FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF).
+        'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        """
 
 
     # User access

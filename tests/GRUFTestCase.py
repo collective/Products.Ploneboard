@@ -221,6 +221,7 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
             "u11",
             "created_user",
             "test_prefix",
+            "group_test_prefix",
             ])
         self.gruf.userFolderDelGroups([
             "g1",

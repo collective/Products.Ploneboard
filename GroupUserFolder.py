@@ -263,7 +263,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     # Append user
                     names.append(name)
                     ret.append(
-                        GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
+                        GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId(), isGroup = 0).__of__(self)
                         )
 
         return ret
@@ -316,7 +316,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             for src in self.listUserSources():
                 u = src.getUser(name)
                 if u:
-                    ret = GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
+                    ret = GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId(), isGroup = 0).__of__(self)
                     return ret
 
         # Then desperatly try to fetch groups (without beeing prefixed by 'group_' prefix)
@@ -499,20 +499,72 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #                                                                           #
 
 
-##    security.declareProtected(Permissions.manage_users, "searchUsersByName")
-##    def searchUsersByName(self, search_term):
-##        """Return users whose name match the specified search_term.
-##        If search_term is an empty string, behaviour depends on the underlying user folder:
-##        it may return all users, return only cached users (for LDAPUF) or return no users.
-##        """
-##        ret = []
-##        for src in self.listUserSources():
-##            # Use source-specific search methods if available
-##            if hasattr(src.aq_base, "findUser"):
-##                # LDAPUF
-##                users = src.findUser(
-##                    )
+    security.declareProtected(Permissions.manage_users, "searchUsersByAttribute")
+    def searchUsersByAttribute(self, attribute, search_term):
+        """Return user ids whose 'attribute' match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        This will return all users whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON USER FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF).
+        'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        """
+        ret = []
+        for src in self.listUserSources():
+            # Use source-specific search methods if available
+            if hasattr(src.aq_base, "findUser"):
+                # LDAPUF
+                id_attr = src._uid_attr
+                if attribute == 'name':
+                    attr = src._login_attr
+                elif attribute == 'id':
+                    attr = src._uid_attr
+                else:
+                    attr = attribute
+                users = src.findUser(attr, search_term)
+                ret.extend(
+                    [ u[id_attr] for u in users ],
+                    )
+            else:
+                # Other types of user folder
+                search_term = search_term.lower()
 
+                # Find the proper method according to the attribute type
+                if attribute == "name":
+                    method = "getName"
+                elif attribute == "id":
+                    method = "getId"
+                else:
+                    raise NotImplementedError, "Attribute searching is only supported for LDAPUserFolder by now."
+
+                # Actually search
+                for u in self.getUsers(__include_groups__ = 0):
+                    s = getattr(u, method)().lower()
+                    if string.find(s, search_term) != -1:
+                        ret.append(u.getId())
+        return ret
+
+    security.declareProtected(Permissions.manage_users, "searchUsersByName")
+    def searchUsersByName(self, search_term):
+        """Return user ids whose name match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        This will return all users whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON USER FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF)
+        """
+        return self.searchUsersByAttribute("name", search_term)
+
+    security.declareProtected(Permissions.manage_users, "searchUsersById")
+    def searchUsersById(self, search_term):
+        """Return user ids whose id match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying user folder:
+        it may return all users, return only cached users (for LDAPUF) or return no users.
+        This will return all users whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON USER FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF)
+        """
+        return self.searchUsersByAttribute("id", search_term)
 
     #                                                                           #
     #                         SECURITY MANAGEMENT METHODS                       #
@@ -892,7 +944,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # UF errors such as SQL or LDAP shutdown
             u = src.authenticate(name, password, request)
             if u:
-                return GRUFUser.GRUFUser(u, self,).__of__(self)
+                return GRUFUser.GRUFUser(u, self, isGroup = 0, source_id = src.getId()).__of__(self)
 
         # No acl_users in the Users folder or no user authenticated
         # => we refuse authentication
@@ -1021,12 +1073,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security.declarePrivate("_doDelUsers")
     def _doDelUsers(self, names):
-        """Delete one or more users. This should be implemented by subclasses
-           to do the actual deleting of users."""
+        """
+        Delete one or more users. This should be implemented by subclasses
+        to do the actual deleting of users.
+        This won't delete groups !
+        """
         # Collect information about user sources
         sources = {}
         for name in names:
-            usr = self.getUser(name)
+            usr = self.getUser(name, __include_groups__ = 0)
             if not usr:
                 continue        # Ignore invalid user names
             src = usr.getUserSourceId()
@@ -1034,7 +1089,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 sources[src] = []
             sources[src].append(name)
         for src, names in sources.items():
-            self.getUserSource(src)._doDelUsers(names)
+            try:
+                self.getUserSource(src)._doDelUsers(names)
+            except:
+                Log(LOG_DEBUG, "RAISING")
 
         # Reset the users overview batch
         self._v_batch_users = []
@@ -1100,7 +1158,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Change groups affectation
         cur_groups = self.getGroups()
         given_roles = tuple(grp.getRoles()) + tuple(roles)
-        Log(LOG_DEBUG, name, groups, cur_groups, given_roles)
         for group in groups:
             if not group.startswith(GROUP_PREFIX, ):
                 group = "%s%s" % (GROUP_PREFIX, group, )
@@ -1192,7 +1249,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/08 10:26:03 $"[7:-2]
+        rev_date = "$Date: 2004/06/08 14:24:23 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

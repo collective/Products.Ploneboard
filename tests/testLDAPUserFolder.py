@@ -144,7 +144,7 @@ class TestLDAPUserFolderBasics(GRUFTestCase.GRUFTestCase):
         
 
 
-class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics):#, testGroupUserFolderAPI.TestGroupUserFolderAPI):
+class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics, testGroupUserFolderAPI.TestGroupUserFolderAPI):
     """
     Whole API test for GRUF+LDAP
 
@@ -181,6 +181,28 @@ class TestLDAPUserFolderAPI(TestLDAPUserFolderBasics):#, testGroupUserFolderAPI.
         self.failUnless(u1.getProperty("sn") == "Second Name Value", u1.getProperty("sn"), )
         
 
+
+    def test_searchUsersByAttribute(self,):
+        # Simple match
+        self.failUnlessEqual(
+            self.gruf.searchUsersByAttribute(defaults['login_attr'], "u3"),
+            ["u3",],
+            )
+
+        # Different case matching
+        self.failUnlessEqual(
+            self.gruf.searchUsersByAttribute(defaults['login_attr'], "U3"),
+            ["u3",],
+            )
+
+        # Multiple (different case) matching
+        s = self.gruf.searchUsersByAttribute(defaults['login_attr'], "U")
+        s.sort()
+        self.failUnlessEqual(
+            s,
+            ['u1', 'u10', 'u11', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u8', 'u9', ],
+            )
+        
 
 
 if __name__ == '__main__':

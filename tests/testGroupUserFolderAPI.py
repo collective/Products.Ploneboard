@@ -507,6 +507,60 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.compareGroups("created_user", ["g2", ], )
 
 
+    # Searching
+
+    def test_searchUsersByAttribute(self,):
+        # Not suitable for regular UFs
+        self.failUnlessRaises(
+            NotImplementedError,
+            self.gruf.searchUsersByAttribute,
+            "a",
+            "b",
+            )
+
+    def test_searchUsersByName(self,):
+        # Simple match
+        self.failUnlessEqual(
+            self.gruf.searchUsersByName("u3"),
+            ["u3",],
+            )
+
+        # Different case matching
+        self.failUnlessEqual(
+            self.gruf.searchUsersByName("U3"),
+            ["u3",],
+            )
+
+        # Multiple (different case) matching
+        s = self.gruf.searchUsersByName("U")
+        s.sort()
+        self.failUnlessEqual(
+            s,
+            ['u1', 'u10', 'u11', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u8', 'u9', ],
+            )
+
+    def test_searchUsersById(self,):
+        # Simple match
+        self.failUnlessEqual(
+            self.gruf.searchUsersById("u3"),
+            ["u3",],
+            )
+
+        # Different case matching
+        self.failUnlessEqual(
+            self.gruf.searchUsersById("U3"),
+            ["u3",],
+            )
+
+        # Multiple (different case) matching
+        s = self.gruf.searchUsersById("U")
+        s.sort()
+        self.failUnlessEqual(
+            s,
+            ['u1', 'u10', 'u11', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u8', 'u9', ],
+            )
+
+
     # Security management
 
     def test_setRolesOnUsers(self):

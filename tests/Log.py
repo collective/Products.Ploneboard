@@ -133,6 +133,8 @@ def LogFile(level, label, data, ):
     LOG_OUTPUT.flush()
 
 
+logFile = LogFile
+
 import zLOG
 
 zLogLevelConverter = {
