@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.15 2004/05/15 01:53:07 tiran Exp $
+$Id: ATTopic.py,v 1.16 2004/05/31 09:42:43 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -255,7 +255,10 @@ class ATTopic(ATCTFolder):
             return []
         kw.update( q )
         pcatalog = getToolByName( self, 'portal_catalog' )
-        return pcatalog.searchResults(REQUEST, **kw)
+        results = pcatalog.searchResults(REQUEST, **kw)
+        if self.limitNumber:
+            results = results[:self.itemCount]
+        return results
 
     security.declareProtected(ChangeTopics, 'addCriterion')
     def addCriterion(self, field, criterion_type):

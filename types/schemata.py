@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.29 2004/05/30 14:51:16 godchap Exp $
+$Id: schemata.py,v 1.30 2004/05/31 09:42:43 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -362,6 +362,33 @@ ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
                                              "should be shown in a Topic above the current one, this " \
                                              "Topic will also have that criterion automatically.",
                                 description_msgid="help_inherit_criteria",
+                                i18n_domain = "plone"),
+                ),
+    BooleanField('limitNumber',
+                required=0,
+                mode="rw",
+                default=0,
+                widget=BooleanWidget(
+                                label="Limit Number of Items",
+                                label_msgid="label_limit_number",
+                                description="Toggles limitation of number of items displayed. "
+                                            "If selected, only the first 'Number of Items' " 
+                                            "will be displayed.",
+                                description_msgid="help_limit_number",
+                                i18n_domain = "plone"),
+                ),
+    IntegerField('itemCount',
+                required=0,
+                mode="rw",
+                default=0,
+                widget=IntegerWidget(
+                                label="Number of Items",
+                                label_msgid="label_item_count",
+                                description="If 'Limit Number of Items' is "
+                                            "selected, only the first "
+                                            "'Number of Items' will be "
+                                            "displayed ",
+                                description_msgid="help_item_count",
                                 i18n_domain = "plone"),
                 ),
     ))
