@@ -23,7 +23,7 @@
                      image python:batch[0];
                      photo_display python:request.cookies.get('photo_display', 'medium');
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+                     tabindex python:Iterator()">
 
       <div class="contentHeader">
         <h1 tal:content="image/title_or_id">Title or id</h1>
@@ -31,7 +31,7 @@
       
       <div metal:use-macro="here/batch_macros/macros/navigation"></div>
 
-      <tal:block tal:define="raw_date python:image.getEXIF().get('EXIF DateTimeOriginal');">
+      <tal:block tal:define="raw_date python:image.getEXIF().get('EXIF DateTimeOriginal')">
 	<div style="position: relative; top: 1.6em; left: 0.3em; color: white; background: black; width:0%; white-space: nowrap; padding: 1px;"
 	     tal:condition="raw_date"
              tal:content="python:here.toPortalTime(DateTime(raw_date), long_format=1)">
@@ -50,7 +50,7 @@
       
     </div>
 
-    <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0);">
+    <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0)">
       <a href="" tal:attributes="href string:${request/URL1}/view?b_start=$b_start">
         <img tal:attributes="src string:$portal_url/folder_icon.gif" i18n:attributes="alt title" alt="Back to album" title="Back to album" />
       </a>

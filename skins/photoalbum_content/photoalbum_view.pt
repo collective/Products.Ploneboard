@@ -20,7 +20,7 @@
                      albums python:here.contentValues(spec='Photo Album');
                      Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
-                     batch python:Batch(images, 10, int(b_start), orphan=1);">
+                     batch python:Batch(images, 10, int(b_start), orphan=1)">
       
       <div class="contentHeader">
         <h1 tal:content="here/title_or_id">Title or id</h1>
@@ -53,7 +53,7 @@
 		number_of_images python:len(images_in_album)">
 		<div>
 		  <a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail', title=album.Description());" />
+		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail', title=album.Description())" />
 		  </a>
 	          <a tal:condition="not:images_in_album" tal:attributes="href string:${album/absolute_url}/view">
 	            <p i18n:translate="" style="text-align: center;">Empty album</p>
