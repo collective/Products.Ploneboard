@@ -1,0 +1,30 @@
+<table width="100%">
+  <tal:block omit-tag="" tal:repeat="item python:here.getNeoBoardArticles(skey='creation_date', expand_all=1, reverse=1)[:5]">
+  <tr  tal:define="oddrow repeat/item/odd;
+                   item_url item/getPath;
+                   item_url string:${here/absolute_url}${item_url};
+                   item python: item.getObject();"
+      tal:attributes="class python:test(oddrow, 'even', 'odd')" > 
+    <td>
+           <img src="#" 
+                 tal:condition="python: item.creation_date.isCurrentDay()"
+                 tal:attributes="src string:${here/absolute_url}/neoboard_icon_new_article.gif">
+           <img src="#" 
+                 tal:condition="python: not item.creation_date.isCurrentDay()"
+                 tal:attributes="src python:test(0, here.absolute_url() + '/neoboard_icon_reply_article.gif', here.absolute_url() + '/neoboard_icon_thread.gif')">
+
+        <a href="" tal:attributes="href item/absolute_url" 
+             target="_blank" 
+             tal:content="string: ${item/Title}(${item/Creator})">
+        </a> 
+        <span tal:content="python: here.getNeoBoardDateTime(item.CreationDate())"></span>
+    </td>
+  </tr>
+  </tal:block>
+  <tr>
+    <td align="right">
+      <a href="" tal:attributes="href string:${here/absolute_url}?neoboard_form=neoboard_article_post_form" target="_blank">Post</a> | <a href="" tal:attributes="href string: ${here/absolute_url}" target="_blank">More...</a>
+    </td>
+  </tr>
+</table>
+
