@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.9 2004/03/01 11:17:33 longsleep Exp $
+$Id: I18NContent.py,v 1.10 2004/03/08 16:20:30 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.9 $"
+__version__ = "$Revision: 1.10 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -31,7 +31,7 @@ from Products.CMFCore.CMFCorePermissions import AddPortalFolders, AddPortalConte
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 from zLOG import LOG, ERROR, INFO, PROBLEM, DEBUG
 
-from utils import getLangPrefsMethod, CheckValidity
+from utils import getLangPrefs, CheckValidity
 
 
 class I18NContentBase:
@@ -82,7 +82,7 @@ class I18NContentBase:
         return languages
 
     def getLanguagesFromTranslationService(self):
-        return getLangPrefsMethod(self.REQUEST)
+        return getLangPrefs(self.REQUEST)
 
     def getObject(self, verifypermission=1):
         # returns the object holding language information
