@@ -18,24 +18,30 @@
 #
 """
 
-$Id: Install.py,v 1.2 2004/03/13 23:25:32 yenzenz Exp $
+$Id: Install.py,v 1.3 2004/03/16 20:33:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.Archetypes import listTypes
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
-from StringIO import StringIO
-from Products.ATContentTypes.config import *
-from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
 from Products.CMFCore.utils import getToolByName
+from StringIO import StringIO
+from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
+from Acquisition import aq_base
+
+from Products.Archetypes.interfaces.base import IBaseFolder, IBaseContent
+from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
+from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+
+from Products.ATContentTypes.config import *
 
 def install(self):
     out = StringIO()
 
-    classes = listTypes(PROJECTNAME)
+    typeInfo = listTypes(PROJECTNAME)
     installTypes(self, out,
-                 classes,
+                 typeInfo,
                  PROJECTNAME)
 
     install_subskin(self, out, GLOBALS)
@@ -45,7 +51,7 @@ def install(self):
     use_folder_tabs=list(props.use_folder_tabs)
 
     print >> out, 'adding classes to use_folder_tabs:'
-    for cl in classes:
+    for cl in typeInfo:
         print >> out,  'type:',cl['klass'].portal_type
         if cl['klass'].isPrincipiaFolderish:
             use_folder_tabs.append(cl['klass'].portal_type)
@@ -62,6 +68,9 @@ def install(self):
         'switch_old_plone_types_on',    
         PROJECTNAME+'.switchOldPloneTypes', 
         'switch_old_plone_types_on')    
+
+    # changing workflow
+    setupWorkflows(self, typeInfo, out)
 
     return out.getvalue()
 
@@ -84,7 +93,29 @@ def uninstall(self):
     
     # remove external methods for toggling between old and new types
     portal=getToolByName(self,'portal_url').getPortalObject()
-    portal.manage_delObjects(ids=['switch_old_plone_types_on',
-                                  'switch_old_plone_types_off'] )
+    for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off'):
+        if hasattr(aq_base(portal), script):
+            portal.manage_delObjects(ids=[script,])
     
     return out.getvalue()
+
+def setupWorkflows(self, typeInfo, out):
+    wftool = getToolByName(self, 'portal_workflow')
+    for t in typeInfo:
+        klass       = t['klass']
+        portal_type = t['portal_type']
+        if IBaseFolder.isImplementedByInstancesOf(klass) and not \
+          IATTopic.isImplementedByInstancesOf(klass):
+            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_FOLDER or 'NONE', portal_type )
+            wftool.setChainForPortalTypes(portal_type, WORKFLOW_FOLDER)
+        elif IATTopic.isImplementedByInstancesOf(klass):
+            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_TOPIC or 'NONE', portal_type )
+            wftool.setChainForPortalTypes(portal_type, WORKFLOW_TOPIC)
+        elif IATTopicCriterion.isImplementedByInstancesOf(klass):
+            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_CRITERIA or 'NONE', portal_type )
+            wftool.setChainForPortalTypes(portal_type, WORKFLOW_CRITERIA)
+        elif IATContentType.isImplementedByInstancesOf(klass):
+            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_DEFAULT or 'NONE', portal_type )
+            wftool.setChainForPortalTypes(portal_type, WORKFLOW_DEFAULT)
+        else:
+            print >>out, 'NOT assigning %s' % portal_type

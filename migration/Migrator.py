@@ -18,10 +18,9 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.7 2004/03/16 15:27:10 tiran Exp $
+$Id: Migrator.py,v 1.8 2004/03/16 20:33:23 tiran Exp $
 """
 
-import sys, traceback, StringIO
 from copy import copy, deepcopy
 
 from Products.CMFCore.utils import getToolByName
@@ -114,28 +113,20 @@ class BaseMigrator:
                     lastmethods.append(method)
         return methods+[self.custom]+lastmethods
         
-    def __call__(self, unittest=0):
+    def migrate(self, unittest=0):
         """Migrates the object
         """
         self.renameOld()
         self.createNew()
-        try:
-            for method in self.getMigrationMethods():
-                __traceback_info__ = (self, method, self.old, self.orig_id)
-                method()
-        except Exception, err: # except all!
-            if unittest:
-                raise
-            # aborting transaction
-            get_transaction().abort()
-            # printing exception
-            exc = sys.exc_info()
-            out=StringIO.StringIO()
-            traceback.print_tb(exc[2], limit=None, file=out)
-            return False, '%s\n%s\n' % (err, out.getvalue())
-        else:
-            self.remove()
-            return True, ''
+
+        for method in self.getMigrationMethods():
+            __traceback_info__ = (self, method, self.old, self.orig_id)
+            # may raise an exception, catch it later
+            method()
+
+        self.remove()
+
+    __call__ = migrate
 
     def renameOld(self):
         """Renames the old object
@@ -310,7 +301,7 @@ class FolderMigrationMixin(ItemMigrationMixin):
         """
         for obj in self.old.objectValues():
             self.new.manage_clone(obj, obj.getId())
-
+            
     def XXX_migrate_alternativeChildren(self):
         """Just an idea
         

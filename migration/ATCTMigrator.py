@@ -18,13 +18,22 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.3 2004/03/16 15:27:10 tiran Exp $
+$Id: ATCTMigrator.py,v 1.4 2004/03/16 20:33:23 tiran Exp $
 """
 
 from common import *
-from Walker import CatalogWalker
+from Walker import CatalogWalker, RecursiveWalker
 from Migrator import CMFItemMigrator, CMFFolderMigrator
 from Products.CMFCore.utils import getToolByName
+from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
+
+
+def isATFolder(obj):
+    return IATFolder.isImplementedBy(obj)
+
+def isATBTreeFolder(obj):
+    return IATBTreeFolder.isImplementedBy(obj)
+
 
 class DocumentMigrator(CMFItemMigrator):
     fromType = 'Document'
@@ -111,15 +120,22 @@ class LargeFolderMigrator(CMFFolderMigrator):
     map = {}
 
 migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
-             ImageMigrator, LinkMigrator, NewsItemMigrator, FolderMigrator,
-             LargeFolderMigrator,
+             ImageMigrator, LinkMigrator, NewsItemMigrator,
             )
 
-def migrateAll(catalog):
+folderMigrators = ( (FolderMigrator,isATFolder), (LargeFolderMigrator,isATBTreeFolder)
+            )
+
+def migrateAll(portal):
+    catalog = getToolByName(portal, 'portal_catalog')
     out = 'Migration: \n'
     for migrator in migrators:
         out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
         w = CatalogWalker(migrator, catalog)
+        out+= w.go()
+    for migrator, checkMethod in folderMigrators:
+        out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
+        w = RecursiveWalker(migrator, portal, checkMethod)
         out+= w.go()
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')

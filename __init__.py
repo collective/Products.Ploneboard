@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: __init__.py,v 1.2 2004/03/16 20:33:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,7 +32,7 @@ from Products.CMFCore.DirectoryView import registerDirectory
 from config import *
 import migration
 import Validators
-from interfaces.IATTopic import IATTopic, IATTopicCriterion
+from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
 
 registerDirectory(SKINS_DIR,GLOBALS)
 

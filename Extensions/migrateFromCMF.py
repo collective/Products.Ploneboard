@@ -18,15 +18,13 @@
 #
 """
 
-$Id: migrateFromCMF.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: migrateFromCMF.py,v 1.2 2004/03/16 20:33:23 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.migration.ATCTMigrator import migrateAll
-from Products.CMFCore.utils import getToolByName
 
 def migrate(self):
-    catalog = getToolByName(self, 'portal_catalog')
-    return migrateAll(catalog)
+    return migrateAll(self)
     

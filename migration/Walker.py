@@ -1,4 +1,12 @@
 from common import *
+import sys, traceback, StringIO
+
+class MigrationError(RuntimeError):
+    def __init__(self, msg):
+        self.msg = msg
+        
+    def __str__(self):
+        return 'MigrationError: %s' % self.msg
 
 class Walker:
     """Walks through the system and migrates every object it finds
@@ -42,17 +50,30 @@ class Walker:
             LOG(msg)
             self.out.append(msg)
             
-            (success, msg) = self.migrator(obj)()
-            if success:
-                LOG('done')
-                self.out[-1]+='done\n'
-            else:
-                msg='ERROR: \n %s\n' % msg
+            migrator = self.migrator(obj)
+            try:
+                # run the migration
+                migrator.migrate()
+            except Exception, err: # except all!
+                # aborting transaction
+                get_transaction().abort()
+
+                # printing exception
+                exc = sys.exc_info()
+                out=StringIO.StringIO()
+                traceback.print_tb(exc[2], limit=None, file=out)
+                tb = '%s\n%s\n' % (err, out.getvalue())
+
+                msg = 'ERROR: \n%s' % tb
                 LOG(msg)
                 self.out[-1]+=msg
+
                 # stop migration process after an error
                 # the transaction was already aborted by the migrator itself
-                return
+                raise MigrationError(tb)
+            else:
+                LOG('done')
+                self.out[-1]+='done\n'
             if self.subtransaction and \
               (len(self.out) % self.subtransaction) == 0:
                 # submit a subtransaction after every X (default 30)
@@ -83,11 +104,35 @@ class CatalogWalker(Walker):
         :rtype: list of objects
         """
         ret = []
-        brains = self.catalog(portal_type = self.fromType)
         LOG("fromType: " + str(self.fromType))
+        brains = self.catalog(portal_type = self.fromType)
         for brain in brains:
             obj = brain.getObject()
             if obj:
                 ret.append(obj)
         return ret
 
+class RecursiveWalker(Walker):
+    """Walk recursivly through a directory stucture
+    """
+
+    def __init__(self, migrator, base, checkMethod):
+        Walker.__init__(self, migrator)
+        self.base=base
+        self.checkMethod = checkMethod
+        self.list = []
+
+    def walk(self):
+        """XXX Todo
+        """
+        lst = []
+        append = lst.append
+        self.recurse(self.base)
+        return self.list
+
+    def recurse(self, folder):
+        for obj in folder.objectValues():
+            if self.checkMethod(obj):
+                self.list.append(obj)
+            if obj.isPrincipiaFolderish:
+                self.recurse(obj)

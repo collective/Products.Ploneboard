@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.4 2004/03/13 18:18:23 tiran Exp $
+$Id: config.py,v 1.5 2004/03/16 20:33:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -37,12 +37,23 @@ GLOBALS = globals()
 # Archetypes 1.3.x requires:  1 
 VALIDATION_IN_PRODUCTS = 1
 
+# using special plone 2 stuff?
 try:
     from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 except ImportError:
     HAS_PLONE2=0
 else:
     HAS_PLONE2=1
+
+# Add attributes to be more CMF compatible?
+# XXX more docs here
+CMF_COMPATIBILITY_ATTRIBUTS=1
+
+# workflow mapping
+WORKFLOW_DEFAULT  = '(Default)'
+WORKFLOW_FOLDER   = 'folder_workflow'
+WORKFLOW_TOPIC    = 'folder_workflow'
+WORKFLOW_CRITERIA = ''
 
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}
