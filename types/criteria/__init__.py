@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.6 2004/06/01 12:18:29 godchap Exp $
+$Id: __init__.py,v 1.7 2004/06/28 21:00:49 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -65,6 +65,16 @@ class _CriterionRegistry(UserDict):
             self.index2criterion[index] = value + (id,)
         
         registerType(criterion, PROJECTNAME)
+
+    def unregister(self, criterion):
+        id = criterion.meta_type
+        self.pop(id)
+        self.criterion2index.pop(id)
+        for (index, value) in self.index2criterion.items():
+            if id in value:
+                valuelist = list(value)
+                del valuelist[valuelist.index(id)]
+                self.index2criterion[index] = tuple(valuelist)
         
     def listTypes(self):
         return self.keys()
@@ -88,6 +98,7 @@ class _CriterionRegistry(UserDict):
 
 CriterionRegistry = _CriterionRegistry()
 registerCriterion = CriterionRegistry.register
+unregisterCriterion = CriterionRegistry.unregister
 
 __all__ = ('registerCriterion', 'ALL_INDICES', 'DATE_INDICES', 'STRING_INDICES',
            'LIST_INDICES', )
