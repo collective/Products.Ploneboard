@@ -5,6 +5,9 @@ from zLOG import LOG, INFO, WARNING
 from Products.CMFCore.utils import getToolByName
 from Acquisition import Explicit
 from MemberPermissions import VIEW_PERMISSION
+import re
+import OFS.ObjectManager
+
 
 _re_is_email = re.compile("^\s*([0-9a-zA-Z_&.+-]+!)*[0-9a-zA-Z_&.+-]+@(([0-9a-z]([0-9a-z-]*[0-9a-z])?\.)+[a-z]{2,6}|([0-9]{1,3}\.){3}[0-9]{1,3})\s*$")
 
@@ -48,7 +51,7 @@ def logException():
     from zLOG import LOG, INFO, WARNING
 
     # sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-    
+
     s = sys.exc_info()[:2]  # don't assign the traceback to s (otherwise will generate a circular reference)
     if s[0] == None:
         summary = 'None'
@@ -98,4 +101,10 @@ def userFolderDelUsers(self, names):
     """Override acl_users user deletion"""
     memberdata = getToolByName(self, 'portal_memberdata')
     memberdata.manage_delObjects(names)
+
+def patch_ids():
+    """Allow email characters into ids. This setting is global and not
+    called by default. See notes in CMFMember.config
+    """
+    OFS.ObjectManager.bad_id=re.compile(r'[^a-zA-Z0-9-_~,.$\(\)@# ]').search
 

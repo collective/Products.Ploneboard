@@ -1,4 +1,5 @@
 import random
+import re
 import md5
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.RegistrationTool import RegistrationTool as BaseTool
@@ -51,7 +52,7 @@ class RegistrationTool( BaseTool ):
 
 
     # A replacement for portal_registration's mailPassword function
-    # The replacement secures the mail password function with 
+    # The replacement secures the mail password function with
     # MAIL_PASSWORD_PERMISSION so that members can be disabled.
     security.declarePublic( 'mailPassword' )
     def mailPassword(self, forgotten_userid, REQUEST):
@@ -64,13 +65,13 @@ class RegistrationTool( BaseTool ):
 
         if member is None:
             raise 'NotFound', 'The username you entered could not be found.'
-            
+
         # we have to do our own security check since we are in a tool
         # and bypassing Zope security; we can't call member.mailPassword
         # directly since in private state it's not viewable by anonymous
         necessary_roles = PermissionRole.rolesForPermissionOn(MAIL_PASSWORD_PERMISSION ,member)
         for role in getSecurityManager().getUser().getRolesInContext( member ):
-            if role in necessary_roles: 
+            if role in necessary_roles:
                 member.mailPassword()
                 return self.mail_password_response(self, REQUEST)
         raise(Unauthorized)
@@ -84,7 +85,7 @@ class RegistrationTool( BaseTool ):
     #
     def getPassword(self, length=5, s=None):
         global password_chars, md5base
-        
+
         if s is None:
             password = ''
             n = len(password_chars)
@@ -109,7 +110,7 @@ class RegistrationTool( BaseTool ):
         with the password policy."""
         # provide public access to the getPassword methog
         return self.getPassword(6)
-    
+
 
     security.declarePrivate('getResetPasswordCode')
     def getResetPasswordCode(self, member_id):
@@ -155,7 +156,7 @@ class RegistrationTool( BaseTool ):
         utils = getToolByName(self, 'plone_utils')
         if (not email) or (not utils.validateSingleEmailAddress(email)):
             raise 'ValueError', 'Invalid email address.'
-    
+
         # Rather than have the template try to use the mailhost, we will
         # render the message ourselves and send it from here (where we
         # don't need to worry about 'UseMailHost' permissions).
@@ -165,12 +166,30 @@ class RegistrationTool( BaseTool ):
                                                          , password=password
                                                          , email=email
                                                          ))
-    
+
         host = self.MailHost
         host.send( mail_text )
 
         return self.mail_password_response( self, self.REQUEST )
 
+
+
+    security.declareProtected(CMFCorePermissions.AddPortalMember, 'isMemberIdAllowed')
+    def isMemberIdAllowed(self, userid):
+        '''Returns 1 if the ID is not in use and is not reserved.
+        '''
+        if len(userid) < 1 or id == 'Anonymous User':
+            return 0
+
+        site_props = self.portal_properties.site_properties
+        pattern = site_props.getProperty('portal_member_validid_re',
+                                         "^[A-Za-z][A-Za-z0-9_]*$")
+        if not re.match(pattern, userid):
+            return 0
+        membership = getToolByName(self, 'portal_membership')
+        if membership.getMemberById(userid) is not None:
+            return 0
+        return 1
 
 InitializeClass(RegistrationTool)
 

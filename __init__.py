@@ -10,6 +10,7 @@ import Products.CMFCore
 import os, os.path
 import Products.CMFCore.CMFCorePermissions as CMFCorePermissions
 from MemberPermissions import ADD_PERMISSION
+import config
 
 PKG_NAME = "CMFMember"
 SKIN_NAME = "member"
@@ -32,14 +33,14 @@ def initialize(context):
     import Member
     import MemberDataContainer
     import ControlTool
-    
+
     homedir = package_home(GLOBALS)
     target_dir = os.path.join(homedir, 'skins', SKIN_NAME)
-    
+
     # This policy enables an option to install CMFMember at Plone site creation
     import PloneWithCMFMemberSitePolicy
     PloneWithCMFMemberSitePolicy.register(context, GLOBALS)
-    
+
     content_types, constructors, ftis = process_types(listTypes(PKG_NAME),
                                                       PKG_NAME)
 
@@ -50,7 +51,7 @@ def initialize(context):
         extra_constructors = constructors,
         fti                = ftis,
         ).initialize(context)
-    
+
     import RegistrationTool, MembershipTool, CatalogTool, MemberCatalogTool
     tools = (
         RegistrationTool.RegistrationTool,

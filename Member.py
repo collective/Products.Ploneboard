@@ -256,7 +256,7 @@ security_schema = Schema((
                     ),
                 regfield=1,
                 ),
-    
+
     LinesField('roles',
                default=('Member',),
                mutator='setRoles',
@@ -364,7 +364,7 @@ login_info_schema = Schema((
                                'view':'visible'},
                       ),
                   ),
-    
+
     ComputedField('listed',
                   mode='r',
                   read_permission=VIEW_OTHER_PERMISSION,
@@ -398,7 +398,7 @@ class Member(VariableSchemaSupport, BaseContent):
 
     # Give a nice icon
     content_icon = "user.gif"
-    
+
     # Note that we override BaseContent.schema
     schema = content_schema + ExtensibleMetadata.schema
 
@@ -1560,7 +1560,7 @@ class Member(VariableSchemaSupport, BaseContent):
                                                )
         host = self.MailHost
         host.send( mail_text )
-        
+
 
     # ########################################################################
     # utility methods

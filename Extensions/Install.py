@@ -168,6 +168,22 @@ def installSkins(self, out):
                 path = ','.join(path)
                 skinsTool.addSkinSelection(skinName, path)
 
+
+def installProperties(portal, out):
+    ## Setup the default pattern for membership Id
+    ## validation. The default is the same as CMFDefault
+    ## but if you want email ids to be valid user ids
+    ## you can change this to
+    ## "^[A-Za-z][A-Za-z0-9_@.]*$"
+    ## or you can mess it up and break your site, don't change it if
+    ## you don't know what your doing...
+    site_props = portal.portal_properties.site_properties
+    if not hasattr(site_props,'portal_member_validid_re'):
+        site_props._setProperty('portal_member_validid_re',
+                                "^[A-Za-z][A-Za-z0-9_]*$" ,
+                                'string')
+
+
 def install(self):
     out=StringIO()
 
@@ -176,6 +192,7 @@ def install(self):
     installControlTool(self, out)
     installSkins(self, out)
     installMember(self, out)
+    installProperties(self, out)
 
     # We need to do the updateRoleMappings only once after all workflows have been set
     # because otherwise the empty one(i.e ControlTool) are reseted to (Default)
