@@ -30,7 +30,7 @@ msgid "label_poll_results"
 msgstr "Nuvarande ställning:"
 
 msgid "label_poll_is_closed"
-msgstr "Omröstningen är stängd"
+msgstr "Omröstningen är stängd."
 
 msgid "label_total_votes"
 msgstr "Totalt antal röster: ${total}"
@@ -49,6 +49,7 @@ msgstr "Svarsalternativ"
 
 msgid "help_answers"
 msgstr "De möjliga svarsalternativ som finns. Ange ett alternativ på varje rad."
+
 msgid "label_open"
 msgstr "Öppen"
 

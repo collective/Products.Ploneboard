@@ -38,3 +38,21 @@ msgstr "Total number of votes: ${total}"
 
 msgid "description_disclaimer"
 msgstr "The poll is not scientific and reflects only the opinions of those users who chose to participate. The results should not be considered representative of either users opinions in general, or the public as a whole."
+
+msgid "label_question"
+msgstr "Question"
+
+msgid "help_question"
+msgstr "The question for this poll."
+
+msgid "label_answers"
+msgstr "Answers"
+
+msgid "help_answers"
+msgstr "A list of alternatives. One alternative per row."
+
+msgid "label_open"
+msgstr "Open"
+
+msgid "help_open"
+msgstr "Check this option to make the poll open, accepting votes from users."

@@ -1,0 +1,40 @@
+# Gettext Message File for MPoll
+# Your Name <your@email>, Year
+EDIT the lines below correctly (and DELETE this one) or your translation WILL NOT WORK
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone 1.0\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: plone\n"
+-------------- Delete this line too just to prove you paid attention --------------
+
+msgid "MPoll"
+msgstr ""
+
+msgid "An error occured while processing your vote."
+msgstr ""
+
+msgid "Your vote has been registered."
+msgstr ""
+
+msgid "You have already voted in this poll."
+msgstr ""
+
+msgid "MPoll has been created."
+msgstr ""
+
+msgid "Your changes have been saved."
+msgstr ""
+
+msgid "This poll is closed."
+msgstr ""
