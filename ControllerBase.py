@@ -147,11 +147,14 @@ class ControllerBase:
         id = self.getId()
         status = controller_state.getStatus()
         context = controller_state.getContext()
-        context_type = getattr(context, '__class__', None)
-        if context_type:
-            context_type = getattr(context_type, '__name__', None)
-        button = controller_state.getButton()
 
+        context_type = getattr(context, 'portal_type', None)
+        if context_type is None:
+            context_type = getattr(context, '__class__', None)
+            if context_type:
+                context_type = getattr(context_type, '__name__', None)
+                
+        button = controller_state.getButton()
         controller = getToolByName(self, 'portal_form_controller')
 
         next_action = None
