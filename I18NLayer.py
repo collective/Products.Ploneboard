@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.11 2003/12/09 12:06:51 longsleep Exp $
+$Id: I18NLayer.py,v 1.12 2003/12/09 14:26:34 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.11 $"
+__version__ = "$Revision: 1.12 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -29,11 +29,14 @@ from OFS.ObjectManager import ObjectManager
 from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission
 from Products.CMFCore.CMFCorePermissions import View, ManageProperties, ListFolderContents, ModifyPortalContent
 from Products.CMFCore.CMFCorePermissions import AddPortalFolders, AddPortalContent
+from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from zLOG import LOG, ERROR, INFO, PROBLEM, DEBUG
 from Products.Archetypes.public import *
+try: from Products.Archetypes.BaseFolder import BaseFolderMixin # AT1.2.x
+except ImportError: from Products.Archetypes.BaseFolder import BaseFolder as BaseFolderMixin # AT1.0.x
 from Products.CMFPlone.PloneFolder import _getViewFor
 
 from I18NContent import I18NContentLayer
@@ -60,7 +63,22 @@ schema = Schema((
     ))
 
 
-class I18NLayer( BaseFolder ):
+class TitleLessBaseFolder( BaseFolderMixin, DefaultDublinCoreImpl ):
+    """ we need a basefolder without title and 
+        without extended meta data and the other crap
+        NOTE: this is for at1.2.x .. hopefully implementation will be cleaner in at1.3 and newer
+    """
+
+    def Title(self, **kwargs):
+        """ we dont have a title """
+        return ''
+
+    def setTitle(self, value, **kwargs):
+        """ we dont have a title """
+        pass
+
+
+class I18NLayer( TitleLessBaseFolder ):
     """ container object which transparently wraps multiple
         subobjects as language representations
     """

@@ -18,18 +18,22 @@
 """
 utilities
 
-$Id: utils.py,v 1.1 2003/06/01 16:39:11 longsleep Exp $
+$Id: utils.py,v 1.2 2003/12/09 14:26:35 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.1 $"
+__version__ = "$Revision: 1.2 $"
 
 
 # PlacelessTranslation Service Negotiator Support
 try:
+    # NOTE: the code below works only with the forked releases of PTS, yet
     from Products.PlacelessTranslationService.Negotiator \
         import getLangPrefsMethod as pts_getLangPrefsMethod
-    getLangPrefsMethod = lambda req, get=pts_getLangPrefsMethod: get(req).getPreferredLanguages()
-except ImportError:
+    getLangPrefsMethod = lambda req, get=pts_getLangPrefsMethod: get(req).getAccepted(req)
+except ImportError, AttributeError:
+    # NOTE: this is called for non forked PTS versions from 1.0b1 which raise ImportError
+    #       this is also called for older PTS version which raise AttributeError
+    #       to get the PTS fork visit http:/sf.net/projects/collective
     getLangPrefsMethod = lambda req: map(
         lambda x: x.split(';')[0].strip(),
         req.get('HTTP_ACCEPT_LANGUAGE','').split(',')
