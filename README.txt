@@ -1,3 +1,9 @@
+!!! IMPORTANT !!!
+
+  This product is in very early development stage.
+  
+  Please do not use yet as it is very very buggy.
+
 Description
 
   Let Plone users create their own bibliography lists.
