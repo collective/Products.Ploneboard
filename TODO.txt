@@ -1,5 +1,16 @@
 V2.0
 
+- at edit form:
+
+  - new option when edit: add to left/rigt column
+
+  - new config/canel buttons
+
+- API
+
+  - register/unregister skin
+  - register/unregister viewlet
+
 - support mxmDynamicPage
 
 - add edit content button for each panel

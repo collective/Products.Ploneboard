@@ -15,16 +15,17 @@
 ###
 ### 3. be careful to the catagory's prefix:
 ###    
-###    - PT: portal types specific viewlets.
-###      it should be PT:PotalTypeName
+###    - PT: content specific viewlets.
+###      it should be PT:PotalTypeID
 ###
-###    - GL: global viewlets. not portal types specific
+###    - GL: context sensitive viewlets
+###        not content specific, but sensitive with its context 
 ###
 ###      GL:folder     all folderish content specific
 ###      GL:content    all non-folderish content specific
 ###      GL:all        all content specific
 ###
-###    - GN: general portlets. they are not content related
+###    - GN: general portlets. they are not context sensitive
 ###
 ###      GN:portal     site-wide viewlets
 ###      GN:personal   personal related viewlets

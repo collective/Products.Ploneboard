@@ -1,4 +1,6 @@
 V1.7
+ 
+  - better UI
 
   - All viewlets are defined at portal_contentpanels now. see the new config.py
 
