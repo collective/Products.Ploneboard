@@ -46,7 +46,7 @@ if hasLDAP:
         LDAPUserFolder._mangleRoles = LDAPUserFolderAdapter._mangleRoles
 
     # Patch LDAPUF  : XXX FIXME: have to find something cleaner here?
-##    patch_LDAPUF()
+    patch_LDAPUF()
 
 
 def initialize(context):
