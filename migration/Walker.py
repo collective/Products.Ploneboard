@@ -14,8 +14,8 @@ class MigrationError(RuntimeError):
             self.id = repr(obj)
         
     def __str__(self):
-        return "MigrationError for obj %s (%s -> %s):\n
-               "%s" % (self.id, self.fromType, self.toType, self.tb
+        return "MigrationError for obj %s (%s -> %s):\n" \
+               "%s" % (self.id, self.fromType, self.toType, self.tb)
 
 class Walker:
     """Walks through the system and migrates every object it finds
@@ -85,6 +85,7 @@ class Walker:
                              self.fromType, self.toType, ))
             LOG(msg)
             self.out.append(msg)
+            print msg
             
             migrator = self.migrator(obj)
             try:
@@ -144,7 +145,11 @@ class CatalogWalker(Walker):
         """
         ret = []
         LOG("fromType: " + str(self.fromType))
-        brains = self.catalog(portal_type = self.fromType)
+        catalog = self.catalog
+        # usage of Language is required for LinguaPlone
+        brains = catalog(portal_type = self.fromType,
+                         Language = catalog.uniqueValuesFor('Language'),
+                        )
         for brain in brains:
             obj = brain.getObject()
             if obj:
