@@ -1,3 +1,19 @@
+2004-04-20 02:27  tiran
+
+	* __pkginfo__.py, version.txt, debian/changelog, docs/HISTORY.txt,
+	  docs/INSTALL.txt: Preparing 0.2-beta3 release
+
+2004-04-18 19:06  tiran
+
+	* docs/HISTORY.txt, skins/ATContentTypes/addtoFavorites.py,
+	  types/schemata.py: Fixed default view of ATBTreeFolder and
+	  ATFolder (stage 2) Both types are using ATContentTypeSchema with
+	  TemplateMixinSchema (thx to skaar again)
+
+2004-04-17 22:06  tiran
+
+	* docs/CHANGELOG.txt: updated changelog
+
 2004-04-17 22:04  tiran
 
 	* docs/HISTORY.txt: Updated history Added contributor to each entry
