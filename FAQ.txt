@@ -25,6 +25,8 @@ You should reinstall CMFContentPanels.
 
 5. How to put my new-created contentpanels on plone's left/right column?
 
+   You can do this at the 'edit' tab. Or do it under ZMI:
+
    Say you have created a contentpanels named 'my-contentpanels'. You can add
    it to plone this way:
 

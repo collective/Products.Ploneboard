@@ -106,9 +106,9 @@ ContentPanels is designed to build a complex view out of a combination of portle
      <div class="field"
           tal:define="customCSS request/customCSS | here/getCustomCSS ">
 
-      <label for="description" i18n:translate="label_custom_css">custom CSS</label>
+      <label for="customCSS" i18n:translate="label_custom_css"  i18n:domain="contentpanels">custom CSS</label>
 
-      <div class="formHelp" i18n:translate="help_custom_css">
+      <div class="formHelp" i18n:translate="help_custom_css"  i18n:domain="contentpanels">
         You can define custom CSS for this contentpanels here. Leave it blank if you don't know about CSS.
       </div>
 
@@ -122,6 +122,26 @@ ContentPanels is designed to build a complex view out of a combination of portle
                 >
        customCSS
       </textarea>
+     </div>
+
+     <div class="field">
+      <label i18n:translate=""  i18n:domain="contentpanels">left/right portlets</label>
+
+      <div class="formHelp" i18n:translate="help_portlet_pos" i18n:domain="contentpanels">
+        You can set this contentpanels as the left or right column of the template.
+      </div>
+
+      <select name="portletsPos" tal:define="pos here/getPortletsPos">
+         <option value="none" 
+                 tal:attributes="selected python:pos == 'none'">
+                 none</option>
+         <option value="left_slots"
+                 tal:attributes="selected python:pos == 'left_slots'">
+                 set to left</option>
+         <option value="right_slots"
+                 tal:attributes="selected python:pos == 'right_slots'">
+                 set to right</option>
+      </select>
      </div>
 
      <div class="formControls"
@@ -139,7 +159,7 @@ ContentPanels is designed to build a complex view out of a combination of portle
 
     <input type="hidden" name="form.submitted" value="1" />
 
-  </form>   
+  </form>
 </div>
 </body>
 </html>

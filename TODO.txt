@@ -1,41 +1,11 @@
 V2.0
 
-- at edit form:
-
-  - new option when edit: add to left/rigt column
-
-  - new config/canel buttons
-
 - API
 
   - register/unregister skin
   - register/unregister viewlet
 
-- support mxmDynamicPage
-
-- add edit content button for each panel
-
-- performance
-
-  You can have a look at the base_panel.pt, perhaps this line is too expensive:
-
-    <metal:block use-macro="here/global_defines/macros/defines" />
-
-  Each panel will call all the defines.
-  I think we can define a small set of variables. 
-
-- It looks like you made a better interface for this. Seems to function much
-better now, but it is still strange that you can select the "global"
-viewlets after you have selected a particular content item.
-
-It seems to me that these two types of viewlets should some how be
-distinguished from each other. One is a global viewlet (Plone portlets)
-which has no bearing on the context, whereas the other is a viewlet which is
-specific to the particular piece of content (or folder) that you have
-selected.
-
-Perhaps you should separate Viewlets from Portlets, because right now it is
-rather confusing.
+- add edit button to each content
 
 - update css to be more compatible with nested contentpanels
 

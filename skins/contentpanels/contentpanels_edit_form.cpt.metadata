@@ -5,4 +5,5 @@ title = edit contentpanels properties
 validators..Save=validate_id
 
 [actions]
-action.success = traverse_to:string:contentpanels_edit
+action.success..Save = traverse_to:string:contentpanels_edit
+action.success..portletsPos = traverse_to:string:cp_setPortletsPos

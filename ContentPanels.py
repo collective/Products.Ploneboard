@@ -18,7 +18,7 @@ import urlparse
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_parent
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalContent import PortalContent, NoWL
@@ -92,15 +92,26 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self.clearPanels()
         self.addPage()
 
-
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'edit')
     def edit(self, customCSS=''):
         self.customCSS = customCSS
 
     security.declarePublic('getCustomCSS')
     def getCustomCSS(self):
+        """ get custom css """
         customCSS = getattr(aq_base(self), 'customCSS', '')
         return customCSS.strip()
+
+    security.declarePublic('getPortletsPos')
+    def getPortletsPos(self):
+        """ get portlet pos of the container """
+        portlet_name = 'here/%s/contentpanels_body' % self.getId()
+        container = aq_parent(self)
+        for slot_name in ['left_slots', 'right_slots']:
+            if hasattr(aq_base(container), slot_name):
+                if portlet_name in getattr(container, slot_name):
+                    return slot_name
+        return 'none'
 
     def clearPanels(self):
         self.panelsConfig = []

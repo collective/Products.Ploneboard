@@ -8,8 +8,8 @@
         <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanelsCustom.css" />
         <style type="text/css"
                tal:define="customCSS here/getCustomCSS"
-               tal:condition="customCSS"> 
-            <!--<tal:block tal:content="structure customCSS"/> -->
+               tal:condition="customCSS"
+               tal:content="structure string:&lt;!-- $customCSS --&gt;">
         </style>
   </metal:block>
 
