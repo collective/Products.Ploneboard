@@ -35,7 +35,7 @@
               ">
               <div class="portlet">
                 <h6>
-                  <img src="" alt="Type" style="border: 0"
+                  <img src="#" alt="Type" style="border: 0"
                        tal:attributes="src groupspace/getIcon;
                     alt groupspace/Type" />
                     <span tal:omit-tag="" i18n:translate="">Managed by</span>
@@ -72,11 +72,11 @@
                       <div tal:replace="nothing">
                         MAY BE USEFUL... ONE DAY :)
                         <a href="" tal:attributes="href string:${here/absolute_url}/search_rss?${request/QUERY_STRING}">
-                          <img i18n:attributes="title alt"
-                            tal:attributes="src string:$portal_url/rss.gif"
-                            src="rss.gif"
-                            alt="RSS Feed"
-                            title="RSS feed of these search results" />
+                          <img src="rss.gif"
+                               alt="RSS Feed"
+                               title="RSS feed of these search results"
+                               i18n:attributes="title alt"
+                               tal:attributes="src string:$portal_url/rss.gif"/>
                         </a>
                       </div>
 
@@ -88,9 +88,9 @@
                               <a href="#"
                                  tal:attributes="href url">
                                 <img src="#"
+                                     alt="Icon"
                                      height="16"
                                      width="16"
-                                     alt=""
                                      tal:on-error="structure python:path('here/linkOpaque.gif')"
                                   tal:replace="structure python:path('here/%s' % result.getIcon)" /></a>
                               &nbsp;

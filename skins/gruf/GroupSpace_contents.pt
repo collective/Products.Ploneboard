@@ -25,12 +25,12 @@
                       batch python:Batch(results, 100, int(b_start), orphan=0);">
 
             <h1 tal:condition="myfolder">
-            <img tal:replace="structure here/folder.gif" />
+            <img src="#" alt="Folder" tal:replace="structure here/folder.gif" />
             <span i18n:translate="heading_my_folder" tal:omit-tag="">My Folder</span>
             </h1>
 
             <h1 tal:condition="not:myfolder">
-            <img tal:replace="structure here/folder.gif" />
+            <img src="#" alt="Folder" tal:replace="structure here/folder.gif" />
             <span tal:content="here/title_or_id" tal:omit-tag="">Directory Id</span>
             </h1>
 
@@ -185,12 +185,13 @@
 
                             <a href="absolute_url/external_edit"
                                tal:attributes="href string:${item/absolute_url}/external_edit">
-                               <img tal:replace="structure python:pencil_icon.tag(title='Edit with External Editor')" />
+                               <img src="#" alt="Edit" tal:replace="structure python:pencil_icon.tag(title='Edit with External Editor')" />
                              </a>
 
                             </tal:block>
 
-                            <img tal:define="lockable python:hasattr(item, 'wl_isLocked')"
+                            <img src="#" alt="Locked"
+                                 tal:define="lockable python:hasattr(item, 'wl_isLocked')"
                                  tal:condition="python:(lockable and item.wl_isLocked()) or (lock_tool and lock_tool.isLockedOut(item))"
                                  tal:replace="structure python:locked.tag(title='Locked')" />
 
@@ -221,11 +222,11 @@
                         <td tal:condition="isOrderable">
                             <a href=""
                                tal:attributes="href string:${here/absolute_url}/folder_position?position=up&amp;id=${item/getId}"
-                            ><img tal:replace="structure here/portal_url/arrowUp.gif" /></a>
+                            ><img alt="Up" src="#" tal:replace="structure here/portal_url/arrowUp.gif" /></a>
                             &nbsp;
                             <a href=""
                                tal:attributes="href string:${here/absolute_url}/folder_position?position=down&amp;id=${item/getId}"
-                            ><img tal:replace="structure here/portal_url/arrowDown.gif" /></a>
+                            ><img alt="Down" src="#" tal:replace="structure here/portal_url/arrowDown.gif" /></a>
                         </td>
                     </tr>
                 </metal:block>
