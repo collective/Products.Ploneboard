@@ -1,0 +1,41 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+<body>
+
+<div metal:define-macro="portlet">
+     <div class="portlet"
+          tal:define="theFolder python:test(here.isPrincipiaFolderish, here, here.aq_parent);
+                 folderPath python:'/'.join(theFolder.getPhysicalPath());
+                 results python:here.portal_catalog.searchResults(
+                                   path=folderPath
+                                   , sort_on='modified'
+                                   , sort_order='reverse')[:6];
+                 results python:[item.getObject() for item in results if item.getPath() != folderPath];
+                 results python:results[:5]">
+
+         <h5><a href="#"    tal:attributes="href here/absolute_url"
+                            tal:content="here/title_or_id" >title</a>
+         </h5>
+
+         <div class="portletBody">
+
+             <tal:block metal:use-macro="here/topic_panel_view/macros/content_listing"/>
+
+             <div class="portletContent odd">
+
+                 <a href="#"
+                    class="portletMore"
+                    i18n:translate="box_morelink"
+                    tal:attributes="href string:$portal_url/search?path=$folderPath&sort_on=modified&sort_order=reverse"
+                   >More...</a>
+
+              </div>
+         </div>
+     </div>
+</div>
+
+</body>
+
+</html>
+

@@ -6,7 +6,7 @@ V2.0
 
 - compatible with I18NLayer
 
-- add to collective
+- (done)add to collective
 
 - submit to Plone as a portlet proposal
 

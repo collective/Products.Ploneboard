@@ -1,0 +1,40 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+
+<body>
+
+<div metal:define-macro="portlet"
+     tal:define="memberName member/getUserName;
+                 results python:here.portal_catalog.searchResults( 
+                                    Creator=memberName
+                                   , sort_on='modified'
+                                   , sort_order='reverse')[:5];
+                 results python:[item.getObject() for item in results]" 
+     tal:condition="results">
+
+     <div class="portlet">
+
+         <h5 i18n:translate="my_recent_changes">My Recent Changes</h5>
+
+         <div class="portletBody">
+              <tal:block metal:use-macro="here/topic_panel_view/macros/content_listing" />
+
+              <div class="portletContent odd">
+
+                 <a href="#" 
+                    class="portletMore"
+                    i18n:translate="box_morelink"
+                    tal:attributes="href string:$portal_url/search?Creator=$memberName&sort_on=modified&sort_order=reverse" 
+                   >More...</a>
+
+              </div>
+         </div>
+     </div>
+</div>
+
+</body>
+
+</html>
+
+

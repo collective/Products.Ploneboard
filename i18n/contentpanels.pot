@@ -1,0 +1,135 @@
+# Gettext Message File for ContentPanels.
+# panjunyong <panjy@zopechina.ods.org>, 2003
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ContentPanels 1.2\n"
+"POT-Creation-Date: 2003-07-03 01:11+0300\n"
+"PO-Revision-Date: 2003-07-03 16:16+0800\n"
+"Last-Translator: panjunyong <panjy@zopechina.ods.org>\n"
+"Language-Team: ZopeChina.com <panjy@zopechina.ods.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: zh_cn\n"
+"Language-name: Chinese\n"
+"Preferred-encodings: utf-8\n"
+"Domain: contentpanels\n"
+
+msgid "label_content"
+msgstr "select content: "
+
+msgid "label_skin"
+msgstr "skin: "
+
+msgid "click here to select other content"
+msgstr "click here to select other content"
+
+msgid "label_column_width"
+msgstr "width:"
+
+msgid "label_viewlet"
+msgstr "view"
+
+msgid "heading_new_panel"
+msgstr "new panel"
+
+msgid "Add Panel"
+msgstr "Add Panel"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "heading_column"
+msgstr "Column #$col_num"
+
+msgid "label_title"
+msgstr "title"
+
+msgid "label_align"
+msgstr "align"
+
+msgid "label_width"
+msgstr "width"
+
+msgid "label_panel_space"
+msgstr "panel space"
+
+msgid "Add Column"
+msgstr "Add Column"
+
+msgid "Add Page"
+msgstr "Add Page"
+
+msgid "Delete Page"
+msgstr "Delete Page"
+
+msgid "description_edit_contentpanels"
+msgstr "ContentPanels is a content to compose different content's different view to build a complex portlets view. Enter the relevant details below, and press 'Save'. Go to view page, click the right top config icon to config."
+
+msgid "legend_contentpanels_details"
+msgstr "contentpanels detals"
+
+msgid "ContentPanels"
+msgstr "Content Panels"
+
+msgid "Config Layout"
+msgstr "Config Layout"
+
+msgid "View Layout"
+msgstr "View Layout"
+
+# Box Skin Names
+
+msgid "Blank Box"
+msgstr "Blank Box"
+
+msgid "Title Only"
+msgstr "Title Only"
+
+msgid "Plone Box"
+msgstr "Plone Box"
+
+msgid "Blue Box"
+msgstr "Blue Box"
+
+msgid "Red Box"
+msgstr "Red Box"
+
+msgid "Yellow Box"
+msgstr "Yellow Box"
+
+# viewlet Names
+
+msgid "ContentPanels View"
+msgstr "Content View"
+
+msgid "View"
+msgstr "View"
+
+msgid "Lastest Updates"
+msgstr "Lastest Updates"
+
+msgid "Body"
+msgstr "Body"
+
+msgid "Default Viewlet"
+msgstr "Default View"
+
+msgid "My Recent Changes"
+msgstr "my recent changes"
+
+#viewlet 
+
+msgid "none_my_post"
+msgstr "none(my latest post)"
+
+msgid "cp_page_title"
+msgstr "page #$page_num"
+
+msgid "Add"
+msgstr "add"

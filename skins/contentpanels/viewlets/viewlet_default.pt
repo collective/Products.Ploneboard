@@ -1,0 +1,24 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+<body>
+
+<div metal:define-macro="portlet">
+     <div class="portlet">
+         <h5><a href="#"    tal:attributes="href here/absolute_url"
+                            tal:content="here/title_or_id" >title</a></h5>
+
+         <div class="portletBody">
+
+            <div class="description" 
+                 tal:content="structure here/Description">description
+            </div>
+
+         </div>
+
+     </div>
+</div>
+
+</body>
+</html>
+

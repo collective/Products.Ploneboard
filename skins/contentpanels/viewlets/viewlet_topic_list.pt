@@ -1,0 +1,70 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+
+<body>
+
+<div metal:define-macro="portlet"
+     tal:define="results python:here.queryCatalog()[:5];
+                 results python:[item.getObject() for item in results]"
+     tal:condition="results">
+
+     <div v class="portlet">
+
+         <h5><a href="#"    tal:attributes="href here/absolute_url"
+                            tal:content="here/title_or_id" >
+Topic title</a></h5>
+
+         <div class="portletBody">
+
+             <tal:block tal:repeat="item results">
+
+                <div class="portletContent odd" 
+                     tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
+                     tal:condition="python:item != None and item.getTypeInfo()">
+                  <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
+                        url python:item.absolute_url()+'/'+action;
+                        ">
+           &nbsp;
+                      <a href="#"
+		            i18n:attributes="title"
+                            tal:attributes="href url;
+                                            title python:item.Description() or  None;">
+                         <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
+                         <tal:block tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(item)" >
+                           <span tal:omit-tag=""
+                               tal:define="replyCount python:here.portal_discussion.getDiscussionFor(item).replyCount(item)"
+                               tal:condition="python: replyCount > 0"
+                               tal:replace="python: '[%d]'% replyCount"> 8
+                           </span>
+                         </tal:block>
+                        <span tal:replace="python:item.Title() or item.getId()">Title</span>
+                     </a>
+       
+                     <span tal:content="string: (${item/Creator})">creator</span>
+                     <span tal:content="python:here.toPortalTime(item.ModificationDate())">
+                             08/19/2001 03:01 AM
+                     </span>
+                </tal:block>
+             </div>
+          </tal:block>
+
+              <div class="portletContent odd">
+
+                 <a href="#"
+                    class="portletMore"
+                    i18n:translate="box_morelink"
+                    tal:attributes="href here/absolute_url"
+                   >More...</a>
+
+              </div>
+         </div>
+     </div>
+</div>
+
+</body>
+
+</html>
+
+
+

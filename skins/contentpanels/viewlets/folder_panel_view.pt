@@ -1,0 +1,135 @@
+<div       i18n:domain="plone"
+     tal:define="dummy here/filterCookie;
+                 folderfilter python:request.get('folderfilter', '');
+                 global decodedFilter python:here.decodeFolderFilter(folderfilter);
+                 global filterValues decodedFilter;
+                 global filter decodedFilter;
+                 global portal_url here/portal_url;
+                 global member here/portal_membership/getAuthenticatedMember;
+                 standalone python:1;
+                 Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                 tabindex python:Iterator();
+                 folder_contents python:here.getFolderContents(contentFilter=filter, suppressHiddenFiles=1);">
+
+    <form name="folderContentsForm"
+          method="post"
+          action="folder_object"
+          tal:attributes="action here/absolute_url"
+          tal:define="b_start python:request.get('b_start', 0);
+                      results python:here.sortObjectsByDate(folder_contents);
+                      global DateTime python:modules['DateTime'].DateTime;
+                      Batch python:modules['Products.CMFPlone'].Batch;
+                      batch python:Batch(results, 10, int(b_start), orphan=0);">
+
+        <input type="hidden" name="filter_state" value="set_view_filter" />
+            <table id="sortable"
+                   
+                   width="100%"
+                   summary="Content listing"
+                   cellpadding="5" cellspacing="0"
+                   metal:define-macro="folder_listing">
+
+             <thead >
+                    <tr tal:condition="standalone|nothing">
+                        <td tal:define="types python:here.allowedContentTypes();
+                                        dummy python:types.sort( lambda x,y: cmp(x.Title().lower(), y.Title().lower()) );
+                                        no_types python:len(types);" >
+
+                            
+                            <!-- Add Item pulldown -->
+                            <select name="type_name" 
+                                    tabindex=""
+                                    tal:condition="python:test(no_types > 1, 1, 0)"
+                                    tal:attributes="tabindex tabindex/next|nothing;">
+                                <option value="Select" i18n:translate="label_select">Select</option>
+                                <metal:block tal:repeat="ctype types"
+                                             tal:define="global filterOut  python:['Favorite']">
+                                <option value="Document"
+                                        tal:condition="python: ctype.getId() not in filterOut"
+                                        tal:attributes="value ctype/getId"
+                                        tal:content="ctype/Title"
+                                        i18n:translate="">Document</option>
+                                </metal:block>
+                            </select>
+                            
+                            <input type="hidden"
+                                   name="type_name"
+                                   value="Content Type Id"
+                                   tal:condition="python:test(no_types==1, 1, 0)"
+                                   tal:attributes="value python:types[0].getId()" />
+                                   
+                            <input class="standalone" 
+                                   type="submit" 
+                                   name="folder_factories:method" 
+                                   value="Add New Item"
+                                   tabindex=""
+                                   style="font-size: 100%;"
+                                   i18n:attributes="value"
+                                   tal:condition="types"
+                                   tal:attributes="tabindex tabindex/next|nothing;
+                                                   value python:test( no_types == 1
+                                                                    , 'Add New ' + types[0].Title()
+                                                                    , 'Add New Item');" />
+            
+                        </td>
+                    </tr> 
+
+                </thead>
+
+                <metal:block tal:condition="folder_contents|not:standalone|nothing">
+                <tbody>
+                <metal:block tal:repeat="item batch"  > 
+                    <tr tal:define="oddrow repeat/item/odd"
+                        tal:attributes="class python:test(oddrow, 'even', 'odd')" > 
+                      <td>
+                        <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(item)" >
+                             <span tal:omit-tag="" 
+                                 tal:define="replyCount python:here.portal_discussion.getDiscussionFor(item).replyCount(item)"
+			         tal:condition="python: replyCount > 0"
+                                 tal:replace="python: '[%d]'% replyCount"> 8
+                             </span>
+                        </span> 
+                        <span tal:define="action python:item.getTypeInfo().getActionById('view');
+                                        use_folder_contents here/portal_properties/site_properties/use_folder_contents;
+                                        url python:test(item.getTypeInfo().getId() in use_folder_contents, 
+                                                        item.absolute_url()+'/folder_board',
+                                                        item.absolute_url()+'/'+action);"> 
+    
+                            <a href="#" tal:attributes="href url" target="_blank">
+                                <img tal:replace="structure python:path('here/%s' % item.getIcon(1))" 
+                                />&nbsp;<span tal:replace="item/title_or_id">Title</span>
+                            </a>
+                        </span>
+ 
+                        <span class="expired"
+                                tal:condition="python:container.isExpired(item)">expired</span>
+
+                        <span tal:content="python:' (' + item.Creator() + ')'">
+                        size
+                        </span>
+
+                        <span tal:content="python:here.toPortalTime(item.ModificationDate())">
+                        08/19/2001 03:01 AM
+                        </span>
+
+                        <br/>
+                        <span tal:replace="python: item.description"></span>
+
+		      </td>
+                    </tr>
+                </metal:block>
+                </tbody>
+                </metal:block> 
+            </table>
+    
+    </form>
+
+</div>
+<div align="right"> 
+     <a href="#" 
+        tal:attributes="href python: here.absolute_url() + '/folder_listing'"
+	i18n:translate="read_more">More... 
+     </a>
+</div>
+
+
