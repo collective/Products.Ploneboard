@@ -38,6 +38,9 @@ import GRUFFolder
 import GroupUserFolder
 from AccessControl.PermissionRole \
   import _what_not_even_god_should_do, rolesForPermissionOn
+from ComputedAttribute import ComputedAttribute
+
+
 
 # NOTE : _what_not_even_god_should_do is a specific permission defined by ZOPE
 # that indicates that something has not to be done within Zope.
@@ -55,6 +58,15 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     There's, alas, many copy/paste from AccessControl.BasicUser...
     """
 
+    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
+        # This is get back from AccessControl.User.BasicUser
+        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
+                    'authenticate', '_shared_roles', 'changePassword',
+                    "_setUnderlying", "__init__", )
+        if name in deny_names:
+            return 0
+        return 1
+
     def _setUnderlying(self, user):
         """
         _setUnderlying(self, user) => Set the GRUFUser properties to 
@@ -68,7 +80,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self._original_roles = user.getRoles()
         self._original_domains = user.getDomains()
         self._original_id = user.getId()
-        self.__underlying__ = user # Used only for authenticate()
+        self.__underlying__ = user # Used for authenticate() and __getattr__
 
 
     # ----------------------------
@@ -315,4 +327,50 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         
         return [u for u in self.aq_parent.getUsers() 
                 if self.getId() in u.getGroups()]
+
+
+    #                                                           #
+    #                   Password management hack                #
+    #                                                           #
+
+    ## This hack is necessary to make GRUF comply with CMF <= 1.4
+    ## There's a hack in setSecurityProfile() that makes CMF incompatible
+    ## with something else than standard User Folder, or, at least,
+    ## with something that doesn't have the (clear) password stored
+    ## in a "__" attribute.
+
+    ## The following hacks define a __ attribute that makes password
+    ## changing possible with it.
+
+    def changePassword(self, password): 
+        """Set the user's password""" 
+        # don't spam the user's roles with group roles and Authenticaed 
+        roles = self.getUserRoles() 
+        roles = filter(lambda x: x != 'Authenticated', roles) 
+
+        # set the profile on the user folder 
+        self.aq_parent.userFolderEditUser(
+            self.getUserName(),
+            password,
+            roles,
+            self.getDomains(),
+            )
+
+    def __setattr__(self, name, value):
+        # This is required password-changing support
+        Log(LOG_DEBUG, "__setattr__", name)
+        if name == "__":
+            self.changePassword(value)
+        else:
+            self.__dict__[name] = value
+
+    #                                                           #
+    #               Underlying user object support              #
+    #                                                           #
+
+
+    def __getattr__(self, name):
+        # This will call the underlying object's methods
+        # if they are not found in this user object.
+        return getattr(self.__dict__['__underlying__'], name)
 
