@@ -22,7 +22,10 @@
 
         <h2 tal:content="here/Title">Conversation title</h2>
 
-        <div class="visualClear"></div>	
+        <div class="documentDescription"
+             tal:content="here/Description"> 
+        description
+        </div>
 
         <div class="boardConversation"
              metal:define-macro="view_messages"
@@ -45,7 +48,8 @@
                           tal:define="home python:container.portal_membership.getHomeUrl(message.Creator(), verifyPermission=1);
                                       portrait python: here.portal_membership.getPersonalPortrait(message.Creator());"> 
                         <a href="#" tal:attributes="href home">                    
-                            <img src="defaultUser.gif" 
+                            <img class="portraitPhoto"
+                                 src="defaultUser.gif" 
                                  alt="" 
                                  border="0" 
                                  width="75" 

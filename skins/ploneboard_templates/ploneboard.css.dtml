@@ -82,7 +82,8 @@
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: &dtml-borderStyle; none none none;
     background-color: &dtml-globalBackgroundColor;;
-    padding: 0.5em 0 0 1em;
+    padding: 0.5em 1em 0 1em;
+    text-align: right;
 }
 
 .boardMessageActions {
