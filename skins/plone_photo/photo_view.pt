@@ -6,64 +6,56 @@
 	
 <body>
 
-<span metal:fill-slot="main"  tal:define="default_size string:small">
+<div metal:fill-slot="main" tal:define="default_size string:small">
 
-    <div class="contentHeader"
-         metal:use-macro="here/portal_boxes/macros/contentHeader">
-    content header
+    <div class="contentHeader">
+    <h1 tal:content="here/title_or_id">Title or id</h1>
     </div>
-   
+
+    <a tal:condition="here/size" tal:attributes="href here/absolute_url">
+        <img tal:define="size python:getattr(request, 'display', default_size)" tal:replace="structure python:here.tag(display=size, cookie=test(request.get('display'), 1, 0))" />
+    </a>
+           
     <span class="description" tal:content="structure here/Description">
     Description
     </span>
 
-    <div class="group">
-        <span class="legend">Image details</span>
-
-        <div class="row">
-            <span class="label"></span>
-            <span class="field" tal:condition="here/size">
-               	<a tal:attributes="href here/absolute_url"><img tal:define="size python:getattr(request, 'display', default_size)" tal:replace="structure python:here.tag(display=size, cookie=test(request.get('display'), 1, 0))" /></a>
-            </span>
-        </div>
-
-        <div class="row">
-            <span class="label">Size</span>
-            <span class="field" 
-                  tal:define="size python:here.getObjSize(here)"
-                  tal:content="size">                        
-            File size
-            </span>            
-            <span class="info" tal:condition="python:test(here.size, 0, 1)">
-              (No file has been uploaded)
-            </span>
-        </div>
+    <small>
+    <span i18n:translate="">Size:</span>
+        <span tal:define="size python:here.getObjSize(here)"
+              tal:content="size">                        
+        File size
+        </span>            
         
-        <div class="row">
-            <span class="label">File type</span>
-            <span class="field" tal:content="here/content_type">
-            Content type
-            </span>
-        </div>    
+        <span tal:condition="python:test(here.size, 0, 1)"
+              i18n:translate="">
+          (No file has been uploaded)
+        </span>
+        
+        -
+        
+        <span i18n:translate="">Content type:</span>
+        <span tal:content="here/content_type">
+        Content type
+        </span>
+    
+    </small>
 
-	<div class="row">
-	    <span class="label">Display size</span>
-            <span class="field">
-                <form>
-                    <select tal:attributes="onChange string:location.href='${request/URL0}?display='+this.options[this.selectedIndex].value" name="display">
-                        <option tal:repeat="display here/displayMap" tal:content="string:${display/id/capitalize} ${display/width}x${display/height}" 
-                                tal:attributes="value display/id;
-                                                selected python:test(request.get('display', default_size)==display['id'], 'selected', '');" 
-                        />
-                    </select>
-                </form>
-            </span>
-        </div>
 
+    <div>      
+        <span i18n:translate="">Display size:</span>
+        <form>
+            <select tal:attributes="onChange string:location.href='${request/URL0}?display='+this.options[this.selectedIndex].value" name="display">
+                <option tal:repeat="display here/displayMap" tal:content="string:${display/id/capitalize} ${display/width}x${display/height}" 
+                        tal:attributes="value display/id;
+                                        selected python:test(request.get('display', default_size)==display['id'], 'selected', '');" 
+                />
+            </select>
+        </form>
     </div>
 
     <span tal:define="display request/form/display | default_size">
-	<span class="left" tal:condition="here/prevPhoto">
+        <span class="left" tal:condition="here/prevPhoto">
             <form tal:attributes="action string:${here/prevPhoto}/view">
                 <input class="standalone" type="submit" value="Previous Photo" />
             </form>
@@ -79,9 +71,13 @@
             </form>
         </span>
     </span>
-
-</span>
+    
+</div>
 
 </body>
 </html>
+
+
+
+
 
