@@ -2,5 +2,5 @@
 validators=validate_id
 
 [actions]
-action.failure=redirect_to_action:string:edit
-action.success=redirect_to_action:string:layout
+action.failure=redirect_to:string:contentpanels_edit_form
+action.success=redirect_to:string:contentpanels_config_form
