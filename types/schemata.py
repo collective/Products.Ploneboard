@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.37 2004/06/24 21:56:48 tiran Exp $
+$Id: schemata.py,v 1.38 2004/07/04 01:05:21 limi Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -272,11 +272,11 @@ ATImageSchema = ATContentTypeSchema + Schema((
                required = 1,
                primary=1,
                languageIndependent=True,
-               sizes= {'preview' : (400, 400),
-                       'thumb'   : (128, 128),
-                       'tile'    :  (64, 64),
-                       'icon'    :  (32, 32),
-                       'listing' :  (16, 16),
+               sizes= {'preview'   : (400, 400),
+                       'thumbnail' : (128, 128),
+                       'tile'      :  (64, 64),
+                       'icon'      :  (32, 32),
+                       'listing'   :  (16, 16),
                       },
                validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
