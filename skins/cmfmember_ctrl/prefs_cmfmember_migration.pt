@@ -16,12 +16,12 @@
     Up to Plone Setup
     </a>
 
-    <p>
+    <p i18n:translate="cmfmember_versions">
       <b>Instance version:</b> <tal:block tal:replace="here/getInstanceVersion"/><br />
       <b>File system version:</b> <tal:block tal:replace="here/getFileSystemVersion"/><br />
     </p>
 
-    <p tal:condition="not: here/needUpgrading">
+    <p tal:condition="not: here/needUpgrading" i18n:translate="cmfmember_up_to_date">
         Your CMFMember instance is up to date. 
     </p>
 
@@ -33,7 +33,7 @@
 	 Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
     </div>
 
-    <p>
+    <p i18n:translate="">
        Your CMFMember instance is out of date. Click "upgrade" to bring this CMFMember version up to date with your file system.
     </p>
     <form action="upgrade" method="post">
@@ -99,7 +99,7 @@
 
 
     <tal:block tal:condition="here/getLog|nothing">
-    <h2>Last migration log</h2>
+    <h2 i18n:translate="last_migration_log">Last migration log</h2>
     <ul>
     <tal:block tal:repeat="msg here/getLog">
          <li tal:content="python:msg[0]">result message</li>

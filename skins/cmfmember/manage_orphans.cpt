@@ -17,9 +17,10 @@
 
         <p tal:define="mdcontents python:here.getMemberDataContents()[0];
                        member_count mdcontents/member_count;
-                       orphan_count mdcontents/orphan_count;">
-          There are <span tal:content="member_count" /> members and 
-          <span tal:content="orphan_count" /> orphaned members (members with
+                       orphan_count mdcontents/orphan_count;"
+             i18n:translate="XXX">
+          There are <span i18n:name="" tal:content="member_count" /> members and 
+          <span i18n:name="" tal:content="orphan_count" /> orphaned members (members with
           missing User objects).
         </p>
 
@@ -43,7 +44,7 @@
                  />
         </div>
 
-      <p>When members are deleted, the content they own may end up with an
+      <p i18n:translate="XXX">When members are deleted, the content they own may end up with an
         invalid owner.  
         <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
           Click the button below to take ownership of orphaned content.

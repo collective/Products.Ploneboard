@@ -31,15 +31,13 @@
     </tal:block>
     </ul>
 
-    <h2>Member type versions</h2>
+    <h2 i18n:translate="member_type_versions">Member type versions</h2>
     <ul tal:define="values here/getMemberTypesFileSystemVersion">
     <tal:block tal:repeat="value values">
          <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
     </tal:block>
     </ul>
 </div>
-
-
 
 </body>
 </html>
