@@ -13,6 +13,7 @@ V1.8.3
   - added or activated much much more viewlets
   - fixed a bug with context's relative path
   - refine layout form. page actions put to documentActions now
+  - fixed a bug which will cause manage_beforeDelete fail
 
 V1.8.2
 

@@ -116,8 +116,10 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
             new_portlets = [portlet for portlet in portlets if portlet != old_portlet_name]
             container.manage_changeProperties(slot_name=new_portlets)
 
-        PortalContent.manage_beforeDelete(self, item, container)
-        DefaultDublinCoreImpl.manage_beforeDelete(self, item, container)
+        if hasattr(PortalContent, 'manage_beforeDelete'):
+            PortalContent.manage_beforeDelete(self, item, container)
+        if hasattr(DefaultDublinCoreImpl, 'manage_beforeDelete'):
+            DefaultDublinCoreImpl.manage_beforeDelete(self, item, container)
 
     def clearPanels(self):
         self.panelsConfig = []
