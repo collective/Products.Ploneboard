@@ -227,19 +227,7 @@ msgstr "Content change list in ${name}:"
 # more viewlets names
 ######################################
 
-msgid "Recent changes(2)"
-msgstr ""
-
-msgid "Recent changes(3)"
-msgstr ""
-
 msgid "Folder changes"
-msgstr ""
-
-msgid "Folder listing(2)"
-msgstr ""
-
-msgid "Folder listing(3)"
 msgstr ""
 
 msgid "Discussion list"

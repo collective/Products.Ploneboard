@@ -38,23 +38,6 @@
      </div>
 </div>
 
-<div metal:define-macro="inline_description">
-    <metal:block use-macro="here/viewlets_folder_recent/macros/base_portlet">
-        <metal:block metal:fill-slot="body">
-            <metal:block metal:use-macro="here/content_list_macros/macros/inline_description"/>
-        </metal:block>
-    </metal:block>
-</div>
-
-<div metal:define-macro="separate_line_description">
-    <metal:block use-macro="here/viewlets_folder_recent/macros/base_portlet">
-        <metal:block metal:fill-slot="body">
-            <metal:block metal:use-macro="here/content_list_macros/macros/separate_line_description"/>
-        </metal:block>
-    </metal:block>
-</div>
-
-
 </body>
 
 </html>
