@@ -4,6 +4,7 @@ title=Edit Topic
 [validators]
 validators..AddCriterion = validate_add_criterion
 validators..SetSortCriterion = validate_set_sort
+validators..Remove = validate_remove_criterion
 
 [actions]
 action.failure=traverse_to:string:criterion_edit_form
