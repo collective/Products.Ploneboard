@@ -11,21 +11,30 @@
 if not id:
     id = context.getId()
 
+old_id = context.getId()
+folder = context.aq_parent
+oldPortletPos = context.getPortletsPos()
+
 new_context = context.portal_factory.doCreate(context, id)
 
 new_context.edit(customCSS, pageLayoutMode)
+new_context.plone_utils.contentEdit(new_context
+                               , id=id
+                               , title=title
+                               , description=description)
+# portlet lost when rename
+if id != old_id:
+    oldPortletPos = 'none'
 
-folder = context.aq_parent
-slot_name = context.getPortletsPos()
-if slot_name != portletsPos or id != context.getId():
-    old_portlet_name = 'here/%s/contentpanels_body' % context.getId()
+if oldPortletPos != portletsPos:
     new_portlet_name = 'here/%s/contentpanels_body' % id
-    if slot_name != 'none':
-        portlets = getattr(folder, slot_name)
+    if oldPortletPos != 'none':
+        portlets = getattr(folder, oldPortletPos)
         if len(portlets) == 1:
-            folder.manage_delProperties([slot_name])
+            folder.manage_delProperties([oldPortletPos])
+        old_portlet_name = 'here/%s/contentpanels_body' % old_id
         new_portlets = [portlet for portlet in portlets if portlet != old_portlet_name] 
-        folder.manage_changeProperties(slot_name=new_portlets)
+        folder.manage_changeProperties({oldPortletPos:new_portlets})
 
     if portletsPos != 'none':
         if not folder.hasProperty(portletsPos):
@@ -33,12 +42,8 @@ if slot_name != portletsPos or id != context.getId():
         else:
             portlets = folder.getProperty(portletsPos)
             portlets = [new_portlet_name] + list(portlets)
-            folder.manage_changeProperties(portletsPos=portlets)
+            folder.manage_changeProperties({portletsPos:portlets})
 
-new_context.plone_utils.contentEdit(new_context
-                               , id=id
-                               , title=title
-                               , description=description)
 return state.set(status='success',\
                  context=new_context,\
                  portal_status_message='contentpanels property changes saved.')

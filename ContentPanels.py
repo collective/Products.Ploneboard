@@ -119,6 +119,21 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
                     return slot_name
         return 'none'
 
+    security.declarePrivate('manage_beforeDelete')
+    def manage_beforeDelete(self, item, container):
+        """ cleanup left_slots when delete """
+        slot_name = self.getPortletsPos()
+        if slot_name != 'none':
+            old_portlet_name = 'here/%s/contentpanels_body' % self.getId()
+            portlets = getattr(container, slot_name)
+            if len(portlets) == 1:
+                container.manage_delProperties([slot_name])
+            new_portlets = [portlet for portlet in portlets if portlet != old_portlet_name]
+            container.manage_changeProperties(slot_name=new_portlets)
+
+        PortalContent.manage_beforeDelete(self, item, container)
+        DefaultDublinCoreImpl.manage_beforeDelete(self, item, container)
+
     def clearPanels(self):
         self.panelsConfig = []
         self._p_changed = 1
