@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.9 2004/09/23 15:37:18 ajung Exp $
+$Id: SchemaEditor.py,v 1.10 2004/09/23 15:55:30 ajung Exp $
 """
 
 import re
@@ -99,7 +99,7 @@ class SchemaEditor:
     ######################################################################
 
     security.declareProtected(ManageSchemaPermission, 'atse_addSchemata')
-    def atse_addSchemata(self, schema_id, name, RESPONSE=None):
+    def atse_addSchemata(self, schema_id, schema_template, name, RESPONSE=None):
         """ add a new schemata """
 
         S = self.atse_getSchemaById(schema_id)
@@ -115,13 +115,13 @@ class SchemaEditor:
                              '"$schemata" is an invalid ID for a schemata'))
 
         S.addSchemata(name)
-        self._p_changed = 1
+        self._schemas[schema_id] = S
 
-        util.redirect(RESPONSE, 'atse_editor', 
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_added', default='Schemata added'), schemata=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_delSchemata')
-    def atse_delSchemata(self, schema_id, name, RESPONSE=None):
+    def atse_delSchemata(self, schema_id, schema_template, name, RESPONSE=None):
         """ delete a schemata """
 
         S = self.atse_getSchemaById(schema_id)
@@ -141,8 +141,8 @@ class SchemaEditor:
 
         
         S.delSchemata(name)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_deleted', 
                                      default='Schemata deleted'),   
                                      schemata=S.getSchemataNames()[0])
@@ -152,7 +152,7 @@ class SchemaEditor:
     ######################################################################
 
     security.declareProtected(ManageSchemaPermission, 'atse_delField')
-    def atse_delField(self, schema_id, name, RESPONSE=None):
+    def atse_delField(self, schema_id, schema_template, name, RESPONSE=None):
         """ remove a field from the  schema"""
 
         S = self.atse_getSchemaById(schema_id)
@@ -166,19 +166,19 @@ class SchemaEditor:
         old_schemata = S
         S.delField(name)    
 
-        if old_schemata in S.getSchemataNames(schema_id): # Schematas disappear if they are empty
+        if old_schemata in S.getSchemataNames(): # Schematas disappear if they are empty
             return_schemata = old_schemata
         else:
             return_schemata = self.atse_getSchemataNames(schema_id, True)[0]
 	
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_field_deleted', 
                                      default='Field deleted'), 
                                      schemata=return_schemata)
 
     security.declareProtected(ManageSchemaPermission, 'atse_update')
-    def atse_update(self, schema_id, fielddata,  REQUEST, RESPONSE=None):
+    def atse_update(self, schema_id, schema_template, fielddata,  REQUEST, RESPONSE=None):
         """ update a single field"""
 
         S = self.atse_getSchemaById(schema_id)
@@ -205,7 +205,7 @@ class SchemaEditor:
             field = StringField(R['name'], schemata=fieldset, widget=StringWidget)
             S.addField(field)
             self._p_changed = 1
-            util.redirect(RESPONSE, 'atse_editor', 
+            util.redirect(RESPONSE, schema_template,
                           self.translate('atse_field_added', 
                                          default='Field added'), 
                                          schemata=fieldset, 
@@ -308,7 +308,7 @@ class SchemaEditor:
         S.replaceField(FD.name, newfield)
         self._schemas[schema_id] = S
 
-        util.redirect(RESPONSE, 'atse_editor', 
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_field_changed', default='Field changed'), 
                       schema_id=schema_id,
                       schemata=FD.schemata, 
@@ -319,58 +319,58 @@ class SchemaEditor:
     ######################################################################
 
     security.declareProtected(ManageSchemaPermission, 'atse_schemataMoveLeft')
-    def atse_schemataMoveLeft(self, schema_id, name, RESPONSE=None):
+    def atse_schemataMoveLeft(self, schema_id, schema_template, name, RESPONSE=None):
         """ move a schemata to the left"""
         S = self.atse_getSchemaById(schema_id)
         S.moveSchemata(name, -1)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_moved_left', default='Schemata moved to left'), 
                       schema_id=schema_id,
                       schemata=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_schemataMoveRight')
-    def atse_schemataMoveRight(self, schema_id, name, RESPONSE=None):
+    def atse_schemataMoveRight(self, schema_id, schema_template, name, RESPONSE=None):
         """ move a schemata to the right"""
         S = self.atse_getSchemaById(schema_id)
         S.moveSchemata(name, 1)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_moved_right', default='Schemata moved to right'), 
                       schema_id=schema_id,
                       schemata=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveLeft')
-    def atse_fieldMoveLeft(self, schema_id, name, RESPONSE=None):
+    def atse_fieldMoveLeft(self, schema_id, schema_template, name, RESPONSE=None):
         """ move a field of a schemata to the left"""
         S = self.atse_getSchemaById(schema_id)
         S.moveField(name, -1)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_field_moved_up', default='Field moved up'), 
                       schemata=S[name].schemata, 
                       schema_id=schema_id,
                       field=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveRight')
-    def atse_fieldMoveRight(self, schema_id, name, RESPONSE=None):
+    def atse_fieldMoveRight(self, schema_id, schema_template, name, RESPONSE=None):
         """ move a field of a schemata to the right"""
         S = self.atse_getSchemaById(schema_id)
         S.moveField(name, 1)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template, 
                       self.translate('atse_field_moved_down', default='Field moved down'), 
                       schemata=S[name].schemata, 
                       schema_id=schema_id,
                       field=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_changeSchemataForField')
-    def atse_changeSchemataForField(self, schema_id, name, schemata_name, RESPONSE=None):
+    def atse_changeSchemataForField(self, schema_id, schema_template, name, schemata_name, RESPONSE=None):
         """ move a field from the current fieldset to another one """
         S = self.atse_getSchemaById(schema_id)
         S.changeSchemataForField(name, schemata_name)
-        self._p_changed = 1
-        util.redirect(RESPONSE, 'atse_editor', 
+        self._schemas[schema_id] = S
+        util.redirect(RESPONSE, schema_template,
                       self.translate('atse_field_moved', default='Field moved to other fieldset'), 
                       schemata=schemata_name, 
                       schema_id=schema_id,
@@ -413,6 +413,5 @@ class SchemaEditor:
         """ return name of baseclass """
         S = self.atse_getSchemaById(schema_id)
         return S.__class__.__name__
-
 
 InitializeClass(SchemaEditor)
