@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.20 2004/04/26 06:30:14 tiran Exp $
+$Id: schemata.py,v 1.21 2004/04/29 14:08:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -205,7 +205,9 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type File
 ###
-_ATFileField = FileField('file',
+
+ATFileSchema = ATContentTypeSchema + Schema((
+    FileField('file',
               required = 1,
               primary=1,
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
@@ -214,15 +216,18 @@ _ATFileField = FileField('file',
                                   label_msgid = "label_file",
                                   i18n_domain = "plone"))
 
-_ATExtFileField = deepcopy(_ATFileField)
-_ATExtFileField.storage = ExternalStorage()#prefix="ATExtFile")
-
-ATFileSchema = ATContentTypeSchema + Schema((
-    _ATFileField,
     ), marshall=PrimaryFieldMarshaller())
 
 ATExtFileSchema = ATContentTypeSchema + Schema((
-    _ATExtFileField,
+    FileField('file',
+              required = 1,
+              primary=1,
+              storage=ExternalStorage(prefix='atct', archive=False),
+              widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
+                                  description_msgid = "help_file",
+                                  label= "File",
+                                  label_msgid = "label_file",
+                                  i18n_domain = "plone"))
     ), marshall=PrimaryFieldMarshaller())
 
 ###
@@ -235,7 +240,8 @@ ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
 ###
 # AT Content Type Image
 ###
-_ATImageField = ImageField('image',
+ATImageSchema = ATContentTypeSchema + Schema((
+    ImageField('image',
                required = 1,
                primary=1,
                sizes= {'preview' : (400, 400),
@@ -249,16 +255,24 @@ _ATImageField = ImageField('image',
                                     label= "Image",
                                     label_msgid = "label_image",
                                     i18n_domain = "plone"))
-
-_ATExtImageField = deepcopy(_ATImageField)
-_ATExtImageField.storage = ExternalStorage()#prefix="ATExtImage")
-
-ATImageSchema = ATContentTypeSchema + Schema((
-    _ATImageField, 
     ), marshall=PrimaryFieldMarshaller())
 
 ATExtImageSchema = ATContentTypeSchema + Schema((
-    _ATExtImageField, 
+    ImageField('image',
+               required = 1,
+               primary=1,
+              storage=ExternalStorage(prefix='atct', archive=False),
+               sizes= {'preview' : (400, 400),
+                       'thumb'   : (128, 128),
+                       'tile'    :  (64, 64),
+                       'icon'    :  (32, 32),
+                       'listing' :  (16, 16),
+                      },
+               widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
+                                    description_msgid = "help_image",
+                                    label= "Image",
+                                    label_msgid = "label_image",
+                                    i18n_domain = "plone"))
     ), marshall=PrimaryFieldMarshaller())
 
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.11 2004/04/26 06:30:14 tiran Exp $
+$Id: ATFile.py,v 1.12 2004/04/29 14:08:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,6 +38,7 @@ from Products.ATContentTypes.interfaces.IATFile import IATFile
 from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema
 
 from OFS.Image import File
+from Acquisition import aq_parent
 
 
 class ATFile(ATCTContent):
@@ -197,18 +198,20 @@ class ATExtFile(ATFile):
 
     security       = ClassSecurityInfo()
 
-    def file(self,**kwargs):
+    def getFile(self, **kwargs):
         """return the file with proper content type"""
         REQUEST=kwargs.get('REQUEST',self.REQUEST)
-        RESPONSE=kwargs.get('RESPONSE',REQUEST.RESPONSE)
-        file   = self.getFile()
+        RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
+        field  = self.getField('file') 
+        file   = field.get(self, **kwargs)
         ct     = self.getContentType()
         parent = aq_parent(self)
         f      = File(self.getId(), self.Title(), file, ct)
-        return f.__of__(parent).index_html(REQUEST,RESPONSE)
+        return f.__of__(parent)
    
     # make it directly viewable when entering the objects URL
-    index_html=file
+    def index_html(self, REQUEST, RESPONSE):
+        self.getFile(REQUEST=REQUEST, RESPONSE=RESPONSE).index_html(REQUEST, RESPONSE)
 
 if HAS_EXT_STORAGE:
     registerType(ATExtFile, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.6 2004/04/26 06:30:14 tiran Exp $
+$Id: ATImage.py,v 1.7 2004/04/29 14:08:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -118,18 +118,20 @@ class ATExtImage(ATImage):
 
     security       = ClassSecurityInfo()
 
-    def image(self,**kwargs):
-        """return the file with proper content type"""
+    def getImage(self, **kwargs):
+        """return the image with proper content type"""
         REQUEST=kwargs.get('REQUEST',self.REQUEST)
-        RESPONSE=kwargs.get('RESPONSE',REQUEST.RESPONSE)
-        image  = self.getImage()
+        RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
+        field  = self.getField('image') 
+        image   = field.get(self, **kwargs)
         ct     = self.getContentType()
         parent = aq_parent(self)
-        img    = Image(self.getId(), self.Title(), image, ct)
-        return img.__of__(parent).index_html(REQUEST,RESPONSE)
+        i      = Image(self.getId(), self.Title(), image, ct)
+        return i.__of__(parent)
    
     # make it directly viewable when entering the objects URL
-    index_html=image
+    def index_html(self, REQUEST, RESPONSE):
+        self.getImage(REQUEST=REQUEST, RESPONSE=RESPONSE).index_html(REQUEST, RESPONSE)
 
 
 if HAS_EXT_STORAGE:

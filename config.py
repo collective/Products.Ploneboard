@@ -23,7 +23,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.17 2004/04/27 00:17:53 tiran Exp $
+$Id: config.py,v 1.18 2004/04/29 14:08:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -41,7 +41,7 @@ except NameError:
 ## user options
 ## The options in this section can be overwritten by customconfig
 
-## enable mxTidy for ATDocument?
+## enable mxTidy for ATDocument and ATNewsItem?
 MX_TIDY_ENABLED = True
 
 ## options for mxTidy
@@ -61,6 +61,10 @@ MX_TIDY_OPTIONS= {
     'char_encoding'    : 'raw',
     }
 
+## enable external storage
+## requires ExternalStorage from Christian Scholz
+EXT_STORAGE_ENABLE = False
+    
 ## use TemplateMixin?
 ## if enabled users can choose between different view templates for each object
 ENABLE_TEMPLATE_MIXIN = False
@@ -83,8 +87,9 @@ SKINS_DIR = 'skins'
 
 GLOBALS = globals()
 
-CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'ENABLE_TEMPLATE_MIXIN',
-                 'TEMPLATE_MIXIN_PERMISSION', 'HISTORY_VIEW_PERMISSION', )
+CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
+                 'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
+                 'HISTORY_VIEW_PERMISSION', )
 
 ## using special plone 2 stuff?
 try:
@@ -114,9 +119,7 @@ except ImportError:
     HAS_EXT_STORAGE = False
 else:
     HAS_EXT_STORAGE = True
-    
-# XXX: hardcode to false because ExternalStorage doesn't work
-HAS_EXT_STORAGE = False
+
 
 ## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'
