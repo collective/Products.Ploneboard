@@ -56,7 +56,7 @@
             <h1 tal:content="image/title_or_id">Title or id</h1>
             </div>
    
-            <a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new_"><img tal:condition="image/size"
+            <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}?display=original', 'Image', ${image/width}+50, ${image/height}+50);; return false;;"><img tal:condition="image/size"
                  src="#" 
                  tal:attributes="src python:image.absolute_url()+'?size='+request.get('display', 'original')"/></a>
 
@@ -67,7 +67,7 @@
 
             <small>
 
-             <div tal:condition="python:request.get('display') != 'original'"><a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}?display=original', 'Image', ${image/width}+50, ${image/height}+50);; return false;;">View full size</a><br/>&nbsp;<br/></div>
+            <a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new">Edit image</a><br/>&nbsp;<br/>
 
             <span i18n:translate="">Size:</span>
             <span tal:define="size python:image.getObjSize(image)"

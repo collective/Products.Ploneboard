@@ -45,19 +45,17 @@
     <h1 tal:content="here/title_or_id">Title or id</h1>
     </div>
    
-    <img tal:condition="here/size"
-         src="#" 
-         tal:attributes="src python:here.absolute_url()+'?display='+request.get('display', 'original')" />
-
+    <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${here/absolute_url}?display=original', 'Image', ${here/width}+50, ${here/height}+50);; return false;;">
+        <img tal:condition="here/size"
+             src="#" 
+             tal:attributes="src python:here.absolute_url()+'?display='+request.get('display', 'original')" />
+    </a>
         
     <span class="description" tal:content="structure here/Description">
     Description
     </span>
 
     <small>
-
-    <div tal:condition="python:request.get('display') != 'original'"><a href="#" tal:attributes="onclick string:javascript:centeredWindow('${here/absolute_url}?display=original', 'Image', ${here/width}+50, ${here/height}+50);; return false;;">View full size</a><br/>&nbsp;<br/></div>
-
 
     <span i18n:translate="">Size:</span>
         <span tal:define="size python:here.getObjSize(here)"
