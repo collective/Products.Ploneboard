@@ -1,18 +1,35 @@
+import copy
+
 from Products.Archetypes.public import *
 from Products.CompositePack.config import PROJECTNAME
 from Products.CMFCore.utils import getToolByName
+
+COMPOSITE = 'composite'
 
 class Titles(BaseContentMixin):
 
     meta_type = portal_type = 'CompositePack Titles'
     archetype_name = 'Navigation Titles'
     global_allow = 0
-    
-    schema = MinimalSchema + Schema((
+
+    idfield = copy.deepcopy(MinimalSchema['id'])
+    idfield.widget.visible = {'edit':'hidden', 'view':'invisible'}
+
+    schema = Schema((
+        idfield, 
+        MinimalSchema['title'],
         StringField(
         'description',
         widget=StringWidget(label='Description',
                             description=('Description used as a subtitle.'))
+        ),
+        ReferenceField(
+        'composite',
+        relationship=COMPOSITE,
+        widget=ReferenceWidget(label='Composite',
+                               visible={'edit':'invisible',
+                                        'view':'invisible'},
+                            description=('iComposite page containing this title.'))
         ),
         ))
 
@@ -27,6 +44,12 @@ class Titles(BaseContentMixin):
             'name':        'view',
             'permissions': ('''View''',)},
 
-           ) 
+           )
+
+    def dereferenceComposite(self):
+        """Returns the object referenced by this composite element.
+        """
+        refs = self.getRefs(COMPOSITE)
+        return refs and refs[0] or None
 
 registerType(Titles, PROJECTNAME)
