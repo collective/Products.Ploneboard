@@ -71,6 +71,7 @@ class CMFCompositePage(BaseFolder, PackComposite):
     security = ClassSecurityInfo()
     
     __occams_gestalt__ = 1
+    use_folder_tabs = 0
 
     schema = BaseSchema + Schema((
                        StringField('layout', 
