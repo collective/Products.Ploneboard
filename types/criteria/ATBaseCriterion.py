@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATBaseCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATBaseCriterion.py,v 1.10 2004/08/04 15:00:44 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -49,7 +49,7 @@ class ATBaseCriterion(BaseContentMixin):
     global_allow = 0
 
     def __init__(self, id, field=None):
-        self.getField('id').set(self, id)
+        self.getField('id').set(self, id) # set is ok
         self.getField('field').set(self, field)
 
     security.declareProtected(CMFCorePermissions.View, 'getId')

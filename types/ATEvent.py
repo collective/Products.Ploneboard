@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.21 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATEvent.py,v 1.22 2004/08/04 15:00:44 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -78,7 +78,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
             # XXX mostly harmless?
             value = ()
         f = self.getField('eventType')
-        f.set(self, value, **kw)
+        f.set(self, value, **kw) # set is ok
         if not alreadySet:
             self.setSubject(value, alreadySet=True, **kw)
 
@@ -89,7 +89,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         Changing the subject changes also the event type.
         """
         f = self.getField('subject')
-        f.set(self, value, **kw)
+        f.set(self, value, **kw) # set is ok
 
         # set the event type to the first subject
         if type(value) is StringType:

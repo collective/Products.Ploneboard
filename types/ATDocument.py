@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.26 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATDocument.py,v 1.27 2004/08/04 15:00:44 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -105,7 +105,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         if tidyOutput:
             value = tidyOutput
 
-        field.set(self, value, **kwargs)
+        field.set(self, value, **kwargs) # set is ok
         self.setContentType(kwargs.get('mimetype', None), skipField=True)
 
     security.declarePrivate('setContentType')
@@ -125,7 +125,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             raw = bu.getRaw()
             filename, encoding = bu.filename, bu.original_encoding
             field.set(self, raw, mimetype=mimetype, filename=filename,
-                      encoding=encoding)
+                      encoding=encoding) # set is ok
 
         self.text_format = mimetype
 
@@ -186,9 +186,9 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             else:
                 mimetype = self.guessMimetypeOfText()
             if mimetype:
-                field.set(self, tidyOutput, mimetype=mimetype)
+                field.set(self, tidyOutput, mimetype=mimetype) # set is ok
             elif tidyOutput:
-                field.set(self, tidyOutput)
+                field.set(self, tidyOutput) # set is ok
 
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, text_format, text, file='', safety_belt='', **kwargs):
