@@ -22,7 +22,7 @@ copyright_text = '''XXX
 web         = 'http://www.sourceforge.net/projects/collective'
 ftp         = ''
 mailing_list= 'collective@lists.sourceforge.net'
-bugtracker  = ''
+bugtracker  = 'http://sourceforge.net/tracker/?atid=645337&group_id=55262&func=browse'
 
 debian_name = 'zope-atcontenttypes'
 debian_maintainer = 'Christian Heimes'
