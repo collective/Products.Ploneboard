@@ -43,11 +43,6 @@ factory_type_information = ( {'id': 'ContentPanels',
                                         'action': 'contentpanels_config_form',
                                         'permissions': (CMFCorePermissions.ModifyPortalContent,)
                                          }
-                                      , { 'id'            : 'metadata'
-                                         , 'name'          : 'Metadata'
-                                         , 'action'        : 'metadata_edit_form'
-                                         , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-                                         }
                                      )
                             },
                         )
