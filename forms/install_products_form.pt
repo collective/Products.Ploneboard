@@ -1,0 +1,36 @@
+<html>
+<body>
+<span tal:replace="structure here/manage_tabs" />
+
+<div >
+    <h2> installable products </h2>
+    <form action="installProducts" tal:attributes="action python:here.absolute_url()+'/installProducts'" method="POST">
+    
+        <table>
+            <tr tal:repeat="product here/listInstallableProducts">
+                <td><input type=checkbox name=products:list tal:attributes="value product/id"></td>
+                <td tal:content="product/id">product name</td>
+                <td><a tal:condition="product/hasError" tal:attributes="href product/id">
+                        <img  src="/misc_/PageTemplates/exclamation.gif"></a>
+                </td>
+            </tr>
+        </table>
+        <input type=submit i18n:attributes="value" value="Install">
+    </form>
+
+    <h2> installed products </h2>
+    <form action="uninstallProducts" method="POST">
+    
+        <table>
+            <tr tal:repeat="product here/listInstalledProducts">
+                <td><input type=checkbox name=products:list tal:attributes="value product/id"></td>
+                <td>
+                     <a tal:attributes="href product/id" tal:content="product/id" >product name</a></td>
+            </tr>
+        </table>
+        <input type=submit i18n:attributes="value" value="Uninstall">
+    </form>
+
+</div>
+</body>
+</html>
