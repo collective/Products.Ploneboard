@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.4 2003/11/20 16:14:51 tesdal Exp $
+$Id: PlacelessTranslationService.py,v 1.5 2003/11/24 20:43:46 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -78,6 +78,41 @@ catalogRegistry = Registry()
 registerCatalog = catalogRegistry.register
 fbcatalogRegistry = Registry()
 registerFBCatalog = fbcatalogRegistry.register
+
+
+class PTSWrapper:
+    """
+    Wrap the persistent PTS since persistent 
+    objects cant be passed around threads
+    """
+
+    #XXX: better have a real seperation between 
+    #     control panel and translation service
+    #     to avoid these zodb traversals
+    
+    def __init__(self, service):
+        # get path from service
+        self._path=service.getPhysicalPath()
+
+    def load(self, context):
+        # return the real service
+        try: root = context.getPhysicalRoot()
+        except: return None
+        # traverse the service
+        return root.unrestrictedTraverse(self._path, None)
+
+    def translate(self, domain, msgid, mapping=None, context=None,
+                  target_language=None, default=None):
+        # get the real service and call its translate method
+        # return default if service couldnt be retrieved
+        service = self.load(context)
+        if not service: return default
+        return service.translate(domain, msgid, mapping, context, target_language, default)
+
+    def __repr__(self):
+        """ return a string representation """
+        return "<PTSWrapper for %s>" %(self._path)
+
 
 class PlacelessTranslationService(Folder):
     meta_type = title = 'Placeless Translation Service'

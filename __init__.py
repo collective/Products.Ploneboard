@@ -16,12 +16,12 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.3 2003/11/20 16:14:51 tesdal Exp $
+$Id: __init__.py,v 1.4 2003/11/24 20:43:46 longsleep Exp $
 '''.strip()
 
 from OFS.Application import get_products
 from AccessControl import ModuleSecurityInfo, allow_module, allow_class, allow_type
-from PlacelessTranslationService import PlacelessTranslationService, log
+from PlacelessTranslationService import PlacelessTranslationService, PTSWrapper, log
 from Negotiator import negotiator
 from Products.PageTemplates.GlobalTranslationService import setGlobalTranslationService
 import os, fnmatch, zLOG, sys, Zope, Globals, TranslateTags
@@ -70,8 +70,6 @@ security.declarePublic('translate')
 security.declarePublic('getLanguages')
 security.declarePublic('getLanguageName')
 
-# set ZPT's translation service
-setGlobalTranslationService(translation_service)
 
 def make_translation_service(cp):
     # Control_Panel translation service
@@ -110,7 +108,13 @@ def initialize(context):
     if not cp_ts.objectIds():
         log('no translations found!', zLOG.PROBLEM)
 
+    # set ZPT's translation service
+    # NOTE: since this registry is a global var we cant register the persistent service itself (zodb connection)
+    #       therefor a wrapper is created around it
+    setGlobalTranslationService(PTSWrapper(cp_ts))
+
     # notify anyone who needs it
     TranslateTags.initialize()
     for function in notify_initialized:
         function()
+
