@@ -1,5 +1,4 @@
 # Gettext Message File for ContentPanels.
-# panjunyong <panjy@zopechina.ods.org>, 2003
 
 msgid ""
 msgstr ""

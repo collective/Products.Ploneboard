@@ -2,7 +2,7 @@ V1.6
 
   1. Items in recent updates open in the same window.
 
-  2. full I18Ned, new italian translation, thanks Tom Snell
+  2. full I18Ned, new italian translation, thanks Enzo Cesanelli <exenzo@tin.it>
 
   3. better documentations, new FAQ.txt and TODO.txt
 
