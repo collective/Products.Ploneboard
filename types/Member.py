@@ -104,7 +104,7 @@ content_schema = FieldList((
                                        description='Choose the appearance of the site. Several styles are available.')
                 ),
     
-    StringField('password',
+    PasswordField('password',
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
@@ -115,7 +115,7 @@ content_schema = FieldList((
                                       description='Enter a new password (leave blank to keep your current password)')
                 ),
 
-    StringField('confirm_password',
+    PasswordField('confirm_password',
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
