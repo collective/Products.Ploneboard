@@ -63,7 +63,28 @@ class RegistrationTool( BaseTool ):
 
         if member is None:
             raise 'NotFound', 'The username you entered could not be found.'
-        return member.mailPassword()
+
+        password = member.getPassword()
+        email = member.getProperty('email')
+
+        # assert that we can actually get an email address, otherwise
+        # the template will be made with a blank To:, this is bad
+        if not email:
+            raise 'ValueError', 'Member does not have an email address.'
+
+        # Rather than have the template try to use the mailhost, we will
+        # render the message ourselves and send it from here (where we
+        # don't need to worry about 'UseMailHost' permissions).
+        mail_text = str(self.mail_password_template( self
+                                                   , REQUEST
+                                                   , member=member
+                                                   , password=password
+                                                   , email=email
+                                                   ))
+
+        host = self.MailHost
+        host.send( mail_text )
+        return self.mail_password_response( self, REQUEST )
 
 
     # Get a password of the prescribed length
