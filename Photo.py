@@ -24,11 +24,11 @@ factory_type_information = {
     'icon'           : 'image_icon.gif',
     'product'        : 'CMFPhoto',
     'factory'        : 'addPhoto',
-    'immediate_view' : 'metadata_edit_form',
+    'immediate_view' : 'image_edit_form',
     'actions'        :
     ( { 'id'            : 'view',
         'name'          : 'View',
-        'action'        : '',
+        'action'        : 'image_view',
         'permissions'   : (CMFCorePermissions.View, )
         }, 
       { 'id'            : 'edit',
@@ -220,6 +220,13 @@ class Photo(Image):
 
         return '%s />' % result
 
+    security.declarePrivate('update_date')
+    def update_data(self, data, content_type=None, size=None):
+        """
+        Update/upload image -> remove all copies
+        """
+        Image.update_data(self, data, content_type, size)
+        self._photos = OOBTree()
 
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
