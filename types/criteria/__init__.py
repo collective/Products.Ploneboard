@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.4 2004/05/14 11:40:16 godchap Exp $
+$Id: __init__.py,v 1.5 2004/05/30 14:13:40 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -98,4 +98,5 @@ import ATDateCriteria
 import ATListCriterion
 import ATSimpleIntCriterion
 import ATSimpleStringCriterion
+import ATPortalTypeCriterion
 import ATSortCriterion

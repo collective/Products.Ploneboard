@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.26 2004/05/26 02:54:19 tiran Exp $
+$Id: schemata.py,v 1.27 2004/05/30 14:13:39 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,8 +32,6 @@ from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
-
-from Products.validation.validators.SupplValidators import MaxSizeValidator
 
 try:
     True
@@ -226,7 +224,6 @@ ATFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
               required = 1,
               primary=1,
-              validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
                                   description_msgid = "help_file",
                                   label= "File",
@@ -239,7 +236,6 @@ ATExtFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
               required = 1,
               primary=1,
-              validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
               storage=ExternalStorage(prefix='atct', archive=False),
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
                                   description_msgid = "help_file",
@@ -268,7 +264,6 @@ ATImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
                                     label= "Image",
@@ -287,7 +282,6 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
                                     label= "Image",

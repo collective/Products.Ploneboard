@@ -16,7 +16,7 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.3 2004/05/11 15:12:05 lele Exp $
+$Id: schemata.py,v 1.4 2004/05/30 14:13:40 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -224,6 +224,28 @@ ATSimpleStringCriterionSchema = ATBaseCriterionSchema + Schema((
                                 label_msgid="label_string_criteria_value",
                                 description="A string value.",
                                 description_msgid="help_string_criteria_value",
+                                i18n_domain="plone"),
+                ),
+
+    ))
+
+###
+# AT Portal Types Criterion
+###
+
+ATPortalTypeCriterionSchema = ATBaseCriterionSchema + Schema((
+    StringField('value',
+                required=1,
+                mode="rw",
+                write_permission=ChangeTopics,
+                accessor="getValue",
+                mutator="setValue",
+                default=None,
+                widget=MultiSelectionWidget(
+                                label="Value",
+                                label_msgid="label_portal_type_criteria_value",
+                                description="One of the registered portal types.",
+                                description_msgid="help_portal_type_criteria_value",
                                 i18n_domain="plone"),
                 ),
 
