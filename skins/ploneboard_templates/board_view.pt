@@ -12,58 +12,61 @@
       
 <body>
 
-    <div metal:fill-slot="main">	
+    <div metal:fill-slot="main">
 
-        <h1 tal:content="here/Title">Board title</h1>
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <div class="description"
+        <div class="documentDescription"
              tal:content="here/Description"> 
-        description
+           description
         </div>
         
-        <div class="boardForumListing">
+        <div class="boardForumListing boardForumIndex">
 
             <tal:showforums tal:define="forums here/getForums"
                             tal:repeat="forum forums">
 
-            
                 <div class="boardForumEntry">
-                
-                        <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                        <a class="lastPost" href="">
-                        <span tal:replace="python:here.toPloneboardTime(forum.getLastMessageDate())">Thursday 13:21</span>
-                        <br /> 
-                        <em>by <span tal:replace="forum/getLastMessageAuthor">lastauthor</span></em>
-                        </a>
-                        
-                        <a class="title" 
-                           href=""
+                    <div class="visualForumEntry">      
+                        <a href=""
                            tal:attributes="href forum/absolute_url">
-                        
-                            <img src="" 
-                                 tal:attributes="src string:${portal_url}/ploneboard_forum_icon.gif" />
-                            
-                            <span tal:replace="forum/Title">This is a title</span>
-                            <em>
-                            by <span tal:replace="forum/Creator">This is a title</span>
-                            -
-                            <metal:replace tal:replace="forum/getNumberOfConversations" /> conversations, 
-                            <metal:replace tal:replace="forum/getNumberOfMessages" /> messages.
-                            </em>
+                            <span>
 
-                            <br />
-                            
-                            <span tal:replace="forum/Description" />
+                                <span tal:replace="forum/Title">This is a title</span>
+
+                                <strong>(<span tal:replace="forum/Description">This is the Board Description</span>)</strong>
+
+                                <em>
+                                    by <span tal:replace="forum/Creator">This is a title</span>
+                                    -
+                                    <span tal:replace="forum/getNumberOfConversations" /> conversations, 
+                                    <span tal:replace="forum/getNumberOfMessages" /> messages.
+                                </em>
+                            </span>
                         </a>
-                        
+
                     </div>
+
+                    <!-- 
+                        This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
+                        if older than this week. (limi)
+                    -->
+                    <div class="boardLastPost">
+                        <span tal:replace="python:here.toPloneboardTime(forum.getLastMessageDate())">
+                            Thursday 13:21
+                        </span>
+                        <em>
+                            by <span tal:replace="forum/getLastMessageAuthor">last author</span>
+                        </em>
+                    </div>
+
+                </div>
 
             </tal:showforums>
 
-        </div>
+            <div class="visualClear"></div>
 
-
-            
+        </div>            
     
     </div>
                      

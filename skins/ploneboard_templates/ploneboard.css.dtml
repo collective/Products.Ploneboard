@@ -1,91 +1,127 @@
 /* 
 ** Ploneboard style sheet for CSS2-capable browsers.
-** Copyright Alexander Limi, 2003 - http://limi.net
+**
+** Copyright Alexander Limi (http://www.plonesolutions.com/)
+** & Michael Zeltner (http://niij.org/) 2003.
+**
 ** Feel free to use whole or parts of this for your own designs, but give credit
 ** where credit is due.
 **
 */
 
-/* <dtml-with stylesheet_properties> */
+/* <dtml-with base_properties> */
 
-div.boardHeader{
+#boardHeader {
     
 }
 
-div.boardForumListing {
-    border: &dtml-boxBorder;;
-    border-style: solid solid none solid;
+.boardForumListing {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    border-top: 0;
 }
 
-div.boardForumEntry {
-    border: &dtml-boxBorder;;
-    border-style: none none solid none;
+.boardForumEntry {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    border-style: &dtml-borderStyle; none none none;
     clear: both;
+    padding-bottom: 1px;
 }
 
-div.boardForumEntry a {
+.boardForumEntry .visualForumEntry {
+    float: left;
+    margin-right: -20em;
+    width: 100%;
+    padding: 0;
+}
+
+.boardForumEntry a {
     display: block;
-    margin-left: 5px;
+    margin-right: 20em;
 }
 
-div.boardForumEntry a:hover {
-    border: 5px solid #FFA500 ! important;
-    border-style: none none none solid;
-    margin-left: 0;
+.boardForumEntry a span {
+    display: block;
+    padding: 10px;
+    padding-left: 35px;
+    background: transparent url("<dtml-var portal_url>/ploneboard_conversation_icon.gif") no-repeat;
+    background-position: 15px 10px;
 }
 
-/* Insane IE bug here - the Title needs to be non-floated, and the others floated
-   right if you want the whole block to act as a link. If not, you can only click
-   the text. -- limi
- */
-
-div.boardForumEntry a.title {
-    width: 70%;
-    padding: 0.5em 2%;
+.boardForumIndex .boardForumEntry a span {
+    display: block;
+    padding: 10px;
+    padding-left: 35px;
+    background: transparent url("<dtml-var portal_url>/ploneboard_forum_icon.gif") no-repeat;
+    background-position: 15px 10px;
 }
 
-div.boardForumEntry a.lastPost {
-    border: &dtml-boxBorder;;
+.boardForumEntry a:hover {
+    border: 5px solid #FFA500;
+}
+
+.boardForumEntry a:hover span {
+    padding: 5px;
+    padding-left: 30px;
+    background-position: 10px 5px;
+}
+
+.boardForumEntry a em,
+.boardForumEntry a strong {
+    display: block;
+    font-size: &dtml-fontSmallSize;;
+    color: &dtml-fontColor;;
+    font-style: normal;
+}
+
+.boardForumEntry a strong {
+    float: right;
+}
+
+.boardForumEntry .boardLastPost {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: none none none dashed;
     float: right;
-    width: 18%;
+    width: 15em;
     text-align: center;
-    padding: 0.5em 2%;
+    padding: 5px;
+    margin: 5px;
+    font-size: &dtml-fontSmallSize;;
 }
 
+.boardConversation {
 
-/* Conversation Wrapper */
-
-div.boardConversation {
-    border: &dtml-boxBorder;;
-    border-style: solid solid none solid;
 }
 
-/* the Message classes */
-
-div.boardMessage {
+.boardMessage {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    margin-top: 1.5em;
+    position: relative;
 }
 
-div.boardMessageDetails {
-    border: &dtml-boxBorder;;
-    border-style: none none solid none;
-    background-color: &dtml-boxHeaderBackground;;
+.boardMessageDetails {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    border-style: none none &dtml-borderStyle; none;
+    background-color: &dtml-globalBackgroundColor;;
     padding: 0.5em 1em;
 }
 
-div.boardMessageBody {
+.boardMessageBody {
     padding: 0.5em 1em;
 }
 
-div.boardMessageActions {
-    padding: 0.5em 1em;
-    border: &dtml-boxBorder;;
-    border-style: none none solid none;
+.boardMessageContent {
+    line-height: 1.5em;
 }
 
-span.boardMessagePortrait {
+.boardMessageActions {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+.boardMessagePortrait {
     float: right; 
-    clear: both;
+    margin-bottom: 1em;
 }
 
 /* </dtml-with> */

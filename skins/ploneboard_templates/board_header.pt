@@ -4,11 +4,11 @@
       
 <body>
 
-    <div metal:define-macro="header">	
+    <div metal:define-macro="header" tal:omit-tag="">	
 
-        Board Header.
+    <h1 class="documentFirstHeading" id="boardHeading">Board Header</h1>
     
     </div>
-                     
+
 </body>
 </html>

@@ -13,11 +13,13 @@
 <body>
 
     <div metal:fill-slot="main"
-         tal:define="conversations here/getConversations">	
+         tal:define="conversations here/getConversations">
 
-        <h1 tal:content="here/Title">Board title</h1>
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <div class="description"
+        <h2 tal:content="here/Title">Board title</h2>
+
+        <div class="documentDescription"
              tal:content="here/Description"> 
         description
         </div>
@@ -31,34 +33,37 @@
         <div class="boardForumListing">
 
             <tal:showconversations tal:repeat="conversation conversations">
-
             
             <div class="boardForumEntry">
-            
-                    <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                    <a class="lastPost" href="">
-                    <span tal:replace="python:here.toPloneboardTime(conversation.getLastMessageDate())">Thursday 13:21</span>
-                    <br /> 
-                    <em>by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span></em>
-                    </a>
-                    
-                    <a class="title" 
-                       href=""
+                <div class="visualForumEntry">
+                    <a href=""
                        tal:attributes="href conversation/absolute_url">
-                    
-                        <img src="" 
-                             tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" />
-                        
-                        <span tal:replace="conversation/Title">This is a title</span>
-                        <br />
-                        <em>
-                        by <span tal:replace="conversation/Creator">This is a title</span>
-                        </em>
+                        <span>
+                            <span tal:replace="conversation/Title">This is a title</span>
+
+                            <em>
+                                by <span tal:replace="conversation/Creator">This is a title</span>
+                            </em>
+                        </span>
                     </a>
-                    
                 </div>
+
+                <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                <div class="boardLastPost">
+                    <span tal:replace="python:here.toPloneboardTime(conversation.getLastMessageDate())">
+                        Thursday 13:21
+                    </span>
+
+                    <em>
+                        by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span>
+                    </em>
+                </div>
+
+            </div>
             
             </tal:showconversations>
+
+            <div class="visualClear"></div>
 
         </div>
 

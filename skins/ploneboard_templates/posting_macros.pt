@@ -4,87 +4,74 @@
 
 <body>
 
-    <div metal:define-macro="message_body_start">
+    <div metal:define-macro="message_body_start" tal:omit-tag="">
+
+        <legend i18n:translate="legend_add_conversation">Details</legend>
 
         <input type="hidden" name="form.submitted" value="1" />
 
-        <span class="legend" i18n:translate="legend_add_conversation">Details</span>    
-
     </div>
 
-    <div metal:define-macro="message_body_title">
+    <div metal:define-macro="message_body_title" tal:omit-tag="">
 
-        <div class="row"
+        <div class="field"
              tal:define="error_title errors/title|nothing;
-                         Title request/title | nothing"> 
-            <div class="label required">
-                <span i18n:translate="label_title">Title</span>
-                
-                <div id="title_help" 
-                     i18n:translate="help_title"
-                     class="help" 
-                     style="visibility:hidden">
+                         Title request/title | nothing"
+             tal:attributes="class python:test(error_title, 'field error', 'field')"> 
+
+            <label for="title" i18n:translate="label_title">Title</label>
+
+            <span class="fieldRequired" title="Required">(Required)</span>
+
+            <div i18n:translate="help_title"
+                 class="formHelp">
                 Enter the title of the document.
-                </div>
             </div>
             
-            <div class="field"
-                  tal:attributes="class python:test(error_title, 'field error', 'field')" >
+            <div tal:replace="error_title">Validation error output</div>
 
-                <div tal:condition="error_title"
-                     tal:replace="structure string:$error_title <br />" />
+            <input type="text" 
+                   name="title"
+                   id="title"
+                   value="#" 
+                   size="40" 
+                   tabindex=""
+                   tal:attributes="value Title;
+                                   tabindex tabindex/next;"
+                   />
 
-                <input type="text" 
-                       name="title" 
-                       value="#" 
-                       size="40" 
-                       tabindex=""
-                       tal:attributes="value Title;
-                                       tabindex tabindex/next;" 
-                       onfocus="formtooltip('title_help',1)" 
-                       onblur="formtooltip('title_help',0)" 
-                       />
-
-            </div>
         </div>
 
     </div>
 
-    <div metal:define-macro="message_body_text">
+    <div metal:define-macro="message_body_text" tal:omit-tag="">
       
-        <div class="row"
+        <div class="field"
              tal:define="error_text errors/text|nothing;
-                         text python:request.get('text', '')"> 
-            <div class="label"> 
-                <span i18n:translate="label_body_text">Body text</span> 
+                         text python:request.get('text', '')"
+             tal:attributes="class python:test(error_text, 'field error', 'field')"> 
 
-                <div id="body_help" 
-                     i18n:translate="help_body_text"
-                     class="help" 
-                     style="visibility:hidden">
+            <label for="text" i18n:translate="label_body_text">Body text</label> 
+
+            <div i18n:translate="help_body_text"
+                 class="formHelp">
                 The body text of the document. 
-                </div>
             </div>
-            <div class="field"
-                  tal:attributes="class python:test(error_text, 'field error', 'field')" >
 
-                <div tal:condition="error_text"
-                     tal:replace="structure string:$error_text <br />" />
+            <div tal:replace="error_text">Validation Error Message</div>
 
-                <textarea name="text" 
-                          tabindex=""
-                          tal:attributes="tabindex tabindex/next;"
-                          tal:content="text" 
-                          onfocus="formtooltip('body_help',1)" 
-                          onblur="formtooltip('body_help',0)" 
-                          />
+            <textarea name="text"
+                      id="text"
+                      tabindex=""
+                      tal:attributes="tabindex tabindex/next;"
+                      tal:content="text" 
+                      />
 
-            </div>
         </div>
 
     </div>
 
-    <div metal:define-macro="message_body_buttons">
+    <div metal:define-macro="message_body_buttons" tal:omit-tag="">
 
         <div class="row">
             <div class="label">&nbsp;</div>
@@ -112,7 +99,7 @@
 
 
     <!-- Preview macros -->
-    <div metal:define-macro="message_preview_hidden_vars">
+    <div metal:define-macro="message_preview_hidden_vars" tal:omit-tag="">
         <input type="hidden"
                name="title"
                tal:condition="request/title | nothing"
@@ -125,7 +112,7 @@
     </div>
 
 
-    <div metal:define-macro="message_preview">
+    <div metal:define-macro="message_preview" tal:omit-tag="">
 
         <h2 tal:condition="request/title | nothing"
             tal:content="request/title">
@@ -140,7 +127,7 @@
     </div>
 
 
-    <div metal:define-macro="message_preview_buttons">
+    <div metal:define-macro="message_preview_buttons" tal:omit-tag="">
 
         <div class="row">
             <div class="label">&nbsp;</div>

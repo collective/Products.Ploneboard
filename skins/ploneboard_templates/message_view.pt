@@ -6,6 +6,7 @@
 <body>
 
     <metal:css fill-slot="css_slot">
+
     <style type="text/css" media="all"
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
@@ -14,9 +15,9 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h1 tal:content="here/Title">Conversation title</h1>
+        <h2 tal:content="here/Title">Conversation title</h2>
 
-        <div class="description"
+        <div class="documentdescription"
              tal:content="here/Description"> 
         description
         </div>
@@ -35,8 +36,10 @@
                 </div>
             
                 <div class="boardMessageBody">
-            
-                    <span class="boardMessagePortrait" 
+                    
+                    <div class="boardMessageContent" tal:replace="structure here/getBody">Jeg mener mye rart.</div>
+
+                    <div class="boardMessagePortrait" 
                           tal:define="home python:container.portal_membership.getHomeUrl(here.Creator(), verifyPermission=1);
                                       portrait python: here.portal_membership.getPersonalPortrait(here.Creator());"> 
                         <a href="#" tal:attributes="href home">                    
@@ -46,17 +49,13 @@
                                  width="75" 
                                  height="100" 
                                  tal:attributes="src portrait/absolute_url" />
-                            <br />  
-                            <span tal:content="here/Creator"> member id</span>
+                            <div tal:content="here/Creator">
+                              member id
+                            </div>
+
                         </a>
-                    </span>
+                    </div>
                     
-                    <span tal:content="structure here/getBody">Jeg mener mye rart.</span>
-                    
-                </div>
-                
-                <div style="border: 1px solid red;clear: right;">
-                ting
                 </div>
                 
                 <div class="boardMessageActions">
@@ -67,9 +66,12 @@
                                value="Reply to this" />
                     </form>
                 </div>
+
+                <div class="visualClear"></div>
+
             </div>
         </div>
     </div>
-                     
+
 </body>
 </html>

@@ -3,29 +3,42 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+
 <body>
 
     <div metal:fill-slot="main" 
          tal:define="errors options/state/getErrors;
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+                     tabindex python:Iterator();
+                     global noreply python: 1;">
 
-        <h1>Add message</h1>
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
+
+        <h2>Add message</h2>
+
+        <div class="documentDescription"></div>
 
         <div metal:use-macro="here/conversation_view/macros/view_messages" />
 
-        <form class="group"
-              name="edit_form"
+        <form name="edit_form"
               action=""
               method="post" 
               enctype="multipart/form-data"
-              tal:attributes="action template/getId" >
+              tal:attributes="action template/getId">
+
+            <fieldset>
    
-            <div metal:use-macro="here/posting_macros/macros/message_body_start" />
+                <div metal:use-macro="here/posting_macros/macros/message_body_start" tal:omit-tag="" />
 
-            <div metal:use-macro="here/posting_macros/macros/message_body_text" />
+                <div metal:use-macro="here/posting_macros/macros/message_body_text" tal:omit-tag="" />
 
-            <div metal:use-macro="here/posting_macros/macros/message_body_buttons" />
+                <div metal:use-macro="here/posting_macros/macros/message_body_buttons" tal:omit-tag="" />
+
+            </fieldset>
 
         </form>
 
