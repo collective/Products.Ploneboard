@@ -9,6 +9,8 @@ rows?
 
  In fact, it is a combination of 2 contentpanels.  One contentpanels can be a panel of another one.  The bottom panels are in another contentpanels content.
 
+ Another way, from 1.7.1 contenpanels support multi-rows, which may meet most of the need.
+
 3.  How can I disable the possibility of adding the Review List, Language, 
   Login, etc. from the Viewlets dropdown? Can we have some sort of 
   permission by which site admins can add any
