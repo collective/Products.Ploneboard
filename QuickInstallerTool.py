@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.49 2004/12/07 10:02:39 yenzenz Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.50 2005/03/01 15:12:32 tiran Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
                          locked=locked,
                          hidden=hidden)
             else:
-                ip = InstalledProduct(p, types=types,
+                ip = InstalledProduct(p, self, types=types,
                                       skins=skins,
                                       actions=actions,
                                       portalobjects=portalobjects,
@@ -368,7 +368,12 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
                 get_transaction().abort(1)   #this is very naughty
             else:
                 raise
-
+        
+        prod = getattr(self, p)
+        afterInstall = prod.getAfterInstallMethod()
+        if afterInstall is not None:
+            afterInstall(portal)
+        
         return res
 
     security.declareProtected(ManagePortal, 'installProducts')
@@ -428,7 +433,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
             p = getattr(self, p)
             p.update(locked=locked, hidden=hidden, **kw)
         else:
-            ip = InstalledProduct(p,locked=locked, hidden=hidden, **kw)
+            ip = InstalledProduct(p, self, locked=locked, hidden=hidden, **kw)
             self._setObject(p,ip)
 
     security.declareProtected(ManagePortal, 'uninstallProducts')

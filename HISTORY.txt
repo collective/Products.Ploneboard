@@ -1,3 +1,13 @@
+unreleased
+
+ - Fixed multiple register bug
+
+   QI doesn't assign an object to a product when it is already registered
+   for another product. This fixes bugs like the removal of the archetype
+   tool when a product was removed which itself had had installed Archetypes.
+
+ - Added after install / uninstall hooks
+
 1.4
 
   - reinstall button

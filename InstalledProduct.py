@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.24 2004/12/11 09:32:58 alan_milligan Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.25 2005/03/01 15:12:31 tiran Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -14,13 +14,14 @@ import os
 import Globals
 from DateTime import DateTime
 from App.Common import package_home
+from types import TupleType
 
 from Globals import HTMLFile, InitializeClass
 from OFS.SimpleItem import SimpleItem
 from OFS.ObjectManager import ObjectManager
 
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_parent,Implicit
+from Acquisition import aq_base, aq_inner, aq_parent, Implicit, aq_base
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore import CMFCorePermissions
@@ -33,10 +34,18 @@ from interfaces.portal_quickinstaller import IInstalledProduct
 from installer import uninstall_from_xml
 from zLOG import LOG, INFO, PROBLEM, ERROR
 
-def updatelist(a,b):
+# the list of elements that watched by the quickinstaller
+QI_ELEMENTS = ('types', 'skins', 'actions', 'portalobjects', 'workflows', 
+              'leftslots', 'rightslots', 'registrypredicates')
+
+def updatelist(a, b, c=None):
     for l in b:
         if not l in a:
-            a.append(l)
+            if c is None:
+                a.append(l)
+            else:
+                if not l in c:
+                    a.append(l)
 
 def delObjects(cont, ids):
     """ abbreviation to delete objects """
@@ -46,6 +55,19 @@ def delObjects(cont, ids):
             cont.manage_delObjects(delid)
         except:
             LOG("Quick Installer Tool: ", PROBLEM, "Failed to delete '%s' in '%s'" % (delid, cont.id))
+
+def getAlreadyRegistered(qi):
+    """Get a list of already registered elements
+    """
+    result = {}
+    products = [p for p in qi.objectValues() if p.isInstalled() ]
+    for element in QI_ELEMENTS:
+        v = result.setdefault(element, [])
+        for product in products:
+            pv = getattr(aq_base(product), element, None)
+            if pv:
+                v.extend(list(pv))
+    return result
 
 class InstalledProduct(SimpleItem):
     """ class storing information about an installed product"""
@@ -72,23 +94,30 @@ class InstalledProduct(SimpleItem):
     default_cascade=['types', 'skins', 'actions', 'portalobjects',
                      'workflows', 'slots', 'registrypredicates']
 
-    def __init__(self, id, types=[], skins=[], actions=[],
+    def __init__(self, id, qi, types=[], skins=[], actions=[],
                  portalobjects=[], workflows=[], leftslots=[],
                  rightslots=[], registrypredicates=[],
                  installedversion='', logmsg='', status='installed',
                  error=0, locked=0, hidden=0):
+                     
         self.id=id
-        self.types=types
-        self.skins=skins
-        self.actions=actions
-        self.portalobjects=portalobjects
-        self.workflows=workflows
-        self.leftslots=leftslots
-        self.rightslots=rightslots
+        reg = getAlreadyRegistered(qi)
+
+        # create the attributes
+        for att in QI_ELEMENTS:
+            setattr(self, att, [])
+        
+        updatelist(self.types, types, reg['types'])
+        updatelist(self.skins, skins, reg['skins'])
+        updatelist(self.actions, actions, reg['actions'])
+        updatelist(self.portalobjects, portalobjects, reg['portalobjects'])
+        updatelist(self.workflows, workflows, reg['workflows'])
+        updatelist(self.leftslots, leftslots, reg['leftslots'])
+        updatelist(self.rightslots, rightslots, reg['rightslots'])
+        updatelist(self.registrypredicates, registrypredicates, reg['registrypredicates'])
         self.transcript=[{'timestamp':DateTime(),'msg':logmsg}]
         self.locked=locked
         self.hidden=hidden
-        self.registrypredicates=registrypredicates
         self.installedversion=installedversion
 
         if status:
@@ -106,21 +135,21 @@ class InstalledProduct(SimpleItem):
                locked=0, hidden=0):
 
         #check for the availability of attributes before assiging
-        for att in ['types', 'skins', 'actions', 'portalobjects',
-                    'workflows', 'leftslots', 'rightslots',
-                    'registrypredicates']:
+        for att in QI_ELEMENTS:
             if not hasattr(self, att):
                 setattr(self, att, [])
+                
+        qi = getToolByName(self, 'portal_quickinstaller')
+        reg = getAlreadyRegistered(qi) 
 
-        updatelist(self.types,types)
-        updatelist(self.skins,skins)
-        updatelist(self.actions,actions)
-        updatelist(self.portalobjects,portalobjects)
-        updatelist(self.workflows,workflows)
-        updatelist(self.leftslots,leftslots)
-        updatelist(self.rightslots,rightslots)
-
-        updatelist(self.registrypredicates,registrypredicates)
+        updatelist(self.types, types, reg['types'])
+        updatelist(self.skins, skins, reg['skins'])
+        updatelist(self.actions, actions, reg['actions'])
+        updatelist(self.portalobjects, portalobjects, reg['portalobjects'])
+        updatelist(self.workflows, workflows, reg['workflows'])
+        updatelist(self.leftslots, leftslots, reg['leftslots'])
+        updatelist(self.rightslots, rightslots, reg['rightslots'])
+        updatelist(self.registrypredicates, registrypredicates, reg['registrypredicates'])
         self.transcript.insert(0, {'timestamp':DateTime(), 'msg':logmsg})
         self.locked=locked
         self.hidden=hidden
@@ -214,19 +243,15 @@ class InstalledProduct(SimpleItem):
         else:
             return 'no messages'
 
-    security.declareProtected(ManagePortal, 'getUninstallMethod')
-    def getUninstallMethod(self):
-        """ returns the uninstaller method """
-
+    def _getMethod(self, modfunc):
+        """Returns a method
+        """
         try:
             productInCP = self.Control_Panel.Products[self.id]
         except KeyError:
             return None
 
-        for mod, func in (('Install','uninstall'),
-                          ('Install','Uninstall'),
-                          ('install','uninstall'),
-                          ('install','Uninstall')):
+        for mod, func in modfunc:
             if mod in productInCP.objectIds():
                 modFolder = productInCP[mod]
                 if func in modFolder.objectIds():
@@ -239,6 +264,50 @@ class InstalledProduct(SimpleItem):
 
         return None
 
+    security.declareProtected(ManagePortal, 'getInstallMethod')
+    def getInstallMethod(self):
+        """ returns the installer method """
+        res = self._getMethod((('Install','install'),
+                                ('Install','Install'),
+                                ('install','install'),
+                                ('install','Install'),
+                               ))
+        if res is None:
+            raise AttributeError, ('No Install method found for '
+                                   'product %s' % self.id)
+        else:
+            return res
+
+    security.declareProtected(ManagePortal, 'getUninstallMethod')
+    def getUninstallMethod(self):
+        """ returns the uninstaller method """
+        return self._getMethod((('Install','uninstall'),
+                                ('Install','Uninstall'),
+                                ('install','uninstall'),
+                                ('install','Uninstall'),
+                               ))
+
+    security.declareProtected(ManagePortal, 'getAfterInstallMethod')
+    def getAfterInstallMethod(self):
+        """ returns the after installer method """
+        return self._getMethod((('Install','afterInstall'),
+                                ('install','afterInstall'),
+                               ))
+
+    security.declareProtected(ManagePortal, 'getAfterUninstallMethod')
+    def getAfterUninstallMethod(self):
+        """ returns the after uninstaller method """
+        return self._getMethod((('Install','afterUninstall'),
+                                ('install','afterUninstall'),
+                               ))
+
+    security.declareProtected(ManagePortal, 'getReinstallMethod')
+    def getReinstallMethod(self):
+        """ returns the reinstaller method """
+        return self._getMethod((('Install','reinstall'),
+                                ('install','reinstall'),
+                               ))
+                               
     security.declareProtected(ManagePortal, 'uninstall')
     def uninstall(self,cascade=default_cascade,REQUEST=None):
         """Uninstalls the product and removes its dependencies
@@ -252,12 +321,77 @@ class InstalledProduct(SimpleItem):
             raise ValueError, 'The product is locked and cannot be uninstalled!'
 
         res=''
+        afterRes=''
 
-        uninstaller=self.getUninstallMethod()
+        uninstaller = self.getUninstallMethod()
+        afterUninstall = self.getAfterUninstallMethod()
 
         if uninstaller:
             res=uninstaller(portal)
+            
+        self._cascadeRemove(cascade)
 
+        if afterUninstall:
+            afterRes=afterUninstall(portal)
+
+        self.status='uninstalled'
+        self.log('uninstalled\n'+str(res)+str(afterRes))
+
+        # New part
+        uninstall_from_xml(portal,self.id)
+
+        if REQUEST and REQUEST.get('nextUrl',None):
+            return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
+
+#    security.declareProtected(ManagePortal, 'reinstall')
+#    def reinstall(self,cascade=default_cascade,REQUEST=None):
+#        """Reinstalls the product
+#        """
+#
+#        portal=getToolByName(self,'portal_url').getPortalObject()
+#
+#        # XXX eventually we will land Event system and could remove
+#        # this 'removal_inprogress' hack
+#        #if self.isLocked() and getattr(portal, 'removal_inprogress', 0):
+#        #    raise ValueError, 'The product is locked and cannot be uninstalled!'
+#
+#        res=''
+#
+#        reinstall = self.getReinstallMethod
+#        
+#        if reinstall is None:
+#            # no reinstall method found
+#            installer = self.getInstallMethod()
+#            uninstaller = self.getUninstallMethod()
+#            
+#            unres = uninstaller(portal)
+#            self._cascadeRemove(cascade)
+#            inres = installer(portal)
+#            
+#            res = str(unres) + str(inres)
+#        else:
+#            result = reinstall(portal)
+#            
+#            # the reinstaller can return a tuple with size two. The first
+#            # first element is the output, the second a new cascade list
+#            if type(result) is TupleType and len(result) == 2:
+#                res = str(result[0])
+#                cascade = result[1]
+#            else:
+#                res = str(result)
+#            
+#            self._cascadeRemove(cascade)
+#
+#        self.log('reinstalled\n'+res)
+#
+#        if REQUEST and REQUEST.get('nextUrl',None):
+#            return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
+
+    def _cascadeRemove(self, cascade):
+        """Cascaded removal of objects
+        """
+        portal=getToolByName(self,'portal_url').getPortalObject()
+        
         if 'types' in cascade:
             portal_types=getToolByName(self,'portal_types')
             delObjects(portal_types, self.types)
@@ -265,7 +399,6 @@ class InstalledProduct(SimpleItem):
         if 'skins' in cascade:
             portal_skins=getToolByName(self,'portal_skins')
             delObjects(portal_skins, self.skins)
-
 
         if 'actions' in cascade:
             portal_actions=getToolByName(self,'portal_actions')
@@ -293,16 +426,6 @@ class InstalledProduct(SimpleItem):
             predicates=getattr(self,'registrypredicates',[])
             for p in predicates:
                 registry.removePredicate(p)
-
-
-        self.status='uninstalled'
-        self.log('uninstalled\n'+str(res))
-
-        # New part
-        uninstall_from_xml(portal,self.id)
-
-        if REQUEST and REQUEST.get('nextUrl',None):
-            return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
 
     security.declareProtected(ManagePortal, 'getInstalledVersion')
     def getInstalledVersion(self):
