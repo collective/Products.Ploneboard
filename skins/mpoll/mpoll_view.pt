@@ -36,10 +36,10 @@
 	<p style="font-style: italic" i18n:translate="description_disclaimer">The poll is not scientific and reflects only the opinions of those users who chose to participate. The results should not be considered representative of either users opinions in general, or the public as a whole.</p>
 
 	<p>
-	<a href="mpoll_list" i18n:translate="the_others_mpoll">current 10 poll list</a>|
+	<a href="mpoll_list" i18n:translate="all_mpolls">All mpolls</a>|
 	<a tal:define="ab_url here/absolute_url"
 	   tal:attributes="href string:$ab_url/mpoll_poll"
-	   i18n:translate="box_poll">do vote</a>
+	   i18n:translate="do_vote">Do vote</a>
 	</p>
     </div>
 </body>

@@ -38,9 +38,3 @@ msgstr "Uw wijzigingen zijn opgeslagen"
 msgid "This poll is closed."
 msgstr "Deze peiling is afgesloten"
 
-
-msgid "the_others_mpoll"
-msgstr "The other polls"
-
-msgid "all_mpolls"
-msgstr "All polls:"

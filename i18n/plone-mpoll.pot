@@ -38,8 +38,3 @@ msgstr ""
 
 msgid "This poll is closed."
 msgstr ""
-msgid "the_others_mpoll"
-msgstr "The other polls"
-
-msgid "all_mpolls"
-msgstr "All polls:"

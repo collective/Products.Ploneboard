@@ -56,9 +56,3 @@ msgstr "Open"
 msgid "help_open"
 msgstr "Markeer deze optie om de peiling open te stellen voor stemmen"
 
-
-msgid "the_others_mpoll"
-msgstr "The other polls"
-
-msgid "all_mpolls"
-msgstr "All polls:"

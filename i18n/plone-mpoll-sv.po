@@ -37,8 +37,3 @@ msgstr "Ändringarna har sparats."
 
 msgid "This poll is closed."
 msgstr "Den här webbfrågan är stängd."
-msgid "the_others_mpoll"
-msgstr "The other polls"
-
-msgid "all_mpolls"
-msgstr "All polls:"

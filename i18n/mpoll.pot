@@ -57,8 +57,8 @@ msgstr "Open"
 msgid "help_open"
 msgstr "Check this option to make the poll open, accepting votes from users."
 
-msgid "the_others_mpoll"
-msgstr "The other polls"
+msgid "do_vote"
+msgstr "Do vote"
 
 msgid "all_mpolls"
-msgstr "All polls:"
+msgstr "All polls"
