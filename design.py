@@ -3,6 +3,7 @@ import Globals
 from AccessControl import ClassSecurityInfo
 from Products.CompositePage.designuis import CommonUI
 from Products.CompositePage.rawfile import RawFile
+from Products.CMFCore.FSDTMLMethod import FSDTMLMethod
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 _plone = os.path.join(os.path.dirname(__file__), 'plone')
@@ -18,6 +19,11 @@ class PloneUI(CommonUI):
 
     security.declarePublic('plone_edit_js')
     plone_edit_js = RawFile('plone_edit.js', 'text/javascript', _plone)
+
+    editstyles_css = FSDTMLMethod("editstyles.css", os.path.join(_plone,
+        "editstyles.css"))
+    pdstyles_css = FSDTMLMethod("pdstyles.css", os.path.join(_plone,
+        "pdstyles.css"))
 
     header_templates = CommonUI.header_templates + (
         PageTemplateFile('header.pt', _plone),)
