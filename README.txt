@@ -1,14 +1,6 @@
-!!! IMPORTANT !!!
-
-  This product is in very early development stage.
-  
-  Please do not use yet as it is very very buggy.
-
 Description
 
-  Let Plone users create their own bibliography lists.
-
-  Add-on to the CMFBibliographyAT product written by Raphael Ritz.
+  A simple product to let Plone users create their own bibliography lists.
 
 What It Does
 
@@ -16,9 +8,9 @@ What It Does
 
 Requirements
 
-  * Plone 2.x / CMF 1.4.4 / Archetypes 1.3 (cvs release-1_3-branch, beta2 is not enough)
+  * Plone 2.x / CMF 1.5 / Archetypes 1.3
   
-  * CMFBibliographyAT (available from the collective's cvs, "http://cvs.sourceforge.net/viewcvs.py/collective/":http://cvs.sourceforge.net/viewcvs.py/collective/)
+  * CMFBibliographyAT
 
 
 Installation
@@ -45,12 +37,8 @@ To Do
 
   * Batch view for references widget
 
-  * keep trace of the searches to apply them later on
-
-  * lists should be sortable
-
   * select all in ref widget
 
   * default view if no format yet defined (done 040616)
 
-  * complete translation (i18n) support (done)
+  * complete translation (i18n) support

@@ -20,6 +20,8 @@ def initialize(context):
     import PresentationFolder
     import ReferencePresentation
     import ReferencePresentationSet
+    import BiblioListTool
+    import formatters
 
     content_types, constructors, ftis = process_types(
         listTypes(PROJECTNAME),
@@ -32,3 +34,12 @@ def initialize(context):
         extra_constructors = constructors,
         fti                = ftis,
         ).initialize(context)
+
+    tools = ( BiblioListTool.BiblioListTool, )
+
+    utils.ToolInit(
+        'BiblioList Tool', tools=tools,
+        product_name='ATBiblioList', icon='bib_tool.gif',
+        ).initialize(context)
+
+    formatters.initialize(context)

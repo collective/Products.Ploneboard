@@ -1,8 +1,6 @@
 ##########################################################################
 #                                                                        #
-#   Project Leader: David Convent, david.convent@naturalsciences.be      #
-#                                                                        #
-#   written by: Louis Wannijn, louis.wannijn@naturalsciences.be          #
+#      written by: Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 

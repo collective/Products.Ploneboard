@@ -1,15 +1,11 @@
 ##########################################################################
 #                                                                        #
-#   Project Leader: David Convent, david.convent@naturalsciences.be      #
-#                                                                        #
-#   written by: David Convent, david.convent@naturalsciences.be          #
-#               Louis Wannijn, louis.wannijn@naturalsciences.be          #
+#      written by: David Convent, david.convent@naturalsciences.be       #
+#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 
-""" ReferencePresentationSet:
-    Combining multiple referencepresentations to allow each type
-    of reference to have its own presentation format.
+""" ReferencePresentationSet: combining multiple referencepresentations to allow each type of reference to have its own presentation format.
 """
 
 from Products.CMFCore import CMFCorePermissions
@@ -17,25 +13,27 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import DisplayList
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import ReferenceField, StringField
+from Products.Archetypes.public import StringField
 from Products.Archetypes.public import BaseContent, registerType
-from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWidget
+from Products.Archetypes.Widget import SelectionWidget
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 
 
 schema = BaseSchema + Schema((
     StringField('DefaultFormat',
-                multiValued=0,
-                vocabulary="vocabPresFormatSel",
-                widget=SelectionWidget(label="Default Presentation Format",
-                                       label_msgid="label_presentation",
-                                       description_msgid="help_presentation",
-                                       description="Select the format how you want to present your list",
-                                       i18n_domain="plone",
-                                       format="select",
-                                       ),
-                ),
+                 multiValued=0,
+                 vocabulary="vocabPresFormatSel",
+                 relationship='has PresFormatSel',
+                 enforce_vocabulary=1,
+                 widget=SelectionWidget(label="Default Presentation Format",
+                                        label_msgid="label_presentation",
+                                        description_msgid="help_presentation",
+                                        description="Select the format how you want to present your list",
+                                        i18n_domain="plone",
+                                        format="select",
+                                        ),
+                   ),
                               ))
 
 def buildPresentationSetSchema():
@@ -70,21 +68,42 @@ class ReferencePresentationSet(BaseContent):
 
     def vocabPresFormatSel(self):
         """ values for the default reference format """
-        return self.buildList(('Select', 'Select'))
+        return self.buildVocab(('Select', 'Select'))
 
     def vocabPresFormatDef(self):
         """ values for each specific reference format """
-        return self.buildList(('Default','Default'))
+        return self.buildVocab(('Default','Default'))
 
-    def buildList(self, default_value):
-        """ lists existing formats to select from """
-
+    def buildVocab(self, default_value):
+        """ build a DisplayList based on existing formats """
         formatList = [default_value,]
-        catalog = getToolByName(self, 'portal_catalog')
-        for refFormat in [r for r in catalog(portal_type='ReferencePresentation')]:
+        bltool = getToolByName(self, 'portal_bibliolist')
+        for refFormatter in bltool.objectValues():
+            formatList.append(('fmt_'+refFormatter.getId().lower(),
+                               refFormatter.title_or_id()))
+        for refFormat in self.findCustomRefFormats():
             obj = refFormat.getObject()
-            formatList.append((obj.UID(),obj.title_or_id()))
+            formatList.append((obj.UID(),obj.title_or_id()+' (Custom Format)'))
 
         return DisplayList(tuple(formatList))
+
+    def findCustomRefFormats(self):
+        """ lists existing formats to select from """
+        catalog = getToolByName(self, 'portal_catalog')
+        formList = catalog(portal_type='ReferencePresentation')
+                
+        return formList        
+
+    def formatList(self, objs):
+        """ renders a formatted bibliography references list
+        """
+        formatted_list = []
+        bltool = getToolByName(self, 'portal_bibliolist')
+        for obj in objs:
+            uid = (obj.UID(),)
+            format = getattr(self, obj.meta_type.replace('Reference', ' Reference') + ' Format')
+            formatted_list.append(bltool.formatList(uid, format)[0])
+        return formatted_list
+
 
 registerType(ReferencePresentationSet)
