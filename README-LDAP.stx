@@ -286,7 +286,22 @@ FAQ
 
   Q: Which LDAPUF versions are compatible with GRUF?
 
-  A: By now, only 2.4Beta2 has been tested successfuly. Other may work - but you have to test.
+  A: By now, only 2.4Beta3 has been tested successfuly. Other may work
+     - but you have to test.
+
+    LDAPUF < 2.4Beta3 has a strange bug in listUserNames(), described
+    as that::
+
+      Consider this PyScript code snipet :
+      return context.acl_users.getUserNames()
+
+      With LDAPUF < 2.4B3, this request returned an empty list when
+      called directly after Zope startup. I needed to do "some things" (but
+      I cannot guess which ones exactly) with LDAPUF to make this code
+      happend to work (ie. return a list of all usernames).
+
+    With 2.4B3, it works perfectly. See
+http://www.dataflake.org/tracker/issue_00385 for a more detailed discussion.
 
 
   Q: How to create ROLES with LDAPUF ?

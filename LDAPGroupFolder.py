@@ -274,7 +274,7 @@ class LDAPGroupFolder(SimpleItem):
             for g in all_groups:
                 groups[g[0]] = g[1]
 
-            # LDAPUF does the mistake of adding possibly invalid roles to the user roles
+            # LDAPUF < 2.4Beta3 adds possibly invalid roles to the user roles
             # (for example, adding the cn of a group additionnaly to the mapped zope role).
             # So we must remove from our 'roles' list all roles which are prefixed by group prefix
             # but are not actually groups.
