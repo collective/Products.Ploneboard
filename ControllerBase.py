@@ -251,7 +251,7 @@ class ControllerBase:
 
                 context_type = component[2]
                 if controller:
-                    if not context_type in controller.listContextTypes():
+                    if context_type and (not context_type in controller.listContextTypes()):
                         # Don't raise an exception because sometimes full list of
                         # types may be unavailable (e.g. when moving a site)
                         # raise ValueError, 'Illegal context type %s' % context_type
@@ -287,7 +287,7 @@ class ControllerBase:
 
                 context_type = component[1]
                 if controller:
-                    if not context_type in controller.listContextTypes():
+                    if context_type and not context_type in controller.listContextTypes():
                         # Don't raise an exception because sometimes full list of
                         # types may be unavailable (e.g. when moving a site)
                         # raise ValueError, 'Illegal context type %s' % context_type

@@ -1,3 +1,9 @@
+2003-03-05  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Got rid of some spurious warnings about "Unknown context type" when 
+     installing new templates with .metadata specifying actions/validators for 
+     all types.
+
 2003-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fix default scripts
