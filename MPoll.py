@@ -1,5 +1,5 @@
 """
-$Id: MPoll.py,v 1.1 2003/03/27 09:45:11 magnusheino Exp $
+$Id: MPoll.py,v 1.2 2003/04/04 11:46:52 magnusheino Exp $
 """
 from Products.Archetypes.public import *
 from BTrees.IOBTree import IOBTree
@@ -8,7 +8,6 @@ from Products.CMFCore import CMFCorePermissions
 from AccessControl import ClassSecurityInfo
 import types
 import operator
-from DateTime import DateTime
 
 schema = ExtensibleMetadata.schema + Schema((
     StringField('id',
@@ -37,6 +36,15 @@ schema = ExtensibleMetadata.schema + Schema((
                                   description_msgid="help_answers",
                                   i18n_domain="mpoll"),
                ),
+    BooleanField('open',
+                 required=1,
+                 accessor='isOpen',
+                 default=None,
+                 widget=BooleanWidget(description="Check this option to make the poll open, accepting votes from users.",
+                                      label_msgid="label_open",
+                                      description_msgid="help_open",
+                                      i18n_domain="mpoll"),
+                 ),
     ))
 
 class MPoll(BaseContent):
@@ -70,11 +78,6 @@ class MPoll(BaseContent):
             self._votes[answer] = Length()
 
         self._votes[answer].change(1)
-
-    security.declareProtected(CMFCorePermissions.View, 'isOpen')
-    def isOpen(self):
-        """Is this poll closed?"""
-        return self.isEffective(DateTime())
 
     security.declareProtected(CMFCorePermissions.View, 'Title')
     def Title(self):

@@ -1,0 +1,4 @@
+
+0.2
+
+  - Added Open/Close checkbox to open/close poll for voting.

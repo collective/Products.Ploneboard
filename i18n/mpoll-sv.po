@@ -49,4 +49,8 @@ msgstr "Svarsalternativ"
 
 msgid "help_answers"
 msgstr "De möjliga svarsalternativ som finns. Ange ett alternativ på varje rad."
+msgid "label_open"
+msgstr "Öppen"
 
+msgid "help_open"
+msgstr "Webbfrågan är öppen och andra kan rösta om detta alternativ är markerat."
