@@ -32,8 +32,7 @@
                      start request/start|python:0;
                      batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
                      previous python:batch.previous;
-                     next python:batch.next;
-                     size python:test(request.get('size'), '&size=%s' % request.get('size'), '')">
+                     next python:batch.next;">
 
         <div tal:repeat="image batch">
 
@@ -43,7 +42,7 @@
    
             <img tal:condition="image/size"
                  src="#" 
-                 tal:attributes="src python:image.absolute_url()+test(request.get('size'), '?size=%s' % request.get('size'), '')" />
+                 tal:attributes="src python:image.absolute_url()+'?display='+request.get('display', 'original')" />
 
         
             <span class="description" tal:content="structure image/Description">
@@ -51,7 +50,7 @@
             </span>
         </div>
 
-        <META tal:condition="next" HTTP-EQUIV=Refresh tal:attributes="CONTENT string:${request/delay};; URL=${request/URL0}?start:int=${next/first}&delay=${request/delay}$size">
+        <META tal:condition="next" HTTP-EQUIV=Refresh tal:attributes="CONTENT string:${request/delay};; URL=${request/URL0}?start:int=${next/first}&delay=${request/delay}">
 
         <META tal:condition="not:next" HTTP-EQUIV=Refresh tal:attributes="CONTENT string:${request/delay};; URL=${request/URL1}/photofolder_slideshow_end">
 

@@ -46,7 +46,7 @@
     <form tal:condition="python:here.contentValues(spec='Portal Photo')" 
           class="group"
           name="edit_form"
-          onSubmit="javascript:centeredWindow('photofolder_slideshow?delay='+document.getElementById('delay').value+'&size='+document.getElementById('size').value, 'Slideshow'); return false;">
+          onSubmit="javascript:centeredWindow('photofolder_slideshow?delay='+document.getElementById('delay').value); return false;">
 
         <span class="legend">Slideshow Details</span>
 
@@ -84,28 +84,6 @@
             </div>
 
         </div>
-
-        <div class="row">
-
-            <div class="label">
-                <span>Size</span>
-
-                <div id="size_help"
-                     class="help"
-                     style="visibility:hidden">
-                Select the size of the photos.
-                </div>
-            </div>
-
-            <div class="field" tal:define="displays python:here.contentValues(spec='Portal Photo')[0].getDisplays()">
-
-                <select id="size" name="size" tabindex="2" onfocus="formtooltip('size_help', 1)" onblur="formtooltip('size_help', 0)">
-                    <option tal:repeat="display displays" tal:attributes="value display/name" tal:content="display/label">1</option>
-                </select>
-            </div>
-
-        </div>
-
 
         <div class="row">
             <div class="label">&nbsp;</div>

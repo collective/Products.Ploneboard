@@ -34,9 +34,9 @@
             <h1 tal:content="image/title_or_id">Title or id</h1>
             </div>
    
-            <img tal:condition="image/size"
+            <a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new_"><img tal:condition="image/size"
                  src="#" 
-                 tal:attributes="src image/absolute_url" />
+                 tal:attributes="src python:image.absolute_url()+'?size='+request.get('display', 'original')"/></a>
 
         
             <span class="description" tal:content="structure image/Description">
@@ -69,10 +69,10 @@
         <p tal:condition="python:previous or next">
             <a tal:condition="previous"
                 tal:attributes="href string:${request/URL0}?start:int=${previous/first}"
-                href="previous_url"><img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?size=thumbnail'" /></a>
+                href="previous_url"><img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?display=thumbnail'" /></a>
             <a tal:condition="next"
                 tal:attributes="href string:${request/URL0}?start:int=${next/first}"
-                href="next_url"><img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?size=thumbnail'" /></a>
+                href="next_url"><img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?display=thumbnail'" /></a>
         </p>
 
 

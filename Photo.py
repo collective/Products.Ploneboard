@@ -26,9 +26,21 @@ factory_type_information = {
     , 'actions'        :
     ( { 'id'            : 'view'
         , 'name'          : 'View'
-        , 'action'        : 'image_view'
+        , 'action'        : 'photo_view'
         , 'permissions'   : (CMFCorePermissions.View, )
         }
+       ,{ 'id'            : 'settings' 
+          , 'name'          : 'Settings'
+          , 'action'        : 'photo_settings_form'
+          , 'permissions'   :
+          (CMFCorePermissions.View,)
+          , 'category'      : 'object'
+          }
+      , { 'id'            : 'rotate'
+          , 'name'          : 'Rotate'
+          , 'action'        : 'photo_rotate_form'
+          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
+          }
       , { 'id'            : 'edit'
           , 'name'          : 'Edit'
           , 'action'        : 'image_edit_form'
@@ -121,13 +133,12 @@ class Photo(Image):
     
     security = ClassSecurityInfo()
 
-
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
         """
         Display the image
         """
-        size = REQUEST.get('size')
+        size = REQUEST.get('display', '')
         if size in self.displays.keys():
             if not size in self._photos.keys():
                 self._photos[size] = OFS.Image.Image('Image', 'Image',
@@ -135,6 +146,8 @@ class Photo(Image):
             return self._photos.get(size).index_html(REQUEST, RESPONSE)
 
         return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
+
+    __call__ = index_html
 
     security.declareProtected(CMFCorePermissions.View, 'getDisplays')
     def getDisplays(self):
@@ -145,6 +158,23 @@ class Photo(Image):
 
         return result
     
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'rotate')
+    def rotate(self, degrees=0):
+        """Rotate photo"""
+        image = StringIO()
+        
+        from popen2 import popen2
+        imgout, imgin = popen2('convert -rotate %s - -'
+                               % (degrees,))
+        imgin.write(str(self.data))
+        imgin.close()
+        image.write(imgout.read())
+        imgout.close()
+        
+        image.seek(0)
+        self.manage_upload(image)
+        self._photos = OOBTree()
         
     def _resize(self, size, quality=100):
         """Resize and resample photo."""

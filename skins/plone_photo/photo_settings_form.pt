@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+	
+<body>
+
+
+<div metal:fill-slot="super">
+
+    <div metal:use-macro="here/portal_tabs/macros/contentTabs">
+    Content tabs
+    </div>
+
+    <div class="contentBar">
+    &nbsp;
+    </div>
+
+</div>
+
+<div metal:fill-slot="main">
+
+    <form class="group"
+          name="edit_form"
+          method="post"
+          action="photo_settings">
+
+        <span class="legend">Photo Details</span>
+
+
+        <div class="row">
+
+            <div class="label">
+                <span>Size</span>
+
+                <div id="display_help"
+                     class="help"
+                     style="visibility:hidden">
+                Select the size of the photos.
+                </div>
+            </div>
+
+            <div class="field" tal:define="displays python:here.contentValues(spec='Portal Photo')[0].getDisplays()">
+
+                <select id="display" name="display" tabindex="2" onfocus="formtooltip('display_help', 1)" onblur="formtooltip('display_help', 0)">
+                    <option tal:repeat="display displays" 
+			    tal:attributes="value display/name;
+                                            selected python:test(request.cookies.get('display') == display['name'], 'selected', '');" 
+                            tal:content="display/label">1</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="label">&nbsp;</div>
+            <div class="field">
+                <input class="context"
+                       tabindex="2"
+                       type="submit"
+                       name="Save"
+                       value="Save" />
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -37,6 +37,13 @@ factory_type_information = {
           (CMFCorePermissions.View,)
           , 'category'      : 'object'
           }
+       ,{ 'id'            : 'settings' 
+          , 'name'          : 'Settings'
+          , 'action'        : 'photo_settings_form'
+          , 'permissions'   :
+          (CMFCorePermissions.View,)
+          , 'category'      : 'object'
+          }
        ,{ 'id'            : 'view' 
           , 'name'          : 'View'
           , 'action'        : 'photofolder_view'
@@ -47,6 +54,13 @@ factory_type_information = {
        ,{ 'id'            : 'slideshow' 
           , 'name'          : 'Slideshow'
           , 'action'        : 'photofolder_slideshow_start'
+          , 'permissions'   :
+          (CMFCorePermissions.View,)
+          , 'category'      : 'folder'
+          }
+       ,{ 'id'            : 'settings' 
+          , 'name'          : 'Settings'
+          , 'action'        : 'photofolder_settings_form'
           , 'permissions'   :
           (CMFCorePermissions.View,)
           , 'category'      : 'folder'
