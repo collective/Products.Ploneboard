@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.14 2004/06/10 09:00:39 tiran Exp $
+$Id: ATEvent.py,v 1.15 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -40,7 +40,7 @@ from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActio
 from Products.ATContentTypes.interfaces.IATEvent import IATEvent
 from Products.ATContentTypes.types.schemata import ATEventSchema
 from Products.ATContentTypes.CalendarSupport import CalendarSupportMixin
-
+from Products.ATContentTypes.Permissions import ChangeEvents
 
 class ATEvent(ATCTContent, CalendarSupportMixin):
     """An Archetype derived version of CMFCalendar's Event"""
@@ -65,7 +65,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     
     actions = updateActions(ATCTContent, CalendarSupportMixin.actions)
 
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setEventType')
+    security.declareProtected(ChangeEvents, 'setEventType')
     def setEventType(self, value, alreadySet=False, **kw):
         """CMF compatibility method
         
@@ -104,6 +104,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         events = metatool.listAllowedSubjects(content_type = "Event")
         return events
 
+    security.declarePrivate('cmf_edit')
     def cmf_edit(self, title=None, description=None, eventType=None,
              effectiveDay=None, effectiveMo=None, effectiveYear=None,
              expirationDay=None, expirationMo=None, expirationYear=None,

@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.23 2004/06/10 08:30:53 tiran Exp $
+$Id: config.py,v 1.24 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -163,4 +163,13 @@ CHAR_MAPPING = {
     'Ä' : 'Ae',
     'Ö' : 'Oe',
     'Ü' : 'Ue',
+    }
+
+MIME_ALIAS = {
+    'plain' : 'text/plain',
+    'stx'   : 'text/structured',
+    'html'  : 'text/html',
+    'rest'  : 'text/x-rst',
+    'structured-text' : 'text/structured',
+    'restructuredtext' : 'text/x-rst',
     }

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.15 2004/06/10 15:19:37 tiran Exp $
+$Id: ATContentType.py,v 1.16 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -62,6 +62,25 @@ def updateActions(klass, actions):
     
     return tuple(actions)
 
+def cleanupFilename(filename):
+    """Removes bad chars from file names to make them a good id
+    """
+    result = ''
+    for s in str(filename):
+        s = CHAR_MAPPING.get(s, s)
+        if s in GOOD_CHARS:
+            result+=s
+    return result
+
+def translateMimetypeAlias(alias):
+    """Maps old CMF content types to real mime types
+    """
+    if alias.find('/') != -1:
+        mime = alias
+    else:
+        mime = MIME_ALIAS.get(alias, None)
+    assert(mime) # shouldn't be empty
+    return mime
 
 class ATCTMixin(TemplateMixin):
     """Mixin class for AT Content Types"""

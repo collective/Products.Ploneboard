@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.32 2004/06/10 15:19:37 tiran Exp $
+$Id: schemata.py,v 1.33 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,6 +30,7 @@ from Products.Archetypes.public import *
 from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
+from Products.ATContentTypes.Permissions import ChangeEvents
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes import RestrainTypesMixin
@@ -120,6 +121,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
 ATEventSchema = ATContentTypeSchema + Schema((
     StringField('location',
                 searchable = 1,
+                write_permission = ChangeEvents,
                 widget = StringWidget(description = "Enter the location where the event will take place.",
                                       description_msgid = "help_event_location",
                                       label = "Event Location",
@@ -129,6 +131,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
     LinesField('eventType',
                required = 1,
                searchable = 1,
+               write_permission = ChangeEvents,
                vocabulary = 'getEventTypes',
                languageIndependent=True,
                widget = MultiSelectionWidget(size = 6,
@@ -142,6 +145,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='event_url',
+                write_permission = ChangeEvents,
                 validators = ('isURL',),
                 widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
                                       description_msgid = "help_url",
@@ -152,6 +156,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   required = 1,
                   searchable = 1,
                   accessor='start',
+                  write_permission = ChangeEvents,
                   default_method=DateTime,
                   languageIndependent=True,
                   widget = CalendarWidget(description="Enter the starting date and time, or click the calendar icon and select it. ",
@@ -164,6 +169,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   required = 1,
                   searchable = 1,
                   accessor='end',
+                  write_permission = ChangeEvents,
                   default_method=DateTime,
                   languageIndependent=True,
                   widget = CalendarWidget(description= "Enter the ending date and time, or click the calendar icon and select it. ",
@@ -175,6 +181,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_name',
+                write_permission = ChangeEvents,
                 widget = StringWidget(description = "Enter a contact person or organization for the event.",
                                       description_msgid = "help_contact_name",
                                       label = "Contact Name",
@@ -184,6 +191,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_email',
+                write_permission = ChangeEvents,
                 validators = ('isEmail',),
                 widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
                                       description_msgid = "help_contact_email",
@@ -194,6 +202,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_phone',
+                write_permission = ChangeEvents,
                 validators = ('isInternationalPhoneNumber',),
                 widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
                                       description_msgid = "help_contact_phone",

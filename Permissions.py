@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Permissions.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: Permissions.py,v 1.2 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,13 +26,15 @@ __docformat__ = 'restructuredtext'
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.CMFCorePermissions import setDefaultRoles
 
-# Gathering Topic Related Permissions into one place
+# Gathering Topic and Event related permissions into one place
 AddTopics = 'Add portal topics'
 ChangeTopics = 'Change portal topics'
+ChangeEvents = 'Change portal events'
 
 # Set up default roles for permissions
 setDefaultRoles(AddTopics, ('Manager',))
 setDefaultRoles(ChangeTopics, ('Manager', 'Owner',))
+setDefaultRoles(ChangeEvents, ('Manager', 'Owner',))
 
 # Add a AT Content Type
 ADD_CONTENT_PERMISSION = CMFCorePermissions.AddPortalContent

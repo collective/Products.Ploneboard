@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.23 2004/06/10 15:19:37 tiran Exp $
+$Id: ATFile.py,v 1.24 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,20 +38,14 @@ from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Products.PortalTransforms.utils import TransformException
 
-from Products.ATContentTypes.types.ATContentType import ATCTFileContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTFileContent, \
+    updateActions, cleanupFilename
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema
 
+
 from OFS.Image import File
 from Acquisition import aq_parent
-
-def cleanupFilename(filename):
-    result = ''
-    for s in str(filename):
-        s = CHAR_MAPPING.get(s, s)
-        if s in GOOD_CHARS:
-            result+=s
-    return result
 
 class ATFile(ATCTFileContent):
     """A Archetype derived version of CMFDefault's File"""

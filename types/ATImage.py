@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.18 2004/06/10 15:19:37 tiran Exp $
+$Id: ATImage.py,v 1.19 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,10 +38,10 @@ from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Acquisition import aq_parent
 
-from Products.ATContentTypes.types.ATContentType import ATCTFileContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTFileContent, \
+    updateActions, cleanupFilename
 from Products.ATContentTypes.interfaces.IATImage import IATImage
 from Products.ATContentTypes.types.schemata import ATImageSchema, ATExtImageSchema
-from Products.ATContentTypes.types.ATFile import cleanupFilename
 
 from OFS.Image import Image
 

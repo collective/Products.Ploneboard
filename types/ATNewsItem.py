@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.10 2004/06/09 13:59:19 tiran Exp $
+$Id: ATNewsItem.py,v 1.11 2004/06/13 00:06:05 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -34,7 +34,8 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTContent, \
+    updateActions, translateMimetypeAlias
 from Products.ATContentTypes.types.ATDocument import ATDocument
 from Products.ATContentTypes.interfaces.IATNewsItem import IATNewsItem
 from Products.ATContentTypes.types.schemata import ATNewsItemSchema
@@ -67,7 +68,7 @@ class ATNewsItem(ATDocument):
     def cmf_edit(self, text, description=None, text_format=None, **kwargs):
         if description is not None:
             self.setDescription(description)
-        self.setText(text, mimetype=text_format)
+        self.setText(text, mimetype=translateMimetypeAlias(text_format))
         self.update(**kwargs)
     
 registerType(ATNewsItem, PROJECTNAME)
