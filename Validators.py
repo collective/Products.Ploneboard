@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.13 2004/04/22 23:26:57 tiran Exp $
+$Id: Validators.py,v 1.14 2004/05/09 23:15:18 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -230,7 +230,6 @@ def unwrapValueFromHTML(value):
     """Remove the html stuff around the body
     """
     # get the body text
-    print value
     result = RE_BODY.search(value)
     if result:
         body = result.group(1)
