@@ -1,10 +1,9 @@
 ##############################################################################
 #
-# Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# Copyright (c) 2002 Ingeniweb SARL
+# Copyright (c) 2002-2003 Ingeniweb SARL - All rights reserved
 #
-# This software is subject to the provisions of the Zope Public License,
-# Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
+# This software is subject to the provisions of the GNU Public License,
+# Version 2.0 (GPL).  A copy of the GPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
@@ -40,6 +39,7 @@ from global_symbols import *
 import AccessControl.User
 import GRUFFolder
 import GRUFUser
+from Products.PageTemplates import PageTemplateFile
 
 DEBUG=1
 #import zLOG
@@ -640,7 +640,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/07/23 15:19:54 $"[7:-2]
+        rev_date = "$Date: 2003/07/24 18:46:15 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
