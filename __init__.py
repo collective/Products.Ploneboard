@@ -14,11 +14,14 @@
 
 """GroupUserFolder product"""
 
-import PatchCatalogTool
 import GroupUserFolder
 import GRUFFolder
 from global_symbols import *
-from Products.CMFCore.DirectoryView import registerDirectory
+try:
+    from Products.CMFCore.DirectoryView import registerDirectory
+except:
+    # No registerdir available -> we ignore
+    pass
 import AccessControl.User
 
 global groupuserfolder_globals
@@ -28,7 +31,11 @@ groupuserfolder_globals=globals()
 
 def initialize(context):
 
-    registerDirectory('skins', groupuserfolder_globals)
+    try:
+        registerDirectory('skins', groupuserfolder_globals)
+    except:
+        # No registerdir available => we ignore
+        pass
     
     context.registerClass(
         GroupUserFolder.GroupUserFolder,
