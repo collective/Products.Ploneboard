@@ -122,7 +122,7 @@
     <h5 i18n:translate="maintenance">Maintenance</h5>
     <div class="portletBody" id="atse_maintenance">
       <div>
-        <a href="update_schema_for_issues?return_to=atse_editor" i18n:translate="update_schema_for_all_issues">Update schema for all issues</a>
+        <a href="update_all_schemas?return_to=atse_editor" i18n:translate="update_schema_for_all_issues">Update schema for all issues</a>
       </div>
     </div>
   </div>

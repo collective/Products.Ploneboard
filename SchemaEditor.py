@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.7 2004/09/17 14:46:49 ajung Exp $
+$Id: SchemaEditor.py,v 1.8 2004/09/17 15:06:30 ajung Exp $
 """
 
 import re
@@ -32,6 +32,8 @@ allowed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/ ().
 
 def remove_unallowed_chars(s):
     return ''.join([c  for c in s  if c in allowed])
+
+class SchemaEditorError(Exception): pass
 
 class SchemaEditor:
     """ a simple TTW editor for Archetypes schemas """
@@ -80,13 +82,13 @@ class SchemaEditor:
     def atse_addSchemata(self, name, RESPONSE=None):
         """ add a new schemata """
         if not name:
-            raise TypeError(self.translate('atse_empty_name', default='Empty ID given'))
+            raise SchemaEditorError(self.translate('atse_empty_name', default='Empty ID given'))
 
         if name in self._ms.getSchemataNames():
-            raise ValueError(self.translate('atse_exists', {schemata:name},
+            raise SchemaEditorError(self.translate('atse_exists', {schemata:name},
                              'Schemata "$schemata" already exists'))
         if not id_regex.match(name):
-            raise ValueError(self.translate('atse_invalid_id_for_schemata', {'schemata':name},
+            raise SchemaEditorError(self.translate('atse_invalid_id_for_schemata', {'schemata':name},
                              '"$schemata" is an invalid ID for a schemata'))
 
         self._ms.addSchemata(name)
@@ -100,12 +102,17 @@ class SchemaEditor:
         """ delete a schemata """
 
         if name in self._undeleteable_schematas: 
-            raise RuntimeError(self.translate('atse_can_not_remove_schema', 
+            raise SchemaEditorError(self.translate('atse_can_not_remove_schema', 
                                               default='Can not remove this schema because it is protected from deletion'))
 
-        if len(self._ms.getSchemataNames(True)) == 1: 
-            raise RuntimeError(self.translate('atse_can_not_remove_last_schema', 
+        if len(self.atse_getSchemataNames(True)) == 1: 
+            raise SchemaEditorError(self.translate('atse_can_not_remove_last_schema', 
                                               default='Can not remove the last schema'))
+
+        for field in self._ms.getSchemataFields(name): 
+            if field.getName() in self._undeleteable_fields:
+                raise SchemaEditorError(self.translate('atse_schemata_contains_undeleteable_fields', 
+                                                  default='The schemata contains fields that can not be deleted'))
 
         self._ms.delSchemata(name)
         self._p_changed = 1
@@ -123,7 +130,7 @@ class SchemaEditor:
         """ remove a field from the  schema"""
 
         if name in self._undeleteable_fields:
-            raise ValueError(self.translate('atse_field_not_deleteable',
+            raise SchemaEditorError(self.translate('atse_field_not_deleteable',
                                             {'name' : name},
                                             'field "$name" can not be deleted because it is protected from deletion',   
                                             ))
@@ -142,7 +149,6 @@ class SchemaEditor:
                                      default='Field deleted'), 
                                      schemata=return_schemata)
 
-
     security.declareProtected(ManageSchemaPermission, 'atse_update')
     def atse_update(self, fielddata,  REQUEST, RESPONSE=None):
         """ update a single field"""
@@ -153,16 +159,16 @@ class SchemaEditor:
         ## ATT: this should go into a dedicated method
         if R.has_key('add_field'):
             if not R['name']:
-                raise ValueError(self.translate('atse_empty_field_name', 
+                raise SchemaEditorError(self.translate('atse_empty_field_name', 
                                                 default='Field name is empty'))
 
             if not id_regex.match(R['name']):
-                raise ValueError(self.translate('atse_not_a_valid_id', 
+                raise SchemaEditorError(self.translate('atse_not_a_valid_id', 
                                                 {'id' : R['name']},
                                                 '"$id" is not a valid ID'))
 
             if R['name'] in [f.getName() for f in self._ms.fields()]:
-                raise ValueError(self.translate('atse_field_already_exists', 
+                raise SchemaEditorError(self.translate('atse_field_already_exists', 
                                                {'id' : R['name']},
                                                '"$id" exists already'))
 
@@ -184,7 +190,7 @@ class SchemaEditor:
         elif FD.type == 'BooleanField':    field = BooleanField
         elif FD.type == 'LinesField':      field = LinesField
         elif FD.type == 'DateTimeField':   field = DateTimeField
-        else: raise TypeError(self.translate('atse_unknown_field', 
+        else: raise SchemaEditorError(self.translate('atse_unknown_field', 
                                               {'field' : FD.field},
                                              'unknown field type: $field')) 
 
@@ -214,9 +220,10 @@ class SchemaEditor:
         elif FD.widget == 'Reference':   widget = ReferenceWidget()
         elif FD.widget == 'Picklist':    widget = PicklistWidget()
         elif FD.widget == 'InAndOut':    widget = InAndOutWidget()
-        else: raise ValueError(self.translate('atse_unknown_widget', 
-                                              {'widget' : d.widget},
-                                              'unknown widget type: $widget'))
+        else: 
+            raise SchemaEditorError(self.translate('atse_unknown_widget', 
+                                                  {'widget' : d.widget},
+                                                  'unknown widget type: $widget'))
 
         if FD.has_key('widgetsize'):
             widget.size = FD.widgetsize
@@ -228,7 +235,7 @@ class SchemaEditor:
             widget.cols = FD['widgetcols']
             widget.size = 60
         else:
-            raise RuntimeError
+            raise SchemaEditorError
 
         widget.visible = 1
         widget.label = FD.label
