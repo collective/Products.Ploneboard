@@ -7,7 +7,6 @@ f = StringIO(buf)   # ready for reading
 f.close()           # explicitly release resources held
 flag = f.isatty()   # always false
 buf = f.read()      # returns the whole file (like getvalue())
-buf = f.readline()  # returns one line from the list buffer
 list = f.readlines()# the whole list buffer
 f.write(buf)        # write at current position
 f.writelines(list)  # extends the list buffer with another list
@@ -22,7 +21,9 @@ with a very basic implementation.
 Limitations:
 
  * read() does return all data
- * no seek/truncate/tell methods are available
+ * no seek/truncate/tell/readline methods are available
+ * no readline
+ * readlines doesn't guarentee lines
  * write is unicode aware
  
 You need the global request patch from PlacelessTranslationService!
@@ -46,13 +47,13 @@ class FasterStringIO:
     unicode aware and restricted version of StringIO for Zope's TAL
     """
     def __init__(self, buf = ''):
-        # Force self.buf to be a string or unicode
-        if type(buf) in (UnicodeType, StringType):
-            buf = str(buf)
+        ## disabled
+        ## Force self.buf to be a string or unicode
+        ##if type(buf) in (UnicodeType, StringType):
+        ##    buf = str(buf)
         self.buf = []
         self.buf.append(buf)
         self.len = len(buf)
-        self.linepos = 0
         self.closed = 0
 
     def __iter__(self):
@@ -90,11 +91,7 @@ class FasterStringIO:
         return '\n'.join(self.buf)
 
     def readline(self, length=None):
-        if self.closed:
-            raise ValueError("I/O operation on closed file")
-        if self.linepos <= len(self.buf):
-            self.linepos+=1
-            return self.buf[self.linepos]
+        raise RuntimeError("FasterStringIO doesn't support seeking")
 
     def readlines(self):
         return self.buf
