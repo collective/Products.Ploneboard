@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.44 2004/05/04 21:29:10 dreamcatcher Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.45 2004/06/23 12:55:08 hoka Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -38,6 +38,10 @@ from interfaces.portal_quickinstaller import IQuickInstallerTool
 from exceptions import RuntimeError
 import zExceptions
 from zLOG import LOG
+
+
+from installer import install_from_xml
+
 
 try:
     from zpi.zope import not_installed, hot_plug
@@ -349,6 +353,11 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                     raise
                 res += 'failed\n'
 
+        #New Part if it is accepted perhaps build it in in the loop above
+    	for p in products:        
+            data=install_from_xml(self,p)
+            res=res+data
+            
         if REQUEST :
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 

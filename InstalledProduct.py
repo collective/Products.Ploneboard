@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.20 2004/05/04 21:29:10 dreamcatcher Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.21 2004/06/23 12:55:08 hoka Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -30,6 +30,10 @@ from Products.ExternalMethod.ExternalMethod import ExternalMethod
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 
 from interfaces.portal_quickinstaller import IInstalledProduct
+
+
+from installer import uninstall_from_xml
+
 
 def updatelist(a,b):
     for l in b:
@@ -244,6 +248,9 @@ class InstalledProduct(SimpleItem):
         self.status='uninstalled'
         self.log('uninstalled\n'+str(res))
 
+        #New part
+        uninstall_from_xml(portal,self.id)
+ 
         if REQUEST and REQUEST.get('nextUrl',None):
             return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
 

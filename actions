@@ -1,0 +1,19 @@
+<portal_daytatool>
+  name=Testaction
+  id=teaction
+  action=string:test_form
+  condition=
+  permission=View
+  category=folder
+  visible=1
+</portal_daytatool>
+
+<portal_daytatool> 
+  name=Testaction2
+  id=testaction2
+  action=string:test_form2
+  condition=member
+  permission=View
+  category=folder
+  visible=1
+</portal_daytatool>
