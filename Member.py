@@ -63,8 +63,8 @@ id_schema = Schema((
                 read_permission=VIEW_PUBLIC_PERMISSION,
                 write_permission=EDIT_ID_PERMISSION,
                 default=None,
-                index=('member_catalog/ZCTIndex|FieldIndex|TextIndex:brains',
-                       'FieldIndex|TextIndex:brains'),
+                index=('member_catalog/FieldIndex:brains',
+                       'FieldIndex:brains'),
                 widget=IdWidget(
                     label='User name',
                     label_msgid='label_user_name',
@@ -89,11 +89,13 @@ id_schema = Schema((
 contact_schema = Schema((
     StringField('fullname',
                 default='',
+                accessor='getFullName',
+                mutator='setFullName',
                 mode='rw',
                 read_permission=VIEW_PUBLIC_PERMISSION,
                 write_permission=EDIT_PROPERTIES_PERMISSION,
-                index=('member_catalog/ZCTIndex|FieldIndex|TextIndex:brains',
-                       'ZCTIndex|FieldIndex|TextIndex:brains'),
+                index=('member_catalog/ZCTextIndex,lexicon_id=member_lexicon,index_type=Cosine Measure|TextIndex:brains',
+                       'ZCTextIndex|TextIndex:brains'),
                 widget=StringWidget(
                     label='Full name',
                     label_msgid='label_full_name',
@@ -106,12 +108,14 @@ contact_schema = Schema((
 
     StringField('email',
                 required=1,
+                accessor='getEmail',
+                mutator='setEmail',
                 mode='rw',
                 read_permission=VIEW_PUBLIC_PERMISSION,
                 write_permission=EDIT_PROPERTIES_PERMISSION,
                 validators=('isEmail',),
-                index=('member_catalog/ZCTIndex|FieldIndex|TextIndex:brains',
-                       'ZCTIndex|FieldIndex|TextIndex:brains'),
+                index=('member_catalog/ZCTextIndex,lexicon_id=member_lexicon,index_type=Cosine Measure|TextIndex:brains',
+                       'ZCTextIndex|TextIndex:brains'),
                 widget=StringWidget(
                     label='E-mail',
                     label_msgid='label_email',
@@ -260,7 +264,7 @@ security_schema = Schema((
                vocabulary='valid_roles',
 #               enforceVocabulary=1, # don't enforce vocabulary because getRoles() adds some extra roles
                multiValued=1,
-               index='member_catalog/KeywordIndex|TextIndex:brains',
+               index='member_catalog/KeywordIndex:brains',
                widget=MultiSelectionWidget(label='Roles',
                                            label_msgid='label_roles',
                                            description='Select the security roles for this user',
@@ -279,7 +283,7 @@ security_schema = Schema((
                vocabulary='valid_groups',
                enforceVocabulary=1,
                multiValued=1,
-               index='member_catalog/KeywordIndex|TextIndex:brains',
+               index='member_catalog/KeywordIndex:brains',
                widget=MultiSelectionWidget(label='Groups',
                                            label_msgid='label_groups',
                                            description='Indicate the groups to which this member belongs',
@@ -319,9 +323,11 @@ login_info_schema = Schema((
     DateTimeField('last_login_time',
                   default='2000/01/01',  # for Plone 1.0.1 compatibility
                   mode='r',
+                  accessor='getLastLoginTime',
+                  mutator='setLastLoginTime',
                   read_permission=VIEW_OTHER_PERMISSION,
                   write_permission=EDIT_PROPERTIES_PERMISSION,
-                  index='member_catalog/DateIndex|FieldIndex:brains',
+                  index='member_catalog/DateIndex:brains',
                   widget=StringWidget(label="Last login time",
                                       modes=('view',),
                                       visible={'edit':'invisible',
@@ -374,6 +380,9 @@ class Member(VariableSchemaSupport, BaseContent):
         self.roles = ('Member',)
         self.domains = ()
 
+        self.fullname = ''
+        self.email = ''
+        
         # for plone compatibility
         self.listed = 0
         self.login_time = '2000/01/01'
@@ -425,7 +434,18 @@ class Member(VariableSchemaSupport, BaseContent):
         """Return the username of a user"""
         return self.getUser().getUserName()
 
+    security.declareProtected(VIEW_PUBLIC_PERMISSION, 'getFullName')
+    def getFullName(self):
+        return self.fullname
 
+    security.declareProtected(VIEW_PUBLIC_PERMISSION, 'getEmail')
+    def getFullName(self):
+        return self.email
+
+    security.declareProtected(VIEW_OTHER_PERMISSION, 'getLastLoginTime')
+    def getLastLoginTime(self):
+        return self.last_login_time
+    
     security.declarePrivate('getPassword')
     def getPassword(self):
         """Return the password of the user."""
@@ -533,6 +553,17 @@ class Member(VariableSchemaSupport, BaseContent):
         if password:
             self.setSecurityProfile(password=password)
 
+    security.declareProtected(EDIT_PROPERTIES_PERMISSION, 'setFullName')
+    def setFullName(self, fullname):
+        self.fullname = fullname
+
+    security.declareProtected(EDIT_PROPERTIES_PERMISSION, 'setEmail')
+    def setEmail(self, email):
+        self.email = email
+
+    security.declareProtected(EDIT_PROPERTIES_PERMISSION, 'setLastLoginTime')
+    def setLastLoginTime(self, last_login_time):
+        self.last_login_time = last_login_time
 
     security.declarePrivate('setRoles')
     def setRoles(self, roles):
