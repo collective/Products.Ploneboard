@@ -25,6 +25,7 @@ from styles.Minimal import MinimalBibrefStyle
 from styles.Chicago import ChicagoBibrefStyle
 from styles.Harvard import HarvardBibrefStyle
 from styles.MLA import MLABibrefStyle
+from styles.APA import APABibrefStyle
 import Products
 
 class BiblioListTool(UniqueObject, Folder):
@@ -50,6 +51,7 @@ class BiblioListTool(UniqueObject, Folder):
         self._setObject('Chicago', ChicagoBibrefStyle('Chicago', ''))
         self._setObject('Harvard', HarvardBibrefStyle('Harvard', ''))
         self._setObject('MLA', MLABibrefStyle('MLA', ''))
+        self._setObject('APA', APABibrefStyle('APA', ''))
 
     def all_meta_types(self):
         return filter(lambda x: IBibrefStyle \
