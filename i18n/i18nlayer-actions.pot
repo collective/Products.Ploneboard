@@ -18,3 +18,9 @@ msgstr ""
 
 msgid "Translate"
 msgstr ""
+
+msgid "Content object translated"
+msgstr ""
+
+msgid "multilingual object converted to simple object"
+msgstr ""

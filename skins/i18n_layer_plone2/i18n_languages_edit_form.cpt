@@ -1,7 +1,7 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="i18nlayer">
 
   <metal:border fill-slot="head_slot">
     <tal:border define="dummy python:request.set('enable_border',1)" />
@@ -196,7 +196,7 @@
     
           </form> 
           
-          <p i18n:translate="description_i18_to_simple_document">
+          <p i18n:translate="description_i18n_to_simple_document">
             Convert your multilingual document to a simple document.
           </p>
           

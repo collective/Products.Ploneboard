@@ -106,3 +106,48 @@ msgstr ""
 #.
 msgid "label_containmenttype"
 msgstr ""
+
+msgid "heading_edit_languages_properties"
+msgstr ""
+
+msgid "description_i18nize_document"
+msgstr ""
+
+msgid "help_i18nize_document"
+msgstr ""
+
+msgid "label_language"
+msgstr ""
+
+msgid "Convert"
+msgstr ""
+
+msgid "description_i18n_document"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Select all items"
+msgstr ""
+
+msgid "listingheader_title"
+msgstr ""
+
+msgid "listingheader_size"
+msgstr ""
+
+msgid "listingheader_modified"
+msgstr ""
+
+msgid "listingheader_status"
+msgstr ""
+
+msgid "listingheader_language"
+msgstr ""
+
+msgid "description_i18n_to_simple_document"
+msgstr ""

@@ -1,0 +1,62 @@
+# French Translation for I18NLayer
+# First author : cyrille.lebeaupin@ingeniweb.com, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: I18NLayer\n"
+"POT-Creation-Date: 2004-03-16 19:10+0000\n"
+"PO-Revision-Date: 2004-03-16 09:17-0500\n"
+"Last-Translator: Cyrille Lebeaupin <cyrille.lebeaupin@ingeniweb.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-code: fr\n"
+"Language-name: French\n"
+"Preferred-encodings: latin1 utf-8\n"
+"Domain: i18nlayer\n"
+
+msgid "heading_edit_languages_properties"
+msgstr "Administration des langues"
+
+msgid "description_i18nize_document"
+msgstr "Ce formulaire vous permet de convertir votre objet en un objet multilingue."
+
+msgid "help_i18nize_document"
+msgstr "Sélectionnez une langue dans la liste ci-dessous. Elle détermine la langue initiale de votre objet."
+
+msgid "label_language"
+msgstr "Langue"
+
+msgid "Convert"
+msgstr "Convertir"
+
+msgid "description_i18n_document"
+msgstr "Ce formulaire vous permet d'administrer les langues d'un objet."
+
+msgid "Add"
+msgstr "Ajouter"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Select all items"
+msgstr "Sélectionnez tous les éléments"
+
+msgid "listingheader_title"
+msgstr "Titre"
+
+msgid "listingheader_size"
+msgstr "Taille"
+
+msgid "listingheader_modified"
+msgstr "Modifié"
+
+msgid "listingheader_status"
+msgstr "Etat"
+
+msgid "listingheader_language"
+msgstr "Langue"
+
+msgid "description_i18n_to_simple_document"
+msgstr "Sélectionnez une langue dans la liste ci-dessous. Elle détermine la langue de votre objet multilingue qui sera préservée après conversion en objet simple. Les autres langues seront détruites."
