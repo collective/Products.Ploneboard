@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.39 2004/02/28 18:19:49 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.40 2004/03/05 21:03:36 zopezen Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ from exceptions import RuntimeError
 from zLOG import LOG
 
 try:
-    from packman.pip import not_installed, hot_plug
+    from zpi.zope import not_installed, hot_plug
     #print 'Packman support(hotplug) installed'
 except ImportError:
     def not_installed(s): return []
@@ -80,7 +80,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
 
-    
+
         for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
             if productname in self.Control_Panel.Products.objectIds():
                 productInCP = self.Control_Panel.Products[productname]
@@ -163,33 +163,33 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             prodpath=self.Control_Panel.Products._getOb(p).home
         except AttributeError:
             return None
-        
+
         #now list the directory to get the readme.txt case-insensitive
         try:
             files=os.listdir(prodpath)
         except OSError:
             return None
-        
+
         for f in files:
             if f.lower()==fname:
                 return open(os.path.join(prodpath,f)).read()
-        
+
         return None
-        
+
     security.declareProtected(ManagePortal, 'getProductReadme')
     getProductReadme=getProductFile
 
     security.declareProtected(ManagePortal, 'getProductVersion')
     def getProductVersion(self,p):
         ''' returns the version string stored in version.txt'''
-        
+
         res = self.getProductFile(p,'version.txt')
         if res is not None:
             res=res.strip()
-            
+
         return res
 
-    
+
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name '''
@@ -199,7 +199,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             msg='this product is already installed, please uninstall before reinstalling it'
             prod.log(msg)
             return msg
-        
+
         if p in not_installed(self):
             hot_plug(self, p)
 
@@ -209,7 +209,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portal_workflow=getToolByName(self,'portal_workflow')
         portal=getToolByName(self,'portal_url').getPortalObject()
         type_registry=getToolByName(self,'content_type_registry')
-        
+
         leftslotsbefore=getattr(portal,'left_slots',[])
         rightslotsbefore=getattr(portal,'right_slots',[])
         registrypredicatesbefore=[pred[0] for pred in type_registry.listPredicates()]
@@ -230,14 +230,14 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         if swallowExceptions:
             get_transaction().commit(1) #start a subtransaction, commit what has happened so far
         try:
-                
+
             res=install()
             status='installed'
             error=0
             if swallowExceptions:
                 get_transaction().commit(1)
         except InvalidObjectReference,e:
-            raise 
+            raise
         except:
             tb=sys.exc_info()
             if str(tb[1]).endswith('already in use.'):
@@ -251,7 +251,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
             # Try to avoid reference
             del tb
-            
+
             if swallowExceptions:
                 get_transaction().abort(1)   #this is very naughty
             else:
@@ -292,7 +292,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                                     status=status,error=error,locked=locked,hidden=hidden)
                 self._setObject(p,ip)
         except InvalidObjectReference,e:
-            raise 
+            raise
         except:
             tb=sys.exc_info()
             res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
@@ -300,7 +300,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
             # Try to avoid reference
             del tb
-            
+
             if swallowExceptions:
                 get_transaction().abort(1)   #this is very naughty
             else:
@@ -325,7 +325,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 if r:
                     r += str(r)+'\n'
             except InvalidObjectReference,e:
-                raise 
+                raise
             except Exception,e:
                 ok=0
                 if stoponerror:
@@ -378,12 +378,12 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         ''' removes a list of products '''
         if type(products) in (type(''),type(u'')):
             products=[products]
-            
+
         #only delete everything EXCEPT portalobjects (tools etc) for reinstall
         cascade=[c for c in InstalledProduct.default_cascade if c != 'portalobjects']
         self.uninstallProducts(products,cascade)
         self.installProducts(products,stoponerror=1)
-        
+
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 
