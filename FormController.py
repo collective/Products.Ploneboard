@@ -151,7 +151,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     security.declareProtected(ManagePortal, 'manage_addFormValidators')
     def manage_addFormValidators(self, REQUEST):
         """Process form validator add form"""
-        self._addFormValidators(self, self.validators, REQUEST)
+        self._addFormValidators(self.validators, REQUEST)
         return REQUEST.RESPONSE.redirect(self.absolute_url()+'/manage_formValidatorsForm')
 
 
