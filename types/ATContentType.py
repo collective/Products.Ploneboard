@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.18 2004/06/17 23:22:30 tiran Exp $
+$Id: ATContentType.py,v 1.19 2004/06/18 12:05:40 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -248,7 +248,7 @@ InitializeClass(ATCTFileContent)
 class ATCTFolder(ATCTMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""
 
-    __implements__ = BaseFolder.__implements__, ATCTFolderMixin.__implements__ 
+    __implements__ = BaseFolder.__implements__, ATCTMixin.__implements__ 
     
     security       = ClassSecurityInfo()
     
@@ -271,11 +271,11 @@ class ATCTFolder(ATCTMixin, BaseFolder):
 InitializeClass(ATCTFolder)
 
 
-class ATCTOrderedFolder(ATCTFolderMixin, OrderedBaseFolder):
+class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
     """Base class for orderable folderish AT Content Types"""
 
     __implements__ = OrderedBaseFolder.__implements__, \
-                     ATCTFolderMixin.__implements__
+                     ATCTMixin.__implements__
     
     security       = ClassSecurityInfo()
 
@@ -298,11 +298,11 @@ class ATCTOrderedFolder(ATCTFolderMixin, OrderedBaseFolder):
 InitializeClass(ATCTOrderedFolder)
 
 
-class ATCTBTreeFolder(ATCTFolderMixin, BaseBTreeFolder):
+class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
     """Base class for folderish AT Content Types using a BTree"""
 
     __implements__ = BaseBTreeFolder.__implements__, \
-                     ATCTFolderMixin.__implements__
+                     ATCTMixin.__implements__
     
     security       = ClassSecurityInfo()
 
