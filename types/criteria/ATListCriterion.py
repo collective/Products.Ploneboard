@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATListCriterion.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATListCriterion.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -71,11 +71,10 @@ schema = ATBaseCriterionSchema + Schema((
 class ATListCriterion(ATBaseCriterion):
     """A list criterion"""
 
-    security = ClassSecurityInfo()
-    
-    schema = schema
-    meta_type = "AT List Criterion"
-    archetype_name = "AT List Criterion"            
+    security       = ClassSecurityInfo()
+    schema         = schema
+    meta_type      = 'ATListCriterion'
+    archetype_name = 'AT List Criterion'
     
     def getCriteriaItems(self):
         # filter out empty strings

@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATBaseCriterion.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATBaseCriterion.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -72,8 +72,8 @@ class ATBaseCriterion(BaseContentMixin):
     security = ClassSecurityInfo()
     
     schema = ATBaseCriterionSchema
-    meta_type = "AT Base Criterion"
-    archetype_name = "Base Criterion"            
+    meta_type = 'ATBaseCriterion'
+    archetype_name = 'Base Criterion'
     global_allow = 0
     
     def __init__(self, id, field=None):
@@ -94,9 +94,14 @@ class ATBaseCriterion(BaseContentMixin):
         """get the objects id"""
         return str(self.id)
 
+    def setId(self, value, *kw):
+        """setting a new ID isn't allowed
+        """
+        assert value == self.getId(), 'You are not allowed to change the id'
+
     security.declareProtected(CMFCorePermissions.View, 'Type')
     def Type(self):
-        return self.archetype_type
+        return self.archetype_name
 
     security.declareProtected(CMFCorePermissions.View, 'Description')
     def Description(self):

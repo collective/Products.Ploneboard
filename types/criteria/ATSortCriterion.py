@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATSortCriterion.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATSortCriterion.py,v 1.2 2004/03/13 19:14:04 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -51,12 +51,11 @@ schema = ATBaseCriterionSchema + Schema((
 class ATSortCriterion(ATBaseCriterion):
     """A simple string criterion"""
 
-    security = ClassSecurityInfo()
-    
-    schema = schema
-    meta_type = "AT Sort Criterion"
-    archetype_name = "AT Sort Criterion"            
-    
+    security       = ClassSecurityInfo()
+    schema         = schema
+    meta_type      = 'ATSortCriterion'
+    archetype_name = 'AT Sort Criterion'
+
     def getCriteriaItems(self):
         result = [('sort_on', self.Field())]
 

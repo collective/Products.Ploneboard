@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATDateCriteria.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATDateCriteria.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -108,11 +108,10 @@ schema = ATBaseCriterionSchema + Schema((
 class ATDateCriteria(ATBaseCriterion):
     """A date criteria"""
 
-    security = ClassSecurityInfo()
-    
-    schema = schema
-    meta_type = "AT Friendly Date Criteria"
-    archetype_name = "AT Friendly Date Criteria"
+    security       = ClassSecurityInfo()
+    schema         = schema
+    meta_type      = 'ATFriendlyDateCriteria'
+    archetype_name = 'AT Friendly Date Criteria'
     
     security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):

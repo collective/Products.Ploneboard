@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATSimpleIntCriterion.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATSimpleIntCriterion.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -53,12 +53,11 @@ schema = ATBaseCriterionSchema + Schema((
 class ATSimpleIntCriterion(ATBaseCriterion):
     """A simple int criterion"""
 
-    security = ClassSecurityInfo()
-    
-    schema = schema
-    meta_type = "AT Simple Int Criterion"
-    archetype_name = "AT Simple Int Criterion"            
-    
+    security       = ClassSecurityInfo()
+    schema         = schema
+    meta_type      = 'ATSimpleIntCriterion'
+    archetype_name = 'AT Simple Int Criterion'
+
     def getCriteriaItems(self):
         result = []
 

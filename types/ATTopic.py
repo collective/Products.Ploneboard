@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATTopic.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -149,7 +149,6 @@ class ATTopic(BaseFolderMixin):
         for criterion in criteria:
             for key, value in criterion.getCriteriaItems():
                 result[key] = value
-
         return result
 
     security.declareProtected(CMFCorePermissions.View, 'queryCatalog')
@@ -159,9 +158,10 @@ class ATTopic(BaseFolderMixin):
         """
         q = self.buildQuery()
         if q is None:
-            # no topics found
+            # empty query - do not show anything
             return []
         kw.update( q )
+        print kw
         pcatalog = getToolByName( self, 'portal_catalog' )
         return pcatalog.searchResults(REQUEST, **kw)
 
