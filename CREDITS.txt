@@ -1,0 +1,9 @@
+**Helge Tesdal** -- *code, idea, architecture*
+
+**Ruslan Spivak** -- *code*
+
+**Alexander Limi** -- *user interface*
+
+**Vidar Andersen** -- *icons*
+
+**Kapil Thangavelu** -- *initial architecture*

@@ -1,0 +1,91 @@
+/* 
+** Ploneboard style sheet for CSS2-capable browsers.
+** Copyright Alexander Limi, 2003 - http://limi.net
+** Feel free to use whole or parts of this for your own designs, but give credit
+** where credit is due.
+**
+*/
+
+/* <dtml-with stylesheet_properties> */
+
+div.boardHeader{
+    
+}
+
+div.boardForumListing {
+    border: &dtml-boxBorder;;
+    border-style: solid solid none solid;
+}
+
+div.boardForumEntry {
+    border: &dtml-boxBorder;;
+    border-style: none none solid none;
+    clear: both;
+}
+
+div.boardForumEntry a {
+    display: block;
+    margin-left: 5px;
+}
+
+div.boardForumEntry a:hover {
+    border: 5px solid #FFA500 ! important;
+    border-style: none none none solid;
+    margin-left: 0;
+}
+
+/* Insane IE bug here - the Title needs to be non-floated, and the others floated
+   right if you want the whole block to act as a link. If not, you can only click
+   the text. -- limi
+ */
+
+div.boardForumEntry a.title {
+    width: 70%;
+    padding: 0.5em 2%;
+}
+
+div.boardForumEntry a.lastPost {
+    border: &dtml-boxBorder;;
+    border-style: none none none dashed;
+    float: right;
+    width: 18%;
+    text-align: center;
+    padding: 0.5em 2%;
+}
+
+
+/* Conversation Wrapper */
+
+div.boardConversation {
+    border: &dtml-boxBorder;;
+    border-style: solid solid none solid;
+}
+
+/* the Message classes */
+
+div.boardMessage {
+}
+
+div.boardMessageDetails {
+    border: &dtml-boxBorder;;
+    border-style: none none solid none;
+    background-color: &dtml-boxHeaderBackground;;
+    padding: 0.5em 1em;
+}
+
+div.boardMessageBody {
+    padding: 0.5em 1em;
+}
+
+div.boardMessageActions {
+    padding: 0.5em 1em;
+    border: &dtml-boxBorder;;
+    border-style: none none solid none;
+}
+
+span.boardMessagePortrait {
+    float: right; 
+    clear: both;
+}
+
+/* </dtml-with> */

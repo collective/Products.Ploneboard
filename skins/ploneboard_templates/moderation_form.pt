@@ -1,0 +1,137 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<head>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+
+    <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="" tal:attributes="src here/vcXMLRPC.js/absolute_url"></script>
+    <script type="text/javascript" src="" tal:attributes="src here/moderation.js/absolute_url"></script>
+    </metal:js>
+</head>
+
+<body>
+
+    <div metal:fill-slot="main"
+         tal:define="results here/moderation_search;
+                     DateTime python:modules['DateTime'].DateTime;">
+
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
+
+        <h1 tal:content="here/Title">Conversation title</h1>
+        
+        <!-- Search results -->
+        
+        <div tal:condition="results">
+        
+            <p>Moderation</p>
+            
+            <p>
+                <a href="#"
+                   tal:condition="python: here.portal_type in ('Forum', 'Conversation', 'Message')"
+                   tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
+                   tal:content="here/aq_inner/aq_parent/Title">Up</a>
+            </p>
+
+            <metal:block tal:repeat="result results">
+            <div class="even"
+                 id="#"
+                 tal:define="oddrow repeat/result/odd;
+                             resultid string:seqno${repeat/result/number};
+                             resulturl string:${result/absolute_url}/${template/id};" 
+                 tal:attributes="class python:test(oddrow, 'even', 'odd');
+                                 id resultid;" >
+
+
+                <div tal:condition="python: result.portal_type == 'Forum';">
+                    <a href="#"
+                       tal:attributes="href resulturl">
+                        <img src="#" 
+                         height="16"
+                         width="16"
+                         alt=""
+                         tal:on-error="structure python:path('here/linkOpaque.gif')"
+                         tal:replace="structure python:path('here/%s' % result.getIcon())" 
+                         /></a>
+                    <a href="#"
+                       tal:attributes="href resulturl"
+                       tal:content="result/Title" />
+                    - <tal:count replace="python: here.moderation_count_search(result)" /> 
+                    messages in queue.
+                </div>
+
+                <div tal:condition="python: result.portal_type == 'Conversation'">
+                    <a href="#"
+                       tal:attributes="href resulturl">
+                        <img src="#" 
+                         height="16"
+                         width="16"
+                         alt=""
+                         tal:on-error="structure python:path('here/linkOpaque.gif')"
+                         tal:replace="structure python:path('here/%s' % result.getIcon())" 
+                         /></a>
+                    <a href="#"
+                       tal:attributes="href resulturl"
+                       tal:content="result/Title" />
+                    - <tal:count replace="python: here.moderation_count_search(result)" /> 
+                    messages in queue.
+                </div>
+
+                <div tal:condition="python: result.portal_type == 'Message'">
+                    <a href="#" 
+                       tal:attributes="href resulturl">
+                        <img src="#" 
+                             height="16"
+                             width="16"
+                             alt=""
+                         tal:on-error="structure python:path('here/linkOpaque.gif')"
+                             tal:replace="structure python:path('here/%s' % result.getIcon())" /></a>
+                    <a href="#" tal:attributes="href resulturl"
+                       tal:content="python:result.Title() or result.getId()" />
+
+                    <div tal:content="result/Creator">Author</div>
+                    <div tal:content="result/Description">Description</div>
+    
+                    <div>
+                        <!-- Iterate over workflow transitions and make a button for each -->
+                        <form class="group" onsubmit="return false;">
+                            <tal:transition repeat="transition python:here.portal_workflow.getTransitionsFor(result, here)">
+                                <input class="context"
+                                       type="submit" 
+                                       value="#" 
+                                       name="#"
+                                       tabindex=""
+                                       onclick="#"
+                                       i18n:attributes="value"
+                                       tal:define="hId here/getId"
+                                       tal:attributes="onclick python:'moderate(\'%s\', \'%s\', \'%s\')' % ('/'.join(here.portal_url.getRelativeContentPath(result)), transition.get('id'), resultid);
+                                                       value transition/name;
+                                                       tabindex tabindex/next;" />
+                            </tal:transition>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </metal:block>
+        </div>
+
+        <div tal:condition="not:results">
+            <p>
+                There are no messages in the moderation queue.
+            </p>
+            <p>
+                <a href="#"
+                   tal:attributes="href here/getBoard/absolute_url"
+                   tal:content="here/aq_inner/aq_parent/Title">Up</a>
+            </p>
+        </div>
+
+    </div>                     
+
+</body>
+</html>

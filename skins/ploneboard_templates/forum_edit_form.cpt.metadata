@@ -1,0 +1,11 @@
+[default]
+title=Edit Forum
+
+[validators]
+validators..Save=validate_id, validate_forum_edit
+validators..Cancel=
+
+[actions]
+action.success..Save=traverse_to:string:forum_edit
+action.success..Cancel=redirect_to_action:string:view
+action.failure=traverse_to:string:forum_edit_form

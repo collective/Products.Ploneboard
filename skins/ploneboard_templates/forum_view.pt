@@ -1,0 +1,68 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<head>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+</head>
+
+<body>
+
+    <div metal:fill-slot="main"
+         tal:define="conversations here/getConversations">	
+
+        <h1 tal:content="here/Title">Board title</h1>
+
+        <div class="description"
+             tal:content="here/Description"> 
+        description
+        </div>
+        
+        <form tal:attributes="action string:${here/absolute_url}/portal_form/add_conversation_form">
+           <input class="standalone"
+                  type="submit" 
+                  value="Start a new Conversation" />
+        </form>
+
+        <div class="boardForumListing">
+
+            <tal:showconversations tal:repeat="conversation conversations">
+
+            
+            <div class="boardForumEntry">
+            
+                    <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                    <a class="lastPost" href="">
+                    <span tal:replace="python:here.toPloneboardTime(conversation.getLastMessageDate())">Thursday 13:21</span>
+                    <br /> 
+                    <em>by <span tal:replace="conversation/getLastMessageAuthor">lastauthor</span></em>
+                    </a>
+                    
+                    <a class="title" 
+                       href=""
+                       tal:attributes="href conversation/absolute_url">
+                    
+                        <img src="" 
+                             tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" />
+                        
+                        <span tal:replace="conversation/Title">This is a title</span>
+                        <br />
+                        <em>
+                        by <span tal:replace="conversation/Creator">This is a title</span>
+                        </em>
+                    </a>
+                    
+                </div>
+            
+            </tal:showconversations>
+
+        </div>
+
+    </div>
+                     
+</body>
+</html>

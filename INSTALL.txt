@@ -1,0 +1,27 @@
+Installing Ploneboard
+
+  To install Ploneboard, uncompress the product into
+  your zope/Products directory or link it there, e.g.::
+
+    ln -s /path/to/installation /path/to/zope/Products
+
+  In the root of your Plone site (within the ZMI):
+
+      1.  Add an external method to the root of the Plone site.
+
+      2.  Use the following configuration values for the external
+          method:
+
+          o id: install_ploneboard
+
+          o title: Install Ploneboard *optional*
+
+          o module name: Ploneboard.Install
+
+          o function name: install
+
+      3. Go to the management screen for the newly added external
+         method and click the 'Test' tab.  
+
+The manager should now be able to instantiate a Ploneboard from 
+within Plone.

@@ -1,0 +1,75 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<body>
+
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+
+    <div metal:fill-slot="main">
+
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
+
+        <h1 tal:content="here/Title">Conversation title</h1>
+
+        <div class="description"
+             tal:content="here/Description"> 
+        description
+        </div>
+
+        <div class="boardConversation">
+            <div class="boardMessage" 
+                 metal:define-macro="message">
+                 
+                <div class="boardMessageDetails">
+                <img src="" 
+                     tal:attributes="src string:${portal_url}/ploneboard_message_icon.gif" />
+                     Posted by 
+                     <span tal:replace="here/Creator">author</span> 
+                     at
+                     <span tal:replace="python:here.toPloneboardTime(here.creation_date)">Thursday 13:21</span>
+                </div>
+            
+                <div class="boardMessageBody">
+            
+                    <span class="boardMessagePortrait" 
+                          tal:define="home python:container.portal_membership.getHomeUrl(here.Creator(), verifyPermission=1);
+                                      portrait python: here.portal_membership.getPersonalPortrait(here.Creator());"> 
+                        <a href="#" tal:attributes="href home">                    
+                            <img src="defaultUser.gif" 
+                                 alt="" 
+                                 border="0" 
+                                 width="75" 
+                                 height="100" 
+                                 tal:attributes="src portrait/absolute_url" />
+                            <br />  
+                            <span tal:content="here/Creator"> member id</span>
+                        </a>
+                    </span>
+                    
+                    <span tal:content="here/getBody">Jeg mener mye rart.</span>
+                    
+                </div>
+                
+                <div style="border: 1px solid red;clear: right;">
+                ting
+                </div>
+                
+                <div class="boardMessageActions">
+                
+                    <form tal:attributes="action string:portal_form/add_message_form">
+                        <input class="standalone"
+                               type="submit" 
+                               value="Reply to this" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                     
+</body>
+</html>

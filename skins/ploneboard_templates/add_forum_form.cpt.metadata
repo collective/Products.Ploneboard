@@ -1,0 +1,11 @@
+[default]
+title=Add Forum
+
+[validators]
+validators..Save=validate_forum_edit
+validators..Cancel=
+
+[actions]
+action.success..Save=traverse_to:string:add_forum_script
+action.success..Cancel=redirect_to_action:string:view
+action.failure=traverse_to:string:add_forum_form

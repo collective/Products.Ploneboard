@@ -1,0 +1,71 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+</head>
+      
+<body>
+
+    <div metal:fill-slot="main">	
+
+        <h1 tal:content="here/Title">Board title</h1>
+
+        <div class="description"
+             tal:content="here/Description"> 
+        description
+        </div>
+        
+        <div class="boardForumListing">
+
+            <tal:showforums tal:define="forums here/getForums"
+                            tal:repeat="forum forums">
+
+            
+                <div class="boardForumEntry">
+                
+                        <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                        <a class="lastPost" href="">
+                        <span tal:replace="python:here.toPloneboardTime(forum.getLastMessageDate())">Thursday 13:21</span>
+                        <br /> 
+                        <em>by <span tal:replace="forum/getLastMessageAuthor">lastauthor</span></em>
+                        </a>
+                        
+                        <a class="title" 
+                           href=""
+                           tal:attributes="href forum/absolute_url">
+                        
+                            <img src="" 
+                                 tal:attributes="src string:${portal_url}/ploneboard_forum_icon.gif" />
+                            
+                            <span tal:replace="forum/Title">This is a title</span>
+                            <em>
+                            by <span tal:replace="forum/Creator">This is a title</span>
+                            -
+                            <metal:replace tal:replace="forum/getNumberOfConversations" /> conversations, 
+                            <metal:replace tal:replace="forum/getNumberOfMessages" /> messages.
+                            </em>
+
+                            <br />
+                            
+                            <span tal:replace="forum/Description" />
+                        </a>
+                        
+                    </div>
+
+            </tal:showforums>
+
+        </div>
+
+
+            
+    
+    </div>
+                     
+</body>
+</html>

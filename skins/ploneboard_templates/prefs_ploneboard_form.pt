@@ -1,0 +1,26 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+</head>
+      
+<body>
+
+    <div metal:fill-slot="main">	
+
+        <h1>Ploneboard configuration</h1>
+
+        <div class="description"> 
+        Here you can configure site settings for Ploneboard.
+        </div>
+        
+    </div>
+                     
+</body>
+</html>

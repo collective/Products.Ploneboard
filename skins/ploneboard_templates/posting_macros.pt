@@ -1,0 +1,178 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      i18n:domain="ploneboard">
+
+<body>
+
+    <div metal:define-macro="message_body_start">
+
+        <input type="hidden" name="form.submitted" value="1" />
+
+        <span class="legend" i18n:translate="legend_add_conversation">Details</span>    
+
+    </div>
+
+    <div metal:define-macro="message_body_title">
+
+        <div class="row"
+             tal:define="error_title errors/title|nothing;
+                         Title request/title | nothing"> 
+            <div class="label required">
+                <span i18n:translate="label_title">Title</span>
+                
+                <div id="title_help" 
+                     i18n:translate="help_title"
+                     class="help" 
+                     style="visibility:hidden">
+                Enter the title of the document.
+                </div>
+            </div>
+            
+            <div class="field"
+                  tal:attributes="class python:test(error_title, 'field error', 'field')" >
+
+                <div tal:condition="error_title"
+                     tal:replace="structure string:$error_title <br />" />
+
+                <input type="text" 
+                       name="title" 
+                       value="#" 
+                       size="40" 
+                       tabindex=""
+                       tal:attributes="value Title;
+                                       tabindex tabindex/next;" 
+                       onfocus="formtooltip('title_help',1)" 
+                       onblur="formtooltip('title_help',0)" 
+                       />
+
+            </div>
+        </div>
+
+    </div>
+
+    <div metal:define-macro="message_body_text">
+      
+        <div class="row"
+             tal:define="error_text errors/text|nothing;
+                         text python:request.get('text', '')"> 
+            <div class="label"> 
+                <span i18n:translate="label_body_text">Body text</span> 
+
+                <div id="body_help" 
+                     i18n:translate="help_body_text"
+                     class="help" 
+                     style="visibility:hidden">
+                The body text of the document. 
+                </div>
+            </div>
+            <div class="field"
+                  tal:attributes="class python:test(error_text, 'field error', 'field')" >
+
+                <div tal:condition="error_text"
+                     tal:replace="structure string:$error_text <br />" />
+
+                <textarea name="text" 
+                          tabindex=""
+                          tal:attributes="tabindex tabindex/next;"
+                          tal:content="text" 
+                          onfocus="formtooltip('body_help',1)" 
+                          onblur="formtooltip('body_help',0)" 
+                          />
+
+            </div>
+        </div>
+
+    </div>
+
+    <div metal:define-macro="message_body_buttons">
+
+        <div class="row">
+            <div class="label">&nbsp;</div>
+            <div class="field"> 
+                <input class="context" 
+                       tabindex=""
+                       type="submit" 
+                       name="form.button.Preview" 
+                       value="Preview" 
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next;" 
+                       /> 
+                <input class="context"
+                       tabindex=""
+                       type="submit"
+                       name="form.button.Cancel"
+                       value="Cancel"
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next"
+                       />
+            </div>
+        </div>
+        
+    </div>
+
+
+    <!-- Preview macros -->
+    <div metal:define-macro="message_preview_hidden_vars">
+        <input type="hidden"
+               name="title"
+               tal:condition="request/title | nothing"
+               tal:attributes="value request/title" 
+               />
+        <input type="hidden"
+               name="text"
+               tal:attributes="value python:request.get('text', '')" 
+               />
+    </div>
+
+
+    <div metal:define-macro="message_preview">
+
+        <h2 tal:condition="request/title | nothing"
+            tal:content="request/title">
+            Subject
+        </h2>
+
+        <div tal:define="nl2br python:modules['Products.PythonScripts.standard'].newline_to_br"
+             tal:content="structure python:nl2br(request.get('text', '(no text)'))">
+            Cooked Body
+        </div>
+
+    </div>
+
+
+    <div metal:define-macro="message_preview_buttons">
+
+        <div class="row">
+            <div class="label">&nbsp;</div>
+            <div class="field"> 
+                <input class="context" 
+                       tabindex=""
+                       type="submit" 
+                       name="form.button.Edit" 
+                       value="Edit" 
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next;" /> 
+
+                <input class="context" 
+                       tabindex=""
+                       type="submit" 
+                       name="form.button.Save" 
+                       value="Post" 
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next;" /> 
+
+                <input class="context"
+                       tabindex=""
+                       type="submit"
+                       name="form.button.Cancel"
+                       value="Cancel"
+                       i18n:attributes="value"
+                       tal:attributes="tabindex tabindex/next"
+                       />
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

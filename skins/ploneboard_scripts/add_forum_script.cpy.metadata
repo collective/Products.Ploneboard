@@ -1,0 +1,6 @@
+[validators]
+validators=validate_forum_edit
+
+[actions]
+action.failure=redirect_to:string:add_forum_form
+action.success=redirect_to_action:string:view
