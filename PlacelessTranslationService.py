@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.10 2004/01/27 23:07:57 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.11 2004/01/27 23:18:54 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -273,7 +273,7 @@ class PlacelessTranslationService(Folder):
         return l
 
     def translate(self, domain, msgid, mapping=None, context=None,
-                  target_language=None, default=None):
+                  target_language=None, default=None, as_unicode=False):
         """
         """
         from GettextMessageCatalog import translationRegistry, getMessage
@@ -313,7 +313,7 @@ class PlacelessTranslationService(Folder):
                 encodings = catalog._info.get('preferred-encodings', '').split()
                 if encodings:
                     context.pt_output_encoding.restrict(catalog, encodings)
-            else:
+            elif not as_unicode:
                 # ZPT probably
                 # ask HTTPResponse to encode it for us
                 text = context.RESPONSE._encode_unicode(text)
