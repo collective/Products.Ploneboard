@@ -8,56 +8,38 @@ from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 
 from Products.CMFDefault.Image import Image
-
-from Products.BTreeFolder2.CMFBTreeFolder import CMFBTreeFolder
-
+from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2
 import OFS.Image
+from Acquisition import aq_parent, aq_base
 
 from cStringIO import StringIO
 
 from BTrees.OOBTree import OOBTree
 
 factory_type_information = {
-    'id'             : 'Photo'
-    , 'meta_type'      : 'Portal Photo'
-    , 'description'    : 'Photos objects can be embedded in Portal documents.'
-    , 'icon'           : 'image_icon.gif'
-    , 'product'        : 'CMFPhoto'
-    , 'factory'        : 'addPhoto'
-    , 'immediate_view' : 'metadata_edit_form'
-    , 'actions'        :
-    ( { 'id'            : 'view'
-        , 'name'          : 'View'
-        , 'action'        : 'photo_view'
-        , 'permissions'   : (CMFCorePermissions.View, )
+    'id'             : 'Photo',
+    'meta_type'      : 'Photo',
+    'description'    : 'Photos objects can be embedded in Portal documents.',
+    'icon'           : 'image_icon.gif',
+    'product'        : 'CMFPhoto',
+    'factory'        : 'addPhoto',
+    'immediate_view' : 'metadata_edit_form',
+    'actions'        :
+    ( { 'id'            : 'view',
+        'name'          : 'View',
+        'action'        : '',
+        'permissions'   : (CMFCorePermissions.View, )
+        }, 
+      { 'id'            : 'edit',
+        'name'          : 'Properties',
+        'action'        : 'portal_form/image_edit_form',
+        'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
+        },
+      { 'id'            : 'metadata',
+        'name'          : 'Metadata',
+        'action'        : 'portal_form/metadata_edit_form',
+        'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
         }
-       ,{ 'id'            : 'settings' 
-          , 'name'          : 'Settings'
-          , 'action'        : 'portal_form/photo_settings_form'
-          , 'permissions'   :
-          (CMFCorePermissions.View,)
-          , 'category'      : 'object'
-          }
-      , { 'id'            : 'rotate'
-          , 'name'          : 'Rotate'
-          , 'action'        : 'portal_form/photo_rotate_form'
-          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-          }
-      , { 'id'            : 'edit'
-          , 'name'          : 'Edit'
-          , 'action'        : 'portal_form/image_edit_form'
-          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-          }
-      , { 'id'            : 'metadata'
-          , 'name'          : 'Metadata'
-          , 'action'        : 'portal_form/metadata_edit_form'
-          , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
-          }
-      , { 'id'            : 'exif'
-          , 'name'          : 'Exifdata'
-          , 'action'        : 'photo_exif_view'
-          , 'permissions'   : (CMFCorePermissions.View, )
-        }      
       )
     }
 
@@ -99,22 +81,17 @@ def addPhoto( self
     self._getOb(id).manage_upload(file)
 
 
-class Photo(Image, CMFBTreeFolder):
+class Photo(Image):
     """
     Implements a Photo, a scalable image
     """
 
-    __implements__ = ( Image.__implements__ ,)
-    
-    meta_type = 'Portal Photo'
 
-    displays = {'thumbnail': (128,128),
-                'xsmall': (200,200),
-                'small': (320,320),
-                'medium': (480,480),
-                'large': (768,768),
-                'xlarge': (1024,1024)
-                }
+    __implements__ = ( Image.__implements__ ,)
+
+    
+    meta_type = 'Photo'
+
 
     def __init__( self
                 , id
@@ -131,88 +108,53 @@ class Photo(Image, CMFBTreeFolder):
                 , language='en-US'
                 , rights=''
                 ):
-        CMFBTreeFolder.__init__(self, id)
         Image.__init__(self, id, title, file, content_type, precondition, 
                        subject, description, contributors, effective_date,
                        expiration_date, format, language, rights)
+        self._photos = OOBTree()
+
     
     security = ClassSecurityInfo()
 
 
+    displays = {'thumbnail': (128,128),
+                'xsmall': (200,200),
+                'small': (320,320),
+                'medium': (480,480),
+                'large': (768,768),
+                'xlarge': (1024,1024)
+                }
+
+
     security.declareProtected(CMFCorePermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE):
-        """
-        Display the image
-        """
-        size = REQUEST.get('display', '')
+    def index_html(self, REQUEST, RESPONSE, size=None):
+        """Return the image data."""
         if size in self.displays.keys():
-            if not size in self.keys():
-                self._setObject(size, OFS.Image.Image('Image', 'Image',
-                                                     self._resize(self.displays.get(size, (0, 0)))))
-            return self.get(size).index_html(REQUEST, RESPONSE)
-
-        return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
-
-
-    __call__ = index_html
-
-
-    security.declareProtected(CMFCorePermissions.View, 'get_size')
-    def get_size(self):
-        """Get the size of a file or image.
-
-        Returns the size of the file or image.
-        """
-        size = self.REQUEST.get('display', '')
-        photo = self.get(size)
-        if photo:
-            return photo.get_size()
-        else:
-            return 'N/A'
+            # Create resized copy, if it doesnt already exist
+            if not self._photos.has_key(size):
+                resolution = self.displays.get(size, (0,0))
+                raw = str(self.data)
+                image = OFS.Image.Image(size, size, self._resize(resolution))
+                self._photos[size] = image
         
-        return Image.get_size(self)
+            return self._photos[size].index_html(REQUEST, RESPONSE)
+
+        return Photo.inheritedAttribute('index_html')(self, REQUEST, RESPONSE)
+
+    def tag(self, size='original'):
+        """ Return an HTML img tag """
+        try:
+            photo = self._photos[size]
+        except KeyError:
+            photo = self
+
+        return '<img src="%s?size=%s" alt="%s" width="%s" height="%s" />' % (self.absolute_url(),
+                                                                             size,
+                                                                             self.title_or_id(),
+                                                                             photo.width,
+                                                                             photo.height)
 
 
-    security.declareProtected(CMFCorePermissions.View, 'getDisplays')
-    def getDisplays(self):
-        result = []
-
-        for name, size in self.displays.items():
-            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
-
-        return result
-    
-
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'rotate')
-    def rotate(self, degrees=0):
-        """Rotate photo"""
-        image = StringIO()
-        
-        if sys.platform == 'win32':
-            from win32pipe import popen2
-            imgin, imgout = popen2('convert -rotate %s - -'
-                               % (degrees,), 'b')
-        else:
-            from popen2 import Popen3
-            convert=Popen3('convert -rotate %s - -' % (degrees,))
-            imgout=convert.fromchild
-            imgin=convert.tochild
-
-        imgin.write(str(self.data))
-        imgin.close()
-        image.write(imgout.read())
-        imgout.close()
-
-	#Wait for process to close if unix. Should check returnvalue for wait
-	if sys.platform !='win32':
-            convert.wait()        
-
-        image.seek(0)
-        self.manage_upload(image)
-        for id in self.keys():
-            self._delObject(id)
-
-                    
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
         image = StringIO()
@@ -242,13 +184,7 @@ class Photo(Image, CMFBTreeFolder):
         image.seek(0)
         return image
 
-    def __bobo_traverse__(self, REQUEST, size):
-        if size in self.displays.keys() and size not in self.keys():
-            self._setObject(size, OFS.Image.Image('Image', 'Image',
-                                                  self._resize(self.displays.get(size, (0, 0)))))
 
-        return getattr(self, size, None)
-    
     security.declareProtected(CMFCorePermissions.View, 'get_exif')
     def get_exif(self):
         """
@@ -278,15 +214,6 @@ class Photo(Image, CMFBTreeFolder):
 		pass
         return result
 
-    contentIds = CMFBTreeFolder.contentIds
-    contentValues = CMFBTreeFolder.contentValues
-    contentItems = CMFBTreeFolder.contentValues
-    objectCount = CMFBTreeFolder.objectCount
-    hasObject = CMFBTreeFolder.hasObject
-    objectIds = CMFBTreeFolder.objectIds
-    objectValues = CMFBTreeFolder.objectValues
-    objectItems = CMFBTreeFolder.objectItems
 
-                  
 InitializeClass(Photo)
 
