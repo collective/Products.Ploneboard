@@ -2,7 +2,7 @@
 
 Test the ability to constrain types inside a folder
 
-$Id: testContrainTypes.py,v 1.3 2004/10/05 23:38:45 tiran Exp $
+$Id: testContrainTypes.py,v 1.4 2004/10/17 01:18:51 tiran Exp $
 """
 
 __author__ = 'Leonardo Almeida'
@@ -87,7 +87,7 @@ class TestConstrainTypes(PloneTestCase.PloneTestCase):
         af.invokeFactory('ATImage', id='anATImage')
         afi = af.anATImage # will bail if invokeFactory didn't work
         self.assertEquals(allowed_ids, ['ATImage'])
-        self.assertRaises(ValueError, af.invokeFactory,
+        self.assertRaises(Unauthorized, af.invokeFactory,
                           'ATDocument', id='anATDocument')
 
     def test_ftiInteraction(self):
@@ -134,11 +134,7 @@ class TestConstrainTypes(PloneTestCase.PloneTestCase):
         user = self.portal.portal_membership.getMemberById(default_user)
         newSecurityManager(None, user)
         af = self.portal.af
-        # should not raise ValueError
-        # XXX why? ValueError is right
-        #self.assertRaises(Unauthorized,
-        #                  af.invokeFactory, 'ATFolder', id='bf')
-        self.assertRaises(ValueError,
+        self.assertRaises(Unauthorized,
                           af.invokeFactory, 'ATFolder', id='bf')
 
 tests.append(TestConstrainTypes)
