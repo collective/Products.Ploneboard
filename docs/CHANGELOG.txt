@@ -1,3 +1,132 @@
+2004-06-27 18:39  tiran
+
+	* types/ATEvent.py: Fixed doc strings
+
+2004-06-27 18:38  tiran
+
+	* types/ATEvent.py: Added validation for end date must be after
+	  start date
+
+2004-06-27 18:31  tiran
+
+	* Extensions/: toolbox.py, utils.py: Fixed issues with content type
+	  registry and templates after switching
+
+2004-06-27 18:31  tiran
+
+	* ATContentTypes.py, __init__.py: Added a list of ATCT types to
+	  __init__
+
+2004-06-27 00:46  yenzenz
+
+	* types/ATContentType.py: make it possible to derive from ATCT's or
+	  to use ATCT as an API.  btw: tests are running fine here :)
+
+2004-06-24 23:56  tiran
+
+	* __init__.py, config.py, customconfig.py.example,
+	  Extensions/toolbox.py, Extensions/utils.py, types/schemata.py:
+	  Default type of ATDocument and ATNewsItem is configurable in
+	  customconfig.py
+
+2004-06-24 22:59  tiran
+
+	* migration/: Walker.py, common.py: Fixed migration for people
+	  without LinguaPlone
+
+2004-06-24 21:47  tiran
+
+	* docs/HISTORY.txt, migration/Migrator.py,
+	  tests/ATCTSiteTestCase.py, tests/common.py,
+	  tests/testATDocument.py, tests/testATEvent.py,
+	  tests/testATFavorite.py, tests/testATFile.py,
+	  tests/testATFolder.py, tests/testATImage.py, tests/testATLink.py,
+	  tests/testATNewsItem.py, types/ATContentType.py: fixed migration
+	  of mod date, fixed tests, moved field tests to site tests
+
+2004-06-24 12:59  tiran
+
+	* docs/HISTORY.txt: updated docs
+
+2004-06-24 12:50  tiran
+
+	* Extensions/toolbox.py: Reindex only Type, portal_type and
+	  meta_type in switching script
+
+2004-06-24 12:47  tiran
+
+	* types/ATContentType.py: Misc cleanup of ATContentType base
+	  classes
+
+2004-06-24 12:47  tiran
+
+	* config.py: Added - as valid char for ids
+
+2004-06-24 12:46  tiran
+
+	* migration/Walker.py: Fixed migration problem when LinguaPlone was
+	  installed
+
+2004-06-24 12:32  tiran
+
+	* migration/Walker.py: better migration error output
+
+2004-06-24 11:10  tiran
+
+	* types/schemata.py: Made ATImage and ATFile image/file language
+	  independend. We could add a I18NFile and I18NImage later if
+	  required (like Zope3 :)
+
+2004-06-24 01:53  tiran
+
+	* Extensions/toolbox.py, types/ATContentType.py: moved to new
+	  markCreationFlag changed klass.portal_type on switching#
+
+2004-06-20 20:45  tiran
+
+	* types/: ATContentType.py, ATEvent.py, ATFile.py, ATImage.py:
+	  fixed upload renaming including new validation
+
+2004-06-20 18:22  tiran
+
+	* Extensions/toolbox.py, docs/HISTORY.txt: Fix for Members folder
+
+2004-06-20 17:13  tiran
+
+	* CalendarSupport.py, HistoryAware.py, Validators.py, config.py,
+	  Extensions/Install.py, Extensions/toolbox.py,
+	  interfaces/IATDocument.py, interfaces/IATEvent.py,
+	  interfaces/IATFavorite.py, interfaces/IATFile.py,
+	  interfaces/IATFolder.py, interfaces/IATImage.py,
+	  interfaces/IATLink.py, interfaces/IATNewsItem.py,
+	  interfaces/IHistoryAware.py, migration/ATCTMigrator.py,
+	  migration/CPTMigrator.py, migration/Migrator.py,
+	  tests/ATCTSiteTestCase.py, types/ATFavorite.py, types/ATFile.py,
+	  types/ATFolder.py, types/ATImage.py, types/ATLink.py,
+	  types/ATNewsItem.py, types/schemata.py,
+	  types/criteria/ATBaseCriterion.py,
+	  types/criteria/ATDateCriteria.py,
+	  types/criteria/ATListCriterion.py,
+	  types/criteria/ATPortalTypeCriterion.py,
+	  types/criteria/ATSimpleIntCriterion.py,
+	  types/criteria/ATSimpleStringCriterion.py,
+	  types/criteria/ATSortCriterion.py: Removed unnecessary imports
+
+2004-06-20 16:06  tiran
+
+	* types/: ATContentType.py, ATFolder.py: Moved some Code from
+	  ATFolder to ATContentType Fixed problem with index_html in
+	  ATBTreeFolder
+
+2004-06-20 01:06  tiran
+
+	* types/ATContentType.py: disabled debugging
+
+2004-06-20 01:04  tiran
+
+	* version.txt, docs/CHANGELOG.txt, docs/HISTORY.txt,
+	  docs/INSTALL.txt: preparing 0.2beta6 release
+
 2004-06-20 00:47  tiran
 
 	* migration/Walker.py, types/ATContentType.py: better portal
