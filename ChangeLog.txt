@@ -1,3 +1,7 @@
+2003-12-16  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Fixed getPersonalPortrait in MembershipTool.py
+
 2003-12-11  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Fixed ownership of member objects after copy / rename

@@ -14,21 +14,22 @@ class MembershipTool( BaseTool ):
     def getPersonalPortrait(self, member_id=None, verifyPermission=0):
         """Returns the Portait for a member_id"""
         portal = getToolByName(self, 'portal_url').getPortalObject()
+        default_portrait = getattr(portal, self.default_portrait)
         if not member_id:
-            return getattr(portal, self.default_portrait)
+            return default_portrait
 
         memberdata_tool = getToolByName(self, 'portal_memberdata')
         member = None
         try:
             member = memberdata_tool.get(member_id)
             if verifyPermission and not _checkPermission(VIEW_PUBLIC_PERMISSION, member):
-                return None
-            #member = apply(member.accessor('portrait'), portrait)
-            return member.getPortrait()
+                return default_portrait
+            portrait = member.getPortrait()
+            if portrait:
+                return portrait
         except AttributeError:
-            member = getattr(portal, self.default_portrait)
-#            member = portal.restrictedTraverse(self.default_portrait)
-        return member
+            pass
+        return default_portrait
 
     def changeMemberPortrait(self, portrait, member_id=None):
         """Override Plone's changeMemberPortrait method to use
@@ -39,7 +40,6 @@ class MembershipTool( BaseTool ):
         member = memberdata_tool.get(member_id, None)
         if member:
             member.setPortrait(portrait)
-            #apply(member.mutator('portrait'), portrait)
 
 
     def searchForMembers( self, REQUEST=None, **kw ):
