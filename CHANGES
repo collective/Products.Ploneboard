@@ -6,6 +6,10 @@
     Other "preview" features will come later. Please read README and PloneFeaturePreview.py
     files for more explanations on these.
 
+  * Made manage_GRUFUsers page a little faster with LDAP by preventing users count.
+
+  * Fixed [ 1051387 ] addGroup fails if type 'Folder' is not implicitly addable.
+
 v3_1_1 - 20040906
 
   * Fixed a bug in getProperty() - it always returned None !

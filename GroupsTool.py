@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.33 2004/10/20 10:03:55 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.34 2004/11/16 12:03:59 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -329,8 +329,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
         if id and self.getGroupWorkspacesCreationFlag():
             if workspaces is None:
                 # add GroupWorkspaces folder
-
-                parent.invokeFactory(self.getGroupWorkspaceContainerType(), self.getGroupWorkspacesFolderId())
+                pt.constructContent(
+                    type_name = self.getGroupWorkspaceContainerType(),
+                    container = parent,
+                    id = self.getGroupWorkspacesFolderId(),
+                    )
                 workspaces = self.getGroupWorkspacesFolder()
                 workspaces.setTitle(self.getGroupWorkspacesFolderTitle())
                 workspaces.setDescription("Container for " + self.getGroupWorkspacesFolderId())
@@ -343,7 +346,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase, ):
 
             if workspaces is not None and not hasattr(workspaces, id):
                 # add workspace to GroupWorkspaces folder
-                workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
+                pt.constructContent(
+                    type_name = self.getGroupWorkspaceType(),
+                    container = workspaces,
+                    id = id,
+                    )
                 space = self.getGroupareaFolder(id)
                 space.setTitle("%s workspace" % id)
                 space.setDescription("Container for objects shared by this group")
