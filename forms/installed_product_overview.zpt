@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:omit-tag="">
+  <head tal:replace="nothing"><title></title></head>
+  <body tal:omit-tag="">
+    <h1 tal:replace="structure here/manage_page_header">Header</h1>
+
+    <h2 tal:define="manage_tabs_message request/manage_tabs_message | options/manage_tabs_message | nothing;
+                    management_view options/management_view|nothing"
+        tal:replace="structure here/manage_tabs">
+      Tabs
+    </h2>
+
+    <h3 tal:define="form_title string:Installed Product"
+        tal:replace="structure here/manage_form_title">
+      Form Title
+    </h3>
+
+    <table width="100%">
+      <tr valign="top">
+        <td width="50%">
+          <table width="100%">
+            <tr tal:repeat="entry python:[('Types','Types'),('Skins','Skins'),('Actions','Portal Actions'),('PortalObjects','Portal Objects'),('Workflows','Workflows'),('Slots','Portal Slots'),('RegistryPredicates','Content Type Registry entries')]">
+              <td tal:content="python:entry[1]"
+                  class="form-label"></td>
+                  <td width="100%"
+                      tal:define="method python: getattr(here,'get'+entry[0]);
+                                  num python: len(method())">
+                    <table tal:condition="python: num > 0">
+                      <tr tal:repeat="r python:method()">
+                        <td class="form-help"
+                            tal:content="r">entry</td>
+                      </tr>
+                    </table>
+                    <span tal:condition="python: num == 0"
+                          class="form-help">
+                      None
+                    </span>
+                  </td>
+            </tr>
+
+            <tr tal:condition="here/hasError">
+              <th> Error </th>
+              <td tal:condition="here/hasError">
+                <img src="/misc_/PageTemplates/exclamation.gif"
+                     />
+                <p class="form-help">
+                  There were Errors during install, check Transcript
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td class="form-label">
+                Status:
+              </td>
+              <td tal:content="here/getStatus"
+                  class="form-help">
+                status
+              </td>
+            </tr>
+            <tr>
+              <td class="form-label">
+                Contains Manual Uninstall:
+              </td>
+              <td tal:content="python: test(here.getUninstallMethod(), 'true', 'false')"
+                  class="form-help">
+                manual uninstall
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+    <hr />
+
+    <h3 tal:define="form_title string:Transcript"
+        tal:replace="structure here/manage_form_title">
+      Form Title
+    </h3>
+
+
+    <div class="form-mono"
+         tal:content="structure python:modules['Products.PythonScripts.standard'].newline_to_br(here.getTranscriptAsText())">
+    </div>
+
+  </body>
+</html>

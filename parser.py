@@ -10,7 +10,7 @@ class ActionParser:
 
         the name has be the name of the installed tool not the name from the module
         eg. portal_actions not ActionTool
-        
+
         <action_provider_name>
           name=Actionname
           id=Actionid
@@ -26,14 +26,14 @@ class ActionParser:
     you want to install.The names in front of = are the same as the parameters in addAction
     so be carefull in writing them.
     """
-    
+
     def __init__(self):
         self.data=[]
         self.lines=[]
         self.lineno=0
         self.start=0
         self.end=0
-        
+
     def parse(self,product_name):
         """parse the actions to a list consisting dictionaries with the action data"""
         os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
@@ -55,7 +55,7 @@ class ActionParser:
                     else:
                         action[item[0]]=item[1]
                 self.data.append({strip(self.lines[self.start])[1:-1]:action})
-            self.lineno=self.lineno+1                
+            self.lineno=self.lineno+1
 
     def get_data(self):
         return self.data
@@ -75,7 +75,7 @@ class PropertyParser:
           propertyname=propertyvalue1,propertyvalue2,propertyvalue3=list
           propertyname=1=boolean
         </tool_name>
-        
+
     Installing Properties over xml is the same as Creating them over
     ZMI choose a id choose a value and choose a type. The type name has be the same
     as the type name zmi.
@@ -87,7 +87,7 @@ class PropertyParser:
         self.lineno=0
         self.start=0
         self.end=0
-        
+
     def parse(self,product_name):
         """parse the properties to a list consisting dictionaries with the property data"""
         os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
@@ -95,7 +95,7 @@ class PropertyParser:
             self.lines=open('properties').readlines()
         except:
             return None
-        
+
         for line in self.lines:
             new_line=strip(line)
             if new_line.startswith('<') and not new_line.startswith('</'):
@@ -111,11 +111,11 @@ class PropertyParser:
                     else:
                         if len(item)>3:
                             property['value']='='.join(item[1:len(item)-1])
-                        else:    
+                        else:
                             property['value']=item[1]
                     property['type']=item[-1]
                     self.data.append({strip(self.lines[self.start])[1:-1]:property})
-            self.lineno=self.lineno+1                
+            self.lineno=self.lineno+1
 
     def get_data(self):
         return self.data

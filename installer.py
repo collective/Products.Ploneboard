@@ -2,7 +2,7 @@ from parser import ActionParser,PropertyParser
 from Products.CMFCore.utils import getToolByName
 from string import join
 
-class Installer:    
+class Installer:
 
     def install_actions(self,product_name,pobj):
         """Install actions to the specified tool"""
@@ -29,7 +29,7 @@ class Installer:
         else:
             res += 'There are no actions to create\n\n'
 
-        return res                
+        return res
 
     def uninstall_actions(self,product_name,pobj):
         """Install actions to the specified tool"""
@@ -54,8 +54,8 @@ class Installer:
         else:
             res += 'There are no actions to create\n\n'
 
-        return res                
-            
+        return res
+
     def install_properties(self,product_name,pobj):
         """Install properties to the specified tool"""
         res=''
@@ -74,10 +74,10 @@ class Installer:
                         res += property[tname]['id']+'already exists\n\n'
                 else:
                     res += tname +' does not exist\n\n'
-                    
+
         else:
             res += 'There are no properties to create\n\n'
-            
+
         return res
 
     def uninstall_properties(self,product_name,pobj):
@@ -97,10 +97,10 @@ class Installer:
                     else:
                         res += property[tname]['id']+'does not exist \n\n'
                 else:
-                    res += tname+' does not longer exist removing of '+action[tname]['name']+' is not possible\n\n'                    
+                    res += tname+' does not longer exist removing of '+action[tname]['name']+' is not possible\n\n'
         else:
             res += 'There are no properties to create\n\n'
-            
+
         return res
 
     def get_tool(self,pobj,tname):
