@@ -18,7 +18,8 @@ from Products.Archetypes.public import DisplayList, registerType
 from Products.Archetypes.public import BaseSchema, Schema
 from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import ReferenceField, ReferenceWidget
-from Products.Archetypes.Widget import StringField, SelectionWidget, 
+from Products.Archetypes.public import StringField, SelectionWidget
+from Products.Archetypes.Widget import TypesWidget
 from Products.Archetypes.Registry import registerWidget
 
 # possible types of bibliographic references from module 'CMFBibliographyAT'
@@ -26,7 +27,7 @@ from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 
 from config import LISTING_VALUES
 
-class BibrefListWidget(TypesWidget):
+class BibrefListWidget(BibrefListWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
