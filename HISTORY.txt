@@ -1,6 +1,6 @@
 V1.6.1
 
-  - I found a way to make ContentPanels content as plone portlet without modifying any code. See FAQ.txt
+  - ContentPanels content can be a plone portlet now. See FAQ.txt
 
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl
 

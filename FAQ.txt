@@ -32,4 +32,4 @@ You should reinstall CMFContentPanels.
    2. add a new lines property, with name left_slots or right_slots.
    3. add the contentpanels portlet:
 
-      here/my-contentpanels/contentpanels_view/macros/viewlet 
+      here/my-contentpanels/contentpanels_body
