@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.9 2004/06/24 10:50:17 tiran Exp $
+$Id: toolbox.py,v 1.10 2004/06/24 21:56:47 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -28,6 +28,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
     ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
 from Products.ATContentTypes.interfaces.IATImage import IATImage
+from Products.ATContentTypes.Extensions.utils import registerTemplatesForClass
 
 not_global_allow = ('Favorite', 'Large Plone Folder')
 
@@ -64,7 +65,7 @@ def recreateATImageScales(self):
 
     return out.getvalue()
 
-def _switchToATCT(pt, cat, reg, klass, out):
+def _switchToATCT(portal, pt, cat, reg, klass, out):
     """
     """
     atId = klass.__name__
@@ -84,6 +85,7 @@ def _switchToATCT(pt, cat, reg, klass, out):
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
+    registerTemplatesForClass(portal, klass, id)
     print >>out, '%s -> %s (%s)' % (atId, id, title)
 
     # adjust the content type registry
@@ -93,7 +95,7 @@ def _switchToATCT(pt, cat, reg, klass, out):
         if typ == atId:
             reg.assignTypeName(predid, id) 
 
-def _switchToCMF(pt, cat, reg, klass, out):
+def _switchToCMF(portal, pt, cat, reg, klass, out):
     """
     """
     atId = klass.__name__
@@ -106,6 +108,7 @@ def _switchToCMF(pt, cat, reg, klass, out):
     pt.manage_renameObject(id, atId)
     pt[atId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
+    registerTemplatesForClass(portal, klass, atId)
     print >>out, '%s -> %s (%s)' % (id, atId, atTitle)
 
     # rename to the new type (CMF -> original)
@@ -151,7 +154,7 @@ def switchCMF2ATCT(self):
     reg = getToolByName(self, 'content_type_registry')
     out = StringIO()
     for klass in atct_klasses:
-        _switchToATCT(pt, cat, reg, klass, out)
+        _switchToATCT(self, pt, cat, reg, klass, out)
     _fixLargePloneFolder(self)
     # XXX maybe we need to reindex only portal_type and meta_type
     #objects are recataloged in switching method
@@ -166,7 +169,7 @@ def switchATCT2CMF(self):
     reg = getToolByName(self, 'content_type_registry') 
     out = StringIO()
     for klass in atct_klasses:
-        _switchToCMF(pt, cat, reg, klass, out)
+        _switchToCMF(self, pt, cat, reg, klass, out)
     _fixLargePloneFolder(self)
     # XXX maybe we need to reindex only portal_type and meta_type
     #objects are recataloged in switching method

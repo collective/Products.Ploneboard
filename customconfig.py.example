@@ -21,7 +21,7 @@
 Copy customconfig.py.example to customconfig.py and change the values in the
 user options section below.
 
-$Id: customconfig.py.example,v 1.5 2004/06/17 23:22:29 tiran Exp $
+$Id: customconfig.py.example,v 1.6 2004/06/24 21:56:47 tiran Exp $
 """ 
 
 from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
@@ -78,4 +78,11 @@ HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 ## maximum upload size for ATImage and ATFile in MB. 0 is infinitiv
 MAX_FILE_SIZE = 0.0
 MAX_IMAGE_SIZE = 0.0
+
+## default content type für ATDocument and ATNewsItem
+# ATDOCUMENT_CONTENT_TYPE = 'text/plain'       # plain text
+# ATDOCUMENT_CONTENT_TYPE = 'text/plain-pre'   # plain text preformated
+# ATDOCUMENT_CONTENT_TYPE = 'text/structured'  # structured text
+# ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
+ATDOCUMENT_CONTENT_TYPE = 'text/restructured' # restructured text (reST)
 

@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.28 2004/06/24 10:47:18 tiran Exp $
+$Id: config.py,v 1.29 2004/06/24 21:56:47 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -85,6 +85,13 @@ HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 MAX_FILE_SIZE = 0.0
 MAX_IMAGE_SIZE = 0.0
 
+## default content type für ATDocument and ATNewsItem
+# ATDOCUMENT_CONTENT_TYPE = 'text/plain'       # plain text
+# ATDOCUMENT_CONTENT_TYPE = 'text/plain-pre'   # plain text preformated
+# ATDOCUMENT_CONTENT_TYPE = 'text/structured'  # structured text
+# ATDOCUMENT_CONTENT_TYPE = 'text/html'        # html
+ATDOCUMENT_CONTENT_TYPE = 'text/restructured' # restructured text (reST)
+
 ###############################################################################
 ## private options
 
@@ -96,7 +103,7 @@ GLOBALS = globals()
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
                  'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
                  'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE',
-                 )
+                 'ATDOCUMENT_CONTENT_TYPE', )
 
 ## using special plone 2 stuff?
 try:

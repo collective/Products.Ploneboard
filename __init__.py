@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.3 2004/04/10 16:31:09 tiran Exp $
+$Id: __init__.py,v 1.4 2004/06/24 21:56:47 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -42,8 +42,11 @@ else:
         if value:
             setattr(config, option, value)
     del config
-    
+
 from Products.ATContentTypes.config import *    
+
+print ENABLE_TEMPLATE_MIXIN
+
 import Products.ATContentTypes.migration
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion

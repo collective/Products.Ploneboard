@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.36 2004/06/24 09:10:12 tiran Exp $
+$Id: schemata.py,v 1.37 2004/06/24 21:56:48 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -94,7 +94,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
               primary = 1,
               validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
-              default_content_type = 'text/restructured',
+              default_content_type = ATDOCUMENT_CONTENT_TYPE,
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',
                                          'text/restructured',
@@ -333,7 +333,7 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
               primary = 1,
               validators = ('isTidyHtmlWithCleanup',),
               #validators = ('isTidyHtml',),
-              default_content_type = 'text/restructured',
+              default_content_type = ATDOCUMENT_CONTENT_TYPE,
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',
                                          'text/restructured',

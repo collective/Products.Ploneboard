@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: utils.py,v 1.3 2004/05/04 18:26:23 tiran Exp $
+$Id: utils.py,v 1.4 2004/06/24 21:56:47 tiran Exp $
 """ 
 
 __author__  = 'Christian Heimes'
@@ -110,21 +110,24 @@ def getFileExtOf(klass):
 def registerTemplates(self, typeInfo, out):
     """Registers templates in the archetypes tool
     """
-    atTool = getToolByName(self, 'archetype_tool')
     for t in typeInfo:
         klass          = t['klass']
-        meta_type      = klass.meta_type
-        default_view = getattr(klass, 'default_view', 'base_view')
-        suppl_views    = getattr(klass, 'suppl_views', ())
+        portal_type    = klass.portal_type
+        registerTemplatesForClass(self, klass, portal_type)
 
-        views = ['base_view',]
 
-        if default_view != 'base_view':
-            atTool.registerTemplate(default_view)
-            views.append(default_view)
+def registerTemplatesForClass(self, klass, portal_type):
+    atTool       = getToolByName(self, 'archetype_tool')
+    default_view = getattr(klass, 'default_view', 'base_view')
+    suppl_views  = getattr(klass, 'suppl_views', ())
+    views        = ['base_view',]
 
-        for view in suppl_views:
-            atTool.registerTemplate(view)
-            views.append(view)
+    if default_view != 'base_view':
+        atTool.registerTemplate(default_view)
+        views.append(default_view)
 
-        atTool.bindTemplate(meta_type, views)
+    for view in suppl_views:
+        atTool.registerTemplate(view)
+        views.append(view)
+
+    atTool.bindTemplate(portal_type, views)    
