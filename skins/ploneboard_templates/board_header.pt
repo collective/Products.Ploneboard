@@ -6,9 +6,9 @@
 <div metal:define-macro="header" tal:omit-tag="">	
 
     <h1 class="documentFirstHeading"
-        tal:content="here/getBoardTitle" 
         id="boardHeading">
-    Board Title
+        <img src="" tal:replace="structure here/ploneboard_icon.gif" />
+        <span tal:replace="here/getBoardTitle">Conversation title</span>
     </h1>
 
     <a href=""

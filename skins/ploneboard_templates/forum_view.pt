@@ -17,7 +17,10 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h2 tal:content="here/Title">Forum title</h2>
+        <h2>
+        <img src="" tal:replace="structure here/ploneboard_forum_icon.gif" />
+        <span tal:replace="here/Title">Forum title</span>
+        </h2>
 
         <div class="documentDescription"
              tal:content="here/Description"> 
