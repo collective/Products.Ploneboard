@@ -2,6 +2,8 @@ DCWorkflowGraph
 
     DCWorkflowGraph is a DCWorkflow graphic viewer now. It uses Graphviz. I want to make it a graphic editor for DCWorkflow, just like what OpenFlowEditor does.
 
+    DCWorkflowGraph is at "collective":http://sf.net/projects/collective.
+
 Require
 
     "Graphviz":http://www.graphviz.org

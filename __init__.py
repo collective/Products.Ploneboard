@@ -9,4 +9,4 @@ manage_workflowGraph._need__name__ = 0
 
 DCWorkflowDefinition.getGraph=getGraph
 DCWorkflowDefinition.manage_workflowGraph=manage_workflowGraph
-DCWorkflowDefinition.manage_options=tuple(DCWorkflowDefinition.manage_options)+({'label': 'graphic', 'action': 'manage_workflowGraph'},)
+DCWorkflowDefinition.manage_options=tuple(DCWorkflowDefinition.manage_options)+({'label': 'graph', 'action': 'manage_workflowGraph'},)
