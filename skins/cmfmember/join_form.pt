@@ -35,7 +35,6 @@
          possibility to have personalized content, and you will be able to add
          your own documents, images and files to the site.
          </p>
-         <p tal:content="python:str(errors)"/>
 
          <form class="group"
                name="edit_form"

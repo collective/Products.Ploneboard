@@ -58,7 +58,8 @@ class RegistrationTool( BaseTool ):
         """ Email a forgotten password to a member.
         o Raise an exception if user ID is not found.
         """
-        member = self.getMemberById(forgotten_userid)
+        membership_tool = getToolByName(self, 'portal_membership')
+        member = membership_tool.getMemberById(forgotten_userid)
 
         if member is None:
             raise 'NotFound', 'The username you entered could not be found.'

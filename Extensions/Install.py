@@ -193,7 +193,7 @@ def installPortalFactory(self, out):
                                          id='TempFolder', 
                                          typeinfo_name='CMFCore: Portal Folder')
     tempfolder = types_tool.TempFolder
-    tempfolder.content_meta_type='Temporary Folder'
+    tempfolder.content_meta_type='TempFolder'
     tempfolder.icon = 'folder_icon.gif'
     tempfolder.global_allow = 0  # make TempFolder not implicitly addable
     tempfolder.allowed_content_types=(types_tool.listContentTypes())

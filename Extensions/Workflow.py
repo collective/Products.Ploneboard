@@ -127,6 +127,7 @@ def setupWorkflow(portal, out):
         transitions=('make_private','disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Owner', 'Manager'))

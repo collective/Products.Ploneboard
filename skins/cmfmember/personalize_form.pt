@@ -39,8 +39,13 @@
                tal:attributes="action request/URL">
 	
             <span class="legend" i18n:translate="legend_personal_details">Personal Details</span>
+         <p tal:content="python:str(errors)"/>
 
+<!--            <p tal:content="python:str(here.getRolesInContext(here))"/>-->
             <tal:fields repeat="field python: schematas[fieldset].fields()">
+<!--               <b tal:content="python:field.name" /> <span tal:content="python:field.write_permission"/>
+                       <span tal:content="python:here.portal_membership.checkPermission(field.write_permission, here)"/>
+               <br/>-->
                <metal:fieldMacro use-macro="python: here.widget(field.name, mode='edit')"/>
             </tal:fields>
 
