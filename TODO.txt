@@ -1,0 +1,95 @@
+PloneBoard to-do list
+
+=================
+Package structure
+=================
+
+- Rename 'types' directory to 'content' or similar, to enable use of python
+    types (StringType etc.) in the root dir
+
+- Split up posting macros, as entire template is evaluated each time a macro is
+    used
+
+- Ensure conversations end up in portal_catalog
+
+======================
+Workflows and Security
+======================
+
+- Add more security declarations, use the board permissions.
+
+- Getting "not allowed to access getBoardTitle in this context" when trying to
+    use getBoardTitle in board_header
+
+- Various permission bugs (possibly fixed, need testing):
+
+    - One private forum in a board makes the whole board private (anon is 
+        prompted for login)
+    
+    - No difference between freeforall and memberposting - anon can't post in 
+        either
+    
+    - anon or member can't view a moderated forum
+    
+    - reviewer can view moderation-form but doesn't see action buttons to 
+        publish
+    
+    - if you reject a moderated post, it vanishes from the plone UI
+    
+    - as soon as a moderated forum contains a comment that was published, anon 
+        and member lose viewing rights 
+    
+      - Unauthorized - access to 'Creator' denied
+      
+    - No links to moderation-form or folder_contents (to delete a forum)
+    
+    - Can't edit posted comment (actually a feature, make sure it works if you 
+        change permissions)
+    
+    - A forum starts in 'freeforall' but if it's moderated or memberposting and 
+        you want to send it back, the action says 'anarchy'.
+
+================
+Template changes
+================
+
+- Enable threaded view, perhaps with TemplateMixin on board?
+
+- Create a single page showing all threads in a board, with all replies in a
+    tree view
+
+- "Up to" in board_header should list the name of the object above + type, like
+    "Back to developer forum"
+
+- Rename forum_view -> conversation_listing - it's actually a listing, not a
+    view
+
+- When creating a forum, it says unknown date (because forum date is last 
+    posting date), display something like 'no conversations' instead
+
+============
+i18n support
+============
+
+- Ensure i18n keys are used everywhere
+
+===========================
+Discussion tool integration
+===========================
+
+- Should be able to use Ploneboard for discussion on content items
+
+- Should have an aggregate page which shows all discussions going on in the
+    portal
+
+=====
+Tests
+=====
+
+- Refactor tests, use PloneTestCase
+
+===================
+Future/nice-to-have
+===================
+
+- Mail/news gateway (bye-bye gmane?)
