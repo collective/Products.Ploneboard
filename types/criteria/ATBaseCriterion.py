@@ -16,13 +16,15 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATBaseCriterion.py,v 1.3 2004/03/29 07:21:01 tiran Exp $
+$Id: ATBaseCriterion.py,v 1.4 2004/03/29 21:55:51 yenzenz Exp $
 """
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
+from Products.Archetypes.BaseContent import BaseContentMixin
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
