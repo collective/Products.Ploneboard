@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: utils.py,v 1.4 2004/06/24 21:56:47 tiran Exp $
+$Id: utils.py,v 1.5 2004/06/27 16:31:57 tiran Exp $
 """ 
 
 __author__  = 'Christian Heimes'
@@ -86,6 +86,16 @@ def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
     # move extension based rules to the top
     for name in moveTop:
         reg.reorderPredicate(name, 0)
+
+def fixMimeTypes(self, klass, portal_type):
+    reg = getToolByName(self, 'content_type_registry')
+    for mm_name, mm in getMajorMinorOf(klass):
+        if reg.getPredicate(mm_name):
+            reg.assignTypeName(mm_name, portal_type)
+    
+    ext_name, ext = getFileExtOf(klass)
+    if reg.getPredicate(ext_name):
+        reg.assignTypeName(ext_name, portal_type)
 
 def getMajorMinorOf(klass):
     """helper method for setupMimeTypes

@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.10 2004/06/24 21:56:47 tiran Exp $
+$Id: toolbox.py,v 1.11 2004/06/27 16:31:57 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -28,7 +28,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
     ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
 from Products.ATContentTypes.interfaces.IATImage import IATImage
-from Products.ATContentTypes.Extensions.utils import registerTemplatesForClass
+from Products.ATContentTypes.Extensions.utils import fixMimeTypes
+
+from Products.Archetypes import fixAfterRenameType
 
 not_global_allow = ('Favorite', 'Large Plone Folder')
 
@@ -85,7 +87,10 @@ def _switchToATCT(portal, pt, cat, reg, klass, out):
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
-    registerTemplatesForClass(portal, klass, id)
+    # fix some internal AT data after renaming
+    fixAfterRenameType(portal, atId, id)
+    # reassociate the content type registry predicates with the portal_type
+    fixMimeTypes(portal, klass, id)
     print >>out, '%s -> %s (%s)' % (atId, id, title)
 
     # adjust the content type registry
@@ -108,7 +113,10 @@ def _switchToCMF(portal, pt, cat, reg, klass, out):
     pt.manage_renameObject(id, atId)
     pt[atId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
-    registerTemplatesForClass(portal, klass, atId)
+    # fix some internal AT data after renaming
+    fixAfterRenameType(portal, id, atId)
+    # reassociate the content type registry predicates with the portal_type
+    fixMimeTypes(portal, klass, atId)
     print >>out, '%s -> %s (%s)' % (id, atId, atTitle)
 
     # rename to the new type (CMF -> original)
