@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.23 2004/06/13 00:06:05 tiran Exp $
+$Id: ATDocument.py,v 1.24 2004/07/04 22:09:48 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -174,21 +174,19 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """
         ATCTContent.manage_afterAdd(self, item, container)
 
-        field    = self.getField('text')
-        if hasattr(self, '_v_renamed'):
-            mimetype = field.getContentType(self)
-            del self._v_renamed
-        else:
-            mimetype = self.guessMimetypeOfText()
-
         # hook for mxTidy / isTidyHtmlWithCleanup validator
         tidyOutput = self.getTidyOutput(field)
-        if tidyOutput and mimetype:
-            field.set(self, tidyOutput, mimetype=mimetype)
-        elif tidyOutput:
-            field.set(self, tidyOutput)
-        elif mimetype:
-            self.setContentType(mimetype, skipField=False)
+        if tidyOutput:
+            field = self.getField('text')
+            if hasattr(self, '_v_renamed'):
+                mimetype = field.getContentType(self)
+                del self._v_renamed
+            else:
+                mimetype = self.guessMimetypeOfText()
+            if mimetype:
+                field.set(self, tidyOutput, mimetype=mimetype)
+            elif tidyOutput:
+                field.set(self, tidyOutput)
 
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, text_format, text, file='', safety_belt='', **kwargs):
