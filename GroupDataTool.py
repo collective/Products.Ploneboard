@@ -5,10 +5,10 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.3 2003/06/27 19:23:00 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.4 2003/07/20 02:47:10 bmh Exp $
 """
 
-from Products.CMFCore.utils import UniqueObject, getToolByName, _dtmldir
+from Products.CMFCore.utils import UniqueObject, getToolByName
 from OFS.SimpleItem import SimpleItem
 from OFS.PropertyManager import PropertyManager
 from Globals import DTMLFile
@@ -56,10 +56,10 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
     manage_options=( ActionProviderBase.manage_options +
                      ({ 'label' : 'Overview'
                        , 'action' : 'manage_overview'
-                       }
-                     , { 'label' : 'Contents'
-                       , 'action' : 'manage_showContents'
-                       }
+                       },
+#                     , { 'label' : 'Contents'
+#                       , 'action' : 'manage_showContents'
+#                       }
                      )
                    + PropertyManager.manage_options
                    + SimpleItem.manage_options
@@ -69,10 +69,10 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
     #   ZMI methods
     #
     security.declareProtected(ManagePortal, 'manage_overview')
-    manage_overview = DTMLFile( 'explainGroupDataTool', _dtmldir )
+    manage_overview = DTMLFile('dtml/explainGroupDataTool', globals())
 
-    security.declareProtected(ViewManagementScreens, 'manage_showContents')
-    manage_showContents = DTMLFile('groupdataContents', _dtmldir )
+    #security.declareProtected(ViewManagementScreens, 'manage_showContents')
+    #manage_showContents = DTMLFile('dtml/groupdataContents', globals())
 
 
     def __init__(self):

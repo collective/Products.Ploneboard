@@ -5,11 +5,11 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.5 2003/07/14 23:45:00 jccooper Exp $
+$Id: GroupsTool.py,v 1.6 2003/07/20 02:47:10 bmh Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore.utils import getToolByName, _dtmldir
+from Products.CMFCore.utils import getToolByName
 from OFS.SimpleItem import SimpleItem
 from Globals import InitializeClass, DTMLFile
 from Acquisition import aq_base
@@ -51,7 +51,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     #   ZMI methods
     #
     security.declareProtected(ManagePortal, 'manage_overview')
-    manage_overview = DTMLFile( 'explainMembershipTool', _dtmldir )
+    manage_overview = DTMLFile('dtml/explainGroupsTool', globals())
 
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
