@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
+$Id: Ploneboard.py,v 1.3 2004/03/15 01:58:41 limi Exp $
 """
 
 import Globals
@@ -35,12 +35,6 @@ factory_type_information = \
       , 'permissions'   : (ViewBoard,)
       , 'category'      : 'folder'
       }
-    , { 'id'            : 'home'
-      , 'name'          : 'Board Home'
-      , 'action'        : 'string:${object_url}/board_view'
-      , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'object'
-      }
     , { 'id'            : 'edit'
       , 'name'          : 'Edit'
       , 'action'        : 'string:${object_url}/board_edit_form'
@@ -51,7 +45,7 @@ factory_type_information = \
       , 'name'          : 'Add Forum'
       , 'action'        : 'string:${object_url}/add_forum_form'
       , 'permissions'   : (AddForum,)
-      , 'category'      : 'object'
+      , 'category'      : 'object_actions'
       }
     )
   },
