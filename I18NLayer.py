@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.15 2004/03/01 11:17:33 longsleep Exp $
+$Id: I18NLayer.py,v 1.16 2004/03/02 13:12:57 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.15 $"
+__version__ = "$Revision: 1.16 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -322,12 +322,14 @@ class I18NLayer( TitleLessBaseFolder ):
 
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setI18NLayerAttributes')
-    def setI18NLayerAttributes(self, id):
+    def setI18NLayerAttributes(self, id, ob=None):
         '''
-        stores required attributes to a given object (has to be subobject of myself)
+        stores required attributes to a given object
+        either to a subobject of myself or to ob
         '''
-        if not hasattr(aq_base(self),id): raise "AttributeError", id
-        ob=getattr(self,id)
+        if not ob:
+            if not hasattr(aq_base(self),id): raise "AttributeError", id
+            ob=getattr(self,id)
 
         if not _checkPermission(ModifyPortalContent, ob):
             raise "Unauthorized"
