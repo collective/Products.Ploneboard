@@ -43,6 +43,9 @@ class IQuickInstallerTool(Interface):
 
     def uninstallProducts( products, REQUEST=None):
         ''' removes a list of products '''
+
+    def reinstallProducts( products, REQUEST=None):
+        ''' reinstalls a list of products '''
         
 class IInstalledProduct(Interface):
     ''' represents the installed product 

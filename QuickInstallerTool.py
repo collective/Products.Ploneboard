@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.18 2003/10/05 14:03:15 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.19 2003/10/05 14:30:14 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -308,5 +308,14 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 
+    security.declareProtected(ManagePortal, 'uninstallProducts')
+    def reinstallProducts(self, products, REQUEST=None):
+        ''' removes a list of products '''
+
+        self.uninstallProducts(products)
+        self.installProducts(products)
+        
+        if REQUEST:
+            return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 
 InitializeClass( QuickInstallerTool )

@@ -19,7 +19,7 @@
     </form>
 
     <h2> installed products </h2>
-    <form action="uninstallProducts" method="POST">
+    <form action="uninstallProducts" tal:attributes="action here/absolute_url" method="POST">
     
         <table>
             <tr tal:repeat="product here/listInstalledProducts">
@@ -29,7 +29,8 @@
                 </td>
             </tr>
         </table>
-        <input type=submit i18n:attributes="value" value="Uninstall">
+        <input type=submit i18n:attributes="value" value="Uninstall" name="uninstallProducts:method">
+        <input type=submit i18n:attributes="value" value="Reinstall" name="reinstallProducts:method">
     </form>
 
 </div>
