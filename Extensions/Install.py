@@ -109,6 +109,10 @@ def replaceTools(self, out, convert=1):
             new_member = memberdata_tool.get(id)
             new_member._migrate(oldMemberData[id], ['portrait'], out)
             workflow_tool.doActionFor(new_member, 'migrate') # put member in registered state without sending registration mail
+            # change ownership for migrated member
+            new_member.changeOwnership(new_member.getUser(), 1)
+            new_member.manage_setLocalRoles(new_member.getUserName(), ['Owner'])
+            
 
 
     memberarea.allowed_content_types=(memberdata_tool.typeName,)
