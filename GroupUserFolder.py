@@ -379,8 +379,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
            original input password, unencrypted. The implementation of this
            method is responsible for performing any needed encryption."""
 
-        return self.Users.acl_users._doAddUser(name, password, 
-                                               roles, domains, **kw)
+        return self.Users.acl_users._doAddUser(
+            name,
+            password, 
+            roles,
+            domains,
+            **kw)
 
     def _doChangeUser(self, name, password, roles, domains, **kw):
         """Modify an existing user. This should be implemented by subclasses
@@ -404,11 +408,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def _doAddGroup(self, name, roles, **kw):
         """Create a new group. Password will be randomly created, and domain will be none"""
 
-        domains = ""
+        domains = ()
         password = ""
         for x in range(0, 10):  # Password will be 10 chars long
             password = "%s%s" % (password, random.choice(string.lowercase), )
-        return self.Users.acl_users._doAddUser(
+        return self.Groups.acl_users._doAddUser(
             name, password, roles, domains, **kw
             )
 
