@@ -1,4 +1,9 @@
-2003-12-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+2003-12-19  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Moved warning for actions / validators with unknown context types to
+     ControllerBase so that it is invoked only when metadata files are loaded.
+
+2003-12-16  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Added more descriptive error message for "No controller state available"
 

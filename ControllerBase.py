@@ -21,6 +21,7 @@ from Products.CMFCore.FSMetadata import FSMetadata, CMFConfigParser
 from FormAction import FormActionType, FormAction, FormActionContainer
 from FormValidator import FormValidator, FormValidatorContainer
 from globalVars import ANY_CONTEXT, ANY_BUTTON
+from utils import log
 
 class ControllerBase:
     """Common functions for objects controlled by portal_form_controller"""
@@ -240,6 +241,15 @@ class ControllerBase:
                 act = v.split(':',1)
                 while len(act) < 2:
                     act.append('')
+
+                context_type = component[2]
+                if controller:
+                    if not context_type in controller.listContextTypes():
+                        # Don't raise an exception because sometimes full list of
+                        # types may be unavailable (e.g. when moving a site)
+                        # raise ValueError, 'Illegal context type %s' % context_type
+                        log('Unknown context type %s for template %s' % (str(context_type), str(id)))
+
                 self.actions.set(FormAction(id, component[1], component[2], component[3], act[0], act[1], controller))
 
 
@@ -267,6 +277,15 @@ class ControllerBase:
                     component.append('')
                 if component[0] != 'validators':
                     raise ValueError, '%s: Format for .metadata validators is validators.CONTEXT_TYPE.BUTTON = LIST (not %s)' % (filepath, k)
+
+                context_type = component[1]
+                if controller:
+                    if not context_type in controller.listContextTypes():
+                        # Don't raise an exception because sometimes full list of
+                        # types may be unavailable (e.g. when moving a site)
+                        # raise ValueError, 'Illegal context type %s' % context_type
+                        log('Unknown context type %s for template %s' % (str(context_type), str(id)))
+
                 self.validators.set(FormValidator(id, component[1], component[2], v, controller))
 
     security.declarePublic('writableDefaults')

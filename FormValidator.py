@@ -24,15 +24,18 @@ class FormValidatorKey(Key):
                 if s:
                     raise ValueError, 'Illegal template id: %s' % s
 
-        if context_type:
-            if controller:
-                if not context_type in controller.listContextTypes():
-                    log('Unknown context type %s for template %s' % (str(context_type), str(object_id)))
-                    # Don't raise an exception because sometimes full list of
-                    # types may be unavailable (e.g. when moving a site)
-                    # raise ValueError, 'Illegal context type %s' % context_type
-                    raise ValueError, 'Illegal context type %s' % context_type
-        else:
+#        if context_type:
+#            if controller:
+#                if not context_type in controller.listContextTypes():
+#                    log('Unknown context type %s for template %s' % (str(context_type), str(object_id)))
+#                    # Don't raise an exception because sometimes full list of
+#                    # types may be unavailable (e.g. when moving a site)
+#                    # raise ValueError, 'Illegal context type %s' % context_type
+#                    raise ValueError, 'Illegal context type %s' % context_type
+#        else:
+#            context_type = ANY_CONTEXT
+
+        if not context_type:
             context_type = ANY_CONTEXT
 
         if button is not None:

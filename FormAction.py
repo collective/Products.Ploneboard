@@ -49,16 +49,19 @@ class FormActionKey(Key):
         if not status:
             raise ValueError, 'Illegal status %s' % (status)
 
-        if context_type:
-            if controller:
-                if not context_type in controller.listContextTypes():
-                    log('Unknown context type %s for template %s' % (str(context_type), str(object_id)))
-                    # Don't raise an exception because sometimes full list of
-                    # types may be unavailable (e.g. when moving a site)
-                    # raise ValueError, 'Illegal context type %s' % context_type
-        else:
-            context_type = ANY_CONTEXT
+#        if context_type:
+#            if controller:
+#                if not context_type in controller.listContextTypes():
+#                    log('Unknown context type %s for template %s' % (str(context_type), str(object_id)))
+#                    # Don't raise an exception because sometimes full list of
+#                    # types may be unavailable (e.g. when moving a site)
+#                    # raise ValueError, 'Illegal context type %s' % context_type
+#        else:
+#            context_type = ANY_CONTEXT
 
+        if not context_type:
+            context_type = ANY_CONTEXT
+            
         if button is not None:
             button = button.strip()
         if not button:
