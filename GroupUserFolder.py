@@ -331,7 +331,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security.declareProtected(Permissions.manage_users, "getGroups")
     def getGroups(self):
-        """Return a list of user-like objects belonging to groups"""
+        """
+        Return a list of user-like objects belonging to groups.
+        """
         ret = []
         for n in self.getGroupNames():
             ret.append(self.getGroup(n))
@@ -656,7 +658,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/12/16 16:16:00 $"[7:-2]
+        rev_date = "$Date: 2003/12/16 17:45:49 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 

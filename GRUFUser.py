@@ -416,7 +416,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.
-        return getattr(self.__dict__['__underlying__'], name, self.inheritedAttribute(GRUFUser, name))
+        ret = getattr(self.__dict__['__underlying__'], name)
+        return ret
 
     def __getitem__(self, name):
         # This will call the underlying object's methods
