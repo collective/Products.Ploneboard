@@ -33,7 +33,9 @@ and people can NOT access public information about the member
 
 LARGE SITES w/LOTS of MEMBERS:
 
-CMFMember uses a BTreeFolder to store the members in, so your
-site should be able to scale to many thousands of users with
-no issues (from the Member POV anyways ;) )  The default Zope
-user folder (acl_users) is NOT a BTreeFolder, so be aware.
+CMFMember uses a BTreeFolder to store the members in, so your site
+should be able to scale to many thousands of users with no issues
+(from the Member POV anyways ;) )
+
+WARNING: The default Zope user folder (acl_users) is NOT a
+BTreeFolder, so be aware.

@@ -15,9 +15,9 @@ default_user = CMFMemberTestCase.default_user
 _d = {'__ac_name': default_user,
       '__ac_password': 'secret'}
 
-allowed_types = ('Member', 'ZCatalog')
+allowed_types = ('Member',)
 
-class TestMemberDataContainer(ZopeTestCase.Functional, CMFMemberTestCase.CMFMemberTestCase):
+class TestMemberDataContainer(CMFMemberTestCase.CMFMemberTestCase):
 
     def afterSetUp(self):
         CMFMemberTestCase.CMFMemberTestCase.afterSetUp(self)
@@ -48,7 +48,8 @@ class TestMemberDataContainer(ZopeTestCase.Functional, CMFMemberTestCase.CMFMemb
 
         #delete the user in acl_users and check if we have one orphan
 
-        self.portal.acl_users.userFolderDelUsers((self.portal_user_info['id'],))
+        self.portal.acl_users.__class__.userFolderDelUsers(self.portal.acl_users,
+                                                           (self.portal_user_info['id'],))
         noMembers = self.memberdata.getMemberDataContents()[0]
         self.assertEqual(noMembers['orphan_count'], 1)
 
@@ -67,18 +68,21 @@ class TestMemberDataContainer(ZopeTestCase.Functional, CMFMemberTestCase.CMFMemb
         # check that everything is ok before we change
         self.assertEqual(list(self.memberdata.getAllowedMemberTypes()),
                         ['Member'])
+
         memberdataType = getToolByName(self.portal, 'portal_types').MemberDataContainer
         self.assertEqual(memberdataType.allowed_content_types, allowed_types)
 
         # change and compare to the type and local instance
         self.memberdata.setAllowedMemberTypes(('Member1','Member2',))
 
+        pt_allowed = self.portal.portal_types.MemberDataContainer.getProperty('allowed_content_types')
+
+        # check that portal_type is set
+        self.assertEqual(pt_allowed, ('Member1','Member2',))
+
         # check member types for instance 
         self.assertEqual(list(self.memberdata.getAllowedMemberTypes()),
                         ['Member1','Member2'])
-
-        # check member types for memberdata type 
-        self.assertEqual(memberdataType.allowed_content_types, allowed_types)
 
 class TestMemberData(CMFMemberTestCase.CMFMemberTestCase):
 

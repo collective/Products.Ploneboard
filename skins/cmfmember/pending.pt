@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="plone"
+      metal:use-macro="here/main_template/macros/master">
+<body>
+<div metal:fill-slot="main">
+
+<h1 i18n:translate="heading_welcome">Welcome!</h1>
+
+<p i18n:translate="description_pending_activation"> 
+As soon your registration is approved you will receive an email with instructions on how to activate your membership. 
+</p>
+
+</div>
+</body>
+</html>

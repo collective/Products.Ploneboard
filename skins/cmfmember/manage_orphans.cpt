@@ -1,4 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
 
@@ -18,9 +23,9 @@
         <p tal:define="mdcontents python:here.getMemberDataContents()[0];
                        member_count mdcontents/member_count;
                        orphan_count mdcontents/orphan_count;"
-             i18n:translate="XXX">
-          There are <span i18n:name="" tal:content="member_count" /> members and 
-          <span i18n:name="" tal:content="orphan_count" /> orphaned members (members with
+             i18n:translate="description_member_orphan_count">
+          There are <span i18n:name="member_count" tal:content="member_count" /> members and 
+          <span i18n:name="orphan_count" tal:content="orphan_count" /> orphaned members (members with
           missing User objects).
         </p>
 
@@ -44,7 +49,7 @@
                  />
         </div>
 
-      <p i18n:translate="XXX">When members are deleted, the content they own may end up with an
+      <p i18n:translate="description_deleted_members_orphan_content">When members are deleted, the content they own may end up with an
         invalid owner.  
         <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
           Click the button below to take ownership of orphaned content.

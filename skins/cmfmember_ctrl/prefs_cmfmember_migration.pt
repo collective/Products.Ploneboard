@@ -1,5 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
       lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="plone"
       metal:use-macro="here/prefs_main_template/macros/master">
 
 <body>
@@ -10,21 +15,13 @@
  <div class="configlet">
  <div class="documentEditable">    
 
-    <!-- simulating views on the groups/user pages until we have real objects. -->
-    <ul class="contentViews">
-        <li class="selected">
-        <a href=""
-        tal:attributes="href string:${template/id}"
-        i18n:translate="label_users">Migration</a>
-        </li>
+    <div metal:use-macro="here/global_contentviews/macros/content_views">
+                      The content views (View, Edit, Properties, Workflow)
+    </div>
 
-        <li class="">
-        <a href=""
-        tal:attributes="href string: prefs_cmfmember_import"
-        i18n:translate="label_groups">Import</a>
-        </li>
- 
-    </ul>
+    <div metal:use-macro="here/global_contentviews/macros/content_actions">
+                      The content bar
+    </div>
 
     <div class="documentContent">
 
@@ -55,16 +52,16 @@
     </p>
     <form action="upgrade" method="post">
        <fieldset>
-          <legend i18n:translate="">Normal migration</legend>
+          <legend i18n:translate="legen_normal_migration">Normal migration</legend>
 
           <div class="field">
-	    <label i18n:translate="">Dry run</label>
+	    <label i18n:translate="label_dry_run">Dry run</label>
 
-            <div i18n:translate=""
+            <div i18n:translate="help_dry_run"
                  class="formHelp">
 		 Print the result of the migration without actually writing anything to the database.
             </div>
-    	    <input name="dry_run" type="checkbox" checked value="1:int" />
+    	    <input name="dry_run" type="checkbox" value="1:int" checked="checked"/>
           </div>
         <div class="formControls">
 	  <input class="context" 
@@ -79,11 +76,11 @@
     
     <form action="upgrade">
        <fieldset>
-          <legend i18n:translate="">Forced migration</legend>
+          <legend i18n:translate="legend_forced_migration">Forced migration</legend>
           <div class="field">
-	    <label i18n:translate="">Upgrade from</label>
+	    <label i18n:translate="label_upgrade_from">Upgrade from</label>
 
-            <div i18n:translate=""
+            <div i18n:translate="help_upgrade_from_cmfmember"
                  class="formHelp">
 		 Please choose from which CMFMember version you are upgrading. This will force the migration procedure from that version. 
             </div>
@@ -95,13 +92,13 @@
           </div>
 
           <div class="field">
-	    <label i18n:translate="">Dry run</label>
+	    <label i18n:translate="label_dry_run">Dry run</label>
 
-            <div i18n:translate=""
+            <div i18n:translate="help_dry_run"
                  class="formHelp">
 		 Print the result of the migration without actually writing anything to the database.
             </div>
-    	    <input name="dry_run" type="checkbox" checked value="1:int" />
+    	    <input name="dry_run" type="checkbox" checked="checked" value="1:int" />
           </div>
         <div class="formControls">
 	  <input class="context" 

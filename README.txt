@@ -1,5 +1,5 @@
 CMFMember is a replacement for portal_memberdata that provides TTP
-(Through-The-Plone) user management. Members are ordinary Archetypes
+(Through-The-Plone) member management. Members are ordinary Archetypes
 (AT) objects that are controlled by workflow.  Member data can be
 expanded and configured via an AT schema (or via subclassing). For
 more about the goals of the project, please see GOALS.txt.
@@ -12,15 +12,32 @@ WARNINGS:
 
     - There is NO reverse migration, meaning once you migrate your
       existing Members to CMFMember types, there is no mechanism
-      provided for going back to "the way things were".  It is
-      HIGHLY RECOMMENDED that you back up, at the very least, your
-      Members, if not your entire Plone site before proceeding with
-      migration.
+      provided for going back to "the way things were".  It is HIGHLY
+      RECOMMENDED that you back up your entire Plone site before
+      proceeding with migration.
 
-    - We have provided a mechanism for migrating your extended
-      member data (properties defined in the memberdata tool) over
-      to an AT schema for your convenience.  We recommend you
-      check the be sure all of your fields went properly.
+    - We have provided a mechanism for migrating your extended member
+      data (properties defined in the memberdata tool) over to an AT
+      schema (using Archetype's VariableSchema support) for your
+      convenience.  This has NOT been heavily tested.  We STRONGLY
+      recommend you check to make sure all of your fields were migrated
+      properly.
+
+    - The VariableSchema support can be exposed through the ZMI by
+      changing the 'expose_var_schema' variable near the top of the
+      MemberDataContainer.py file to a non-zero value.  This will cause
+      a 'Schema' tab to appear in the MemberDataContainer's management
+      interface, and will allow for TTW editing of custom schema fields.
+      This will also give anyone with the "Manage properties" permission
+      the ability to run arbitrary code on the server, so please only
+      use this if you trust your managers completely.
+
+    - If you upgrade Archetypes out from under CMFMember, all of the
+      catalog associations disappear.  (To see these, go to the
+      archetype_tool, click the Catalog Tab and you'll see all of the
+      catalog associations. The way to avoid this is to install
+      CMFMember after getting Archetypes to where you want it.
+      (See Requirements section)
 
     - If you change the workflow that is associated with your Member
       type, your existing users will be set to the initial (default)
@@ -28,28 +45,33 @@ WARNINGS:
       about the workflow state is stored in the workflow itself.
       A recommended workaround is to write a quick script that
       captures the existing states, then, after your workflow change,
-      sets the Members to whatever state you map them to:
+      sets the Members to whatever state you map them to::
 
-      wf_map = {
-                'public':'public',
-                'private':'secret',
-                'new':'unregistered',
-               }
+       wf_map = {
+                 'public':'public',
+                 'private':'secret',
+                 'new':'unregistered',
+                }
 
-      user ID:   Old State:   New State:
-      ==========================================
-      user_1     public       wf_map['public']
-      user_2     private      wf_map['private']
-      user_3     new          wf_map['new']
+       user ID:   Old State:   New State:
+       ========   ==========   ==================
+       user_1     public       wf_map['public']
+       user_2     private      wf_map['private']
+       user_3     new          wf_map['new']
 
       or something like that...
 
 
 REQUIREMENTS:
 
-    - Archetypes 1.3
+    - Archetypes 1.3 from the release-1_3-branch, the upcoming
+      Archetypes1.3 release will be from this branch.  (NOTE: recent
+      iterations of the release-1_3-branch require the MimetypesRegistry
+      product to be installed separately.)
 
-    - CMFPlone 2.0-final
+    - Plone-2.0.1 or greater.  (Plone 2.0-final will NOT suffice,
+      there is a fix to MembershipTool's getMemberById() method that
+      is required to make the unit tests pass.)
 
 
 INSTALLATION:
@@ -57,7 +79,8 @@ INSTALLATION:
     1. Put CMFMember (and the Requirements) in your Zope Products directory.
 
     1a. Run the test suite.  This will require ZopeTestCase available from
-        Stefan Holek, who's testing technique is unstoppable:
+
+        Stefan Holek, whose testing technique is unstoppable:
 
         http://zope.org/Members/shh/ZopeTestCase
 
@@ -67,16 +90,17 @@ INSTALLATION:
 
     2. Restart Zope.
 
-    3. Install CMFMember using CMFQuickInstaller. (In Plone, select
-       "plone setup", click on "Add/Remove Products" and install
-       CMFMember.)  You can also use the portal_quickinstaller tool
-       from the ZMI to install the Product.
+    4. Install CMFMember into your Plone site using
+       CMFQuickInstaller. (In Plone, select "plone setup", click on
+       "Add/Remove Products" and install CMFMember.)  You can also use
+       the portal_quickinstaller tool from the ZMI to install the
+       Product.
 
-    4. Click on the CMFMember entry in in the navigation portlet. (The
+    5. Click on the CMFMember entry in in the navigation portlet. (The
        entry probably says something like "CMFMember out of date".)
        You can also use the cmfmember_control tool from the ZMI for this.
 
-    5. (SEE WARNING ABOVE) Click the "migrations" tab and migrate.
+    6. (SEE WARNING ABOVE) Click the "migrations" tab and migrate.
 
 
 WORKFLOWS:
@@ -85,35 +109,66 @@ WORKFLOWS:
 
         - member_auto_workflow (default)
 
-            This workflow works almost the same as the normal Plone
-            registration -- the member is registered on saving the
-            registration form and can immediately log into the site.
+          This workflow works almost the same as the normal Plone
+          registration -- the member is registered upon submission
+          of the registration form and can immediately log into the
+          site.
 
         - member_approval_workflow
 
-            The approval workflow forces the registration into an approval
-            process, much like the publication workflow for regular content.
-            The pending member cannot log in until a site manager approves
-            the registration.
+          The approval workflow forces the registration into an approval
+          process, much like the publication workflow for regular content.
+          The pending member cannot log in until a site manager approves
+          the registration.
 
     Feel free to build a custom workflow and associate it to the Member
-    Type!  This is why we built this thing ;)  If you do, be sure to review
+    Type! This is why we built this thing. ;)  If you do, be sure to review
     the warning section above.
 
 
 EXTENDING MEMBERS:
 
-    * More stuff about TTW schema and subclassing goes here
 
-    You can add custom memberdata to your Members by building a
-    schema that provides the custom dataset.  You will be able to
-    do this TTW when the TTW schema editor is complete :)  For now,
-    you can (after migrating), use the portal_memberdata tool to add
-    your custom schema.  In the ZMI, click on the portal_memberdata
-    tool, then click the "schema" tab and paste your completed schema
-    into there.  If you want a data point to be available when a new
-    member registers, add "regfield=1" to the schema for that
-    data point.
+    CMFMember allows you to customize the member data. You can customize
+    the data either using a TTW (through-the-web) schema editor, or by
+    creating an Archetypes module that subclasses CMFMember.Member.
+
+    Optional Field Attributes
+
+      CMFMember adds an optional attribute to the Archetypes Field
+      schema. This attribute allows CMFMember to present the member edit
+      form differently, depending on whether the register action has run yet.
+
+      **regfield** -- The 'regfield' attribute is used to mark fields that
+      should appear on the registration form. Fields must have
+      'regfield=1' in order to appear on the form.
+
+      Note that if a field is marked as required ('required=1') but not
+      marked as a regfield, it will not appear on the registration form.
+      In this case, validation will fail and the workflow will not trigger
+      the next state.
+
+
+    TTW Schema
+
+      There are plans underway to provide a full GUI TTW schema
+      editor.  For now, you can (after migrating), use the
+      portal_memberdata tool to add your custom schema fields.  In the
+      ZMI, click on the portal_memberdata tool, then click the
+      "schema" tab and paste your completed schema into there.  (Note
+      that your schema definition will be appended to the default
+      schema.)  If you want a data point to show up on the
+      registration form when a new member registers, add "regfield=1"
+      to the schema for that field.
+
+
+MAILING LIST:
+
+    Interested Users and Developers are welcome to join the
+    collective-cmfmember@lists.sourceforge.net mailing list, hosted on
+    SourceForge (duh) as part of the Collective project:
+
+    http://sf.net/projects/collective
 
 
 MAILING LIST:
@@ -126,23 +181,25 @@ MAILING LIST:
 
 BUGS:
 
-    Please report bugs (which are different from feature requests) to:
+
+    Please report bugs (which are different from feature requests) to
+    the following collector:
 
     http://plone.org/development/teams/developer/groups/issues
 
 
-FEATURES REQUESTS:
+FEATURE REQUESTS:
 
     In the spirit of Open Source, we suggest you write your new features
     to satisfy your particular Use Case yourself!  Cut a branch, work on
     your changes; we'll review them and merge them in if appropriate.
 
-    One thing we ask is that if you plan on writing new features, you keep
-    the entire community in mind, write your features as options, and use
-    "best practices" coding techniques.  We also ask that you write tests
-    for your code before it will be considered.  Open communication is key!
-    Join the #CMFMember channel on IRC, ask questions, let people know
-    what direction you want to take and you'll find friendly helpful people.
+    One thing we ask is that if you plan on writing new features, you
+    keep the entire community in mind, write your features as options,
+    and use "best practices" coding techniques.  We also ask that you
+    write tests for your code before it will be considered.  Open
+    communication is key!  Join the #cmfmember channel on IRC
+    (irc.freenode.net), ask questions, let people know what direction
+    you want to take and you'll find friendly helpful people.
 
-Thanks for using CMFMember, build with beer!
-
+Thanks for using CMFMember, built with beer!

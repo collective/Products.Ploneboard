@@ -5,13 +5,14 @@ if __name__ == '__main__':
 from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from Products.CMFMember.tests import CMFMemberTestCase
+from unittest import TestSuite, makeSuite
 
 """ test renaming a member """
 
 class TestRename(CMFMemberTestCase.CMFMemberTestCase):
-    
+
     def testRename(self):
-        # Test renaming of a member whose corresponding user lives in the 
+        # Test renaming of a member whose corresponding user lives in the
         # portal's acl_users
 
         self.createUserContent()
@@ -55,7 +56,7 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
         self.failUnless(folder1 != None)
         owner = folder1.getOwner(0)
         self.assertEqual(owner.getUserName(), user.getUserName())
-        
+
         doc1 = getattr(folder1, 'doc1', None)
         self.failUnless(doc1 != None)
         owner = doc1.getOwner(0)
@@ -71,17 +72,17 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
         self.failUnless(folder2 != None)
         owner = folder2.getOwner(0)
         self.assertEqual(owner.getUserName(), self.root_user.getUserName())
-        
+
         doc3 = getattr(folder2, 'doc3', None)
         self.failUnless(doc3 != None)
         owner = doc3.getOwner(0)
         self.assertEqual(owner.getUserName(), user.getUserName())
-        
+
         doc4 = getattr(folder2, 'doc4', None)
         self.failUnless(doc4 != None)
         owner = doc4.getOwner(0)
         self.assertEqual(owner.getUserName(), self.root_user.getUserName())
-        
+
         # make sure local roles get updated
         roles = folder1.get_local_roles_for_userid(self.root_user.getUserName())
         self.assertEqual(roles, ('Reviewer',))
@@ -94,10 +95,10 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
 
 
 
-    def xtestRenameRoot(self):
-        # Test renaming of a member whose corresponding user lives in the Zope 
+    def testRenameRoot(self):
+        # Test renaming of a member whose corresponding user lives in the Zope
         # root's acl_users
-        
+
         self.createUserContent()
         portal = self.portal
         old_id = self.root_user.getUserName()
@@ -147,7 +148,7 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
         self.failUnless(folder1 != None)
         owner = folder1.getOwner(0)
         self.assertEqual(owner.getUserName(), self.portal_user.getUserName())
-        
+
         doc1 = getattr(folder1, 'doc1', None)
         self.failUnless(doc1 != None)
         owner = doc1.getOwner(0)
@@ -163,17 +164,17 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
         self.failUnless(folder2 != None)
         owner = folder2.getOwner(0)
         self.assertEqual(owner.getUserName(), user.getUserName())
-        
+
         doc3 = getattr(folder2, 'doc3', None)
         self.failUnless(doc3 != None)
         owner = doc3.getOwner(0)
         self.assertEqual(owner.getUserName(), self.portal_user.getUserName())
-        
+
         doc4 = getattr(folder2, 'doc4', None)
         self.failUnless(doc4 != None)
         owner = doc4.getOwner(0)
         self.assertEqual(owner.getUserName(), user.getUserName())
-        
+
         # make sure local roles get updated
         roles = folder1.get_local_roles_for_userid(old_id)
         self.assertEqual(roles, ())
@@ -187,12 +188,12 @@ class TestRename(CMFMemberTestCase.CMFMemberTestCase):
         roles = folder2.get_local_roles_for_userid(self.portal_user_info['id'])
         self.assertEqual(roles, ('Reviewer',))
 
-                         
+
+def xtest_suite():
+    suite = TestSuite()
+    suite.addTest(makeSuite(TestRename))
+    return suite
+
+
 if __name__ == '__main__':
-        framework(verbosity=1)
-else:
-    from unittest import TestSuite, makeSuite
-    def test_suite():
-        suite = TestSuite()
-        suite.addTest(makeSuite(TestRename))
-        return suite
+   framework(verbosity=1)

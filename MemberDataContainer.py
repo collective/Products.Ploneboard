@@ -14,7 +14,7 @@ from OFS.ObjectManager import ObjectManager
 from ZODB.POSException import ConflictError
 
 from Products.Archetypes.debug import log
-from Products.Archetypes import registerType
+
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
@@ -24,7 +24,15 @@ from Products.CMFMember import PKG_NAME
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 from Products.CMFMember.Member import Member
 from Products.CMFMember.utils import logException, changeOwnership
+from DateTime import DateTime
+import string
 
+# Change this to 1 to allow TTW VariableSchemaSupport.  It is deactivated
+# by default (and requires this edit for activation) b/c activation means
+# that users w/ the ManageProperties privelege can execute arbitrary code
+# on the server.  Do NOT activate this unless you trust your managers with
+# this privelege.
+expose_var_schema = 0
 
 _marker = []
 
@@ -40,6 +48,9 @@ schema = BaseFolderSchema + Schema((
          StringField('typeName',
                      default = 'Member',
                      vocabulary = '_vocabAllowedMemberTypes',
+                     read_permission = CMFCorePermissions.View,
+                     accessor = 'getTypeName',
+                     mutator = 'setDefaultType',
                      widget = SelectionWidget(description = "Choose default member type.",
                                               label = "Default member type")),
          LinesField('allowedMemberTypes',
@@ -77,8 +88,8 @@ class MemberDataContainer(BaseBTreeFolder):
 
     schema = schema
     filter_content_types = 1
-    allowed_content_types = ['Member', 'ZCatalog']
-    
+    allowed_content_types = ['Member']
+
     security=ClassSecurityInfo()
 
     id = 'portal_memberdata'
@@ -88,8 +99,10 @@ class MemberDataContainer(BaseBTreeFolder):
     global_allow = 0
 
     _defaultMember = None
-    _instanceVersion = ''
     
+    defaultMemberSchema = Member.schema
+    _instanceVersion = ''
+
     actions = (
         { 'id': 'view',
           'name': 'View',
@@ -106,9 +119,12 @@ class MemberDataContainer(BaseBTreeFolder):
 
     manage_options=( BaseBTreeFolder.manage_options +
                      ActionProviderBase.manage_options
-                   )  +({'label':'Schema','action':'schemaForm'}, )
-    security.declareProtected(CMFCorePermissions.ManageProperties, 'schemaForm')
-    schemaForm = DTMLFile('dtml/schemaForm',globals())
+                     )
+    
+    if expose_var_schema:
+        manage_options += ({'label':'Schema','action':'schemaForm'}, )
+        security.declareProtected(CMFCorePermissions.ManageProperties, 'schemaForm')
+        schemaForm = DTMLFile('dtml/schemaForm',globals())
 
     # Methods: wrapUser, getMemberDataContents and pruneMemberDataContents
     # Implementation of CMFCore.interfaces.portal_memberdata.portal_memberdata
@@ -129,7 +145,7 @@ class MemberDataContainer(BaseBTreeFolder):
                 m = self.get(name)
                 m.setUser(user)
                 # trigger any workflow transitions that need to occur
-                triggerAutomaticTransitions(m) 
+                triggerAutomaticTransitions(m)
 
             # Return a wrapper with self as containment and
             # the user as context following CMFCore portal_memberdata
@@ -143,11 +159,11 @@ class MemberDataContainer(BaseBTreeFolder):
     security.declareProtected(CMFCorePermissions.ManageProperties, 'getMemberDataContents')
     def getMemberDataContents(self):
         '''
-        Returns a list containing a dictionary with information 
-        about the _members BTree contents: member_count is the 
+        Returns a list containing a dictionary with information
+        about the _members BTree contents: member_count is the
         total number of member instances stored in the memberdata-
-        tool while orphan_count is the number of member instances 
-        that for one reason or another are no longer in the 
+        tool while orphan_count is the number of member instances
+        that for one reason or another are no longer in the
         underlying acl_users user folder.
         The result is designed to be iterated over in a dtml-in
         '''
@@ -158,7 +174,7 @@ class MemberDataContainer(BaseBTreeFolder):
         for member in members:
             if member.isOrphan(): oc +=1
             member_ids.append(member.getUserName())
-                
+
         return [{
             'member_count' : len(member_ids),
             'orphan_count' : oc
@@ -167,17 +183,16 @@ class MemberDataContainer(BaseBTreeFolder):
     security.declareProtected(CMFCorePermissions.ManageProperties, 'pruneMemberDataContents')
     def pruneMemberDataContents(self):
         """
-        Check for every Member object if it's orphan and delete it. 
+        Check for every Member object if it's orphan and delete it.
 
         The impl can override the pruneOrphan(id) method to do things
         like manage its workflow state. The default impl will remove.
         """
-        
+
         members = self.objectValues()
         for member in members:
-            if member.isOrphan(): 
+            if member.isOrphan():
                 self.pruneOrphan(member.getUserName())
-
 
     def fixOwnership(self):
         """A utility method for transferring ownership for users who no longer
@@ -201,7 +216,7 @@ class MemberDataContainer(BaseBTreeFolder):
         reindex = []
         for u in missing_users:
             ownedObjects = catalog.search({'indexedOwner':u})
- 
+
             for o in ownedObjects:
                 object = o.getObject()
                 if object is not None and object != self:
@@ -214,8 +229,8 @@ class MemberDataContainer(BaseBTreeFolder):
 
     def handleOrphanedContent(self, object, new_user=None):
         """Handle orphaned content.  If new_user is not None, ownership is
-        transferred to the new user.  If new_user is None, the policy is 
-        determined by container properties.  Returns 1 if the object's 
+        transferred to the new user.  If new_user is None, the policy is
+        determined by container properties.  Returns 1 if the object's
         ownership changes."""
         if new_user:
             changeOwnership(object, new_user)
@@ -258,26 +273,27 @@ class MemberDataContainer(BaseBTreeFolder):
         results=[]
         if search_param == 'username':
             search_param = 'getId'
-            
+
         catalog=getToolByName(self, search_catalog)
         indexes=catalog.indexes()
         query={}
-        
+
         if search_param in indexes:
             query[search_param] = search_term
-        
+
         if query:
             query['portal_type'] = allowed_content_types
             results=catalog(query)
-        
+
         return [{'username':getattr(r,'id'), 'email':getattr(r,'email')} for r in [r.getObject() for r in results] if hasattr(r,'id')]
 
 
     def searchForMembers( self, REQUEST=None, **kw ):
         """ do a catalog search on a sites members.
+            Expects basic
             if the keyword brains is set to a non zero/null value, search will return only member_catalog metadata.
             Otherwise, memberdata objects returned. """
-        
+
         if REQUEST:
             search_dict = getattr(REQUEST, 'form', REQUEST)
         else:
@@ -286,24 +302,62 @@ class MemberDataContainer(BaseBTreeFolder):
 
         results=[]
         catalog=getToolByName(self, search_catalog)
-        indexes=catalog.indexes()
+
+        # no reason to iterate over all those indexes
+        try:
+            from sets import Set
+            indexes=Set(catalog.indexes())
+            indexes = indexes & Set(search_dict.keys())
+        except:
+            # Unless we are on 2.3
+            catalog.indexes()
 
         query={}
 
+        def dateindex_query(field_value, field_usage):
+            usage, val = field_usage.split(':')
+            return { 'query':  field_value, usage:val }
+
+        def zctextindex_query(field_value):
+            # Auto Globbing
+            if not field_value.endswith('*') and field_value.find(' ') == -1:
+                field_value += '*'
+            return field_value
+
+        special_query = dict((
+            ( 'DateIndex',    dateindex_query ),
+            ( 'ZCTextIndex',  zctextindex_query )
+            ))
+
         if search_dict:
+            # Make a indexname: fxToApply dict
+            idx_fx = dict(\
+                [(x.id, special_query[x.meta_type])\
+                 for x in catalog.Indexes.objectValues()\
+                 if (x.meta_type in special_query.keys() and x.id in indexes)]\
+                )
+
             for i in indexes:
                 val=search_dict.get(i, None)
+                usage_val = search_dict.get('%s_usage' %i)
                 if type(val) == type([]):
-                    val.remove('')
+                    val = filter(None, val)
+
+                if (i in idx_fx.keys() and val):
+                    if usage_val:
+                        val = idx_fx[i](val, usage_val)
+                    else:
+                        val = idx_fx[i](val)
+
                 if val:
                     query.update({i:val})
-                    
-        results=catalog.search(query)
+
+        results=catalog(query) 
 
         if results and not (search_dict.has_key('brains') or REQUEST.get('brains', None)):
             results = [r.getObject() for r in results]
 
-        return results
+        return filter(None, results)
 
     security.declarePrivate('registerMemberData')
     def registerMemberData(self, m, id):
@@ -316,7 +370,7 @@ class MemberDataContainer(BaseBTreeFolder):
         self._setObject(id, m)
 
     def _getMemberInstance(self):
-        """Get an instance of the Member class.  Used for 
+        """Get an instance of the Member class.  Used for
            extracting default property values, etc."""
         if self._defaultMember is None:
             tempFolder = PortalFolder('temp').__of__(self)
@@ -324,9 +378,9 @@ class MemberDataContainer(BaseBTreeFolder):
             self._defaultMember = getattr(tempFolder,'cmfmemberdefault')
             getattr(tempFolder,'cmfmemberdefault').unindexObject()
             # don't store _defaultMember in the catalog
-            tempFolder.unindexObject() 
+            tempFolder.unindexObject()
             # don't store _defaultMember in the catalog
-            self._defaultMember.unindexObject() 
+            self._defaultMember.unindexObject()
         return self._defaultMember
 
 
@@ -413,7 +467,12 @@ class MemberDataContainer(BaseBTreeFolder):
 
 
     def setDefaultType(self, type_name):
-        self.setTypeName(type_name)
+        self.typeName = type_name
+        t_tool = getToolByName(self, 'portal_types')
+        at_tool = getToolByName(self, 'archetype_tool')
+        type_info = t_tool.getTypeInfo(type_name)
+        pkg = type_info.product
+        self.defaultMemberSchema = at_tool.lookupType(pkg, type_name)['schema']
         self._defaultMember = None # nuke the default member (which was of the old Member type)
 
     # Migrate members when changing member type
@@ -426,7 +485,7 @@ class MemberDataContainer(BaseBTreeFolder):
     # workflow_transfer = dict mapping each state in old members to a list of transitions
     #       that must be executed to move the new member to the old member's state
     def migrateMembers(self, out, new_type_name, workflow_transfer={}):
-        
+
         self.registerType(new_type_name)
         factory = getMemberFactory(self, self.getTypeName())
 
@@ -477,28 +536,43 @@ class MemberDataContainer(BaseBTreeFolder):
         """
         self._deleteMember(id)
 
-    security.declareProtected(CMFCorePermissions.ManageProperties, 'setMemberSchema')
+    if expose_var_schema:
+        security.declareProtected(CMFCorePermissions.ManageProperties,
+                                  'setMemberSchema')
+    else:
+        security.declarePrivate('setMemberSchema')
+
     def setMemberSchema(self,member_schema,REQUEST=None):
         ''' '''
         member_schema=member_schema.strip().replace('\r','')
         schema=eval(member_schema)
-        self.memberSchema=Member.schema + schema
+        self.memberSchema=self.defaultMemberSchema + schema
         self.member_schema=member_schema
-        
+
         if REQUEST:
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-            
+
+    security.declareProtected(CMFCorePermissions.ManageProperties,
+                              'getMemberSchema')
     def getMemberSchema(self):
         ''' '''
-        return getattr(self,'memberSchema',Member.schema ) #+ Schema((StringField('sssssss')))
+        return getattr(self,'memberSchema',self.defaultMemberSchema )
 
     # AT methods
     def setAllowedMemberTypes(self, memberTypes, **kwargs):
         """Overriding default mutator since TypesTool checks the
-        variable allowed_content_types directly"""
+        variable allowed_content_types directly.  No checking for whether types are real, proper, etc."""
+
+
         self.allowed_content_types = memberTypes
         field=self.Schema()['allowedMemberTypes']
         field.set(self, memberTypes, **kwargs)
+
+        type_tool = getToolByName(self, 'portal_types')
+        
+        mdct = type_tool.MemberDataContainer
+        mdc_allowed_types = mdct.getProperty('allowed_content_types')
+        mdct.manage_changeProperties({'allowed_content_types':self.allowed_content_types})
 
     def _vocabAllowedMemberTypes(self):
         return self.getAllowedMemberTypes()
@@ -519,7 +593,7 @@ def getMemberFactory(self, type_name):
         action = getattr(p, ti.factory, None)
     except AttributeError:
         raise ValueError, 'No type information installed'
-    if action is None: 
+    if action is None:
         raise ValueError, ('Invalid Factory for %s'
                            % ti.getId())
     return action

@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.8 2004/04/19 15:43:29 k_vertigo Exp $
+$Id: ControlTool.py,v 1.9 2004/07/12 22:32:00 svincic Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -43,6 +43,7 @@ def modify_fti(fti, allowed = ()):
     refs['visible'] = 0
     refs = findDict(fti['actions'], 'id', 'metadata')
     refs['visible'] = 0
+
     
 _upgradePaths = {}
 _memberPaths = {}
@@ -71,6 +72,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     _needUpdateRole = 0
 
     global_allow = 0
+    use_folder_tabs = 0
     
     actions = (
         { 'id'            : 'migrations',
@@ -96,9 +98,11 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
     security.declareProtected(ManagePortal, 'manage_overview')
     security.declareProtected(ManagePortal, 'manage_migrate')
+    security.declareProtected(ManagePortal, 'manage_setup')
 
     manage_migrate = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration.pt', globals())
     manage_overview = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration_overview.pt', globals())
+    manage_setup = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_setup.pt', globals())
 
     version = ''
     

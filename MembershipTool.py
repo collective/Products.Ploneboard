@@ -81,7 +81,10 @@ class MembershipTool( BaseTool ):
 
         if hasattr(self, 'portal_memberdata'):
             memberdata_container = self.portal_memberdata
-            memberdata_container.invokeFactory('Member',id)
+            member_type = 'Member'
+            if hasattr(memberdata_container, 'typeName'):
+                member_type = str(memberdata_container.typeName)
+            memberdata_container.invokeFactory(member_type,id)
             member=getattr(memberdata_container.aq_explicit,id)
             member.edit(password=password,roles=roles,domains=domains,**(properties or {}))
 

@@ -1,4 +1,122 @@
-2004-04-16  Rob Miller and Whit Morriss <ra@burningman.com, whit@burningman.com> (rafrombrc, brcwhit)
+2004-06-25  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Added 'absolute_url' metadata to the member_catalog brains
+      objects
+
+2004-06-23  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Removed GRUF dependency by copying 'unique' utility
+      method to Products.CMFMember.utils
+
+2004-06-22  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Improved MemberDataContainer.getMemberSchema() so that it
+      returns the schema for the default member type instead of
+      the hard-coded Member type
+
+    * Changed some imports to be from Archetypes.public instead of
+      other Archetypes modules (which are subject to change)
+
+2004-06-03  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Changed migration process to use quick installer's
+      reinstall method instead of uninstall/install
+
+    * Applied alecm's monkeypatch to acl_users to allow for
+      deletion of the Member object when the Plone interface
+      is used to delete users (issue 48)
+
+2004-06-02  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Fixed install script so it doesn't barf on a pre-existing
+      member_catalog (issue 53)
+
+    * Modified default workflows to explicitly give View permission
+      to Members (not just Authenticated) and fixed typo in
+      Member.isListed() (issue 51)
+
+    * Integrated alecm's patch to improve group handling for temporary
+      user objects (i.e. at registration time) (issue 47)
+
+    * added private declaration to Member.setMemberProperties() method
+
+    * added missing 'privacy' to email field widget description
+
+2004-06-01  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Added 'expose_var_schema' flag to MemberDataContainer (0 by 
+      default) to allow control of exposure of variable schema support.
+      (thanks to bbollenbach for finding this hole and implementing
+      a partial fix)
+
+    * Added address validation for all MailHost usage.
+
+2004-05-07  Bill Schindler <bill@bitranch.com>  (bitranch)
+
+    * Member.view() was failing in a VHM site. Stripping off the
+      leading slash on the path returned from the action now allows
+      restrictedTraverse to look in the right places.
+
+    * The groups field was limping badly. Added special handling for
+      editing groups on a pending member.
+
+      Also getRawGroups() is the default name of the field's edit_accessor.
+      The name collision blocked the field from showing the current
+      settings. Fixed by explicitly setting the group field's
+      edit_accessor to getGroups.
+
+2004-05-06  Bill Schindler <bill@bitranch.com>  (bitranch)
+
+    * Put 'mail_me' back into the Member schema and condition the
+      widget to only display on join_form. The static 'mail_me'
+      field was showing up on all fieldset pages and needed too
+      many special conditions to make it work with fieldsets.
+
+    * Password fields are now also conditioned off of the site
+      properties validate_email property. The registered email is
+      sent when validate_email is set -- no matter what the state
+      of 'mail_me' is.
+
+    * Added member_edit template to clean up the edit screen when
+      it's being accessed under preferences. (member_edit is a set
+      of macros called by base_edit -- no Archetypes code was harmed
+      in this change.)
+
+    * Added a prefs_user_details script to redirect the preferences
+      to the member object's base_edit. The member_edit template needs
+      to be conditioned to look a little better when it's called this
+      way.
+
+2004-05-05  Bill Schindler <bill@bitranch.com>  (bitranch)
+
+    * Set a condition on the skins field so that it doesn't display
+      when it's turned off for the site.
+
+    * Condition the password fields to only display on the join_form.
+      (The user's password is changed using a separate form under
+      preferences.)
+
+    * Clean up description text in the schema so it mostly matches the
+      text displayed in Plone 2.
+
+2004-05-02  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Removed 'mail_me' from the Member schema and instead
+      just made it a UI hook in join_form
+
+2004-04-29  Joshua LaPlace <josh@clearnoodle.com> (swampmonkey)
+
+    * Changed MembershipTool.addMember to check for typeName on 
+      memberdata_tool and use that instead of 'Member'
+
+2004-04-19  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Finished the custom memberdata migration.  Selections and multiple
+      selections come across correctly, including Vocabularies.  Tokens
+      might still be a little wonky, but who uses tokens, anyway?  :-P
+
+2004-04-16  Rob Miller <ra@burningman.com> (rafrombrc)
+            Whit Morriss <whit@burningman.com> (brcwhit)
 
     * Lots of improvements to the migration unit tests to
       make sure the custom memberdata migration works correctly.
@@ -99,7 +217,7 @@
       have your own Member type to migrate too. The tool is ready for external
       migrations and setup such us imports.
 
-    * Migrations for Plone->CMFMember and OldCMFMember->CMFMember are included. 
+    * Migrations for Plone->CMFMember and OldCMFMember->CMFMember are included.
       OldCMFMember is when MemberDataTool wasn't a container.
 
     * Simple CSV import available under setup tab Plone controlpanel ->

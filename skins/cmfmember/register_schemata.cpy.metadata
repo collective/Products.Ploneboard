@@ -1,0 +1,6 @@
+[validators]
+validators = validate_base
+
+[actions]
+action.next_schemata = redirect_to:string:join_form
+

@@ -6,13 +6,24 @@ def null(portal):
     pass
 
 def registerMigrations():
-    # so the basic concepts is you put  a bunch of migrations is here
+    # so the basic concept is you put a bunch of migrations in here
 
     MigrationTool.registerUpgradePath('development',
-                                      '0.7 alpha test',
-                                      v1.dev_one0.onezero)
+                                      '1.0 alpha',
+                                      v1.dev_one0a.oneZeroAlpha)
 
     MigrationTool.registerUpgradePath('plone',
-                                      '0.7 alpha test',
-                                      v1.plone_one0.onezero)
+                                      '1.0 alpha',
+                                      v1.plone_one0a.oneZeroAlpha)
 
+    MigrationTool.registerUpgradePath('1.0 alpha',
+                                      '1.0 beta',
+                                      null)
+
+    MigrationTool.registerUpgradePath('1.0 beta',
+                                      '1.0 beta2',
+                                      null)
+
+    MigrationTool.registerUpgradePath('1.0 beta2',
+                                      '1.0 beta3',
+                                      v1.one0b2_one0b3.oneZeroBeta3)

@@ -16,7 +16,6 @@ from Products.CMFMember.Extensions.Install import install as install_cmfmember
 from Products.CMFMember.MemberDataContainer import MemberDataContainer
 from Products.CMFMember.Member import Member
 from Products.CMFMember.Extensions.Install import install as install_cmfmember
-from Products.CMFMemberExample.Extensions.Install import install as install_cmfmemberexample
 from AccessControl.SecurityManagement import newSecurityManager
 from Products.CMFCore.utils import getToolByName, ToolInit
 from DateTime import DateTime
@@ -63,7 +62,8 @@ prop_data = tuple(\
 propName = lambda proptype: '%s_prop' % string.join(proptype.split(), '_')
 class TestMigration( PloneTestCase.PloneTestCase ):
 
-    def testMigrationPlone2CMFMember(self):
+    def testMigrationPlone2CMFMemberCustomMData(self):
+        """ Tests migration from Plone to CMFMember w/ custom member data properties """
         self.makeMembers()
 
         mdtool = self.portal.portal_memberdata
@@ -71,7 +71,6 @@ class TestMigration( PloneTestCase.PloneTestCase ):
 
         # check that we have what we should have before migration
         self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
-        
         self._compare_members()
 
         # add new properties to MemberData tool
@@ -108,13 +107,15 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         self.assertEquals(mstool.getMemberById(usera['id']).__class__, Member)
         self.assertEquals(mstool.getMemberById(userb['id']).__class__, Member)
 
-        a = mstool.getMemberById(usera['id'])
+        user_a = mstool.getMemberById(usera['id'])
         self._compare_members()
 
         errors = self.compareProperties(user_a)
         self.failIf(len(errors) > 0, string.join(errors, '\n'))
 
-    def testMigrationPlone2CMFMember2(self):
+    def testMigrationPlone2CMFMemberZ(self):
+        """ Tests migration from Plone default to CMFMember.  Must run after the
+            custom memberdata test or it will cause that one to fail... :-P"""
         self.makeMembers()
         # check that we have what we should have before migration
         self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
@@ -138,6 +139,7 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         self.assertEquals(self.portal.portal_memberdata.a.__class__, Member)
         self.assertEquals(self.portal.portal_memberdata.b.__class__, Member)
 
+
     def defaultsDict(self):
         return dict([x for x in dict(prop_data).keys() if type(x) == type((0,))])
 
@@ -156,9 +158,10 @@ class TestMigration( PloneTestCase.PloneTestCase ):
     def compareProperties(self, md):
         data = self.populateDict()
         md_data = ()
+        hasAccessor = lambda field: field.schemata != 'metadata' and field.getAccessor(md)
         if md.__class__ == Member:
-            schema = md.schema()
-            md_data = [ ( x, x.getAccessor()() ) for x in schema.fields()] 
+            schema = md.Schema()
+            md_data = [ ( x.getName(), x.getAccessor(md)() ) for x in schema.filterFields(hasAccessor)] 
         else:
             md_data = [ ( x, md.getProperty(x))  for x in data.keys() ] 
 
@@ -197,6 +200,22 @@ class TestMigration( PloneTestCase.PloneTestCase ):
 
         # Check raw data
         errors = [ "%s %s != %s" %(x, getProp(x), data[x]) for x in data.keys() if getProp(x) != data[x] ]
+
+        md_tool = self.portal.portal_memberdata
+        def getVocab(prop):
+            if md.__class__ == Member:
+                vocab = [v_item[0] \
+                         for v_item in md.getField(prop).Vocabulary().items()]
+                vocab = tuple(vocab)
+            else:
+                vocab = md_tool.getProperty(md_tool.propdict()[prop]['select_variable'])
+            return vocab
+
+        # Check that Vocabularies were built correctly
+        select_props = ('selection_prop', 'multiple_selection_prop')
+        errors += [ "vocab mismatch for %s" % prop for prop in data.keys() \
+                    if (prop in select_props) \
+                    and (getVocab(prop) != populator_choices) ]
         return errors
 
             
@@ -229,19 +248,21 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         #newSecurityManager(None, self.portal.acl_users.getUser('test_admin').__of__(self.portal.acl_users))
 
     def makeMembers(self):
+        #import pdb; pdb.set_trace()
         membership_tool = self.portal.portal_membership
         membership_tool.addMember(usera['id'], usera['password'], usera['roles'], usera['domains'])
         user_a = membership_tool.getMemberById(usera['id'])
         user_a.setMemberProperties({'email':usera['email'],
-                               'fullname':usera['fullname']})
+                                    'fullname':usera['fullname']})
 
         membership_tool.addMember(userb['id'], userb['password'], userb['roles'], userb['domains'])
         user_b = membership_tool.getMemberById(userb['id'])
         user_b.setMemberProperties({'email':userb['email'],
-                               'fullname':userb['fullname']})
+                                    'fullname':userb['fullname']})
 
 
 if __name__ == '__main__':
+
     framework(verbosity=1)
 else:
     from unittest import TestSuite, makeSuite

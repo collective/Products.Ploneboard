@@ -27,7 +27,7 @@
                       Iterator python:modules['Products.Archetypes'].IndexIterator;
                       tabindex python:Iterator();
                       schematas here/Schemata;
-                      fieldsets python:[key for key in schematas.keys() if key != 'metadata'];
+                      fieldsets python:[key for key in schematas.keys() if (key != 'metadata') and (schematas[key].filterFields(regfield=1))];
                       default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
                       fieldset request/fieldset|options/fieldset|default_fieldset;
                       portal_type python:here.getPortalTypeName().lower();
@@ -36,17 +36,15 @@
                       is_multipage python: len(fieldsets) &gt; 1;"
           tal:omit-tag="">
         <h1 i18n:translate="heading_registration_form">Registration Form</h1>
-
+        
         <form name="edit_form"
               method="post"
               enctype="multipart/form-data"
               tal:attributes="action python:here.absolute_url()+'/'+template.id">
           <fieldset tal:omit-tag="not: is_multipage">
             <legend
-                i18n:translate=""
                 tal:condition="is_multipage"
                 tal:content="python:(len(fieldsets) &gt; 1 and fieldset != 'default') and fieldset or here.archetype_name" />
-
             <tal:fields repeat="field python: schematas[fieldset].fields()">
               <tal:block tal:condition="field/regfield | nothing">
                 <metal:fieldMacro
@@ -72,7 +70,7 @@
                  type="hidden"
                  name="id"
                  value=""
-                 tal:attributes="value request/username|request/id|nothing" />
+                 tal:attributes="value request/id|nothing" />
               <input
                  type="hidden"
                  name="password"
@@ -121,3 +119,4 @@
 
   </body>
 </html>
+

@@ -18,7 +18,7 @@ class CatalogTool(BaseTool):
     before cataloging them."""
     __implements__ = (ICatalogTool, ActionProviderBase.__implements__)
 
-    meta_type = 'CMFMember Catalog Tool'
+    meta_type = 'Portal CMFMember Catalog Tool'
     security = ClassSecurityInfo()
 
     def catalog_object(self, object, uid, idxs=[]):
@@ -36,7 +36,7 @@ class CatalogTool(BaseTool):
             raise
         except:
             owner = None
-            
+
         wf = getattr(self, 'portal_workflow', None)
         if wf is not None:
             vars = wf.getCatalogVariablesFor(object)

@@ -7,3 +7,5 @@ validators = validate_base
 [actions]
 action.failure = traverse_to:string:join_form
 action.success = traverse_to:string:do_register
+action.success..next = traverse_to:string:register_schemata
+action.success..previous = traverse_to:string:register_schemata

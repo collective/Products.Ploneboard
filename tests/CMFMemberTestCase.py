@@ -5,6 +5,7 @@ from Testing import ZopeTestCase
 ZopeTestCase.installProduct('CMFMember')
 ZopeTestCase.installProduct('PortalTransforms')
 ZopeTestCase.installProduct('Archetypes')
+ZopeTestCase.installProduct('MimetypesRegistry')
 ZopeTestCase.installProduct('ZCatalog')
     
 from Products.CMFPlone.tests import PloneTestCase

@@ -17,7 +17,7 @@ from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.Archetypes.debug import log
-from Products.Archetypes import registerType
+from Products.Archetypes.ArchetypeTool import registerType
 from Products.CMFMember import PKG_NAME
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 from Products.CMFMember.types.Member import Member

@@ -1,7 +1,8 @@
 from Globals import package_home
 from Products.Archetypes import process_types
 from Products.Archetypes.debug import log
-from Products.Archetypes import listTypes, registerType
+from Products.Archetypes.ArchetypeTool import  registerType
+from Products.Archetypes.public import listTypes
 from Products.Archetypes.utils import pathFor
 from Products.CMFCore.utils import manage_addContentForm, manage_addContent, manage_addTool
 import Products.CMFCore
@@ -46,14 +47,15 @@ def initialize(context):
         fti                = ftis,
         ).initialize(context)
     
-    import RegistrationTool, MembershipTool, CatalogTool
+    import RegistrationTool, MembershipTool, CatalogTool, MemberCatalogTool
     tools = (
         RegistrationTool.RegistrationTool,
         MembershipTool.MembershipTool,
         CatalogTool.CatalogTool,
-        ControlTool.ControlTool
+        ControlTool.ControlTool,
+        MemberCatalogTool.MemberCatalogTool
         )
-    
+
     Products.CMFCore.utils.ToolInit(PKG_NAME + ' Tool', tools=tools,
                    product_name=PKG_NAME,
                    icon="tool.gif",

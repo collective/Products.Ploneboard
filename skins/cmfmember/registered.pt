@@ -1,9 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="plone"
+      metal:use-macro="here/main_template/macros/master">
 <body>
 <div metal:fill-slot="main">
 
@@ -23,7 +25,7 @@ You will receive an email shortly containing your password
     <form action=""
           method="post"
           tal:define="username request/id; 
-		                  password request/password;"
+		              password request/password;"
           tal:attributes="action python:'%s/logged_in' % here.portal_url()"
 	        >
         <input type="hidden" 

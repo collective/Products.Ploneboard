@@ -3,4 +3,4 @@ validators = validate_base
 
 [actions]
 action.success = traverse_to:string:registered
-action.next_schemata = redirect_to:string:join_form
+action.pending = traverse_to:string:pending

@@ -1,7 +1,7 @@
 import random
 import md5
 from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.RegistrationTool import RegistrationTool as BaseTool
+from Products.CMFPlone.RegistrationTool import RegistrationTool as BaseTool
 
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
@@ -67,10 +67,10 @@ class RegistrationTool( BaseTool ):
         password = member.getPassword()
         email = member.getProperty('email')
 
-        # assert that we can actually get an email address, otherwise
-        # the template will be made with a blank To:, this is bad
-        if not email:
-            raise 'ValueError', 'Member does not have an email address.'
+        # assert that the email address is valid
+        utils = getToolByName(self, 'plone_utils')
+        if (not email) or (not utils.validateSingleEmailAddress(email)):
+            raise 'ValueError', 'Invalid email address.'
 
         # Rather than have the template try to use the mailhost, we will
         # render the message ourselves and send it from here (where we
@@ -163,9 +163,9 @@ class RegistrationTool( BaseTool ):
         password = member.getPassword()
         email = member.getProperty( 'email' )
 
-        if email is None:
-            raise ValueError( 'Member %s has no e-mail address!'
-                            % new_member_id )
+        utils = getToolByName(self, 'plone_utils')
+        if (not email) or (not utils.validateSingleEmailAddress(email)):
+            raise 'ValueError', 'Invalid email address.'
     
         # Rather than have the template try to use the mailhost, we will
         # render the message ourselves and send it from here (where we

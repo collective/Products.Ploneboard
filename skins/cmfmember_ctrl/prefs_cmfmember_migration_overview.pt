@@ -1,5 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
       lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="plone"
       metal:use-macro="here/prefs_main_template/macros/master">
 
 <body>
@@ -8,28 +13,17 @@
 <div metal:fill-slot="prefs_configlet_main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
     
  <div class="configlet">
+ <div class="documentEditable">    
+    <div metal:use-macro="here/global_contentviews/macros/content_views">
+                      The content views (View, Edit, Properties, Workflow)
+    </div>
 
-    <!-- simulating views on the groups/user pages until we have real objects. -->
-    <ul class="contentViews">
-        <li class="selected">
-        <a href=""
-        tal:attributes="href string:${template/id}"
-        i18n:translate="label_users">Migration</a>
-        </li>
-
-        <li class="">
-        <a href=""
-        tal:attributes="href string: prefs_cmfmember_import"
-        i18n:translate="label_groups">Import</a>
-        </li>
-
-        <li class="">
-        <a href=""
-        tal:attributes="href string: prefs_cmfmember_setup"
-        i18n:translate="label_groups">Setup</a>
-        </li>
-    </ul>
+    <div metal:use-macro="here/global_contentviews/macros/content_actions">
+                      The content bar
+    </div>
  
+    <div class="documentContent">
+
     <h1 i18n:translate="heading_cmfmember_migration">
         CMFMember migration overview
     </h1>
@@ -55,7 +49,8 @@
          <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
     </tal:block>
     </ul>
-
+    </div>
+ </div>
  </div>
 </div>
 

@@ -2,6 +2,9 @@ import re
 from AccessControl import Owned
 from Acquisition import aq_get
 from zLOG import LOG, INFO, WARNING
+from Products.CMFCore.utils import getToolByName
+from Acquisition import Explicit
+from MemberPermissions import VIEW_PERMISSION
 
 _re_is_email = re.compile("^\s*([0-9a-zA-Z_&.+-]+!)*[0-9a-zA-Z_&.+-]+@(([0-9a-z]([0-9a-z-]*[0-9a-z])?\.)+[a-z]{2,6}|([0-9]{1,3}\.){3}[0-9]{1,3})\s*$")
 
@@ -21,6 +24,13 @@ TYPESMAP = {'boolean':('BooleanField', ''),
             'selection':('StringField', 'SelectionWidget'),
             'multiple selection':('LinesField', 'MultiSelectionWidget'),
             }
+
+def unique(sequence):
+    """Make a sequence a tuple of unique items"""
+    uniquedict = {}
+    for v in sequence:
+        uniquedict[v] = 1
+    return tuple(uniquedict.keys())
 
 
 def isEmail(email):
@@ -75,4 +85,17 @@ def setSchemaCollector(obj, collection_by):
         obj.setSchemaCollector(collection_py)
     except :
         pass
+
+
+class _MethodWrapper(Explicit):
+    """Wrapper to create instance methods"""
+    def __init__(self, f): self.__f = f
+    def __call__(self, *args, **kw):
+        return self.__f(self.aq_parent, *args, **kw)
+
+
+def userFolderDelUsers(self, names):
+    """Override acl_users user deletion"""
+    memberdata = getToolByName(self, 'portal_memberdata')
+    memberdata.manage_delObjects(names)
 

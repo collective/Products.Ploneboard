@@ -1,5 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
       lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
+      i18n:domain="plone"
       metal:use-macro="here/prefs_main_template/macros/master">
 
 <body>
@@ -10,25 +15,17 @@
  <div class="configlet">
  <div class="documentEditable">    
 
-    <!-- simulating views on the groups/user pages until we have real objects. -->
-    <ul class="contentViews">
-        <li class="">
-        <a href=""
-        tal:attributes="href string: prefs_cmfmember_migration"
-        i18n:translate="label_users">Migration</a>
-        </li>
+   <div metal:use-macro="here/global_contentviews/macros/content_views">
+                      The content views (View, Edit, Properties, Workflow)
+    </div>
 
-        <li class="selected">
-        <a href=""
-        tal:attributes="href string: prefs_cmfmember_import"
-        i18n:translate="label_groups">Import</a>
-        </li>
- 
-    </ul>
+    <div metal:use-macro="here/global_contentviews/macros/content_actions">
+                      The content bar
+    </div>
 
     <div class="documentContent">
 
-    <h1 i18n:translate="heading_cmfmember_migration">CMFMember import</h1>
+    <h1 i18n:translate="heading_cmfmember_import">CMFMember import</h1>
 
     <a href=""
        class="link-parent"
@@ -37,23 +34,23 @@
     Up to Plone Setup
     </a>
 
-    <div class="documentDescription" i18n:translate="">
+    <div class="documentDescription" i18n:translate="description_import_view">
       This view is intended for import with possibility to upload a csv file. For now we use a filesystem based one.
     </div>
 
     
     <form action="installItems" method="post">
-            <input type="hidden" name="widget" value="CMFMember Import Setup">
+            <input type="hidden" name="widget" value="CMFMember Import Setup" i18n:attributes="value"/>
        <fieldset>
-          <legend i18n:translate="">Filesystem based import</legend>
+          <legend i18n:translate="legend_filesystem_based_import">Filesystem based import</legend>
           <div class="field">
-	    <label i18n:translate="">Import from CSV</label>
+	    <label i18n:translate="label_import_from_csv">Import from CSV</label>
 
-            <div i18n:translate=""
+            <div i18n:translate="help_import_from_csv"
                  class="formHelp">
 		 Import from <code>/tmp/users.csv</code> and portraits from <code>/tmp/images/</code>. See source of CMFMember/setup/ImportSetup.py for more information.
             </div>
-    	    <input name="items:list" type="hidden" value="Import from CSV" />	     
+    	    <input name="items:list" type="hidden" value="Import from CSV" i18n:attributes="value" />	     
           </div>
 
         <div class="formControls">

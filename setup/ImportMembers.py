@@ -1,4 +1,5 @@
 from OFS.PropertyManager import PropertyManager
+from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.Expression import Expression
@@ -18,7 +19,7 @@ def importUsers(self, portal):
     # portraits if any : /tmp/images/ 
     import string
     memberdata_tool = getToolByName(portal, 'portal_memberdata')
-
+    wf_tool=getToolByName(portal, 'portal_workflow')
     import codecs
     users = codecs.open('/tmp/users.csv','r','utf-8').readlines()
     for user in users:
@@ -39,13 +40,18 @@ def importUsers(self, portal):
             image = None
         try:
             memberdata_tool.invokeFactory('Member', username)
-            member = getattr(memberdata_tool.aq_explicit, username)
-            member.edit(password=password,roles=('Member',),domains=(),**{'confirm_password':password,'fullname':fullname,'email':email,'portrait':image})
+            member = getattr(memberdata_tool.aq_explicit, username) 
+            member.update(**{'password':password,'roles':('Member',),'domains':(),'confirm_password':password,'fullname':fullname,'email':email,'portrait':image}) 
+            member._createUser()
+            member.processForm() 
             if(image):
                 image.close()
         except:
             pass
-
+               
+       
+        
+   
 
 # this one isn't finnished!
 # or even tested once

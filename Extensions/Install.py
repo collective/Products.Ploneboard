@@ -1,6 +1,6 @@
 from Globals import package_home
 from OFS.ObjectManager import BadRequestException
-from Products.Archetypes import listTypes
+from Products.Archetypes.public import listTypes
 from Products.Archetypes.debug import log, log_exc
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
@@ -23,6 +23,8 @@ from Products.CMFMember.Extensions.Workflow \
 from Products.CMFMember.Extensions.SimpleWorkflow \
     import setupWorkflow as setupSimpleWorkflow
 
+from Products.CMFMember.MemberCatalogTool import MemberCatalogTool
+
 import sys, os, string
 
 TYPE_NAME = 'Member'
@@ -34,8 +36,14 @@ def uninstallControlTool(portal, out):
         controltool.unregisterConfiglet(configlet['id'])
 
 def uninstall(self):
-    out=StringIO()    
+    out=StringIO()
     uninstallControlTool(self, out)
+    #Remove user deletion override
+    acl_users = getToolByName(self, 'acl_users')
+    try:
+        del acl_users.userFolderDelUsers
+    except KeyError, AttributeError:
+        pass
 
 # Install methods
 
@@ -44,7 +52,7 @@ def installDependencies(self, out):
     qi.installProduct('PortalTransforms',)
     qi.installProduct('Archetypes')
 
-        
+
 def installControlTool(self, out):
     """
     Install a migration tool if there isn't any. We also set the version at install,
@@ -53,13 +61,13 @@ def installControlTool(self, out):
     """
     if hasattr(self,'cmfmember_control'):
         self.manage_delObjects(['cmfmember_control'])
-        
+
     m = self.manage_addProduct[CMFMember.PKG_NAME]
     manage_addTool(m, 'ControlTool')
+
     # XXX: the class name is used as tool name when Archetype, don't know how to change it.
-    
     cp = getToolByName(self, 'portal_controlpanel')
-    cm = getToolByName(self, 'cmfmember_control')    
+    cm = getToolByName(self, 'cmfmember_control')
     # we add our groups to the controlpanel tool, groups are used to display configlets
     # in the setup tab of our migration tool.
     if 'cmfmember' not in cp.getGroupIds(): cp.groups.append(ControlTool.group)
@@ -70,8 +78,6 @@ def installControlTool(self, out):
     # add configlet to the plone control panel
     cp.registerConfiglets(cm.getConfiglets())
 
-    # clear the workflow for migration tool
-    getToolByName(self, 'portal_workflow').setChainForPortalTypes('ControlTool', '')
     # set smart title after setup
     cm = self.cmfmember_control
     if cm.needUpgrading():
@@ -87,46 +93,43 @@ def installControlTool(self, out):
         nl_meta_types.append('ControlTool')
     self.portal_properties.navtree_properties.metaTypesNotToList = tuple( nl_meta_types )
 
-    
+
 def installMember(self, out):
     types = listTypes(CMFMember.PKG_NAME)
 
     class args:
         def __init__(self, **kw):
             self.__dict__.update(kw)
-            
-    # Member uses a special catalog 
-    self.manage_addProduct['ZCatalog'].manage_addZCatalog(id='member_catalog', title='Members Only: CMFMember Catalog')
-    self.member_catalog.addIndex(name='review_state', type='FieldIndex')
-    self.member_catalog.manage_addProduct[ 'ZCTextIndex' ].manage_addLexicon(
-        'member_lexicon',
-        elements=[
-        args(group= 'Case Normalizer' , name= 'Case Normalizer' ),
-        args(group= 'Stop Words' , name= " Don't remove stop words" ),
-        args(group= 'Word Splitter' , name= "Unicode Whitespace splitter" ),
-        ]
-        )
-    
+
+    # Member uses a special catalog tool
+    portal = getToolByName(self, 'portal_url').getPortalObject()
+    if not 'member_catalog' in portal.objectIds():
+        m = self.manage_addProduct[CMFMember.PKG_NAME]
+        m.manage_addTool(MemberCatalogTool.meta_type)
+        mcat = getToolByName(self, 'member_catalog')
+
     installTypes(self, out,
                  types,
                  CMFMember.PKG_NAME)
 
     # Register member_catalog with archetype_tool
     at = getToolByName(self, 'archetype_tool')
-    at.setCatalogsByType('Member', ['member_catalog', 'uid_catalog'])
-    
-    wf_tool = getToolByName(self, 'portal_workflow')
-    wf_tool.setChainForPortalTypes((TYPE_NAME,), 'member_auto_workflow')
-    wf_tool.updateRoleMappings()
-    
+    at.setCatalogsByType('Member', ['member_catalog', 'portal_catalog'])
+
     # register with portal factory
     site_props = self.portal_properties.site_properties
     if not hasattr(site_props,'portal_factory_types'):
         site_props._setProperty('portal_factory_types',('Member',), 'lines')
 
-    
-    
-    
+    # add a form_controller action so that preference edit traverses back
+    # to the preferences panel
+    fc = getToolByName(self, 'portal_form_controller')
+    fc.addFormAction('validate_integrity',   # template/script
+                     'success',              # status
+                     'Member',               # context
+                     None,                   # button
+                     'traverse_to_action',   # action
+                     'string:edit')          # argument
 
 def installSkins(self, out):
     # we do this by hand since we don't want all of our skins to be
@@ -168,7 +171,7 @@ def installSkins(self, out):
                         path.append(productSkinName)
                 path = ','.join(path)
                 skinsTool.addSkinSelection(skinName, path)
-    
+
 def install(self):
     out=StringIO()
 
@@ -176,9 +179,16 @@ def install(self):
     installDependencies(self, out)
     installControlTool(self, out)
     installSkins(self, out)
-    installMember(self, out)    
+    installMember(self, out)
 
-    
+    # We need to do the updateRoleMappings only once after all workflows have been set
+    # because otherwise the empty one(i.e ControlTool) are reseted to (Default)
+    # clear the workflow for migration tool
+    wf_tool = getToolByName(self, 'portal_workflow')
+    wf_tool.setChainForPortalTypes((TYPE_NAME,), 'member_auto_workflow')
+    wf_tool.setChainForPortalTypes(('ControlTool',), '')
+    wf_tool.updateRoleMappings()
+
     setupWorkflow(self, out)
     setupSimpleWorkflow(self, out)
 
