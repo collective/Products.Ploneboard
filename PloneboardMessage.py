@@ -1,19 +1,18 @@
 """
-$Id: Message.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: PloneboardMessage.py,v 1.1 2003/11/26 17:43:17 tesdal Exp $
 """
 
-import Globals
-
 import random
-
+import Globals
+from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base
 from DateTime import DateTime
 from OFS import Image
 
-from Products.CMFDefault.SkinnedFolder import SkinnedFolder
-from Products.CMFCore.PortalContent import PortalContent
-from AccessControl import ClassSecurityInfo
-from Products.Archetypes.Referenceable import Referenceable
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import TextAreaWidget
+from config import PROJECTNAME
 
 from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
@@ -23,15 +22,14 @@ from PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, \
      ManageBoard, AddMessage, AddMessageReply, EditMessage, AddAttachment, ManageMessage
 
 from interfaces import IMessage
-from Products.Archetypes.interfaces.referenceable import IReferenceable
 
 factory_type_information = \
-( { 'id'             : 'Ploneboard Message'
-  , 'meta_type'      : 'Ploneboard Message'
+( { 'id'             : 'PloneboardMessage'
+  , 'meta_type'      : 'PloneboardMessage'
   , 'description'    : """Message holds the message data and can contain attachments."""
   , 'icon'           : 'ploneboard_message_icon.gif'
   , 'product'        : 'Ploneboard'
-  , 'factory'        : None # To avoid it being visible in add contents menu
+  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
   , 'allowed_content_types' : () 
   , 'immediate_view' : 'message_edit_form'
@@ -54,26 +52,44 @@ factory_type_information = \
   },
 )
 
-class Message(Referenceable, SkinnedFolder, PortalContent):
+schema = BaseBTreeFolderSchema + Schema((
+    TextField('text',
+              searchable = 1,
+              default_content_type = 'text/html',
+              default_output_type = 'text/html',
+              allowable_content_types=('text/html',
+                                       'text/plain'),
+              widget = TextAreaWidget(description = "Enter message body.",
+                                      description_msgid = "help_text",
+                                      label = "Text",
+                                      label_msgid = "label_text",
+                                      rows = 5)),
+    ))
+
+class PloneboardMessage(BaseBTreeFolder):
     """A message contains regular text body and metadata."""
 
-    __implements__ = (IMessage, IReferenceable)
+    __implements__ = (IMessage,) + tuple(BaseBTreeFolder.__implements__)
 
-    meta_type = 'Ploneboard Message'
-    manage_options = SkinnedFolder.manage_options
+    archetype_name = 'Ploneboard Message'
     
-    security = ClassSecurityInfo()
-
+    schema = schema
+    
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
     _in_reply_to = None   # Id to message this is a reply to
 
-    def __init__(self, id, title='', text='', creator=None):
-        self.id = id
-        self.title = title
-        self.text = text
+    security = ClassSecurityInfo()
+    
+    #def __init__(self, id, title='', text='', creator=None):
+    #def __init__(self, oid, text='', creator=None, **kwargs):
+    def __init__(self, oid, **kwargs):
+        BaseBTreeFolder.__init__(self, oid, **kwargs)
         self.creation_date = DateTime()
-        self._creator = creator
+        # Archetypes doesn't set values on creation from kwargs
+        self.setTitle(kwargs.get('title', ''))
+        self._creator = kwargs.get('creator', '')
+        self.setText(kwargs.get('text', ''))
         self._attachments_ids = []
 
     security.declareProtected(ViewBoard, 'getConversation')
@@ -95,10 +111,15 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
         id = self.aq_inner.aq_parent.generateId(message=1, min_id=min_id)
         if not message_subject:
             message_subject = self.aq_inner.aq_parent.Title()
-        message = Message(id, message_subject, message_body, creator)
+        kwargs = {'title' : message_subject, 
+                  'creator' : creator,
+                  'text' : message_body
+                  }
+        #message = PloneboardMessage(id, message_subject, message_body, creator)
+        message = PloneboardMessage(id, **kwargs)
         self.aq_inner.aq_parent._setObject(id, message)
         m = getattr(self.aq_inner.aq_parent, id)
-        m._setPortalTypeName('Ploneboard Message')
+        m._setPortalTypeName('PloneboardMessage')
         m.notifyWorkflowCreated()
         m.setInReplyTo(self)
         # Add to replies index
@@ -108,11 +129,14 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
     security.declareProtected(ViewBoard, 'inReplyTo')
     def inReplyTo(self):
         """
-        Returns the message object this message is a reply to.
+        Returns message object this message is a reply to.
         """
         if not hasattr(self, '_in_reply_to'):
             self._in_reply_to = None
-        return self.in_reply_to and self.aq_inner.aq_parent.getMessage(self._in_reply_to) or None
+        if self._in_reply_to:
+            return self.aq_inner.aq_parent.getMessage(self._in_reply_to)
+        return self._in_reply_to # None
+        #return self._in_reply_to and self.aq_inner.aq_parent.getMessage(self._in_reply_to) or None
 
     
     security.declareProtected(AddMessageReply, 'setReply')
@@ -128,7 +152,7 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
     security.declareProtected(AddMessageReply, 'deleteReply')
     def deleteReply(self, message_id):
         """ Removes message from the replies index """
-        if self.replies and self._replies.has_key(message_id):
+        if self._replies and self._replies.has_key(message_id):
             del self._replies[message_id]
             self._reply_count.change(-1)
 
@@ -155,7 +179,7 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
     security.declareProtected(ViewBoard, 'getBody')
     def getBody(self):
         """Returns the body of the message."""
-        return self.text
+        return self.getText()
     
     def childIds(self, level=0):
         """
@@ -165,40 +189,45 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
             result = []
         else:
             result = [self.getId()]
-        res = self.getResponses()
-        if res:
-            for msg_object in res:
+        replies = self.getReplies()
+        if replies:
+            for msg_object in replies:
                 result = result + msg_object.childIds(level+1)
         return result
    
     
-    security.declareProtected(ManageMessage, 'branch')
-    def branch(self):
+    security.declareProtected(ManageMessage, 'makeBranch')
+    def makeBranch(self):
         """"""
+        # Contains mappings - old_msg_id -> new_msg_id
+        ids = {}
+        
         forum = self.getConversation().getForum()
         parent = self.getConversation()
-        get_transaction().begin()
-        conv = forum.addConversation(self.getSubject(), self.getBody())
+        conv = forum.addConversation(self.getSubject(), self.getBody(), script=0)
         # here we get id of the first Message in newly created Conversation
         first_msg_id = conv.objectIds()[0]
-        objects = [parent.getMessage(id) for id in self.childIds()]
+
+        ids.update({self.getId() : first_msg_id})
+        
+        objects = map(parent.getMessage, self.childIds())
         for obj in objects:
-            obj_id = obj.getId()
-            self_id = self.getId()
-            conv._setObject(obj_id, obj)
-            m = getattr(conv, obj_id)
-            if m.inReplyTo() == self_id:
-                m.setInReplyTo(first_msg_id)
-            else:
-                m.setInReplyTo(obj.inReplyTo())
-        parent._delObject(self.getId()) # delete ourselves and all our descendants
+            msg = conv.getMessage(ids.get(obj.inReplyTo().getId())).addReply(obj.getSubject(), obj.getBody())
+            ids.update({obj.getId() : msg.getId()})
+            # Here we need to set some fields from old objects
+            # What else should we update?
+            msg.creation_date = obj.creation_date
+            msg.setEffectiveDate(obj.EffectiveDate())
+            msg.setExpirationDate(obj.ExpirationDate())
+            msg.creator = obj.Creator()
+        
+        parent._delObject(self.getId(), recursive=1) # delete ourselves and all our descendants
         # if conversation after branching is empty, remove it
         if parent.getNumberOfMessages() == 0:
             forum._delObject(parent.getId())
         # we need to reindex stuff in newly created Conversation
-        for o in conv.objectValues():
-            o.reindexObject()
-        get_transaction().commit()
+        #for o in conv.objectValues():
+        #    o.reindexObject()
 
     # Workflow related methods - called by workflow scripts to control what to display
     def notifyPublished(self):
@@ -215,54 +244,46 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
 
     security.declareProtected(ViewBoard, 'Creator')
     def Creator(self):
-        return getattr(self, '_creator', None) or SkinnedFolder.Creator(self)
+        return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
 
     # Catalog related issues
     security.declareProtected(ViewBoard, 'indexObject')
     def indexObject(self):
+        BaseBTreeFolder.indexObject(self)
         self._getBoardCatalog().indexObject(self)
         
     security.declareProtected(ViewBoard, 'unindexObject')
     def unindexObject(self):
         self._getBoardCatalog().unindexObject(self)
+        BaseBTreeFolder.unindexObject(self)
     
     security.declareProtected(ViewBoard, 'reindexObject')
     def reindexObject(self, idxs=[]):
+        BaseBTreeFolder.reindexObject(self)
         self._getBoardCatalog().reindexObject(self)
         
     def manage_afterAdd(self, item, container):
         """Add self to the conversation catalog."""
-        Referenceable.manage_afterAdd(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.indexObject()
-            self.__recurse('manage_afterAdd', item, container)
+        BaseBTreeFolder.manage_afterAdd(self, item, container)
+        self.indexObject()
         
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, item):
-        Referenceable.manage_afterClone(self, item)
-        PortalContent.manage_afterClone(self, item)
+        BaseBTreeFolder.manage_afterClone(self, item)
+        self.reindexObject()
 
     def manage_beforeDelete(self, item, container):
         """Remove self from the conversation catalog."""
-        Referenceable.manage_beforeDelete(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.__recurse('manage_beforeDelete', item, container)
-            self.unindexObject()
         # Remove from reply index
-        self.inReplyTo().deleteReply(self.getId())
-
-    def __recurse(self, name, *args):
-        """ Recurse in subobjects. """
-        values = self.objectValues()
-        for ob in values:
-            s = getattr(ob, '_p_changed', 0)
-            if hasattr(aq_base(ob), name):
-                getattr(ob, name)(*args)
-            if s is None: ob._p_deactivate()
+        #self.inReplyTo().deleteReply(self.getId())
+        in_reply_to = self.inReplyTo()
+        if in_reply_to is not None:
+            in_reply_to.deleteReply(self.getId())
+        BaseBTreeFolder.manage_beforeDelete(self, item, container)
 
     def SearchableText(self):
         """ """
-        return (self.title + ' ' + self.text)
+        return (self.Title() + ' ' + self.getText())
     
     def _getBoardCatalog(self):
         return self.getConversation().getForum().getBoard().getInternalCatalog()
@@ -293,6 +314,8 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
     security.declareProtected(AddAttachment, 'removeAttachment')
     def removeAttachment(self, index=0):
         """ """
+        if index > self.getNumberOfAttachments()-1:
+            return
         id = self._attachments_ids[index]
         del self._attachments_ids[index]
         self._delObject(id)
@@ -320,23 +343,13 @@ class Message(Referenceable, SkinnedFolder, PortalContent):
         return getattr(self, self._attachments_ids[index])
     
     security.declareProtected(AddAttachment, 'listAttachments')
-    def listAttachments(self):
+    def getAttachments(self):
         """ """
-        attachlist = []
-        for attach_id in self._attachments_ids:
-            attachlist.append(getattr(self, attach_id))
-        return attachlist
+        return map(lambda id, this=self: getattr(this, id), this._attachments_ids)
     
     def getNumberOfAttachments(self):
         return len(self._attachments_ids)
-    
 
-def addMessage(self
-              , id
-              , title=''
-              , description=''):
-    """Factory method for creating message."""
-    message = Message(id, title, description)
-    self._setObject(id, message)
+registerType(PloneboardMessage, PROJECTNAME)
+Globals.InitializeClass(PloneboardMessage)
 
-Globals.InitializeClass(Message)

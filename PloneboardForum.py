@@ -1,11 +1,12 @@
 """
-$Id: Forum.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: PloneboardForum.py,v 1.1 2003/11/26 17:43:17 tesdal Exp $
 """
 
 from random import randint
 
-import Globals, sys
-
+import sys
+import Globals
+from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base
 from DateTime import DateTime
 
@@ -13,28 +14,26 @@ from BTrees.Length import Length
 
 from Products.ZCatalog.Lazy import LazyMap
 
-from Products.CMFDefault.SkinnedFolder import SkinnedFolder
-from Products.CMFCore.PortalContent import PortalContent
-from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
-from AccessControl import ClassSecurityInfo
-from Products.Archetypes.Referenceable import Referenceable
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import TextAreaWidget
+from config import PROJECTNAME
 
 from PloneboardPermissions import ViewBoard, SearchBoard, \
      AddForum, ManageForum, ManageBoard, AddMessage
-from Conversation import Conversation
+from PloneboardConversation import PloneboardConversation
 from PloneboardIndex import PloneboardIndex
 from interfaces import IForum, IConversation
-from Products.Archetypes.interfaces.referenceable import IReferenceable
 
 factory_type_information = \
-( { 'id'             : 'Ploneboard Forum'
-  , 'meta_type'      : 'Ploneboard Forum'
+( { 'id'             : 'PloneboardForum'
+  , 'meta_type'      : 'PloneboardForum'
   , 'description'    : """Forums hold conversations."""
   , 'icon'           : 'ploneboard_forum_icon.gif'
   , 'product'        : 'Ploneboard'
-  , 'factory'        : None # To avoid it being visible in add contents menu
+  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('Ploneboard Conversation', ) 
+  , 'allowed_content_types' : ('PloneboardConversation', ) 
   , 'immediate_view' : 'forum_edit_form'
   , 'aliases'        : {'(Default)':'forum_view',
                         'view':'forum_view'}
@@ -55,6 +54,18 @@ factory_type_information = \
   },
 )
 
+schema = BaseBTreeFolderSchema + Schema((
+    TextField('description',
+              searchable = 1,
+              default_content_type = 'text/plain',
+              default_output_type = 'text/html',
+              widget = TextAreaWidget(description = "Enter a brief description of the forum.",
+                                      description_msgid = "help_description",
+                                      label = "Description",
+                                      label_msgid = "label_description",
+                                      rows = 5)),
+    ))
+
 class ForumIndex(PloneboardIndex):
     """
     A class for containing the date indexes and handling length (map to __len__)
@@ -66,26 +77,29 @@ class ForumIndex(PloneboardIndex):
 
 MAX_UNIQUEID_ATTEMPTS = 1000
 
-class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
+class PloneboardForum(BaseBTreeFolder):
     """
     A Forum contains conversations.
     """
     
-    __implements__ = (IForum, IReferenceable)
+    __implements__ = (IForum,) + tuple(BaseBTreeFolder.__implements__)
 
-    meta_type = 'Ploneboard Forum'
-    manage_options = SkinnedFolder.manage_options
-
-    security = ClassSecurityInfo()
-
+    archetype_name = 'Ploneboard Forum'
+    
+    schema = schema
+    
     _index = None
     _message_count = None
 
     _moderated = 0 # 1 if moderated
 
-    def __init__(self, id, title=''):
-        SkinnedFolder.__init__(self, id, title)
-        BTreeFolder2Base.__init__(self, id)
+    security = ClassSecurityInfo()
+    
+    def __init__(self, oid, **kwargs):
+        BaseBTreeFolder.__init__(self, oid, **kwargs)
+        # Archetypes doesn't set values on creation from kwargs
+        self.setTitle(kwargs.get('title', ''))
+        self.setDescription(kwargs.get('description', ''))
         self._index = ForumIndex()
         self._message_count = Length()
         self._moderated = 0
@@ -96,17 +110,21 @@ class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
         return self.aq_inner.aq_parent
 
     security.declareProtected(AddMessage, 'addConversation')
-    def addConversation(self, subject, body, creator=None, **kw):
+    def addConversation(self, subject, body, creator=None, script=1):
         """Adds a new conversation to the forum."""
         # Add a new conversation and a message inside it.
         id = self.generateId(conversation=1)
-        fconversation = Conversation(id, subject, creator)
+        kwargs = {'title' : subject, 'creator' : creator}
+        fconversation = PloneboardConversation(id, **kwargs)
         self._setObject(id, fconversation)
         m = getattr(self, id)
-        m._setPortalTypeName('Ploneboard Conversation')
+        m._setPortalTypeName('PloneboardConversation')
         m.notifyWorkflowCreated()
         #m.addMessage(subject, body)
-        m.add_message_script(subject, body, creator)
+        if script:
+            m.add_message_script(subject, body, creator)
+        else:
+            m.addMessage(subject, body, creator)
         return m
 
     security.declareProtected(ViewBoard, 'getConversation')
@@ -183,7 +201,7 @@ class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
         """Returns an ID not used yet by this folder.
         """
         if not conversation:
-            return BTreeFolder2Base.generateId(self, prefix, suffix, rand_ceiling)
+            return BaseBTreeFolder.generateId(self, prefix, suffix, rand_ceiling)
         else:
             tree = self._tree
             n = self._v_nextid
@@ -214,8 +232,7 @@ class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
             return id
 
     def _checkId(self, id, allow_dup=0):
-        SkinnedFolder._checkId(self, id, allow_dup)
-        BTreeFolder2Base._checkId(self, id, allow_dup)
+        BaseBTreeFolder._checkId(self, id, allow_dup)
 
     def setDateKey(self, id, date=None):
         """Update the _index."""
@@ -229,7 +246,8 @@ class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
     def _delOb(self, id):
         """Remove the named object from the folder.
         """
-        BTreeFolder2Base._delOb(self, id, object)
+        object = self.getConversation(id)
+        BaseBTreeFolder._delOb(self, id)
         # Update Ploneboard specific indexes
         if IConversation.isImplementedBy(object):
             self.delDateKey(id)
@@ -238,56 +256,40 @@ class Forum(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
     # Catalog related issues
     security.declareProtected(ViewBoard, 'indexObject')
     def indexObject(self):
+        BaseBTreeFolder.indexObject(self)
         self._getBoardCatalog().indexObject(self)
         
     security.declareProtected(ViewBoard, 'unindexObject')
     def unindexObject(self):
         self._getBoardCatalog().unindexObject(self)
+        BaseBTreeFolder.unindexObject(self)
     
     security.declareProtected(ViewBoard, 'reindexObject')
     def reindexObject(self, idxs=[]):
+        BaseBTreeFolder.reindexObject(self)
         self._getBoardCatalog().reindexObject(self)
         
     def manage_afterAdd(self, item, container):
         """Add self to the conversation catalog."""
-        Referenceable.manage_afterAdd(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.indexObject()
-            self.__recurse('manage_afterAdd', item, container)
+        BaseBTreeFolder.manage_afterAdd(self, item, container)
+        self.indexObject()
         
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, item):
-        Referenceable.manage_afterClone(self, item)
-        PortalContent.manage_afterClone(self, item)
+        BaseBTreeFolder.manage_afterClone(self, item)
+        self.reindexObject()
 
     def manage_beforeDelete(self, item, container):
         """Remove self from the conversation catalog."""
-        Referenceable.manage_beforeDelete(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.__recurse('manage_beforeDelete', item, container)
-            self.unindexObject()
+        BaseBTreeFolder.manage_beforeDelete(self, item, container)    
 
-    def __recurse(self, name, *args):
-        """ Recurse in subobjects. """
-        values = self.objectValues()
-        for ob in values:
-            s = getattr(ob, '_p_changed', 0)
-            if hasattr(aq_base(ob), name):
-                getattr(ob, name)(*args)
-            if s is None: ob._p_deactivate()
-        
     def SearchableText(self):
         """ """
-        return (self.title, )
+        return (self.Title(), )
     
     def _getBoardCatalog(self):
         return self.getBoard().getInternalCatalog()
 
-def addForum(self
-             , id
-             , title=''):
-    """Factory method for creating forum."""
-    forum = Forum(id, title)
-    self._setObject(id, forum)
+registerType(PloneboardForum, PROJECTNAME)
+Globals.InitializeClass(PloneboardForum)
 
-Globals.InitializeClass(Forum)

@@ -1,23 +1,20 @@
 """
-$Id: Ploneboard.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: Ploneboard.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
 """
 
 import Globals
-
-from Products.CMFCore.CMFCatalogAware import CMFCatalogAware
-from Products.CMFDefault.SkinnedFolder import SkinnedFolder
-from Products.CMFCore.PortalContent import PortalContent
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.Referenceable import Referenceable
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import TextAreaWidget
+from config import PROJECTNAME
 
 import PloneboardCatalog
 from PloneboardPermissions import ViewBoard, SearchBoard, \
-     AddBoard, AddForum, ManageBoard, AddAttachment
-
-from Forum import Forum
-
+    AddBoard, AddForum, ManageBoard, AddAttachment  
+from PloneboardForum import PloneboardForum
 from interfaces import IPloneboard
-from Products.Archetypes.interfaces.referenceable import IReferenceable
+
 
 factory_type_information = \
 ( { 'id'             : 'Ploneboard'
@@ -27,7 +24,7 @@ factory_type_information = \
   , 'product'        : 'Ploneboard'
   , 'factory'        : 'addPloneboard'
   , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('Ploneboard Forum', ) 
+  , 'allowed_content_types' : ('PloneboardForum', ) 
   , 'immediate_view' : 'board_edit_form'
   , 'aliases'        : {'(Default)':'board_view',
                         'view':'board_view'}
@@ -60,25 +57,35 @@ factory_type_information = \
   },
 )
 
-# PortalFolder/SkinnedFolder overrides the catalogaware methods to avoid being 
-# added to the catalog
-class Ploneboard(Referenceable, CMFCatalogAware, SkinnedFolder, PortalContent):
+schema = BaseBTreeFolderSchema + Schema((
+    TextField('description',
+              searchable = 1,
+              default_content_type = 'text/plain',
+              default_output_type = 'text/html',
+              widget = TextAreaWidget(description = "Enter a brief description of the board.",
+                                      description_msgid = "help_description",
+                                      label = "Description",
+                                      label_msgid = "label_description",
+                                      rows = 5)),
+    ))
+
+class Ploneboard(BaseBTreeFolder):
     """
     Ploneboard is the outmost board object, what shows up in your site.
     """
-    __implements__ = (IPloneboard, IReferenceable)
+    __implements__ = (IPloneboard,) + tuple(BaseBTreeFolder.__implements__)
+    
+    archetype_name = 'Ploneboard'
 
-    meta_type = portal_type = 'Ploneboard'
-    manage_options = SkinnedFolder.manage_options
-
+    schema = schema
+    
     # CONFIG variables
     _number_of_attachments = 5
 
     security = ClassSecurityInfo()
     
-    def __init__(self, id, title=''):
-        self.id = id
-        self.title = title
+    def __init__(self, oid, **kwargs):
+        BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._setupInternalCatalog()
 
     def _setupInternalCatalog(self):
@@ -96,13 +103,15 @@ class Ploneboard(Referenceable, CMFCatalogAware, SkinnedFolder, PortalContent):
                 , title
                 , description ):
         """Add a forum to the board."""
-        forum = Forum(id, title)
+        kwargs = {'title' : title, 'description' : description}
+        forum = PloneboardForum(id, **kwargs)
         self._setObject(id, forum)
         
         forum = getattr(self, id)
-        forum._setPortalTypeName('Ploneboard Forum')
+        forum._setPortalTypeName('PloneboardForum')
         forum.notifyWorkflowCreated()
-        forum.setDescription(description)
+        #forum.setDescription(description)
+        return forum
 
     security.declarePublic('getForums')
     def getForums(self):
@@ -124,20 +133,27 @@ class Ploneboard(Referenceable, CMFCatalogAware, SkinnedFolder, PortalContent):
         """Returns forum with specified forum id."""
         return getattr(self, forum_id, None)
 
-    def manage_afterAdd(self, item, container):
-        Referenceable.manage_afterAdd(self, item, container)
-        PortalContent.manage_afterAdd(self, item, container)
+    #def manage_afterAdd(self, item, container):
+    #    BaseBTreeFolder.manage_afterAdd(self, item, container)
 
-    security.declarePrivate('manage_afterClone')
-    def manage_afterClone(self, item):
-        Referenceable.manage_afterClone(self, item)
-        PortalContent.manage_afterClone(self, item)
+    #security.declarePrivate('manage_afterClone')
+    #def manage_afterClone(self, item):
+    #    BaseBTreeFolder.manage_afterClone(self, item, container)
 
-    security.declarePrivate('manage_beforeDelete')
-    def manage_beforeDelete(self, item, container):
-        Referenceable.manage_beforeDelete(self, item, container)
-        PortalContent.manage_beforeDelete(self, item, container)
+    #security.declarePrivate('manage_beforeDelete')
+    #def manage_beforeDelete(self, item, container):
+    #    if aq_base(container) is not aq_base(self):
+    #        self.__recurse('manage_beforeDelete', item, container)
+    #    BaseBTreeFolder.manage_beforeDelete(self, item, container)
 
+    #def __recurse(self, name, *args):
+    #    """ Recurse in subobjects. """
+    #    values = self.objectValues()
+    #    for ob in values:
+    #        s = getattr(ob, '_p_changed', 0)
+    #        if hasattr(aq_base(ob), name):
+    #            getattr(ob, name)(*args)
+    #        if s is None: ob._p_deactivate()
 
     ############################################################################
     # CONFIG
@@ -149,11 +165,5 @@ class Ploneboard(Referenceable, CMFCatalogAware, SkinnedFolder, PortalContent):
         """
         return self._number_of_attachments
 
-def addPloneboard( self
-                 , id
-                 , title='' ):
-    """Factory method for adding Ploneboard."""
-    board = Ploneboard(id, title)
-    self._setObject(id, board)
-
+registerType(Ploneboard, PROJECTNAME)
 Globals.InitializeClass(Ploneboard)

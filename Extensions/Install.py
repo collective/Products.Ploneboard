@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.1 2003/10/24 13:03:06 tesdal Exp $
+$Id: Install.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the
@@ -17,20 +17,20 @@ information about the steps it took to register and install the
 Ploneboard into the Plone Site instance. 
 """
 
-from Products.Ploneboard import Ploneboard, Forum, Conversation, Message, ploneboard_globals
-
-from Products.CMFCore.TypesTool import ContentFactoryMetadata
-from Products.CMFCore.DirectoryView import addDirectoryViews
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.CMFCorePermissions import ManagePortal
+from Products.CMFCore.TypesTool import ContentFactoryMetadata
 
 from cStringIO import StringIO
 import string
 
-fti_list = Ploneboard.factory_type_information + \
-           Forum.factory_type_information + \
-           Conversation.factory_type_information + \
-           Message.factory_type_information
+from Products.Archetypes.public import listTypes
+from Products.Archetypes.Extensions.utils import installTypes, install_subskin
+from Products.Ploneboard.config import *
+from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
+
+from StringIO import StringIO
+
 
 configlets = \
 ( { 'id'         : 'Ploneboard'
@@ -44,23 +44,20 @@ configlets = \
 ,
 )
 
-def setupTypesandSkins(self, out):
-    # Add our tool
-    try:
-        addTool = self.manage_addProduct['Ploneboard'].manage_addTool
-        addTool('Ploneboard Tool')
-        out.write('Adding Ploneboard Tool\n')
-    except:
-        out.write('Ploneboard Tool already existed, skipping...\n')
+def setupAdditionalTypes(self, out):
+    from Products.Ploneboard.PloneboardForum import factory_type_information as pf_fti
+    from Products.Ploneboard.PloneboardConversation import factory_type_information as pc_fti
+    from Products.Ploneboard.PloneboardMessage import factory_type_information as pm_fti
     
+    fti_list = pf_fti + pc_fti + pm_fti
+
     typesTool = getToolByName(self, 'portal_types')
-    skinsTool = getToolByName(self, 'portal_skins')
     
     # Former types deletion (added by PJG)
     for f in fti_list:
         if f['id'] in typesTool.objectIds():
             out.write('*** Object "%s" already existed in the types tool => deleting\n' % (f['id']))
-            
+
             typesTool._delObject(f['id'])
 
     # Type re-creation
@@ -68,47 +65,6 @@ def setupTypesandSkins(self, out):
         cfm = apply(ContentFactoryMetadata, (), f)
         typesTool._setObject(f['id'], cfm)
         out.write('Type "%s" registered with the types tool\n' % (f['id']))
-
-        
-    # Add directory views
-    try:  
-        addDirectoryViews(skinsTool, 'skins', ploneboard_globals)
-        out.write( "Added directory views to portal_skins.\n" )
-    except:
-        out.write( '*** Unable to add directory views to portal_skins.\n')
-
-    # Go through the skin configurations and insert 'ploneboard_templates'  and
-    # ploneboard_scripts into the configurations.
-    skins = skinsTool.getSkinSelections()
-    for skin in skins:
-        path = skinsTool.getSkinPath(skin)
-        path = map(string.strip, string.split(path,','))
-        changed = 0
-        if 'ploneboard_templates' not in path:
-            try: 
-                path.insert(path.index('custom')+1, 'ploneboard_templates')
-                changed = 1
-            except ValueError:
-                path.append('ploneboard_templates')
-                changed = 1
-
-        if 'ploneboard_scripts' not in path:
-            try: 
-                path.insert(path.index('custom')+1, 'ploneboard_scripts')
-                changed = 1
-            except ValueError:
-                path.append('ploneboard_scripts')
-                changed = 1
-                
-        if changed:        
-            path = string.join(path, ', ')
-            # addSkinSelection will replace existing skins as well.
-            skinsTool.addSkinSelection(skin, path)
-            out.write("Added 'ploneboard_templates' and/or 'ploneboard_scripts' to %s skin\n" % skin)
-        else:
-            out.write("Skipping %s skin, 'ploneboard_templates' and 'ploneboard_scripts' already set up\n" % (
-                skin))
-
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
@@ -118,7 +74,7 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_message_workflow'
                               , workflow_type='ploneboard_message_workflow '+\
                                 '(Message Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('Ploneboard Conversation','Ploneboard Message'), 'ploneboard_message_workflow')
+    wf_tool.setChainForPortalTypes( ('PloneboardConversation','PloneboardMessage'), 'ploneboard_message_workflow')
     out.write('Added Message Workflow\n')
 
     if 'ploneboard_forum_workflow' in wf_tool.objectIds():
@@ -127,7 +83,7 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_forum_workflow'
                               , workflow_type='ploneboard_forum_workflow '+\
                                 '(Forum Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('Ploneboard Forum',), 'ploneboard_forum_workflow')
+    wf_tool.setChainForPortalTypes( ('PloneboardForum',), 'ploneboard_forum_workflow')
     out.write('Added Forum Workflow\n')
 
     if 'ploneboard_workflow' in wf_tool.objectIds():
@@ -151,7 +107,7 @@ def addPortalProperties(self, out):
     out.write("Added member variables\n")
 
 def addConfiglets(self, out):
-    configTool = getToolByName(self, 'portal_control_panel_actions', None)
+    configTool = getToolByName(self, 'portal_controlpanel', None)
     if configTool:
         for conf in configlets:
             out.write('Adding configlet %s\n' % conf['id'])
@@ -160,22 +116,54 @@ def addConfiglets(self, out):
 def addMemberProperties(self, out):
     pass
 
+def addTransforms(self, out):
+    tr_tool = getToolByName(self, 'portal_transforms')
+    tr_tool.manage_addTransform(EMOTICON_TRANSFORM_ID, EMOTICON_TRANSFORM_MODULE)
+    #tr_tool.manage_addTransformsChain(PLONEBOARD_TRANSFORMSCHAIN_ID, 'Ploneboard chain')
+    #chain = tr_tool._getOb(PLONEBOARD_TRANSFORMSCHAIN_ID)
+    #chain.manage_addObject(EMOTICON_TRANSFORM_ID)
+    #chain.manage_addObject('text_to_html')
+    #tr_tool.manage_addObject(EMOTICON_TRANSFORM_ID)
+    tr_tool.manage_addPolicy('text/html', ('text_to_emoticons', 'html_to_text'))
+    
+def removeTransforms(self, out):
+    tr_tool = getToolByName(self, 'portal_transforms')
+    #tr_tool._delObject(PLONEBOARD_TRANSFORMSCHAIN_ID)
+    tr_tool._delObject(EMOTICON_TRANSFORM_ID)
+    tr_tool.manage_delPolicies(('text/html', ))
 
 def install(self):
-    out=StringIO()
-    setupTypesandSkins(self, out)
+    out = StringIO()
+
+    installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
+    
+    setupAdditionalTypes(self, out)
+    
+    # Here we exclude our types to be cataloged in portal_catalog by archetypes
+    # we need only UID_CATALOG from archetypes
+    at = getToolByName(self, TOOL_NAME)
+    for type in listTypes(PROJECTNAME):
+        if type['name'] != 'Ploneboard': # Let Ploneboard object be in portal_catalog
+            at.setCatalogsByType(type['name'], [UID_CATALOG])
+
+    install_subskin(self, out, GLOBALS)
+    
     setupPloneboardWorkflow(self, out)
     addPortalProperties(self, out)
     addConfiglets(self, out)
     addMemberProperties(self, out)
-    out.write('Installation completed.\n')
+    
+    addTransforms(self, out)
+
+    print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
+
 
 #
 # Uninstall methods
 #
 def removeConfiglets(self, out):
-    configTool = getToolByName(self, 'portal_control_panel_actions', None)
+    configTool = getToolByName(self, 'portal_controlpanel', None)
     if configTool:
         for conf in configlets:
             out.write('Removing configlet %s\n' % conf['id'])
@@ -186,4 +174,5 @@ def removeConfiglets(self, out):
 def uninstall(self):
     out=StringIO()
     removeConfiglets(self, out)
+    removeTransforms(self, out)
     return out.getvalue()

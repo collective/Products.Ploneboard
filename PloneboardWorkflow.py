@@ -1,7 +1,7 @@
 import os
 from Globals import package_home
 
-from Products.Ploneboard import ploneboard_globals
+from Products.Ploneboard.config import GLOBALS
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Default import setupDefaultWorkflowRev2
@@ -15,7 +15,7 @@ from Products.PythonScripts.PythonScript import manage_addPythonScript
 
 
 # path_prefix is used for finding workflow scripts
-path_prefix = os.path.join( package_home(ploneboard_globals)
+path_prefix = os.path.join( package_home(GLOBALS)
                           , 'workflow_scripts')
 # Default is to add all scripts for all workflows
 # Override by defining script_ids as a tuple for each workflow

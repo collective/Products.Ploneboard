@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=text, file='', title='', creator=None
+##parameters=title, text='', creator=None, file=''
 ##title=Add a conversation
 
 if not creator:

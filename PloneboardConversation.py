@@ -1,37 +1,34 @@
 """
-$Id: Conversation.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: PloneboardConversation.py,v 1.1 2003/11/26 17:43:17 tesdal Exp $
 """
 
 from random import randint
-
 import Globals
-
+from AccessControl import ClassSecurityInfo
 from Acquisition import aq_base
 from DateTime import DateTime
 
 from Products.ZCatalog.Lazy import LazyMap
 
-from Products.CMFDefault.SkinnedFolder import SkinnedFolder
-from Products.CMFCore.PortalContent import PortalContent
-from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
-from AccessControl import ClassSecurityInfo
-from Products.Archetypes.Referenceable import Referenceable
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import TextAreaWidget
+from config import PROJECTNAME
 
 from PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, ManageBoard, AddMessage, AddMessageReply, ManageConversation
-from Message import Message
+from PloneboardMessage import PloneboardMessage
 from PloneboardIndex import PloneboardIndex
 from interfaces import IConversation, IMessage
-from Products.Archetypes.interfaces.referenceable import IReferenceable
 
 factory_type_information = \
-( { 'id'             : 'Ploneboard Conversation'
-  , 'meta_type'      : 'Ploneboard Conversation'
+( { 'id'             : 'PloneboardConversation'
+  , 'meta_type'      : 'PloneboardConversation'
   , 'description'    : """Conversations hold messages."""
   , 'icon'           : 'ploneboard_conversation_icon.gif'
   , 'product'        : 'Ploneboard'
-  , 'factory'        : None # To avoid it being visible in add contents menu
+  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('Ploneboard Message', ) 
+  , 'allowed_content_types' : ('PloneboardMessage', ) 
   , 'immediate_view' : 'conversation_edit_form'
   , 'aliases'        : {'(Default)':'conversation_view',
                         'view':'conversation_view'}
@@ -52,6 +49,19 @@ factory_type_information = \
   },
 )
 
+schema = BaseBTreeFolderSchema + Schema((
+    TextField('description',
+              searchable = 1,
+              default_content_type = 'text/plain',
+              default_output_type = 'text/html',
+              widget = TextAreaWidget(description = "Enter a brief description of the conversation.",
+                                      description_msgid = "help_description",
+                                      label = "Description",
+                                      label_msgid = "label_description",
+                                      rows = 5)),
+    ))
+
+    
 class ConversationIndex(PloneboardIndex):
     """
     A class for containing the date indexes and handling length (map to __len__)
@@ -63,25 +73,29 @@ class ConversationIndex(PloneboardIndex):
 
 MAX_UNIQUEID_ATTEMPTS = 1000
 
-class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent):
+class PloneboardConversation(BaseBTreeFolder):
     """
     Conversation contains messages.
     """
 
-    __implements__ = (IConversation, IReferenceable)
+    __implements__ = (IConversation,) + tuple(BaseBTreeFolder.__implements__)
 
-    meta_type = 'Ploneboard Conversation'
-    manage_options = SkinnedFolder.manage_options
-    
-    security = ClassSecurityInfo()
+    archetype_name = 'Ploneboard Conversation'
+
+    schema = schema
 
     _index = None
 
-    def __init__(self, id, title='', creator=None):
-        SkinnedFolder.__init__(self, id, title)
-        BTreeFolder2Base.__init__(self, id)
+    security = ClassSecurityInfo()
+    
+    #def __init__(self, id, title='', creator=None):
+    def __init__(self, oid, **kwargs):
+        BaseBTreeFolder.__init__(self, oid, **kwargs)
         self._index = ConversationIndex()
-        self._creator = creator
+        # Archetypes doesn't set values on creation from kwargs
+        self.setTitle(kwargs.get('title', ''))
+        self._creator = kwargs.get('creator', '')
+       
 
     security.declareProtected(ViewBoard, 'getForum')
     def getForum(self):
@@ -94,10 +108,15 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
         id = self.generateId(message=1)
         if not message_subject:
             message_subject = self.Title()
-        message = Message(id, message_subject, message_body, creator)
+        kwargs = {'title' : message_subject, 
+                  'creator' : creator,
+                  'text' : message_body
+                  }
+        #message = PloneboardMessage(id, message_subject, message_body, creator)
+        message = PloneboardMessage(id, **kwargs)
         self._setObject(id, message)
         m = getattr(self, id)
-        m._setPortalTypeName('Ploneboard Message')
+        m._setPortalTypeName('PloneboardMessage')
         m.notifyWorkflowCreated()
         return m
     
@@ -164,7 +183,7 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
 
     security.declareProtected(ViewBoard, 'Creator')
     def Creator(self):
-        return getattr(self, '_creator', None) or SkinnedFolder.Creator(self)
+        return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
 
     ############################################################################
     # Folder methods, indexes and such
@@ -174,7 +193,7 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
         """Returns an ID not used yet by this folder.
         """
         if not message:
-            return BTreeFolder2Base.generateId(self, prefix, suffix, rand_ceiling)
+            return BaseBTreeFolder.generateId(self, prefix, suffix, rand_ceiling)
         else:
             tree = self._tree
             n = self._v_nextid
@@ -223,16 +242,28 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
         return result
 
     def _checkId(self, id, allow_dup=0):
-        SkinnedFolder._checkId(self, id, allow_dup)
-        BTreeFolder2Base._checkId(self, id, allow_dup)
+        BaseBTreeFolder._checkId(self, id, allow_dup)
 
     def _delOb(self, id):
         """Remove the named object from the folder.
         """
-        BTreeFolder2Base._delOb(self, id, object)
+        object = self.getMessage(id)
+        BaseBTreeFolder._delOb(self, id)
         # Update Ploneboard specific indexes
         if IMessage.isImplementedBy(object):
             self.delDateKey(id)
+            
+    def _delObject(self, id, dp=1, recursive=0):
+        """Deletes object and if recursive is true - its descendants"""
+        # We need to delete all descendants of message if recursive is true
+        if recursive:
+            object = self.getMessage(id)
+            for msg_id in object.childIds():
+                BaseBTreeFolder._delObject(self, msg_id)
+        BaseBTreeFolder._delObject(self, id)
+        # we delete ourselves if we don't have any messages
+        if self.getNumberOfMessages() == 0:
+            self.getForum()._delObject(self.getId())
 
     # Workflow related methods - called by workflow scripts to control what to display
     security.declareProtected(AddMessage, 'notifyPublished')
@@ -248,34 +279,32 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
     # Catalog related issues
     security.declareProtected(ViewBoard, 'indexObject')
     def indexObject(self):
+        BaseBTreeFolder.indexObject(self)
         self._getBoardCatalog().indexObject(self)
         
     security.declareProtected(ViewBoard, 'unindexObject')
     def unindexObject(self):
         self._getBoardCatalog().unindexObject(self)
+        BaseBTreeFolder.unindexObject(self)
     
     security.declareProtected(ViewBoard, 'reindexObject')
     def reindexObject(self, idxs=[]):
+        BaseBTreeFolder.reindexObject(self)
         self._getBoardCatalog().reindexObject(self)
 
     def manage_afterAdd(self, item, container):
         """Add self to the conversation catalog."""
-        Referenceable.manage_afterAdd(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.indexObject()
-            self.__recurse('manage_afterAdd', item, container)
-        
+        BaseBTreeFolder.manage_afterAdd(self, item, container)
+        self.indexObject()
+       
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, item):
-        Referenceable.manage_afterClone(self, item)
-        PortalContent.manage_afterClone(self, item)
+        BaseBTreeFolder.manage_afterClone(self, item)
+        self.reindexObject()
 
     def manage_beforeDelete(self, item, container):
         """Remove self from the conversation catalog."""
-        Referenceable.manage_beforeDelete(self, item, container)
-        if aq_base(container) is not aq_base(self):
-            self.__recurse('manage_beforeDelete', item, container)
-            self.unindexObject()
+        BaseBTreeFolder.manage_beforeDelete(self, item, container)    
 
     def __recurse(self, name, *args):
         """ Recurse in subobjects. """
@@ -288,17 +317,10 @@ class Conversation(Referenceable, BTreeFolder2Base, SkinnedFolder, PortalContent
         
     def SearchableText(self):
         """ """
-        return (self.title, )
+        return (self.Title(), )
     
     def _getBoardCatalog(self):
         return self.getForum().getBoard().getInternalCatalog()
 
-def addConversation(self
-                  , id
-                  , title=''):
-    """Factory method for creating conversation."""
-    fconversation = Conversation(id, title)
-    self._setObject(id, fconversation)
-
-Globals.InitializeClass(Conversation)
-
+registerType(PloneboardConversation, PROJECTNAME)
+Globals.InitializeClass(PloneboardConversation)

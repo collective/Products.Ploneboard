@@ -1,49 +1,79 @@
 """
-$Id: __init__.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: __init__.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
 """
 
-import Ploneboard, Forum, Conversation, Message, PloneboardPermissions
-from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import ToolInit, ContentInit
+from Globals import package_home
+from Products.CMFCore import utils
+from Products.Archetypes.public import process_types, listTypes
+from Products.Archetypes.ArchetypeTool import getType
+from Products.CMFCore import utils
 from Products.CMFCore.DirectoryView import registerDirectory
-
 from PloneboardTool import PloneboardTool
+import os, os.path
 
-ploneboard_globals=globals()
+from config import SKINS_DIR, GLOBALS, PROJECTNAME
+from config import ADD_BOARD_PERMISSION, ADD_FORUM_PERMISSION, ADD_MESSAGE_PERMISSION
 
-# PloneboardWorkflow requires ploneboard_globals
+# PloneboardWorkflow requires GLOBALS
 import PloneboardWorkflow
 
-# Make the skins available as DirectoryViews.
-registerDirectory('skins', ploneboard_globals)
+registerDirectory(SKINS_DIR, GLOBALS)
 
-def initialize( context ):
+def initialize(context):
+    ##Import Types here to register them
+    import Ploneboard
+    import PloneboardForum
+    import PloneboardConversation
+    import PloneboardMessage
+
+    ploneboard_content_type, ploneboard_constructor, ploneboard_fti = process_types(
+        (getType('Ploneboard', PROJECTNAME), ),
+        PROJECTNAME)
+    forum_content_type, forum_constructor, forum_fti = process_types(
+        (getType('PloneboardForum', PROJECTNAME), ),
+        PROJECTNAME)
+    conversation_content_type, conversation_constructor, conversation_fti = process_types(
+        (getType('PloneboardConversation', PROJECTNAME), ),
+        PROJECTNAME)
+    message_content_type, message_constructor, message_fti = process_types(
+        (getType('PloneboardMessage', PROJECTNAME), ),
+        PROJECTNAME)
     
-    ToolInit('Ploneboard Tool', 
+    utils.ToolInit('Ploneboard Tool', 
             tools=(PloneboardTool, ), 
             product_name='Ploneboard',
             icon='tool.gif'
             ).initialize(context)
 
-    ContentInit( 'Ploneboard Content'
-               , content_types=(Ploneboard.Ploneboard,)
-               , permission=PloneboardPermissions.AddBoard
-               , extra_constructors=(Ploneboard.addPloneboard,)
-               , fti=Ploneboard.factory_type_information
-               ).initialize( context )
+    #content_types, constructors, ftis = process_types(
+    #    listTypes(PROJECTNAME),
+    #    PROJECTNAME)
+
+    #utils.ContentInit(
+    #    PROJECTNAME + ' Content',
+    #    content_types      = content_types,
+    #    permission         = ADD_BOARD_PERMISSION,
+    #    extra_constructors = constructors,
+    #    fti                = ftis,
+    #    ).initialize(context)
+    utils.ContentInit('Ploneboard Content',
+            content_types=ploneboard_content_type,
+            permission=ADD_BOARD_PERMISSION,
+            extra_constructors=ploneboard_constructor,
+            fti=ploneboard_fti
+            ).initialize( context )
 
     # Register manually for each type instead of using utils.ContentInit, 
     # as they need different permissions.
 
-    context.registerClass(Forum.Forum,
-                          constructors = (Forum.addForum,),
-                          permission = PloneboardPermissions.AddBoard)
+    context.registerClass(PloneboardForum.PloneboardForum,
+                          constructors = forum_constructor,
+                          permission = ADD_FORUM_PERMISSION)
 
-    context.registerClass(Conversation.Conversation,
-                          constructors = (Conversation.addConversation,),
-                          permission = PloneboardPermissions.AddMessage)
+    context.registerClass(PloneboardConversation.PloneboardConversation,
+                          constructors = conversation_constructor,
+                          permission = ADD_MESSAGE_PERMISSION)
 
-    context.registerClass(Message.Message,
-                          constructors = (Message.addMessage,),
-                          permission = PloneboardPermissions.AddMessage)
-
+    context.registerClass(PloneboardMessage.PloneboardMessage,
+                          constructors = message_constructor,
+                          permission = ADD_MESSAGE_PERMISSION)
