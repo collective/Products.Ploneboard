@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.17 2004/05/15 01:53:07 tiran Exp $
+$Id: ATDocument.py,v 1.18 2004/05/20 22:59:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -150,6 +150,13 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         if isinstance(request, HTTPRequest):
             return request.get(tidyAttribute, None)
 
+    def _notifyOfCopyTo(self, container, op=0):
+        """Overide this to store a flag when we are copied, to be able
+        to discriminate the right thing to do in manage_afterAdd here
+        below.
+        """
+        self._v_renamed = 1 
+
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, item, container):
         """
@@ -159,7 +166,11 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         ATCTContent.manage_afterAdd(self, item, container)
 
         field    = self.getField('text')
-        mimetype = self.guessMimetypeOfText()
+        if hasattr(self, '_v_renamed'):
+            mimetype = field.getContentType(self)
+            del self._v_renamed
+        else:
+            mimetype = self.guessMimetypeOfText()
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator
         tidyOutput = self.getTidyOutput(field)
