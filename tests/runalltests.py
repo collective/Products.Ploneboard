@@ -4,21 +4,20 @@
 # Execute like:
 #   python runalltests.py
 #
-# Alternatively use the testrunner: 
+# Alternatively use the testrunner:
 #   python /path/to/Zope/utilities/testrunner.py -qa
 #
 
 import os, sys
 if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py')) 
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
 import unittest
 TestRunner = unittest.TextTestRunner
 suite = unittest.TestSuite()
 
-tests = os.listdir('.')
+tests = os.listdir(os.curdir)
 tests = [n[:-3] for n in tests if n.startswith('test') and n.endswith('.py')]
-print tests
 
 for test in tests:
     m = __import__(test)
@@ -27,4 +26,3 @@ for test in tests:
 
 if __name__ == '__main__':
     TestRunner().run(suite)
-
