@@ -49,8 +49,6 @@ groupuserfolder_globals=globals()
 ##  CMF / Plone SUPPORT END...  ##
 ##################################
 
-Log(LOG_NOTICE, "Loaded GroupUserFolder.")
-
 
 def initialize(context):
 
