@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.22 2004/06/09 22:31:38 yenzenz Exp $
+$Id: config.py,v 1.23 2004/06/10 08:30:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -79,7 +79,7 @@ TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 
 ## use RestrainedMixin?
 ## if enabled you can restrain allowed types.on a ATCT Folder
-ENABLE_RESTRAIN_TYPES_MIXIN = True
+ENABLE_RESTRAIN_TYPES_MIXIN = False
 RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 #RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 #RESTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
@@ -102,7 +102,9 @@ GLOBALS = globals()
 
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
                  'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
-                 'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE', )
+                 'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE',
+                 'ENABLE_RESTRAIN_TYPES_MIXIN', 'RESTRAIN_TYPES_MIXIN_PERMISSION',
+                 )
 
 ## using special plone 2 stuff?
 try:
