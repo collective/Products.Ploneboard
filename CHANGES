@@ -1,5 +1,8 @@
 v2_0 - 20040302
 
+  * Reindexing new GroupSpace objects
+    2004/03/10 Maik Röder
+
   * Speedup improvements by Heldge Tesdal
 
   * Fixed ZMI overview refreshing bug

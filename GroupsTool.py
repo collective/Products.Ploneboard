@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.21 2004/02/27 16:53:17 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.22 2004/03/19 15:23:28 roeder Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -340,6 +340,8 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 else:
                     space.manage_delLocalRoles(space.users_with_local_role('Owner'))
                     self.setGroupOwnership(self.getGroupById(id), space)
+                portal_catalog = getToolByName( self, 'portal_catalog' )
+                portal_catalog.reindexObject(space)
 
     security.declareProtected(ManagePortal, 'getGroupWorkspaceType')
     def getGroupWorkspaceType(self):
