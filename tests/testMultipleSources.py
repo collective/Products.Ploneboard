@@ -17,7 +17,7 @@ from Testing import ZopeTestCase
 from AccessControl.Permissions import access_contents_information, view, add_documents_images_and_files, change_images_and_files, view_management_screens
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl import Unauthorized
-from Products.CMFCore.CMFCorePermissions import *
+#from Products.CMFCore.CMFCorePermissions import *
 from AccessControl.User import UnrestrictedUser
 
 import urllib
