@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 #  ATContentTypes http://sf.net/projects/collective/
 #  Archetypes reimplementation of the CMF core types
 #  Copyright (c) 2003-2004 AT Content Types development team
@@ -23,13 +24,14 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.19 2004/05/15 01:53:06 tiran Exp $
+$Id: config.py,v 1.20 2004/05/21 18:44:03 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
 from Products.CMFCore import CMFCorePermissions
+import string
 
 try:
     True
@@ -137,3 +139,15 @@ WORKFLOW_CRITERIA = ''
 ## icon map used for overwriting ATFile icons
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}
+
+GOOD_CHARS = string.ascii_letters + string.digits + '._'
+CHAR_MAPPING = {
+    ' ' : '_',
+    'ä' : 'ae',
+    'ö' : 'oe',
+    'ü' : 'ue',
+    'ß' : 'ss',
+    'Ä' : 'Ae',
+    'Ö' : 'Oe',
+    'Ü' : 'Ue',
+    }
