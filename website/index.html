@@ -191,7 +191,9 @@
                     with existing Zope 2.x (> 2.5), without the need to add, patch, modify or do anything to make it work.</li>
                   <li><strong>My existing Zope application ?</strong> Yes, provided you do not use non-official security functions.
                     GRUF is completely transparent.</li>
-                  <li><strong>LDAPUserFolder ?</strong> Yes, with groups beeing stored in LDAP database or not.</li>
+                  <li><strong>LDAPUserFolder ?</strong> Yes, with groups beeing stored in LDAP database or not. Users adding is not
+                  supported now because LDAPUF doesn't comply with standard Zope security API for this part.</li>
+                  <li><strong>ExUserFolder ?</strong> Yes, except for GRUF 1.3 version.</li>
                   <li><strong>SimpleUserFolder ?</strong> Yes.</li>
                   <li><strong>My coffee machine ?</strong> Not yet, but we're actively working on it&nbsp;!</li>
                 </ul>
@@ -208,6 +210,7 @@
                 <ol>
                     <p>Releases are now hosted by SourceForge. The latest release can always be found <a href="http://sourceforge.net/project/showfiles.php?group_id=55262">here</a>.</p>
                     <ul>
+                      <li><b>1.31</b> (2003-07-23): Major speed improvements, cosmetic ZMI improvements</li>
                       <li><b>1.3</b> (2003-07-23): Implemented nested groups feature, major ZMI improvements</li>
                       <li><b>1.21</b> (2003-07-10): Fix in LDAPUserFolder attributes retreiving and cosmetic fixes on ZMI</li>
                       <li><b>1.2</b> (2003-07-10): Major ZMI enhancing and GRUF API improvements</li>
@@ -339,7 +342,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                 <font size="-3">
                   <!-- Created: Wed Jul  9 15:52:57 GMT 2003 -->
                   <!-- hhmts start -->
-Last modified: Wed Jul 23 15:18:10 GMT 2003
+Last modified: Thu Jul 31 09:03:27 GMT 2003
 <!-- hhmts end -->
                 </font>
               </p>

@@ -1,3 +1,12 @@
+v1_31 - 20030731
+
+  * Many performance improvements (tree and audit views)
+
+  * Fixed a recursion pb. on the left pane tree (!)
+
+  * Added a batch view for "overview" page when there's more than
+    100 users registered in the system
+
 v1_3 - 20030723
 
   * GRUF NOW SUPPORTS NESTED GROUPS - Transparently, of course.
