@@ -18,7 +18,7 @@ factory_type_information = {
     , 'actions'        :
     (  { 'id'            : 'edit'
          , 'name'          : 'Edit'
-         , 'action'        : 'folder_edit_form'
+         , 'action'        : 'portal_form/folder_edit_form'
          , 'permissions'   :
          (CMFCorePermissions.ManageProperties,)
          , 'category'      : 'folder'
@@ -39,7 +39,7 @@ factory_type_information = {
           }
        ,{ 'id'            : 'settings' 
           , 'name'          : 'Settings'
-          , 'action'        : 'photo_settings_form'
+          , 'action'        : 'portal_form/photo_settings_form'
           , 'permissions'   :
           (CMFCorePermissions.View,)
           , 'category'      : 'object'
@@ -60,14 +60,14 @@ factory_type_information = {
           }
        ,{ 'id'            : 'settings' 
           , 'name'          : 'Settings'
-          , 'action'        : 'photo_settings_form'
+          , 'action'        : 'portal_form/photo_settings_form'
           , 'permissions'   :
           (CMFCorePermissions.View,)
           , 'category'      : 'folder'
           }
        , { 'id'            : 'local_roles'
            , 'name'          : 'Local Roles'
-           , 'action'        : 'folder_localrole_form'
+           , 'action'        : 'portal_form/folder_localrole_form'
            , 'permissions'   :
            (CMFCorePermissions.ManageProperties,)
            , 'category'      : 'folder'
