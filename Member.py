@@ -449,11 +449,13 @@ class BaseMember:
             for action in actions:
                 if action.id == 'view':
                     if _verifyActionPermissions(self, action):
-                        url=action.action(createExprContext(self.aq_parent,getToolByName(self,'portal_url').getPortalObject(),self))
-                        path=urllib.splithost(urllib.splittype(url)[1])[1]
-                        # strip the leading slash or traverse will try to
-                        # find portal_memberdata in the zmi's root (and fail!)
-                        action = self.restrictedTraverse(path[1:])
+                        purl = getToolByName(self, 'portal_url')
+                        portal = purl.getPortalObject()
+                        expr = createExprContext(self.aq_parent, portal, self)
+                        url = action.action(expr)
+                        pplen = len(purl().split('/'))
+                        path = '/'.join(url.split('/')[pplen:])
+                        action = self.restrictedTraverse(path)
                         if action is not None:
                             return action(**kwargs)
 
