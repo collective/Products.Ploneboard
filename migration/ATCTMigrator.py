@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.8 2004/06/09 13:59:19 tiran Exp $
+$Id: ATCTMigrator.py,v 1.9 2004/06/10 15:19:37 tiran Exp $
 """
 
 from common import *
@@ -66,12 +66,25 @@ class EventMigrator(CMFItemMigrator):
             'location'      : 'setLocation',
             'Subject'       : 'setEventType',
             'event_url'     : 'setEventUrl',
-            'start_date'    : 'setStartDate',
-            'end_date'      : 'setEndDate',
+            #'start_date'    : 'setStartDate',
+            #'end_date'      : 'setEndDate',
             'contact_name'  : 'setContactName',
             'contact_email' : 'setContactEmail',
             'contact_phone' : 'setContactPhone',
           }
+          
+    def custom(self):
+        sdate = self.old.start_date
+        edate = self.old.end_date
+        
+        if sdate is None:
+            sdate = self.old.created()
+        if edate is None:
+            edate = sdate
+        
+        self.new.setStartDate(sdate)
+        self.new.setEndDate(edate)
+        
 
 class FileMigrator(CMFItemMigrator):
     fromType = ATFile.ATFile.newTypeFor[0]

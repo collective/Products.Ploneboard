@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.14 2004/06/10 08:25:34 tiran Exp $
+$Id: ATContentType.py,v 1.15 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -124,6 +124,7 @@ class ATCTMixin(TemplateMixin):
         cmf edit() method
         """
         if len(args) != 0:
+            #print "Len != 0"
             # use cmf edit method
             return self.cmf_edit(*args, **kwargs)
         
@@ -131,6 +132,7 @@ class ATCTMixin(TemplateMixin):
         for name in kwargs.keys():
             if name not in fieldNames:
                 # we are trying to
+                #print "unknow kwarg %s" % name
                 return self.cmf_edit(**kwargs)
         # standard AT edit - redirect to update()
         return self.update(**kwargs)

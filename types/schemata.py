@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.31 2004/06/09 22:31:39 yenzenz Exp $
+$Id: schemata.py,v 1.32 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -152,7 +152,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   required = 1,
                   searchable = 1,
                   accessor='start',
-                  default=DateTime(),
+                  default_method=DateTime,
                   languageIndependent=True,
                   widget = CalendarWidget(description="Enter the starting date and time, or click the calendar icon and select it. ",
                                           description_msgid = "help_event_start",
@@ -164,7 +164,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   required = 1,
                   searchable = 1,
                   accessor='end',
-                  default=DateTime(),
+                  default_method=DateTime,
                   languageIndependent=True,
                   widget = CalendarWidget(description= "Enter the ending date and time, or click the calendar icon and select it. ",
                                           description_msgid = "help_event_end",

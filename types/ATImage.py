@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.17 2004/06/10 09:00:39 tiran Exp $
+$Id: ATImage.py,v 1.18 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -91,8 +91,12 @@ class ATImage(ATCTFileContent):
         return self.image.tag(*args, **kwargs)
 
     security.declarePrivate('cmf_edit')
-    def cmf_edit(self, precondition='', file='', title=''):
-        self.update(image=file, title=title)
+    def cmf_edit(self, precondition='', file=None, title=None):
+        if file is not None:
+            self.setImage(file)
+        if title is not None:
+            self.setTitle(title)
+        self.reindexObject()
 
 registerType(ATImage, PROJECTNAME)
 

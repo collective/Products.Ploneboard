@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.22 2004/05/26 08:55:54 tiran Exp $
+$Id: ATFile.py,v 1.23 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -172,6 +172,11 @@ class ATFile(ATCTFileContent):
             source+=data
 
         return source, mimetype, encoding
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, precondition='', file=None):
+        if file is not None:
+            self.setFile(file)
 
 registerType(ATFile, PROJECTNAME)
 

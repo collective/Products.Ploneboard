@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.18 2004/06/01 12:18:29 godchap Exp $
+$Id: ATTopic.py,v 1.19 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -97,6 +97,7 @@ class ATTopic(ATCTFolder):
         """
         return criteriaType in self.criteriaByIndexId(indexId)
 
+    security.declareProtected(ChangeTopics, 'criteriaByIndexId')
     def criteriaByIndexId(self, indexId):
         catalog_tool = getToolByName(self, CatalogTool.id)
         indexObj = catalog_tool.Indexes[indexId]
@@ -152,7 +153,7 @@ class ATTopic(ATCTFolder):
         return val
 
     security.declareProtected(ChangeTopics, 'listCriteria')
-    def listCriteria( self ):
+    def listCriteria(self):
         """Return a list of our criteria objects.
         """
         val = self.objectValues(self.listCriteriaMetaTypes())
@@ -160,20 +161,20 @@ class ATTopic(ATCTFolder):
         return val
 
     security.declareProtected(ChangeTopics, 'listSearchCriteria')
-    def listSearchCriteria( self ):
+    def listSearchCriteria(self):
         """Return a list of our search criteria objects.
         """
         return [val for val in self.listCriteria() if
              IATTopicSearchCriterion.isImplementedBy(val)]
 
     security.declareProtected(ChangeTopics, 'hasSortCriteria')
-    def hasSortCriterion( self ):
+    def hasSortCriterion(self):
         """Tells if a sort criterai is already setup.
         """
         return not self.getSortCriterion() is None
 
     security.declareProtected(ChangeTopics, 'getSortCriterion')
-    def getSortCriterion( self ):
+    def getSortCriterion(self):
         """Return the Sort criterion if setup.
         """
         for criterion in self.listCriteria():
@@ -181,7 +182,7 @@ class ATTopic(ATCTFolder):
                 return criterion
         return None
 
-    security.declareProtected(ChangeTopics, 'setSortCriterion')
+    security.declareProtected(ChangeTopics, 'removeSortCriterion')
     def removeSortCriterion( self):
         """remove the Sort criterion.
         """
@@ -246,8 +247,8 @@ class ATTopic(ATCTFolder):
         if self.getAcquireCriteria():
             try:
                 # Tracker 290 asks to allow combinations, like this:
-                # parent = aq_parent( self )
-                parent = aq_parent( aq_inner( self ) )
+                # parent = aq_parent(self)
+                parent = aq_parent( aq_inner(self) )
                 result.update( parent.buildQuery() )
             except: # oh well, can't find parent, or it isn't a Topic.
                 pass
@@ -309,5 +310,12 @@ class ATTopic(ATCTFolder):
         ti = self.getTypeInfo()
         ti.constructInstance(self, id)
         return self._getOb( id )
+
+    security.declarePrivate('synContentValues')
+    def synContentValues(self):
+        """Getter for syndacation support
+        """
+        results = [brain.getObject() for brain in self.queryCatalog()]
+        return [obj for obj in results if obj]
 
 registerType(ATTopic)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.21 2004/06/09 13:59:19 tiran Exp $
+$Id: ATDocument.py,v 1.22 2004/06/10 15:19:37 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -81,12 +81,6 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     
     # backward compat
     text_format = 'text/plain'
-
-    security.declarePrivate('cmf_edit')
-    def cmf_edit(self, text_format, text, file='', safety_belt='', **kwargs):
-        assert file == '', 'file currently not supported' # XXX
-        self.setText(text, mimetype=text_format)
-        self.update(**kwargs)
 
     security.declareProtected(CMFCorePermissions.View, 'CookedBody')
     def CookedBody(self, stx_level='ignored'):
@@ -201,5 +195,11 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             field.set(self, tidyOutput)
         elif mimetype:
             self.setContentType(mimetype, skipField=False)
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, text_format, text, file='', safety_belt='', **kwargs):
+        assert file == '', 'file currently not supported' # XXX
+        self.setText(text, mimetype=text_format)
+        self.update(**kwargs)
 
 registerType(ATDocument, PROJECTNAME)
