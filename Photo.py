@@ -198,7 +198,7 @@ class Photo(Image):
             imgout=convert.fromchild
             imgin=convert.tochild
 
-        imgin.write(self.data.data)
+        imgin.write(str(self.data))
         imgin.close()
         image.write(imgout.read())
         imgout.close()
@@ -229,7 +229,7 @@ class Photo(Image):
             imgout=convert.fromchild
             imgin=convert.tochild
 
-        imgin.write(self.data.data)
+        imgin.write(str(self.data))
         imgin.close()
         image.write(imgout.read())
         imgout.close()
