@@ -14,6 +14,6 @@ new_ob.setTarget(uid)
 
 compo = portal.restrictedTraverse(compopage_path)
 compo.incrementVersion('Add element')
-pageDesignUrl = compo.absolute_url() + '/design?ui=plone'
+pageDesignUrl = compo.absolute_url() + '/design_view'
 
 return context.REQUEST.RESPONSE.redirect(pageDesignUrl)

@@ -10,6 +10,6 @@ portal = context.portal_url.getPortalObject()
 compo = portal.restrictedTraverse(compopage_path)
 compo.incrementVersion('Change viewlet')
 
-pageDesignUrl = compo.absolute_url() + '/design?ui=plone'
+pageDesignUrl = compo.absolute_url() + '/design_view'
 request.RESPONSE.redirect(pageDesignUrl)
 
