@@ -1,0 +1,14 @@
+.atcontenttypes-diff {
+    min-height: 2em;
+    border: 1px solid #8cacbb;
+    background-color: #eeeeee;
+}
+
+.atcontenttypes-del {
+    color: red;
+}
+
+.atcontenttypes-ins {
+    color: green;
+    text-decoration: none;
+}

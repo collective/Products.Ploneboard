@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:block metal:fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string:@import url($portal_url/atcontenttypes.css);"></style>
+</metal:block>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+    tal:define="histories here/getDocumentComparisons">
+    <h1 tal:content="string:Changes of ${here/Title}" class="documentFirstHeading">History</h1>
+
+    <tal:histories tal:repeat="history histories" tal:condition="histories">
+      <h3>Comparison between
+          <span tal:content="python:here.toPortalTime(history['oldTime'], 1)" />
+          and
+         <span tal:content="python:here.toPortalTime(history['newTime'], 1)" />
+      </h3>
+
+      <dl>
+       <dt>Comment</dt>
+       <dd tal:content="history/description" />
+       <dt>User</dt>
+       <dd tal:content="history/user" />
+      </dl>
+      <div class="atcontenttypes-diff"
+           tal:content="structure python:here.formatHistoryDiff(history['lines'])">
+      </div>
+
+    </tal:histories>
+
+    <tal:nohistories tal:condition="not: histories">
+      <p>
+       No history available for this document
+      </p>
+    </tal:nohistories>
+
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
