@@ -5,7 +5,7 @@
 
   <metal:block fill-slot="head_slot">
         <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels.css" />
-        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels_skins.css" />
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanelsCustom.css" />
   </metal:block>
 
 <body>

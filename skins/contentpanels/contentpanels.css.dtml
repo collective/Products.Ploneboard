@@ -1,8 +1,8 @@
 /* <dtml-with base_properties> (do not remove this :) */
 
-/* The basic elements: */
+/* content style */
 
-* .sameline {
+.sameline {
     background: #dee7ec url(linkOpaque.gif) 9px 1px no-repeat;
     cursor: hand;
     font-size: 80%;
@@ -12,12 +12,17 @@
 
 .cpTools {
     background-color: &dtml-contentViewBackgroundColor;;
-    
 }
 
 .smallTitle {
     border-bottom: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
 }
+
+/*
+** end content style
+** ------------------------------
+** begin page tab
+*/
 
 .cpPages {
     background-color: transparent;
@@ -62,6 +67,69 @@
     background-color: &dtml-contentViewBackgroundColor;;
     color: &dtml-contentViewFontColor;;
 }
+
+/*
+** end page tab
+** ---------------------------------------- 
+** begin viewlet skins
+*/
+
+/* common viewlet skins, fix plone portlet css */
+
+.viewlet .portletContent {
+    padding: 0.5em;
+}
+
+.viewlet ul,
+.viewlet ol {
+    margin: 0.5em 0 0 1.5em;
+    padding: 0;
+    line-height: 1.5em;
+}
+
+.viewlet ul li{
+    list-style: square;
+    list-style-image: url(&dtml-portal_url;/bullet.gif);
+     margin-bottom: 1em;
+}
+
+.viewlet ol li{
+    list-style: decimal;
+     margin-bottom: 1em;
+}
+
+/* default viewlet skins */
+
+/* no title skin */
+.notitlePortletWrapper h5 {
+    display: none;
+}
+
+.notitlePortletWrapper .portletBody {
+    background: #FCFCFC;
+    border: none;
+}
+
+/* zopezen skin */
+.zopezenPortletWrapper h5 {
+    background: &dtml-backgroundColor;;
+    font-style: normal;
+    border: none;
+    text-transform: capitalize;
+}
+
+.zopezenPortletWrapper .portletBody {
+    background: #FCFCFC;
+    border: none;
+    border-top: 1px solid black;
+}
+
+/* default box */
+.boxPortletWrapper h5 {
+  margin: 0 0 0 0;
+  display: block
+}
+
 
 /* </dtml-with>  */
 

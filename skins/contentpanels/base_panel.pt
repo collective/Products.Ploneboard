@@ -5,7 +5,7 @@
 
     <metal:block use-macro="here/global_defines/macros/defines" />
 
-    <div class="portlet-wrap" tal:attributes="class options/panelSkin" >
+    <div class="portlet-wrap" tal:attributes="class string:viewlet ${options/panelSkin}" >
         <metal:block tal:condition="usemacro">
            <metal:block metal:use-macro="python:path(viewletPath)" />
         </metal:block>

@@ -10,19 +10,19 @@ V2.0
 
 - submit to Plone as a portlet proposal
 
-- view refinement
+- (done)view refinement
 
 - (done) viewlet title should be clickable
 
-- description should add to document view 
+- (refuse) description should add to document view 
 
-- bug: css refinement: bulleted list not work now
+- (done)bug: css refinement: bulleted list not work now
 
 - more choice (select viewlet) in the popup windows.
 
 - bug: empty folder will cause recent folder viewlet broken.
 
-- a new css which support content icon
+- (done)a new css which support content icon
 
 - > Also, you mention in the documentation that there are heirarchical content
   panels - I assumed that when you click the 'add panel' button inside a panel

@@ -13,7 +13,9 @@
 
          <div class="portletBody">
 
-            <img tal:attributes="src here/absolute_url"/>
+            <div class="portletContent">
+               <img tal:attributes="src here/absolute_url"/>
+            </div>
 
          </div>
      </div>
