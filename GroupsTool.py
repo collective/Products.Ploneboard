@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.2 2003/06/26 13:36:51 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.3 2003/06/26 16:04:52 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -21,11 +21,7 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import SetOwnPassword
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 
-try:
-    from interfaces.portal_groups import portal_groups as IGroupsTool
-except ImportError:
-    # If this fails, that's probably 'cause we are with a Plone version < 1.1
-    IGroupsTool = None
+from interfaces.portal_groups import portal_groups as IGroupsTool
      
 
 class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
@@ -35,7 +31,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     different way.
     """
     # Show implementation only if  IGroupsTool is defined
-    if IGroupsTool:
+    if hasattr(ActionProviderBase, '__implements__'):
         __implements__ = (IGroupsTool, ActionProviderBase.__implements__)
 
     id = 'portal_groups'

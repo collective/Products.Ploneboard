@@ -108,7 +108,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
                 ===================================================================
         a                                                                       R,W
         b                                       R                               R,W
-        c       R                                                               R,W
+        c       role1                           R                               R,W
         
         """
         # Replace default acl_user by a GRUF one
@@ -135,8 +135,8 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         # Create a few folders to play with
         self.folder.manage_addProduct['OFSP'].manage_addFolder('a')
         self.folder.manage_addProduct['OFSP'].manage_addFolder('b')
-        self.folder.b.manage_addLocalRoles('
         self.folder.manage_addProduct['OFSP'].manage_addFolder('c')
+        self.folder.b.manage_addLocalRoles("group1", "role_test")
 
         # Create a few documents to play with
         self.folder.addDTMLMethod('index_html', file='index_html: <dtml-var objectIds>')
