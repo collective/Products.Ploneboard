@@ -48,8 +48,14 @@
 
 .boardMessage {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    margin-top: 1.5em;
+    margin-bottom: 1.5em;
     position: relative;
+}
+
+* html .boardMessage {
+    float: left;
+    clear: both;
+    width: 99%;
 }
 
 .boardMessageDetails {
@@ -71,6 +77,10 @@
     position: absolute;
     top: 0.5em;
     right: 0.5em;
+}
+
+.boardMessageActions {
+    right: 1em:
 }
 
 .boardMessagePortrait {
