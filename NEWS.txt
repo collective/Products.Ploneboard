@@ -1,3 +1,13 @@
+1.0fork-beta4 - 2004-01-28
+
+    Read all files with "rb" in msgfmt.py
+
+    Display broken Message Catalogs in ControlPanel as "broken"
+
+    Synced with these latest PTS changes from savannah:
+      - added as_unicode argument to translate
+      - cleaned up msgfmt.py
+
 1.0fork-beta3 - 2004-01-07
 
     Added a builtin mo compiler based on the msgfmt tool from the python source
@@ -9,7 +19,7 @@
 1.0fork-beta2 - 2003-11-24
 
     No longer register a persistent service to zope translation
-    service registrs. Instead wrap PTS with a non persistent class
+    service registry. Instead wrap PTS with a non persistent class
 
     Added a de (German) translation for PTS ZMI
 
