@@ -19,5 +19,6 @@ return {
         , 'Forum': 'forum_panel_view'
         ,  'CMF BTree Folder':'folder_panel_view'
         ,  'CMF Wiki Page':'cmfwikipage_panel_view'
+        , 'ZWiki Page':'cmfwikipage_panel_view'
        }
 

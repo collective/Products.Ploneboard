@@ -6,6 +6,10 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
 
+  <span metal:fill-slot="base" tal:omit-tag="">
+    <base tal:attributes="href string:${here/absolute_url}/" />
+  </span>
+
 <body>
 
     <td metal:fill-slot="main"
