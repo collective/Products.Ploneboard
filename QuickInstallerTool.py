@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.27 2003/11/14 23:47:25 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.28 2003/11/19 02:42:50 zopezen Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -34,6 +34,8 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from InstalledProduct import InstalledProduct
 
 from interfaces.portal_quickinstaller import IQuickInstallerTool
+from exceptions import RuntimeError
+from zLOG import LOG
 
 class AlreadyInstalled(Exception):
     """ Would be nice to say what Product was trying to be installed """
@@ -82,8 +84,16 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
             try:
                 return ExternalMethod('temp','temp',productname+'.'+mod, func)
+            except RuntimeError, msg:
+                # external method can throw a bunch of these
+                msg = "RuntimeError: %s" % msg
+                LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
             except:
-                pass
+                # catch a string exception
+                err = sys.exc_type
+                if err != "Module Error":
+                    msg = "%s: %s" % (err, sys.exc_value)
+                    LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
 
         return None
 
