@@ -13,7 +13,7 @@ from cStringIO import StringIO
 
 from Products.ATBiblioList import PROJECTNAME, GLOBALS
 from Products.ATBiblioList.config import formcontroller_transitions
-from Products.ATBiblioList.formatters.MinimalFormat import MinimalFormat
+#from Products.ATBiblioList.styles.Minimal import MinimalBibrefStyle
 
 #
 # Install functions

@@ -1,14 +1,18 @@
 Description
 
-  A simple product to let Plone users create their own bibliography lists.
+  This product is an add-on to Raphael Ritz's CMFBibliographyAT.
+
 
 What It Does
 
   * Installs the 'Bibliography List' content type.
 
+  * Installs the 'portal_bibliolist' tool.
+
+
 Requirements
 
-  * Plone 2.x / CMF 1.5 / Archetypes 1.3
+  * Plone 2+ / Archetypes 1.2.5+
   
   * CMFBibliographyAT
 
@@ -19,19 +23,26 @@ Installation
 
   * Or: create an external method at the root of your cmf portal and run it by clicking its 'test' tab.
 
-    - Id           : InstallATBiblioList
+    - Id            : InstallATBiblioList
 
-    - Title        : Install ATBiblioList (optional)
+    - Title         : Install ATBiblioList (optional)
 
-    - Module Name  : InstallATBiblioList.Install
+    - Module Name   : InstallATBiblioList.Install
 
-    - Function Name: install
+    - Function Name : install
+
 
 Contact
 
   David Convent - david.convent(at)naturalsciences(dot)be
 
   Louis Wannijn - louis.wannijn(at)naturalsciences(dot)be
+
+
+Licence
+
+  See Licence.txt
+
 
 To Do
 

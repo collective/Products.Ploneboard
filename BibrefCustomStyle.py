@@ -1,11 +1,14 @@
 ##########################################################################
 #                                                                        #
-#      written by: David Convent, david.convent@naturalsciences.be       #
-#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
+#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
+#                       and contributors                                 #
+#                                                                        #
+#    project leader: David Convent, david.convent@naturalsciences.be     #
+#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
 #                                                                        #
 ##########################################################################
 
-""" ReferencePresentation:
+""" BibrefCustomStyle:
     Presentation format to convert a bibliographic references list
     in a html format ready for publishing
 """
@@ -20,16 +23,16 @@ from Products.Archetypes.public import RichWidget, IdWidget, StringWidget
 from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import TypesWidget
 
-from BiblioListFormatter import IBiblioListFormatter
+from BibrefStyle import IBibrefStyle
 
 from Products.ATBiblioList.config import *
 #from Products.ATBiblioList.dummy_refs import dummy_refs
 
 try:
     import roman
-    HAVEDOCUTILS = 1
+    HASDOCUTILS = 1
 except ImportError:
-    HAVEDOCUTILS = None
+    HASDOCUTILS = None
 
 schema = BaseSchema + Schema((
     TextField('refDisplay',
@@ -39,7 +42,7 @@ schema = BaseSchema + Schema((
               vocabulary=FORMAT_GENERICSTRING_STYLES,
               default_content_type = 'text/html',
               default_output_type = 'text/html',
-              default= DEFAULT_REFS_DISPLAY,
+              default = DEFAULT_REFS_DISPLAY,
               allowable_content_types = ( 'text/html',),
               widget=EpozWidget(label='Format',
                           label_refpresentation_msgid="label_refpresentation_formatandorder",
@@ -121,7 +124,7 @@ schema = BaseSchema + Schema((
     StringField('titleFormat',
                 searchable=0, 
                 multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
+                vocabulary=FORMAT_TITLE_STYLES,
                 widget=SelectionWidget(format='select',
                           label='PublicationTitle (%T)',
                           label_refpresentation_msgid="label_refpresentation_titleformat",
@@ -137,28 +140,7 @@ schema = BaseSchema + Schema((
                           description="Check if authors link to their URL (if URL exists).",
                           i18n_domain="plone"),
                  ),
-    StringField('publicationYearFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_YEAR_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Publication year (%y)',
-                          label_refpresentation_msgid="label_refpresentation_publicationyearformat",
-                          description_msgid="help_refpresentation_publicationyearformat",
-                          description='Choose a format on how to present years.',
-                          i18n_domain="plone"),
-                ),
-    StringField('publicationMonthFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_MONTH_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Publication month (%m)',
-                          label_refpresentation_msgid="label_refpresentation_publicationmonthformat",
-                          description_msgid="help_refpresentation_publicationmonthformat",
-                          description='Choose a format on how to present months.',
-                          i18n_domain="plone"),
-                ),
+
     StringField('journalFormat',
                 searchable=0, 
                 multivalued=0,
@@ -170,7 +152,7 @@ schema = BaseSchema + Schema((
                           description='Choose a format on how to present the Journal name.',
                           i18n_domain="plone"),
                 ),))
-if HAVEDOCUTILS:
+if HASDOCUTILS:
     schema = schema + Schema((
     StringField('pagesFormat',
                 searchable=0, 
@@ -231,7 +213,7 @@ schema = schema + Schema((
     StringField('seriesFormat',
                 searchable=0, 
                 multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
+                vocabulary=FORMAT_TITLE_STYLES,
                 widget=SelectionWidget(format='select',
                           label='Series Format (%s)',
                           label_refpresentation_msgid="label_refpresentation_seriesformat",
@@ -239,55 +221,10 @@ schema = schema + Schema((
                           description_msgid="help_refpresentation_seriesformat",
                           i18n_domain="plone"),
                 ),
-    StringField('howPublishedFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Medium how it got published (%h)',
-                          label_refpresentation_msgid="label_refpresentation_howpublishedformat",
-                          description_msgid="help_refpresentation_howpublishedformat",
-                          description='Choose a fitting format for this field.',
-                          i18n_domain="plone"),
-                ),
-    StringField('editorFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Editor(s) (%E)',
-                          label_refpresentation_msgid="label_refpresentation_editorformat",
-                          description_msgid="help_refpresentation_editorformat",
-                          description='Choose a fitting format for the editors names.',
-                          i18n_domain="plone"),
-                ),
-    # StringField('editorFlagFormat',
-    #           searchable=0, 
-    #           multivalued=0,
-    #           vocabulary=FORMAT_GENERICSTRING_STYLES,
-    #           widget=SelectionWidget(format='select',
-    #                      label='EditorFlag (%F)',
-    #                      label_refpresentation_msgid="label_refpresentation_editorflagformat",
-    #                      description_msgid="help_refpresentation_editorflagformat",
-    #                      description='Choose a fitting format for the editor flag.',
-    #                      i18n_domain="plone"),
-    #           ),
-    # 
-    StringField('publisherFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Publisher (%P)',
-                          label_refpresentation_msgid="label_refpresentation_publisherformat",
-                          description='Choose a fitting format for the publisher name.',
-                          description_msgid="help_refpresentation_publisherformat",
-                          i18n_domain="plone"),
-                ),
     StringField('bookTitleFormat',
                 searchable=0, 
                 multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
+                vocabulary=FORMAT_TITLE_STYLES,
                 widget=SelectionWidget(format='select',
                           label='Title of Book (for inbook reference) (%B)',
                           label_refpresentation_msgid="label_refpresentation_booktitleformat",
@@ -295,79 +232,36 @@ schema = schema + Schema((
                           description_msgid="help_refpresentation_booktitleformat",
                           i18n_domain="plone",)
                 ),
-    StringField('schoolFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='School publishing the proceeding (%S)',
-                          label_refpresentation_msgid="label_refpresentation_schoolformat",
-                          description='Choose a fitting format for the name of the school.',
-                          description_msgid="help_refpresentation_schoolformat",
-                          i18n_domain="plone",)
-                ),
-    StringField('organizationFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Organization publishing the proceeding (%O)',
-                          label_refpresentation_msgid="label_refpresentation_organizationformat",
-                          description='Choose a fitting format for the name of the organization.',
-                          description_msgid="help_refpresentation_organizationformat",
-                          i18n_domain="plone",)
-                ),
-    StringField('institutionFormat',
-                searchable=0, 
-                multivalued=0,
-                vocabulary=FORMAT_GENERICSTRING_STYLES,
-                widget=SelectionWidget(format='select',
-                          label='Institution publishing the technical report (%I)',
-                          label_refpresentation_msgid="label_refpresentation_institutionformat",
-                          description='Choose a fitting format for the name of the institution.',
-                          description_msgid="help_refpresentation_institutionformat",
-                          i18n_domain="plone",)
-                ),
-    # StringField('typeFormat',
-    #           searchable=0, 
-    #           multivalued=0,
-    #           vocabulary=FORMAT_GENERICSTRING_STYLES,
-    #           widget=SelectionWidget(format='select',
-    #                      label='Type of technical report (%t)',
-    #                      label_refpresentation_msgid="label_refpresentation_typeformat",
-    #                      description='Choose a fitting format for the field.',
-    #                      description_msgid="help_refpresentation_typeformat",
-    #                      i18n_domain="plone",)
-    #           ),
     ))
         
-class ReferencePresentation(BaseContent):
+class BibrefCustomStyle(BaseContent):
     """ object permitting to define a presentation format.
     """
-    __implements__ = (IBiblioListFormatter ,)
+    __implements__ = (IBibrefStyle ,)
 
-    archetype_name = "Bibliography presentation format"
+    archetype_name = "Bibref Custom Style"
 
     global_allow = 0
     
     schema = schema
 
-    def formatList(self, objs):
-        """ renders a formatted bibliography references list
-        """
-        formatted_list = []
-        for obj in objs:
-            formatted_list.append(self.formatEntry(obj))
-        return formatted_list
+    actions = (
+        {'id'          : 'view',
+         'name'        : 'View',
+         'action'      : 'string:${object_url}/bibrefcustomstyle_view',
+         'permissions' : (CMFCorePermissions.View,)
+         },
+               )
 
-    def formatEntry(self, entry):
-        """ renders a formatted bibliography reference """
+    def formatDictionnary(self, refValues):
+        """ formats a bibref dictionnary
+        """
 
         formatstring = self.getRefDisplay()
         formatstring = formatstring.replace('%%', 'EsCaPe')
 
         # Authors
-        authors = entry.getAuthorList()
+        authors = refValues.get('authors')
         new_authors = ''
         new_authors += self.formatAuthor(authors[0])
         if len(authors) > 1:
@@ -381,22 +275,22 @@ class ReferencePresentation(BaseContent):
 
         # Other Fields
         replacedFields = (
-            {'avatar': '%T', 'field': 'title', 'format': self.titleFormat, 'with_url': self.withTitleUrl},
-            {'avatar': '%m', 'field': 'publication_month', 'format': self.publicationMonthFormat},
-            {'avatar': '%y', 'field': 'publication_year', 'format': self.publicationYearFormat},
+            {'avatar': '%T', 'field': 'title', 'format': self.titleFormat, 'with_abs_url': self.withTitleUrl},
+            {'avatar': '%m', 'field': 'publication_month'},
+            {'avatar': '%y', 'field': 'publication_year'},
             {'avatar': '%J', 'field': 'journal', 'format': self.journalFormat},
-            {'avatar': '%I', 'field': 'institution', 'format': self.institutionFormat},
-            {'avatar': '%o', 'field': 'organization', 'format': self.organizationFormat},
+            {'avatar': '%I', 'field': 'institution'},
+            {'avatar': '%o', 'field': 'organization'},
             {'avatar': '%B', 'field': 'booktitle', 'format': self.bookTitleFormat},
             {'avatar': '%p', 'field': 'pages', 'format': self.pagesFormat},
             {'avatar': '%v', 'field': 'volume', 'format': self.volumeFormat},
             {'avatar': '%n', 'field': 'number', 'format': self.numberFormat},
-            {'avatar': '%E', 'field': 'editor', 'format': self.editorFormat},
-            {'avatar': '%P', 'field': 'publisher', 'format': self.publisherFormat},
+            {'avatar': '%E', 'field': 'editor',},
+            {'avatar': '%P', 'field': 'publisher',},
             {'avatar': '%e', 'field': 'edition', 'format': self.editionFormat},
-            {'avatar': '%h', 'field': 'howpublished', 'format': self.howPublishedFormat},
+            {'avatar': '%h', 'field': 'howpublished',},
             {'avatar': '%c', 'field': 'chapter', 'format': self.chapterFormat},
-            {'avatar': '%S', 'field': 'school', 'format': self.schoolFormat},
+            {'avatar': '%S', 'field': 'school',},
             {'avatar': '%s', 'field': 'series', 'format': self.seriesFormat},
             {'avatar': '%a', 'field': 'address'},
             {'avatar': '%i', 'field': 'pmid'},
@@ -406,21 +300,17 @@ class ReferencePresentation(BaseContent):
 
         for replacedField in replacedFields:
             avatar = replacedField.get('avatar')
-            format = replacedField.get('format', None)
-            with_url = replacedField.get('with_url', 0)
+            format = replacedField.get('format')
+            with_abs_url = replacedField.get('with_url')
             replacement = ''
             field_name = replacedField.get('field')
-            field = entry.getField(field_name)
-            if field:
-                value = getattr(entry, field.accessor)()
-                if value:
-                    replacement = self.formatAttribute(value, format)
-                    if with_url:
-                        url = entry.absolute_url()
-                        replacement = '<a href="%s">%s</a>' %(url, replacement)
-            formatstring = formatstring.replace(avatar,replacement)
-
-        formatstring = formatstring.replace('%D', entry.Source())
+            value = refValues.get(field_name)
+            if value:
+                replacement = self.formatAttribute(value, format)
+                if with_abs_url:
+                    url = refValues.absolute_url()
+                    replacement = '<a href="%s">%s</a>' %(url, replacement)
+                formatstring = formatstring.replace(avatar,replacement)
 
         formatstring = formatstring.replace('EsCaPe', '%')
         return formatstring
@@ -468,24 +358,11 @@ class ReferencePresentation(BaseContent):
                 initials = new_initials
             stringvar = ''.join(initials)
 
-        if 'roman' in format and stringvar.isdigit() and HAVEDOCUTILS:
+        if 'roman' in format and stringvar.isdigit() and HASDOCUTILS:
            stringvar = roman.toRoman(int(stringvar))
 
-        if 'upper' in format:
-           stringvar = stringvar.upper()
-        if 'lower' in format:
-           stringvar = stringvar.lower()
-
-        # I think this should be rewritten using built-in python date formatting
-        if 'm01' in format and stringvar.isdigit() and int(stringvar) < 10:
-           # put month in a double digit format
-           stringvar = "0" + stringvar
-        if 'm1' in format and stringvar.isdigit():
-           # put month in a single digit
-           stringvar = string.atoi(stringvar)
-        if 'yxx' in format:
-            if len(stringvar) == 4:
-                stringvar = stringvar[-2:]
+        if 'upper' in format: stringvar = stringvar.upper()
+        if 'lower' in format: stringvar = stringvar.lower()
 
         #not yet implemented...
         if format == '1; 3; 5-8; 10+' in format:
@@ -493,9 +370,17 @@ class ReferencePresentation(BaseContent):
 
         return stringvar.strip()
 
-    def formatDummyRefs(self):
-        """ """
-        return
-        
+    def formatDummyList(self):
+        """ renders a formatted bibref dummy list
+            only used for display in custom style view
+        """
+        bltool = getToolByName(self, 'portal_bibliolist')
+        formatted_list = []
+        for ref in self.dummy_refs():
+            style = self.UID()
+            result = bltool.formatDicoRef(ref, style)
+            formatted_list.append({'type':ref.get('ref_type')+' Reference', 'result':result})
+        return formatted_list
 
-registerType(ReferencePresentation)
+
+registerType(BibrefCustomStyle)

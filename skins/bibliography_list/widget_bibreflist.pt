@@ -1,0 +1,201 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+  <head><title></title></head>
+  <body>
+
+    <!-- Bibrefs List Widget -->
+    <metal:view_macro define-macro="view"
+        tal:define="bl_tool here/portal_bibliolist;
+                    style here/getPresentationStyle;
+                    uids python:getattr(here, field.edit_accessor)();
+                    objs python:[here.archetype_tool.lookupObject(uid = uid) for uid in uids];
+                    list_layout here/getListingLayout|nothing;
+                    formatted_list python:bl_tool.formatList(uids, style)" >
+
+      <ul tal:condition="python:list_layout=='bulleted'">
+        <tal:block repeat="ref formatted_list">
+        <li tal:content="structure ref"
+            tal:condition="ref" />
+        </tal:block>
+      </ul>
+
+      <ol tal:condition="python:list_layout=='ordered'">
+        <tal:block repeat="ref formatted_list">
+        <li tal:content="structure ref"
+            tal:condition="ref" />
+        </tal:block>
+      </ol>
+
+      <div tal:repeat="ref formatted_list"
+           tal:condition="python:list_layout=='lines'">
+        <span tal:replace="structure ref"
+              tal:condition="ref" />
+      </div>
+
+      <table class="listing" tal:condition="python:list_layout=='table'">
+        <thead>
+          <tr>
+            <th class="nosort" i18n:translate="header_bibrefs_listing">
+              Bibliography References
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tal:block repeat="ref formatted_list">
+          <tr tal:define="oddrow repeat/ref/odd;"
+              tal:attributes="class python:test(oddrow, 'even', 'odd')">
+            <td tal:content="structure ref" />
+          </tr>
+          </tal:block>
+        </tbody>
+      </table>
+
+    </metal:view_macro>
+
+    <div metal:define-macro="edit">
+      <div metal:use-macro="here/widgets/field/macros/edit">
+    <div metal:fill-slot="widget_body"
+         tal:define="searchterm python: request.get('searchterm','');
+                     references python: request.get('references',None);
+                     uids python:getattr(here, field.edit_accessor)();
+                     old python:[here.archetype_tool.lookupObject(uid=uid) for uid in uids];
+                     results python:here.searchMatchingReferences(searchterm)">
+
+      <fieldset>
+        <legend>Listed References</legend>
+        <p tal:condition="not:old">Nothing in the bibliography list</p>
+
+        <div tal:condition="old"> <!-- Edit existing references -->
+          <table class="listing">
+            <thead>
+              <th class="nosort"><input class="noborder"
+                                        type="checkbox"
+                                        src="select_all_icon.gif"
+                                        name="selectButton"
+                                        title="Select all items"
+                                        onClick="toggleSelect(this, id='modReferences:list');"
+                                        tal:attributes="src string:$portal_url/select_all_icon.gif"
+                                        alt="Select all items"
+                                        i18n:attributes="title alt"
+                                        />
+              </th>
+              <th class="nosort"
+                  i18n:translate="header_bibliolist_oldrefs">Existing references</th>
+            </thead>
+            <tbody>
+              <tal:block repeat="item old">
+              <tr tal:define="oddrow repeat/item/odd;"
+                  tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+                <td><input type="checkbox"
+                           name="modReferences:list"
+                           tal:define="toi item/title_or_id"
+                           tal:attributes="value item/UID;
+                                           id python: 'cb_'+item.getId();
+                                           checked request/modReferences_checked|nothing;
+                                           tabindex tabindex/next|nothing;
+                                           alt string:Select ${toi};
+                                           title string:Select ${toi}" /></td>
+                <td><a tal:attributes="href item/absolute_url"
+                       tal:content="item/title_or_id">item title or id</a></td>
+              </tr>
+              </tal:block>
+            </tbody>
+          </table>
+          <input type="submit" name="form.button.reference_delete" value="Remove"
+                 i18n:attributes="value" />
+          <input type="submit" name="form.button.reference_up" value="Up"
+                 i18n:attributes="value"/>
+          <input type="submit" name="form.button.reference_down" value="Down"
+                 i18n:attributes="value"/>
+        
+<!--
+        <table> <tr> <th colspan=2> sort: </th> </tr>
+        <tr> <th> by: </th> <td><select name="sortlist:list">
+        <option value="('publication_year', 'cmp', 'desc')"> publication_year </option>
+        <option value="('Authors', 'nocase', 'asc'))"> Authors </option>
+        <option value="('Source', 'nocase', 'asc'))"> Source </option>
+        </select> </td>
+        <tr> <th> and: </th> <td><select name="sortlist:list">
+        <option value=""> -------none-------</option>
+        <option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+        <option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
+        <option value=",('Source', 'nocase', 'asc'))"> Source </option>
+        </select></td>
+        <tr> <th> and: </th> <td><select name="sortlist:list">
+        <option value=""> -------none-------</option>
+        <option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+        <option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
+        <option value=",('Source', 'nocase', 'asc'))"> Source </option>
+        </select></td>
+        </table>
+        <input type="submit" name="form.button.reference_sort" value="Sort"/>
+-->
+
+        </div> <!-- end editing existing references -->
+      </fieldset>
+
+      <fieldset> <!-- search/add new references -->
+        <legend>Search/Add references</legend>
+
+        <input name="searchterm" tal:attributes="value searchterm|nothing" />&nbsp;
+        <input type="submit" name="form.button.reference_search" value="Search"
+               i18n:attributes="value" />
+
+        <tal:block condition="searchterm">
+          <table class="listing"
+                  tal:condition="results">
+            <thead>
+              <th class="nosort"><input class="noborder"
+                                        type="checkbox"
+                                        src="select_all_icon.gif"
+                                        name="selectButton"
+                                        title="Select all items"
+                                        onClick="toggleSelect(this, id='references:list');"
+                                        tal:attributes="src string:$portal_url/select_all_icon.gif"
+                                        alt="Select all items"
+                                        i18n:attributes="title alt"
+                                        />
+              </th>
+              <th class="nosort"
+                  i18n:translate="header_bibliolist_foundrefs">Found references</th>
+            </thead>
+            <tbody>
+              <tal:block repeat="item results">
+                <tal:block define="item item/getObject;">
+
+                <tr tal:define="oddrow repeat/item/odd;"
+                    tal:attributes="class python:test(oddrow, 'even', 'odd')">
+                  <td><input type="checkbox"
+                             name="references:list"
+                             tal:attributes="value item/UID"/></td>
+                  <td><a tal:attributes="href item/absolute_url"
+                         tal:content="item/title_or_id">item title or id</a></td>
+                </tr>
+                </tal:block>
+              </tal:block>
+            </tbody>
+          </table>
+          <input type="submit"
+                 name="form.button.reference_add"
+                 value="Add to list"
+                 tal:condition="results"
+                 i18n:attributes="value" />
+        </tal:block>
+
+        <p tal:condition="not:results">No matching bibliographic reference found.
+           Please try another search term.</p>
+      </fieldset> <!-- end search/add new references -->
+
+    </div>
+      </div>
+    </div>
+
+    <div metal:define-macro="search">
+      <div metal:use-macro="here/authors_widget/macros/edit"></div>
+    </div>
+
+</body>
+</html>

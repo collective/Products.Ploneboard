@@ -1,7 +1,10 @@
 ##########################################################################
 #                                                                        #
-#      written by: David Convent, david.convent@naturalsciences.be       #
-#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
+#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
+#                       and contributors                                 #
+#                                                                        #
+#    project leader: David Convent, david.convent@naturalsciences.be     #
+#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
 #                                                                        #
 ##########################################################################
 
@@ -19,7 +22,7 @@ from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWi
 from Products.Archetypes.Registry import registerWidget
 from roman import *
 
-# possible types of bibliographic references in module 'CMFBibliographyAT'
+# possible types of bibliographic references by module 'CMFBibliography'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 from config import LISTING_VALUES
 
@@ -27,7 +30,7 @@ class ReferencesWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
-        'macro' : "widget_bibliolist",
+        'macro' : "widget_bibreflist",
         })
 
 registerWidget(ReferencesWidget)
@@ -37,17 +40,18 @@ schema = BaseSchema + Schema((
                    multiValued=1,
                    relationship='lists reference',
                    widget=ReferencesWidget(label="References",
-                               label_msgid="label_references_list",
-                               description="Search and select references to add to the list or organize/remove listed references.",
-                               description_msgid="help_references_list",
-                               i18n_domain="plone",),
+                                           label_msgid="label_references_list",
+                                           description_msgid="help_references_list",
+                                           i18n_domain="plone",
+                                           description="Search and select references to add to the list or organize/remove listed references.",
+                                           ),
                    ),
-    StringField('PresentationFormat',
+    StringField('PresentationStyle',
                 multiValued=0,
-                default = 'fmt_minimal',
-                vocabulary="vocabPresFormat",
+                default = 'stl_minimal',
+                vocabulary="vocabCustomStyle",
                 enforce_vocabulary=1,
-                widget=SelectionWidget(label="Presentation Format",
+                widget=SelectionWidget(label="Presentation Style",
                               label_msgid="label_presentation",
                               description_msgid="help_presentation",
                               description="Select the format how you want to present your list.",           
@@ -55,14 +59,14 @@ schema = BaseSchema + Schema((
                               format="select",
                               visible={'edit':'visible','view':'invisible'},),
                 ),
-    StringField('ListingType',
+    StringField('ListingLayout',
                 multiValued=0,
-                default = 'bulleted',
+                default = 'bulletted',
                 vocabulary=LISTING_VALUES,
                 enforce_vocabulary=1,
-                widget=SelectionWidget(label="Listing Type",
-                              label_msgid="label_bibliolist_listing_type",
-                              description_msgid="help_bibliolist_listing_type",
+                widget=SelectionWidget(label="Listing Layout",
+                              label_msgid="label_bibliolist_listing_format",
+                              description_msgid="help_bibliolist_listing_format",
                               description="How the list will be rendered in the view page.",           
                               i18n_domain="plone",
                               format="radio",
@@ -90,43 +94,21 @@ class BibliographyList(BaseContent):
          },
                )
 
-    def tryPresentationFormat(self):
-        """ test method to see if presentationformats exist and have been declared.
-        """
-        try:
-            return self.getattr('PresentationFormat')
-        except AttributeError:
-            return None
-
     def searchMatchingReferences(self, searchterm):
-        """ lists existing references but rejects those already referenced """
-
+        """ list existing references but rejects those already referenced
+        """
         catalog = getToolByName(self, 'portal_catalog')
         field = self.getField('references_list')
         value = getattr(self, field.edit_accessor)()
         refList = [r for r
                    in catalog(SearchableText=searchterm, portal_type=search_types)
                    if r.getObject().UID() not in value]
-                
         return refList
     
-    def vocabPresFormat(self):
-        """ build a DisplayList based on existing formats """
-
-        formatList = []
-        # file system based formatters
+    def vocabCustomStyle(self):
+        """ build a DisplayList based on existing styles
+        """
         bltool = getToolByName(self, 'portal_bibliolist')
-        for refFormatter in bltool.objectValues():
-            formatList.append(('fmt_'+refFormatter.getId().lower(),
-                               refFormatter.title_or_id()))
-        # content type based formatters
-        catalog = getToolByName(self, 'portal_catalog')
-        presentationTypes = ('ReferencePresentation', 'ReferencePresentationSet')
-        for refFormat in catalog(portal_type=presentationTypes):
-            obj = refFormat.getObject()
-            formatList.append((obj.UID(),obj.title_or_id()+' (Custom Format)'))
-
-        return DisplayList(tuple(formatList))
-
+        return DisplayList(bltool.findBibrefStyles())
 
 registerType(BibliographyList)

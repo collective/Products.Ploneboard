@@ -1,4 +1,16 @@
-""" File containing the displaylists for the different string formats (these lists are used in the selection boxes in formatting files)"""
+##########################################################################
+#                                                                        #
+#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
+#                       and contributors                                 #
+#                                                                        #
+#    project leader: David Convent, david.convent@naturalsciences.be     #
+#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
+#                                                                        #
+##########################################################################
+
+""" File containing the displaylists for the different string formats 
+    (these lists are used in the selection boxes in formatting files)
+"""
 
 from Products.Archetypes.public import DisplayList
 
@@ -52,23 +64,23 @@ FORMAT_MONTH_STYLES = DisplayList((
                                   ))
     
 FORMAT_YEAR_STYLES = DisplayList((
-    (None, 'xxxx'),
+    ('', 'xxxx'),
     ('yxx', 'xx'),
                                  ))
 
 FORMAT_NUMBERSLISTS_STYLES = DisplayList((
-    (None, '1, 3, 5-8, 10+'),
+    ('', '1, 3, 5-8, 10+'),
     ('semicolon', '1; 3; 5-8; 10+'),
                                          ))
         
 FORMAT_NUMBERS_STYLES = DisplayList((
-    (None, 'digital: 12'),
+    ('', 'digital: 12'),
     ('roman', 'Roman: XII'),
     ('roman_lower', 'Roman: xii'),
                                     ))
         
 FORMAT_GENERICSTRING_STYLES = DisplayList((
-    (None, 'Rendering of the Value'),
+    ('', 'Rendering of the Value'),
     ('lower', 'rendering of the value'),
     ('upper', 'RENDERING OF THE VALUE'),
     ('ini', 'RotV'),
@@ -85,6 +97,12 @@ FORMAT_GENERICSTRING_STYLES = DisplayList((
     ('ini_space_upper', 'R O T V'),
                                           ))
 
+FORMAT_TITLE_STYLES = DisplayList((
+    ('', 'Rendering of the Value'),
+    ('lower', 'rendering of the value'),
+    ('upper', 'RENDERING OF THE VALUE'),
+                                   ))
+
 FORMAT_AUTHORS_LIST_ORDER = DisplayList((
     ('first middle last', 'Firstname Middlename Lastname (John Edward Smith)'),
     ('first last','Firstname Lastname (John Smith)'),
@@ -95,4 +113,4 @@ FORMAT_AUTHORS_LIST_ORDER = DisplayList((
     ('last, first middle','Lastname, Firstname Middlename (Smith, John Edward)'),
                                         ))
 
-DEFAULT_REFS_DISPLAY = '%A (%y): "%T" - %D'
+DEFAULT_REFS_DISPLAY = '%A (%y): "%T" - %Y'

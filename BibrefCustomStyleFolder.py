@@ -1,10 +1,15 @@
 ##########################################################################
 #                                                                        #
-#      written by: Louis Wannijn, louis.wannijn@naturalsciences.be       #
+#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
+#                       and contributors                                 #
+#                                                                        #
+#    project leader: David Convent, david.convent@naturalsciences.be     #
+#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
 #                                                                        #
 ##########################################################################
 
-""" BibliographyFolder main class """
+""" BibrefCustomStyleFolder class
+"""
 
 import string
 from urllib import quote
@@ -24,15 +29,15 @@ def modify_fti(fti):
     """ overwrite the default immediate view """
     fti['immediate_view'] = 'folder_contents'
 
-class PresentationFolder(BaseFolder):
-    """ container for presentation formats
+class BibrefCustomStyleFolder(BaseFolder):
+    """ container for custom bibref styles
     """
     
-    archetype_name = "Presentation Folder"
+    archetype_name = "Bibref Custom Style Folder"
     filter_content_types = 1
-    allowed_content_types = ('ReferencePresentation' , 'RefPresentationSet' ,'ReferencePresentationSet' , 'Reference Presentation Set')
+    allowed_content_types = ('BibrefCustomStyle', 'BibrefCustomStyleSet')
 
     schema = schema
 
-registerType(PresentationFolder)
+registerType(BibrefCustomStyleFolder)
 
