@@ -10,10 +10,12 @@ from cStringIO import StringIO
 import sys
 from zLOG import LOG, ERROR, WARNING
 from Acquisition import aq_parent, aq_base, aq_self
+from zExceptions import Unauthorized
+from AccessControl import getSecurityManager()
 
 factory_type_information =  { 'id'             : 'Photo Album',
                               'meta_type'      : 'Photo Album',
-                              'description'    : """Plone folders can define custom 'view' actions, or will behave like directory listings without one defined.""",
+                              'description'    : """Photo Albums contain other albums or images..""",
                               'icon'           : 'folder_icon.gif',
                               'product'        : 'CMFPhotoAlbum',
                               'factory'        : 'addPhotoAlbum',
@@ -62,12 +64,19 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
     def __init__(self, id):
         SkinnedFolder.__init__(self, id)
         BTreeFolder2Base.__init__(self, id)
-        self.resized_photos = BTreeFolder2('Photos')
+        self._resized_photos = BTreeFolder2('Photos')
 
     security.declarePublic('getResizedImage')
     def getResizedImage(self, REQUEST=None):
         """ """
-        return self.resized_photos.get(REQUEST.get('image')).index_html(REQUEST, REQUEST.response)
+        # TODO: Need to do security checks here.
+        # This method should act as a proxy for the "real" image.
+        #image = REQUEST.get('image')
+        #user = getSecurityManager.getUser()
+        #if user.has_permission(CMFCorePermissions.View, image):
+        return self._resized_photos.get(image).index_html(REQUEST, REQUEST.response)
+
+        #raise Unauthorized
 
     def __before_publishing_traverse__(self, ob, REQUEST):
         # Get the traversal stack
@@ -83,11 +92,11 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
                 resized_name = '%s_%s' % (name, size)
 
                 # Create resized copy, if it doesnt already exist
-                if not resized_name in self.resized_photos.keys():
+                if not resized_name in self._resized_photos.keys():
                     resolution = self.displays.get(size, (0,0))
                     raw = str(getattr(self, name).data)
                     image = OFS.Image.Image('Image', 'Image', self._resize(raw, resolution))
-                    self.resized_photos._setObject(resized_name, image)
+                    self._resized_photos._setObject(resized_name, image)
 
                 REQUEST.set('image', resized_name)
                 REQUEST.set('TraversalRequestNameStack', ['getResizedImage'])
@@ -121,7 +130,7 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
         imgout.close()
 
         # Wait for process to close if unix.
-        # RODO: Should check returnvalue for wait
+        # TODO: Should check returnvalue for wait
         if sys.platform !='win32':
             convert.wait()
 
@@ -135,14 +144,14 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
         """
         # Collect a list of all resized copies
         remove_list = []
-        for resized in self.resized_photos.keys():
+        for resized in self._resized_photos.keys():
             if resized.startswith(id):
                 remove_list.append(resized)
 
         # Then remove them
         for item in remove_list:
             try:
-                self.resized_photos._delObject(item)
+                self._resized_photos._delObject(item)
             except:
                 LOG('CMFPhotoAlbum', ERROR, 'Failed to remove resized copy',
                     error = sys.exc_info())
