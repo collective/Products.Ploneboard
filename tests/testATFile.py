@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFile.py,v 1.5 2004/05/24 17:45:40 tiran Exp $
+$Id: testATFile.py,v 1.6 2004/06/06 15:26:15 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -156,7 +156,7 @@ class TestATFileFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == (),
+        self.failUnless(field.validators == "(('checkFileMaxSize', V_REQUIRED))",
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, FileWidget),
                         'Value is %s' % id(field.widget))
