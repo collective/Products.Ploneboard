@@ -1,0 +1,39 @@
+# Gettext Message File for PlacelessTranslationService.
+msgid ""
+msgstr ""
+"Project-Id-Version: pts-de\n"
+"POT-Creation-Date: 2003-10-04 12:51+0300\n"
+"Last-Translator: Simon Eisenmann <simon@struktur.de>\n"
+"Language-Team:  <>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: de\n"
+"Language-name: Deutsch\n"
+"Preferred-encodings: ascii latin1 utf-8\n"
+"Domain: PlacelessTranslationService\n"
+
+msgid "Gettext message catalog"
+msgstr "Gettext Übersetzungs Katalog"
+
+msgid "Reload this catalog"
+msgstr "Diesen Katalog neu einlesen"
+
+msgid "This catalog cannot be reloaded because the corresponding file does not exist"
+msgstr "Dieser Katalog kann nicht neu eingelesen werden, da die Datei nicht existiert"
+
+msgid "Test ${title}"
+msgstr "${title} testen"
+
+msgid "Test results:"
+msgstr "Testergebnisse:"
+
+msgid "Translation not found"
+msgstr "Übersetzung nicht gefunden"
+
+msgid "New test:"
+msgstr "Neuer Test:"
+
+msgid "Translate this phrase"
+msgstr "Diesen Satz übersetzen"
