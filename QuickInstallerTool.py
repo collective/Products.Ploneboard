@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.34 2004/02/17 17:24:29 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.35 2004/02/18 10:20:53 shh42 Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ from zLOG import LOG
 
 try:
     from packman.pip import not_installed, hot_plug
-    print 'Packman support(hotplug) installed'
+    #print 'Packman support(hotplug) installed'
 except ImportError:
     def not_installed(s): return []
 
@@ -99,7 +99,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             except:
                 # catch a string exception
                 err = sys.exc_type
-                print err, sys.exc_type, sys.exc_value
+                #print err, sys.exc_type, sys.exc_value
                 if err != "Module Error":
                     msg = "%s: %s" % (err, sys.exc_value)
                     LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
