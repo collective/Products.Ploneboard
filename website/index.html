@@ -206,11 +206,22 @@
                 <p>
                   GRUF is shipped as a tarball for Zope. See <a href="http://sourceforge.net/projects/collective">The Collective Project</a> for more information.<br />
                   And don't forget that even if GRUF is hosted by a Plone-related project, <b>GRUF independent from Plone !</b></p>
+                <h2>Upward / Backward compatibility</h2>
+                <ol>
+                    <p>
+                      All GRUF versions are backward compatible, and then doesn't require you to do anything to <strong>upgrade</strong>.
+                    </p>
+                    <p>
+                      All GRUF versions within the same major number are <b>upward compatible</b>, that is to say that you can replace your version
+                      by a previous one without loosing your user data. This is false for versions having a different major number (O.x and 1.x for example).<br />
+                      So, if you notice a bug in the newest version, you can always decide to get back in time ! :-)
+                    </p>
+                </ol>
                 <h2>Official releases</h2>
                 <ol>
                     <p>Releases are now hosted by SourceForge. The latest release can always be found <a href="http://sourceforge.net/project/showfiles.php?group_id=55262">here</a>.</p>
                     <ul>
-                      <li><b>1.31</b> (2003-07-23): Major speed improvements, cosmetic ZMI improvements</li>
+                      <li><b>1.31</b> (2003-07-29): Major speed improvements, cosmetic ZMI improvements</li>
                       <li><b>1.3</b> (2003-07-23): Implemented nested groups feature, major ZMI improvements</li>
                       <li><b>1.21</b> (2003-07-10): Fix in LDAPUserFolder attributes retreiving and cosmetic fixes on ZMI</li>
                       <li><b>1.2</b> (2003-07-10): Major ZMI enhancing and GRUF API improvements</li>
@@ -342,7 +353,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                 <font size="-3">
                   <!-- Created: Wed Jul  9 15:52:57 GMT 2003 -->
                   <!-- hhmts start -->
-Last modified: Thu Jul 31 09:03:27 GMT 2003
+Last modified: Thu Jul 31 09:48:29 GMT 2003
 <!-- hhmts end -->
                 </font>
               </p>
