@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.25 2005/03/01 15:12:31 tiran Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.26 2005/03/10 09:38:32 tiran Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -294,22 +294,16 @@ class InstalledProduct(SimpleItem):
                                 ('install','afterInstall'),
                                ))
 
-    security.declareProtected(ManagePortal, 'getAfterUninstallMethod')
-    def getAfterUninstallMethod(self):
-        """ returns the after uninstaller method """
-        return self._getMethod((('Install','afterUninstall'),
-                                ('install','afterUninstall'),
+    security.declareProtected(ManagePortal, 'getBeforeUninstallMethod')
+    def getBeforeUninstallMethod(self):
+        """ returns the before uninstaller method """
+        return self._getMethod((('Install','beforeUninstall'),
+                                ('install','beforeUninstall'),
                                ))
 
-    security.declareProtected(ManagePortal, 'getReinstallMethod')
-    def getReinstallMethod(self):
-        """ returns the reinstaller method """
-        return self._getMethod((('Install','reinstall'),
-                                ('install','reinstall'),
-                               ))
-                               
+                             
     security.declareProtected(ManagePortal, 'uninstall')
-    def uninstall(self,cascade=default_cascade,REQUEST=None):
+    def uninstall(self, cascade=default_cascade, reinstall=False, REQUEST=None):
         """Uninstalls the product and removes its dependencies
         """
 
@@ -324,15 +318,22 @@ class InstalledProduct(SimpleItem):
         afterRes=''
 
         uninstaller = self.getUninstallMethod()
-        afterUninstall = self.getAfterUninstallMethod()
+        beforeUninstall = self.getBeforeUninstallMethod()
 
         if uninstaller:
-            res=uninstaller(portal)
-            
-        self._cascadeRemove(cascade)
+            uninstaller = uninstaller.__of__(portal)
+            try:
+                res=uninstaller(portal, reinstall=reinstall)
+                # XXX log it
+            except TypeError:
+                res=uninstaller(portal)
 
-        if afterUninstall:
-            afterRes=afterUninstall(portal)
+        if beforeUninstall:
+            beforeUninstall = beforeUninstall.__of__(portal)
+            beforeRes, cascade = beforeUninstall(portal, reinstall=reinstall,
+                                                product=self, cascade=cascade)
+        
+        self._cascadeRemove(cascade)
 
         self.status='uninstalled'
         self.log('uninstalled\n'+str(res)+str(afterRes))
@@ -342,50 +343,6 @@ class InstalledProduct(SimpleItem):
 
         if REQUEST and REQUEST.get('nextUrl',None):
             return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
-
-#    security.declareProtected(ManagePortal, 'reinstall')
-#    def reinstall(self,cascade=default_cascade,REQUEST=None):
-#        """Reinstalls the product
-#        """
-#
-#        portal=getToolByName(self,'portal_url').getPortalObject()
-#
-#        # XXX eventually we will land Event system and could remove
-#        # this 'removal_inprogress' hack
-#        #if self.isLocked() and getattr(portal, 'removal_inprogress', 0):
-#        #    raise ValueError, 'The product is locked and cannot be uninstalled!'
-#
-#        res=''
-#
-#        reinstall = self.getReinstallMethod
-#        
-#        if reinstall is None:
-#            # no reinstall method found
-#            installer = self.getInstallMethod()
-#            uninstaller = self.getUninstallMethod()
-#            
-#            unres = uninstaller(portal)
-#            self._cascadeRemove(cascade)
-#            inres = installer(portal)
-#            
-#            res = str(unres) + str(inres)
-#        else:
-#            result = reinstall(portal)
-#            
-#            # the reinstaller can return a tuple with size two. The first
-#            # first element is the output, the second a new cascade list
-#            if type(result) is TupleType and len(result) == 2:
-#                res = str(result[0])
-#                cascade = result[1]
-#            else:
-#                res = str(result)
-#            
-#            self._cascadeRemove(cascade)
-#
-#        self.log('reinstalled\n'+res)
-#
-#        if REQUEST and REQUEST.get('nextUrl',None):
-#            return REQUEST.RESPONSE.redirect(REQUEST['nextUrl'])
 
     def _cascadeRemove(self, cascade):
         """Cascaded removal of objects

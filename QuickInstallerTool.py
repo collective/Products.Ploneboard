@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.51 2005/03/04 07:05:12 shh42 Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.52 2005/03/10 09:38:33 tiran Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 import sys
 import traceback
 import os
-from types import StringTypes
+from types import StringTypes, FunctionType, MethodType
 
 import Globals
 from Globals import HTMLFile, InitializeClass
@@ -61,7 +61,7 @@ def addQuickInstallerTool(self,REQUEST=None):
     self._setObject('portal_quickinstaller', qt, set_owner=0)
     if REQUEST:
         return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-
+    
 class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
 
     __implements__ = IQuickInstallerTool
@@ -214,7 +214,8 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
 
 
     security.declareProtected(ManagePortal, 'installProduct')
-    def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
+    def installProduct(self, p, locked=0, hidden=0, swallowExceptions=0,
+                       reinstall=False):
         """Install a product by name
         """
 
@@ -260,7 +261,11 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
                                         # far
         try:
 
-            res=install()
+            try:
+               res=install(portal, reinstall=reinstall)
+               # XXX log it
+            except TypeError:
+                res=install(portal)
             status='installed'
             error=0
             if swallowExceptions:
@@ -372,12 +377,16 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         prod = getattr(self, p)
         afterInstall = prod.getAfterInstallMethod()
         if afterInstall is not None:
-            afterInstall(portal)
+            afterInstall = afterInstall.__of__(portal)
+            afterRes=afterInstall(portal, reinstall=reinstall, product=prod)
+            if afterRes:
+                res = res + '\n' + str(afterRes)
         
         return res
 
     security.declareProtected(ManagePortal, 'installProducts')
-    def installProducts(self,products=[],stoponerror=0,REQUEST=None):
+    def installProducts(self, products=[], stoponerror=0, reinstall=False,
+                        REQUEST=None):
         """ """
         res = """
     Installed Products
@@ -388,7 +397,8 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         for p in products:
             res += p +':'
             try:
-                r=self.installProduct(p,swallowExceptions=not stoponerror)
+                r=self.installProduct(p, swallowExceptions=not stoponerror,
+                                      reinstall=reinstall)
                 res +='ok:\n'
                 if r:
                     r += str(r)+'\n'
@@ -439,12 +449,13 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
     security.declareProtected(ManagePortal, 'uninstallProducts')
     def uninstallProducts(self, products,
                           cascade=InstalledProduct.default_cascade,
+                          reinstall=False,
                           REQUEST=None):
         """Removes a list of products
         """
         for pid in products:
             prod=getattr(self,pid)
-            prod.uninstall(cascade=cascade)
+            prod.uninstall(cascade=cascade, reinstall=reinstall)
 
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
@@ -461,8 +472,8 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         # only delete everything EXCEPT portalobjects (tools etc) for reinstall
         cascade=[c for c in InstalledProduct.default_cascade
                  if c != 'portalobjects']
-        self.uninstallProducts(products, cascade)
-        self.installProducts(products, stoponerror=1)
+        self.uninstallProducts(products, cascade, reinstall=True)
+        self.installProducts(products, stoponerror=1, reinstall=True)
 
         if REQUEST:
             return REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])

@@ -71,7 +71,8 @@ in order to automate installing of application.
 For API reference see interfaces/portal_quickinstaller.py
 
 Customized uninstall
-------------
+--------------------
+
 In order to use a customize uninstall, the following
 requirements must be met:
 
@@ -86,3 +87,41 @@ requirements must be met:
 
 Please note that the customized uninstall method is invoked before
 (and in addition to) the standard removal of objects.
+
+Install:
+--------
+
+  install(portal) or install(portal, reinstall)
+
+Uninstall:
+----------
+
+  uninstall(portal) or uninstall(portal, reinstall)
+
+Reinstall
+---------
+
+Reinstalling a product invokes uninstall() and install(). If you have special
+code which should work differently on reinstall than uninstall/install you can
+add a second argument to the install or uninstall method named 'reinstall' which
+is true only for a reinstallation. In most cases you shouldn't react differently
+when reinstalling!
+
+Special Hooks
+-------------
+
+afterInstall:  Called after a product is installed and the changes are saved
+               into the product instance.
+               The method is called between install() and recoding the installed
+               objects.
+beforeInstall: Called before a product is uninstalled. It may change the
+               cascade containing which object types should be cleared.
+               The method is called after uninstall() but before the cascading
+               removing of installed objects.
+API:
+  out = afterInstall(portal, reinstall=reinstall, qi_product)
+  out, cascade = beforeUninstall(portal, reinstall, qi_product, cascade)
+
+Flow: 
+  install(), <record installation>, afterInstall()
+  uninstall(), beforeUninstall(), <cascade remove>
