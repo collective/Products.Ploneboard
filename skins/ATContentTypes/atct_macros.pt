@@ -18,9 +18,10 @@
 
 	  <fieldset>
 
-	    <legend
-	     i18n:translate=""
-	     tal:content="string:Criterion for ${criterion/Field} " />
+	    <legend i18n:translate="">
+               Criterion for <span tal:content="criterion/Field"
+                                   i18n:name="fieldname">Field Name</span>
+            </legend>
 
         <div tal:content="criterion/Description" />
 
