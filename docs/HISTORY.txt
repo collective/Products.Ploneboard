@@ -1,4 +1,6 @@
-0.2-beta3
+0.2-beta3 - 2004-04-20
+
+ * Updated INSTALL.txt [tiran]
 
  * Fixed default view of ATBTreeFolder and ATFolder (stage 2)
    Both types are using ATContentTypeSchema with TemplateMixinSchema
