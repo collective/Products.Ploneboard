@@ -16,7 +16,10 @@
 
     <div metal:fill-slot="main"
          tal:define="images python:here.contentValues(spec='Photo');
-                     albums python:here.contentValues(spec='Photo Album');">
+                     albums python:here.contentValues(spec='Photo Album');
+                     Batch python:modules['ZTUtils'].Batch;
+                     b_start python:request.get('b_start', 0);
+                     batch python:Batch(images, 10, int(b_start), orphan=1);">
       
       <h1 tal:content="here/title_or_id">
 	Title or id
@@ -37,11 +40,31 @@
 	    </tal:block>
 	  </td>
 	</tr>
+	<tr tal:condition="python:test(batch.previous or batch.next, 1, 0)">
+	  <td>
+	    <div class="listingBar">
+	      <table style="width: 100%">
+		<tr>
+		  <td>
+		    <span class="previous" tal:define="p batch/previous | nothing" tal:condition="p"> 
+		      <a href="#" tal:attributes="href string:?b_start=${p/first}"> &laquo; previous photos</a>
+		    </span>
+		  </td>
+		  <td>
+		    <span class="next" tal:define="n batch/next | nothing" tal:condition="n"> 
+		      <a href="#" tal:attributes="href string:?b_start=${batch/end}">next photos &raquo;</a>
+		    </span>
+		  </td>
+		</tr>
+	      </table>
+	    </div>
+	  </td>
+	</tr>
 	<tr>
 	  <td>
-	    <tal:block tal:condition="images"
-     	               tal:repeat="image images">
-	      <span class="card" style="background: white; border-color: white;">
+	    <tal:block tal:condition="batch"
+     	               tal:repeat="image batch">
+	      <span class="card" style="background: white; border-color: white; height: 130px; width:130px;">
 		<a tal:attributes="href string:${image/absolute_url}/view">
 		  <img tal:replace="structure python:image.tag(size='thumbnail')" />
 		</a>
