@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.2 2004/03/16 20:33:23 tiran Exp $
+$Id: __init__.py,v 1.3 2004/04/10 16:31:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -29,9 +29,23 @@ from Products.CMFCore import CMFCorePermissions
 from Products.Archetypes.public import *
 from Products.CMFCore.DirectoryView import registerDirectory
 
-from config import *
-import migration
-import Validators
+# load customconfig and overwrite the configureable options of config with the
+# values from customconfig
+try:
+    from Products.ATContentTypes import customconfig
+except ImportError:
+    pass
+else:
+    from Products.ATContentTypes import config
+    for option in config.CONFIGUREABLE:
+        value = getattr(customconfig, option, None)
+        if value:
+            setattr(config, option, value)
+    del config
+    
+from Products.ATContentTypes.config import *    
+import Products.ATContentTypes.migration
+import Products.ATContentTypes.Validators
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
 
 registerDirectory(SKINS_DIR,GLOBALS)

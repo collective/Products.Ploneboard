@@ -16,14 +16,19 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
-"""
+"""AT Content Types configuration file
 
-$Id: config.py,v 1.14 2004/04/02 21:30:25 tiran Exp $
+DO NOT CHANGE THIS FILE!
+
+All changes will be overwritten by the next release. Use a customconfig instead.
+See customconfig.py.example
+
+$Id: config.py,v 1.15 2004/04/10 16:31:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
+from Products.ATContentTypes.Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
 from Products.CMFCore import CMFCorePermissions
 
 try:
@@ -34,13 +39,31 @@ except NameError:
 
 ###############################################################################
 ## user options
+## The options in this section can be overwritten by customconfig
 
 ## enable mxTidy for ATDocument?
 MX_TIDY_ENABLED = True
 
+## options for mxTidy
+## read http://www.egenix.com/files/python/mxTidy.html for more informations
+MX_TIDY_OPTIONS= {
+    'drop_font_tags'   : 1,
+    'drop_empty_paras' : 1,
+    'input_xml'        : 0,
+    'output_xhtml'     : 1,
+    'quiet'            : 1,
+    'show_warnings'    : 1,
+    'tab_size'         : 4,
+    'wrap'             : 72,
+    #'indent'           : 'auto',
+    'indent_spaces'    : 1,
+    'word_2000'        : 1,
+    'char_encoding'    : 'raw',
+    }
+
 ## use TemplateMixin?
 ## if enabled users can choose between different view templates for each object
-ENABLE_TEMPLATE_MIXIN = True
+ENABLE_TEMPLATE_MIXIN = False
 
 ## TemplateMixin write permission. Only if the member has this permission he
 ## is allowed to choose another permission then the default permission
@@ -49,23 +72,25 @@ TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 
 ## Document History view permission
-##
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
 
 ###############################################################################
-## Don't change anything below here!
+## private options
 
 PROJECTNAME = "ATContentTypes"
 SKINS_DIR = 'skins'
 
 GLOBALS = globals()
 
-## Load the validation package from Products.validation (1) or from the
-## python site-packages (0)
-## Archetypes 1.2.x requires:  0
-## Archetypes 1.2.5+ requires: 1
-## Archetypes 1.3.x requires:  1 
+CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'ENABLE_TEMPLATE_MIXIN',
+                 'TEMPLATE_MIXIN_PERMISSION', 'HISTORY_VIEW_PERMISSION', )
+
+## Load the validation package from Products.validation (True) or from the
+## python site-packages (False)
+## Archetypes 1.2.x requires:  False
+## Archetypes 1.2.5+ requires: True
+## Archetypes 1.3.x requires:  True 
 VALIDATION_IN_PRODUCTS = True
 
 ## using special plone 2 stuff?
@@ -88,23 +113,6 @@ else:
 MX_TIDY_MIMETYPES = (
     'text/html',
      )
-
-## options for mxTidy
-## read http://www.egenix.com/files/python/mxTidy.html for more informations
-MX_TIDY_OPTIONS= {
-    'drop_font_tags'   : 1,
-    'drop_empty_paras' : 1,
-    'input_xml'        : 0,
-    'output_xhtml'     : 1,
-    'quiet'            : 1,
-    'show_warnings'    : 1, # -v
-    'tab_size'         : 4,
-    'wrap'             : 72,
-    #'indent'           : 'auto',
-    'indent_spaces'    : 1,
-    'word_2000'        : 1,
-    'char_encoding'    : 'raw',
-    }
 
 ## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'

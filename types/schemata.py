@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.10 2004/04/09 22:02:21 tiran Exp $
+$Id: schemata.py,v 1.11 2004/04/10 16:31:10 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -59,8 +59,8 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
                                        label = "View template",
                                        label_msgid = "label_template_mixin",
                                        i18n_domain = "plone",
-                                       visible={'view' : 'invisible',
-                                                'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'invisible'},
+                                       visible={'view' : 'hidden',
+                                                'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'hidden'},
                                        )),
     ))
     
