@@ -1,0 +1,30 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: CMFContentPanels 1.7.2\n"
+"POT-Creation-Date: 2004-10-28 00:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Luciano De Fazio <luciano@camaracatanduva.sp.gov.br>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: pt-br\n"
+"Language-Name: Português do Brasil\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+msgid "Config"
+msgstr "Configurar"
+
+msgid "ContentPanels"
+msgstr "ContentPanels"
+
+msgid "ContentPanels is a portlet content to build composite page."
+msgstr "ContentPanels é um portlet de conteúdo construir páginas compostas"
+
+msgid "contentpanels property changes saved."
+msgstr "alterações salvas"
