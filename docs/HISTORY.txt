@@ -1,6 +1,10 @@
 0.2-beta5
 
  * Added iCal/vCal export to AT Event
+   [tiran]
+  
+ * Added PloneLingua support 
+   [gotcha]
 
 0.2-beta4
 
