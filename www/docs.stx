@@ -30,7 +30,7 @@ Using the CMFFormController
       Here is a basic form that uses CMFFormController::
 
         <form tal:define="errors options/state/getErrors"
-              tal:attributes="action template/id;"
+              tal:attributes="action string:${here/absolute_url}/${template/id};"
              method="post">
            <input type="hidden" name="form.submitted" value="1" />
            <p tal:define="err errors/foo|nothing" tal:condition="err" tal:content="err" />

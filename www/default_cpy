@@ -1,15 +1,14 @@
 ################################################################################
 # Example form action code
 
-# Set the state status (unnecessary in this case, as the default status is 'success')
-state.setStatus('success')
+# Get a value from the REQUEST
+n = context.REQUEST.get('n')
 
-# do something here
-context.n = context.REQUEST.get('n')
+# do something with the value here
 
 # (Optional) set the default next action (this can be overridden
 # in the script's actions tab in the ZMI).
-state.setNextAction('redirect_to','http://www.plone.org')
+state.setNextAction('redirect_to:string:http://www.plone.org')
 
-# Make sure to return the ControllerState object
+# Always make sure to return the ControllerState object
 return state
