@@ -2,7 +2,7 @@ What is CMFContentPanels?
 
   Have you tried the famous "CMFportalts":http://www.zope.org/Members/ausum/CMFPortlets ? Do you want another one which store portlets layout information in a CMF content to build public portlets page but not in a member's private memberdata? Do you want to support more existing contents without creating any new content type? Do you want a easier way to write new box skins? Do you want a total Plone support and more clean code?
 
-  Maybe CMFContentPanels is your right choice now. CMFContentPanels is totally rewrite from CMFPortlets. It is a CMF/Plone Content which have panels showing other contents to build complex page easily. You can change the box skin for each content panel.
+  Maybe CMFContentPanels is an alternative now. CMFContentPanels is totally rewrite from CMFPortlets. It is a CMF/Plone Content which have panels showing other contents to build complex page easily. You can change the box skin for each content panel.
 
 Features
 
@@ -57,8 +57,6 @@ todo list
   * Move panels.
 
   * Use DHTML to build a more easy use layout adjust interface.
-
-  * Contribute it to Plone? How to?
 
 Credits
 
