@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.3 2004/09/27 15:52:21 ajung Exp $
+$Id: config.py,v 1.4 2004/09/27 18:16:37 spamsch Exp $
 """
 
 SKINS_DIR = 'skins'
@@ -18,3 +18,12 @@ PROJECT_NAME = 'ATSchemaEditorNG'
 
 # Permissions
 ManageSchemaPermission = 'ATSE: Manage schema'
+
+# Update mode
+# True: Schema Editor changes are not persistent.
+# The Schema of the object is kept in sync with
+# the one defined on the filesystem.
+# ATTENTION: Setting this property to True can
+# lead to a complete data loss!!
+# Never activate it on production systems
+ALWAYS_SYNC_SCHEMA_FROM_DISC = False

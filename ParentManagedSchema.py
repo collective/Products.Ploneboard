@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.12 2004/09/27 17:18:09 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.13 2004/09/27 18:16:37 spamsch Exp $
 """
 
 from Globals import InitializeClass
@@ -20,6 +20,7 @@ from Products.Archetypes.Schema import ManagedSchema
 from zLOG import LOG, INFO
 
 from util import create_signature
+import config
 
 class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
@@ -62,7 +63,7 @@ class ParentManagedSchema:
             # looking for changes in the schema hold by the object
             self._v_schema = self._lookupChanges(schema_id)
             self.initializeArchetype()
-            
+
             for field in self._v_schema.fields():
 
                 ##########################################################
@@ -98,18 +99,17 @@ class ParentManagedSchema:
         return self._wrap_schema(self._v_schema)
 
     def _lookupChanges(self, atse_schema_id):
-        """
-        Checks if schema has changed
-        """
+        """ Checks if schema has changed """
 
-        # looking if schema has changed
-        atse_schema = self.aq_parent.atse_getSchemaById(atse_schema_id)
-        object_schema = self.schema
+        if config.ALWAYS_SYNC_SCHEMA_FROM_DISC == True:
+            
+            # looking if schema has changed
+            atse_schema = self.aq_parent.atse_getSchemaById(atse_schema_id)
+            object_schema = self.schema
 
-        # XXX what about registered objects?
-        if create_signature(atse_schema) != create_signature(object_schema):
-            LOG('ATSchemaEditorNG', INFO, 'Schema %s changed on disk - refreshing' % atse_schema_id)
-            self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
+            if create_signature(atse_schema) != create_signature(object_schema):
+                LOG('ATSchemaEditorNG', INFO, 'Schema %s changed - refreshing' % atse_schema_id)
+                self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
 
         return self.aq_parent.atse_getSchemaById(atse_schema_id)
 

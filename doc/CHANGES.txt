@@ -1,5 +1,7 @@
 0.2 (unreleased)
 
+    - Added developer mode: Look @ config.py for information
+
     - Beautyfied view a little bit
 
     - Added a selection box where you can select registered objects
