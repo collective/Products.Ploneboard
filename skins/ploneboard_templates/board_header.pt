@@ -3,12 +3,27 @@
       i18n:domain="ploneboard">
       
 <body>
+<div metal:define-macro="header" tal:omit-tag="">	
 
-    <div metal:define-macro="header" tal:omit-tag="">	
+    <h1 class="documentFirstHeading" 
+        id="boardHeading">
+    Board Title
+    </h1>
 
-    <h1 class="documentFirstHeading" id="boardHeading">Board Header</h1>
-    
+    <a href=""
+       class="link-parent"
+       tal:define="parent_url python:here.navigationParent(here, template.getId())"
+       tal:condition="parent_url"
+       tal:attributes="href parent_url"
+       i18n:translate="go_to_parent_url">
+    Up one level
+    </a>
+
+    <div class="documentDescription">
+    Board Description
     </div>
 
+    
+</div>
 </body>
 </html>
