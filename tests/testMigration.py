@@ -21,18 +21,18 @@ userb = {'id':'b', 'password':'456', 'roles':('Member','Reviewer',), 'domains':(
 
 class TestMigration( PloneTestCase.PloneTestCase ):
 
-    def beforeSetUp(self):
-        pass
     
     def afterSetUp( self ):
         from Products.CMFMember.Extensions.Install import install as install_cmfmember
         install_cmfmember(self.portal)
         # create an admin user
-        self.portal.acl_users.userFolderAddUser('test_admin', 'qwerty', ('Manager','Member',), ())
-        get_transaction().commit(1)
+        #self.portal.acl_users.userFolderAddUser('test_admin', 'qwerty', ('Manager','Member',), ())
+        #import pdb; pdb.set_trace()
+        #get_transaction().commit(1)
         # assume role of test_admin
-        newSecurityManager(None, self.portal.acl_users.getUser('test_admin').__of__(self.portal.acl_users))
-
+        self.loginPortalOwner()
+            
+        #newSecurityManager(None, self.portal.acl_users.getUser('test_admin').__of__(self.portal.acl_users))
 
         membership_tool = self.portal.portal_membership
 

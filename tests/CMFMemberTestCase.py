@@ -1,3 +1,4 @@
+
 from Testing import ZopeTestCase
 
 # Add products/dependencies here as needed
@@ -13,38 +14,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 
 portal_name  = 'portal'
 portal_owner = 'portal_owner'
-
 default_user = 'unittest_admin'
-
-app = ZopeTestCase.app()
-portal = app[portal_name]
-uf = portal.acl_users
-
-# create a portal administrator
-admin_user_info = {'id':default_user, 'password':'password', 'roles':('Manager','Member',), 'domains':()}
-uf._doAddUser(admin_user_info['id'], admin_user_info['password'], admin_user_info['roles'], [])
-admin_user = uf.getUserById(admin_user_info['id'])
-# set aquisition context for admin_user
-if not hasattr(admin_user, 'aq_base'):
-    admin_user = admin_user.__of__(uf)
-
-# create a user in the portal's acl_users folder
-portal_user_info = {'id':'unittest_user', 'password':'secret', 'roles':('Member',), 'domains':()}
-uf._doAddUser(portal_user_info['id'], portal_user_info['password'], portal_user_info['roles'], [])
-portal_user = uf.getUserById(portal_user_info['id'])
-# set aquisition context for portal_user
-if not hasattr(portal_user, 'aq_base'):
-    portal_user = portal_user.__of__(uf)
-
-# create a user in the zope root's acl_users folder
-root_user_info = {'id':'unittest_root_user', 'password':'password2', 'roles':('Manager',), 'domains':()}
-app.acl_users._doAddUser(root_user_info['id'], root_user_info['password'], root_user_info['roles'], [])
-root_user = app.acl_users.getUserById(root_user_info['id'])
-# set aquisition context for root_user
-if not hasattr(root_user, 'aq_base'):
-    root_user = root_user.__of__(app.acl_users)
-
-newSecurityManager(None, admin_user)
 
 # # add a member corresponding to portal_user
 # portal.portal_membership.addMember(portal_user_info['id'], portal_user_info['password'],portal_user_info['roles'],portal_user_info['domains'])
@@ -55,23 +25,57 @@ newSecurityManager(None, admin_user)
 # m = portal.portal_membership.getMemberById(root_user_info['id'])
 # m.setMemberProperties({'email': 'foo@bar.com'})
 
-get_transaction().commit()
-install_cmfmember(app[portal_name])
-portal.cmfmember_control.upgrade()
-get_transaction().commit()
-ZopeTestCase.close(app)
-
 
 class CMFMemberTestCase(PloneTestCase.PloneTestCase):
 
-    admin_user_info = admin_user_info
-    admin_user = admin_user
-    
-    portal_user_info = portal_user_info
-    portal_user = portal_user
-    
-    root_user_info = root_user_info
-    root_user = root_user
+    def afterSetUp(self):
+        self.setupUsers()
+        self.setupCMFMember()
+        self.qi = self.portal.portal_quickinstaller
+        self.membership = self.portal.portal_membership
+        self.memberdata = self.portal.portal_memberdata
+        self.setRoles(['Manager'])
+
+    def setupCMFMember( self ):
+        install_cmfmember( self.portal)
+        self.portal.cmfmember_control.upgrade()        
+
+    def setupUsers( self ):
+        puf = self.portal.acl_users        
+        # create a portal administrator
+        self.admin_user_info = {'id':default_user, 'password':'password', 'roles':('Manager','Member',), 'domains':()}
+        puf._doAddUser(self.admin_user_info['id'],
+                       self.admin_user_info['password'],
+                       self.admin_user_info['roles'],
+                       [])
+        self.admin_user = puf.getUserById(self.admin_user_info['id'])
+        # with gruf the user is wrapped
+        # set aquisition context for admin_user
+        #self.admin_user = self.admin_user.__of__(puf)
+        
+        # create a user in the portal's acl_users folder
+        self.portal_user_info = {'id':'unittest_user', 'password':'secret', 'roles':('Member',), 'domains':()}
+        puf._doAddUser(self.portal_user_info['id'],
+                       self.portal_user_info['password'],
+                       self.portal_user_info['roles'],
+                       [])
+        self.portal_user = puf.getUserById(self.portal_user_info['id'])
+        # with gruf the user is wrapped        
+        # set aquisition context for portal_user
+        self.portal_user = self.portal_user.__of__(puf)
+                                                  
+        # create a user in the zope root's acl_users folder
+        self.root_user_info = {'id':'unittest_root_user', 'password':'password2', 'roles':('Manager',), 'domains':()}
+        root = self.portal.getPhysicalRoot()
+        root.acl_users._doAddUser(
+            self.root_user_info['id'],
+            self.root_user_info['password'],
+            self.root_user_info['roles'], [])
+        self.root_user = root.acl_users.getUserById(self.root_user_info['id'])
+        # set aquisition context for root_user
+        self.root_user = self.root_user.__of__(root.acl_users)
+
+        newSecurityManager(None, self.admin_user)
 
 
     def compareTuples(self, t1, t2):
@@ -120,14 +124,10 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
         doc4.changeOwnership(self.root_user)
 
         # recatalog to make sure catalog knows about new local roles and ownership
-        catalog = portal.portal_catalog
+        catalog = self.portal.portal_catalog
         catalog.refreshCatalog(clear=1)
         
-    def afterSetUp(self): 
-        self.qi = self.portal.portal_quickinstaller
-        self.membership = self.portal.portal_membership
-        self.memberdata = self.portal.portal_memberdata
-        self.setRoles(['Manager'])
+
 
     def getTheTag(self, pParser, tag, **kwargs):
         if not tag: return None
