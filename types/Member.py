@@ -364,8 +364,8 @@ class Member(BaseContent):
                 portal.acl_users.userFolderDelUsers((old_user_id,))
             delattr(self, '_v_user')
 
-        self.id = id
-
+        memberdata=getToolByName(self, 'portal_memberdata')
+        memberdata.manage_renameObjects( (self.getId(),), (id,) )
 
     security.declarePrivate('setUser')
     def setUser(self, user):
@@ -410,7 +410,14 @@ class Member(BaseContent):
     security.declarePrivate('getDomains')
     def getDomains(self):
         """Return the list of domain restrictions for a user"""
-        return self.getUser().getDomains()
+        domains=()
+        try:
+            domains=self.getUser().getDomains()
+        except TypeError:
+            if self.getUser().domains is None:
+                self.getUser().domains=()
+            domains=self.getUser().getDomains()
+        return domains
 
 
     def _setPassword(self, password):
