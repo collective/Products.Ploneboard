@@ -1,7 +1,8 @@
-
+0.3:
   - Added Spanish and German translation, thanks to Philipp von Weitershausen
     <philikon@philikon.de>
   - Added Dutch translation, thanks to Misja Hoebe <misja@efobia.nl>
+  - New maintainer: Christian 'Tiran' Heimes <heimes@faho.rwth-aachen.de>
 
 0.2:
 

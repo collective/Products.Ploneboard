@@ -20,4 +20,8 @@ For more information see http://sourceforge.net/projects/collective/
 
 CONTACT:
 
-  magnus.heino@home.se
+  Christian 'Tiran' Heimes <heimes@faho.rwth-aachen.de> -- maintainer
+  Magnus Heino <magnus.heino@home.se> -- original author
+
+  Please send questions, patches and help requests to Christian. Magnus
+  won't have time to answer your questions.
