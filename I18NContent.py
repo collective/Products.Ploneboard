@@ -18,11 +18,12 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.2 2003/08/12 20:51:19 longsleep Exp $
+$Id: I18NContent.py,v 1.3 2003/08/18 14:03:34 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.2 $"
+__version__ = "$Revision: 1.3 $"
 
+from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission
 from Products.CMFCore.CMFCorePermissions import View, ManageProperties, ListFolderContents, ModifyPortalContent
@@ -54,8 +55,9 @@ class I18NContentBase:
     def getLanguagesFromRequest(self):
         """ return a list of languages matching this request """
 
-        language=self.REQUEST.cookies.get('I18N_CONTENT_LANGUAGE', None)
-        language_once=self.REQUEST.get('cl', None)
+        REQUEST = get_request()
+        language=REQUEST.cookies.get('I18N_CONTENT_LANGUAGE', None)
+        language_once=REQUEST.get('cl', None)
         if not language_once:
             # we support a property here to make it possible to pre select default languages
             # for certain folders
@@ -88,9 +90,10 @@ class I18NContentBase:
 
     def setServed(self, lang):
         # set cookies and response headers for multilingual content
-        self.REQUEST.set('I18N_CONTENT_SERVED_LANGUAGE', lang)
-        self.REQUEST.RESPONSE.setHeader('Content-Language', lang)
-        self.REQUEST.RESPONSE.setHeader('Vary', '*') #
+        REQUEST = get_request()
+        REQUEST.set('I18N_CONTENT_SERVED_LANGUAGE', lang)
+        REQUEST.RESPONSE.setHeader('Content-Language', lang)
+        REQUEST.RESPONSE.setHeader('Vary', '*') #
         self.served_language=lang
 
     def Served(self):
@@ -162,6 +165,7 @@ class I18NContentLayer(I18NContentBase):
                 #print "allowed", allowed
     
                 if allowed:
+                    #print "check", self.Languages()
                     if not fallback and lang != self.Languages()[0]:
                         # we have fallen back but are not allowed to
                         fallenback=lang

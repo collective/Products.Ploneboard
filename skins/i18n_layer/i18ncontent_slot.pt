@@ -17,13 +17,13 @@
 
              <metal:block metal:define-macro="i18nContentChooser">
               <form name="i18ncontentselector" method="GET" action="setI18NContentCookie" tal:attributes="action string:${here/absolute_url}/setI18NContentCookie">
-	        <select name="lang" onChange="i18ncontentselector.submit();">
-                  <option value="" i18n:domain="plone" i18n:translate="label_choose_language">Choose Language</option>
-		  <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().items()">
-                    <option value="" tal:attributes="value python:lang[0]; selected python:current[0] == lang[0]" tal:content="python:lang[1]+' ('+lang[0]+')'" />
-                  </tal:block>
+                <select name="lang" onChange="i18ncontentselector.submit();">
+                    <option value="" i18n:domain="plone" i18n:translate="label_choose_language">Choose Language</option>
+                    <tal:block i18n:domain="dynamic_motherlanguages" tal:repeat="lang python:here.retrieveFilteredLanguages().items()">
+                        <option value="" tal:attributes="value python:lang[0]; selected python:current[0] == lang[0]" i18n:translate="" tal:content="python:lang[1]" />
+                    </tal:block>
                 </select>
-	      </form>
+              </form>
              </metal:block>
 
             </div>

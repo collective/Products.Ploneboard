@@ -18,10 +18,10 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.3 2003/08/18 09:54:53 longsleep Exp $
+$Id: Patches.py,v 1.4 2003/08/18 14:03:34 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.3 $"
+__version__ = "$Revision: 1.4 $"
 
 
 ####################
@@ -78,7 +78,6 @@ if not hasattr(Globals, 'get_request'):
     Publish.publish = new_publish
 
     Globals.get_request = get_request
-
     # First import (its not a refresh operation).
     # We need to apply the patches.
     patch = 1

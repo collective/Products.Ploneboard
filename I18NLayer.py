@@ -18,11 +18,12 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.7 2003/08/12 20:51:19 longsleep Exp $
+$Id: I18NLayer.py,v 1.8 2003/08/18 14:03:34 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.7 $"
+__version__ = "$Revision: 1.8 $"
 
+from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
 from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission
@@ -96,8 +97,7 @@ class I18NLayer( BaseFolder ):
         """ returns the contentlayer helper instance """
         # get request
         if not REQUEST:
-            try: REQUEST=self.REQUEST
-            except: pass
+            REQUEST = get_request()
         # make new contentlayer instance
         return I18NContentLayer(self, REQUEST, verifypermission=verifypermission)
 
