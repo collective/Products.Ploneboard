@@ -27,7 +27,6 @@ from OFS.PropertyManager import PropertyManager
 from OFS import ObjectManager, SimpleItem
 from DateTime import DateTime
 from App import ImageFile
-from zExceptions import Unauthorized
 import AccessControl.Role, webdav.Collection
 import Products
 import os
