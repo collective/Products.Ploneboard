@@ -21,22 +21,51 @@
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 10, int(b_start), orphan=1);">
       
+      <script language="javascript">
+        <!--
+        var newWin;
+	
+        function centeredWindow(url, winname) {
+	w = screen.width - (screen.width * 0.25)
+	h = screen.height - (screen.height * 0.25)
+	windowLeft = (screen.width - w)/2;
+	windowTop = (screen.height - h)/2;
+	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
+	closeWindow();
+	newWin = window.open(url, winname, settings);
+	newWin.focus();
+        }
+	
+        function closeWindow() {
+	if (newWin && !newWin.closed) {
+	newWin.close();
+	}
+        }
+	-->
+      </script>
+
       <h1 tal:content="here/title_or_id">
 	Title or id
       </h1>
 
       <table style="width: 100%;">
-	<tr tal:condition="python:test(batch.previous or batch.next, 1, 0)">
+	<tr>
 	  <td>
 	    <div class="listingBar">
 	      <table style="width: 100%">
 		<tr>
-		  <td>
+		  <td style="width: 33%">
 		    <span class="previous" tal:define="p batch/previous | nothing" tal:condition="p"> 
 		      <a href="#" tal:attributes="href string:?b_start=${p/first}"> &laquo; previous photos</a>
 		    </span>
 		  </td>
-		  <td>
+		  <td style="width: 33%; text-align: center;">
+		    <input type="button" 
+			   value="Start slideshow" 
+			   class="context"
+			   onClick="javascript:centeredWindow('photoalbum_slideshow'); return false;"/>
+		  </td>
+		  <td style="width: 33%">
 		    <span class="next" tal:define="n batch/next | nothing" tal:condition="n"> 
 		      <a href="#" tal:attributes="href string:?b_start=${batch/end}">next photos &raquo;</a>
 		    </span>

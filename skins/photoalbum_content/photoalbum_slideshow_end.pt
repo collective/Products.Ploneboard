@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US">
+
+  <head>
+    <!-- Style sheets for CSS2 capable browsers (Mozilla, Opera, IE, Netscape6+, Konqueror etc. -->
+    <style type="text/css" media="all"
+           tal:content="string:
+           @import url(${here/portal_url}/ploneBasic.css);
+           @import url(${here/portal_url}/ploneStructure.css);
+           @import url(${here/portal_url}/ploneWidgets.css);">
+    </style>
+    
+    <meta http-equiv="imagetoolbar" content="no" /> <!-- Disable IE6 image toolbar -->
+    <title>The End</title>
+  </head>
+
+  <body style="margin: 2em;">
+
+    <h1>The End</h1>
+
+  </body>
+</html>

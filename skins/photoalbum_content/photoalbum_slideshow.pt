@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      tal:define="images python:here.contentValues(spec='Photo');
+                  Batch python:modules['ZTUtils'].Batch;
+                  b_start python:request.get('b_start', 0);
+                  batch python:Batch(images, 1, int(b_start));
+                  next python:batch.next;
+                  image python:batch[0];">
+
+  <head>
+    <!-- Style sheets for CSS2 capable browsers (Mozilla, Opera, IE, Netscape6+, Konqueror etc. -->
+    <style type="text/css" media="all"
+           tal:content="string:
+           @import url(${here/portal_url}/ploneBasic.css);
+           @import url(${here/portal_url}/ploneStructure.css);
+           @import url(${here/portal_url}/ploneWidgets.css);">
+    </style>
+    
+    <meta http-equiv="imagetoolbar" content="no" /> <!-- Disable IE6 image toolbar -->
+    <title tal:content="image/title_or_id" />
+  </head>
+
+  <body style="margin: 2em;">
+
+    <div tal:condition="image">
+      <h1 tal:content="image/title_or_id"/>
+	
+      <img tal:replace="structure python:image.tag('medium')" />
+	  
+      <meta tal:condition="next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:5;; URL=${request/URL0}?b_start:int=${next/first}" />
+      <meta tal:condition="not:next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:1;; URL=${request/URL1}/photoalbum_slideshow_end" />
+    </div>
+
+  </body>
+</html>
