@@ -1,14 +1,5 @@
 TODO-LIST
 
-[Done]
-
-  * HTML documentation
-
-  * Add a management tab on GRUF to allow users and groups to be created
-    at this top-level management interface.
-
-[v1.2 => Planned 2002-07-31]
-
 [v1.3 => Not planned yet]
 
   * Document the whole GRUF API

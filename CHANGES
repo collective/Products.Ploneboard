@@ -1,3 +1,10 @@
+v1_2 - 20030709
+
+  * HTML documentation
+
+  * Add a management tab on GRUF to allow users and groups to be created
+    at this top-level management interface.
+
 v1_1 - 20030702
 
   * Security improvements
