@@ -1,13 +1,13 @@
 V2.0
 
+- I'd like to put a different title on the page and different titles on the singular panels
+
 - API
 
   - register/unregister skin
   - register/unregister viewlet
 
 - add edit button to each content
-
-- update css to be more compatible with nested contentpanels
 
 - compatible with I18NLayer
 

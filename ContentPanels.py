@@ -103,7 +103,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         customCSS = getattr(aq_base(self), 'customCSS', '')
         return customCSS.strip()
 
-    security.declarePublic('getCustomCSS')
+    security.declarePublic('getPageLayoutMode')
     def getPageLayoutMode(self):
         """ get page layout: tiled page, tab page """
         return getattr(aq_base(self), 'pageLayoutMode', 'tab')
