@@ -16,16 +16,18 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.8 2004/01/28 13:41:59 tiran Exp $
+$Id: __init__.py,v 1.9 2004/02/03 22:14:42 tiran Exp $
 '''.strip()
 
 from OFS.Application import get_products
-from AccessControl import ModuleSecurityInfo, allow_module, allow_class, allow_type
-from PlacelessTranslationService import PlacelessTranslationService, PTSWrapper, log
-from Negotiator import negotiator
-from MessageID import MessageIDFactory
-from Products.PageTemplates.GlobalTranslationService import setGlobalTranslationService
-import os, fnmatch, zLOG, sys, Zope, Globals, TranslateTags
+from AccessControl import ModuleSecurityInfo, allow_module
+from AccessControl.Permissions import view
+from PlacelessTranslationService import PlacelessTranslationService, PTSWrapper
+from utils import log
+import zLOG
+from Negotiator import negotiator, setSessionLanguage
+from Products.PageTemplates.GlobalTranslationService import setGlobalTranslationService, getGlobalTranslationService
+import os, fnmatch, sys, Zope, Globals, TranslateTags
 
 # in python 2.1 fnmatch doesn't have the filter function
 if not hasattr(fnmatch, 'filter'):
@@ -44,6 +46,9 @@ notify_initialized = []
 # id to use in the Control Panel
 cp_id = 'TranslationService'
 
+# module level translation service
+translation_service = None
+
 # icon
 misc_ = {
     'PlacelessTranslationService.png':
@@ -52,28 +57,53 @@ misc_ = {
     Globals.ImageFile('www/GettextMessageCatalog.png', globals()),
     }
 
-# this is the module-level translation service
-translation_service = PlacelessTranslationService('default')
-
 # set product-wide attrs for importing
-translate = translation_service.translate
-getLanguages = translation_service.getLanguages
-getLanguageName = translation_service.getLanguageName
+security = ModuleSecurityInfo('Products.PlacelessTranslationService')
+allow_module('Products.PlacelessTranslationService')
+allow_module('Products.PlacelessTranslationService.MessageID')
+
+security.declareProtected(view, 'getTranslationService')
+def getTranslationService():
+    """ returns the PTS instance """
+    #return getGlobalTranslationService()
+    return translation_service
+
+security.declareProtected(view, 'translate')
+def translate(*args, **kwargs):
+    """ see PlaceslessTranslationService.PlaceslessTranslationService """
+    return getTranslationService().translate(*args, **kwargs)
+
+security.declareProtected(view, 'utranslate')
+def utranslate(*args, **kwargs):
+    """ see PlaceslessTranslationService.PlaceslessTranslationService """
+    return getTranslationService().utranslate(*args, **kwargs)
+
+security.declareProtected(view, 'getLanguages')
+def getLanguages(*args, **kwargs):
+    """ see PlaceslessTranslationService.PlaceslessTranslationService """
+    return getTranslationService().getLanguages(*args, **kwargs)
+
+security.declareProtected(view, 'getLanguageName')
+def getLanguageName(*args, **kwargs):
+    """ see PlaceslessTranslationService.PTSWrapper """
+    return getTranslationService().getLanguageName(*args, **kwargs)
+
+security.declareProtected(view, 'setSessionLanguage')
+# imported from the Negotiator
+
+negotiateDeprecatedLogged = 0
+security.declareProtected(view, 'negotiate')
 def negotiate(langs, context):
-    # deprecated!
+    """ deprecated! """
+    if not negotiateDeprecatedLogged:
+        log('Products.PlacelessTranslationService.negotiate() is deprecated', zLOG.WARNING)
+        negotiateDeprecatedLogged = 1
     return negotiator.negotiate(langs, context, 'language')
 
-# import permissions
-security = ModuleSecurityInfo('Products.PlacelessTranslationService')
-security.declarePublic('negotiator')
-security.declarePublic('negotiate')
-security.declarePublic('translate')
-security.declarePublic('getLanguages')
-security.declarePublic('getLanguageName')
-
-
 def make_translation_service(cp):
-    # Control_Panel translation service
+    """Control_Panel translation service
+    """
+    global translation_service
     translation_service = PlacelessTranslationService('default')
     translation_service.id = cp_id
     cp._setObject(cp_id, translation_service)
@@ -81,19 +111,30 @@ def make_translation_service(cp):
 
 def initialize(context):
     # hook into the Control Panel
+    global translation_service
     cp = context._ProductContext__app.Control_Panel # argh
     if cp_id in cp.objectIds():
         cp_ts = getattr(cp, cp_id)
+        # use the ts in the acquisition context of the control panel
+        #translation_service = translation_service.__of__(cp)
+        translation_service = cp_ts
     else:
         cp_ts = make_translation_service(cp)
 
     # don't touch - this is the last version that didn't have the attribute (0.4)
     instance_version = getattr(cp_ts, '_instance_version', (0, 4, 0, 0))
+    if instance_version[3] > 99:
+        log('development mode: translation service recreated',
+            detail = '(found %s.%s.%s.%s)\n' % instance_version)
+        cp._delObject(cp_id)
+        cp_ts = make_translation_service(cp)
+        
     if instance_version < PlacelessTranslationService._class_version:
         log('outdated translation service found, recreating',
             detail = '(found %s.%s.%s.%s)\n' % instance_version)
         cp._delObject(cp_id)
         cp_ts = make_translation_service(cp)
+
 
     # sweep products
     log('products: %r' % get_products(), zLOG.BLATHER)
@@ -120,4 +161,3 @@ def initialize(context):
     TranslateTags.initialize()
     for function in notify_initialized:
         function()
-

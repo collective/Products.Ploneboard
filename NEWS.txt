@@ -1,3 +1,17 @@
+1.0fork-beta5 - 2004-02-03
+
+    Added utranslate method
+
+    Added negotiator chains and two new easy negotiators
+
+    Added zope 3 like MessageID and MessageIDFactory
+
+    Updated API and cleaned up code:
+      - added security to classes
+      - moved some classes to utils.py to avoid method level imports
+      - added getTranslationService() method to get the PTS instance
+        in other products
+
 1.0fork-beta4 - 2004-01-28
 
     Read all files with "rb" in msgfmt.py

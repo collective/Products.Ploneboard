@@ -17,10 +17,13 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.7 2004/01/28 08:53:05 longsleep Exp $
+$Id: GettextMessageCatalog.py,v 1.8 2004/02/03 22:14:42 tiran Exp $
 """
 
 from Acquisition import aq_parent
+from AccessControl import ClassSecurityInfo
+from AccessControl.Permissions import view, view_management_screens
+from Globals import InitializeClass
 from gettext import GNUTranslations
 import os, sys, types, codecs, traceback, zLOG
 from OFS.Traversable import Traversable
@@ -29,7 +32,7 @@ from Acquisition import Implicit
 from App.Management import Tabs
 import re
 from OFS.Uninstalled import BrokenClass
-from PlacelessTranslationService import log, Registry
+from utils import log, Registry
 from msgfmt import Msgfmt
 from DateTime import DateTime
 import Globals
@@ -92,6 +95,7 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     __roles__=('Manager',)
     title__roles__=__roles__
 
+    security = ClassSecurityInfo()
  
     def __init__(self, pofile, error):
         self._pofile = pofile
@@ -172,6 +176,7 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
                                                             
     index_html = ptFile('index_html', globals(), 'www', 'catalog_broken')
 
+#XXX InitializeClass(BrokenMessageCatalog)
 
 
 class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
@@ -183,6 +188,8 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     icon = 'misc_/PlacelessTranslationService/GettextMessageCatalog.png'
     __roles__=('Manager',)
     title__roles__=__roles__
+
+    security = ClassSecurityInfo()
     
     def __init__(self, pofile):
         """Initialize the message catalog"""
@@ -248,7 +255,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         pofile=self._pofile
         try:
             self._prepareTranslations(0)
-            log('reloading %s: %s' % (self.getId(), self.title))
+            log('reloading %s: %s' % (self.getId(), self.title), severity=zLOG.BLATHER)
         except:
             pts._delObject(name)
             exc=sys.exc_info()
@@ -441,7 +448,12 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     #
     ############################################################
 
+#XXX InitializeClass(GettextMessageCatalog)
+
 class MissingIds(Persistent):
+    
+    security = ClassSecurityInfo()
+
     def __init__(self, fileName, charset):
         self._fileName = fileName
         self._charset = charset
@@ -470,3 +482,4 @@ class MissingIds(Persistent):
             self._v_file.flush()
             self._ids[msgid]=1
 
+#XXX InitializeClass(MissigIds)

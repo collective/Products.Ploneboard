@@ -17,16 +17,20 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.14 2004/01/28 13:48:15 tiran Exp $
+$Id: PlacelessTranslationService.py,v 1.15 2004/02/03 22:14:42 tiran Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
 from AccessControl import ClassSecurityInfo
+from AccessControl.Permissions import view, view_management_screens
+from Globals import InitializeClass
 from OFS.Folder import Folder
 from types import DictType, StringType, UnicodeType
 from Negotiator import negotiator
 from Domain import Domain
+from utils import log, Registry
 from msgfmt import PoSyntaxError
+from GettextMessageCatalog import BrokenMessageCatalog, GettextMessageCatalog, translationRegistry, getMessage
 import os
 try:
     from pax import XML
@@ -38,14 +42,9 @@ try:
 except NameError:
     True=1
     False=0
+
 _marker = []
 
-def log(msg, severity=zLOG.INFO, detail='', error=None):
-    if type(msg) is UnicodeType:
-        msg = msg.encode(sys.getdefaultencoding(), 'replace')
-    if type(detail) is UnicodeType:
-        detail = detail.encode(sys.getdefaultencoding(), 'replace')
-    zLOG.LOG('PlacelessTranslationService', severity, msg, detail, error)
 
 def map_get(map, name):
     return map.get(name)
@@ -67,13 +66,6 @@ _get_var_regex = re.compile(r'%(n)s' %({'n': NAME_RE}))
 # message in a catalog is not translated, tough luck, you get the msgid.
 LANGUAGE_FALLBACKS = list(os.environ.get('LANGUAGE_FALLBACKS', 'en').split(' '))
 
-from UserDict import UserDict
-
-class Registry(UserDict):
-
-    def register(self, name, value):
-        self[name] = value
-
 catalogRegistry = Registry()
 registerCatalog = catalogRegistry.register
 fbcatalogRegistry = Registry()
@@ -90,17 +82,21 @@ class PTSWrapper:
     #     control panel and translation service
     #     to avoid these zodb traversals
     
+    security = ClassSecurityInfo()
+    
     def __init__(self, service):
         # get path from service
         self._path=service.getPhysicalPath()
 
+    security.declarePrivate('load')
     def load(self, context):
         # return the real service
         try: root = context.getPhysicalRoot()
         except: return None
         # traverse the service
         return root.unrestrictedTraverse(self._path, None)
-
+    
+    security.declareProtected(view, 'translate')
     def translate(self, domain, msgid, mapping=None, context=None,
                   target_language=None, default=None):
         """translate a message using the default encoding
@@ -112,6 +108,7 @@ class PTSWrapper:
         if not service: return default
         return service.translate(domain, msgid, mapping, context, target_language, default)
 
+    security.declareProtected(view, 'utranslate')
     def utranslate(self, domain, msgid, mapping=None, context=None,
                   target_language=None, default=None):
         """translate a message using unicode
@@ -122,10 +119,21 @@ class PTSWrapper:
         if not service: return default
         return service.utranslate(domain, msgid, mapping, context, target_language, default)
 
+    security.declarePublic(view, 'getLanguageName')
+    def getLanguageName(self, code, context):
+        service = self.load(context)
+        return service.getLanguageName(code)
+
+    security.declarePublic(view, 'getLanguages')
+    def getLanguages(self, context, domain=None):
+        service = self.load(context)
+        return service.getLanguages(domain)
+
     def __repr__(self):
         """ return a string representation """
         return "<PTSWrapper for %s>" %(self._path)
 
+InitializeClass(PTSWrapper)
 
 class PlacelessTranslationService(Folder):
     """
@@ -138,14 +146,12 @@ class PlacelessTranslationService(Folder):
     # internal is always 0 on releases; if you hack this internally, increment it
     # -3 for alpha, -2 for beta, -1 for release candidate
     # for forked releases internal is always 99
-    _class_version = (1, -2, 3, 99)
+    # use an internal of >99 to recreate the PTS at evry startup (development mode)
+    _class_version = (1, -2, 5, 99)
     all_meta_types = ()
 
     security = ClassSecurityInfo()
-    security.declarePublic('translate')
-    security.declarePublic('getLanguages')
-    security.declarePublic('getLanguageName')
-
+    
     def __init__(self, default_domain='global', fallbacks=None):
         self._instance_version = self._class_version
         # XXX We haven't specified that ITranslationServices have a default
@@ -162,7 +168,7 @@ class PlacelessTranslationService(Folder):
 
     def _registerMessageCatalog(self, catalog):
 
-        from GettextMessageCatalog import BrokenMessageCatalog
+        
         # dont register broken message catalogs
         if isinstance(catalog, BrokenMessageCatalog): return
 
@@ -187,7 +193,6 @@ class PlacelessTranslationService(Folder):
         self._p_changed = 1
 
     def _load_dir(self, basepath):
-        from GettextMessageCatalog import GettextMessageCatalog, BrokenMessageCatalog
         log('looking into ' + basepath, zLOG.BLATHER)
         if not os.path.isdir(basepath):
             log('it does not exist', zLOG.BLATHER)
@@ -232,6 +237,7 @@ class PlacelessTranslationService(Folder):
                  
         log('Initialized:', detail = repr(names) + (' from %s\n' % basepath))
 
+    security.declareProtected(view_management_screens, 'manage_renameObject')
     def manage_renameObject(self, id, new_id, REQUEST=None):
         "wrap manage_renameObject to deal with registration"
         catalog = self._getOb(id)
@@ -244,6 +250,7 @@ class PlacelessTranslationService(Folder):
         Folder._delObject(self, id, dp)
         self._unregisterMessageCatalog(catalog)
 
+    security.declarePrivate('reloadCatalog') 
     def reloadCatalog(self, catalog):
         # trigger an exception if we don't know anything about it
         id=catalog.id
@@ -253,6 +260,7 @@ class PlacelessTranslationService(Folder):
         catalog=self._getOb(id)
         self._registerMessageCatalog(catalog)
 
+    security.declarePrivate('addCatalog') 
     def addCatalog(self, catalog):
         try:
             self._delObject(catalog.id)
@@ -262,51 +270,8 @@ class PlacelessTranslationService(Folder):
         log('adding %s: %s' % (catalog.id, catalog.title))
         self._registerMessageCatalog(catalog)
 
-    def setLanguageFallbacks(self, fallbacks=None):
-        if fallbacks is None:
-            fallbacks = LANGUAGE_FALLBACKS
-        self._fallbacks = fallbacks
-
-    def getLanguageName(self, code):
-        for (ccode, cdomain), cnames in catalogRegistry.items():
-            if ccode == code:
-                for cname in cnames:
-                    cat = self._getOb(cname)
-                    if cat.name:
-                        return cat.name
-
-    def getLanguages(self, domain=None):
-        """Get available languages"""
-        if domain is None:
-            # no domain, so user wants 'em all
-            langs = catalogRegistry.keys()
-            # uniquify
-            d = {}
-            for l in langs:
-                d[l[0]] = 1
-            l = d.keys()
-        else:
-            l = [k[0] for k in catalogRegistry.keys() if k[1] == domain]
-        l.sort()
-        return l
-
-    def utranslate(self, domain, msgid, mapping=None, context=None,
-                  target_language=None, default=None):
-        """translate() using unicode
-        """
-        self.translate(domain, msgid, mapping, context,
-                  target_language, default, as_unicode=True)
-
-    def translate(self, domain, msgid, mapping=None, context=None,
-                  target_language=None, default=None, as_unicode=False):
-        """
-        """
-        from GettextMessageCatalog import translationRegistry, getMessage
-
-        if not msgid:
-            # refuse to translate an empty msgid
-            return default
-
+    security.declarePrivate('getCatalogs')
+    def getCatalogsForTranslation(self, context, domain, target_language=None):
         # ZPT passes the object as context.  That's wrong according to spec.
         try:
             context = context.REQUEST
@@ -325,8 +290,65 @@ class PlacelessTranslationService(Folder):
                 if catalog_names:
                     break
 
-        for name in catalog_names:
-            catalog = translationRegistry[name]
+        return [translationRegistry[name] for name in catalog_names ]
+
+    security.declarePrivate('setLanguageFallbacks') 
+    def setLanguageFallbacks(self, fallbacks=None):
+        if fallbacks is None:
+            fallbacks = LANGUAGE_FALLBACKS
+        self._fallbacks = fallbacks
+
+    
+    security.declareProtected(view, 'getLanguageName')
+    def getLanguageName(self, code):
+        for (ccode, cdomain), cnames in catalogRegistry.items():
+            if ccode == code:
+                for cname in cnames:
+                    cat = self._getOb(cname)
+                    if cat.name:
+                        return cat.name
+
+    security.declareProtected(view, 'getLanguages')
+    def getLanguages(self, domain=None):
+        """Get available languages"""
+        if domain is None:
+            # no domain, so user wants 'em all
+            langs = catalogRegistry.keys()
+            # uniquify
+            d = {}
+            for l in langs:
+                d[l[0]] = 1
+            l = d.keys()
+        else:
+            l = [k[0] for k in catalogRegistry.keys() if k[1] == domain]
+        l.sort()
+        return l
+
+    security.declareProtected(view, 'utranslate')
+    def utranslate(self, domain, msgid, mapping=None, context=None,
+                  target_language=None, default=None):
+        """translate() using unicode
+        """
+        self.translate(domain, msgid, mapping, context,
+                  target_language, default, as_unicode=True)
+
+    security.declareProtected(view, 'translate')
+    def translate(self, domain, msgid, mapping=None, context=None,
+                  target_language=None, default=None, as_unicode=False):
+        """
+        """
+        if not msgid:
+            # refuse to translate an empty msgid
+            return default
+
+        # ZPT passes the object as context.  That's wrong according to spec.
+        try:
+            context = context.REQUEST
+        except AttributeError:
+            pass
+
+        catalogs = self.getCatalogsForTranslation(context, domain, target_language)
+        for catalog in catalogs:
             try:
                 text = getMessage(catalog, msgid, default)
             except KeyError:
@@ -354,6 +376,7 @@ class PlacelessTranslationService(Folder):
         text = self.interpolate(text, mapping)
         return text
 
+    security.declarePrivate('negotiate_language') 
     def negotiate_language(self, context, domain):
         if context is None:
             raise TypeError, 'No destination language'
@@ -364,11 +387,13 @@ class PlacelessTranslationService(Folder):
                 langs.append(fallback)
         return negotiator.negotiate(langs, context, 'language')
 
+    security.declareProtected(view, 'getDomain')
     def getDomain(self, domain):
         """
         """
         return Domain(domain, self)
 
+    security.declarePrivate('interpolate') 
     def interpolate(self, text, mapping):
      try:
         """Insert the data passed from mapping into the text"""
@@ -416,6 +441,7 @@ class PlacelessTranslationService(Folder):
         import traceback
         traceback.print_exc()
 
+    security.declareProtected(view_management_screens, 'manage_main')
     def manage_main(self, REQUEST, *a, **kw):
         "Wrap Folder's manage_main to render international characters"
         # ugh, API cruft
@@ -430,3 +456,5 @@ class PlacelessTranslationService(Folder):
 
     #
     ############################################################
+
+InitializeClass(PlacelessTranslationService)

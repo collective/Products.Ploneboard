@@ -16,10 +16,10 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: TranslateTags.py,v 1.1 2003/11/20 16:14:51 tesdal Exp $
+$Id: TranslateTags.py,v 1.2 2004/02/03 22:14:42 tiran Exp $
 '''.strip()
 
-from PlacelessTranslationService import log
+from utils import log
 from DocumentTemplate.DT_String import String
 from DocumentTemplate.DT_Util import parse_params
 import string, random, Globals, os, glob, zLOG

@@ -17,15 +17,16 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """
 
-$Id: Negotiator.py,v 1.6 2003/11/20 21:16:08 longsleep Exp $
+$Id: Negotiator.py,v 1.7 2004/02/03 22:14:42 tiran Exp $
 """
+
+import types
 
 try:
     True
 except NameError:
     True=1
     False=0
-
 
 _langPrefsRegistry = {}
 
@@ -44,11 +45,16 @@ def registerLangPrefsMethod(prefs, kind='language'):
     # add this pref helper
     _langPrefsRegistry[kind].append(prefs)
     # sort by priority
-    _langPrefsRegistry[kind].sort(lambda x, y: cmp(x['priority'], y['priority']))
+    _langPrefsRegistry[kind].sort(lambda x, y: cmp(y['priority'], x['priority']))
 
-def getLangPrefsMethod(env, kind='language'):
+def getLangPrefs(env, kind='language'):
     # get higest prio method for kind
-    return _langPrefsRegistry[kind][-1]['klass'](env)
+    for pref in  _langPrefsRegistry[kind]:
+        handler = pref['klass'](env)
+        accepted = handler.getAccepted(env, kind)
+        if accepted:
+            return accepted
+    return ()
 
 def lang_normalize(lang):
     return lang.replace('_', '-')
@@ -150,7 +156,80 @@ class BrowserAccept:
         return [accept[1] for accept in accepts]
 
 
-registerLangPrefsMethod({'klass':BrowserAccept,'priority':10 }, 'language')
+class SessionAccept:
+    filters = (str_lower, lang_normalize)
+
+    def __init__(self, request):
+        pass
+
+    def getAccepted(self, request, kind='language'):
+        language = request.SESSION.get('pts_language', None)
+        if language:
+            if type(language) is types.TupleType:
+                return language
+            else:
+                #filter
+                for filter in self.filters:
+                    language = filter(language)
+                return (language,)
+        else:
+            return ()
+
+def setSessionLanguage(request, lang, REQUEST=None):
+    """sets the language of the current session
+
+    request - the request object
+    lang - language as string like de or pt_BR (it's normalizd)
+    """
+    if type(lang) is types.TupleType:
+        lang = lang[1]
+    lang = str_lower(lang_normalize(lang))
+    request.SESSION['pts_language'] = (lang,)
+    if REQUEST:
+        REQUEST.RESPONSE.redirect(REQUEST.URL0)
+    else:
+        return lang
+
+
+class RequestGetAccept:
+    filters = (str_lower, lang_normalize)
+
+    def __init__(self, request):
+        pass
+
+    def getAccepted(self, request, kind='language'):
+        # get
+        form = request.form
+        language=form.get('language', None)
+        setLanguage=form.get('setlanguage', None)
+        
+        if language:
+            #filter
+            for filter in self.filters:
+                language = filter(language)
+            try:
+                if setLanguage == 1 or setLanguage.lower() in ('1','true', 'yes'):
+                    setLanguage = True
+                else:
+                    setLanguage = False
+            except (ValueError, AttributeError), msg:
+                # XXX log?
+                setLanguage = False
+            if setLanguage:
+                # request.RESPONE.setCookie('language', language)
+                request.SESSION['pts_language'] = (language,)
+            return (language,)
+        else:
+            return ()
+
+
+# higher number = higher priority
+# if a acceptor returns a false value (() or None) then the next acceptor
+# in the chain is queried
+registerLangPrefsMethod({'klass':BrowserAccept,   'priority':10 }, 'language')
+registerLangPrefsMethod({'klass':SessionAccept,   'priority':40 }, 'language')
+registerLangPrefsMethod({'klass':RequestGetAccept,'priority':50 }, 'language')
+
 registerLangPrefsMethod({'klass':BrowserAccept,'priority':10 }, 'content-type')
 
 
@@ -174,12 +253,11 @@ class Negotiator:
             return cache[choices]
         except KeyError:
             cache[choices] = self._negotiate(choices, request, kind)
-            return cache[choices]
+        return cache[choices]
 
     def _negotiate(self, choices, request, kind):
         
-        envprefs = getLangPrefsMethod(request, kind)
-        userchoices = envprefs.getAccepted(request, kind)
+        userchoices = getLangPrefs(request, kind)
         # Prioritize on the user preferred choices.  Return the first user
         # preferred choice that the object has available.
         test = self.tests.get(kind, _false)
@@ -196,8 +274,7 @@ class Negotiator:
         return self.negotiate(langs, request, 'language')
 
     def getLanguages(self, request):
-        envprefs = getLangPrefsMethod(request, 'language')
-        return envprefs.getAccepted(request, 'language')
+        return getLangPrefs(request, 'language')
 
 
 negotiator = Negotiator()

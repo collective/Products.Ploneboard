@@ -60,27 +60,20 @@ if not hasattr(Publish, '_requests'):
     import Globals
     Globals.get_request = get_request
 
+# PATCH 2
+#
 # Fix uses of StringIO with a Unicode-aware StringIO
+#
+
 from Products.PageTemplates.PageTemplate import PageTemplate
 from TAL.TALInterpreter import TALInterpreter
-from StringIO import StringIO as originalStringIO
-from types import UnicodeType
-class unicodeStringIO(originalStringIO):
-    def write(self, s):
-        if isinstance(s, UnicodeType):
-            response = get_request().RESPONSE
-            try:
-                s = response._encode_unicode(s)
-            except AttributeError:
-                # not an HTTPResponse
-                pass
-        originalStringIO.write(self, s)
 
+from FasterStringIO import FasterStringIO
 
 if hasattr(TALInterpreter, 'StringIO'):
     # Simply patch the StringIO method of TALInterpreter and PageTemplate
     # on a new Zope
     def patchedStringIO(self):
-        return unicodeStringIO()
+        return FasterStringIO()
     TALInterpreter.StringIO = patchedStringIO
     PageTemplate.StringIO = patchedStringIO

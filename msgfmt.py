@@ -45,11 +45,11 @@ except NameError:
 
 class PoSyntaxError(Exception):
     """ Syntax error in a po file """
-    def __init__(self, lno):
-        self.lno = lno
+    def __init__(self, msg):
+        self.msg = msg
         
     def __str__(self):
-        return 'Po file syntax error on line %d' % self.lno
+        return 'Po file syntax error: %s' % self.msg
 
 class Msgfmt:
     """ """
@@ -161,13 +161,16 @@ class Msgfmt:
                 continue
             # XXX: Does this always follow Python escape semantics?
             # XXX: eval is evil because it could be abused
-            l = eval(l, globals())
+            try:
+                l = eval(l, globals())
+            except Exception, msg:
+                raise PoSyntaxError('%s (line %d of the po file): \n%s' % (msg, lno, l))
             if section == ID:
                 msgid += l
             elif section == STR:
                 msgstr += l
             else:
-                raise PoSyntaxError(lno)
+                raise PoSyntaxError('error in line %d' % lno)
 
         # Add last entry
         if section == STR:
