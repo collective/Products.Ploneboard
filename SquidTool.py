@@ -11,6 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+# $Id: SquidTool.py,v 1.2 2003/12/09 23:49:18 longsleep Exp $ (Author: $Author: longsleep $)
 """
 
 # make sockets non blocking

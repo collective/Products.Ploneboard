@@ -8,7 +8,9 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-############################################################################## """
+##############################################################################
+# $Id: __init__.py,v 1.2 2003/12/09 23:49:18 longsleep Exp $ (Author: $Author: longsleep $)
+"""
 
 
 from AccessControl import ModuleSecurityInfo
