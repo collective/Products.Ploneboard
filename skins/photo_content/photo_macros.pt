@@ -46,7 +46,7 @@
 	  <option tal:repeat="display displays" 
                   i18n:translate=""
 	          tal:attributes="value display/name;
-	          selected python:test(photo_display == display['name'], 'selected', '');" 
+	          selected python:test(photo_display == display['name'], 'selected', '')" 
 	          tal:content="display/label/title">1</option>
 	</select>
       </form>

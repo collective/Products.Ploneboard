@@ -19,7 +19,7 @@
 
     <img tal:condition="here/size" 
          src="#" 
-         tal:replace="structure python:here.tag(size=photo_display);" />
+         tal:replace="structure python:here.tag(size=photo_display)" />
 
     <p style="margin-top: 2em;" tal:content="here/Description">
     Description
