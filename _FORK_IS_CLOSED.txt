@@ -1,0 +1,5 @@
+This fork is closed. We are using http://savannah.nongnu.org/projects/opental for development. Please report any bugs to this project page. Ask lalo, __gotcha or dreamcatcher for cvs access if you want to help.
+
+2004/01/12
+Christian 'Tiran' Heimes
+ 
