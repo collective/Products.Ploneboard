@@ -13,6 +13,7 @@
                 <td><a tal:condition="product/hasError" tal:attributes="href product/id">
                         <img  src="/misc_/PageTemplates/exclamation.gif"></a>
                 </td>
+                <td tal:content="python:here.getProductVersion(product['id'])"> </td>
             </tr>
         </table>
         <input type=submit i18n:attributes="value" value="Install">

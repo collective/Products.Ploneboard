@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.19 2003/10/05 14:30:14 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.20 2003/10/05 15:34:30 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
-        ''' list candidate CMF products for installation '''
+        ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
         pids=self.Control_Panel.Products.objectIds()
 
         import sys
@@ -119,7 +119,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'listInstalledProducts')
     def listInstalledProducts(self, showHidden=0):
-        ''' returns a list of products that are installed -> list of strings'''
+        ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden)'''
         pids = [o.id for o in self.objectValues() if o.isInstalled() and (o.isVisible() or showHidden )]
 
         res=[]
@@ -145,7 +145,11 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         
     security.declareProtected(ManagePortal, 'getProductReadme')
     getProductReadme=getProductFile
-        
+
+    security.declareProtected(ManagePortal, 'getProductVersion')
+    def getProductVersion(self,p):
+        ''' returns the version string stored in version.txt'''
+        return self.getProductFile(p,'version.txt')
 
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):

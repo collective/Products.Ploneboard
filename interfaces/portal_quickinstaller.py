@@ -8,10 +8,10 @@ class IQuickInstallerTool(Interface):
     id = Attribute('id', 'Must be set to "portal_quickinstaller"')
     
     def listInstallableProducts(skipInstalled=1):
-        ''' returns a list of products that are installed -> list of strings'''
+        ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
 
     def listInstalledProducts(showHidden=0):
-        ''' returns a list of products that are installed -> list of strings'''
+        ''' returns a list of products that are installed -> list of dicts with keys:(id,hasError,status,,isLocked,isHidden)'''
 
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name 
@@ -28,6 +28,9 @@ class IQuickInstallerTool(Interface):
 
     def getProductReadme(self,p):
         ''' returns the readme file of the product case-insensitive '''
+
+    def getProductVersion(self,p):
+        ''' returns the version string stored in version.txt'''
 
     def isProductInstalled(productname):
         ''' checks wether a product is installed (by name) '''
