@@ -117,10 +117,8 @@ def installMember(self, out):
     at.setCatalogsByType('Member', ['member_catalog', 'portal_catalog'])
 
     # register with portal factory
-    site_props = self.portal_properties.site_properties
-    if not hasattr(site_props,'portal_factory_types'):
-        site_props._setProperty('portal_factory_types',('Member',), 'lines')
-
+    ft = getToolByName(self, 'portal_factory')    portal_factory_types = ft.getFactoryTypes().keys()
+    if 'Member' not in portal_factory_types:        portal_factory_types.append('Member')    ft.manage_setPortalFactoryTypes(listOfTypeIds=portal_factory_types)
     # add a form_controller action so that preference edit traverses back
     # to the preferences panel
     fc = getToolByName(self, 'portal_form_controller')
