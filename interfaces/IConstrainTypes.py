@@ -16,15 +16,15 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-"""RestrainTypes awareness marker interface
+"""ConstrainTypes awareness marker interface
 
-$Id: IRestrainTypes.py,v 1.2 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: IConstrainTypes.py,v 1.2 2004/08/17 16:59:41 tiran Exp $
 """
 __author__  = 'Jens Klein'
 __docformat__ = 'restructuredtext'
 
 from Interface import Interface
 
-class IRestrainTypes(Interface):
-    """RestrainTypes awareness marker interface
+class IConstrainTypes(Interface):
+    """ConstrainTypes awareness marker interface
     """

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.46 2004/08/17 16:20:00 tiran Exp $
+$Id: schemata.py,v 1.47 2004/08/17 16:59:42 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -54,6 +54,7 @@ else:
 # just like CMF
 ATContentTypeBaseSchema = BaseSchema.copy()
 ATContentTypeBaseSchema['description'].isMetadata = False
+ATContentTypeBaseSchema['description'].schemata = 'default'
 
 ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
     # TemplateMixin
@@ -264,8 +265,8 @@ ATExtFileSchema['file'].storage = ExternalStorage(prefix='atct', archive=False)
 # AT Content Type Folder
 ###
 
-ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema
-ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
+ATFolderSchema      = ATContentTypeSchema
+ATBTreeFolderSchema = ATContentTypeSchema
 
 if ENABLE_CONSTRAIN_TYPES_MIXIN:
     ATFolderSchema      = ATFolderSchema + ConstrainTypesMixinSchema

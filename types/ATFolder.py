@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.16 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATFolder.py,v 1.17 2004/08/17 16:59:42 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,8 +36,8 @@ from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, \
     ATCTBTreeFolder
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, \
     IATBTreeFolder
-from Products.ATContentTypes.types.schemata import ATFolderSchema,\
-    ATBTreeFolderSchema
+from Products.ATContentTypes.types.schemata import ATFolderSchema
+from Products.ATContentTypes.types.schemata import ATBTreeFolderSchema
 
 class ATFolder(ATCTOrderedFolder):
     """A simple folderish archetype"""
