@@ -1,3 +1,20 @@
+2003-09-09  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Applied some fixes contributed by Robert Rotterman and Volodymyr 
+      Cherepanyak:
+
+    * Modified methods used in Member.py to access and set user passwords / 
+      roles / domains to make things work with GRUF.
+
+    * Fixed Member.getSchema so that things work with users defined outside the
+      portal acl_users folder.
+
+    * Fixed migration in MemberData to work better with GRUF
+
+    * Modified MemberData.getProperty so that it first looks for default values
+      in MemberData properties and then falls back to the defaults defined in
+      the Member object schema.  This lets one set member defaults TTW.
+
 2003-07-21  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Factory tool now gives ownership of new objects to the currently 

@@ -451,8 +451,6 @@ class Member(VariableSchemaSupport, BaseContent):
         """Return the list of roles assigned to the user,
            including local roles assigned in context of
            the passed in object."""
-#        import pdb
-#        pdb.set_trace()
         return self.getUser().getRolesInContext(object)
 
 
@@ -514,9 +512,15 @@ class Member(VariableSchemaSupport, BaseContent):
                 delattr(self, '_v_user')  # remove the cached user
         else:
             # we have a temporary user in hand -- set its attributes by hand
-            self.getUser().__ = password
-            self.getUser().roles = roles
-            self.getUser().domains = domains
+            user = self.getUser()
+            if hasattr(user, 'changePassword'):
+                # for GRUF
+                user.changePassword(password)
+            else:
+                # for ordinary acl_users
+                user.__ = password
+            user.roles = roles
+            user.domains = domains
 
 
     security.declareProtected(EDIT_PASSWORD_PERMISSION, 'setMailMe')
@@ -739,7 +743,6 @@ class Member(VariableSchemaSupport, BaseContent):
             self.login_time = mapping['login_time']
         if mapping.has_key('last_login_time'):
             self.last_login_time = mapping['last_login_time']
-        
 
 
     security.declarePrivate('setMemberProperties')
@@ -1118,9 +1121,16 @@ class Member(VariableSchemaSupport, BaseContent):
         if hasattr(self, '_v_user'):
             delattr(self, '_v_user')  # remove the cached user
 
-        self.password = user.__
-        self.roles = user.roles
-        self.domains = user.domains
+        if hasattr(user, '_getPassword'):
+            # for GRUF
+            self.password = user._getPassword()
+            self.roles = user.getRoles()
+            self.domains = user.getDomains()
+        else:
+            # for ordinary acl_users
+            self.password = user.__
+            self.roles = user.roles
+            self.domains = user.domains
 
 
     def _updateCredentials(self):
@@ -1394,7 +1404,7 @@ class Member(VariableSchemaSupport, BaseContent):
 
     
     def getSchema(self):
-        return self.aq_parent.getMemberSchema()
-    
+        md_tool = getToolByName(self, 'portal_memberdata')
+        return md_tool.getMemberSchema()    
    
 registerType(Member)

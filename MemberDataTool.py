@@ -203,7 +203,14 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         
         res = []
         portal = self.portal_url.getPortalObject()
-        for u in portal.acl_users.getUsers():
+        acl_users = portal.acl_users
+        if hasattr(acl_users, 'getPureUsers'):
+            # for GRUF
+            getUsers = acl_users.getPureUsers
+        else:
+            getUsers = acl_users.getUsers
+            
+        for u in getUsers():
             user = md.wrapUser(u)
             if not (user.listed or is_manager):
                 continue
@@ -312,7 +319,15 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     def getProperty(self, id, default=None):
         """Get the property 'id', returning the optional second
            argument or None if no such property is found."""
-        # Get the default value from the Member schema
+
+        # First try to get the default value from MemberDataTool properties
+        # so that one can set default values TTW
+        _marker = {}
+        p = DefaultMemberDataTool.getProperty(self, id, _marker)
+        if p != _marker:
+            return p
+
+        # Fall back to the default value from the Member schema
         # Create a temporary member if needed.
         m = self._getMemberInstance()
 
@@ -459,13 +474,16 @@ def getMemberFactory(self, type_name):
 
 from Products.CMFCore.utils import _verifyActionPermissions
 
+# XXX update this for 1.1
 def _getViewFor(obj, view='view', default=None):
     ti = obj.getTypeInfo()
     if ti is not None:
         actions = ti.getActions()
         for action in actions:
             if action.get('id', None) == default:
-                return obj.restrictedTraverse(default['action'])
+                if default and type(default) != type(''):
+                    default = default['action']
+                return obj.restrictedTraverse(default)
 
         # "view" action is not present or not allowed.
         # Find something that's allowed.
