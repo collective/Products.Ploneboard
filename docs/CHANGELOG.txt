@@ -1,3 +1,47 @@
+2004-04-17 22:04  tiran
+
+	* docs/HISTORY.txt: Updated history Added contributor to each entry
+
+2004-04-17 22:02  tiran
+
+	* types/ATFolder.py: Fixed default view of ATBTreeFolder
+
+2004-04-17 21:46  yenzenz
+
+	* types/ATFavorite.py: fixed NameError: global name 'url' is not
+	  defined it appeared while adding a Favorite
+
+2004-04-17 21:31  tiran
+
+	* skins/ATContentTypes/atct_edit.cpt: Fixed wrong closing tag (thx
+	  to skaar)
+
+2004-04-17 06:27  dtremea
+
+	* tests/common.py: Standardized 'quiet' argument for
+	  installProduct. Fixed typos on ExeATCTion.
+
+2004-04-15 22:16  tiran
+
+	* skins/ATContentTypes/: atct_edit.cpt, atct_macros.pt,
+	  criterion_edit_form.cpt, criterion_macros.pt: Renamed
+	  criterion_macros to atct_macros Moved typedescription to
+	  atct_macros Merged base_edit Fixed tab index problem
+
+2004-04-15 21:42  tiran
+
+	* types/ATContentType.py: Added missing Sharing tab for content
+	  items
+
+2004-04-15 21:42  tiran
+
+	* skins/ATContentTypes/atct_edit.cpt: fixed a possible problem with
+	  translate()
+
+2004-04-15 18:16  tiran
+
+	* docs/: CHANGELOG.txt, HISTORY.txt: Updated history/changelog
+
 2004-04-15 18:10  tiran
 
 	* Extensions/: Install.py, switchOldPloneTypes.py, toolbox.py:
