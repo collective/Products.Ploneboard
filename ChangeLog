@@ -1,3 +1,9 @@
+2003-10-07  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added more detailed error messages when next action can't be found.
+     Hopefully this will make people less mystified when they screw up
+     their .metadata files.
+
 2003-09-27  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Bound the state to the global variable 'state' in controller scripts and

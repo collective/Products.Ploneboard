@@ -126,6 +126,11 @@ class FormAction(SimpleItem):
     def getAction(self):
         return self.action
 
+    def __str__(self):
+        return '%s.%s.%s.%s=%s:%s' % (str(self.getObjectId()), str(self.getStatus()), \
+            str(self.getContextType()), str(self.getButton()), str(self.getActionType()), \
+            str(self.getActionArg()))
+
 InitializeClass(FormAction)
 
 # ##############################################################################

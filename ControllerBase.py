@@ -171,7 +171,10 @@ class ControllerBase:
                     if status == 'failure':
                         next_action=FormAction(id, status, ANY_CONTEXT, ANY_BUTTON, 'traverse_to', 'string:%s' % id, controller)
                     if next_action is None:
-                        raise ValueError, 'No next action found for %s.%s.%s.%s' % (id, status, context_type, button)
+                        metadata_actions = [str(a) for a in self.actions.getFiltered(object_id=id)]
+                        zmi_actions = [str(a) for a in controller.actions.getFiltered(object_id=id)]
+                        raise ValueError, 'No next action found for %s.%s.%s.%s\nMetadata actions:\n%s\n\nZMI actions:\n%s\n' % \
+                            (id, status, context_type, button, '\n'.join(metadata_actions), '\n'.join(zmi_actions))
 
         REQUEST.set('controller_state', controller_state)
         return next_action.getAction()(controller_state)
