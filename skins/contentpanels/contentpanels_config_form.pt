@@ -21,9 +21,7 @@
 
 <div metal:fill-slot="main"
      tal:define="page request/pageIndex | python:'0';
-                 global pageIndex python:int(page);
-                 theFolder python:here.isPrincipiaFolderish and here or here.aq_parent;
-                 folder_url theFolder/absolute_url" >
+                 global pageIndex python:int(page);" >
 
     <h1 tal:content="here/title_or_id">
     Title or id
@@ -121,7 +119,7 @@ columns
                            tal:attributes="value repeat/column/index" />
               </div>
 
-                <a href="#" tal:attributes="onclick string:window.open('${folder_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=620,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false">
+                <a href="#" tal:attributes="onclick string:window.open('${here_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=620,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false">
                    <img title="new panel" alt="new panel"
                         i18n:attributes="title"
                          tal:attributes="src string:$portal_url/newPanel.gif"/>
@@ -194,7 +192,7 @@ columns
                              i18n:attributes="title"
                              tal:attributes="src string:$portal_url/right.gif"/>
                         </a>
-                        <a href="#" tal:attributes="onclick string:window.open('${folder_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=620,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false">
+                        <a href="#" tal:attributes="onclick string:window.open('${here_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=620,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false">
                           <img title="new panel" alt="new panel"
                              i18n:attributes="title"
                              tal:attributes="src string:$portal_url/newPanel.gif"/>

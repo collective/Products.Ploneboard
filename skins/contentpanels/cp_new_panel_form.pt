@@ -2,6 +2,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       i18n:domain="plone"
       tal:define="cpPath request/cpPath | here/absolute_url;
+                  here python:here.isPrincipiaFolderish and here or here.aq_parent;
                   addPanel request/addPanel | string:edit;
                   pageIndex request/pageIndex; 
                   columnIndex request/columnIndex;
