@@ -39,6 +39,7 @@ import traceback
 
 from interfaces.IUserFolder import IUser, IGroup
 
+_marker = ['INVALID_VALUE']
 
 # NOTE : _what_not_even_god_should_do is a specific permission defined by ZOPE
 # that indicates that something has not to be done within Zope.
@@ -371,11 +372,13 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
 
     security.declarePrivate("getProperty")
-    def getProperty(self, name):
+    def getProperty(self, name, default = _marker):
         """getProperty(self, name) => return property value or raise AttributeError
         """
         # Try to do an attribute lookup on the underlying user object
-        return getattr(self.__underlying__, name)
+        v = getattr(self.__underlying__, name, _marker)
+        if v is _marker:
+            raise AttributeError, name
 
     security.declarePrivate("hasProperty")
     def hasProperty(self, name):
