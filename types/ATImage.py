@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.25 2004/07/21 15:22:46 tiran Exp $
+$Id: ATImage.py,v 1.26 2004/08/01 17:49:40 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -72,20 +72,20 @@ class ATImage(ATCTFileContent):
         self._setATCTFileContent(value, **kwargs)
 
     security.declareProtected(CMFCorePermissions.View, 'tag')
-    def tag(self, *args, **kwargs):
+    def tag(self, **kwargs):
         """Generate image tag using the api of the ImageField
         """
-        return self.image.tag(*args, **kwargs)
+        return self.getField('image').tag(self, **kwargs)
 
     def __str__(self):
         """cmf compatibility
         """
-        return tag()
+        return self.tag()
     
     security.declareProtected(CMFCorePermissions.View, 'getSize')
     def getSize(self, scale=None):
         field = self.getField('image')
-        return field.getSize(self, scale)
+        return field.getSize(self, scale=scale)
     
     security.declareProtected(CMFCorePermissions.View, 'getWidth')
     def getWidth(self, scale=None):
@@ -95,8 +95,8 @@ class ATImage(ATCTFileContent):
     def getHeight(self, scale=None):
         return self.getSize(scale)[1]
     
-    width = ComputedAttribute(getWidth)
-    height = ComputedAttribute(getHeight)
+    width = ComputedAttribute(getWidth, 1)
+    height = ComputedAttribute(getHeight, 1)
 
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, precondition='', file=None, title=None):
@@ -135,13 +135,6 @@ class ATExtImage(ATImage):
         parent = aq_parent(self)
         i      = Image(self.getId(), self.Title(), image, ct)
         return i.__of__(parent)
-
-    security.declareProtected(CMFCorePermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE):
-        """Make it directly viewable when entering the objects URL
-        """
-        image = self.getImage(REQUEST=REQUEST, RESPONSE=RESPONSE)
-        return image.index_html(REQUEST, RESPONSE)
 
 if HAS_EXT_STORAGE:
     registerType(ATExtImage, PROJECTNAME)
