@@ -18,7 +18,7 @@ CompositePage 0.2
 kupu 
     HEAD of http://codespeak.net/svn/kupu/trunk/kupu
 Archetypes
-    release-1_3-branch from SF archetypes project
+    release-1_3-branch from SF archetypes project - http://sf.net/projects/archetypes
 
 Layouts
 =======
@@ -28,22 +28,22 @@ Layouts have slots which define the places where content can be added. Those
 slots are named.
 
 Layout can be changed later if needed. This is done through the edit view. When
-changing layout, if old and new layouts do share slot names, the content placed
+changing the layout, if the old and new layouts share slot names, the content placed
 in a slot of a given name in the old layout will be placed in the corresponding
 slot in the new layout.  Content items placed in slots that do not have
-correspondance in the new layout are hidden, not deleted.  Switching back to
+corresponding names in the new layout are hidden, not deleted.  Switching back to
 a layout will show items in their original location. Slots and composite
-elements unaccessible through design view can be deleted through ZMI.
+elements inaccessible through design view can be deleted through ZMI.
 
 Design view
 ===========
 The design view is supported in Mozilla and IE6.
 
-The design view allows to select the pieces of content : when clicking on one
+The design view allows you to select the pieces of content : when clicking on one
 of the dotted bars representing the slots, you get a menu.  There are two
-options : Add.. and Add title... (see below for more about titles).
+options : 'Add..' and 'Add title...' (see below for more about titles).
 
-To add a composite element, select Add...  You get a popup window wherein you
+To add a composite element, select 'Add...'  You get a popup window wherein you
 can select the piece of content that you want to add to this slot.  This window
 is a kupu drawer. It only shows instance of "composable" portal types (see
 below for setting up composables).  You browse your site until you have found
@@ -56,13 +56,13 @@ to another : drag and drop the icon associated with the composite element to
 one of the dotted bars.
 
 If you click the icon, you get another menu.  There are three options :
-Edit..., Delete and Select viewlet.
+'Edit...', 'Delete' and 'Select viewlet'.
 
-Edit... sends you to the edit screen of the content pointed at by the element.
+'Edit...' sends you to the edit screen of the content pointed at by the element.
 
-Delete removes the composite element (not the associated content).
+'Delete' removes the composite element (not the associated content).
 
-Select viewlet lists the available viewlets corresponding to the content type
+'Select viewlet' lists the available viewlets corresponding to the content type
 of the composite element. Choose one of them to get your content displayed
 differently.
 
@@ -84,12 +84,12 @@ Titles
 Titles are special composite elements which allows you to add some text when
 composing your page.
 
-In the design view, select Add title...
+In the design view, select 'Add title...'
 You get a popup window with a prompt for the given title.
-This add a new composite element displaying the title through its registered
+This adds a new composite element displaying the title through its registered
 viewlet.
 
-If you need to modify the title, access its data through the Edit... item of
+If you need to modify the title, access its data through the 'Edit...' item of
 the icon menu.
 
 Setting up composables
