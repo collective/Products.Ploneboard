@@ -6,6 +6,32 @@
 
  * Fixed wrong portal type in Members ATBTreeFolder after migration [tiran]
 
+ * Added initializeArchetype() to ATContentType base class and changed it to
+   use edit() instead of update() to make invokeFactory compatible with the old
+   cmf types syntax.
+
+ * Fixed problem with _getPortalTypeName in initializeArchetype() phase of
+   object creation. Before the fix the portal type name was the original type
+   name (e.g. ATDocument) because it was changed after the initializeArchetype
+   call by the portal types tool. This issue has caused some wired problems with
+   LinguaPlone and workflows. [tiran]
+
+ * ATFile file field and ATImage image field are now language independend.
+   Later I will add a I18NImage and I18NFile if needed. Having a seperate type
+   for language dependend content for file and image is in my opinion easier to
+   understand for people. Besides it's like Zope3. [tiran]
+
+ * Removed TemplateMixin specific code from ATContentType base class. It was
+   moved to TemplateMixin some time ago. [tiran]
+
+ * Better error reporting for migration errors [tiran]
+
+ * Fixed migration problem when LinguaPlone was installed [tiran]
+
+ * Added - as valid char for ids [tiran]
+
+ * Reindex only Type, portal_type and meta_type in switching script [tiran]
+
 0.2-beta6 - 2004-06-20
 
  * Added max upload size validator to ATFile and ATImage [tiran]
