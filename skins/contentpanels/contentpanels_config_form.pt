@@ -213,7 +213,7 @@ columns
                         </select>
                         <select name="panelObjectViewlet" title="content viewlet" width="6"
                                 tal:define="viewlets python: here.portal_actions.listFilteredActionsFor(panelContent).get('panel_viewlets', []);
-                                            viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent.absolute_url() != cpPath)];
+                                            viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent != here)];
                                             portlets python: here.portal_contentpanels.listFilteredActionsFor(panelContent).get('panel_viewlets',[]);"
                                 i18n:attributes="title label_viewlet"
                                 tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records">
