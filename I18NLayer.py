@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.2 2003/03/26 11:41:53 vladoi Exp $
+$Id: I18NLayer.py,v 1.3 2003/05/09 06:05:34 ctheune Exp $
 """
 
-__version__ = "$Revision: 1.2 $"
+__version__ = "$Revision: 1.3 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -214,11 +214,11 @@ schema = Schema((
     ))
 
 def modify_fti(fti):
-    fti[0]['name']='I18NLayer'
-    fti[0]['filter_content_types']=1
+    fti['name']='I18NLayer'
+    fti['filter_content_types']=1
     # NOTE: we better hide the useless actions rather than delete them
     #       to keep compatibilty with templates requesting them
-    for a in fti[0]['actions']:
+    for a in fti['actions']:
         if a['id'] in ('references', 'metadata'): 
             a['visible'] = 0
     return fti
