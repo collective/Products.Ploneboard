@@ -1,3 +1,7 @@
+0.3.1
+  - serious BUG fix in Extentions/Install.py
+    Yangh <walteyh@sohu.com>
+
 0.3
   - Added list page(mpoll_list.pt) to list all avilable mpoll. 
   - Added mpoll_poll.pt to do vote from the mpoll_view.pt page.  
