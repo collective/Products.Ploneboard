@@ -28,7 +28,7 @@
     <div tal:condition="image" tal:define="delay python:request.get('delay', 'manual')">
       <h1 tal:content="image/title_or_id"/>
 	
-      <img tal:replace="structure python:image.tag(prefered_size)" />
+      <img tal:replace="structure python:image.tag(size=prefered_size)" />
 	  
       <meta tal:condition="python:next and delay!='manual'" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:5;; URL=${request/URL0}?b_start:int=${next/first}&delay=$delay" />
       <meta tal:condition="not:next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:1;; URL=${request/URL1}/photoalbum_slideshow_end" />

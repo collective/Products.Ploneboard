@@ -48,7 +48,7 @@
 	<input type="button" 
 	       value="Start slideshow" 
 	       class="context"
-	       onClick="javascript:centeredWindow('photoalbum_slideshow'); return false;"/>
+	       tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
       </span>
       
       <h1 tal:content="here/title_or_id">
