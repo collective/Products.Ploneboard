@@ -1,3 +1,7 @@
+V1.8.1
+
+  - fix bug 'AttributeError: toRelativePath' when add new panel 
+
 V1.8
 
   - rewrite the popup viewlet selecting window. It is:
