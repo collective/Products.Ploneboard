@@ -188,3 +188,98 @@
     </div>
   </div>
 </metal:div>
+
+
+
+<metal:div metal:define-macro="fieldeditor">
+
+  <div class="portlet" id="atse_field_editor" tal:condition="request/field|nothing"> 
+    <h5 i18n:translate="field_definition">Field definition for <b tal:content="request/field"/></h5>
+    <div class="portletBody" id="atse_fieldeditor">
+
+      <form action="atse_update" method="post"
+            tal:define="field python: here.atse_getField(request['field']);
+                        widget python: field.widget;
+                        widget_name python:field.getWidgetName()">
+        <input type="hidden" name="fielddata.name:record:string" 
+               tal:attributes="value request/field|nothing" />
+        <input type="hidden" name="fielddata.schemata:record:string"    
+             tal:attributes="value fieldset" />
+                                                                        
+        <div>
+          <div class="left">
+             <tal:div metal:use-macro="here/atse_macros/macros/type" />         
+           </div>
+           <div class="left">
+             <tal:div metal:use-macro="here/atse_macros/macros/widget" />         
+           </div>
+           <div class="left">
+             <tal:div metal:use-macro="here/atse_macros/macros/size" />         
+          </div>
+          <div class="clear">&nbsp; </div>
+     
+        </div>
+        <div class="clear"> </div>
+
+        <div tal:condition="python: widget_name in ('MultiSelectionWidget', 'SelectionWidget', 'PicklistWidget', 'InAndOutWidget')">
+          <span class="label" i18n:translate="vocabulary">
+            Vocabulary (Use "key|value" for passing key-value pairs 
+            or 'method:&lt;methodname&gt;')
+          </span>
+          <div> 
+            <textarea cols="60" rows="6"
+                   name="fielddata.vocabulary:record:lines"
+                   tal:condition="python: widget_name in ('MultiSelectionWidget', 'SelectionWidget', 'PicklistWidget', 'InAndOutWidget')"
+                   tal:content="python: here.atse_formatVocabulary(field)"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <span class="label" i18n:translate="default">Default</span>
+          <div>
+            <input type="text" value="" size="40" 
+                   name="fielddata.default:record:string"
+                   tal:attributes="value python: here.atse_field_default(field)"/>
+          </div>
+        </div>
+
+        <div>
+          <span class="label" i18n:translate="label">Label</span>
+          <div>
+            <input type="text" value="" size="40" 
+                   name="fielddata.label:record:string"
+                   tal:attributes="value python: field.widget.label"/>
+          </div>
+        </div>
+      
+        <div>
+          <div class="left">
+            <span class="label" i18n:translate="required">Required</span >
+            <div>
+              <input type="checkbox" value="1" 
+                     name="fielddata.required:record:int"
+                     tal:attributes="checked field/required"/>
+            </div>
+         </div>
+        
+          <div class="left">
+            <span class="label" i18n:translate="create_index">Create index</span>
+            <div>
+              <input type="checkbox" value="1" 
+                     name="fielddata.createindex:record:int"
+                     tal:attributes="checked field/createindex|nothing"/>
+            </div>
+          </div>
+          <div class="clear"> </div>
+        </div>
+
+        <div> 
+          <div class="field">
+            <input type="submit" value="Save changes" class="standalone" i18n:attributes="value">
+          </div> 
+        </div>
+
+      </form>
+    </div>
+  </div>
+</metal:div>

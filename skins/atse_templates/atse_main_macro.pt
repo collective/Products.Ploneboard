@@ -1,0 +1,25 @@
+<div metal:define-macro="schema_editor">
+
+  <!-- portlets left side -->
+  <div class="left" style="width: 25%"
+       tal:define="fieldsets python:[key for key in here.atse_getSchemataNames() if not key in ['metadata', 'default']];
+                   default_fieldset python: fieldsets[0];
+                   global fieldset request/schemata|default_fieldset">
+
+    <metal:block tal:condition="not: request/schemata|nothing">
+      <span tal:define="dummy python: request.set('schemata', fieldsets[0])" /> 
+    </metal:block>
+
+    <tal:div metal:use-macro="here/atse_macros/macros/fieldsets" />
+    <tal:div metal:use-macro="here/atse_macros/macros/fields" />
+    <tal:div metal:use-macro="here/atse_macros/macros/maintenance" />
+  </div>
+        
+
+  <!-- portlet right side -->
+  <div class="right" style="width: 70%">
+    <tal:div metal:use-macro="here/atse_macros/macros/fieldeditor" />
+  </div>
+
+  <div class="clear"> </div>
+</div>
