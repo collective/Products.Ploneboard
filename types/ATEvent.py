@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.15 2004/06/13 00:06:05 tiran Exp $
+$Id: ATEvent.py,v 1.16 2004/06/18 12:53:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -108,37 +108,29 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     def cmf_edit(self, title=None, description=None, eventType=None,
              effectiveDay=None, effectiveMo=None, effectiveYear=None,
              expirationDay=None, expirationMo=None, expirationYear=None,
-             start_time=None, startAMPM=None,
-             stop_time=None, stopAMPM=None,
+             start_date=None, start_time=None, startAMPM=None,
+             end_date=None, stop_time=None, stopAMPM=None,
              location=None,
              contact_name=None, contact_email=None, contact_phone=None,
              event_url=None):
-##        if title is not None:
-##            self.setTitle(title)
-##        if description is not None:
-##            self.setDescription(description)
-##        if eventType is not None:
-##            self.setEventType(eventType)
-##        if location is not None:
-##            self.setLocation(location)
-##        if contact_name is not None:
-##            self.setContactName = contact_name
-##        if contact_email is not None:
-##            self.setContactEmail = contact_email
-##        if contact_phone is not None:
-##            self.setContactPhone = contact_phone
-##        if event_url is not None:
-##            self.setEventUrl = event_url
 
         if effectiveDay and effectiveMo and effectiveYear and start_time:
             sdate = '%s-%s-%s %s %s' % (effectiveDay, effectiveMo, effectiveYear,
                                          start_time, startAMPM)
+        elif start_date:
+            if not start_time:
+                start_time = '00:00:00'
+            sdate = '%s %s' % (start_date, start_time)
         else:
             sdate = None
 
         if expirationDay and expirationMo and expirationYear and stop_time:
             edate = '%s-%s-%s %s %s' % (expirationDay, expirationMo, expirationYear,
                                          stop_time, stopAMPM)
+        elif end_date:
+            if not stop_time:
+                stop_time = '00:00:00'
+            edate = '%s %s' % (end_date, stop_time)
         else:
             edate = None
 
@@ -147,10 +139,10 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
                 edate = sdate
             self.setStartDate(sdate)
             self.setEndDate(edate)
-        
-##        self.update(title=title, description=description, eventType=eventType,
-##                    location=location, contactName=contact_name,
-##                    contactEmail=contact_email, contactPhone=contact_phone,
-##                    eventUrl=event_url)
+            
+        self.update(title=title, description=description, eventType=eventType,
+                    location=location, contactName=contact_name,
+                    contactEmail=contact_email, contactPhone=contact_phone,
+                    eventUrl=event_url)
 
 registerType(ATEvent, PROJECTNAME)

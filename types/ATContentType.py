@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.19 2004/06/18 12:05:40 tiran Exp $
+$Id: ATContentType.py,v 1.20 2004/06/18 12:53:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -35,6 +35,7 @@ else:
     from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
 
 from Products.Archetypes.TemplateMixin import TemplateMixin
+from Products.Archetypes.debug import log_exc
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
@@ -116,6 +117,24 @@ class ATCTMixin(TemplateMixin):
          },
         )
 
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent,
+                              'initializeArchetype')
+    def initializeArchetype(self, **kwargs):
+        """called by the generated addXXX factory in types tool
+        
+        Overwritten to call edit() instead of update() to have the cmf
+        compatibility method.
+        """
+        try:
+            self.initializeLayers()
+            self.setDefaults()
+            if kwargs:
+                self.edit(**kwargs)
+            self._signature = self.Schema().signature()
+            self.mark_creation_flag()
+        except:
+            log_exc()
+
     security.declareProtected(CMFCorePermissions.View, 'getLayout')
     def getLayout(self, **kw):
         """Get the current layout or the default layout if the current one is None
@@ -151,7 +170,7 @@ class ATCTMixin(TemplateMixin):
         for name in kwargs.keys():
             if name not in fieldNames:
                 # we are trying to
-                #print "unknow kwarg %s" % name
+                #print "unknow kwarg %s" % name, kwargs
                 return self.cmf_edit(**kwargs)
         # standard AT edit - redirect to update()
         return self.update(**kwargs)
