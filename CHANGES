@@ -1,4 +1,8 @@
-[v3.2 - 20050305]
+[v3.2 - 20050307]
+
+  Service release.
+
+[v3.2RC2 - 20050305]
 
   * Now your user sources (especially LUF) can have a 'portait' property which
     will be used as your user's portrait. This works only in 'preview.txt'-mode.

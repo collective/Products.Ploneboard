@@ -1,0 +1,33 @@
+Here comes a few screenshots of GroupUserFolder interface.
+
+.. image:: doc/folder_contents.png
+
+*The way GRUF shows-up in the Zope Management Interface*
+
+.. image:: doc/menu.png
+
+*Detail of GRUF in ZMI*
+
+.. image:: doc/tab_overview.png
+
+*The overview page with many users*
+
+.. image:: doc/tab_groups.png
+
+*The groups management interface*
+
+.. image:: doc/tab_users.png
+
+*The users management interface*
+
+.. image:: doc/user_edit.png
+
+*Individual group edition*
+
+.. image:: doc/tab_audit.png
+
+*A sample security audit page*
+
+.. image:: doc/tab_sources.png
+
+*The multi-sources view*
