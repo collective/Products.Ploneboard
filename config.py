@@ -18,17 +18,13 @@
 #
 """
 
-$Id: config.py,v 1.13 2004/03/29 16:44:17 tiran Exp $
+$Id: config.py,v 1.14 2004/04/02 21:30:25 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Permissions import ADD_CONTENT_PERMISSION, ADD_TOPIC_PERMISSION
-
-PROJECTNAME = "ATContentTypes"
-SKINS_DIR = 'skins'
-
-GLOBALS = globals()
+from Products.CMFCore import CMFCorePermissions
 
 try:
     True
@@ -36,14 +32,43 @@ except NameError:
     True  = 1
     False = 0
 
-# Load the validation package from Products.validation (1) or from the
-# python site-packages (0)
-# Archetypes 1.2.x requires:  0
-# Archetypes 1.2.5+ requires: 1
-# Archetypes 1.3.x requires:  1 
+###############################################################################
+## user options
+
+## enable mxTidy for ATDocument?
+MX_TIDY_ENABLED = True
+
+## use TemplateMixin?
+## if enabled users can choose between different view templates for each object
+ENABLE_TEMPLATE_MIXIN = True
+
+## TemplateMixin write permission. Only if the member has this permission he
+## is allowed to choose another permission then the default permission
+TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
+# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
+# TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
+
+## Document History view permission
+##
+HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
+# HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
+
+###############################################################################
+## Don't change anything below here!
+
+PROJECTNAME = "ATContentTypes"
+SKINS_DIR = 'skins'
+
+GLOBALS = globals()
+
+## Load the validation package from Products.validation (1) or from the
+## python site-packages (0)
+## Archetypes 1.2.x requires:  0
+## Archetypes 1.2.5+ requires: 1
+## Archetypes 1.3.x requires:  1 
 VALIDATION_IN_PRODUCTS = True
 
-# using special plone 2 stuff?
+## using special plone 2 stuff?
 try:
     from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 except ImportError:
@@ -51,7 +76,7 @@ except ImportError:
 else:
     HAS_PLONE2 = True
 
-# mxTidy available?
+## mxTidy available?
 try:
     import mx.Tidy
 except ImportError:
@@ -59,16 +84,13 @@ except ImportError:
 else:
     HAS_MX_TIDY = True
 
-# enable mxTidy for ATDocument?
-MX_TIDY_ENABLED = True
-
-# tidy only these document types
+## tidy only these document types
 MX_TIDY_MIMETYPES = (
     'text/html',
      )
 
-# options for mxTidy
-# read http://www.egenix.com/files/python/mxTidy.html for more informations
+## options for mxTidy
+## read http://www.egenix.com/files/python/mxTidy.html for more informations
 MX_TIDY_OPTIONS= {
     'drop_font_tags'   : 1,
     'drop_empty_paras' : 1,
@@ -84,16 +106,12 @@ MX_TIDY_OPTIONS= {
     'char_encoding'    : 'raw',
     }
 
-# use TemplateMixin?
-# if enabled users can choose between different view templates for each object
-ENABLE_TEMPLATE_MIXIN = True
-
-# workflow mapping for the installer
+## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'
 WORKFLOW_FOLDER   = 'folder_workflow'
 WORKFLOW_TOPIC    = 'folder_workflow'
 WORKFLOW_CRITERIA = ''
 
-# icon map used for overwriting ATFile icons
+## icon map used for overwriting ATFile icons
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}

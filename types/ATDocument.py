@@ -18,33 +18,28 @@
 #
 """
 
-$Id: ATDocument.py,v 1.10 2004/03/31 17:22:22 tiran Exp $
+$Id: ATDocument.py,v 1.11 2004/04/02 21:30:26 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-import difflib
 from types import TupleType
 
-from DateTime import DateTime
-from OFS.History import historicalRevision
-from DocumentTemplate.DT_Util import html_quote
-from Acquisition import aq_parent
 from ZPublisher.HTTPRequest import HTTPRequest
 
 from Products.Archetypes.public import *
-from Products.Archetypes.TemplateMixin import TemplateMixin
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.HistoryAware import HistoryAwareMixin
 from Products.ATContentTypes.interfaces.IATDocument import IATDocument
 from Products.ATContentTypes.types.schemata import ATDocumentSchema
 
 
-class ATDocument(ATCTContent):
+class ATDocument(ATCTContent, HistoryAwareMixin):
     """An Archetypes derived version of CMFDefault's Document"""
 
     schema         =  ATDocumentSchema
@@ -61,19 +56,16 @@ class ATDocument(ATCTContent):
                      )
     assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', 'py' )
 
-    __implements__ = ATCTContent.__implements__, IATDocument
+    __implements__ = (ATCTContent.__implements__,
+                      IATDocument,
+                      HistoryAwareMixin.__implements__,
+                     )
 
     security       = ClassSecurityInfo()
 
     actions = updateActions(ATCTContent,
-        ({
-        'id'          : 'history',
-        'name'        : 'History',
-        'action'      : 'string:${object_url}/atdocument_history',
-        'permissions' : (CMFCorePermissions.View,)
-         },
-        )
-    )
+                            HistoryAwareMixin.actions
+                           )
     
     # backward compat
     text_format = 'text/plain'
@@ -157,8 +149,8 @@ class ATDocument(ATCTContent):
         """
         ATCTContent.manage_afterAdd(self, item, container)
 
-        field = self.getField('text')
-        mimetype  = self.guessMimetypeOfText()
+        field    = self.getField('text')
+        mimetype = self.guessMimetypeOfText()
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator
         tidyOutput = self.getTidyOutput(field)
@@ -168,81 +160,5 @@ class ATDocument(ATCTContent):
             field.set(self, tidyOutput)
         elif mimetype:
             self.setContentType(mimetype, skipField=False)
-
-    security.declarePrivate('getHistories')
-    def getHistories(self, max=10):
-        """Get a list of historic revisions.
-        
-        Returns metadata as well    
-        (object, time, transaction_note, user)"""
-    
-        historyList = self._p_jar.db().history(self._p_oid, None, max)
-    
-        if not historyList:
-            return ()
-    
-        # Build list of objects
-        lst = []
-        parent = aq_parent(self)
-        for revision in historyList:
-            serial = revision['serial']
-            # get the revision object and wrap it in a context wrapper
-            obj    = historicalRevision(self, serial)
-            obj    = obj.__of__(parent)
-            lst.append((obj,
-                        DateTime(revision['time']),
-                        revision['description'],
-                        revision['user_name'],
-                      ))
-
-        return lst
-
-    security.declareProtected(CMFCorePermissions.View, 'getDocumentComparisons')
-    def getDocumentComparisons(self, max=10, filterComment=0):
-        """
-        """
-        mTool = getToolByName(self, 'portal_membership')
-        
-        histories = self.getHistories()
-        if max > len(histories):
-            max = len(histories)
-
-        lst = []
-
-        for revisivon in range(1, max):
-    
-            oldObj, oldTime, oldDesc, oldUser = histories[revisivon]
-            newObj, newTime, newDesc, newUser = histories[revisivon-1]
-
-            oldText  = oldObj.getRawText().split("\n")
-            newText  = newObj.getRawText().split("\n")
-            member = mTool.getMemberById(newUser)
-
-            lines = [
-                     html_quote(line)
-                     for line in difflib.unified_diff(oldText, newText)
-                    ][3:]
-
-            description = newDesc            
-            if filterComment:
-                relativUrl = self.absolute_url(1)
-                description = '<br />\n'.join(
-                              [line
-                               for line in description.split('\n')
-                               if line.find(relativUrl) != -1]
-                              )
-            else:
-                description.replace('\n', '<br />\n')
-            
-            if lines:
-                lst.append({
-                            'lines'       : lines,
-                            'oldTime'     : oldTime,
-                            'newTime'     : newTime,
-                            'description' : description,
-                            'user'        : newUser,
-                            'member'      : member
-                           })
-        return lst
 
 registerType(ATDocument, PROJECTNAME)

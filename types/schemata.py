@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.8 2004/03/29 16:44:20 tiran Exp $
+$Id: schemata.py,v 1.9 2004/04/02 21:30:26 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -50,13 +50,14 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
     StringField('layout',
                 accessor="getLayout",
                 mutator="setLayout",
+                write_permission=TEMPLATE_MIXIN_PERMISSION,
                 default_method="getDefaultLayout",
                 vocabulary="templates",
                 #enforceVocabulary=1,
-                widget=SelectionWidget(#description="",
-                                       #description_msgid = "",
-                                       #label = "",
-                                       #label_msgid = "",
+                widget=SelectionWidget(description="Choose a template that will be used for viewing this item.",
+                                       description_msgid = "help_template_mixin",
+                                       label = "View template",
+                                       label_msgid = "label_template_mixin",
                                        i18n_domain = "plone",
                                        visible={'view' : 'invisible',
                                                 'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'invisible'},
