@@ -155,4 +155,37 @@
     </form>
     
   </ol>
+
+    <tal:block condition="here/hasLDAPUserFolderSource">
+      <h4>Special operations</h4>
+      <ol>
+          <p class="form-help">
+            To manage groups with a LDAPUserFolder, one must map LDAP groups to Zope Roles.<br />
+            You can do this mapping manually or click this button to have it done automatically.<br />
+            Please not that any previously existing ldap-group - to - zope-role mapping may be lost.
+          </p>
+          <p class="form-help">
+            To help you in this task, you can have a look at the following table, which summs up<br />
+            the mappings done (or not done!) in LDAPUserFolder.
+          </p>
+
+      <table>
+        <thead>
+          <th>GRUF group</th>
+          <th>LDAP group</th>
+        </thead>
+        <tbody>
+          <tr tal:repeat="group_info here/listLDAPUserFolderMapping">
+            <td tal:content="python:group_info[0]"></td>
+            <td tal:content="python:group_info[1]"></td>
+          </tr>
+        </tbody>
+      </table>
+          <form action="updateLDAPUserFolderMapping">
+            <input type="submit" value="Update LDAP mapping" />
+          </form>
+      </ol>
+    </tal:block>
+
+
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

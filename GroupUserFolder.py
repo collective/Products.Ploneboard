@@ -1328,7 +1328,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2005/01/07 10:48:57 $"[7:-2]
+        rev_date = "$Date: 2005/01/07 20:32:46 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2521,6 +2521,101 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if REQUEST.has_key('RESPONSE'):
             return REQUEST.RESPONSE.redirect("%s/%s/%s" % (self.absolute_url(), id, new_factory))
         return us.unrestrictedTraverse(new_factory)(*args, **kw) # XXX minor security pb ?
+
+
+    security.declareProtected(Permissions.manage_users, "hasLDAPUserFolderSource")
+    def hasLDAPUserFolderSource(self, ):
+        """
+        hasLDAPUserFolderSource(self,) => boolean
+        Return true if a LUF source is instanciated.
+        """
+        for src in self.listUserSources():
+            if src.meta_type == "LDAPUserFolder":
+                return 1
+        return None
+
+    security.declareProtected(Permissions.manage_users, "updateLDAPUserFolderMapping")
+    def updateLDAPUserFolderMapping(self, REQUEST = None):
+        """
+        updateLDAPUserFolderMapping(self, REQUEST = None) => None
+        
+        Update the first LUF source in the process so that LDAP-group-to-Zope-role mapping
+        is done.
+        This is done by calling the appropriate method in LUF and affecting all 'group_' roles
+        to the matching LDAP groups.
+        """
+        # Fetch all groups
+        groups = self.getGroupIds()
+
+        # Scan sources
+        for src in self.listUserSources():
+            if not src.meta_type == "LDAPUserFolder":
+                continue
+
+            # Delete all former group mappings
+            deletes = []
+            for (grp, role) in src.getGroupMappings():
+                if role.startswith('group_'):
+                    deletes.append(grp)
+            src.manage_deleteGroupMappings(deletes)
+
+            # Append all group mappings if it can be done
+            ldap_groups = src.getGroups(attr = "cn")
+            for grp in groups:
+                if src._local_groups:
+                    grp_name = grp
+                else:
+                    grp_name = grp[len('group_'):]
+                Log(LOG_DEBUG, "cheching", grp_name, "in", ldap_groups, )
+                if not grp_name in ldap_groups:
+                    continue
+                Log(LOG_DEBUG, "Map", grp, "to", grp_name)
+                src.manage_addGroupMapping(
+                    grp,
+                    grp_name
+                    )
+                
+        # Return
+        if REQUEST:
+            return REQUEST.RESPONSE.redirect(
+                self.absolute_url() + "/manage_GRUFSources",
+                )
+
+    def listLDAPUserFolderMapping(self,):
+        """
+        listLDAPUserFolderMapping(self,) => utility method
+        """
+        ret = []
+        gruf_done = []
+        ldap_done = []
+        
+        # Scan sources
+        for src in self.listUserSources():
+            if not src.meta_type == "LDAPUserFolder":
+                continue
+
+            # Get all GRUF & LDAP groups
+            if src._local_groups:
+                gruf_ids = self.getGroupIds()
+            else:
+                gruf_ids = self.getGroupNames()
+            ldap_mapping = src.getGroupMappings()
+            ldap_groups = src.getGroups(attr = "cn")
+            for grp,role in ldap_mapping:
+                if role in gruf_ids:
+                    ret.append((role, grp))
+                    gruf_done.append(role)
+                    ldap_done.append(grp)
+                    if not src._local_groups:
+                        ldap_done.append(role)
+            for grp in ldap_groups:
+                if not grp in ldap_done:
+                    ret.append((None, grp))
+            for grp in gruf_ids:
+                if not grp in gruf_done:
+                    ret.append((grp, None))
+
+            return ret
 
 
 class treeWrapper:
