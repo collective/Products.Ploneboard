@@ -1,65 +1,60 @@
-# Product-dependant information
-PRODUCT_NAME = $(shell cat PRODUCT_NAME)
-MAINDIR = $(shell cat PRODUCT_NAME)
-ZOPE_USER = zope
-ZOPE_GROUP = zope
-DISTDIR = dist
+SHELL = /bin/sh
+VERSION := $(shell cat version.txt)
+CVS_TAG := v$(shell sed "s/\./_/g" version.txt)
+PRODUCT := $(shell cat product.txt)
+PRODUCT_NAME := ${PRODUCT}
+MODULE := ${PRODUCT}
+CVS_URL := :ext:$(USERNAME)@cvs.sourceforge.net:/cvsroot/ingeniweb
+PYTHON := $(shell which python)
+SCP_SERVER := $(USERNAME)@shell.sourceforge.net:/home/groups/i/in/ingeniweb/htdocs/Products
 
-# OS-dependant
-RM = rm -rf
-MKDIR = mkdir -p 
-EDITOR = dtemacs
-GREP = grep -n '\$$\$$\$$'
-CHOWN = chown -R $(ZOPE_USER).$(ZOPE_GROUP)
-DEBUG_FILE = $(MAINDIR)/debug.txt
-PYTHON=/usr/local/bin/python
-FIND= find
-
-
-# Just-Do-It stuff
 default:
-	echo "Nothing to do by default"
+	echo "Nothing to do by default."
+	echo .
+	echo "Use 'make test' to check against unit tests."
+	echo "Use 'make dist' to make a distribution if you are in the CVS."
+	echo .
+	echo "This Makefile requires cvs2cl.pl script which can be found at http://www.red-bean.com/cvs2cl/cvs2cl.pl"
 
-clean::init
-	$(RM) *.pyc *~ *.pyo
-	$(FIND) . -name "*~" -exec $(RM) {} \;
-	$(RM) $(DISTDIR)/*
+test:
+	echo "If tests fail, please refer to test/runtests.sh script to check your PYTHON_PATH."
+	(cd tests ; ./runtests.sh)
 
-init:
-	echo "PLEASE USE gmake INSTEAD OF make !!!"
-	touch version.txt
+changelogfile:
+	echo "Refreshing ChangeLog"
+	./cvs2cl.pl
 
-export::dist
-	$(warning "ENTER THE DESTINATION HOST NAME FOLLOWED BY : AND BY THE (optional) DESTINATION DIRECTORY")
-	scp $(DISTDIR)/$(PRODUCT_NAME)-`cat version.txt`.tar.gz $(shell read DEST ; echo $$DEST)
+apidoc:
+	echo "Refreshing API doc"
+	mkdir -p doc
+	cd doc && $(PYTHON) ./py2htmldoc.py $(PRODUCT_NAME) ..
 
-dist::distrib
+commit:apidoc changelogfile www
+	cvs update
+	cvs commit
 
-distrib::clean documentation
-	mkdir $(DISTDIR) || echo ""
-	cd .. && tar -czf $(MAINDIR)/$(DISTDIR)/$(PRODUCT_NAME)-`cat $(MAINDIR)/version.txt`.tar.gz $(MAINDIR) --exclude $(MAINDIR)/$(DISTDIR) --exclude CVS*
+www:apidoc changelogfile
+	scp CHANGES ChangeLog README* ${SCP_SERVER}/${PRODUCT}/
+	scp doc/*html ${SCP_SERVER}/${PRODUCT}/api/ || echo ""
 
-zip::distrib
-	mkdir $(DISTDIR) || echo ""
-	cd .. && zip -rT9v $(MAINDIR)/$(DISTDIR)/$(PRODUCT_NAME)-`cat $(MAINDIR)/version.txt`.zip $(MAINDIR) -x $(MAINDIR)/$(DISTDIR)
+dist:version.txt
+	echo .
+	echo ${VERSION}
+	echo ${CVS_TAG}
+	echo ${PRODUCT}
 
-edit:
-	$(EDITOR) *py
+	# Updating
+	./cvs2cl.pl
+	mkdir dist || echo ""
+	echo "When updating, be careful about the '?' files : they must NOT be part of your distribution."
+	echo "If you feel that one '?'-tagged file should be in your distribution, add it to the cvs before running 'make dist'."
+	cvs update -dP
 
-check:
-	$(GREP) *py
+	# Tagging and archiving
+	cvs tag -c ${CVS_TAG}
+	(cd dist ; cvs -d${CVS_URL} export -r${CVS_TAG} ${MODULE})
+	cp ChangeLog dist/${MODULE}
+	(cd dist ; tar -czvf ${PRODUCT}-${VERSION}.tar.gz ${MODULE})
+	(cd dist ; rm -rf ${MODULE})
 
-install::clean
-	cd .. && $(CHOWN) $(MAINDIR)
-	rm $(DEBUG_FILE) || echo ""
 
-documentation:
-	$(MKDIR) doc
-	#cd doc && $(PYTHON) ../../Ingeniweb/py2htmldoc.py $(PRODUCT_NAME) ..
-
-help:
-	echo ${PRODUCT_NAME}
-	$(shell echo *py)
-	echo $(ERR)
-	echo ${PRODUCT_NAME}
-	$(MAINDIR)

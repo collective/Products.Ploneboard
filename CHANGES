@@ -1,9 +1,12 @@
+v0_2 - 20030331
 
   * Users are now acquired correctly, which prevents you from hotfixing anything !!! :-)
 
   * This fixed Zope 2.5 w/ Plone bug
 
   * Better log reporting
+
+  * Validated with LDAPUserFolder and SimpleUserFolder
 
 v0_1 - 20021126
 
