@@ -1396,14 +1396,15 @@ class Member(VariableSchemaSupport, BaseContent):
         # the template will be made with a blank To:, this is bad
         if not self.getProperty('email'):
             raise 'ValueError', 'Member does not have an email address.'
-        
+
+        password = self.getPassword()        
         # Rather than have the template try to use the mailhost, we will
         # render the message ourselves and send it from here (where we
         # don't need to worry about 'UseMailHost' permissions).
         mail_text = self.mail_password_template( self
                                                , self.REQUEST
                                                , member=self
-                                               , password=self.getPassword()
+                                               , password=password
                                                )
         host = self.MailHost
         host.send( mail_text )
