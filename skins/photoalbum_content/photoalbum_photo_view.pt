@@ -25,29 +25,6 @@
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();">
 
-      <script language="javascript">
-        <!--
-        var newWin;
-	
-        function centeredWindow(url, winname) {
-	w = screen.width - (screen.width * 0.25)
-	h = screen.height - (screen.height * 0.25)
-	windowLeft = (screen.width - w)/2;
-	windowTop = (screen.height - h)/2;
-	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
-	closeWindow();
-	newWin = window.open(url, winname, settings);
-	newWin.focus();
-        }
-	
-        function closeWindow() {
-	if (newWin && !newWin.closed) {
-	newWin.close();
-	}
-        }
-	-->
-      </script>
-
       <div class="contentHeader">
         <h1 tal:content="image/title_or_id">Title or id</h1>
       </div>
@@ -74,10 +51,6 @@
     </div>
 
     <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0);">
-<!--      <a href="" tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;">
-        <img tal:attributes="src string:$portal_url/image_icon.gif" alt="Start slideshow" title="Start slideshow" />
-      </a>-->
-
       <a href="" tal:attributes="href string:${request/URL1}/view?b_start=$b_start">
         <img tal:attributes="src string:$portal_url/folder_icon.gif" alt="Back to album" title="Back to album" />
       </a>

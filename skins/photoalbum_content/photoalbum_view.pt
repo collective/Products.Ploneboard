@@ -2,7 +2,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
-      metal:use-macro="here/main_template/macros/master">
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
 
   <body>
 
@@ -21,29 +22,6 @@
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 10, int(b_start), orphan=1);">
       
-      <script language="javascript">
-        <!--
-        var newWin;
-	
-        function centeredWindow(url, winname) {
-	w = screen.width - (screen.width * 0.25)
-	h = screen.height - (screen.height * 0.25)
-	windowLeft = (screen.width - w)/2;
-	windowTop = (screen.height - h)/2;
-	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
-	closeWindow();
-	newWin = window.open(url, winname, settings);
-	newWin.focus();
-        }
-	
-        function closeWindow() {
-	if (newWin && !newWin.closed) {
-	newWin.close();
-	}
-        }
-	-->
-      </script>
-
       <div class="contentHeader">
         <h1 tal:content="here/title_or_id">Title or id</h1>
       </div>
@@ -93,11 +71,7 @@
     
     </div>
 
-    <metal:block fill-slot="documentActions" tal:define="b_start python:request.get('b_start', 0);">
-<!--      <a href="" tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;">
-        <img tal:attributes="src string:$portal_url/image_icon.gif" alt="Start slideshow" title="Start slideshow" />
-      </a>-->
-
+    <metal:block fill-slot="documentActions">
       <a tal:condition="python:here.aq_parent.meta_type=='Photo Album'" href="" tal:attributes="href string:${here/aq_parent/absolute_url}/view;">
         <img tal:attributes="src string:$portal_url/folder_icon.gif; title string:Back to album: ${here/aq_parent/title_or_id}" alt="Back" title="Back to album" />
       </a>
