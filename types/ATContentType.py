@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.26 2004/06/20 18:45:55 tiran Exp $
+$Id: ATContentType.py,v 1.27 2004/06/23 23:53:40 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -51,7 +51,7 @@ from Acquisition import aq_base, aq_inner, aq_parent
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
 
-DEBUG = 0
+DEBUG = 1
 
 def updateActions(klass, actions):
     """Merge the actions from a class with a list of actions
@@ -135,17 +135,13 @@ class ATCTMixin(TemplateMixin):
             if kwargs:
                 self.edit(**kwargs)
             self._signature = self.Schema().signature()
-            # XXX mark_creation_flag is in portal skins but we don't have a 
-            # context in all cases .. BAD
-            self.mark_creation_flag()
+            self.markCreationFlag()
         except Exception, msg:
             _zlogger.log_exc()
-            # XXX Don't fail for missing SESSION in unit tests and unaccessable
-            # mark_creation_flag in migration
-            if DEBUG and str(msg) not in ('mark_creation_flag', 'SESSION',):
+            if DEBUG and str(msg) not in ('SESSION',):
                 # XXX debug code
                 raise
-                _default_logger.log_exc()
+                #_default_logger.log_exc()
 
     security.declareProtected(CMFCorePermissions.View, 'getLayout')
     def getLayout(self, **kw):

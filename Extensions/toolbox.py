@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.7 2004/06/20 16:22:57 tiran Exp $
+$Id: toolbox.py,v 1.8 2004/06/23 23:53:40 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -74,16 +74,19 @@ def _switchToATCT(pt, cat, reg, klass, out):
     title = klass.archetype_name[3:]
     bakTitle = bakId
     
-    # move away the disabled type
+    # move away the disabled type (CMF -> backup)
     pt.manage_renameObject(id, bakId)
     pt[bakId].manage_changeProperties(title=bakTitle, global_allow=0)
     _changePortalType(cat, id, bakId)
+    # XXX reassign the portal_type class var of the CMF class?
     print >>out, '%s -> %s (%s)' % (id, bakId, bakTitle)
 
-    # rename to the new
+    # rename to the new (ATCT -> ...)
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
+    # reassign the portal_type class var
+    klass.portal_type = id
     print >>out, '%s -> %s (%s)' % (atId, id, title)
 
     # adjust the content type registry
@@ -102,13 +105,15 @@ def _switchToCMF(pt, cat, reg, klass, out):
 
     atTitle = klass.archetype_name
     
-    # move away the ATCT type
+    # move away the ATCT type (ATCT -> original ATCT)
     pt.manage_renameObject(id, atId)
     pt[atId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
+    # reassign the portal_type class var
+    klass.portal_type = atId
     print >>out, '%s -> %s (%s)' % (id, atId, atTitle)
 
-    # rename to the new type
+    # rename to the new type (CMF -> original)
     pt.manage_renameObject(bakId, id)
     if id not in not_global_allow:
         global_allow = 1
@@ -116,6 +121,7 @@ def _switchToCMF(pt, cat, reg, klass, out):
         global_allow = 0
     pt[id].manage_changeProperties(title='', global_allow=global_allow)
     _changePortalType(cat, bakId, id)
+    # XXX reassign the portal_type class var of the CMF class?
     print >>out, '%s -> %s (%s): %i' % (bakId, id, '', global_allow)
 
     # adjust the content type registry
@@ -134,6 +140,7 @@ def _changePortalType(cat, old, new):
         if not obj:
             continue
         obj._setPortalTypeName(new)
+        obj.reindexObject(idxs=['portal_type', 'Type', ])
 
 def _fixLargePloneFolder(self):
     # XXX why do I need this hack?
@@ -153,7 +160,8 @@ def switchCMF2ATCT(self):
         _switchToATCT(pt, cat, reg, klass, out)
     # XXX maybe we need to reindex only portal_type and meta_type
     _fixLargePloneFolder(self)
-    cat.refreshCatalog(clear=1)
+    #objects are recataloged in switching method
+    #cat.refreshCatalog(clear=1)
     return out.getvalue()
 
 def switchATCT2CMF(self):
@@ -167,7 +175,8 @@ def switchATCT2CMF(self):
         _switchToCMF(pt, cat, reg, klass, out)
     # XXX maybe we need to reindex only portal_type and meta_type
     _fixLargePloneFolder(self)
-    cat.refreshCatalog(clear=1)
+    #objects are recataloged in switching method
+    #cat.refreshCatalog(clear=1)
     return out.getvalue()
 
 def isSwitchedToATCT(self):
