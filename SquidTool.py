@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.2 2003/12/09 23:49:18 longsleep Exp $ (Author: $Author: longsleep $)
+# $Id: SquidTool.py,v 1.3 2004/09/20 05:49:48 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 # make sockets non blocking
@@ -27,7 +27,7 @@ from Products.CMFCore.CMFCorePermissions  import ManagePortal, ModifyPortalConte
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Acquisition import aq_base
-
+from Permissions import *
 
 
 class SquidTool(UniqueObject, SimpleItem):
@@ -72,16 +72,16 @@ class SquidTool(UniqueObject, SimpleItem):
         results = []
         ob_url=urllib.quote(ob_url)
         for url in self.squid_urls:
-            if not url.endswith('/'): url=url+'/'
+            # if not url.endswith('/'): url=url+'/'
+            url = urlparse.urljoin(url, ob_url)
             (scheme, host, path, params, query, fragment) = urlparse.urlparse(url)
-            p = path + ob_url
 
             # XXX: probably put into seperate thread
             #      and setup a Queue
 
             try: 
                 conn = httplib.HTTPConnection(host)
-                conn.putrequest('PURGE', p)
+                conn.putrequest('PURGE', path)
                 conn.endheaders()
                 conn.sock.set_timeout(2)
                 resp = conn.getresponse()
@@ -101,10 +101,9 @@ class SquidTool(UniqueObject, SimpleItem):
             #       if you are not allowed to PURGE status is 403
             #       see README.txt for details how to setup squid to allow PURGE
 
-            if REQUEST: REQUEST.RESPONSE.write('%s\t%s%s\t%s\n' % (status, url, p, xsquiderror))
+            if REQUEST: REQUEST.RESPONSE.write('%s\t%s%s\t%s\n' % (status, url, path, xsquiderror))
 
         return results
-        
 
     security.declarePrivate('pruneObject')
     def pruneObject(self, ob, REQUEST=None):
@@ -114,7 +113,7 @@ class SquidTool(UniqueObject, SimpleItem):
         return self.pruneUrl(url, REQUEST=REQUEST)        
 
 
-    security.declareProtected(ManagePortal, 'manage_pruneUrl')
+    security.declareProtected(PURGE_URL, 'manage_pruneUrl')
     def manage_pruneUrl(self, url, REQUEST=None):
         """ give a url which shall be pruned """
         return self.pruneUrl(url, REQUEST=REQUEST)

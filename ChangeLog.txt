@@ -1,0 +1,5 @@
+2004-9-20 Pan Junyong <panjy at zopechina.com>
+
+   - add i18n
+   - add skin for plone
+   - refine the prune logic

@@ -9,7 +9,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: __init__.py,v 1.3 2003/12/10 00:04:06 longsleep Exp $ (Author: $Author: longsleep $)
+# $Id: __init__.py,v 1.4 2004/09/20 05:49:48 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 
@@ -17,9 +17,14 @@ from AccessControl import ModuleSecurityInfo
 from Globals import InitializeClass
 import Products.CMFCore.utils
 import catalogawarehook
+from Products.CMFCore.DirectoryView import registerDirectory
 
 ADD_CONTENT_PREMISSIONS = 'Manage Portal'
 lang_globals = globals()
+
+# Make the skins available as DirectoryViews
+registerDirectory('skins', globals())
+registerDirectory('skins/squid_tool', globals())
 
 PKG_NAME = "CMFSquidTool"
 

@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      i18n:domain="squidtool"
+      metal:use-macro="here/prefs_main_template/macros/master">
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<body>
+
+<div metal:fill-slot="prefs_configlet_main"
+     tal:define="portal_squid here/portal_squid">
+
+<h1 i18n:translate="heading_squid">prune squid cache</h1>
+
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string: $portal_url/plone_control_panel"
+       i18n:domain="plone"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Plone Setup
+    </a>
+
+    <div class="documentDescription"
+         i18n:translate="description_squid">
+    This is the Add-on Products install section, you can add and remove products
+
+    in the lists below.
+    </div>
+
+<form action="manage_setSquidSettings" 
+      tal:condition="python: checkPermission('Manage portal', portal_squid)"
+      tal:attributes="action python:portal_squid.absolute_url()+'/manage_setSquidSettings'" method="POST">
+
+<h2 i18n:translate="heading_squid_urls">Squid URLs</h2>
+<p i18n:translate="description_squid_urls">Give the base urls for all squid caches which should be contacted for each <strong>PRUNE</strong>.<br />Put an absolute url in each line. This url is put in front of the object url which is relative to the portal.</p>
+<p>
+    <textarea name="urls"><tal:block tal:repeat="url portal_squid/squid_urls"><span tal:replace="url" />
+</tal:block></textarea>
+</p>
+
+<input type=submit class="context" i18n:attributes="value" i18n:domain="plone" value="Save">
+</form>
+
+<form action="manage_pruneUrl" 
+      tal:condition="python:checkPermission('SquidTool: Purge URL', portal_squid)"
+      tal:attributes="action python:portal_squid.absolute_url()+'/manage_pruneUrl'" method="POST">
+						     
+<h2 i18n:translate="heading_prune_url">Prune URL</h2>
+<p i18n:translate="description_prune_url">Enter a URL which should be PRUNEed <em>now</em>. You have to give it relative to the portal. Eg: "search".</p>
+<p>
+    <input type="text" name="url" size="40" />
+</p>
+						     
+<input type=submit class="context" i18n:attributes="value" 
+       value="Go!">
+</form>
+
+<form action="manage_pruneAll" 
+      tal:condition="python:checkPermission('Manage portal', portal_squid)"
+      tal:attributes="action python:portal_squid.absolute_url()+'/manage_pruneAll'" method="POST">
+						     
+<h2 i18n:translate="heading_prune_all">Prune All indexed Objects</h2>
+<p i18n:translate="description_prune_all">Press the button below to prune all objects indexed in the portal catalog. <em>This may take some time.</em></p>
+						     
+<input type=submit class="context" i18n:attributes="value" 
+       value="Go!">
+</form>
+</div>
+</body>
+</html>
+
