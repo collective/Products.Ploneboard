@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.22 2004/12/31 12:53:34 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.23 2005/01/07 16:57:43 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -145,6 +145,10 @@ class ToolManagedSchema(ManagedSchemaBase):
 
     def lookup_provider(self):
         """ return schema provider instance """
-        return getToolByName(self, TOOL_NAME, None)
+        
+        tool = getToolByName(self, TOOL_NAME, None)
+        if not tool:
+            raise LookupError('%s not found' % TOOL_NAME)
+        return tool
 
 InitializeClass(ToolManagedSchema)
