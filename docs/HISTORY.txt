@@ -58,6 +58,16 @@
  * Fixed problem with ATFavorite: Migration to ATFavorite failed when the object
    was gone or the user wasn't allowed to access it.
    [tiran]
+
+ * Fixed [ 1027070 ] Download permission. Now the download tab is shown for all
+   logged in users with View permission.
+   [tiran]
+
+ * Fixed [ 1027093 ] Edit permission topics. The edit action of ATTopic now
+   requires ChangeTopic permission.
+
+ * [ 1027094 ] folderlisting action for ATTopic. Removed folderlisting action
+   using a module level modify_fti function in ATTopic.py.
    
 0.2.0-rc1 - 2004-07-28
 

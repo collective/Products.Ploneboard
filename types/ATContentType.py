@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.40 2004/09/10 15:09:17 tiran Exp $
+$Id: ATContentType.py,v 1.41 2004/09/13 15:46:18 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -245,7 +245,8 @@ class ATCTFileContent(ATCTContent):
         'id'          : 'download',
         'name'        : 'Download',
         'action'      : 'string:${object_url}/download',
-        'permissions' : (CMFCorePermissions.ModifyPortalContent,)
+        'permissions' : (CMFCorePermissions.View,),
+        'condition'   : 'member', # don't show border for anon user
          },
         )
     )

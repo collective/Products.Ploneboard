@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.23 2004/08/18 19:50:34 dreamcatcher Exp $
+$Id: ATTopic.py,v 1.24 2004/09/13 15:46:18 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -78,6 +78,12 @@ class ATTopic(ATCTFolder):
         'name'        : 'View',
         'action'      : 'string:${folder_url}/atct_topic_view',
         'permissions' : (CMFCorePermissions.View,)
+        },
+        {
+        'id'          : 'edit',
+        'name'        : 'Edit',
+        'action'      : 'string:${object_url}/base_edit',
+        'permissions' : (ChangeTopics,)
         },
         {
         'id'          : 'criteria',
@@ -331,3 +337,12 @@ class ATTopic(ATCTFolder):
         return [brain.getObject() for brain in brains]
 
 registerType(ATTopic)
+
+def modify_fti(fti):
+    """Remove folderlisting action
+    """
+    actions = []
+    for action in fti['actions']:
+        if action['id'] != 'folderlisting':
+                actions.append(action)
+    fti['actions'] = tuple(actions)
