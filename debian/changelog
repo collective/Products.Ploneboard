@@ -1,4 +1,10 @@
-zope-pts (1.0.1beta5-fork) unstable; urgency=low
+zope-pts (1.0.2beta5+fork) unstable; urgency=low
+
+  * Bugfix release for python 2.1 and 2.2
+
+ -- Christian Heimes <heimes@sol.faho.rwth-aachen.de>  Wed,  4 Feb 2004 06:39:46 +0100
+
+zope-pts (1.0.1beta5+fork) unstable; urgency=low
 
   * New upstream release 1.0beta5 from the collective fork
 

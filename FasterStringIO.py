@@ -37,7 +37,7 @@ try:
 except ImportError:
     EINVAL = 22
 
-from types import UnicodeType
+from types import UnicodeType, StringType
 from TAL.TALInterpreter import _write_ValueError
 
 class FasterStringIO:
@@ -47,7 +47,7 @@ class FasterStringIO:
     """
     def __init__(self, buf = ''):
         # Force self.buf to be a string or unicode
-        if not isinstance(buf, basestring):
+        if type(buf) in (UnicodeType, StringType):
             buf = str(buf)
         self.buf = []
         self.buf.append(buf)
