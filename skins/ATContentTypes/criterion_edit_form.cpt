@@ -27,7 +27,7 @@
             <legend i18n:translate="legend_criteria_details">Criteria Details</legend>
 
             <metal:block tal:repeat="criterion criteria">
-                  <span metal:use-macro="here/criterion_macros/macros/edit" />
+                  <span metal:use-macro="here/atct_macros/macros/criterion_edit" />
             </metal:block>
 
 	    <input type="hidden" name="form.submitted" value="1" />
