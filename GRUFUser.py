@@ -10,6 +10,7 @@ from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
 from AccessControl import Permissions
+from AccessControl import getSecurityManager
 from Globals import InitializeClass
 from Acquisition import Implicit, aq_inner, aq_parent, aq_base
 from Globals import Persistent
@@ -630,9 +631,18 @@ class GRUFUser(GRUFUserAtom):
     #                     User Mutation                         #
     #                                                           #
 
-    security.declarePrivate('changePassword')
+    security.declarePublic('changePassword')
     def changePassword(self, password):
-        """Set the user's password"""
+        """Set the user's password. This method performs its own security checks"""
+        # Check security
+        user = getSecurityManager().getUser()
+        if not user.has_permission(Permissions.manage_users, self._GRUF):       # Is manager ?
+            if user.__class__.__name__ != "GRUFUser":
+                raise "Unauthorized", "You cannot change someone else's password."
+            if not user.getId() == self.getId():    # Is myself ?
+                raise "Unauthorized", "You cannot change someone else's password."
+        
+        # Just do it
         self.clearCachedGroupsAndRoles()
         return self._GRUF.userSetPassword(self.getId(), password)
 
