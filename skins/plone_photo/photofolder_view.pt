@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+	
+<body>
+
+<div metal:fill-slot="super">
+
+    <div metal:use-macro="here/portal_tabs/macros/folderTabs">
+    Content tabs
+    </div>
+
+    <div class="contentBar">
+    &nbsp;
+    </div>
+</div>
+
+<div metal:fill-slot="main">
+
+    <div metal:define-macro="photos"
+                     tal:define="photos here/contentValues;
+                     start request/start|python:0;
+                     batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
+                     previous python:batch.previous;
+                     next python:batch.next">
+
+        <p>Photo <span tal:replace="batch/start">10</span> of <span tal:replace="python:len(photos)">17</span>.<p>
+
+        <div tal:repeat="image batch">
+
+            <div class="contentHeader">
+            <h1 tal:content="image/title_or_id">Title or id</h1>
+            </div>
+   
+            <img tal:condition="image/size"
+                 src="#" 
+                 tal:attributes="src image/absolute_url" />
+
+        
+            <span class="description" tal:content="structure image/Description">
+            Description
+            </span>
+
+            <small>
+            <span i18n:translate="">Size:</span>
+            <span tal:define="size python:image.getObjSize(image)"
+                  tal:content="size">                        
+            File size
+            </span>            
+        
+            <span tal:condition="python:test(image.size, 0, 1)"
+                  i18n:translate="">
+            (No file has been uploaded)
+            </span>
+        
+            -
+        
+            <span i18n:translate="">Content type:</span>
+            <span tal:content="image/content_type">
+            Content type
+            </span>
+    
+            </small>
+        </div>
+
+
+        <p tal:condition="python:previous or next">
+            <a tal:condition="previous"
+                tal:attributes="href string:${request/URL0}?start:int=${previous/first}"
+                href="previous_url"><img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?size=thumbnail'" /></a>
+            <a tal:condition="next"
+                tal:attributes="href string:${request/URL0}?start:int=${next/first}"
+                href="next_url"><img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?size=thumbnail'" /></a>
+        </p>
+
+
+    </div>
+</div>
+
+</body>
+</html>

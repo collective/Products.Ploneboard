@@ -1,10 +1,11 @@
 import sys
 import Photo
+import PhotoFolder
 from Products.CMFCore import utils, DirectoryView
 
 ADD_CONTENT_PERMISSION = 'Add portal content' # disgusting isn't it ?
 
-bases = (Photo.Photo,)
+bases = (Photo.Photo, PhotoFolder.PhotoFolder)
 
 this_module = sys.modules[__name__]
 z_bases = utils.initializeBasesPhase1(bases, this_module)
@@ -19,7 +20,7 @@ def initialize(registrar):
         'CMFPhoto',
         content_types = bases,
         permission = ADD_CONTENT_PERMISSION,
-        extra_constructors = (Photo.addPhoto,),
-        fti = (Photo.factory_type_information,),
+        extra_constructors = (Photo.addPhoto, PhotoFolder.addPhotoFolder),
+        fti = (Photo.factory_type_information, PhotoFolder.factory_type_information),
         ).initialize(registrar)
 
