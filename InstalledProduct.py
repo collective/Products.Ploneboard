@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.16 2003/11/14 23:02:42 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.17 2004/02/27 02:14:25 achilles_ Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -58,9 +58,6 @@ class InstalledProduct(SimpleItem):
     error=0 #error flag
     default_cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates']
     
-    def manage_beforeDelete(self,object,container):
-        self.uninstall()
-        
     def __init__(self,id,types=[],skins=[],actions=[],portalobjects=[],
         workflows=[],leftslots=[],rightslots=[],registrypredicates=[],installedversion='',logmsg='',status='installed',
         error=0,locked=0, hidden=0):
