@@ -9,7 +9,7 @@ TODO-LIST
   * [ZMI] Add an "Add group/roles" and "Remove group/roles" along with the
     current "Change" button on users/group view (thanks to Danny Bloemendaal)
 
-  * Check users overview : users disapear sometimes
+  DONE * Check users overview : users disapear sometimes
 
   DONE * Pass to ZPL licence
 

@@ -479,6 +479,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 raise ValueError, "Invalid group: '%s'" % (group, )
             roles.append(group)
 
+        # Reset the users overview batch
+        self._v_batch_users = []
+
         # Really add users
         return self.getDefaultUserSource()._doAddUser(
             name,
@@ -508,6 +511,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 group = "%s%s" % (_group_prefix, group, )
             if not group in cur_groups and not group in given_roles:
                 roles.append(group)
+
+        # Reset the users overview batch
+        self._v_batch_users = []
 
         # Change the user itself
         src = self.getUser(name).getUserSourceId()
@@ -543,6 +549,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if groups is None:
             groups = usr.getGroups(no_recurse = 1)
 
+        # Reset the users overview batch
+        self._v_batch_users = []
+
         # Change the user
         return self._doChangeUser(name, password, roles, domains, groups)
 
@@ -559,6 +568,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             sources[src].append(name)
         for src, names in sources.items():
             self.getUserSource(src)._doDelUsers(names)
+
+        # Reset the users overview batch
+        self._v_batch_users = []
 
 
     #                                   #
@@ -594,6 +606,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if not group in gruf_groups:
                 raise ValueError, "Invalid group: '%s'" % (group, )
             roles.append(group)
+
+        # Reset the users overview batch
+        self._v_batch_users = []
 
         # Actual creation
         return self.Groups.acl_users._doAddUser(
@@ -631,6 +646,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if not group in cur_groups and not group in given_roles:
                 roles.append(group)
 
+        # Reset the users overview batch
+        self._v_batch_users = []
+
         # Perform the change
         domains = ""
         password = ""
@@ -665,6 +683,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if groups is None:
             groups = usr.getGroups(no_recurse = 1)
 
+        # Reset the users overview batch
+        self._v_batch_users = []
+
         # Change the user
         return self._doChangeGroup(name, roles, groups)
 
@@ -675,6 +696,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Remove prefix if given
         if name.startswith(self.getGroupPrefix()):
             name = name[_group_prefix_len:]
+
+        # Reset the users overview batch
+        self._v_batch_users = []
 
         # Delete it
         return self.Groups.acl_users._doDelUsers([name])
@@ -719,7 +743,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/03/01 13:18:24 $"[7:-2]
+        rev_date = "$Date: 2004/03/01 13:54:10 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -754,7 +778,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         changeOrCreateUsers => affect roles & groups to users and/or create new users
         
         All parameters are strings or lists (NOT tuples !).
-        NO CHECKING IS DONE. This is an utility method !
+        NO CHECKING IS DONE. This is an utility method, it's not part of the official API.
         """
         # Manage roles / groups deletion
         del_roles = 0
