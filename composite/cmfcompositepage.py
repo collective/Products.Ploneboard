@@ -80,6 +80,10 @@ class CMFCompositePage(BaseFolder, PackComposite):
                },
                )
 
+    factory_type_information={
+        'content_icon':'composite.gif',
+        }
+
     cp_view = Composite.__call__
 
     def __init__(self, oid, **kwargs):
