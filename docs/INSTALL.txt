@@ -29,7 +29,8 @@ Archetypes
 
 AT Content Types is tested with the following AT versions
 
- * AT CVS HEAD (aka 1.3) after 2004-05-24 (with seperate MimetypesRegistry product)
+ * AT CVS release-1_3-branch (aka 1.3b2+) after 2004-06-20
+  (with seperate MimetypesRegistry product)
    
    Note: Please use the version of AT that is bundled with AT Content Types.
          It's the latest developer checkout.
@@ -72,7 +73,8 @@ types and AT Folder requires some code from PloneFolder, too. It should be easy
 to seperate the dependecies if needed.
 
 AT Content Types should work with Plone 2.0 but for better results use Plone
-2.0.1 or update CMFPlone to the latest Plone-2_0-branch	cvs version.
+2.0.3 or update CMFPlone to the latest branches/tiran-atct-integration 
+subversion version from http://svn.plone.org/
 
 
 =====================
@@ -88,7 +90,7 @@ break the user interface of plone.
 You can download mxTidy from http://www.egenix.com/files/python/mxTidy.html
 
 
-TextIndexNG 2.0.7+
+TextIndexNG 2.0.8+
 ------------------
 
 If you want to use TextIndexNG to index the SearchableText attribute you should

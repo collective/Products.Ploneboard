@@ -1,11 +1,245 @@
-2004-06-10 00:03  jensens
-	* Added RestrainedTypes support, which allows to restrain (restrict) the
-	  allowed types on any AT[*]Folder based on FTI/portal_types + parents 
-	  restrictions + local restriction per folder instance.
-	  
-2004-05-24 19:20  jensens
-	* Changed permission for download tab an ATFile. Dont confuse the average
-	  user with the green edit frame 
+2004-06-20 00:47  tiran
+
+	* migration/Walker.py, types/ATContentType.py: better portal
+	  handling in migration, do not fail when mark_creation_flag is not
+	  accessable
+
+2004-06-18 18:00  tiran
+
+	* types/ATEvent.py: setEventType: None -> (), string value ->
+	  (value,)
+
+2004-06-18 18:00  tiran
+
+	* types/ATFavorite.py: cmf_edit like ATLink
+
+2004-06-18 17:59  tiran
+
+	* types/: ATContentType.py, ATFile.py, ATImage.py: Better renaming
+	  support for file uploads
+
+2004-06-18 16:13  tiran
+
+	* types/: ATContentType.py, ATLink.py: Fixed minor compat. issue in
+	  ATLink Unit test logging in ATContentType.initializeArchetypes
+
+2004-06-18 14:53  tiran
+
+	* types/: ATContentType.py, ATEvent.py, ATLink.py: be compatible
+	  with invokeFactory
+
+2004-06-18 14:05  tiran
+
+	* types/ATContentType.py: Removed ATCTFolderMixin
+
+2004-06-18 01:22  tiran
+
+	* config.py, customconfig.py.example, types/ATContentType.py,
+	  types/ATTopic.py, types/schemata.py: moved RestrainMixin to
+	  jensens-restrain_mixin-branch until he has time to fix and write
+	  some unit tests
+
+2004-06-16 22:02  tiran
+
+	* config.py: larger char map
+
+2004-06-15 13:48  yenzenz
+
+	* customconfig.py.example: added custom example for RestrainTypes
+
+2004-06-15 13:47  yenzenz
+
+	* RestrainTypesMixin.py: make mixin LinguaPlone aware
+
+2004-06-14 02:37  tiran
+
+	* tests/: ATCTSiteTestCase.py, framework.py, runalltests.py,
+	  testATFile.py: Updated test suit from ZTC, more tests for ATFile
+
+2004-06-13 23:49  tiran
+
+	* tests/: ATCTSiteTestCase.py, ATCTTestCase.py, common.py,
+	  testATDocument.py, testATEvent.py, testATFavorite.py,
+	  testATFile.py, testATFolder.py, testATImage.py, testATLink.py,
+	  testATNewsItem.py: reworked tests
+
+2004-06-13 23:48  tiran
+
+	* types/: ATContentType.py, ATFile.py, ATImage.py: some more cmf
+	  compatibility methods
+
+2004-06-13 02:06  tiran
+
+	* Permissions.py, config.py, types/ATContentType.py,
+	  types/ATDocument.py, types/ATEvent.py, types/ATFile.py,
+	  types/ATImage.py, types/ATNewsItem.py, types/schemata.py: * Added
+	  translateMimetypeAlias for old cmf content types * Use
+	  ChangeEvents for ATEvent * Moved cleanupFilename
+
+2004-06-13 01:38  tiran
+
+	* skins/ATContentTypes/isATCTbased.py: Added interface test for
+	  objects to be ATCT based
+
+2004-06-12 13:58  tiran
+
+	* docs/INSTALL.txt: Note for docutils 0.3.3+
+
+2004-06-10 17:19  tiran
+
+	* migration/ATCTMigrator.py, types/ATContentType.py,
+	  types/ATDocument.py, types/ATFile.py, types/ATImage.py,
+	  types/ATTopic.py, types/schemata.py: Fixed mixed problems with
+	  migration and ATEvent Fixed Security Added synContentValues for
+	  syndication to ATTopic
+
+2004-06-10 11:00  tiran
+
+	* types/: ATEvent.py, ATImage.py: Fixed bugs in new cmf_edit
+	  methods
+
+2004-06-10 10:30  tiran
+
+	* config.py: Disabled RestrainMixin because there aren't working
+	  for me in branches/plone-atct-migration
+
+2004-06-10 10:25  tiran
+
+	* types/ATContentType.py:  ups :) Fixed brain melt bug
+
+2004-06-10 00:31  yenzenz
+
+	* RestrainTypesMixin.py, config.py, docs/AUTHORS.txt,
+	  docs/CHANGELOG.txt, docs/HISTORY.txt, docs/TODO.txt,
+	  interfaces/IRestrainTypes.py, types/ATContentType.py,
+	  types/schemata.py: Added RestrainedTypes support, which allows to
+	  restrain (restrict) the allowed types on any AT[*]Folder based on
+	  FTI/portal_types + parents restrictions + local restriction per
+	  folder instance.
+
+2004-06-09 15:59  tiran
+
+	* docs/HISTORY.txt, migration/ATCTMigrator.py,
+	  types/ATContentType.py, types/ATDocument.py, types/ATEvent.py,
+	  types/ATImage.py, types/ATLink.py, types/ATNewsItem.py: Added
+	  edit() backward compatibility methods
+
+2004-06-06 17:36  tiran
+
+	* tests/ATCTTestCase.py: test for mutable dc
+
+2004-06-06 17:26  tiran
+
+	* tests/: ATCTTestCase.py, testATFile.py, testATImage.py,
+	  testSkeletonTest.py: Fixed some unit tests, added unit tests for
+	  interfaces
+
+2004-06-06 12:09  tiran
+
+	* migration/Walker.py: Added a hack to work around _verifyPaste and
+	  implicitly addable
+
+2004-06-03 04:24  tiran
+
+	* types/ATDocument.py: Fixed security
+
+2004-06-01 14:18  godchap
+
+	* docs/HISTORY.txt,
+	  skins/ATContentTypes/criterion_edit_form.cpt.metadata,
+	  skins/ATContentTypes/validate_add_criterion.vpy,
+	  types/ATTopic.py, types/criteria/__init__.py: Added validation of
+	  Criterion support for a specific index
+
+2004-06-01 11:10  zworkb
+
+	* types/criteria/ATDateCriteria.py: added missing import of
+	  DateTime
+
+2004-06-01 10:21  godchap
+
+	* skins/ATContentTypes/criterion_edit_form.cpt: fix for newline in
+	  python expression
+
+2004-05-31 18:22  tiran
+
+	* docs/HISTORY.txt: Updated history
+
+2004-05-31 18:21  tiran
+
+	* migration/: ATCTMigrator.py, CPTMigrator.py, Migrator.py,
+	  Walker.py: Nicer output
+
+2004-05-31 18:20  tiran
+
+	* types/ATDocument.py: Added EditableBody() method
+
+2004-05-31 18:20  tiran
+
+	* types/ATTopic.py: Fixed last addition: Always use mutators and
+	  accessors!
+
+2004-05-31 11:42  godchap
+
+	* types/: ATTopic.py, schemata.py: added ability to limit the
+	  number of items displayed by a topic
+
+2004-05-30 16:51  godchap
+
+	* types/schemata.py: finish my correction
+
+2004-05-30 16:46  godchap
+
+	* types/schemata.py: oops, correct last checkin that I should not
+	  have done
+
+2004-05-30 16:13  godchap
+
+	* types/: schemata.py, criteria/ATPortalTypeCriterion.py,
+	  criteria/__init__.py, criteria/schemata.py: portal_type criteria
+	  offers selection list
+
+2004-05-26 10:55  tiran
+
+	* types/: ATContentType.py, ATFile.py, ATImage.py: Moved code for
+	  file handling to ATCTFileContent
+
+2004-05-26 10:54  tiran
+
+	* skins/ATContentTypes/validate_atct.vpy: Set the title from
+	  filename if empty
+
+2004-05-26 09:52  tiran
+
+	* types/ATFile.py: Fixed minor issue in the TXNG2 hook method
+
+2004-05-26 04:54  tiran
+
+	* config.py, customconfig.py.example, docs/HISTORY.txt,
+	  types/schemata.py: Added max upload size validator to ATFile and
+	  ATImage
+
+2004-05-24 21:21  yenzenz
+
+	* docs/CHANGELOG.txt: changed changelog
+
+2004-05-24 21:10  yenzenz
+
+	* types/ATFile.py: Content tabs shouldnt be visible for users with
+	  view permission, the green frame is confuding for them ;) and the
+	  same fucntionality is available with the link inside the content
+	  view.  If someone want it he can change it by slighly modifing
+	  ATFiles actions permissions.
+
+2004-05-24 19:45  tiran
+
+	* tests/: ATCTSiteTestCase.py, common.py, testATDocument.py,
+	  testATEvent.py, testATFavorite.py, testATFile.py, testATImage.py,
+	  testATLink.py, testATNewsItem.py: fixed unit tests
+
+2004-05-24 13:29  tiran
+
+	* docs/CHANGELOG.txt: updating changelog
 
 2004-05-24 13:29  tiran
 

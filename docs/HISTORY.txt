@@ -1,4 +1,4 @@
-0.2-beta6
+0.2-beta6 - 2004-06-20
 
  * Added max upload size validator to ATFile and ATImage [tiran]
 
@@ -19,6 +19,8 @@
  * Added edit() methods for backward compatibility to CMF 
 
  * Added restrained folder support. [jensens]
+
+ * Disabled restrained folder support until it's fixed. [tiran]
 
 0.2-beta5
 
