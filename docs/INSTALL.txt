@@ -55,6 +55,14 @@ mimetypes_registry and portal_transforms manually and reinstall PortalTransforms
 using the Quickinstaller. Otherwise some features of AT Content Types may not
 work or worse AT Content Types may break.
 
+Docutils for restructured text
+------------------------------
+
+You have to install a new version of docutils for Zope 2.7.0! Zope 2.7.1+ will
+be shipped with docutils 0.3.3. You can download docutils at
+http://docutils.sf.net/. Either you have to remove
+ZOPE_HOME/lib/python/docutils after installing docutils or you have to replace
+Zope's version by docutils 0.3.3+.
 
 Plone
 -----
@@ -94,7 +102,7 @@ PortalTransforms helper applications
 
 You should install all helpers application for PortalTransforms.
 For debian users:
-apt-get install lynx pdftohtml python-docutils wv xsltproc tidy \
+apt-get install lynx pdftohtml wv xsltproc tidy \
                 unrtf ppthtml xlhtml gs-common xpdf-utils catdoc
 
 Python Imaging Library (PIL)
