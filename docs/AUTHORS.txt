@@ -37,6 +37,9 @@ Contributors (in alphabetic order)
 Volker Bachschneider:
  * idea + testing of mxTidy validation
 
+Lele Gaifax:
+ * bug reports and improvements
+
 Markus Koelle:
  * bug reporting
 

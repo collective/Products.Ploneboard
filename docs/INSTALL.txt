@@ -29,7 +29,7 @@ Archetypes
 
 AT Content Types is tested with the following AT versions
 
- * AT CVS HEAD (aka 1.3) after 2004-04-25
+ * AT CVS HEAD (aka 1.3) after 2004-05-03
    
    Note: Please use the version of AT that is bundled with AT Content Types.
          It's the latest developer checkout.
@@ -173,3 +173,5 @@ Migration from CMF Plone Types
 
 Migration from CMF Plone Types to AT Content Types is less tested but should
 work like the migration from CMF types.
+There is an external method available for migration. See migrateFromCMFtoATCT
+and replace 'CMF' by 'CPT'
