@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.4 2004/03/08 17:54:01 tiran Exp $
+$Id: Migrator.py,v 1.5 2004/03/10 12:12:44 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -114,7 +114,7 @@ class BaseMigrator:
                     lastmethods.append(method)
         return methods+[self.custom]+lastmethods
         
-    def __call__(self, unittest=0):
+    def __call__(self, unittest=1):
         """Migrates the object
         """
         self.renameOld()
@@ -160,6 +160,11 @@ class BaseMigrator:
         
         Removes the old (if exists) and adds a new
         """
+        if not hasattr(aq_base(self.old), 'propertyIds') or \
+          not hasattr(aq_base(self.new), '_delProperty'):
+            # no properties available
+            return None
+
         for id in self.old.propertyIds():
             LOG("propertyid: " + str(id))
             if id in ('title', 'description'):
