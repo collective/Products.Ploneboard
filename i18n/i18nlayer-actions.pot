@@ -1,0 +1,20 @@
+# Gettext Message File for i18nlayer.
+# Simon Eisenmann <simon@struktur.de>, 2004
+msgid ""
+msgstr ""
+"Project-Id-Version: I18NLayer\n"
+"POT-Creation-Date: 2004-02-25 18:00+0100\n"
+"PO-Revision-Date: 2003-06-06 17:20+0200\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "Translate"
+msgstr ""
