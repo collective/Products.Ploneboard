@@ -400,6 +400,104 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Security audit methods
     # ----------------------
 
+
+    def computeSecuritySettings(self, folders, actors, permissions, cache = {}):
+        """
+        computeSecuritySettings(self, folders, actors, permissions, cache = {}) => return a structure that is suitable for security audit Page Template.
+
+        - folders is the structure returned by getSiteTree()
+        - actors is the structure returned by listUsersAndRoles()
+        - permissions is ((id: permission), (id: permission), ...)
+        - cache is passed along requests to make computing faster
+        """
+        # Scan folders and actors to get the relevant information
+        usr_cache = {}
+        for id, depth, path in folders:
+            folder = self.unrestrictedTraverse(path)
+            for kind, actor in actors:
+                if kind in ("user", "group"):
+                    # Init structure
+                    if not cache.has_key(path):
+                        cache[path] = {(kind, actor): {}}
+                    elif not cache[path].has_key((kind, actor)):
+                        cache[path][(kind, actor)] = {}
+                    else:
+                        cache[path][(kind, actor)] = {}
+
+                    # Split kind into groups and get individual role information
+                    perm_keys = []
+                    usr = usr_cache.get(actor)
+                    if not usr:
+                        usr = self.getUser(actor)
+                        usr_cache[actor] = usr
+                    roles = usr.getRolesInContext(folder,)
+                    for role in roles:
+                        for perm_key in self.computeSetting(path, folder, role, permissions, cache).keys():
+                            cache[path][(kind, actor)][perm_key] = 1
+                        
+                else:
+                    # Get role information
+                    self.computeSetting(path, folder, actor, permissions, cache)
+
+        # Return the computed cache
+        return cache
+
+
+    def computeSetting(self, path, folder, actor, permissions, cache):
+        """
+        computeSetting(......) => used by computeSecuritySettings to populate the cache for ROLES
+        """
+        # Avoid doing things twice
+        kind = "role"
+        if cache.get(path, {}).get((kind, actor), None) is not None:
+##            Log(LOG_DEBUG, "**** Returning from the cache ****")
+            return cache[path][(kind, actor)]
+
+        # Initilize cache structure
+        Log(LOG_DEBUG, "computeSetting", path, actor, )
+        if not cache.has_key(path):
+            cache[path] = {(kind, actor): {}}
+        elif not cache[path].has_key((kind, actor)):
+            cache[path][(kind, actor)] = {}
+
+        # Analyze permission settings
+        ps = folder.permission_settings()
+        for perm_key, permission in permissions:
+            # Check acquisition of permission setting.
+            can = 0
+            acquired = 0
+            for p in ps:
+                if p['name'] == permission:
+                    acquired = not not p['acquire']
+
+            # If acquired, call the parent recursively
+            if acquired:
+                parent = folder.aq_parent.getPhysicalPath()
+                perms = self.computeSetting(parent, self.unrestrictedTraverse(parent), actor, permissions, cache)
+                can = perms.get(perm_key, None)
+
+            # Else, check permission here
+            else:
+                for p in folder.rolesOfPermission(permission):
+                    if p['name'] == "Anonymous":
+                        # If anonymous is allowed, then everyone is allowed
+                        if p['selected']:
+                            can = 1
+                            break
+                    if p['name'] == actor:
+                        if p['selected']:
+                            can = 1
+                            break
+
+            # Extend the data structure according to 'can' setting
+            if can:
+                cache[path][(kind, actor)][perm_key] = 1
+
+        Log(LOG_DEBUG, "Returning", cache[path][(kind, actor)])
+        return cache[path][(kind, actor)]
+
+    
+
     def listUsersAndRoles(self,):
         """
         listUsersAndRoles(self,) => list of tuples
@@ -447,8 +545,14 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         ret.append([obj.getId(), depth, string.join(obj.getPhysicalPath(), '/')])
         for sub in obj.objectValues():
             try:
+                # Ignore user folders
                 if sub.getId() in ('acl_users', ):
                     continue
+                
+                # Ignore portal_* stuff
+                if sub.getId()[:len('portal_')] == 'portal_':
+                    continue
+                
                 if sub.isPrincipiaFolderish:
                     ret.extend(self.getSiteTree(sub, depth + 1))
 
@@ -469,59 +573,28 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def getDefaultPermissions(self,):
         """
         getDefaultPermissions(self,) => return default R & W permissions for security audit.
-        XXX TODO : check if CMF/plone is here to return the right permission set.
         """
-        return {'R': 'Access contents information',
-                'W': 'Change Images and Files',
-                }
-
-
-    def getSecuritySetting(self, path, usr_or_role, permission='View'):
-        """
-        getSecuritySetting => this method is used for security audit to collect information about each object's security info
-        """
-        ret = ""
-        can = 0
-        obj = self.restrictedTraverse(path)
-
-        if usr_or_role[0] in ('user', 'group'):
-            # Process user permissions : get its roles
-            usr = self.getUser(usr_or_role[1])
-            roles = usr.getRolesInContext(obj,)
-
-            # Check each role
-            for role in roles:
-                can = self.getSecuritySetting(path, ('role', role), permission)
-                if can:
+        # If there's a Plone site in the above folder, use plonish permissions
+        hasPlone = 0
+        p = self.aq_parent
+        Log(LOG_DEBUG, "p", p.meta_type)
+        if p.meta_type == "CMF Site":
+            hasPlone = 1
+        else:
+            for obj in p.objectValues():
+                Log(LOG_DEBUG, "obj", obj.meta_type)
+                if obj.meta_type == "CMF Site":
+                    hasPlone = 1
                     break
 
+        if hasPlone:
+            return {'R': 'View',
+                    'W': 'Modify portal content',
+                    }
         else:
-            # Check acquisition of permission setting.
-            ps = obj.permission_settings()
-            acquired = 0
-            for p in ps:
-                if p['name'] == permission:
-                    acquired = not not p['acquire']
-
-            # If acquired, call the parent recursively
-            if acquired:
-                parent = obj.aq_parent.getPhysicalPath()
-                can = self.getSecuritySetting(parent, usr_or_role, permission)
-
-            # Else, check permission here
-            else:
-                for p in obj.rolesOfPermission(permission):
-                    if p['name'] == "Anonymous":
-                        # If anonymous is allowed, then everyone is allowed
-                        if p['selected']:
-                            can = 1
-                            break
-                    if p['name'] == usr_or_role[1]:
-                        if p['selected']:
-                            can = 1
-                            break
-
-        return can
+            return {'R': 'View',
+                    'W': 'Change Images and Files',
+                    }
 
 
 

@@ -9,9 +9,13 @@
 
   <table 
       border="1"
+      class="list-item"
       tal:define="
         users_and_roles here/listUsersAndRoles;
-        width python:int(100/len(users_and_roles))">
+        site_tree here/getSiteTree;
+        table_cache python:here.computeSecuritySettings(site_tree, users_and_roles, [('R', request.read_permission), ('W', request.write_permission)]);
+        width python:int(100/len(users_and_roles))"
+      >
       <tr>
         <td width="0" tal:attributes="width string:$width%"></td>
         <td width="0"
@@ -23,21 +27,29 @@
         </td>
       </tr>
 
-      <tr tal:repeat="folder here/getSiteTree">
+      <tr tal:repeat="folder site_tree">
         <td nowrap="1">
           <span tal:repeat="x python:range(0,folder[1])" tal:omit-tag="">-</span>
           <a href=""
             tal:attributes="href python:folder[2]"
             tal:content="python:folder[0]"
           />
+          <tal:block 
+            tal:define="state python:here.portal_workflow.getInfoFor(here.restrictedTraverse(folder[2]), 'review_state')"
+            tal:on-error="nothing"
+          >
+            <br />
+            <span tal:repeat="x python:range(0,folder[1])" tal:omit-tag="">-</span>
+            <span tal:replace="state" />
+          </tal:block>
         </td>
         <td 
           tal:repeat="s users_and_roles" 
         >
           <tal:block
             tal:define="
-              R python:here.getSecuritySetting(folder[2], s, request.read_permission);
-              W python:here.getSecuritySetting(folder[2], s, request.write_permission)"
+              R python:table_cache[folder[2]][s].get('R', None);
+              W python:table_cache[folder[2]][s].get('W', None)"
           >
             <span tal:condition="R">R</span>
             <span tal:condition="W">W</span>
@@ -58,7 +70,9 @@
 
       <form action="manage_audit" method="GET">
         <input type="hidden" name="doIt" value="1">
-        <table>
+        <table
+          tal:define="default here/getDefaultPermissions"
+          >
           <tr class="list-header">
             <th>Parameter</th>
             <th class="list-header">Setting</th>
@@ -73,7 +87,7 @@
                   tal:repeat="perm here/listAuditPermissions"
                   tal:attributes="
                     value perm;
-                    selected python:perm == here.getDefaultPermissions()['R'];
+                    selected python:perm == default['R'];
                   "
                   tal:content="perm"
                 />
@@ -90,7 +104,7 @@
                   tal:repeat="perm here/listAuditPermissions"
                   tal:attributes="
                     value perm;
-                    selected python:perm == here.getDefaultPermissions()['W'];
+                    selected python:perm == default['W'];
                   "
                   tal:content="perm"
                 />
