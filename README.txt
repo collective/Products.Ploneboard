@@ -22,7 +22,7 @@ Features
 
   * integrate with plone's default portlets, add some new portlet like 'my recent changes'.
 
-  * predefined viewlets for Document, Image, Folder, Topic, ZWiki Page.
+  * predefined viewlets for Document, Image, Folder, Topic, ZWiki Page, PloneChat, mxm.
 
   * suport relative content path
 
