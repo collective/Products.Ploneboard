@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.8 2004/03/20 18:41:41 tiran Exp $
+$Id: Validators.py,v 1.9 2004/03/20 19:22:35 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -248,27 +248,29 @@ def unwrapValueFromHTML(value):
     """Remove the html stuff around the body
     """
     # get the body text
+    print value
     result = RE_BODY.search(value)
     if result:
         body = result.group(1)
     else:
         raise ValueError('%s is not a html string' % value)
 
-    # remove 2 spaces from the beginning of each line
-    nlines = []
-    for line in body.split('\n'):
-        print line
-        if line[:2] == '  ':
-            nlines.append(line[2:])
-        else:
-            nlines.append(line)
-
-    return '\n'.join(nlines)
+##    # remove 2 spaces from the beginning of each line
+##    nlines = []
+##    for line in body.split('\n'):
+##        print line
+##        if line[:2] == '  ':
+##            nlines.append(line[2:])
+##        else:
+##            nlines.append(line)
+##
+##    return '\n'.join(nlines)
+    return body
 
 def parseErrorData(data, removeWarnings=0):
     """Parse the error data to change some stuff
     """
-    lines  = data.split('\n'    )
+    lines  = data.split('\n')
     nlines = []
     for line in lines:
         # substract 11 lines from line

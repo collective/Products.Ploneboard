@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.11 2004/03/20 16:08:53 tiran Exp $
+$Id: config.py,v 1.12 2004/03/20 19:22:35 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -65,7 +65,6 @@ MX_TIDY_ENABLED = True
 # tidy only these document types
 MX_TIDY_MIMETYPES = (
     'text/html',
-    'text/structured', # may contain unquoted html entities
      )
 
 # options for mxTidy
@@ -79,7 +78,7 @@ MX_TIDY_OPTIONS= {
     'show_warnings'    : 1, # -v
     'tab_size'         : 4,
     'wrap'             : 72,
-    'indent'           : 'auto',
+    #'indent'           : 'auto',
     'indent_spaces'    : 1,
     'word_2000'        : 1,
     'char_encoding'    : 'raw',
