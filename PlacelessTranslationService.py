@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.17 2004/02/11 01:30:08 tiran Exp $
+$Id: PlacelessTranslationService.py,v 1.18 2004/02/11 11:56:46 ajung Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -329,7 +329,7 @@ class PlacelessTranslationService(Folder):
                   target_language=None, default=None):
         """translate() using unicode
         """
-        self.translate(domain, msgid, mapping, context,
+        return self.translate(domain, msgid, mapping, context,
                   target_language, default, as_unicode=True)
 
     security.declareProtected(view, 'translate')
