@@ -371,7 +371,7 @@ class Member(VariableSchemaSupport, BaseContent):
         self.id = str(userid)
         self._userInfo = None
         self.password = ''
-        self.roles = ()
+        self.roles = ('Member',)
         self.domains = ()
 
         # for plone compatibility
