@@ -27,6 +27,7 @@ from OFS.PropertyManager import PropertyManager
 from OFS import ObjectManager, SimpleItem
 from DateTime import DateTime
 from App import ImageFile
+from zExceptions import Unauthorized
 import AccessControl.Role, webdav.Collection
 import Products
 import os
@@ -267,7 +268,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             break
         
         roles=list(roles) + local.keys() + group_roles
-        Log(LOG_DEBUG, "Roles", roles)
         return GroupUserFolder.unique(roles)
 
     security.declarePublic('getDomains')
@@ -359,7 +359,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 if self.getId() in u.getGroups()]
 
 
-
     #                                                           #
     #               Underlying user object support              #
     #                                                           #
@@ -368,11 +367,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.
-        if hasattr(self.__dict__['__underlying__'], name):
+        Log(LOG_DEBUG, "Trying to get attribute", name)
+        try:
             return self.__dict__['__underlying__'].restrictedTraverse(name)
-        else:
+        except AttributeError:
             # Use a try/except to fetch attributes from UserFolders that
-            # override the __getattr__ method (eg. LDAPUserFolder)
+            # do not handle restrictedTraverse
             try:
                 return getattr(self.__dict__['__underlying__'], name)
             except:

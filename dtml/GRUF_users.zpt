@@ -4,7 +4,7 @@
 
   <h3>Users management</h3>
   <form action="" method="POST" tal:attributes="action template/absolute_url">
-    <ol>
+    <ol tal:define="users here/getPureUsers">
       <table cellspacing="10">
         <tr>
           <!-- Users selection -->
@@ -17,7 +17,7 @@
                 <th>Current role(s)*</th>
               </tr>
               
-              <tr tal:repeat="user here/getPureUsers" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
+              <tr tal:repeat="user users" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
                 <td><div class="list-item"><input type="checkbox" name="users:list" value="" tal:attributes="value user"></td>
                 <td>
                   <div class="list-item">
@@ -41,6 +41,16 @@
                         <span tal:condition="python: role in user.getUserRoles()" tal:replace="role"></span><i tal:condition="python: role not in user.getUserRoles()" tal:content="role"></i><span tal:condition="not:repeat/role/end">, </span>
                       </font>
                     </span>
+                  </div>
+                </td>
+              </tr>
+
+              <tr tal:condition="not: users">
+                <td colspan="4">
+                  <div class="list-item">
+                    No user available. This happens either if you have no users defined or if
+                    the underlying UserFolder cannot retreive the entire users list (for example, LDAPUserFolder
+                    is limited in results size)
                   </div>
                 </td>
               </tr>
