@@ -176,6 +176,15 @@ class TestGroupsTool(GroupTestCase, testInterface.TestInterface):
         Will by default remove this group's GroupWorkspace if it exists. You may
         turn this off by specifying keep_workspaces=true.
         Underlying user folder must support removing users via the usual Zope API."""
+        self.groups.addGroup("grptest1",)
+        self.groups.addGroup("grptest2",)
+        self.groups.editGroup("grptest2", ["Reviewer", ], ["grptest1", ], description = "Sample group")
+        self.groups.removeGroups(["grptest1", "grptest2", ])
+        self.failIf("grptest2" in self.groups.listGroupIds())
+        self.failIf("grptest1" in self.groups.listGroupIds())
+        self.failIf("grptest2" in self.gruf.getGroupNames())
+        self.failIf("grptest1" in self.gruf.getGroupNames())
+
 
     def test_setGroupOwnership(self, ):
         """Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""
