@@ -63,13 +63,14 @@ def migrate_user_folder(out, obj):
         container.manage_delObjects( tempid )
     
 
-def migrate_plone_site_to_gruf(self):
-    out = StringIO()
+def migrate_plone_site_to_gruf(self, out = None):
+    if out is not None:
+        out = StringIO()
     print >>out, "Migrating UserFolders to GroupUserFolders."
     urltool=getToolByName(self, 'portal_url')
     plonesite = urltool.getPortalObject()
     walk(out, plonesite, migrate_user_folder)
-    print >>out, "Done."
+    print >>out, "Done Migrating UserFolders to GroupUserFolders."
     return out.getvalue()
     
 def install(self):
@@ -78,6 +79,7 @@ def install(self):
     
     install_subskin(self, out)
     install_plone(self, out)
+    migrate_plone_site_to_gruf(self, out)
 
     print >>out, "Done."
     
