@@ -73,7 +73,7 @@ class Walker:
                 raise MigrationError(tb)
             else:
                 LOG('done')
-                self.out[-1]+='done\n'
+                self.out[-1]+='done'
             if self.subtransaction and \
               (len(self.out) % self.subtransaction) == 0:
                 # submit a subtransaction after every X (default 30)

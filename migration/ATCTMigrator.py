@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.6 2004/04/26 06:28:43 tiran Exp $
+$Id: ATCTMigrator.py,v 1.7 2004/05/31 16:21:50 tiran Exp $
 """
 
 from common import *
@@ -145,11 +145,11 @@ def migrateAll(portal):
     catalog = getToolByName(portal, 'portal_catalog')
     out = 'Migration: \n'
     for migrator in migrators:
-        out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
+        out+='\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType)
         w = CatalogWalker(migrator, catalog)
         out+= w.go()
     for migrator, checkMethod in folderMigrators:
-        out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
+        out+='\n\n*** Migrating %s to %s ***\n' % (migrator.fromType, migrator.toType)
         while 1:
             # loop around until we got 'em all :]
             w = RecursiveWalker(migrator, portal, checkMethod)
@@ -160,5 +160,5 @@ def migrateAll(portal):
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')
     count = wf.updateRoleMappings()
-    out+='\n *** Workflow: %d object(s) updated. *** \n' % count
+    out+='\n\n\n*** Workflow: %d object(s) updated. ***\n' % count
     return out
