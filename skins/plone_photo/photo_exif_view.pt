@@ -11,7 +11,7 @@
     <div tal:define="exif here/get_exif"
          tal:condition="exif">
 	
-    <table class="listing" tal:condition="python: exif['Make'] == 'Canon'">
+    <table class="listing" tal:condition="python: exif['Image Make'] == 'Canon'">
     <thead>
         <tr>
 	   <th colspan=2>Camera Information</th>
@@ -31,7 +31,7 @@
      </tbody>
      </table>
 
-    <table class="listing" tal:condition="python: exif['Make'] == 'Canon'">
+    <table class="listing" tal:condition="python: exif['Image Make'] == 'Canon'">
     <thead>
         <tr>
            <th colspan=2>Photo Information</th>
