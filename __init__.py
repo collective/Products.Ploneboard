@@ -31,7 +31,7 @@ VIEW_SECURITY_PERMISSION = 'Manage users'
 # View a member's public information
 VIEW_PUBLIC_PERMISSION = 'CMFMember: View'
 # View a member's private information
-VIEW_OTHER_PERMISSION = EDIT_INFO_PERMISSION
+VIEW_OTHER_PERMISSION = EDIT_OTHER_PERMISSION
 # Appear in searches
 VIEW_PERMISSION = CMFCorePermissions.View
 # Enable password mailing

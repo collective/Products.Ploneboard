@@ -17,10 +17,11 @@ from Products.CMFMember import TYPE_NAME, PKG_NAME
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
 
-
+from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataTool
 _marker = []
 
-class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProviderBase):
+class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
+#class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProviderBase):
     __implements__ = (portal_memberdata, ActionProviderBase.__implements__)
 
     security=ClassSecurityInfo()
@@ -183,11 +184,13 @@ class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProvide
            argument or None if no such property is found."""
         # Get the default value from the Member schema
         # Create a temporary member if needed.
-#        import pdb
-#        pdb.set_trace()
+        #import pdb; pdb.set_trace()
+        prop=_marker
         m = self._getMemberInstance()
         schema = self._getMemberInstance().schema
         field = schema.get(id, None)
+        import pdb; pdb.set_trace()
+
         if field:
             prop = getattr(field, 'default', _marker)
         if prop != _marker:
@@ -196,8 +199,10 @@ class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProvide
         # No default property 
         if default is not None:
             return default
+        import pdb; pdb.set_trace()
+
         raise AttributeError, id
-        
+       
 
     ## Folderish Methods
     def allowedContentTypes(self):
@@ -266,10 +271,14 @@ def getMemberFactory(self):
     types_tool = getToolByName(self, 'portal_types')
     ti = types_tool.getTypeInfo(TYPE_NAME)
     
-    p = self.manage_addProduct[ti.product]
-    action = getattr(p, ti.factory, None)
-    if action is None: raise ValueError, ('Invalid Factory for %s'
-                                          % ti.getId())
+    try:
+        p = self.manage_addProduct[ti.product]
+        action = getattr(p, ti.factory, None)
+    except AttributeError:
+        raise ValueError, 'No type information installed'
+    if action is None: 
+        raise ValueError, ('Invalid Factory for %s'
+                           % ti.getId())
     return action
 
 

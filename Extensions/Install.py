@@ -50,7 +50,7 @@ def replaceTools(self, out, convert=1):
     memberdata_tool = getToolByName(self, 'portal_memberdata')
 
     # move the old members into the new memberdata tool
-    pdb.set_trace()
+    #pdb.set_trace()
     for m in _v_tempFolder.objectValues():
         memberdata_tool.registerMemberData(m, m.id)
 

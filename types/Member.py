@@ -107,7 +107,7 @@ content_schema = FieldList((
                 read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
                 write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
                 searchable=0,
-                widget=PasswordWidget(label='Password',
+                widget=StringWidget(label='Password',
                                       description='Enter a new password (leave blank to keep your current password)')
                 ),
 
@@ -118,7 +118,7 @@ content_schema = FieldList((
                 read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
                 write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
                 searchable=0,
-                widget=PasswordWidget(label='Confirm password',
+                widget=StringWidget(label='Confirm password',
                                       description='Confirm your new password')
                 ),
 

@@ -1,4 +1,6 @@
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
+from Products.DCWorkflow.Default import p_request, p_review
+from Products import CMFMember
 
 # Execute the 'trigger' transition -- this should trigger
 # any automatic transitions for which the guard conditions
@@ -6,7 +8,6 @@ from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 def triggerAutomaticTransitions(ob):
     wf_tool=getToolByName(ob, 'portal_workflow')
     wf_tool.doActionFor(ob, 'trigger')
-
 
 def setupWorkflow(portal, out):
     wf_tool=portal.portal_workflow
@@ -47,7 +48,7 @@ def setupWorkflow(portal, out):
             wf.addManagedPermission(p)
             perms[p] = 1
     
-    for l in ('member_queue', ):
+    for l in ('reviewer_queue','member_queue'):
         wf.worklists.addWorklist(l)
 
     # STATES
@@ -134,7 +135,7 @@ def setupWorkflow(portal, out):
     transition.setProperties(
         title='Lock member properties until registered',
         new_state_id='pending',
-        props={'trigger_type'=TRIGGER_AUTOMATIC})
+        props={'trigger_type':TRIGGER_AUTOMATIC})
 
     # if Manager creates a member, automatically register the member
     transition = wf.transitions['auto_register']
@@ -142,7 +143,8 @@ def setupWorkflow(portal, out):
         title='Make member profile public',
         new_state_id='public',
         props={'guard_roles':'Manager',
-               'trigger_type':trigger_type=TRIGGER_AUTOMATIC})
+               'trigger_type':TRIGGER_AUTOMATIC
+               }) #trigger_type=TRIGGER_AUTOMATIC})
 
     # manual registration
     transition = wf.transitions['register_private']
