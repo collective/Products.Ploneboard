@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.29 2004/06/24 19:47:12 tiran Exp $
+$Id: ATContentType.py,v 1.30 2004/06/26 22:46:12 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -147,12 +147,16 @@ class ATCTMixin(TemplateMixin):
         """
         """
         pt = getToolByName(self, 'portal_types')
-        correct_pt = self.newTypeFor[0]
+        # make it easy to derive from atct:
+        if hasattr(self,'newTypeFor') and self.newTypeFor:
+            correct_pt = self.newTypeFor[0]
+        else:
+            correct_pt = self.portal_type
         fti = pt.getTypeInfo(correct_pt)
         if fti is None:
             # FTI is None which may happen in ATCT2CMF switching script
             # in this case the self.portal_type aka self.__class__.__name__ 
-            # is right but test to be shure
+            # is right but test to be sure
             assert(self.portal_type, self.__class__.__name__)
             return self.portal_type
         if fti.Metatype() == self.meta_type:
