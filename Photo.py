@@ -156,22 +156,33 @@ class Photo(Image):
     def tag(self, height=None, width=None, alt=None,
             scale=0, xscale=0, yscale=0, css_class=None, title=None, size='original', **args):
         """ Return an HTML img tag (See OFS.Image)"""
-        try:
+
+        # Default values
+        w=self.width
+        h=self.height
+        
+        if height is None or width is None:
+            
             if size in self.displays.keys():
-                # Create resized copy, if it doesnt already exist
                 if not self._photos.has_key(size):
-                    resolution = self.displays.get(size, (0,0))
-                    raw = str(self.data)
-                    image = OFS.Image.Image(size, size, self._resize(resolution))
-                    self._photos[size] = image
+                    # This resized image isn't created yet.
+                    # Calculate a size for it
+                    x,y = self.displays.get(size)
+                    if self.width > self.height:
+                        w=x
+                        h=int(round(1.0/(float(self.width)/w/self.height)))
+                    else:
+                        h=y
+                        w=int(round(1.0/(float(self.height)/x/self.width)))
+                else:
+                    # The resized image exist, get it's size
+                    photo = self._photos.get(size)
+                    w=photo.width
+                    h=photo.height
 
-            photo = self._photos[size]
-        except KeyError:
-            photo = self
-
-        if height is None: height=photo.height
-        if width is None:  width=photo.width
-
+        if height is None: height=h
+        if width is None:  width=w
+                
         # Auto-scaling support
         xdelta = xscale or scale
         ydelta = yscale or scale
