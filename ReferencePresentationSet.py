@@ -18,7 +18,7 @@ from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import SelectionWidget
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
-
+from BiblioListFormatter import IBiblioListFormatter
 
 schema = BaseSchema + Schema((
     StringField('DefaultFormat',
@@ -59,6 +59,7 @@ def buildPresentationSetSchema():
 class ReferencePresentationSet(BaseContent):
     """ Class combining multiple referencepresentations 
     """
+    __implements__ = (IBiblioListFormatter ,)
 
     archetype_name = "Reference Presentation Set"
 

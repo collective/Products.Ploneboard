@@ -62,7 +62,7 @@ class MinimalFormat(BiblioListFormatter):
                                author.get('lastname'))
         url = author.get('homepage')
         if url:
-            result = '<a href="%s">%s</a>' %(url, author)
+            result = '<a href="%s">%s</a>' %(url, result)
         return result
     
 # Class instanciation

@@ -39,26 +39,33 @@ formcontroller_transitions = (
      'action_arg'   : 'string:bibliography_list_edit'},
                               )
 
+LISTING_VALUES = DisplayList((
+    ('bulleted', 'Bulleted list'),
+    ('ordered', 'Ordered list'),
+    ('lines', 'Simple lines list'),
+    ('table', 'Table listing'),
+                             ))
+
 FORMAT_MONTH_STYLES = DisplayList((
     ('m01', '01'),
     ('m1', '1'),
-    ))
+                                  ))
     
 FORMAT_YEAR_STYLES = DisplayList((
     (None, 'xxxx'),
     ('yxx', 'xx'),
-    ))
+                                 ))
 
 FORMAT_NUMBERSLISTS_STYLES = DisplayList((
-    ('1, 3, 5-8, 10+', '1, 3, 5-8, 10+'),
-    ('1; 3; 5-8; 10+', '1; 3; 5-8; 10+'),
-    ))
+    (None, '1, 3, 5-8, 10+'),
+    ('semicolon', '1; 3; 5-8; 10+'),
+                                         ))
         
 FORMAT_NUMBERS_STYLES = DisplayList((
     (None, 'digital: 12'),
     ('roman', 'Roman: XII'),
     ('roman_lower', 'Roman: xii'),
-    ))
+                                    ))
         
 FORMAT_GENERICSTRING_STYLES = DisplayList((
     (None, 'Rendering of the Value'),
@@ -76,12 +83,16 @@ FORMAT_GENERICSTRING_STYLES = DisplayList((
     ('ini_space', 'R o t V'),
     ('ini_space_lower', 'r o t v'),
     ('ini_space_upper', 'R O T V'),
-    ))
+                                          ))
 
 FORMAT_AUTHORS_LIST_ORDER = DisplayList((
-    ('Smith','Smith'),
-    ('Smith John','Smith John'),
-    ('Smith John Edward','Smith John Edward'),
-    ('John Smith','John Smith'),
-    ('John Edward Smith','John Edward Smith'),
-    ))
+    ('first middle last', 'Firstname Middlename Lastname (John Edward Smith)'),
+    ('first last','Firstname Lastname (John Smith)'),
+    ('last','Lastname (Smith)'),
+    ('last first','Lastname Firstname (Smith John)'),
+    ('last, first','Lastname, Firstname (Smith, John)'),
+    ('last first middle','Lastname Firstname Middlename (Smith John Edward)'),
+    ('last, first middle','Lastname, Firstname Middlename (Smith, John Edward)'),
+                                        ))
+
+DEFAULT_REFS_DISPLAY = '%A (%y): "%T" - %D'

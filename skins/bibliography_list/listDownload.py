@@ -18,11 +18,9 @@ RESPONSE.setHeader('Content-Disposition',
                    context.getId() + '.' + format)
 
 output = ''
-bibtool = context.portal_bibliography
-ref_types = bibtool.getReferenceTypes()
-
-for entry in context.getReferences_list():
-    obj = context.archetype_tool.lookupObject(uid = entry)
+field = context.getField('references_list')
+for uid in getattr(context, field.edit_accessor)():
+    obj = context.archetype_tool.lookupObject(uid = uid)
     output += bibtool.render(obj, format)
 
 return output

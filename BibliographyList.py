@@ -21,12 +21,13 @@ from roman import *
 
 # possible types of bibliographic references by module 'CMFBibliography'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
+from config import LISTING_VALUES
 
 class ReferencesWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
-        'macro' : "references_widget",
+        'macro' : "widget_references",
         })
 
 registerWidget(ReferencesWidget)
@@ -39,7 +40,7 @@ schema = BaseSchema + Schema((
                                            label_msgid="label_references_list",
                                            description_msgid="help_references_list",
                                            i18n_domain="plone",
-                                           description="Select refenferces to put in your list",
+                                           description="Search and select references to add to the list or organize/remove listed references.",
                                            ),
                    ),
     StringField('PresentationFormat',
@@ -50,9 +51,23 @@ schema = BaseSchema + Schema((
                 widget=SelectionWidget(label="Presentation Format",
                               label_msgid="label_presentation",
                               description_msgid="help_presentation",
-                              description="Select the format how you want to present your list",           
+                              description="Select the format how you want to present your list.",           
                               i18n_domain="plone",
-                              format="select",),
+                              format="select",
+                              visible={'edit':'visible','view':'invisible'},),
+                ),
+    StringField('ListingFormat',
+                multiValued=0,
+                default = 'bulletted',
+                vocabulary=LISTING_VALUES,
+                enforce_vocabulary=1,
+                widget=SelectionWidget(label="Listing Format",
+                              label_msgid="label_bibliolist_listing_format",
+                              description_msgid="help_bibliolist_listing_format",
+                              description="How the list will be rendered in the view page.",           
+                              i18n_domain="plone",
+                              format="radio",
+                              visible={'edit':'visible','view':'invisible'},),
                 ),
     ))
 

@@ -12,47 +12,8 @@ from cStringIO import StringIO
 #import string
 
 from Products.ATBiblioList import PROJECTNAME, GLOBALS
-
-#
-# Elements to be installed
-#
-#
-custom_formcontroller_transitions = (
-        {'object_id'    : 'base_edit',
-         'status'       : 'success',
-         'context_type' : '',
-         'button'       : 'reference_search',
-         'action_type'  : 'traverse_to',
-         'action_arg'   : 'string:base_edit'},
-
-        {'object_id'    : 'base_edit',
-         'status'       : 'success',
-         'context_type' : '',
-         'button'       : 'reference_add',
-         'action_type'  : 'traverse_to',
-         'action_arg'   : 'string:bibliography_list_edit'},
-
-        {'object_id'    : 'base_edit',
-         'status'       : 'success',
-         'context_type' : '',
-         'button'       : 'reference_delete',
-         'action_type'  : 'traverse_to',
-         'action_arg'   : 'string:bibliography_list_edit'},
-        
-        {'object_id'    : 'base_edit',
-         'status'       : 'success',
-         'context_type' : '',
-         'button'       : 'reference_up',
-         'action_type'  : 'traverse_to',
-         'action_arg'   : 'string:bibliography_list_edit'},
-
-        {'object_id'    : 'base_edit',
-         'status'       : 'success',
-         'context_type' : '',
-         'button'       : 'reference_down',
-         'action_type'  : 'traverse_to',
-         'action_arg'   : 'string:bibliography_list_edit'},
-                                     )
+from Products.ATBiblioList.config import formcontroller_transitions
+from Products.ATBiblioList.formatters.MinimalFormat import MinimalFormat
 
 #
 # Install functions
@@ -61,11 +22,11 @@ def addCustomFormControllerTransitions(self, out):
     """ Add predefined custom form_controller transitions
     """
     container = getToolByName(self, 'portal_form_controller')
-    for transition in custom_formcontroller_transitions:
+    for transition in formcontroller_transitions:
         container.addFormAction(**transition)
     out.write("Added custom transitions to 'portal_form_controller'")
 
-def fixContentTab(self):
+def fixContentTab(self,out):
     pp = getToolByName(self, 'portal_properties', None)
     if pp and hasattr(pp, 'site_properties'):
         use_folder_tabs = pp.site_properties.getProperty('use_folder_tabs', [])
@@ -74,7 +35,17 @@ def fixContentTab(self):
             pp.site_properties.manage_changeProperties(
 	        {'use_folder_tabs' : use_folder_tabs},
                 )
-    
+
+def setupTool(self, out):
+    """ adds the bibliolist tool to the portal root folder
+    """
+    if hasattr(self, 'portal_bibliolist'):
+        self.manage_delObjects(['portal_bibliolist'])
+        out.write('Deleting old tool; make sure you repeat customizations.')
+    addTool = self.manage_addProduct['ATBiblioList'].manage_addTool
+    addTool('BiblioList Tool', None)
+    out.write("\nAdded the bibliolist tool to the portal root folder.\n")
+
 def install(self):
     """ Main install function
     """
@@ -85,7 +56,9 @@ def install(self):
 
     addCustomFormControllerTransitions(self, out)
     
-    fixContentTab(self)
+    fixContentTab(self,out)
+
+    setupTool(self,out)
     
     out.write('Installation completed.\n')
     return out.getvalue()
@@ -99,7 +72,7 @@ def removeCustomFormControllerTransitions(self, out):
     #BAAH no Python API for deleting actions in FormController
     #lets get our hands dirty
     container = fc.actions
-    for transition in custom_formcontroller_transitions: 
+    for transition in formcontroller_transitions: 
         try:
             container.delete(FormActionKey(transition['object_id'],
                                            transition['status'],

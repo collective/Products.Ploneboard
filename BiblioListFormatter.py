@@ -19,19 +19,12 @@ class IBiblioListFormatter(Interface):
             BiblioList object
         """
 
-    def formatEntry(self, entry):
-        """ returns a formatted bibliography reference
-            entry is a bibliography reference object
-        """
-
 class BiblioListFormatter(SimpleItem):
     """ Base class for the input formatter of the bibliolist tool.
     """
     __implements__ = (IBiblioListFormatter ,)
 
     meta_type = 'BiblioList Formatter'
-
-    format = {'name':'name of the format',}
     
     security = ClassSecurityInfo()
 
