@@ -7,9 +7,9 @@
 <tr valign="top">
 <td width="50%">
 <table border width="100%">
-    <tr tal:repeat="entry python:['Types','Skins','Actions','PortalObjects','Workflows','Slots']">
-        <th tal:content="entry"></th>
-        <td width="100%" tal:define="method python: getattr(here,'get'+entry);
+    <tr tal:repeat="entry python:[('Types','Types'),('Skins','Skins'),('Actions','Portal Actions'),('PortalObjects','Portal Objects'),('Workflows','Workflows'),('Slots','Portal Slots'),('RegistryPredicates','Content Type Registry entries')]">
+        <th tal:content="python:entry[1]"></th>
+        <td width="100%" tal:define="method python: getattr(here,'get'+entry[0]);
                                      num python: len(method())">
             <table tal:condition="python: num > 0">
                 <tr tal:repeat="r python:method()">

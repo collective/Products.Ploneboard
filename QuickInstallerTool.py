@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.17 2003/10/05 11:24:42 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.18 2003/10/05 14:03:15 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -162,8 +162,11 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portal_actions=getToolByName(self,'portal_actions')
         portal_workflow=getToolByName(self,'portal_workflow')
         portal=getToolByName(self,'portal_url').getPortalObject()
+        type_registry=getToolByName(self,'content_type_registry')
+        
         leftslotsbefore=getattr(portal,'left_slots',[])
         rightslotsbefore=getattr(portal,'right_slots',[])
+        registrypredicatesbefore=[pred[0] for pred in type_registry.listPredicates()]
 
 
         emid='install'+p
@@ -215,6 +218,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portalobjectsafter=portal.objectIds()
         leftslotsafter=getattr(portal,'left_slots',[])
         rightslotsafter=getattr(portal,'right_slots',[])
+        registrypredicatesafter=[pred[0] for pred in type_registry.listPredicates()]
 
         types=[t for t in typesafter if t not in typesbefore]
         skins=[s for s in skinsafter if s not in skinsbefore]
@@ -223,19 +227,20 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portalobjects=[a for a in portalobjectsafter if a not in portalobjectsbefore]
         leftslots=[s for s in leftslotsafter if s not in leftslotsbefore]
         rightslots=[s for s in rightslotsafter if s not in rightslotsbefore]
+        registrypredicates=[s for s in registrypredicatesafter if s not in registrypredicatesbefore]
 
         msg=str(res)
 
         #add the product
         if p in self.objectIds():
             p=getattr(self,p)
-            p.update(types,skins,actions,portalobjects,workflows,
-                     leftslots,rightslots,res,status,error,locked,
-                     hidden)
+            p.update(types=types,skins=skins,actions=actions,portalobjects=portalobjects,workflows=workflows,
+                     leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,logmsg=res,status=status,error=error,locked=locked,
+                     hidden=hidden)
         else:
-            ip=InstalledProduct(p,types,skins,actions,portalobjects,
-                                workflows,leftslots,rightslots,res,
-                                status,error,locked,hidden)
+            ip=InstalledProduct(p,types=types,skins=skins,actions=actions,portalobjects=portalobjects,
+                                workflows=workflows,leftslots=leftslots,rightslots=rightslots,registrypredicates=registrypredicates,logmsg=res,
+                                status=status,error=error,locked=locked,hidden=hidden)
             self._setObject(p,ip)
 
         return res
@@ -252,7 +257,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         for p in products:
             res += p +':'
             try:
-                r=self.installProduct(p,swallowExceptions=1)
+                r=self.installProduct(p,swallowExceptions=not stoponerror)
                 res +='ok:\n'
                 if r:
                     r += str(r)+'\n'

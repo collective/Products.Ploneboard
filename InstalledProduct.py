@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.12 2003/07/09 07:25:37 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.13 2003/10/05 14:03:15 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class InstalledProduct(SimpleItem):
         self.uninstall()
         
     def __init__(self,id,types=[],skins=[],actions=[],portalobjects=[],
-        workflows=[],leftslots=[],rightslots=[],logmsg='',status='installed',
+        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',
         error=0,locked=0, hidden=0):
         self.id=id
         self.types=types
@@ -74,6 +74,7 @@ class InstalledProduct(SimpleItem):
         self.transcript=[{'timestamp':DateTime(),'msg':logmsg}]
         self.locked=locked
         self.hidden=hidden
+        self.registrypredicates=registrypredicates
         
         if status:
             self.status=status
@@ -84,7 +85,7 @@ class InstalledProduct(SimpleItem):
 
     security.declareProtected(ManagePortal, 'update')
     def update(self,types=[],skins=[],actions=[],portalobjects=[],workflows=[],
-        leftslots=[],rightslots=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
+        leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
         updatelist(self.types,types)
         updatelist(self.skins,skins)
         updatelist(self.actions,actions)
@@ -92,6 +93,7 @@ class InstalledProduct(SimpleItem):
         updatelist(self.workflows,workflows)
         updatelist(self.leftslots,leftslots)
         updatelist(self.rightslots,rightslots)
+        updatelist(self.registrypredicates,registrypredicates)
         self.transcript.insert(0,{'timestamp':DateTime(),'msg':logmsg})
         self.locked=locked
         self.hidden=hidden
@@ -149,6 +151,10 @@ class InstalledProduct(SimpleItem):
     
     def getSlots(self):
         return self.leftslots+self.rightslots
+
+    def getRegistryPredicates(self):
+        ''' returns the custom entries in the content_type_registry '''
+        return getattr(self,'registrypredicates',[])
     
     def getTranscriptAsText(self):
         if getattr(self,'transcript',None):
@@ -175,7 +181,7 @@ class InstalledProduct(SimpleItem):
         return None
 
     security.declareProtected(ManagePortal, 'uninstall')
-    def uninstall(self,cascade=['types','skins','actions','portalobjects','workflows','slots'],REQUEST=None):
+    def uninstall(self,cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
         '''uninstalls the prod and removes its deps'''
 
         if self.isLocked():
@@ -215,6 +221,13 @@ class InstalledProduct(SimpleItem):
                 portal.left_slots=[s for s in portal.left_slots if s not in self.leftslots]
             if self.rightslots:
                 portal.right_slots=[s for s in portal.right_slots if s not in self.rightslots]
+
+        if 'registrypredicates' in cascade:
+            registry=getToolByName(self,'content_type_registry')
+            predicates=getattr(self,'registrypredicates',[])
+            for p in predicates:
+                registry.removePredicate(p)
+                    
             
         self.status='uninstalled'
         self.log('uninstalled\n'+str(res))
