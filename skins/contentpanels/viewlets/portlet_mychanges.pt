@@ -9,8 +9,7 @@
                  results python:here.portal_catalog.searchResults( 
                                     Creator=memberName
                                    , sort_on='modified'
-                                   , sort_order='reverse')[:5];
-                 results python:[item.getObject() for item in results]" 
+                                   , sort_order='reverse')[:5];"
      tal:condition="results">
 
      <div class="portlet">
