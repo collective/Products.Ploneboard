@@ -1,5 +1,7 @@
 V2.0
 
+I will release a completely new product.
+
 - I'd like to put a different title on the page and different titles on the singular panels
 
 - API
@@ -8,15 +10,6 @@ V2.0
   - register/unregister viewlet
 
 - add edit button to each content
-
-- compatible with I18NLayer
-
-  I18NLayer should be transparent. Here is some point in
-my mind now.
-
-  1. Viewlets of the actual types belongs to the I18N container
-  2. (howto?)Viewlet like recent changes only show the specific languge stuff
- but not the container and other stuff.
 
 - submit to Plone as a portlet proposal
 

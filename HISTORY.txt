@@ -1,6 +1,6 @@
-V1.7.4
+V1.8
 
-  - Refined the popup viewlet selecting window. It is:
+  - rewrite the popup viewlet selecting window. It is:
 
     - cleaner and easier to use.
     - easier to debug viewlet
@@ -8,6 +8,7 @@ V1.7.4
   - add link to the contentpanels at left/right column when user can edit it.
   - complete i18n pot and Chinese translation
   - remove useless viewlets in the config file
+  - more UI refinement
 
 V1.7.3
 

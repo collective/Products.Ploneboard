@@ -197,7 +197,7 @@ msgstr "preview viewlet"
 msgid "select_this_viewlet"
 msgstr "select this viewlet"
 
-msgid "Title & description"
+msgid "Title description"
 msgstr ""
 
 msgid "Image folder"
@@ -240,3 +240,6 @@ msgstr "right"
 
 msgid "goto_this_contentpanels"
 msgstr "goto this contentpanels"
+
+msgid "Document body"
+msgstr ""

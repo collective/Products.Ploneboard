@@ -70,7 +70,7 @@ actions=[
 
 ### GL: global viewlets
 
-('default_viewlet', 'Title & description',
+('default_viewlet', 'Title description',
 'string:here/viewlet_default/macros/portlet',
 '', 'View', 'GL:all', 1),
 
