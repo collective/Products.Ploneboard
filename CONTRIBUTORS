@@ -1,9 +1,10 @@
 
 CONTRIBUTORS
 
-
-  P.-J. Grizel (grizel@ingeniweb.com) : Design, Coding, Testing, Uglying
+  P.-J. Grizel <grizel@ingeniweb.com> : Lead programming, Design, Coding, Testing
   
-  O. Deckmyn (deckmyn@ingeniweb.com) : Design, Testing, User interface
+  O. Deckmyn <deckmyn@ingeniweb.com>: Design, Main user interface
 
+  J Cameron Cooper <jccooper@jcameroncooper.com>: GroupDataTool and GroupsTool design & coding
 
+  Brent Hendricks <brentmh@ece.rice.edu>: GroupDataTool and GroupsTool design & coding

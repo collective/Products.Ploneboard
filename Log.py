@@ -89,15 +89,15 @@ def FormatStack(stack):
     return ret
 
 
-##def LogException():
-##    """
-##    LogException () => None
+def LogException():
+    """
+    LogException () => None
 
-##    Print an exception information on the console
-##    """
-##    Log(LOG_NOTICE, "EXCEPTION >>>")
-##    traceback.print_exc(file = LOG_OUTPUT)
-##    Log(LOG_NOTICE, "<<< EXCEPTION")
+    Print an exception information on the console
+    """
+    Log(LOG_NOTICE, "EXCEPTION >>>")
+    traceback.print_exc(file = LOG_OUTPUT)
+    Log(LOG_NOTICE, "<<< EXCEPTION")
 
 
 LOG_OUTPUT = stderr

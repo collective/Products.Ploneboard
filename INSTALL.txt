@@ -11,3 +11,6 @@ HOW TO USE GRUF?
   them by other kind of User Folders: LDAPUserFolder, SQLUserFolder, SimpleUserFolder,
   or whatever suits your needs.
 
+PLONE INSTALLATION
+
+  See README-Plone file for explanation on Plone installation.

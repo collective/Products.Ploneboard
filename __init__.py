@@ -53,5 +53,16 @@ def initialize(context):
         icon='www/GRUFGroups.gif',
         )
 
-
+    try:
+        from Products.CMFCore.utils import ToolInit
+        from GroupsTool import GroupsTool
+        from GroupDataTool import GroupDataTool
+        ToolInit( meta_type='CMF Groups Tool'
+                  , tools=( GroupsTool, GroupDataTool, )
+                  , product_name='CMFGroups'
+                  , icon="tool.gif"
+                  ).initialize( context )
+    except ImportError:
+        Log(LOG_NOTICE, "Unable to import GroupsTool and/or GroupDataTool (see exception in the log below)")
+        LogException()
     
