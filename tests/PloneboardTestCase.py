@@ -15,7 +15,7 @@ ZopeTestCase.installProduct('Ploneboard')
 
 class PloneboardTestCase(PloneTestCase.PloneTestCase):
     def afterSetUp(self):
-        self.refreshSkinData()
+        self._refreshSkinData()
         self.loginPortalOwner()
         utils.disableScriptValidators(self.portal)
                 
