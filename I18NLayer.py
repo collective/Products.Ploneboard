@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.10 2003/10/02 14:08:10 longsleep Exp $
+$Id: I18NLayer.py,v 1.11 2003/12/09 12:06:51 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.10 $"
+__version__ = "$Revision: 1.11 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -348,6 +348,11 @@ class I18NLayer( BaseFolder ):
         except: return None
 
     getSize=get_size
+
+    security.declarePublic('tag')
+    def tag(self, *args, **kw):
+        """ map the tag method """
+        return self.mapCore('tag', *args, **kw)
 
     security.declarePublic('getIcon')
     def getIcon(self, relative_to_portal=0):

@@ -18,12 +18,12 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.4 2003/08/18 14:03:34 longsleep Exp $
+$Id: Patches.py,v 1.5 2003/12/09 12:06:51 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.4 $"
+__version__ = "$Revision: 1.5 $"
 
-
+from types import StringType
 ####################
 # <start patches>
 
@@ -58,7 +58,6 @@ def new_publish(request, module_name, after_list, debug=0):
     try:
         del Publish._requests[id]
     except KeyError:
-        # XXX
         # Some people has reported that sometimes a KeyError exception is
         # raised in the previous line, I haven't been able to reproduce it.
         # This try/except clause seems to work. I'd prefer to understand
@@ -86,9 +85,15 @@ if not hasattr(Globals, 'get_request'):
 # PATCH 2
 #
 # Filters I18NLayer objects which dont represent an object
+# patch support to folder base classes to return spec matches 
+# for i18nlayer based on containment
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
+try:
+    from BTrees.OIBTree import OIBTree, union
+    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2Base
+except: BTreeFolder2Base=None
 
 def new__filteredItems(self, ids, filt):
     """
@@ -144,12 +149,46 @@ def new_objectIds(self, spec=None):
     # return all if no spec
     return map(lambda i: i['id'], self._objects)
 
+
+def new_BTreeobjectIds(self, spec=None):
+    # Returns a list of subobject ids of the current object.
+    # If 'spec' is specified, returns objects whose meta_type
+    # matches 'spec'.
+
+    # we also match i18nlayer subobjects here which match spec
+
+    if spec is not None:
+        if isinstance(spec, StringType):
+            spec = [spec]
+        mti = self._mt_index
+        set = None
+        for meta_type in spec:
+            ids = mti.get(meta_type, None)
+            if ids is not None:
+                set = union(set, ids)
+        lids = mti.get('I18NLayer', None)
+        ids = OIBTree()
+        for id in lids.keys():
+            o = self._getOb(id)
+            if o.ContainmentMetaType() in spec:
+                ids[id]=lids[id]
+            set = union(set, ids)
+            
+        if set is None:
+            return ()
+        else:
+            return set.keys()
+    else:
+        return self._tree.keys()
+
+
 patch2 = 0
 if not hasattr(PortalFolder, '_old_filteredItems'):
     # Apply patch
     PortalFolder._old_filteredItems = PortalFolder._filteredItems
     PortalFolder._filteredItems = new__filteredItems
     PortalFolder.objectIds = new_objectIds
+    if BTreeFolder2Base: BTreeFolder2Base.objectIds = new_BTreeobjectIds
 
     # First import (not a refresh)
     # applied patch
@@ -158,7 +197,7 @@ if not hasattr(PortalFolder, '_old_filteredItems'):
 
 # PATCH 3
 #
-# adds the attribute i18nContent_language = neutral to PoralContent class
+# adds the attribute i18nContent_language = neutral to PortalContent class
 # and to PortalFolder class
 
 from Products.CMFCore.PortalContent import PortalContent
@@ -204,3 +243,4 @@ PortalFolder.title_or_id = new_title_or_id
         
 # </finished patches>
 #####################
+
