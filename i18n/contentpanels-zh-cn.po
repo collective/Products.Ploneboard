@@ -1,5 +1,5 @@
 # Gettext Message File for ContentPanels.
-# panjunyong <panjy@zopechina.ods.org>, 2003
+# panjunyong <panjy AT zopechina.com>, 2003
 msgid ""
 msgstr ""
 "Project-Id-Version: ContentPanels 1.6\n"
@@ -15,9 +15,10 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: contentpanels\n"
-"Language-code: zh_cn\n"
+"Language-code: zh\n"
 "Language-name: Chinese\n"
 "Preferred-encodings: utf-8\n"
+"X-Is-Fallback-For: zh-cn zh-hk zh-mo zh-sg\n"
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <span i18n:translate="Column Width">
