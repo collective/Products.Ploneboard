@@ -1,4 +1,6 @@
 
+  - Added Dutch translation, thanks to Misja Hoebe <misja@efobia.nl>
+
 0.2:
 
   - Photo size variants now callable by url (${photo_url}/variant/${variant})
