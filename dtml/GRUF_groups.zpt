@@ -166,7 +166,7 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="2" align="middle"><input type="submit" name="changeOrCreateUsers:method" value="Change" /></td>
+                <td colspan="2" align="middle"><input type="submit" name="changeOrCreateGroups:method" value="Change" /></td>
             </table>
           </td>
         </tr>
