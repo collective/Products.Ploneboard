@@ -16,7 +16,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.10 2004/02/16 12:14:17 tiran Exp $
+$Id: __init__.py,v 1.11 2004/02/16 18:21:37 dtremea Exp $
 '''.strip()
 
 from OFS.Application import get_products
@@ -143,7 +143,8 @@ def initialize(context):
 
     # sweep the i18n directory for local catalogs
     instance_i18n = os.path.join(INSTANCE_HOME, 'i18n')
-    if os.path.isdir(instance_i18n): cp_ts._load_dir(instance_i18n)
+    if os.path.isdir(instance_i18n):
+        cp_ts._load_i18n_dir(instance_i18n)
         
     # didn't found any catalogs
     if not cp_ts.objectIds():
