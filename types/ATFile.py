@@ -18,18 +18,19 @@
 #
 """
 
-$Id: ATFile.py,v 1.14 2004/05/15 00:52:20 tiran Exp $
+$Id: ATFile.py,v 1.15 2004/05/15 01:53:07 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
+from Products.ATContentTypes.config import *
+
 from urllib import quote
 
-try:
+if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType, BaseContent
-except ImportError:
-    # No multilingual support
-    from Products.Archetypes.public import registerType, BaseContent
+else:
+    from Products.Archetypes.public import registerType,BaseContent
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
@@ -37,7 +38,6 @@ from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Products.PortalTransforms.utils import TransformException
 
-from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema

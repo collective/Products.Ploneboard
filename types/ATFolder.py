@@ -18,16 +18,16 @@
 #
 """
 
-$Id: ATFolder.py,v 1.12 2004/05/15 00:52:20 tiran Exp $
+$Id: ATFolder.py,v 1.13 2004/05/15 01:53:07 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
+from Products.ATContentTypes.config import *
 
-try:
+if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
-except ImportError:
-    # No multilingual support
+else:
     from Products.Archetypes.public import registerType
 
 from Acquisition import aq_base, aq_inner, aq_parent
@@ -37,7 +37,6 @@ from AccessControl import ClassSecurityInfo
 from OFS.ObjectManager import REPLACEABLE
 from ComputedAttribute import ComputedAttribute
 
-from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, ATCTBTreeFolder, updateActions
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
 from Products.ATContentTypes.types.schemata import ATFolderSchema, ATBTreeFolderSchema

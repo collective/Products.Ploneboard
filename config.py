@@ -23,7 +23,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.18 2004/04/29 14:08:20 tiran Exp $
+$Id: config.py,v 1.19 2004/05/15 01:53:06 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -120,6 +120,13 @@ except ImportError:
 else:
     HAS_EXT_STORAGE = True
 
+## LinguaPlone addon?
+try:
+    from Products.LinguaPlone.public import registerType
+except ImportError:
+    HAS_LINGUA_PLONE = False
+else:
+    HAS_LINGUA_PLONE = True
 
 ## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'

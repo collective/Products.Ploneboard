@@ -18,24 +18,24 @@
 #
 """
 
-$Id: ATEvent.py,v 1.11 2004/05/15 00:52:20 tiran Exp $
+$Id: ATEvent.py,v 1.12 2004/05/15 01:53:07 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
+from Products.ATContentTypes.config import *
+
 from types import StringType
 
-try:
+if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
-except ImportError:
-    # No multilingual support
+else:
     from Products.Archetypes.public import registerType
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATEvent import IATEvent
 from Products.ATContentTypes.types.schemata import ATEventSchema

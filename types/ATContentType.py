@@ -18,15 +18,22 @@
 #
 """
 
-$Id: ATContentType.py,v 1.9 2004/05/15 00:52:20 tiran Exp $
+$Id: ATContentType.py,v 1.10 2004/05/15 01:53:07 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
+from Products.ATContentTypes.config import *
+
 from copy import copy
 
-from Products.Archetypes.public import BaseContent, BaseFolder
-from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
+if HAS_LINGUA_PLONE:
+    from Products.LinguaPlone.public import BaseContent, BaseFolder
+    from Products.LinguaPlone.public import OrderedBaseFolder,BaseBTreeFolder
+else:
+    from Products.Archetypes.public import BaseContent, BaseFolder
+    from Products.Archetypes.public import OrderedBaseFolder,BaseBTreeFolder
+
 from Products.Archetypes.TemplateMixin import TemplateMixin
 
 from Products.CMFCore import CMFCorePermissions
@@ -35,7 +42,6 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
 
