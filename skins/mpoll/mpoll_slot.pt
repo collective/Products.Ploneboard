@@ -9,7 +9,7 @@
 <!-- The vote box -->
 
 <div metal:define-macro="voteBox"
-     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published')">
+     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')">
 
     <div class="box" tal:condition="results" tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
                                  tabindex python:Iterator();">
