@@ -19,7 +19,7 @@ if id is None:
 
 
 # portal factory support
-factory_types = ()
+factory_types = {} 
 try:
     if hasattr(context, 'portal_factory'):
         factory_types = context.portal_factory.getFactoryTypes()
