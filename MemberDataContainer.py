@@ -458,7 +458,7 @@ class MemberDataContainer(BaseBTreeFolder):
     
     security.declareProtected(CMFCorePermissions.ListPortalMembers, 'contentValues')
     def contentValues(self, spec=None, filter=None):
-        objects = [v.__of__(self) for v in self.objectValues()]
+        objects = [v.__of__(self) for v in self.objectValues(spec=spec)]
         l = []
         for v in objects:
             id = v.getId()
