@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.11 2004/02/27 16:53:17 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.12 2004/02/27 17:02:22 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -194,12 +194,15 @@ class GroupData (SimpleItem):
     security.declarePublic('addMember')
     def addMember(self, id):
         """ Add the existing member with the given id to the group"""
-	user = self.acl_users.getUser(id)
+        user = self.acl_users.getUser(id)
         prefix = self.acl_users.getGroupPrefix()
 
         groups = list(user.getGroups())
         groups.append(prefix + self.getGroupName())
-        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
+        self.acl_users._updateUser(
+            name = id,
+            groups = tuple(groups),
+            )
 
 
     # FIXME: What permission should this be?
@@ -211,7 +214,10 @@ class GroupData (SimpleItem):
 
         groups = list(user.getGroups())
         groups.remove(prefix + self.getGroupName())
-        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getUserRoles()+groups, user.getDomains())
+        self.acl_users._updateUser(
+            name = id,
+            groups = tuple(groups),
+            )
 
     security.declareProtected(SetOwnProperties, 'setProperties')
     def setProperties(self, properties=None, **kw):
