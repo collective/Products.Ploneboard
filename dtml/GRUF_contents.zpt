@@ -1,0 +1,31 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+  <h3>Users folders management</h3>
+  <ol>
+    <p class="form-help">Use this form to check/manage the underlying user folders.</p>
+    <p class="form-help">BE CAREFUL THAT MISUSE OF THIS FORM CAN LEAD YOU TO UNRECOVERABLE LOSS OF USER DATA.</p>
+
+    <form action="manage_changeUserFolders" method="POST">
+      <!-- Users selection -->
+      <table bgcolor="#EEEEEE" tal:on-error="nothing">
+        <tr>
+          <th class="list-header">Groups backend</th>
+          <td>
+            <img src="" tal:attributes="src here/Groups/acl_users/icon">&nbsp;
+              <a href="Groups/acl_users/manage_main" tal:content="here/Groups/acl_users/meta_type">Type</a>
+          </td>
+        </tr>
+        <tr>
+          <th class="list-header">Users backend</th>
+          <td>
+            <img src="" tal:attributes="src here/Users/acl_users/icon">&nbsp;
+              <a href="Users/acl_users/manage_main" tal:content="here/Users/acl_users/meta_type">Type</a>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+  </ol>
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>

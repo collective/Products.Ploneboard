@@ -103,6 +103,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     manage_options=( 
         (
+        {'label':'Contents', 'action':'manage_GRUFContents'},
         {'label':'Audit', 'action':'manage_audit'},
         {'label':'Overview', 'action':'manage_overview'},
         {'label':'Groups', 'action':'manage_groups'},
@@ -119,6 +120,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     manage_groups = PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
     manage_users = PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
     manage_newusers = PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
+    manage_GRUFContents = PageTemplateFile.PageTemplateFile('dtml/GRUF_contents', globals())
 
     __ac_permissions__=(
         ('Manage users',
