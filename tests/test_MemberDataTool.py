@@ -17,10 +17,9 @@ class MemberDataToolTests(TestCase):
 
     def test_interface(self):
         from Products.CMFCore.interfaces.portal_memberdata \
-                import portal_memberdata as IMemberDataTool
+            import portal_memberdata as IMemberDataTool
         from Products.CMFCore.interfaces.portal_actions \
-                import ActionProvider as IActionProvider
-
+            import ActionProvider as IActionProvider
         verifyClass(IMemberDataTool, MemberDataTool)
         verifyClass(IActionProvider, MemberDataTool)
 
@@ -29,7 +28,6 @@ class MemberDataTests(TestCase):
     def test_interface(self):
         from Products.CMFCore.interfaces.portal_memberdata \
                 import MemberData as IMemberData
-
         verifyClass(IMemberData, MemberData)
 
 

@@ -54,6 +54,28 @@ def modify_fti(fti):
     fti['global_allow'] = 0  # only allow Members to be added where explicitly allowed
 
 
+def logException():
+    """Dump an exception to the log"""
+    import traceback
+    import sys
+    from zLOG import LOG, INFO, WARNING
+
+    sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+    
+    s = sys.exc_info()[:2]  # don't assign the traceback to s (otherwise will generate a circular reference)
+    if s[0] == None:
+        summary = 'None'
+    else:
+        if type(s[0]) == type(''):
+            summary = s[0]
+        else:
+            summary = str(s[1])
+
+    LOG('CMFMember Debug', WARNING,
+        summary,
+        '\n'.join(traceback.format_exception(*sys.exc_info())))
+
+
 id_schema = FieldList((
     StringField('id',
                 accessor='getId',
@@ -378,13 +400,11 @@ class Member(VariableSchemaSupport, BaseContent):
         try:
             user=self.getUser()
             if user is None:
-                # temp fix:
-                # when reimporting a  plone portal with
-                # CMFMember it breaks on catalog indexing
-                # because the posrtal_memberdata gets 
-                # imported before acl_users
-                # XXX: find a solution to force acl_users to
-                # be imported before CMFMember stuff
+                # Temporary fix: when reimporting a plone portal with
+                # CMFMember it breaks on catalog indexing because the 
+                # portal_memberdata gets imported before acl_users
+                # XXX: find a way to force acl_users to be imported before 
+                # CMFMember stuff
                 return ()
             
             if hasattr(user,'getUserRoles'):
@@ -642,8 +662,8 @@ class Member(VariableSchemaSupport, BaseContent):
         # make sure object has required data and metadata
         self.Schema().validate(self, None, errors, 1, 1)
         if errors:
-            import sys
-            sys.stdout.write('isValid, errors = %s\n' % (str(errors)))
+#            import sys
+#            sys.stdout.write('isValid, errors = %s\n' % (str(errors)))
             return 0
         return 1
 
@@ -655,6 +675,10 @@ class Member(VariableSchemaSupport, BaseContent):
 
     def valid_roles(self):
         roles = list(self.getUser().valid_roles())
+        # XXX - how should we handle roles for users in root.acl_users?
+        # XXX - can they assume all portal roles or just root roles?
+#        portal = getToolByName(self, 'portal_url').getPortalObject()
+#        roles = list(portal.acl_users.valid_roles())
         # remove automatically added roles
         while 'Authenticated' in roles:
             roles.remove('Authenticated')
@@ -849,58 +873,79 @@ class Member(VariableSchemaSupport, BaseContent):
 
     security.declarePrivate('register')
     def register(self):
-        registration_tool = getToolByName(self, 'portal_registration')
-        user_created = 0
-        # create a real user
-        if not self.hasUser():
-            # Limit the granted roles.
-            # Anyone is always allowed to grant the 'Member' role.
-            roles = self.getRoles()
-            _limitGrantedRoles(roles, self, ('Member',))
-            self.setRoles(roles)
-            self._createUser(create_acl_user=1)
-            user_created = 1
-
-        # make the user the owner of the current member object
-        self.changeOwnership(self.getUser(), 1)
-        self.manage_setLocalRoles(self.getUserName(), ['Owner'])
-        # XXX - should we invoke this for members with users in the Zope root acl_user?
-        registration_tool.afterAdd(self, id, self.getPassword(), None)
-        self.updateListed()
-
-        # only send mail if we had to create a new user -- this avoids
-        # sending mail to users who are already registered at the Zope root level
-        if user_created:
-            registration_tool.registeredNotify(self.getUserName())
+        try:
+            registration_tool = getToolByName(self, 'portal_registration')
+            user_created = 0
+            # create a real user
+            if not self.hasUser():
+                # Limit the granted roles.
+                # Anyone is always allowed to grant the 'Member' role.
+                roles = self.getRoles()
+                _limitGrantedRoles(roles, self, ('Member',))
+                self.setRoles(roles)
+                self._createUser(create_acl_user=1)
+                user_created = 1
+    
+            # make the user the owner of the current member object
+            self.changeOwnership(self.getUser(), 1)
+            self.manage_setLocalRoles(self.getUserName(), ['Owner'])
+            # XXX - should we invoke this for members with users in the Zope root acl_user?
+            registration_tool.afterAdd(self, id, self.getPassword(), None)
+            self.updateListed()
+    
+            # only send mail if we had to create a new user -- this avoids
+            # sending mail to users who are already registered at the Zope root level
+            if user_created:
+                registration_tool.registeredNotify(self.getUserName())
+        except:
+            # write tracebacks because otherwise workflow will swallow exceptions
+            logException()
+            raise
 
 
     security.declarePrivate('disable')
     def disable(self):
-        self._setPassword(self._generatePassword())
-#        self.listed = 0
-        workflow_tool = getToolByName(self, 'portal_workflow')
-        self.old_state = workflow_tool.getInfoFor(self, 'review_state', '')
-        self.updateListed()
+        try:
+            self._setPassword(self._generatePassword())
+            workflow_tool = getToolByName(self, 'portal_workflow')
+            self.old_state = workflow_tool.getInfoFor(self, 'review_state', '')
+            self.updateListed()
+        except:
+             # write tracebacks because otherwise workflow will swallow exceptions
+            logException()
+            raise
 
 
     security.declarePrivate('enable')
     def enable(self):
-        # BUGBUG - reset self.listed
-        if hasattr(self, 'old_state'):
-#            self.listed = (self.old_state == 'public')
-            delattr(self, 'old_state')
-        self.updateListed()
+        try:
+            if hasattr(self, 'old_state'):
+                delattr(self, 'old_state')
+            self.updateListed()
+        except:
+            # write tracebacks because otherwise workflow will swallow exceptions
+            logException()
+            raise
+
 
     security.declarePrivate('makePublic')
     def makePublic(self):
-#        self.listed = 1
-        self.updateListed()
+        try:
+            self.updateListed()
+        except:
+            # write tracebacks because otherwise workflow will swallow exceptions
+            logException()
+            raise
 
 
     security.declarePrivate('makePrivate')
     def makePrivate(self):
-#        self.listed = 0
-        self.updateListed()
+        try:
+            self.updateListed()
+        except:
+            # write tracebacks because otherwise workflow will swallow exceptions
+            logException()
+            raise
 
 
     security.declarePrivate('updateListed')
@@ -926,10 +971,7 @@ class Member(VariableSchemaSupport, BaseContent):
             if op:
                 self._v_old_user = [self.getUser()] # get user with aq context, store in a list to keep from stomping wrapper
         except:
-            import traceback
-            import sys
-            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            #import pdb;pdb.set_trace()
+            logException()
             raise
 
 
@@ -968,10 +1010,7 @@ class Member(VariableSchemaSupport, BaseContent):
                         if portal.acl_users.getUser(old_user.getUserName()):
                             portal.acl_users.userFolderDelUsers([old_user.getUserName()])
         except:
-            import traceback
-            import sys
-            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-#            import pdb; pdb.set_trace()
+            logException()
             raise
 
 
@@ -982,10 +1021,7 @@ class Member(VariableSchemaSupport, BaseContent):
                 # the copied member had a real user -- create a real user for the copy
                 self._createUser(create_acl_user=1)
         except:
-            import traceback
-            import sys
-            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            #import pdb;pdb.set_trace()
+            logException()
             raise
 
 
@@ -1025,10 +1061,7 @@ class Member(VariableSchemaSupport, BaseContent):
             self._v_user = None # remove references to user
             BaseContent.manage_beforeDelete(self, item, container)
         except:
-            import traceback
-            import sys
-            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-            #import pdb; pdb.set_trace()
+            logException()
             raise
 
 
@@ -1145,8 +1178,6 @@ class Member(VariableSchemaSupport, BaseContent):
                 if self._changeUserInfo(o, old_user_info, new_user):
                     # delete object if need be
                     if o != self:
-                        import sys
-                        sys.stdout.write('deleting %s\n' % o.getId())
                         context.manage_delObjects([o.getId()])
                     
             # remove any local roles the user may have had
@@ -1201,10 +1232,7 @@ class Member(VariableSchemaSupport, BaseContent):
                     password += RegistrationTool.password_chars[random.randint(0,n-1)]
                 return password
             except:
-                import traceback
-                import sys
-                sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-                #import pdb;pdb.set_trace()
+                logException()
                 raise
 
     # replacement for portal_registration's mailPassword function
@@ -1346,8 +1374,10 @@ class Member(VariableSchemaSupport, BaseContent):
                 return
             print >> out, 'Unable to set property %s from member %s\n' % (id, self.getMemberId())
             raise ValueError
+
     
     def getSchema(self):
-        return self.aq_parent.getMemberSchema()  
+        return self.aq_parent.getMemberSchema()
     
+   
 registerType(Member)

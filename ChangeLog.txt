@@ -1,3 +1,13 @@
+2003-07-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Added mechanism to log tracebacks for exceptions thrown by methods called 
+      by workflow to aid in debugging (ideally we should filter out 
+      ConflictErrors).
+
+    * Refactored test.py into a sequence of standalone tests.  All tests 
+      now run except for test_MemberData (and this might run with CMF 1.4 --
+      I haven't checked).
+
 2003-06-24  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Removed test for mail_me from Member.register().  If you want to test for
