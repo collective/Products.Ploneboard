@@ -55,7 +55,7 @@ factory_type_information = ( {'id': 'ContentPanels',
                                           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
                                           }
                                        , { 'id'            : 'contentpanels_viewlet'
-                                          , 'name'          : 'ContentPanels View'
+                                          , 'name'          : 'Nested ContentPanels'
                                           , 'action'        : 'string:here/viewlet_contentpanels_body/macros/portlet'
                                           , 'permissions'   : (CMFCorePermissions.View, )
                                           , 'category' : 'panel_viewlets'

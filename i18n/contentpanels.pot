@@ -92,34 +92,55 @@ msgstr ""
 
 # Box Skin Names
 
-msgid "Blank Box"
+msgid "Default"
 msgstr ""
 
-msgid "Title Only"
+msgid "No Title"
 msgstr ""
 
-msgid "Plone Box"
+msgid "Default Box"
 msgstr ""
 
-msgid "Blue Box"
-msgstr ""
-
-msgid "Red Box"
-msgstr ""
-
-msgid "Yellow Box"
-msgstr ""
+msgid "ZopeZen"
+msgstr "ZopeZen.."
 
 # viewlet Names
 
-msgid "ContentPanels View"
+msgid "My Recent Updates"
+msgstr ""
+
+msgid "My Favorites"
+msgstr ""
+
+msgid "Calendar"
+msgstr ""
+
+msgid "Events"
+msgstr ""
+
+msgid "Review List"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Recent Published"
+msgstr ""
+
+msgid "Nested ContentPanels"
 msgstr ""
 
 msgid "View"
 msgstr ""
 
-msgid "Lastest Updates"
+msgid "Recent Updates"
 msgstr ""
+
+msgid "Content Listing"
+msgtr ""
 
 msgid "Body"
 msgstr ""

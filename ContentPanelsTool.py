@@ -84,43 +84,10 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
                                 , visible=1
                                  )
                ,
-               ActionInformation(id='portlet_login'
-                                , title='Login'
-                                , action=Expression(
-                text='string:here/portlet_login/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_related'
-                                , title='Related'
-                                , action=Expression(
-                text='string:here/portlet_related/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
                ActionInformation(id='portlet_events'
                                 , title='Events'
                                 , action=Expression(
                 text='string:here/portlet_events/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_navigation'
-                                , title='Navigation'
-                                , action=Expression(
-                text='string:here/portlet_navigation/macros/portlet')
                                 , condition=Expression(
                 text='python: 1')
                                 , permissions=('View',)
@@ -134,7 +101,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
                 text='string:here/portlet_review/macros/portlet')
                                 , condition=Expression(
                 text='python: 1')
-                                , permissions=('View',)
+                                , permissions=('Review portal content',)
                                 , category='panel_viewlets'
                                 , visible=1
                                  )

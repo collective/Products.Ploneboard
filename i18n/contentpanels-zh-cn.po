@@ -92,34 +92,55 @@ msgstr "选择视图:"
 
 # Box Skin Names
 
-msgid "Blank Box"
-msgstr "空外壳"
+msgid "Default"
+msgstr "缺省"
 
-msgid "Title Only"
-msgstr "只有标题"
+msgid "No Title"
+msgstr "没有标题"
 
-msgid "Plone Box"
-msgstr "Plone外壳"
+msgid "Default Box"
+msgstr "缺省方框"
 
-msgid "Blue Box"
-msgstr "蓝外壳"
-
-msgid "Red Box"
-msgstr "绿外壳"
-
-msgid "Yellow Box"
-msgstr "黄外壳"
+msgid "ZopeZen"
+msgstr "ZopeZen风格"
 
 # viewlet Names
 
-msgid "ContentPanels View"
-msgstr "内容面板"
+msgid "My Recent Updates"
+msgstr "我最近的更改"
+
+msgid "My Favorites"
+msgstr "我的收藏"
+
+msgid "Calendar"
+msgstr "日历"
+
+msgid "Events"
+msgstr "事件"
+
+msgid "Review List"
+msgstr "评审清单"
+
+msgid "News"
+msgstr "新闻"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Recent Published"
+msgstr "最近发布"
+
+msgid "Nested ContentPanels"
+msgstr "嵌套子面板"
 
 msgid "View"
 msgstr "查看"
 
-msgid "Lastest Updates"
+msgid "Recent Updates"
 msgstr "最近更新"
+
+msgid "Folder Listing"
+msgstr "内容列表"
 
 msgid "Body"
 msgstr "正文"
@@ -130,16 +151,7 @@ msgstr "缺省视图"
 msgid "My Recent Changes"
 msgstr "我最近的更改"
 
-#viewlet 
-
-msgid "none_my_post"
-msgstr "无（我在这个网站上还没有发表任何内容）"
-
-msgid "cp_page_title"
-msgstr "第$page_num页："
-
-msgid "Add"
-msgstr "添加"
+# title
 
 msgid "move left"
 msgstr "左移"
