@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.10 2004/05/15 01:53:07 tiran Exp $
+$Id: ATFavorite.py,v 1.11 2004/06/18 16:00:15 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -103,5 +103,11 @@ class ATFavorite(ATCTContent):
         except KeyError:
             obj = None
         return obj
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, remote_url=None, **kwargs):
+        if not remote_url:
+            remote_url = kwargs.get('remote_url', None)
+        self.update(remoteUrl = remote_url, **kwargs)
 
 registerType(ATFavorite, PROJECTNAME)
