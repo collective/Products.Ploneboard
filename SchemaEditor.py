@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.21 2004/09/27 16:28:53 spamsch Exp $
+$Id: SchemaEditor.py,v 1.22 2004/09/27 18:41:36 spamsch Exp $
 """
 
 import re
@@ -190,14 +190,14 @@ class SchemaEditor:
         return self._schemas.keys()
 
     security.declareProtected(View, 'atse_getSchemaById')
-    def atse_selectRegisteredSchema(self, REQUEST=None):
+    def atse_selectRegisteredSchema(self, schema_template, REQUEST=None):
         """
         Redirection
         """
 
         req = REQUEST or self.REQUEST
         sel = req.form['selection']
-        return util.redirect(req.RESPONSE, 'atse_editor',
+        return util.redirect(req.RESPONSE, schema_template,
                       self.translate('Now editing schema for %s' % sel), schema_id=sel)
 
     security.declareProtected(View, 'atse_isSchemaRegistered')
@@ -586,6 +586,7 @@ class SchemaEditor:
     security.declareProtected(ManageSchemaPermission, 'atse_updateManagedSchemas')
     def atse_updateManagedSchema(self,
                                  portal_type,
+                                 schema_template,
                                  REQUEST=None, RESPONSE=None):
         
         """
@@ -595,7 +596,7 @@ class SchemaEditor:
 
         # we absolutely need to have portal_type
         if not self.atse_editorCanUpdate(portal_type):
-            return util.redirect(RESPONSE, 'atse_editor',
+            return util.redirect(RESPONSE, schema_template,
                                  self.translate('Can not determine portal_type of managed objects (%s)...' \
                                                 % portal_type))
 
@@ -611,8 +612,9 @@ class SchemaEditor:
             if hasattr(obj, '_v_schema'):
                 delattr(obj, '_v_schema')
                 obj._p_changed = 1
-                
-        return util.redirect(RESPONSE, 'atse_editor',
+
+        # XXX do translation
+        return util.redirect(RESPONSE, schema_template,
                       self.translate('Updated objects of type %s successfully' % portal_type))
 
 InitializeClass(SchemaEditor)

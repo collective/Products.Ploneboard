@@ -4,6 +4,8 @@
     <div class="portletBody">
      <div style="margin: 5px 1px 5px 1px;">
       <form method="POST" action="atse_selectRegisteredSchema">
+      <input type="hidden" name="schema_template" value="#"
+             tal:attributes="value SCHEMA_TEMPLATE">
       <select name="selection:string">
         <span tal:repeat="item here/atse_getRegisteredSchemata">
           <option tal:attributes="value item;
@@ -143,7 +145,7 @@
     <div class="portletBody" id="atse_maintenance">
       <div tal:condition="python: here.atse_editorCanUpdate(SCHEMA_ID)">
         <a href="#" 
-	   tal:attributes="href string: ${here/absolute_url}/atse_updateManagedSchema?portal_type=$SCHEMA_ID&return_to=atse_editor"
+	   tal:attributes="href string: ${here/absolute_url}/atse_updateManagedSchema?portal_type=$SCHEMA_ID&schema_template=$SCHEMA_TEMPLATE"
 	   i18n:translate="update_schema_for_all_schemas">Update schema for all managed schemas</a>
       </div>
       <div tal:condition="python: not here.atse_editorCanUpdate(SCHEMA_ID)">
