@@ -127,7 +127,7 @@ class TestPloneInterface(PloneTestCase.PloneTestCase):
 
     def testUserToGroupRoles(self,):
         # Add a user and a group with valid roles
-        self.portal._addRole('SampleRo2le')
+        self.portal._addRole('SampleRole')
         self.gt.addGroup("group2", roles = ['SampleRole',], )
         self.mt.addMember("member1", "secret", ['Member',], None)
         group = self.gt.getGroupById("group2")
@@ -146,7 +146,7 @@ class TestPloneInterface(PloneTestCase.PloneTestCase):
         # to the same group: in this case, the user will get group's role affected
         # to him directly... which should not happend.
         # Add a user and a group with valid roles
-        self.portal._addRole('SampleRo2le')
+        self.portal._addRole('SampleRole')
         self.gt.addGroup("group2", roles = ['SampleRole',], )
         self.mt.addMember("member1", "secret", ['Member',], None)
         group = self.gt.getGroupById("group2")
@@ -156,7 +156,7 @@ class TestPloneInterface(PloneTestCase.PloneTestCase):
         group.addMember("member1")
 
         # Ensure that "group-acquired" role is not affected to the user directly
-        self.failUnless("SampleRole" not in self.acl_users.getUser("member1").getUserRoles())
+        self.failIf("SampleRole" in self.acl_users.getUser("member1").getUserRoles())
 
     def testUserToGroupRemoving(self,):
         # Add a user and a group with valid roles

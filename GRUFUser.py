@@ -239,7 +239,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         returns the roles defined for the user without the group roles
         """
         prefix=GRUFFolder.GRUFGroups._group_prefix
-        return [r for r in self._original_roles if not r.startswith(prefix)]
+        return tuple([r for r in self._original_roles if not r.startswith(prefix)])
 
     security.declarePublic("getGroupRoles")
     def getGroupRoles(self,):
@@ -255,8 +255,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 Log("Group", group, "is invalid. Ignoring.")
                 # This may occur when groups are deleted
                 # Ignored silently
-                continue  
-            ret.extend(acl_users.getGroup(group).getRoles())
+                continue
+            ret.extend(acl_users.getGroup(group).getUserRoles())
             
         return GroupUserFolder.unique(ret)
     
@@ -347,25 +347,72 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             if object_roles is None or 'Anonymous' in object_roles:
                 return 1
 
-        # Check for a role match with the normal roles given to
-        # the user, then with local roles only if necessary. We
-        # want to avoid as much overhead as possible.
-        user_roles = self.getRoles()
-        for role in object_roles:
-            if role in user_roles:
-                if self._check_context(object):
-                    return 1
-                return None
 
-        # Check against getRolesInContext
-        # This is time-consuming, it may be possible to avoid several
-        # tests by copying the original allowed() implemetation from
-        # AccessControl.User and adapting it to GRUF needs.
-        # So, the following code works but can be optimized.
-        for role in self.getRolesInContext(object):
-            if role in object_roles:
+        # Trying to make some speed improvements, changes starts here.
+        # Helge Tesdal, Plone Solutions AS, http://www.plonesolutions.com
+        # We avoid using the getRoles() and getRolesInContext() methods to be able
+        # to short circuit.
+        
+        # Dict for faster lookup and avoiding duplicates
+        object_roles_dict = {}
+        for role in object_roles:
+            object_roles_dict[role] = 1
+
+        if [role for role in self.getUserRoles() if object_roles_dict.has_key(role)]:
+            if self._check_context(object):
                 return 1
+            return None
+
+        # Try the top level group roles.
+        acl_users = self._GRUF.acl_users 
+        groups = acl_users.getGroupNames()
+        groups_dict = {}
+        for g in groups:
+            groups_dict[g] = 1
+
+        user_groups = self.getGroups()
+        for group in user_groups:
+            if group in groups:
+                if [role for role in acl_users.getGroup(group).getUserRoles() if object_roles_dict.has_key(role)]:
+                    if self._check_context(object):
+                        return 1
+                    return None
+
+        # No luck on the top level, try local roles
+        inner_obj = getattr(object, 'aq_inner', object)
+        userid = self.getId()
+        while 1:
+            local_roles = getattr(inner_obj, '__ac_local_roles__', None)
+            if local_roles:
+                if callable(local_roles):
+                    local_roles = local_roles()
+                dict = local_roles or {}
+
+                if [role for role in dict.get(userid, []) if object_roles_dict.has_key(role)]:
+                    if self._check_context(object):
+                        return 1
+                    return None
+
+                # Get roles & local roles for groups
+                # This handles nested groups as well
+                for groupid in user_groups:
+                    if [role for role in local_roles.get(groupid, []) if object_roles_dict.has_key(role)]:
+                        if self._check_context(object):
+                            return 1
+                        return None
+
+            inner = getattr(inner_obj, 'aq_inner', inner_obj)
+            parent = getattr(inner, 'aq_parent', None)
+            if parent is not None:
+                inner_obj = parent
+                continue
+            if hasattr(inner_obj, 'im_self'):
+                inner_obj=inner_obj.im_self
+                inner_obj=getattr(inner_obj, 'aq_inner', inner_obj)
+                continue
+            break
         return None
+    
 
     security.declarePublic('hasRole')
     def hasRole(self, *args, **kw):

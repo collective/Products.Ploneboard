@@ -53,20 +53,11 @@ _group_prefix_len = len(GRUFFolder.GRUFGroups._group_prefix)
 _group_prefix = GRUFFolder.GRUFGroups._group_prefix
 
 def unique(sequence):
-    """
-    unique(sequence) => make sequence a list of unique items
-    """
-    ret = []
-    lst = list(sequence)
-    lst.sort()
-    prev = "THIS VALUE WILL SURELY BE UNIQUE IN ALL THE LISTS " \
-           "WE CAN IMAGINE ! :-)"
-    for item in lst:
-        if item == prev:
-            continue
-        ret.append(item)
-        prev = item
-    return tuple(ret)
+    """Make a sequence a list of unique items"""
+    uniquedict = {}
+    for v in sequence:
+        uniquedict[v] = 1
+    return tuple(uniquedict.keys())
 
 
 def manage_addGroupUserFolder(self, dtself=None, REQUEST=None, **ignored):
@@ -721,7 +712,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/02/27 17:33:15 $"[7:-2]
+        rev_date = "$Date: 2004/02/27 19:05:51 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
