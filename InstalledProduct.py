@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.11 2003/07/09 02:04:50 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.12 2003/07/09 07:25:37 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.ExternalMethod.ExternalMethod import ExternalMethod
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 
-from IQuickInstaller import IInstalledProduct
+from interfaces.portal_quickinstaller import IInstalledProduct
 
 def updatelist(a,b):
     for l in b:

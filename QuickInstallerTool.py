@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.7 2003/07/09 02:04:50 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.8 2003/07/09 07:25:37 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 
 from InstalledProduct import InstalledProduct
 
-from IQuickInstaller import IQuickInstallerTool
+from interfaces.portal_quickinstaller import IQuickInstallerTool
 
 def addQuickInstallerTool(self,REQUEST=None):
     ''' '''
