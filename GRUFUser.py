@@ -618,7 +618,7 @@ class GRUFUser(GRUFUserAtom):
     def changePassword(self, password):
         """Set the user's password"""
         self.clearCachedGroupsAndRoles()
-        return self._GRUF.changePassword(self.getId(), password)
+        return self._GRUF.userSetPassword(self.getId(), password)
 
     security.declarePrivate("setRoles")
     def setRoles(self, roles):

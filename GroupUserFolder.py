@@ -1125,7 +1125,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security.declarePrivate("_updateUser")
     def _updateGroup(self, name, roles = None, groups = None):
         """
-        _updateUser(self, name, roles = None, groups = None)
+        _updateGroup(self, name, roles = None, groups = None)
 
         Front-end to _doChangeUser, but with a better default value support.
         We guarantee that None values will let the underlying UF keep the original ones.
@@ -1189,7 +1189,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/05/28 12:49:45 $"[7:-2]
+        rev_date = "$Date: 2004/06/07 15:08:29 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1204,7 +1204,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if obj.isGroup():
             self._updateGroup(name = user, groups = groups, roles = roles, )
         else:
-            self._updateUser(name = user, groups = groups, roles = roles, )
+            self._updateUser(id = user, groups = groups, roles = roles, )
 
 
         if REQUEST.has_key('RESPONSE'):
@@ -1274,7 +1274,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Update existing users
         for user in users:
-            self._updateUser(name = user, groups = groups, roles = roles, )
+            self._updateUser(id = user, groups = groups, roles = roles, )
 
         # Redirect if no users have been created
         if not passwords_list:
