@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.15 2004/06/20 15:13:17 tiran Exp $
+$Id: Validators.py,v 1.16 2004/07/11 18:28:18 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -189,13 +189,13 @@ def doTidy(value, field, request, cleanup=0):
     # and the current text_format isn't in the list
     if MX_TIDY_MIMETYPES and text_format not in MX_TIDY_MIMETYPES:
         # do not filter this mime type
-        return None
+        return
 
     # it's a file upload
     if isinstance(value, FileUpload):
         # XXX *mmh* ok it's a file upload but a file upload could destroy
         # the layout, too. Maybe we are doomed?
-        return 1
+        return
 
     result = mx_tidy(wrapValueInHTML(value), **MX_TIDY_OPTIONS)
     nerrors, nwarnings, outputdata, errordata = result
