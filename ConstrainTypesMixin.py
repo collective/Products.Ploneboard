@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.6 2004/09/13 05:39:55 runyaga Exp $
+$Id: ConstrainTypesMixin.py,v 1.7 2004/09/13 10:23:14 runyaga Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -132,17 +132,13 @@ class ConstrainTypesMixin:
         # getLocallyAllowedTypes is the accessor for the
         # the locallyAllowedTypes schema field.
         allowed = list(self.getLocallyAllowedTypes())
-        possible_and_allowed = [fti for fti in possible_ftis
-                                if fti.id in allowed]
-
-	#Schwatzian Transform
-        tmp = [(fti.title or fti.id, fti) for fti in possible_and_allowed]
-	tmp.sort()
-	possible_and_allowed = [fti[1] for fti in tmp]
+        possible_and_allowed = [(fti.title or fti.id, fti) for fti in possible_ftis
+                                 if fti.id in allowed]
+        possible_and_allowed.sort()
 
         # if none are selected as allowed then all possible types
         # are allowed
-        return possible_and_allowed or possible_ftis
+        return [fti[1] for fti in possible_and_allowed] or possible_ftis
 
     # overrides CMFCore's PortalFolder invokeFactory
     security.declareProtected(AddPortalContent, 'invokeFactory')
