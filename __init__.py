@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: __init__.py,v 1.3 2004/09/27 15:52:21 ajung Exp $
+$Id: __init__.py,v 1.4 2004/11/07 21:52:50 brcwhit Exp $
 """
 
 from Products.CMFCore.DirectoryView import registerDirectory
@@ -20,3 +20,22 @@ registerDirectory(SKINS_DIR, GLOBALS)
 # make refresh possible
 from SchemaEditor import SchemaEditor
 from ParentManagedSchema import ParentManagedSchema
+
+import Products.CMFCore
+from Products.Archetypes import process_types
+from Products.Archetypes.public import listTypes
+from config import *
+from Products.CMFCore.CMFCorePermissions import AddPortalContent 
+
+def initialize(context):
+    import examples.content
+    content_types, constructors, ftis = process_types(listTypes(PKG_NAME),
+                                                      PKG_NAME)
+
+    Products.CMFCore.utils.ContentInit(
+        '%s Example Content' % PKG_NAME,
+        content_types      = content_types,
+        permission         = AddPortalContent,
+        extra_constructors = constructors,
+        fti                = ftis,
+        ).initialize(context)

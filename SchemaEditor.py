@@ -1,5 +1,3 @@
-# -*- coding: iso-8859-1
-
 """
 ATSchemaEditorNG
 
@@ -11,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.25 2004/11/02 19:09:44 ajung Exp $
+$Id: SchemaEditor.py,v 1.26 2004/11/07 21:52:50 brcwhit Exp $
 """
 
 import re
@@ -25,6 +23,8 @@ from Products.Archetypes.public import DisplayList, BaseFolderSchema
 from Products.Archetypes.Field import *
 from Products.Archetypes.Widget import *
 from ManagedSchema import ManagedSchema
+
+from interfaces import ISchemaEditor
 
 import util
 from config import ManageSchemaPermission
@@ -86,11 +86,10 @@ class SchemaEditor:
 
     security = ClassSecurityInfo()
 
+    __implements__ = ISchemaEditor
+
     security.declareProtected(ManageSchemaPermission, 'atse_init')
     def atse_init(self):
-        """ init everything """
-
-        # only for compat reasons
         return
 
     def _clear(self, safe=False):
@@ -224,6 +223,7 @@ class SchemaEditor:
             return self._schemas.items()[0][1]
 
         # XXX urgh
+        # change this to use an attr
         return BaseFolderSchema()
 
     security.declareProtected(View, 'atse_getDefaultSchemaId')

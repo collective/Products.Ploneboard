@@ -2,10 +2,16 @@
 # PloneTestCase
 #
 
-# $Id: atse_testcase.py,v 1.1 2004/09/18 02:24:09 brcwhit Exp $
+# $Id: atse_testcase.py,v 1.2 2004/11/07 21:52:51 brcwhit Exp $
 
 from Testing import ZopeTestCase
+### ought to be refactored to use CMFTestCase
 from Products.CMFPlone.tests import PloneTestCase
+from Products.Archetypes.Extensions.utils import installTypes
+from Products.Archetypes.public import listTypes
+from Products.ATSchemaEditorNG.config import *
+
+from StringIO import StringIO
 
 ZopeTestCase.installProduct('ATSchemaEditorNG')
 ZopeTestCase.installProduct('Archetypes')
@@ -31,8 +37,10 @@ class ATSETestCase( PloneTestCase.PloneTestCase ):
 
     def createBasicSetup(self):
         """ basic schema editing setup """
-
+        out = StringIO()
+        installTypes(self.portal, out, listTypes(PKG_NAME), PKG_NAME)
+        
         self.container = makeContent(self.folder, 'Container', id='container')
         self.target1 = makeContent(self.container, 'Target1', id='target1')
         self.target2 = makeContent(self.container, 'Target2', id='target2')
-        
+

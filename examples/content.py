@@ -11,6 +11,8 @@ class Container(SchemaEditor, BaseFolder):
     """
     Container to act as host for schema editing.
     """
+    
+    portal_type = "Container"
 
     def manage_afterAdd(self, item, container):
         """ """

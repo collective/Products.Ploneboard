@@ -9,12 +9,12 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.6 2004/09/29 15:25:51 spamsch Exp $
+$Id: config.py,v 1.7 2004/11/07 21:52:50 brcwhit Exp $
 """
 
 SKINS_DIR = 'skins'
 GLOBALS = globals()
-PROJECT_NAME = 'ATSchemaEditorNG'
+PROJECT_NAME = PKG_NAME = 'ATSchemaEditorNG'
 
 # Permissions
 ManageSchemaPermission = 'ATSE: Manage schema'

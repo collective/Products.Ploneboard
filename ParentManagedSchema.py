@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.18 2004/09/29 18:26:56 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.19 2004/11/07 21:52:49 brcwhit Exp $
 """
 
 from Globals import InitializeClass
@@ -18,6 +18,7 @@ from Acquisition import ImplicitAcquisitionWrapper
 from Products.CMFCore.CMFCorePermissions import View
 from Products.Archetypes.Schema import ManagedSchema
 from zLOG import LOG, INFO
+from interfaces import IParentManagedSchema
 
 from util import create_signature
 import config
@@ -26,6 +27,8 @@ class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
         the parent container and retrieved through acquisition.
     """
+
+    __implements__ = IParentManagedSchema
 
     security = ClassSecurityInfo()  
 
