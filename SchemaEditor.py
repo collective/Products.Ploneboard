@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.12 2004/09/23 16:33:03 ajung Exp $
+$Id: SchemaEditor.py,v 1.13 2004/09/23 17:42:17 ajung Exp $
 """
 
 import re
@@ -84,7 +84,7 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_registerSchema')
     def atse_registerSchema(self, 
-                            id,
+                            schema_id,
                             schema,     
                             filtered_schemas=(), 
                             undeleteable_fields=(), 
@@ -100,6 +100,14 @@ class SchemaEditor:
         S._undeleteable_schematas = undeleteable_schematas 
         S._i18n_domain = domain
         self._schemas[id] = S
+
+    security.declareProtected(ManageSchemaPermission, 'atse_unregisterSchema')
+    def atse_registerSchema(self, schema_id):
+        """ unregister schema """
+        if not self._schemas.has_key(schema_id):
+            raise SchemaEditorError('No such schema: %s' % schema_id)
+        del self._schemas[schema_id]
+        
 
     security.declareProtected(View, 'atse_getSchemaById')
     def atse_getSchemaById(self, schema_id):
@@ -179,7 +187,7 @@ class SchemaEditor:
                       schema_template,
                       self.translate('atse_deleted', 
                                      default='Schemata deleted'),   
-                                     schemata=S.getSchemataNames()[0])
+                                     schemata=self.atse_getSchemataNames(schema_id))
 
     ######################################################################
     # Field manipulation
@@ -285,8 +293,7 @@ class SchemaEditor:
         D['widget'] = widget
 
         # build DisplayList instance for SelectionWidgets
-        if FD.widget in ('Radio', 'Select', 'MultiSelect', 'Flex', 'Picklist',
-                         'InAndOut'):
+        if FD.widget in ('Radio', 'Select', 'MultiSelect', 'Flex', 'Picklist', 'InAndOut'):
             vocab = FD.get('vocabulary', [])
 
             # The vocabulary can either be a list of string of 'values'
@@ -386,7 +393,6 @@ class SchemaEditor:
                       schemata=schemata_name, 
                       schema_id=schema_id,
                       field=name)
-
 
     ######################################################################
     # Hook for UI

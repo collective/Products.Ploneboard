@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.2 2004/09/23 15:37:17 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.3 2004/09/23 17:42:17 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -25,7 +25,10 @@ class ParentManagedSchema:
 
     security.declareProtected(View, 'Schema')
     def Schema(self, schema_id):
-        """ retrieve schema from parent object """
+        """ Retrieve schema from parent object. The client class should
+            override the method as Schema(self) and then call his method
+            of the baseclass with the corresponding schema_id.
+        """
 
         # Schema() seems to be called during the construction phase when there is
         # not acquisition context. So we return the default schema itself.
