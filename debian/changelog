@@ -1,3 +1,9 @@
+zope-cmfplonetypes (0.2-beta-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Christian Heimes <heimes@faho.rwth-aachen.de>  Sat, 10 Apr 2004 00:47:15 +0200
+
 zope-cmfplonetypes (0.2-alpha2) unstable; urgency=low
 
   * Initial release
