@@ -104,7 +104,7 @@ def make(infile):
 
     #try:
     # XXX this could raise an IOError
-    lines = open(infile).readlines()
+    lines = infile.readlines()
     #except IOError, msg:
     #    do something
     
@@ -157,4 +157,8 @@ def make(infile):
     return generate()
                       
 
+if __name__ == '__main__':
 
+    po = open('i18n/pts-de.po')
+    mo = make(po)
+    print "Seems to work :)"   
