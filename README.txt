@@ -47,6 +47,11 @@ Installation
 
 - inside the portal instanciate a CMF QuickInstaller Tool
 
+- Happy debian users may apt-get install the Quick Installer by 
+adding the following line to their /etc/apt/sources.list file :
+
+deb ftp://ftp.logilab.org/pub/debian unstable/
+
 Usage:
 --------
 
