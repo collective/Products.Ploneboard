@@ -1,0 +1,9 @@
+1.1 
+
+  - 
+
+  - anonymous can't view folder_contents and edit icon now
+ 
+  - fixed topic panel broken problem
+
+  - support neoboard 1.1

@@ -30,10 +30,12 @@ HEAD PAGE TITLES!!
 
           </span>
 
-          <a href="" tal:attributes="href python:here.absolute_url() + '/contentpanels_edit_form?pageIndex=%d' % pageIndex ">
+          <a href="" tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here)"
+	         tal:attributes="href python:here.absolute_url() + '/contentpanels_edit_form?pageIndex=%d' % pageIndex ">
                  <img src="/misc_/CMFCore/tool.gif"/>
           </a>
-          <a href="" tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_contents'">
+          <a href="" tal:condition="python:here.portal_membership.checkPermission('List folder contents', here)"
+	            tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_contents'">
                  <img src="/folder_icon.gif"/>
           </a>
 
@@ -74,4 +76,5 @@ panel should be here!!
 </body>
 
 </html>
+
 
