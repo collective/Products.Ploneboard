@@ -2,7 +2,7 @@
 # Example form action code
 
 # Set the state status (unnecessary in this case, as the default status is 'success')
-state.setStatus = 'success'
+state.setStatus('success')
 
 # do something here
 context.n = context.REQUEST.get('n')

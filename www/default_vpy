@@ -2,7 +2,7 @@
 # Example validator code
 
 # Set the state status (unnecessary here, since the default status is 'success')
-state.setStatus = 'success'
+state.setStatus('success')
 
 # validate your variables here
 n = context.REQUEST.get('n', None)
