@@ -1,0 +1,10 @@
+
+0.9.1
+	Documentation touchup (format using Structured Text rules)
+	
+	Use folder_workflow for Banner Folders to fix permission problems
+
+	Unset global_allow for Banner Images
+
+0.9.0
+	Initial release
