@@ -1,6 +1,6 @@
 <div>
-    <img tal:attributes="href here/absolute_url;
-                         alt here/title_or_id; title
-                         here/title_or_id"
+    <img tal:attributes="src here/absolute_url;
+                         alt here/title_or_id;
+                         title here/title_or_id"
                          />
 </div>                         
