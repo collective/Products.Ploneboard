@@ -1,3 +1,21 @@
+2003-10-06 13:26  longsleep
+
+        * ChangeLog: preparing for release
+
+2003-10-06 12:05  longsleep
+                                                                                
+        * tests/: framework.py, runalltests.py, test_I18Nlayer.py: prepare
+        for new unit tests
+                                                                                
+2003-10-02 16:08  longsleep
+                                                                                
+        * I18NContent.py, I18NLayer.py: dont cache redirects in index_html
+                                                                                
+2003-09-30 13:31  longsleep
+                                                                                
+        * I18NContent.py, I18NLayer.py: added support for the language tool
+        added forcing language urls option
+
 2003-08-12 22:51  longsleep
 
 	* I18NContent.py, I18NLayer.py: some documentation added preparing
