@@ -5,6 +5,12 @@
 
  * Moved AT Dyn Document to a new product ATDynDocument.
 
+ * Fixed the migration
+ 
+ * Fixed and improved the switch from/to "ATCT as default types" methods
+ 
+ * Updated docs
+ 
 0.2-beta3 - 2004-04-20
 
  * Updated INSTALL.txt [tiran]
