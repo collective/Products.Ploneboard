@@ -109,7 +109,7 @@ class Walker:
 
                 # stop migration process after an error
                 # the transaction was already aborted by the migrator itself
-                raise error
+                raise MigrationError(obj, migrator, tb)
             else:
                 LOG('done')
                 self.out[-1]+='done'
