@@ -374,6 +374,16 @@ class Member(VariableSchemaSupport, BaseContent):
         roles=()
         try:
             user=self.getUser()
+            if user is None:
+                # temp fix:
+                # when reimporting a  plone portal with
+                # CMFMember it breaks on catalog indexing
+                # because the posrtal_memberdata gets 
+                # imported before acl_users
+                # XXX: find a solution to force acl_users to
+                # be imported before CMFMember stuff
+                return ()
+            
             if hasattr(user,'getUserRoles'):
                 roles=user.getUserRoles()
             else:
@@ -394,7 +404,18 @@ class Member(VariableSchemaSupport, BaseContent):
         """Return the list of domain restrictions for a user"""
         domains=()
         try:
-            domains=self.getUser().getDomains()
+            user=self.getUser()
+            if user is None:
+                # temp fix:
+                # when reimporting a  plone portal with
+                # CMFMember it breaks on catalog indexing
+                # because the posrtal_memberdata gets 
+                # imported before acl_users
+                # XXX: find a solution to force acl_users to
+                # be imported before CMFMember stuff
+                return ()
+            
+            domains=user.getDomains()
         except TypeError:
             if self.getUser().domains is None:
                 self.getUser().domains=()
@@ -762,7 +783,18 @@ class Member(VariableSchemaSupport, BaseContent):
         folder = self.getPhysicalRoot()
         for p in path[:-1]:
             folder = getattr(folder, p)
-        return folder.getUser(path[-1]).__of__(folder)
+        u=folder.getUser(path[-1])
+        if u is None:
+                # temp fix:
+                # when reimporting a  plone portal with
+                # CMFMember it breaks on catalog indexing
+                # because the posrtal_memberdata gets 
+                # imported before acl_users
+                # XXX: find a solution to force acl_users to
+                # be imported before CMFMember stuff
+            return u
+        
+        return u.__of__(folder)
 
 
 
