@@ -148,10 +148,13 @@ class Photo(Image):
         if size in self.displays.keys():
             # Create resized copy, if it doesnt already exist
             if not self._photos.has_key(size):
-                resolution = self.displays.get(size, (0,0))
-                raw = str(self.data)
-                image = OFS.Image.Image(size, size, self._resize(resolution))
-                self._photos[size] = image
+                self._photos[size] = OFS.Image.Image(size, size,
+                                                     self._resize(self.displays.get(size, (0,0))))
+            # a copy with a content type other than image/* exists, this
+            # probably means that the last resize process failed. retry
+            elif not self._photos[size].getContentType().startswith('image'):
+                self._photos[size] = OFS.Image.Image(size, size,
+                                                     self._resize(self.displays.get(size, (0,0))))
 
             return self._photos[size].index_html(REQUEST, RESPONSE)
 
