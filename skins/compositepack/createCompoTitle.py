@@ -17,7 +17,7 @@ factory = compo.titles.manage_addProduct['CompositePack'].manage_addTitles
 new_id = context.generateUniqueId()
 new_id = factory(id=new_id)
 new_titles = getattr(compo.titles, new_id)
-new_titles.setTitle(repr(title))
+new_titles.setTitle(title)
 new_titles.setComposite(new_el.UID())
 
 uid = new_titles.UID()

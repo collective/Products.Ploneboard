@@ -1,8 +1,6 @@
 
 // Plone-specific editing scripts.  Referenced by plone/bottom.pt.
 // The variable "ui_url" is provided by common/header.pt.
-
-
 function plone_edit(element) {
   var path = element.getAttribute("full_path");
   window.document.location = path + "/edit_compo_element"; 
@@ -10,19 +8,18 @@ function plone_edit(element) {
 
 function plone_add(target) {
   // Note that target_index is also available.
-  var path = escape(target.getAttribute("target_path"));
-  var index = target.getAttribute("target_index");
-  draweropen(path, index);
+  var target_path = target.getAttribute("target_path");
+  var target_index = target.getAttribute("target_index");
+  draweropen(target_path, target_index);
 }
 
 function plone_add_title(target) {
   // Note that target_index is also available.
-  var form, compopage_path, title;
-  var target_path = escape(target.getAttribute("target_path"));
-  var target_index = escape(target.getAttribute("target_index"));
-  form = document.forms.modify_composites;
-  compopage_path = form.elements.composite_path.value;
-  title = escape(prompt('Input the title value', 'a title'));
+  var form = document.forms.modify_composites;
+  var compopage_path = form.elements.composite_path.value;
+  var title = prompt('Input the title value', 'a title');
+  var target_path = target.getAttribute("target_path");
+  var target_index = target.getAttribute("target_index");
   url = "createCompoTitle?target_path=" + target_path;
   url = url + "&target_index=" + target_index;
   url = url + "&compopage_path=" + compopage_path;
