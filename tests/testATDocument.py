@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.6 2004/05/15 01:54:07 tiran Exp $
+$Id: testATDocument.py,v 1.7 2004/05/20 23:54:41 lele Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from common import *
+from ATCTSiteTestCase import ArcheSiteTestCase
 
 example_stx = """
 Header
@@ -21,6 +22,16 @@ Header
  
    * List
    * List
+"""
+
+example_rest = """
+Header
+======
+
+Text, text, text
+
+* List
+* List
 """
 
 def editCMF(obj):
@@ -127,6 +138,33 @@ class TestSiteATDocument(ATCTSiteTestCase):
         ATCTSiteTestCase.beforeTearDown(self)
 
 tests.append(TestSiteATDocument)
+
+class TestSiteATDocumentRename(ArcheSiteTestCase):
+
+    def afterSetUp(self):
+        ArcheSiteTestCase.afterSetUp(self)
+        self._portal = self.app.portal
+        # login as manager
+        user = self.getManagerUser()
+        newSecurityManager(None, user)
+        
+        self._portal.invokeFactory(type_name='ATDocument', id='ATCT')
+        self._ATCT = getattr(self._portal, 'ATCT')
+        self._ATCT.setText(example_rest, mimetype="text/x-rst")
+
+    def test_rename(self):
+        doc = self._ATCT
+        self.failUnless(str(doc.getField('text').getContentType(doc)) == "text/x-rst")
+        #make sure we have _p_jar
+        get_transaction().commit(1)
+
+        cur_id = 'ATCT'
+        new_id = 'WasATCT'
+        self._portal.manage_renameObject(cur_id, new_id)
+        doc = getattr(self._portal, new_id)
+        self.failUnless(str(doc.getField('text').getContentType(doc)) == "text/x-rst")
+
+tests.append(TestSiteATDocumentRename)
 
 class TestATDocumentFields(ATCTFieldTestCase):
 
