@@ -6,9 +6,6 @@ TODO-LIST
 
 [v2.xx => Not planned yet]
 
-  * [GroupSpace] Provide a hook at instanciation time to create additional
-    objects in a GS by simply providing a Python Script in the skin
-
   * [ZMI] Add an "Add group/roles" and "Remove group/roles" along with the
     current "Change" button on users/group view (thanks to Danny Bloemendaal)
 
