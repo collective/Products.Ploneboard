@@ -16,7 +16,7 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.8 2004/09/17 14:19:34 tiran Exp $
+$Id: schemata.py,v 1.9 2005/01/24 18:27:06 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -39,7 +39,7 @@ DateOptions = DisplayList((
                   , (  str(31*3), '3 Months' )
                   , (  str(31*6), '6 Months' )
                   , (   str(365), '1 Year'   )
-                  , ( str(365*2), '2 years'  )
+                  , ( str(365*2), '2 Years'  )
     ))
 
 CompareOperations = DisplayList((
@@ -217,7 +217,7 @@ ATSimpleStringCriterionSchema = ATBaseCriterionSchema + Schema((
                 write_permission=ChangeTopics,
                 accessor="Value",
                 mutator="setValue",
-                default=None,
+                default="",
                 widget=StringWidget(
                     label="Value",
                     label_msgid="label_string_criteria_value",

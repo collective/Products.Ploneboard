@@ -18,12 +18,14 @@
 #
 """
 
-$Id: ATImage.py,v 1.28 2004/10/16 21:24:32 tiran Exp $
+$Id: ATImage.py,v 1.29 2005/01/24 18:27:05 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
+
+from cgi import escape
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
@@ -76,6 +78,10 @@ class ATImage(ATCTFileContent):
     def tag(self, **kwargs):
         """Generate image tag using the api of the ImageField
         """
+        if not kwargs.has_key('longdesc'):
+            longdesc = self.getLongDescription()
+            if longdesc:
+                 kwargs['longdesc'] = escape(longdesc, 1)
         return self.getField('image').tag(self, **kwargs)
 
     def __str__(self):
@@ -137,5 +143,8 @@ class ATExtImage(ATImage):
         i      = Image(self.getId(), self.Title(), image, ct)
         return i.__of__(parent)
 
-if HAS_EXT_STORAGE:
-    registerType(ATExtImage, PROJECTNAME)
+# XXX external storage based types are currently disabled due the lack of time
+# and support for ext storage. Neither MrTopf nor I have time to work on ext
+# storage.
+#if HAS_EXT_STORAGE:
+#    registerType(ATExtImage, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.27 2004/10/08 16:23:16 tiran Exp $
+$Id: ATTopic.py,v 1.28 2005/01/24 18:27:05 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,6 +26,7 @@ __docformat__ = 'restructuredtext'
 from Products.ATContentTypes.config import *
 
 from types import ListType, TupleType, StringType
+from locale import strcoll
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
@@ -44,6 +45,11 @@ from Products.ATContentTypes.types.criteria import CriterionRegistry
 from Products.ATContentTypes.Permissions import ChangeTopics, AddTopics
 from Products.ATContentTypes.types.schemata import ATTopicSchema
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion, IATTopicSortCriterion
+
+# A couple of fields just don't make sense to sort (for a user),
+# some are just doubles.
+IGNORED_FIELDS = ['Date', 'allowedRolesAndUsers', 'getId', 'in_reply_to',
+    'meta_type', 'portal_type']
 
 class ATTopic(ATCTFolder):
     """A topic folder"""
@@ -222,9 +228,18 @@ class ATTopic(ATCTFolder):
         available = pcatalog.indexes()
         val = [ field
                  for field in available
+                 if  field not in IGNORED_FIELDS
                ]
-        val.sort()
+        val.sort(lambda x,y: strcoll(self.translate(x),self.translate( y)))
         return val
+
+    security.declareProtected(ChangeTopics, 'listSortFields')
+    def listSortFields(self):
+        """Return a list of available fields for sorting."""
+        fields = [ field
+                    for field in self.listFields() 
+                    if self.validateAddCriterion(field, 'ATSortCriterion') ]
+        return fields
 
     security.declareProtected(ChangeTopics, 'listAvailableFields')
     def listAvailableFields(self):
@@ -296,7 +311,7 @@ class ATTopic(ATCTFolder):
     def addCriterion(self, field, criterion_type):
         """Add a new search criterion.
         """
-        newid = 'crit__%s' % field
+        newid = 'crit__%s_%s' % (field, criterion_type)
         ct    = CriterionRegistry[criterion_type]
         crit  = ct(newid, field)
 

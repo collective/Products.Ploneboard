@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.21 2004/10/14 22:30:52 tiran Exp $
+$Id: Migrator.py,v 1.22 2005/01/24 18:26:58 tiran Exp $
 """
 
 from copy import copy
@@ -28,6 +28,7 @@ from Acquisition import aq_base, aq_parent
 from DateTime import DateTime
 from Persistence import PersistentMapping
 from OFS.Uninstalled import BrokenClass
+from OFS.IOrderSupport import IOrderedContainer
 
 from common import *
 
@@ -152,6 +153,7 @@ class BaseMigrator:
             # may raise an exception, catch it later
             method()
 
+        self.reorder()
         self.remove()
 
     __call__ = migrate
@@ -262,6 +264,13 @@ class BaseMigrator:
         """
         raise NotImplementedError
 
+    def reorder(self):
+        """Reorder the new object in its parent
+
+        Must be implemented by the real Migrator
+        """
+        raise NotImplementedError
+
 class BaseCMFMigrator(BaseMigrator):
     """Base migrator for CMF objects
     """
@@ -341,6 +350,12 @@ class ItemMigrationMixin:
         if REMOVE_OLD:
             self.parent.manage_delObjects([self.old_id])
 
+    def reorder(self):
+        """Reorder the new object in its parent
+        """
+        if IOrderedContainer.isImplementedBy(self.parent):
+            self.parent.moveObject(self.new_id,self.parent.getObjectPosition(self.old_id))
+
 class FolderMigrationMixin(ItemMigrationMixin):
     """Migrates a folderish object
     """
@@ -369,11 +384,21 @@ class FolderMigrationMixin(ItemMigrationMixin):
         #        continue
         #    id = obj.getId()
         #    self.new._setObject(id, aq_base(obj))
+        
+        orderAble = IOrderedContainer.isImplementedBy(self.old)
+        orderMap = {}
 
         # using objectIds() should be safe with BrokenObjects
         for id in self.old.objectIds():
             obj = getattr(self.old.aq_inner.aq_explicit, id)
+            if orderAble:
+                orderMap[id] = self.old.getObjectPosition(id)
             self.new._setObject(id, aq_base(obj))
+        
+        # reorder items
+        if orderAble:
+            for id, pos in orderMap.items():
+                self.new.moveObjectToPosition(id, pos)
 
 class CMFItemMigrator(ItemMigrationMixin, BaseCMFMigrator):
     """

@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.18 2004/11/10 00:20:02 dtremea Exp $
+$Id: toolbox.py,v 1.19 2005/01/24 18:26:54 tiran Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -50,13 +50,13 @@ atct_klasses = (
     ATTopic.ATTopic,
    )
 
-def recreateATImageScales(self):
+def recreateATImageScales(self, portal_type=('ATImage', 'Image')):
     """Recreates AT Image scales (doesn't remove unused!)
     """
     out = StringIO()
     print >>out, "Updating AT Image scales"
     catalog = getToolByName(self, 'portal_catalog')
-    brains  = catalog(portal_type = ('ATImage', 'Image'))
+    brains  = catalog(portal_type = portal_type)
     for brain in brains:
         obj = brain.getObject()
         if not obj:

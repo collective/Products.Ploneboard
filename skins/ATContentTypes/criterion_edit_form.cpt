@@ -101,7 +101,11 @@
                     tal:define="fields here/listAvailableFields;"
                     tal:attributes="tabindex tabindex/next;">
 		
-                    <option value="" tal:repeat="field fields" tal:attributes="value field" tal:content="field">Field</option>
+                    <option value="" 
+                        tal:repeat="field fields" 
+                        tal:attributes="value field"
+                        i18n:translate=""
+                        tal:content="field">Field</option>
 
                 </select>
 
@@ -123,6 +127,7 @@
 
                     <option value="" tal:repeat="type types"
                                      tal:attributes="value type/name"
+                                     i18n:translate=""
                                      tal:content="type/description">Type</option>
 
                 </select>
@@ -167,18 +172,20 @@
                     <select name="field"
                             id="field"
                             tabindex=""
-                            tal:define="fields here/listFields;"
+                            tal:define="fields here/listSortFields"  
                             tal:attributes="tabindex tabindex/next;">
 
                          <option value="no_sort" 
                                  tal:attributes="selected python:not here.hasSortCriterion();"
                                  i18n:translate="no_sort_order">No sort order</option>   
 		
-                         <option value=""
-                                 tal:repeat="field fields"
-                                 tal:attributes="value field;
-                                                 selected python:here.hasSortCriterion() and here.getSortCriterion().field==field;"
-                                 tal:content="field">Field</option>
+                         <tal:block repeat="field  fields">
+                             <option value=""
+                                     tal:attributes="value field;
+                                                     selected python:here.hasSortCriterion() and here.getSortCriterion().field==field;"
+                                     i18n:translate=""
+                                     tal:content="field">Field</option>
+                         </tal:block>
 
                     </select>
 

@@ -1,3 +1,13 @@
+2004-12-13 18:12 ctheune
+
+    * Default content type for ATDocument is now "html" which is more common.
+      I also cleaned up the config.py to not list all the examples from
+      customconfig.example.py again.
+
+2004-12-13 17:49 ctheune
+
+    * Fixed 1078278 (Minor typos in utils.py)
+
 2004-10-06 01:38  tiran
 
 	* ConstrainTypesMixin.py, docs/HISTORY.txt, migration/Walker.py,

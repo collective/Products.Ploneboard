@@ -1,5 +1,5 @@
 from common import *
-import sys, traceback, StringIO
+import sys, traceback
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
 
@@ -99,7 +99,7 @@ class Walker:
 
                 # printing exception
                 exc = sys.exc_info()
-                out=StringIO.StringIO()
+                out=StdoutStringIO()
                 traceback.print_tb(exc[2], limit=None, file=out)
                 tb = '%s\n%s\n' % (err, out.getvalue())
 

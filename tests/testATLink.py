@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATLink.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: testATLink.py,v 1.10 2005/01/24 18:27:02 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -18,7 +18,8 @@ def editCMF(obj):
 def editATCT(obj):
     dcEdit(obj)
 
-from common import *
+from Testing import ZopeTestCase # side effect import. leave it here.
+from Products.ATContentTypes.tests.common import *
 
 URL='http://www.example.org/'
 

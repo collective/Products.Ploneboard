@@ -13,18 +13,20 @@ form    = request.form
 
 ## XXX It's hacky and not nice but it's working
 # Set the title from the filename of uploaded image or field
-title = form.get('title', context.Title())
-image = form.get('image_file', None)
-file  = form.get('file_file', None)
+# The title has to be set before the validation. This is the only place to do it
+# right although it's looking hackish.
+pfield = context.getPrimaryField()
+if pfield:
+    pfname = pfield.getName()
+    title = form.get('title', context.Title())
+    file = form.get('%s_file' % pfname, None)
 
-if not title and (image or file):
-    if image:
-        filename = getattr(image, 'filename', None)
-    if file:
-        filename = getattr(file, 'filename', None)
+    if not title and file:
+        if file:
+            filename = getattr(file, 'filename', None)
 
-    if filename:
-        request.form['title'] = filename
+        if filename:
+            form['title'] = filename
 ## eoXXX
 
 errors  = context.validate(REQUEST=request, errors=errors, data=1, metadata=0)

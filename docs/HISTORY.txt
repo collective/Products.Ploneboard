@@ -4,12 +4,106 @@
  * Fixed [ 1047878 ] For ical and vcal export, use action icons instead of tabs
    [tiran]
 
-0.2.0-rc4 - Unreleased
+0.2.0-rc5 - unreleased
 ======================
+
+ * Applied patch from [ 1104069 ] ATCT migration -- more ordering issues
+   which fixes some more ordering issues
+   [hahnfeld]
+
+ * atct_topic_view now doesn't call getObject() anymore and is a small
+   bit more performant. This also takes some burden from waking up objects.
+   (Bug 1079030)
+   [ctheune]
+
+ * Made HTML the default content type for documents (and news items).
+ * [ctheune]
+
+ * Fixed [ 1080729 ] Wrong permissions for ATDocument.EditableText / setFormat
+   [tiran]
+
+ * Use StdoutStringIO in migration to be more verbose
+
+ * Fixed atct_topcic_view: Make sure there is an object before referencing
+   attributes. This can typically happen if there are problems with the
+   AccessContentsInfo permission.
+   [tesdal]
+
+ * Removed support of Python 2.1 and 2.2 from INSTALL.txt. Some code like 
+   migration requires new features of Python 2.3 like generators.
+   [tiran]
+
+ * Added note to INSTALL.txt that ATCT will soon drop support for Zope < 2.7.2.
+   [tiran]
+
+
+0.2.0-rc4 - 2004-11-30
+======================
+
+ * ATTopic: Adding the criterion type to the generated id, so you can sort and
+   filter on the same field.
+   [ctheune]
+
+ * Fixed unit tests to work without (and hopefully with too) runner again
+   [ctheune]
+
+ * Added feature that doesn't show users non-sortable criterions in the form
+   [ctheune]
+
+ * Added feature that removes double or stupid criterions (allowedRolesAndUsers,
+   id/getId)
+   [ctheune]
+
+ * Sorting criterion lists (by their translations)
+   [ctheune]
+ 
+ * Added german translation
+   [ctheune]
+
+ * More i18n support in the templates
+   [ctheune]
+
+ * Fixed _very_ annoying problem with bad ids. this should be bullet proof.
+   [ctheune]
+
+ * Extended german translations
+   [ctheune]
+
+ * Fixed ATDocument to not kill uploaded files on the submission of an empty
+   text area
+   [ctheune]
+
+ * Fixed small bug in id protection
+   [ctheune]
 
  * Fixed the case where the portal doesn't has a 'Members' folder or
    when it has another name.
    [dtremea]
+
+ * Fixed [ 1055347 ] id problems when member preferences are set to not display
+   and [ 1055348 ] ATCTFile id problems with portal_factory in ATCTFileContent.
+   _setATCTFileContent()
+   [tiran]
+
+ * Disabled external storages based types because neither I nor MrTopf have time
+   to support it right now.
+   [tiran]
+
+ * Added long description field and image tag to ATImage. Fixed [ 1056050 ] Add
+   longdesc to ATImage.
+   [tiran]
+
+ * Fixed [ 1057691 ] Make ATContentTypes tests works with testrunner.py. Thx to
+   dan_t.
+   [dan_t, tiran]
+
+ * Added fix for [ 1063549 ] ATCT migration doesn't migrate order to migrator.py
+   [tiran]
+
+ * Fixed [ 1067719 ] Install.py bug: property modified but not assigned by
+   removing unnecessary code from Install.py. AT itself is already handling
+   use_folder_tabs.
+   [tiran]
 
 0.2.0-rc3 - 2004-10-17
 ======================

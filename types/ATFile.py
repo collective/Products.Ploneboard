@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.31 2005/01/07 17:04:11 dreamcatcher Exp $
+$Id: ATFile.py,v 1.32 2005/01/24 18:27:05 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -200,5 +200,8 @@ class ATExtFile(ATFile):
     def index_html(self, REQUEST, RESPONSE):
         self.getFile(REQUEST=REQUEST, RESPONSE=RESPONSE).index_html(REQUEST, RESPONSE)
 
-if HAS_EXT_STORAGE:
-    registerType(ATExtFile, PROJECTNAME)
+# XXX external storage based types are currently disabled due the lack of time
+# and support for ext storage. Neither MrTopf nor I have time to work on ext
+# storage.
+#if HAS_EXT_STORAGE:
+#    registerType(ATExtFile, PROJECTNAME)

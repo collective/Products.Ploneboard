@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.13 2004/09/15 11:09:51 tesdal Exp $
+$Id: ATCTMigrator.py,v 1.14 2005/01/24 18:26:57 tiran Exp $
 """
 
 from common import *
@@ -173,9 +173,23 @@ def migrateAll(portal):
             else:
                 out.append(o)
                 depth+=1
+                
+    #out.append('\nCommitting full transaction')
+    #get_transaction().commit()
+    #get_transaction().begin()
 
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')
     count = wf.updateRoleMappings()
     out.append('\n\n*** Workflow: %d object(s) updated. ***\n' % count)
+    
+    #out.append('\nCommitting full transaction')
+    #get_transaction().commit()
+    #get_transaction().begin()
+    
+    LOG('starting catalog update')
+    ct = getToolByName(catalog, 'portal_catalog')
+    ct.refreshCatalog(clear=1)
+    out.append('Portal catalog was updated')
+
     return '\n'.join(out)

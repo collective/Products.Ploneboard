@@ -1,8 +1,9 @@
+# -*- coding: iso-8859-1 -*-
 """ATContentTypes site tests
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.13 2004/12/05 16:39:39 shh42 Exp $
+$Id: ATCTSiteTestCase.py,v 1.14 2005/01/24 18:27:01 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -15,7 +16,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
 from Acquisition import aq_base
 
-from common import dcEdit, EmptyValidator
+from Products.ATContentTypes.tests.common import dcEdit, EmptyValidator
 
 from Products.Archetypes.Storage import MetadataStorage
 from Products.CMFCore import CMFCorePermissions
@@ -36,6 +37,10 @@ from Products.CMFPlone.tests import PloneTestCase
 portal_name = PloneTestCase.portal_name
 portal_owner = PloneTestCase.portal_owner
 
+class FakeRequest:
+    def get(self, key, default=None):
+        return default
+
 class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
 
@@ -51,15 +56,16 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
         user = self.getManagerUser()
         newSecurityManager(None, user)
 
-        ttool = getToolByName(self._portal, 'portal_types')
-        atctFTI = ttool.getTypeInfo(self.portal_type)
-        cmfFTI = ttool.getTypeInfo(self.klass.newTypeFor[0])
+        self._ATCT = self._createType(self._portal, self.portal_type, 'ATCT')
+        self._cmf = self._createType(self._portal, self.klass.newTypeFor[0], 'cmf')
 
-        atctFTI.constructInstance(self._portal, 'ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        cmfFTI.constructInstance(self._portal, 'cmf')
-        self._cmf = getattr(self._portal, 'cmf')
+    def _createType(self, context, portal_type, id):
+        """Helper method to create a new type 
+        """
+        ttool = getToolByName(context, 'portal_types')
+        fti = ttool.getTypeInfo(portal_type)
+        fti.constructInstance(context, id)
+        return getattr(context.aq_inner.aq_explicit, id)
 
     def test_dcEdit(self):
         #if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
@@ -109,6 +115,29 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     def beforeTearDown(self):
         # logout
         noSecurityManager()
+
+    def test_idValidation(self):
+        ttool = getToolByName(self._portal, 'portal_types')
+        atctFTI = ttool.getTypeInfo(self.portal_type)
+        atctFTI.constructInstance(self._portal, 'asdf')
+        atctFTI.constructInstance(self._portal, 'asdf2')
+        asdf = self._portal.asdf
+        
+        request = FakeRequest()
+        
+        # invalid ids
+        ids = ['asdf2', 'ההה', '/asdf2', ' asdf2', 'portal_workflow',
+            'portal_url']
+        for id in ids:
+            request.form = {'id':id, 'fieldset':'default'}
+            self.assertNotEquals(asdf.validate(REQUEST=request), {}, "Not catched id: %s" % id)
+
+        # valid ids
+        ids = ['', 'abcd', 'blafasel']
+        for id in ids:
+            request.form = {'id':id}
+            self.assertEquals(asdf.validate(REQUEST=request), {})
+
 
 
 class ATCTFieldTestCase(BaseSchemaTest):

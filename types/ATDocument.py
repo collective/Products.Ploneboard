@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.34 2004/10/17 00:11:31 tiran Exp $
+$Id: ATDocument.py,v 1.35 2005/01/24 18:27:05 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -85,15 +85,16 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """
         return self.getText()
 
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent,
-                              'EditableBody')
+    # XXX plone news template requires the View permission but
+    # would be better ModifyPortalContent
+    security.declareProtected(CMFCorePermissions.View, 'EditableBody')
     def EditableBody(self):
         """CMF compatibility method
         """
         return self.getRawText()
 
     security.declareProtected(CMFCorePermissions.ModifyPortalContent,
-                              'EditableBody')
+                              'setFormat')
     def setFormat(self, value):
         """CMF compatibility method
         
@@ -117,6 +118,8 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
 
         * hook into mxTidy an replace the value with the tidied value
         """
+        if not value:   # XXX somehow submitting an empty textarea overwrites file uploads because empty strings end up here
+            return
         field = self.getField('text')
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator

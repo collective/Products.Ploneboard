@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFolder.py,v 1.6 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: testATFolder.py,v 1.7 2005/01/24 18:27:02 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -12,7 +12,8 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-from common import *
+from Testing import ZopeTestCase # side effect import. leave it here.
+from Products.ATContentTypes.tests.common import *
 
 def editCMF(obj):
     dcEdit(obj)

@@ -18,10 +18,11 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: common.py,v 1.4 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: common.py,v 1.5 2005/01/24 18:26:59 tiran Exp $
 """
 
 from Products.Archetypes.debug import log as at_log
+from StringIO import StringIO
 
 try:
     dummy = True
@@ -38,6 +39,14 @@ def LOG(logmessage):
 
     if DEBUG:
         at_log(logmessage)
+
+class StdoutStringIO(StringIO):
+    """StringIO that also writes to stdout
+    """
+    
+    def write(self, s):
+        print >> sys.stdout, str(s),
+        StringIO.write(self, s)
 
 ## LinguaPlone addon?
 try:

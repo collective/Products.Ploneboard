@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATNewsItem.py,v 1.10 2004/12/14 21:52:32 ctheune Exp $
+$Id: testATNewsItem.py,v 1.11 2005/01/24 18:27:03 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -18,7 +18,8 @@ def editCMF(obj):
 def editATCT(obj):
     dcEdit(obj)
 
-from common import *
+from Testing import ZopeTestCase # side effect import. leave it here.
+from Products.ATContentTypes.tests.common import *
 
 tests = []
 

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.12 2004/09/17 13:59:28 dreamcatcher Exp $
+$Id: testATEvent.py,v 1.13 2005/01/24 18:27:01 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -12,7 +12,8 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-from common import *
+from Testing import ZopeTestCase # side effect import. leave it here.
+from Products.ATContentTypes.tests.common import *
 from Products.ATContentTypes.Permissions import ChangeEvents
 from Products.ATContentTypes.utils import DT2dt
 
@@ -152,6 +153,32 @@ class TestSiteATEvent(ATCTSiteTestCase):
         self.failUnless(migrated.getAttendees() == (),
                         'attendees mismatch: %s / %s' %
                         (migrated.getAttendees(), ()))
+
+    def test_cmp(self):
+        e1 = self._ATCT
+        e2 = self._createType(self._portal, self.portal_type, 'e2')
+        day29 = DateTime('2004-12-29 0:00:00')
+        day30 = DateTime('2004-12-30 0:00:00')
+        day31 = DateTime('2004-12-31 0:00:00')
+        
+        e1.edit(startDate = day29, endDate=day30, title='event')
+        e2.edit(startDate = day29, endDate=day30, title='event')
+        self.failUnlessEqual(cmp(e1, e2), 0)
+    
+        # start date
+        e1.edit(startDate = day29, endDate=day30, title='event')
+        e2.edit(startDate = day30, endDate=day31, title='event')
+        self.failUnlessEqual(cmp(e1, e2), -1) # e1 < e2
+
+        # duration
+        e1.edit(startDate = day29, endDate=day30, title='event')
+        e2.edit(startDate = day29, endDate=day31, title='event')
+        self.failUnlessEqual(cmp(e1, e2), -1)  # e1 < e2
+    
+        # title
+        e1.edit(startDate = day29, endDate=day30, title='event')
+        e2.edit(startDate = day29, endDate=day30, title='evenz')
+        self.failUnlessEqual(cmp(e1, e2), -1)  # e1 < e2
 
     def beforeTearDown(self):
         del self._ATCT

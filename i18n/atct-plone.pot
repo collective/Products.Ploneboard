@@ -69,3 +69,78 @@ msgid "help_string_criteria_value"
 msgstr ""
 
 
+# criterion_edit_form.cpt
+
+# These are the standard field names. No field_ possible. :/
+msgid "id"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "created"
+msgstr ""
+
+msgid "effective"
+msgstr ""
+
+
+msgid "end"
+msgstr ""
+
+msgid "expires"
+msgstr ""
+
+msgid "modified"
+msgstr ""
+
+msgid "review_state"
+msgstr ""
+
+msgid "start"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "path"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "SearchableText"
+msgstr ""
+
+msgid "exact date value"
+msgstr ""
+
+msgid "logical AND or OR of list values"
+msgstr ""
+
+msgid "portal types values"
+msgstr ""
+
+msgid "exact integer value"
+msgstr ""
+
+msgid "exact text value"
+msgstr ""
+
+msgid "table_criteria_field"
+msgstr ""
+
+msgid "table_criterion_details"
+msgstr ""
+
+msgid "label_sort_reverse"
+msgstr ""
+
+msgid "help_sort_reverse"
+msgstr ""
