@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.42 2004/07/23 18:53:59 tiran Exp $
+$Id: schemata.py,v 1.43 2004/08/05 23:52:00 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -49,20 +49,10 @@ else:
         def __init__(self, prefix='', archive=False):
             pass
 
-
-ATContentTypeBaseSchema = BaseSchema + Schema((
-    TextField('description',
-              default='',
-              searchable=1,
-              accessor="Description",
-              storage=MetadataStorage(),
-              widget = TextAreaWidget(description = "Enter a brief description",
-                                      description_msgid = "help_description",
-                                      label = "Description",
-                                      label_msgid = "label_description",
-                                      rows = 5,
-                                      i18n_domain = "plone")),
-    ))
+# for ATContentTypes we want to have the description in the edit view
+# just like CMF
+ATContentTypeBaseSchema = BaseSchema.copy()
+ATContentTypeBaseSchema['description'].isMetadata = False
 
 ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
     # TemplateMixin
@@ -116,7 +106,12 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type Event
 ###
-ATEventSchema = ATContentTypeSchema + Schema((
+
+# copy the base schema to set the description field as primary field
+ATEventBaseSchema = ATContentTypeSchema.copy()
+ATEventBaseSchema['description'].primary = True
+
+ATEventSchema = ATEventBaseSchema + Schema((
     StringField('location',
                 searchable = 1,
                 write_permission = ChangeEvents,

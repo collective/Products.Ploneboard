@@ -19,6 +19,10 @@
  * Added talkback discussion migration
    [tiran]
 
+ * Set description as primary field for ATEvent. Also use an easier syntax for
+   setting description to isMetadata = False.
+   [tiran]
+
 0.2.0-rc1 - 2004-07-28
 
  * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 

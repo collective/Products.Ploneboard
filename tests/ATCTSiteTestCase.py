@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.11 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATCTSiteTestCase.py,v 1.12 2004/08/05 23:52:10 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -137,6 +137,7 @@ class ATCTFieldTestCase(BaseSchemaTest):
         self.failUnless(field.required == 0)
         self.failUnless(field.default == '')
         self.failUnless(field.searchable == 1)
+        #XXX self.failUnless(field.primary == 0)
         vocab = field.vocabulary
         self.failUnless(vocab == ())
         self.failUnless(field.enforceVocabulary == 0)
@@ -147,8 +148,8 @@ class ATCTFieldTestCase(BaseSchemaTest):
         self.failUnless(field.read_permission == CMFCorePermissions.View)
         self.failUnless(field.write_permission ==
                         CMFCorePermissions.ModifyPortalContent)
-        #XXX self.failUnless(field.generateMode == 'mVc', field.generateMode)
-        self.failUnless(field.generateMode == 'veVc', field.generateMode)
+        self.failUnless(field.generateMode == 'mVc', field.generateMode)
+        #self.failUnless(field.generateMode == 'veVc', field.generateMode)
         self.failUnless(field.force == '')
         self.failUnless(field.type == 'text')
         self.failUnless(isinstance(field.storage, MetadataStorage))
