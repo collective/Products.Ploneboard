@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.33 2004/02/17 15:50:48 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.34 2004/02/17 17:24:29 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -38,6 +38,12 @@ from interfaces.portal_quickinstaller import IQuickInstallerTool
 from exceptions import RuntimeError
 from zLOG import LOG
 
+try:
+    from packman.pip import not_installed, hot_plug
+    print 'Packman support(hotplug) installed'
+except ImportError:
+    def not_installed(s): return []
+
 class AlreadyInstalled(Exception):
     """ Would be nice to say what Product was trying to be installed """
     pass
@@ -52,7 +58,6 @@ def addQuickInstallerTool(self,REQUEST=None):
 
 
 class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
-    """ A tool to ease installing/uninstalling all sorts of products """
 
     __implements__ = IQuickInstallerTool
 
@@ -75,18 +80,15 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
 
-        try:
-            productInCP = self.Control_Panel.Products[productname]
-        except KeyError:
-            #in the case a product has been deleted from the ControlPanel
-            return None
-        
+    
         for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
+            if productname in self.Control_Panel.Products.objectIds():
+                productInCP = self.Control_Panel.Products[productname]
 
-            if mod in productInCP.objectIds():
-                modFolder = productInCP[mod]
-                if func in modFolder.objectIds():
-                    return modFolder[func]
+                if mod in productInCP.objectIds():
+                    modFolder = productInCP[mod]
+                    if func in modFolder.objectIds():
+                        return modFolder[func]
 
             try:
                 return ExternalMethod('temp','temp',productname+'.'+mod, func)
@@ -97,6 +99,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             except:
                 # catch a string exception
                 err = sys.exc_type
+                print err, sys.exc_type, sys.exc_value
                 if err != "Module Error":
                     msg = "%s: %s" % (err, sys.exc_value)
                     LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
@@ -112,8 +115,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation -> list of dicts with keys:(id,hasError,status)'''
-        Products=self.Control_Panel.Products
-        pids=Products.objectIds()
+        pids=self.Control_Panel.Products.objectIds() + not_installed(self)
 
         import sys
         sys.stdout.flush()
@@ -146,10 +148,6 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
         for r in pids:
             p=self._getOb(r,None)
-            #for thse products that have been deleted from the ControlPanel using the ZMI
-            if not hasattr(self.Control_Panel.Products.aq_base,p.getId()):
-                continue
-            
             res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden(),'installedVersion':p.getInstalledVersion()})
 
         return res
@@ -159,9 +157,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
         try:
             prodpath=self.Control_Panel.Products._getOb(p).home
-        except:
-            #necessary for products that have been removed from FS but are still registered in 
-            #the ZODB
+        except AttributeError:
             return None
         
         #now list the directory to get the readme.txt case-insensitive
@@ -199,6 +195,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             msg='this product is already installed, please uninstall before reinstalling it'
             prod.log(msg)
             return msg
+        
+        if p in not_installed(self):
+            hot_plug(self, p)
 
         portal_types=getToolByName(self,'portal_types')
         portal_skins=getToolByName(self,'portal_skins')
@@ -241,7 +240,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 self.error_log.raising(tb)
                 res='this product has already been installed without Quickinstaller!'
                 if not swallowExceptions:
-                    raise AlreadyInstalled, tb[1]
+                    raise AlreadyInstalled
 
             res+='failed:'+'\n'+'\n'.join(traceback.format_exception(*tb))
             self.error_log.raising(tb)
