@@ -1,4 +1,4 @@
-0.2.5 (unreleased)
+0.2 (unreleased)
 
     - Beautyfied view a little bit
 
@@ -13,8 +13,6 @@
     - Fixed tests
 
     - Added some field to control if widget is visible
-
-0.2 (unreleased)
 
     - added schema registration infrastructure (support for multiple schemas)
 

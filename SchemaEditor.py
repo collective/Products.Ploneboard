@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.17 2004/09/27 13:24:20 spamsch Exp $
+$Id: SchemaEditor.py,v 1.18 2004/09/27 14:57:39 ajung Exp $
 """
 
 import re
@@ -76,9 +76,7 @@ class SchemaEditor:
 
     security.declareProtected(ManageSchemaPermission, 'atse_init')
     def atse_init(self):
-        """
-        init everything
-        """
+        """ init everything """
 
         # only for compat reasons
         return

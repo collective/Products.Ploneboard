@@ -29,3 +29,5 @@ Documentation:
 Contributions:
 
     Whit Morriss: examples and tests
+
+    Simon Spamies: code, code, code
