@@ -83,8 +83,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
              return view()
 
 
-    security.declarePublic('view')
-    def view(self):
+    security.declareProtected( CMFCorePermissions.View, 'view' )    
+    def view(self, **kwargs):
         """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
         if getattr(aq_base(view), 'isDocTemp', 0):
@@ -405,7 +405,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             transitions = workflow_transfer.get(old_member_state, [])
             print >> out, 'transitions = %s' % (str(transitions),)
             for t in transitions:
-                workflow_tool.doActionFor(ob, t)
+                workflow_tool.doActionFor(new_member, t)
 
             self.manage_delObjects(temp_id)
         from Products.CMFMember.Extensions.Install import setupNavigation

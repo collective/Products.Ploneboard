@@ -146,6 +146,7 @@ plone_schema = FieldList((
 
     ImageField('portrait',
                mode='rw',
+               max_size=(150,150),
                read_permission=VIEW_PUBLIC_PERMISSION,
                write_permission=EDIT_OTHER_PERMISSION,
                required=0,

@@ -47,6 +47,8 @@ def setupWorkflow(portal, out):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Enable a Member', 'CMFMember.Workflow', 'enable')
     if not 'makePublic' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('makePublic', 'Make a Member profile public', 'CMFMember.Workflow', 'makePublic')
+    if not 'makePrivate' in wf.scripts.objectIds():
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('makePrivate', 'Make a Member profile private', 'CMFMember.Workflow', 'makePrivate')
     if not 'enable' in wf.scripts.objectIds():
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Make a Member profile private', 'CMFMember.Workflow', 'makePrivate')
 
@@ -103,7 +105,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager'))
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
     state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Manager',))
 
@@ -122,7 +124,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
-    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Owner', 'Authenticated', 'Manager'))
     state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Owner', 'Manager',))
 
     # Registered, public
@@ -139,7 +141,7 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
     state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Authenticated', 'Owner', 'Manager')) # allow Anonymous to let everyone view member info
     state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Authenticated', 'Manager')) # allow Anonymous to let everyone search for public members
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Authenticated', 'Owner', 'Manager')) # allow Anonymous to let everyone search for public members
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
     state.setPermission(CMFCorePermissions.ModifyPortalContent, 0, ('Owner', 'Manager',))
     
@@ -322,9 +324,9 @@ def setupWorkflow(portal, out):
 # workflow state
 workflow_transfer = {'new': [],
                      'pending': ['trigger'],
-                     'registered_public':['trigger', 'register_public'],
-                     'registered_private':['trigger', 'register_private'],
-                     'disabled':['trigger', 'register_private', 'disable']
+                     'registered_public':['migrate'],
+                     'registered_private':['migrate', 'make_private'],
+                     'disabled':['trigger', 'disable']
                     }
 
 
