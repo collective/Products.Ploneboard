@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.8 2004/01/07 09:53:04 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.9 2004/01/07 10:08:39 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -169,6 +169,14 @@ class PlacelessTranslationService(Folder):
         if not os.path.isdir(basepath):
             log('it does not exist', zLOG.BLATHER)
             return
+
+        # print deprecation warning for mo files
+        depr_names = fnmatch.filter(os.listdir(basepath), '*.mo')
+        if depr_names: 
+            import warnings
+            warnings.warn('Compiled po files (*.mo) found in %s. PlacelessTranslationService now compiles mo files automatically. All mo files have been ignored.' % basepath, DeprecationWarning, stacklevel=4)
+
+        # load po files
         names = fnmatch.filter(os.listdir(basepath), '*.po')
         if not names:
             log('nothing found', zLOG.BLATHER)

@@ -16,7 +16,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.6 2004/01/07 09:47:34 longsleep Exp $
+$Id: __init__.py,v 1.7 2004/01/07 10:08:39 longsleep Exp $
 '''.strip()
 
 from OFS.Application import get_products
@@ -104,11 +104,7 @@ def initialize(context):
 
     # sweep the i18n directory for local catalogs
     instance_i18n = os.path.join(INSTANCE_HOME, 'i18n')
-    if os.path.isdir(instance_i18n):
-        # instance i18n dir is deprecated 
-        import warnings
-        warnings.warn('Using INSTANCEHOME/i18n folder is deprecated. Remove it to avoid double loading of po files. PlacelessTranslationService fork now loads po files directly from each Products i18n folder.', DeprecationWarning, stacklevel=4)
-        cp_ts._load_dir(instance_i18n)
+    if os.path.isdir(instance_i18n): cp_ts._load_dir(instance_i18n)
         
     # didn't found any catalogs
     if not cp_ts.objectIds():
