@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.14 2004/09/23 18:29:00 ajung Exp $
+$Id: SchemaEditor.py,v 1.15 2004/09/23 18:36:55 ajung Exp $
 """
 
 import re
@@ -99,7 +99,7 @@ class SchemaEditor:
         S._undeleteable_fields = undeleteable_fields
         S._undeleteable_schematas = undeleteable_schematas 
         S._i18n_domain = domain
-        self._schemas[id] = S
+        self._schemas[schema_id] = S
 
     security.declareProtected(ManageSchemaPermission, 'atse_unregisterSchema')
     def atse_unregisterSchema(self, schema_id):
