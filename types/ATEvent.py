@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.16 2004/06/18 12:53:53 tiran Exp $
+$Id: ATEvent.py,v 1.17 2004/06/18 16:00:49 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -71,6 +71,11 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         
         Changing the event type changes also the subject. 
         """
+        if type(value) is StringType:
+            value = (value,)
+        elif not value:
+            # XXX mostly harmless?
+            value = ()
         f = self.getField('eventType')
         f.set(self, value, **kw)
         if not alreadySet:
