@@ -187,19 +187,20 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         to the given User object.
         '''
         try:
+            #import pdb; pdb.set_trace()
             name = user.getUserName()
             m = self.get(name, None)
             if not m:
                 ## XXX Delegate to the factory and create a new site specific
                 ## member object for this user
-                self.getMemberFactory()(name)
+                addMember=getMemberFactory(self, 'Member')
+                addMember(name)
                 m = self.get(name)
                 m.setUser(user)
-                triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
+                # trigger any workflow transitions that need to occur
+                triggerAutomaticTransitions(m) 
 
             # Return a wrapper with self as containment and
-            # the user as context following CMFCore portal_memberdata
-            # the user as context following CMFCore portal_memberdata
             # the user as context following CMFCore portal_memberdata
             return m.__of__(self).__of__(user)
         except:
