@@ -1,8 +1,0 @@
-<html>
-<body>
-<span tal:replace="structure here/manage_tabs" />
-
-    <span metal:use-macro="here/prefs_cmfmember_macros/macros/migration_forms" />
-
-</body>
-</html>

@@ -34,8 +34,34 @@
     Up to Plone Setup
     </a>
 
-    <span metal:use-macro="here/prefs_cmfmember_macros/macros/import_form" />
+    <div class="documentDescription" i18n:translate="description_import_view">
+      This view is intended for import with possibility to upload a csv file. For now we use a filesystem based one.
+    </div>
 
+    
+    <form action="installItems" method="post">
+            <input type="hidden" name="widget" value="CMFMember Import Setup" i18n:attributes="value"/>
+       <fieldset>
+          <legend i18n:translate="legend_filesystem_based_import">Filesystem based import</legend>
+          <div class="field">
+	    <label i18n:translate="label_import_from_csv">Import from CSV</label>
+
+            <div i18n:translate="help_import_from_csv"
+                 class="formHelp">
+		 Import from <code>/tmp/users.csv</code> and portraits from <code>/tmp/images/</code>. See source of CMFMember/setup/ImportSetup.py for more information.
+            </div>
+    	    <input name="items:list" type="hidden" value="Import from CSV" i18n:attributes="value" />	     
+          </div>
+
+        <div class="formControls">
+	  <input class="context" 
+                 type="submit" 
+                 name="submit"
+                 i18n:attributes="value"                 
+                 value="Import"/>
+        </div>
+    </fieldset>
+    </form>
   </div>
  </div>
 </div>

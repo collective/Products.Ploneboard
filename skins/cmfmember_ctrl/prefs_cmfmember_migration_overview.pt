@@ -24,8 +24,31 @@
  
     <div class="documentContent">
 
-      <span metal:use-macro="here/prefs_cmfmember_macros/macros/migration_overview_content" />
+    <h1 i18n:translate="heading_cmfmember_migration">
+        CMFMember migration overview
+    </h1>
 
+    <div class="documentDescription"
+         i18n:translate="description_cmfmember_migration">
+    This is the Add-on Products install section, you can add and remove products 
+    in the lists below. migration tool form CMFMember. You can migrate between versions of CMFMember and from Plone.
+    </div>
+
+    <h2>Core information</h2>
+    <ul tal:define="values here/coreVersionsList">
+    <tal:block tal:repeat="value values">
+         <li tal:define="key python:value[0];
+	                 ver python:value[1]"
+	     tal:content="string: ${key}: ${ver} ">core versions</li>
+    </tal:block>
+    </ul>
+
+    <h2 i18n:translate="member_type_versions">Member type versions</h2>
+    <ul tal:define="values here/getMemberTypesFileSystemVersion">
+    <tal:block tal:repeat="value values">
+         <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
+    </tal:block>
+    </ul>
     </div>
  </div>
  </div>

@@ -104,15 +104,6 @@ class TestUser(CMFMemberTestCase.CMFMemberTestCase):
         self.failUnless(self.compareTuples(user.getRoles(), ('Authenticated',) + self.portal_user_info['roles']))
         self.assertEqual(user.getDomains(), self.portal_user_info['domains'])
 
-    def testProcessForm(self):
-        portal = self.getPortal()
-        member = self.membership.getMemberById(self.portal_user.getUserName())
-        member.processForm(values={'fullname':'Test User'})
-        self.assertEqual(member.fullname, 'Test User')
-        request=self.app.REQUEST
-        request.form={'fullname':'Test User2'}
-        member.processForm(REQUEST=request)
-        self.assertEqual(member.fullname, 'Test User2')        
 
 if __name__ == '__main__':
     framework(verbosity=1)

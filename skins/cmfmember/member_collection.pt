@@ -122,7 +122,7 @@ Ce que j'ai modifi'checkbox'" en remplapartout les "folder_contents" par "result
                 tal:define="review_state python:getInfoFor(item, 'review_state', '')"
                 tal:content="structure python:test(review_state, review_state, '&nbsp;')"
                 tal:attributes="class python:test(review_state, 'state-'+review_state, 'state-private')"
-                i18n:translate="">&nbsp;
+                >&nbsp;
             </td>
             <td tal:condition="python:isOrderable and canModifyFolderContent">
               <a href=""

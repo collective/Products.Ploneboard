@@ -1,12 +1,15 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: CMFMember 1.0\n"
-"POT-Creation-Date: 2004-05-17 22:23+0000\n"
-"PO-Revision-Date: 2004-10-02 15:30+0002\n"
-"Last-Translator: Jens Klein <jens.klein@jensquadrat.com>\n"
-"Language-Team: CMFMember Team nntp://news.gmane.org/gmane.comp.web.zope.plone.cmfmember\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-10-02 16:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: en\n"
@@ -134,61 +137,52 @@ msgstr "${number} items matching your criteria."
 
 
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
-#. <p i18n:translate="cmfmember_up_to_date" tal:condition="not: here/needUpgrading">
+#. <div class="portalMessage" i18n:translate="cmfmember_up_to_date" tal:condition="not: here/needUpgrading">
+#.  <tal:block replace="structure here/info.gif"/>
 #.         Your CMFMember instance is up to date.
-#. </p>
-msgid "cmfmember_up_to_date"
-msgstr "Your CMFMember instance is up to date."
-
-
-#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
-#. <p i18n:translate="cmfmember_versions">
-#.  <b>
-#.   Instance version:
-#.  </b>
-#.  <tal:block tal:replace="here/getInstanceVersion"/>
-#.  <br/>
-#.  <b>
-#.   File system version:
-#.  </b>
-#.  <tal:block tal:replace="here/getFileSystemVersion"/>
-#.  <br/>
-#. </p>
-msgid "cmfmember_versions"
-msgstr "<b>Instance version:</b>  <tal:block tal:replace=\"here/getInstanceVersion\"/> <br/>  <b>File system version:</b>  <tal:block tal:replace=\"here/getFileSystemVersion\"/> <br/>"
-
-
-#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
-#. <div class="documentDescription" i18n:translate="description_cmfmember_migration">
-#.  <span style="background-color:red; color: white; font-weight: bold">
-#. 	 Please ensure you have a backup of your site before
-#. 	 performing migration.
-#.  </span>
-#.  <br/>
-#. 	 Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
 #. </div>
+msgid "cmfmember_up_to_date"
+msgstr "<tal:block replace=\"structure here/info.gif\"/> Your CMFMember instance is up to date."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <b i18n:translate="cmfmember_version_filesystem">
+#.  File system version:
+#. </b>
+msgid "cmfmember_version_filesystem"
+msgstr "File system version:"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <b i18n:translate="cmfmember_version_instance">
+#.  Instance version:
+#. </b>
+msgid "cmfmember_version_instance"
+msgstr "Instance version:"
+
+
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_migration_overview.pt
 #. <div class="documentDescription" i18n:translate="description_cmfmember_migration">
 #.     This is the Add-on Products install section, you can add and remove products
 #.     in the lists below. migration tool form CMFMember. You can migrate between versions of CMFMember and from Plone.
 #. </div>
 msgid "description_cmfmember_migration"
-msgstr "<span style=\"background-color:red; color: white; font-weight: bold\"> Please ensure you have a backup of your site before performing migration.</span>  <br/> Migrations perform a catalog and security update, this may take a long time on large sites. Be patient."
+msgstr "This is the Add-on Products install section, you can add and remove products in the lists below. migration tool form CMFMember. You can migrate between versions of CMFMember and from Plone."
 
 
 #: ../skins/cmfmember/manage_orphans.cpt
 #. <p i18n:translate="description_deleted_members_orphan_content">
 #.  When members are deleted, the content they own may end up with an
 #.         invalid owner.
-#.  <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+#.  <span i18n:translate="description_orphans_take_ownership" tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
 #.           Click the button below to take ownership of orphaned content.
 #.  </span>
-#.  <span tal:condition="python:here.orphanedContentDestination == 'delete'">
-#.           Click the button below to delete orphaned content.
+#.  <span i18n:translate="description_orphans_delete_content" tal:condition="python:here.orphanedContentDestination == 'delete'">
+#.           Click the button below to delete ordelete_content.
 #.  </span>
 #. </p>
 msgid "description_deleted_members_orphan_content"
-msgstr "When members are deleted, the content they own may end up with an invalid owner. <span tal:condition=\"python:here.orphanedContentDestination == 'transfer_to_current'\"> Click the button below to take ownership of orphaned content. </span>  <span tal:condition=\"python:here.orphanedContentDestination == 'delete'\"> Click the button below to delete orphaned content. </span>"
+msgstr "When members are deleted, the content they own may end up with an invalid owner. <span i18n:translate=\"description_orphans_take_ownership\" tal:condition=\"python:here.orphanedContentDestination == 'transfer_to_current'\"> Click the button below to take ownership of orphaned content. </span>  <span i18n:translate=\"description_orphans_delete_content\" tal:condition=\"python:here.orphanedContentDestination == 'delete'\"> Click the button below to delete ordelete_content. </span>"
 
 
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_import.pt
@@ -227,6 +221,30 @@ msgstr "This search form enables you to find members by specifying one or more s
 #. </strong>
 msgid "description_no_results_found"
 msgstr "No results were found."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <span i18n:translate="description_orphans_delete_content" tal:condition="python:here.orphanedContentDestination == 'delete'">
+#.           Click the button below to delete ordelete_content.
+#. </span>
+msgid "description_orphans_delete_content"
+msgstr "Click the button below to delete ordelete_content."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <span i18n:translate="description_orphans_take_ownership" tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+#.           Click the button below to take ownership of orphaned content.
+#. </span>
+msgid "description_orphans_take_ownership"
+msgstr "Click the button below to take ownership of orphaned content."
+
+
+#: ../skins/cmfmember/pending.pt
+#. <p i18n:translate="description_pending_activation">
+#. As soon your registration is approved you will receive an email with instructions on how to activate your membership.
+#. </p>
+msgid "description_pending_activation"
+msgstr "As soon your registration is approved you will receive an email with instructions on how to activate your membership."
 
 
 #: ../skins/cmfmember/registered.pt
@@ -322,17 +340,30 @@ msgid "heading_registration_form"
 msgstr "Registration Form"
 
 
-#: ../skins/cmfmember/registered.pt
+#: ../skins/cmfmember/pending.pt
 #. <h1 i18n:translate="heading_welcome">
 #.  Welcome!
 #. </h1>
+## 1 more: ../skins/cmfmember/registered.pt
 msgid "heading_welcome"
 msgstr "Welcome!"
 
 
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <div class="formHelp" i18n:translate="help_default_workflow">
+#.                   Choose the default member type and workflow.
+#. </div>
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <div class="formHelp" i18n:translate="help_default_workflow">
+#.                   Choose the default workflow for CMFMember.
+#. </div>
+msgid "help_default_workflow"
+msgstr "Choose the default member type and workflow."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
 #. <div class="formHelp" i18n:translate="help_dry_run">
-#. 		 Print the result of the migration without actually writing anything to the database.
+#.  		         Print the result of the migration without actually writing anything to the database.
 #. </div>
 ## 1 more: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
 msgid "help_dry_run"
@@ -393,6 +424,31 @@ msgstr "Return members with all of the selected roles."
 #. </div>
 msgid "help_upgrade_from_cmfmember"
 msgstr "Please choose from which CMFMember version you are upgrading. This will force the migration procedure from that version."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <div class="formHelp" i18n:translate="help_upgrade_workflows">
+#.                   This will reinstall CMFMember workflows and all
+#.  <strong>
+#.   your changes to the workflows will be lost
+#.  </strong>
+#.  .
+#.                   If you have own workflows those will not be touched.
+#. </div>
+msgid "help_upgrade_workflows"
+msgstr "This will reinstall CMFMember workflows and all <strong>your changes to the workflows will be lost</strong> . If you have own workflows those will not be touched."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <label i18n:translate="label_default_workflow">
+#.  Default Member and Workflow
+#. </label>
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <label i18n:translate="label_default_workflow">
+#.  Default Workflow
+#. </label>
+msgid "label_default_workflow"
+msgstr "Default Member and Workflow"
 
 
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
@@ -474,6 +530,14 @@ msgstr "Up to My Preferences"
 #. </label>
 msgid "label_upgrade_from"
 msgstr "Upgrade from"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <label i18n:translate="label_upgrade_workflows">
+#.  Upgrade Workflows
+#. </label>
+msgid "label_upgrade_workflows"
+msgstr "Upgrade Workflows"
 
 
 #: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
@@ -603,16 +667,14 @@ msgstr "Last week"
 msgid "time_yesterday"
 msgstr "Yesterday"
 
-#
-# Manually added IDs
-#
-# Action
-msgid "Manage orphans"
-msgstr ""
 
-# Button
-msgid "Add new ${type}"
-msgstr ""
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_migration.pt
+#. <strong i18n:translate="warning_cmfmember_migration">
+#.  Please ensure you have a backup
+#.          of your site before performing migration.
+#. </strong>
+msgid "warning_cmfmember_migration"
+msgstr "Please ensure you have a backup of your site before performing migration."
 
 #- Removed msgids:
 # 
@@ -621,6 +683,7 @@ msgstr ""
 #  heading_registration_form Previous Next Register
 # heading_manage_orphans description_member_orphan_count
 # "Delete orphans" Cancel description_deleted_members_orphan_content
+# description_orphans_take_ownership description_orphans_delete_content
 # "Fix content" "Select all items" listing_username
 # listingheader_fullname listingheader_email listingheader_last_login
 # listingheader_state listingheader_order "Move item up"
@@ -632,15 +695,21 @@ msgstr ""
 # label_loginname help_search_name label_email help_search_email
 # label_last_logged_in help_search_last_logged_in time_yesterday
 # time_last_week time_last_month time_ever label_roles help_search_roles
-# Search heading_welcome description_you_are_registered
-# description_you_will_get_password description_you_can_log_on_now
-# "Log in" heading_cmfmember_import label_up_to_plone_setup
-# description_import_view "CMFMember Import Setup"
-# legend_filesystem_based_import label_import_from_csv
-# help_import_from_csv "Import from CSV" Import
-# heading_cmfmember_migration cmfmember_versions cmfmember_up_to_date
-# description_cmfmember_migration legen_normal_migration label_dry_run
-# help_dry_run Upgrade legend_forced_migration label_upgrade_from
-# help_upgrade_from_cmfmember "Force Upgrade" last_migration_log
+# Search heading_welcome description_pending_activation
+# description_you_are_registered description_you_will_get_password
+# description_you_can_log_on_now "Log in" heading_cmfmember_import
+# label_up_to_plone_setup description_import_view
+# "CMFMember Import Setup" legend_filesystem_based_import
+# label_import_from_csv help_import_from_csv "Import from CSV" Import
+# heading_cmfmember_migration cmfmember_version_instance
+# cmfmember_version_filesystem cmfmember_up_to_date
+# warning_cmfmember_migration legen_normal_migration label_dry_run
+# help_dry_run label_upgrade_workflows help_upgrade_workflows
+# label_default_workflow help_default_workflow Upgrade
+# legend_forced_migration label_upgrade_from help_upgrade_from_cmfmember
+# "Force Upgrade" last_migration_log description_cmfmember_migration
 # member_type_versions header_cmfmember_configlet_group_title
 # label_no_panels_available
+
+#- Added msgids by merging file None:
+# 

@@ -10,7 +10,7 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore import CMFCorePermissions
 from StringIO import StringIO
 #from Products.CMFPlone.setup.ConfigurationMethods import modifyMembershipTool
-#from Products.CMFMember.CatalogTool import CatalogTool
+from Products.CMFMember.CatalogTool import CatalogTool
 from Products.CMFMember.MembershipTool import MembershipTool
 
 
@@ -181,9 +181,9 @@ def replaceTools(portal, custSchema, convert=1):
                      'CMFMember Registration Tool',
                      ['_actions'])
         out.append('Migrated registration tool to CMFMember Registration tool')
-#        _migrateTool(portal, 'portal_catalog',
-#                     CatalogTool.meta_type,
-#                     ['_actions', '_catalog'])
+        _migrateTool(portal, 'portal_catalog',
+                     CatalogTool.meta_type,
+                     ['_actions', '_catalog'])
         out.append('Migrated catalog to Member Catalog tool')
 
         catalog = portal.portal_catalog

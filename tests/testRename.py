@@ -11,18 +11,6 @@ from unittest import TestSuite, makeSuite
 
 class TestRename(CMFMemberTestCase.CMFMemberTestCase):
 
-    def testValidateId(self):
-        uf = self.portal.acl_users
-        # create a member3 user that should not be wrapped on validation
-        uf._doAddUser('member3', 'password', ('Member',), [])
-        self.portal.portal_memberdata.invokeFactory('Member', 'member1')
-        self.portal.portal_memberdata.invokeFactory('Member', 'member2')
-        self.failIf(self.portal.portal_memberdata.member2.validate_id('member3'))
-        self.failIf(self.portal.portal_memberdata.member2.validate_id('member3'))
-        self.failUnless(self.portal.portal_memberdata.member2.validate_id('member1'))
-        self.failUnless(self.portal.portal_memberdata.member2.validate_id('Anonymous User'))
-        self.failUnless(self.portal.portal_memberdata.member2.validate_id('rm -rf /'))
-
     def testRename(self):
         # Test renaming of a member whose corresponding user lives in the
         # portal's acl_users

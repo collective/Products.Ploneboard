@@ -17,4 +17,13 @@ def oneZeroBeta3(portal):
     md_tool = getToolByName(portal, 'portal_memberdata')
     md_tool.setDefaultType(md_tool.getTypeName())
 
+    qi_tool = getToolByName(portal, 'portal_quickinstaller')
+    inst_vers = [prod['installedVersion'] for prod in qi_tool.listInstalledProducts() \
+                 if prod['id'] == 'CMFMember']
+    fs_vers = qi_tool.getProductVersion('CMFMember')
+    
+    if len(inst_vers) and inst_vers[0] != fs_vers:
+        out.append('Reinstalling CMFMember Product')
+        qi_tool.reinstallProducts(['CMFMember'])
+
     return out
