@@ -1,3 +1,7 @@
-v1.0
+v0.2
+
+- support windows now, thanks volker.wend@efgbsh.de
+
+v0.1
 
 - initial import, graphic view of DCWorkflow is provided only now

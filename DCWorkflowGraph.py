@@ -3,7 +3,7 @@ from tempfile import mktemp
 import os
 import sys
 from os.path import basename, splitext, join
-from config import bin_search_path
+from config import bin_search_path, DOT_EXE
 
 
 # following 2 method is copied form PortalTranforms 
@@ -74,8 +74,8 @@ def getGraph(self, wf_id="", format="gif", REQUEST=None):
     f.write(pot)
     f.close()
     outfile = mktemp('.%s' % format)
-    os.system('%s -T%s -o %s %s' % (bin_search('dot'), format, outfile, infile))
-    out = open(outfile, 'r')
+    os.system('%s -T%s -o %s %s' % (bin_search(DOT_EXE), format, outfile, infile))
+    out = open(outfile, 'rb')
     result = out.read()
     out.close()
     os.remove(infile)
