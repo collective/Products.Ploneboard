@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.14 2003/10/05 16:38:56 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.15 2003/10/30 15:39:15 runyaga Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -186,10 +186,12 @@ class InstalledProduct(SimpleItem):
     def uninstall(self,cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
         '''uninstalls the prod and removes its deps'''
 
-        if self.isLocked():
+        portal=getToolByName(self,'portal_url').getPortalObject()
+
+        #XXX eventually we will land Event system and could remove this 'removal_inprogress' hack
+        if self.isLocked() and getattr(portal, 'removal_inprogress', 0):
             raise ValueError, 'The product is locked and cannot be uninstalled!'
         
-        portal=getToolByName(self,'portal_url').getPortalObject()
         res=''
 
         uninstaller=self.getUninstallMethod()
