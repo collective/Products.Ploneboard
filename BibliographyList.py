@@ -122,7 +122,7 @@ class BibliographyList(BaseContent):
         # content type based formatters
         catalog = getToolByName(self, 'portal_catalog')
         presentationTypes = ('ReferencePresentation', 'ReferencePresentationSet')
-        for refFormat in formList = catalog(portal_type=presentationTypes):
+        for refFormat in catalog(portal_type=presentationTypes):
             obj = refFormat.getObject()
             formatList.append((obj.UID(),obj.title_or_id()+' (Custom Format)'))
 
