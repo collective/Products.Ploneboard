@@ -538,7 +538,6 @@ class Member(BaseContent):
         if skins_tool.getAllowAny():
             return getToolByName(self, 'portal_skins').getSkinSelections()
         else:
-            log(str([self.getPortalSkin()]))
             return [self.getPortalSkin()]
 
 
