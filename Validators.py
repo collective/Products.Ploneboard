@@ -1,4 +1,3 @@
-from Products.validation import validation
 #  ATContentTypes http://sf.net/projects/collective/
 #  Archetypes reimplementation of the CMF core types
 #  Copyright (c) 2003-2004 AT Content Types development team
@@ -19,13 +18,22 @@ from Products.validation import validation
 #
 """
 
-$Id: Validators.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: Validators.py,v 1.2 2004/03/08 15:15:49 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from Products.validation.interfaces import ivalidator
-from Products.validation.validators import RegexValidator 
+from config import *
+
+if VALIDATION_IN_PRODUCTS:
+    from Products.validation import validation
+    from Products.validation.interfaces import ivalidator
+    from Products.validation.validators import RegexValidator
+else:
+    from validation import validation
+    from validation.interfaces import ivalidator
+    from validation.validators import RegexValidator
+
 
 class EmptyEmailValidator:
     __implements__ = (ivalidator,)
