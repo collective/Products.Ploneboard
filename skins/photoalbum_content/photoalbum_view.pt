@@ -4,17 +4,57 @@
       lang="en-US"
       metal:use-macro="here/main_template/macros/master">
 
-<body>
+  <body>
 
-<div metal:fill-slot="main">
+    <metal:block fill-slot="base">
+      <tal:block tal:define="dummy python:request.set('disable_border', 1)"
+	         tal:replace="nothing">
+        Disable the tabs
+      </tal:block>    
+    </metal:block>
 
-    <h1 tal:content="here/title_or_id">
-    Title or id
-    </h1>
 
-</div>
+    <div metal:fill-slot="main"
+         tal:define="images python:here.contentValues(spec='Photo');
+                     albums python:here.contentValues(spec='Photo Album');">
+      
+      <h1 tal:content="here/title_or_id">
+	Title or id
+      </h1>
 
-</body>
+      <table style="width: 100%;">
+	<tr>
+	  <td>
+	    <tal:block tal:condition="albums"
+	               tal:repeat="album albums">
+	      <span class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
+		                             number_of_images python:len(images_in_album)">
+		<a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
+		  <img tal:replace="structure python:images_in_album[0].tag(size='thumbnail')" />
+		</a>
+		<br/><span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
+	    </span>
+	    </tal:block>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    <tal:block tal:condition="images"
+     	               tal:repeat="image images">
+	      <span class="card" style="background: white; border-color: white;">
+		<a tal:attributes="href string:${image/absolute_url}/view">
+		  <img tal:replace="structure python:image.tag(size='thumbnail')" />
+		</a>
+	      </span>
+	    </tal:block>
+	  </td>
+	</tr>
+      </table>
+
+      <div class="spacer">&nbsp;</div>          
+    </div>
+    
+  </body>
 
 </html>
 
