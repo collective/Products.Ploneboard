@@ -743,7 +743,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/03/01 13:54:10 $"[7:-2]
+        rev_date = "$Date: 2004/03/24 08:39:06 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1660,7 +1660,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # If we're called TTW, uses a redirect else tries to call the UF factory directly
         if REQUEST.has_key('RESPONSE'):
             return REQUEST.RESPONSE.redirect("%s/%s/%s" % (self.absolute_url(), id, new_factory))
-        return getattr(self, next_id).unrestrictedTraverse(new_factory)() # XXX minor security pb ?
+        return getattr(self, id).unrestrictedTraverse(new_factory)() # XXX minor security pb ?
 
 
 class treeWrapper:
