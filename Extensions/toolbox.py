@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.14 2004/08/18 20:17:35 dreamcatcher Exp $
+$Id: toolbox.py,v 1.15 2004/08/22 21:51:37 tiran Exp $
 """
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -155,6 +155,9 @@ def _changePortalType(cat, old, new):
     for obj in objs:
         if not obj:
             continue
+        __traceback_info__ = (obj, getattr(obj, '__class__', 'no class'),
+                              getattr(obj, 'meta_type', 'no metatype'),
+                              old, new)
         obj._setPortalTypeName(new)
         obj.reindexObject(idxs=['portal_type', 'Type', 'meta_type', ])
 
