@@ -1,0 +1,10 @@
+
+
+  - Photo size variants now callable by url (${photo_url}/variant/${variant})
+  - Tag method now uses a real url to call each variant instead of passing a
+    request parameter. This solves caching problems. 
+
+
+0.1:
+
+  - initial release

@@ -2,6 +2,10 @@
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
+from ExtensionClass import Base
+from Acquisition import Implicit, aq_parent
+from OFS.Traversable import Traversable
+
 from Products.CMFCore import CMFCorePermissions
 
 from Products.CMFDefault.Image import Image
@@ -84,6 +88,30 @@ def addPhoto( self
     self._getOb(id).manage_upload(file)
 
 
+class DynVariantWrapper(Base):
+    """
+    provide a transparent wrapper from photo to dynvariant
+    call it with url ${photo_url}/variant/${variant}
+    """
+
+    def __of__(self, parent):
+        return parent.Variants()
+
+
+class DynVariant(Implicit, Traversable):
+    """
+    provide access to the variants
+    """
+    def __init__(self):
+	pass
+
+    def __getitem__(self, name):
+	if self.checkForVariant(name):
+            return self.getPhoto(name).__of__(aq_parent(self))
+        else:
+            raise AttributeError, name
+
+
 class Photo(Image):
     """
     Implements a Photo, a scalable image
@@ -128,6 +156,14 @@ class Photo(Image):
                 'xlarge': (1024,1024)
                 }
 
+    # make image variants accesable via url
+    variant=DynVariantWrapper()
+    security.declareProtected(CMFCorePermissions.View, 'Variants')
+    def Variants(self):
+        # Returns a variants wrapper instance
+        return DynVariant().__of__(self) 
+
+    security.declareProtected(CMFCorePermissions.View, 'getPhoto')
     def getPhoto(self,size):
         '''returns the Photo of the specified size'''
         return self._photos[size]
@@ -142,11 +178,11 @@ class Photo(Image):
         result.sort(lambda d1,d2: cmp(d1['size'][0]*d1['size'][0],d2['size'][1]*d2['size'][1])) #sort ascending by size
         return result
 
-    security.declareProtected(CMFCorePermissions.View, 'index_html')
-    def index_html(self, REQUEST, RESPONSE, size=None):
-        """Return the image data."""
+    security.declarePrivate('checkForVariant')
+    def checkForVariant(self, size):
+	"""Create variant if not there."""
         if size in self.displays.keys():
-            # Create resized copy, if it doesnt already exist
+	    # Create resized copy, if it doesnt already exist
             if not self._photos.has_key(size):
                 self._photos[size] = OFS.Image.Image(size, size,
                                                      self._resize(self.displays.get(size, (0,0))))
@@ -156,7 +192,15 @@ class Photo(Image):
                 self._photos[size] = OFS.Image.Image(size, size,
                                                      self._resize(self.displays.get(size, (0,0))))
 
-            return self._photos[size].index_html(REQUEST, RESPONSE)
+            return 1
+
+        else: return 0
+
+    security.declareProtected(CMFCorePermissions.View, 'index_html')
+    def index_html(self, REQUEST, RESPONSE, size=None):
+        """Return the image data."""
+	if self.checkForVariant(size):
+            return self.getPhoto(size).index_html(REQUEST, RESPONSE)
 
         return Photo.inheritedAttribute('index_html')(self, REQUEST, RESPONSE)
 
@@ -209,7 +253,7 @@ class Photo(Image):
         if ydelta and height:
             height = str(int(round(int(height) * ydelta)))
 
-        result='<img src="%s?size=%s"' % (self.absolute_url(), escape(size))
+        result='<img src="%s/variant/%s"' % (self.absolute_url(), escape(size))
 
         if alt is None:
             alt=getattr(self, 'title', '')
