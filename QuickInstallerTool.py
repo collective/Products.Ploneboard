@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.36 2004/02/26 15:52:49 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.37 2004/02/28 18:05:34 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -96,6 +96,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 # external method can throw a bunch of these
                 msg = "RuntimeError: %s" % msg
                 LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
+                raise
             except:
                 # catch a string exception
                 err = sys.exc_type
@@ -103,14 +104,20 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 if err != "Module Error":
                     msg = "%s: %s" % (err, sys.exc_value)
                     LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
+                raise
 
         return None
 
     security.declareProtected(ManagePortal, 'isProductInstallable')
-    isProductInstallable=getInstallMethod
+    def isProductInstallable(self,productname):
+        try:
+            meth=self.getInstallMethod(productname)
+            return 1
+        except:
+            return 0
 
     security.declareProtected(ManagePortal, 'isProductAvailable')
-    isProductAvailable=getInstallMethod
+    isProductAvailable=isProductInstallable
 
     security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
