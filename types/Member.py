@@ -568,6 +568,13 @@ class Member(BaseContent):
 
         self.update(**mapping)
 
+        # FIXME -- there has to be a better way!!
+        if mapping.has_key('login_time'):
+            self.login_time = mapping['login_time']
+        if mapping.has_key('last_login_time'):
+            self.last_login_time = mapping['last_login_time']
+        
+
 
     security.declarePrivate('setMemberProperties')
     def setMemberProperties(self, mapping):
