@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.18 2004/10/16 23:56:22 tiran Exp $
+$Id: ATLink.py,v 1.19 2004/10/17 01:33:27 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -64,7 +64,7 @@ class ATLink(ATCTContent):
 
     security       = ClassSecurityInfo()
     
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'remote_url')
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setRemoteUrl')
     def setRemoteUrl(self, value, **kwargs):
         """remute url mutator
         
