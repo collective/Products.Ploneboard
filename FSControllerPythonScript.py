@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.7 2003/10/25 22:29:09 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.8 2003/10/30 01:16:40 plonista Exp $
 """
 
 import re
@@ -29,7 +29,7 @@ from Script import FSPythonScript as BaseClass
 from ControllerPythonScript import ControllerPythonScript
 from ControllerState import ControllerState
 from ControllerBase import ControllerBase
-from utils import logException
+from utils import log, logException
 
 
 class FSControllerPythonScript (BaseClass, ControllerBase):
@@ -55,8 +55,12 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
     def __init__(self, id, filepath, fullname=None, properties=None):
         BaseClass.__init__(self, id, filepath, fullname, properties)
         self.filepath = filepath
-        self._read_action_metadata(self.getId(), filepath)
-        self._read_validator_metadata(self.getId(), self.filepath)
+        try:
+            self._read_action_metadata(self.getId(), filepath)
+            self._read_validator_metadata(self.getId(), self.filepath)
+        except ValueError, e:
+            log(summary='metadata error', text='file = %s' % filepath)
+            raise
 
 
     def __call__(self, *args, **kwargs):

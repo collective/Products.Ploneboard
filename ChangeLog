@@ -1,3 +1,14 @@
+2003-10-29  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Fixed code that tests for existence of validators and objects being 
+     traversed to.  You'll get a helpful ValueError now instead of a cryptic
+     Unauthorized exception when things aren't found.
+
+   * Dump the full file name to the log when a .metadata file's [actions] or
+     [validators] sections can't be read properly.
+
+   * Fixed the version number.  D'oh.
+
 2003-10-25  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fixed validation for scripts so that it will work when scripts are called

@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.3 2003/10/30 01:16:40 plonista Exp $
 """
 
 import copy
@@ -31,7 +31,7 @@ from ControllerPageTemplate import ControllerPageTemplate
 from ControllerBase import ControllerBase
 from FormAction import FormActionContainer
 from FormValidator import FormValidatorContainer
-from utils import logException
+from utils import log, logException
 
 
 class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
@@ -53,8 +53,12 @@ class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
     def __init__(self, id, filepath, fullname=None, properties=None):
         BaseClass.__init__(self, id, filepath, fullname, properties)
         self.filepath = filepath
-        self._read_action_metadata(self.getId(), filepath)
-        self._read_validator_metadata(self.getId(), filepath)
+        try:
+            self._read_action_metadata(self.getId(), filepath)
+            self._read_validator_metadata(self.getId(), filepath)
+        except ValueError, e:
+            log(summary='metadata error', text='file = %s' % filepath)
+            raise
 
 
     security.declarePrivate('manage_afterAdd')
