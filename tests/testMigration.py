@@ -63,21 +63,6 @@ prop_data = tuple(\
 propName = lambda proptype: '%s_prop' % string.join(proptype.split(), '_')
 class TestMigration( PloneTestCase.PloneTestCase ):
 
-    def defaultsDict(self):
-        return dict([x for x in dict(prop_data).keys() if type(x) == type((0,))])
-
-    def populateDict(self):
-        with_defaults = dict(\
-            [(propName(defaults[0]), data) \
-             for defaults, data in prop_data if type(defaults) == type((0,))])
-
-        wo_defaults   = dict(\
-            [(propName(proptype), data) \
-             for proptype, data in prop_data if type(proptype) != type((0,))])
-
-        with_defaults.update(wo_defaults)
-        return with_defaults
-
     def testMigrationPlone2CMFMember(self):
         self.makeMembers()
 
@@ -128,6 +113,45 @@ class TestMigration( PloneTestCase.PloneTestCase ):
 
         errors = self.compareProperties(user_a)
         self.failIf(len(errors) > 0, string.join(errors, '\n'))
+
+    def xtestMigrationPlone2CMFMember2(self):
+        self.makeMembers()
+        # check that we have what we should have before migration
+        self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
+        self._compare_members()
+
+        install_cmfmember(self.portal)
+        # migrate Plone member stuff to CMFMember
+        try:
+            self.portal.cmfmember_control.upgrade(swallow_errors=False)
+        except:
+            import pdb; sys
+            ec, e, tb = sys.exc_info()
+            print ec, e
+            pdb.post_mortem(tb)
+
+        # check that we still have everything we had before
+        
+        self.assertEquals(self.portal.portal_memberdata.__class__, MemberDataContainer)
+        self._compare_members()
+        
+        self.assertEquals(self.portal.portal_memberdata.a.__class__, Member)
+        self.assertEquals(self.portal.portal_memberdata.b.__class__, Member)
+
+    def defaultsDict(self):
+        return dict([x for x in dict(prop_data).keys() if type(x) == type((0,))])
+
+    def populateDict(self):
+        with_defaults = dict(\
+            [(propName(defaults[0]), data) \
+             for defaults, data in prop_data if type(defaults) == type((0,))])
+
+        wo_defaults   = dict(\
+            [(propName(proptype), data) \
+             for proptype, data in prop_data if type(proptype) != type((0,))])
+
+        with_defaults.update(wo_defaults)
+        return with_defaults
 
     def compareProperties(self, md):
         data = self.populateDict()
@@ -216,24 +240,6 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         user_b.setMemberProperties({'email':userb['email'],
                                'fullname':userb['fullname']})
 
-        
-    def xtestMigrationPlone2CMFMember(self):
-        self.makeMembers()
-        # check that we have what we should have before migration
-        self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
-        self._compare_members()
-
-        install_cmfmember(self.portal)
-        # migrate Plone member stuff to CMFMember
-        self.portal.cmfmember_control.upgrade(swallow_errors=False)
-
-        # check that we still have everything we had before
-        
-        self.assertEquals(self.portal.portal_memberdata.__class__, MemberDataContainer)
-        self._compare_members()
-        
-        self.assertEquals(self.portal.portal_memberdata.a.__class__, Member)
-        self.assertEquals(self.portal.portal_memberdata.b.__class__, Member)
 
 if __name__ == '__main__':
     framework(verbosity=1)

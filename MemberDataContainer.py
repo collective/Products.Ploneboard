@@ -87,7 +87,8 @@ class MemberDataContainer(BaseBTreeFolder):
     global_allow = 0
 
     _defaultMember = None
-
+    _instanceVersion = ''
+    
     actions = (
         { 'id': 'view',
           'name': 'View',
@@ -454,6 +455,16 @@ class MemberDataContainer(BaseBTreeFolder):
             self.manage_delObjects(temp_id)
         from Products.CMFMember.Extensions.Install import setupNavigation
         setupNavigation(self, out, new_type_name)
+
+
+    #################################
+    # version awareness
+
+    def setVersion(self, version):
+        self._instanceVersion = version
+
+    def getVersion(self):
+        return self._instanceVersion or 'development'
 
 
     ##SUBCLASS HOOKS

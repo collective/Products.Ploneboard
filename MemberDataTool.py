@@ -45,11 +45,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     id = 'portal_memberdata'
     portal_type = meta_type = PKG_NAME + ' Tool'
-#    portal_type = 'Folder'
+
     _actions = []
 
     _defaultMember = None
-    
 
     memberdata_actions = (
         { 'id': 'view',
