@@ -23,35 +23,6 @@ import AccessControl.User
 global groupuserfolder_globals
 groupuserfolder_globals=globals()
 
-#XXX PJ What the @#$@? 
-#    Please get rid of this .. this whole fake_getPhysicalRoot stuff is 
-#    quite scary.  if you arent using it throw it away
-
-##################################
-## CMF / Plone SUPPORT START... ##
-##################################
-
-### Hotfix to let User objects support an 'id' method
-
-##def fake_id(self,):
-##    """faking the 'id' attribute for Owned.py module / ownerInfo method"""
-##    Log(LOG_DEBUG, "Within fake_id")
-##    return """__VERY_BAD_VALUE__"""
-
-##def fake_getPhysicalRoot(self,):
-##    try:
-##        Log(LOG_DEBUG, "Within fake_getPhysicalRoot", self.getId(), self.getGRUFPhysicalRoot())
-##        return self.getGRUFPhysicalRoot()
-##    except:
-##        Log(LOG_DEBUG, "Within fake_getPhysicalRoot", self.getId(), "but cannot access getGRUFPhysicalRoot()")
-##        return None
-
-##AccessControl.User.BasicUser.id = fake_id
-##AccessControl.User.BasicUser.getPhysicalRoot = fake_getPhysicalRoot
-
-##################################
-##  CMF / Plone SUPPORT END...  ##
-##################################
 
 
 def initialize(context):
