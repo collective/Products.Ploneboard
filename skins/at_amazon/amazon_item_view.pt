@@ -1,0 +1,96 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+       tal:define="amazon_url python:'http://www.amazon.com/exec/obidos/ASIN/'+here.getAsin()+'/'+context.getAmazonAssociateId()">
+        <h1 tal:content="here/title_or_id" class="documentFirstHeading">
+          Title or id
+        </h1>
+    
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+
+        <a tal:attributes="href amazon_url">
+          <img alt="" border="0" hspace="3" vspace="2" style="float: left;" align="left" tal:attributes="src context/getImageUrlMedium" />
+        </a>
+
+        <p tal:define="authors here/getAuthors">
+          <em>Author<span tal:condition="python:len(authors) != 1" tal:omit-tag="">s</span>:</em> 
+          <span tal:content="python:', '.join(authors)">Authors</span>
+        </p>
+        <p>
+          <em>Edition:</em> 
+          <span tal:content="here/getMedia">Media</span>
+        </p>
+        <p>
+          <em>Publisher:</em> 
+          <span tal:content="here/getManufacturer">Publisher</span>
+        </p>
+        <p>
+          <em>ISBN:</em> 
+          <span tal:content="here/getIsbn">ISBN</span>
+        </p>
+        <p tal:define="rating here/getAvgCustomerRating;
+                       nRatings here/getTotalCustomerReviews;" 
+           tal:condition="rating">
+          <em>Rating:</em> 
+          <img tal:define="img_name python:('%.1f' % (int(2.0*rating + 0.5)/2.0)).replace('.','-')"
+               tal:attributes="alt string:${rating} stars;
+                               src string:http://g-images.amazon.com/images/G/01/detail/stars-${img_name}.gif" />
+          based on <span tal:content="nRatings">#</span> review<span tal:condition="python:nRatings != 1" tal:omit-tag="">s</span>
+        </p>
+        <p tal:define="listPrice here/getListPrice;
+                       amazonPrice here/getAmazonPrice;
+                       lp python:here.priceToFloat(listPrice);
+                       ap python:here.priceToFloat(amazonPrice);
+                       savings python:ap < lp;">
+          <em>Price:</em> 
+          <strike tal:condition="savings" tal:content="listPrice">List price</strike> 
+          <font color="red"><b tal:content="amazonPrice">Price</b></font>
+          <span tal:condition="savings">&nbsp;&nbsp;&nbsp;&nbsp;<em>You save</em> $<span tal:content="python:'%.2f' % float(lp-ap)" /> (<span tal:content="python:'%d' % (100.0*float(lp-ap)/float(lp)+0.5)" />%)</span>
+        </p>
+        <p>
+          <em>Availability:</em> 
+          <span tal:content="here/getAvailability">Availability</span>
+        </p>
+
+        <p><a tal:attributes="href amazon_url">View details at Amazon.com</a></p>
+
+        <div class="documentDescription"
+             tal:define="description here/Description"
+             tal:condition="description"
+             tal:content="description">
+            description
+        </div>
+
+        <form method="POST" tal:attributes="action string:http://buybox.amazon.com/o/dt/assoc/handle-buy-box=${here/getAsin}">
+          <input type="hidden" tal:attributes="name string:asin.${here/getAsin}" value="1">
+          <input type="hidden" name="tag-value" tal:attributes="value string:${here/getAmazonAssociateId}">
+          <input type="hidden" name="tag_value" tal:attributes="value string:${here/getAmazonAssociateId}">
+          <input type="image" name="submit.add-to-cart" style="border:0;" value="Buy from Amazon.com" border="0" alt="Buy from Amazon.com" src="http://rcm-images.amazon.com/images/G/01/associates/add-to-cart.gif">
+        </form>
+
+        <dl tal:define="reviews here/getReviews" tal:condition="reviews">
+          <tal:review tal:repeat="review reviews">
+            <dt>
+              <img tal:attributes="alt string:${review/getRating} stars;
+                                   src string:http://g-images.amazon.com/images/G/01/detail/stars-${review/getRating}-0.gif" />
+              <span tal:content="review/getSummary" />
+            </dt>
+            <dd tal:content="structure review/getComment" />
+          </tal:review>
+        </dl>
+
+        <p tal:condition="python: len(here.getReviews()) < here.getTotalCustomerReviews()">
+          <a tal:attributes="href amazon_url">Read more reviews at Amazon.com</a>
+        </p>
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>

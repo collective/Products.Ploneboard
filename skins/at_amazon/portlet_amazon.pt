@@ -1,0 +1,38 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+
+<body>
+
+<!-- The amazon box -->
+
+<div metal:define-macro="portlet"
+     tal:define="items here/getAmazonItems">
+    <div class="portlet" id="portlet-amazon">
+        <h5 i18n:translate="box_amazon">Related Items</h5>
+        <div class="portletBody">
+            <tal:block tal:repeat="obj items">
+                <div tal:define="oddrow repeat/obj/odd"
+                     tal:attributes="class python:test(oddrow, 'portletContent even', 'portletContent odd')"
+                     align="center" >
+                    <a href=""
+                       tal:attributes="href obj/absolute_url;
+                                       title obj/Title">
+                        <img alt="" tal:attributes="src obj/getImageUrlMedium" /><br />
+                        <span tal:replace="obj/Title" > Title </span><br />
+                    </a>
+                    <span tal:content="python:', '.join(obj.getAuthors())" />
+                    <tal:stars tal:define="rating obj/getAvgCustomerRating"
+                               tal:condition="rating">
+                      <br />
+                      <img tal:define="img_name python:('%.1f' % (int(2.0*rating + 0.5)/2.0)).replace('.','-');"
+                           tal:attributes="alt string:${rating} stars;
+                                           src string:http://g-images.amazon.com/images/G/01/detail/stars-${img_name}.gif" />
+                    </tal:stars>
+                </div>
+            </tal:block>
+        </div>
+    </div>
+</div>
+</body>
+</html>
