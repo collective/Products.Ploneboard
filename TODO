@@ -1,24 +1,15 @@
 TODO-LIST
 
-[Done]
+[v1.4 => Planned 2003-08-31]
 
-  * [Test] Improve test plan
+  * [Core] Implement multi-UserFolder-sources
 
-  * [Perf] Improve performance.
+  * [Core/ZMI] Implement something to list all members of a particular group
+    and put this view in individual group management screen.
 
-  * [Core] Implement nested groups
+[v1.41 => Not planned yet]
 
-  * [ZMI] Improve users/groups admin screens:
-     
-    - roles icon, show permissions in some way
-  
-    - use wizards instead of complex screens
-
-    - allow users and groups to be edited in a single screen (1 page per user/group)
-  
-    - replace audit's legend AA/AB/AC/AD by A0/A1/A2/A3/...
-
-[v1.4 => Not planned yet]
+  * [Core] Implement some feature to make LDAPUF roles/groups binding easier
 
   * [CMF/Plone] Test & Document change_password
 
@@ -27,8 +18,6 @@ TODO-LIST
   * [CMF] Test within CMF (not only Plone)
 
   * [Doc] Document the whole GRUF API
-
-  * [Core] Implement multi-UserFolder-sources
 
   * [ZMI] Improve users/groups admin screens:
 
