@@ -7,6 +7,8 @@ TODO-LIST
 
   * Allow LocalRole blacklisting
 
+  * [Plone] Allow user property mutation: needs MembershipTool update !
+
   * [ZMI] Add an "Add group/roles" and "Remove group/roles" along with the
     current "Change" button on users/group view (thanks to Danny Bloemendaal)
 

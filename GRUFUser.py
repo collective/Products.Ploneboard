@@ -394,16 +394,22 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
         # LDAPUserFolder => specific API.
         if hasattr(src, "manage_setUserProperty"):
-            # Unmap pty name if necessary
-            ldapname = name
-            for ldap_name, zope_name in src.getMappedUserAttrs():
-                if name == zope_name:
-                    ldapname = ldap_name
+            # Unmap pty name if necessary, get it in the schema
+            ldapname = None
+            for schema in src.getSchemaConfig().values():
+                if schema["ldap_name"] == name:
+                    ldapname = schema["ldap_name"]
+                if schema["public_name"] == name:
+                    ldapname = schema["ldap_name"]
                     break
+
+            # If we didn't find it, we skip it
+            Log(LOG_DEBUG, user_dn, ldapname, value)
+            if ldapname is None:
+                raise KeyError, "Invalid LDAP attribute: '%s'." % (name, )
             
             # Edit user
             user_dn = src._find_user_dn(self.getUserName())
-            Log(LOG_DEBUG, user_dn, ldapname, value)
             src.manage_setUserProperty(user_dn, ldapname, value)
 
             # Expire the underlying user object
@@ -416,7 +422,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
             raise NotImplementedError, "Property setting is not supported for '%s'." % (name,)
         v = self._GRUF.getUserById(self.getId()).getProperty(name)
         if not v == value:
-            Log(LOG_WARNING, "Property '%s' for user '%s' should be '%s' and not '%s'" % (
+            Log(LOG_DEBUG, "Property '%s' for user '%s' should be '%s' and not '%s'" % (
                 name, self.getId(), v, value,
                 ))
             raise NotImplementedError, "Property setting is not supported for '%s'." % (name,)
