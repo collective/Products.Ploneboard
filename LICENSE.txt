@@ -1,0 +1,4 @@
+ATBiblioList is designed and written by David Convent and Louis
+Wannijn on behalf of the Royal Belgian Institute for Natural
+Sciences and published under the Zope Public License ZPL
+(http://www.zope.org/Resources/ZPL).
