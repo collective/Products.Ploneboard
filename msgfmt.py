@@ -66,7 +66,7 @@ class Msgfmt:
         if type(self.po) is ListType:
             output = self.po
         if type(self.po) is StringType:
-            output = open(self.po, 'r').readlines()
+            output = open(self.po, 'rb').readlines()
         if not output:
             raise ValueError, "self.po is invalid! %s" % type(self.po)
         return output

@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.6 2004/01/27 23:07:56 longsleep Exp $
+$Id: GettextMessageCatalog.py,v 1.7 2004/01/28 08:53:05 longsleep Exp $
 """
 
 from Acquisition import aq_parent
@@ -89,7 +89,6 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     """ broken message catalog """
     meta_type = title = 'Broken Gettext Message Catalog'
     icon='p_/broken'
-
     __roles__=('Manager',)
     title__roles__=__roles__
 

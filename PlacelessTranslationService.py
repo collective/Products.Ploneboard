@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.11 2004/01/27 23:18:54 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.12 2004/01/28 08:53:05 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -115,13 +115,17 @@ class PTSWrapper:
 
 
 class PlacelessTranslationService(Folder):
+    """
+    The Placeless Translation Service
+    """
+
     meta_type = title = 'Placeless Translation Service'
     icon = 'misc_/PlacelessTranslationService/PlacelessTranslationService.png'
     # major, minor, patchlevel, internal
     # internal is always 0 on releases; if you hack this internally, increment it
     # -3 for alpha, -2 for beta, -1 for release candidate
     # for forked releases internal is always 99
-    _class_version = (1, -2, 2, 99)
+    _class_version = (1, -2, 3, 99)
     all_meta_types = ()
 
     security = ClassSecurityInfo()
@@ -144,8 +148,11 @@ class PlacelessTranslationService(Folder):
         self._fallbacks = fallbacks
 
     def _registerMessageCatalog(self, catalog):
+
         from GettextMessageCatalog import BrokenMessageCatalog
+        # dont register broken message catalogs
         if isinstance(catalog, BrokenMessageCatalog): return
+
         domain = catalog.getDomain()
         catalogRegistry.setdefault((catalog.getLanguage(), domain), []).append(catalog.getIdentifier())
         for lang in catalog.getOtherLanguages():
@@ -247,7 +254,6 @@ class PlacelessTranslationService(Folder):
             fallbacks = LANGUAGE_FALLBACKS
         self._fallbacks = fallbacks
 
-
     def getLanguageName(self, code):
         for (ccode, cdomain), cnames in catalogRegistry.items():
             if ccode == code:
@@ -255,7 +261,6 @@ class PlacelessTranslationService(Folder):
                     cat = self._getOb(cname)
                     if cat.name:
                         return cat.name
-
 
     def getLanguages(self, domain=None):
         """Get available languages"""
