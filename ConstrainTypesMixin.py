@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.4 2004/09/08 14:21:55 runyaga Exp $
+$Id: ConstrainTypesMixin.py,v 1.5 2004/09/12 19:04:44 runyaga Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -135,6 +135,12 @@ class ConstrainTypesMixin:
         allowed = list(self.getLocallyAllowedTypes())
         possible_and_allowed = [fti for fti in possible_ftis
                                 if fti.id in allowed]
+
+	#Schwatzian Transform
+        tmp = [(fti.title or fti.id, fti) for fti in possible_and_allowed]
+	tmp.sort()
+	possible_and_allowed = [fti[1] for fti in tmp]
+
         # if none are selected as allowed then all possible types
         # are allowed
         return possible_and_allowed or possible_ftis
