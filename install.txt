@@ -1,7 +1,10 @@
 Install 
 
-1. Note : you must install "Graphviz":http://www.graphviz.org/ in your system before you use it.
+Note: 
+- you must install "Graphviz":http://www.graphviz.org/ in your system before you use it.
+- tested under linux only now. If you use windows, you should add your bot
+  binary path to 'bin_search_path' in config.py 
 
-2. unzip the DCWorkflowEditor to your zope Products directory.
+1. unzip the DCWorkflowEditor to your zope Products directory.
 
-3. restart zope
+2. restart zope
