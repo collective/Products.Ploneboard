@@ -81,8 +81,8 @@ def manage_addGroupUserFolder(self, dtself=None, REQUEST=None, **ignored):
 
 
 
-class GroupUserFolder(OFS.ObjectManager.ObjectManager, 
-                      AccessControl.User.BasicUserFolder ):
+class GroupUserFolder(OFS.ObjectManager.ObjectManager,
+                      AccessControl.User.BasicUserFolder):
     """
     GroupUserFolder => User folder with groups management
     """
@@ -97,7 +97,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     security = ClassSecurityInfo()
 
-    manage_options=( 
+    manage_options=(
         (
         {'label':'Overview', 'action':'manage_overview'},
         {'label':'Sources', 'action':'manage_GRUFSources'},
@@ -133,7 +133,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     user_color = "#006600"
     group_color = "#000099"
     role_color = "#660000"
-    
+
     # User and group images
     img_user = ImageFile.ImageFile('www/GRUFUsers.gif', globals())
     img_group = ImageFile.ImageFile('www/GRUFGroups.gif', globals())
@@ -152,7 +152,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security.declarePrivate('_post_init')
     def _post_init(self):
         """
-        _post_init(self) => meant to be called when the 
+        _post_init(self) => meant to be called when the
                             object is in the Zope tree
         """
         uf = GRUFFolder.GRUFUsers()
@@ -198,13 +198,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             else:
                 userType = 'unknown'
             result.append((massagedUsername, roles, userType, username))
-        return tuple(result)    
+        return tuple(result)
 
     security.declarePrivate('getGRUFPhysicalRoot')
     def getGRUFPhysicalRoot(self,):
-        # $$$ trick meant to be used within 
+        # $$$ trick meant to be used within
         # fake_getPhysicalRoot (see __init__)
-        return self.getPhysicalRoot()   
+        return self.getPhysicalRoot()
 
     security.declareProtected(Permissions.view, 'getGRUFId')
     def getGRUFId(self,):
@@ -212,7 +212,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Alias to self.getId()
         """
         return self.getId()
-    
+
     # ----------------------------------
     # Public UserFolder object interface
     # ----------------------------------
@@ -239,8 +239,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """Return a list of user objects"""
         ret = []
         names = []
-        
-        # Fetch groups first (then the user must be 
+
+        # Fetch groups first (then the user must be
         # prefixed by 'group_' prefix)
         if __include_groups__:
             for u in self.Groups.acl_users.getUsers():
@@ -283,19 +283,19 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         XXX Have to improve perfs here
         """
-        # Prevent infinite recursion when instanciating a GRUF 
+        # Prevent infinite recursion when instanciating a GRUF
         # without having sub-acl_users set
         if not "acl_users" in self.Groups.objectIds():
             return None
-        
-        # Fetch groups first (then the user must be 
+
+        # Fetch groups first (then the user must be
         # prefixed by 'group_' prefix)
         u = self.Groups.getGroup(name)
         if u:
             # We changed that because the previous code returned
             # a double-wrapped group object...
             return u
- 
+
         # Fetch users then
         for src in self.listUserSources():
             u = src.getUser(name)
@@ -369,7 +369,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Performance tricks
         if not name:
             return None
-        
+
         # Unprefix group name
         if prefixed:
             newname = name[_group_prefix_len:]
@@ -418,9 +418,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security.declarePrivate("authenticate")
     def authenticate(self, name, password, request):
         """
-        Pass the request along to the underlying user-related UserFolder 
+        Pass the request along to the underlying user-related UserFolder
         object
-        THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code 
+        THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code
         in AccessControl/User.py.
         We also check for inituser in there.
         """
@@ -433,7 +433,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 return emergency
             else:
                 return None
-            
+
         # Usual GRUF authentication
         for src in self.listUserSources():
             # XXX We can imagine putting a try/except here to "ignore"
@@ -445,7 +445,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # No acl_users in the Users folder or no user authenticated
         # => we refuse authentication
         return None
-    
+
 ##    ## I DON'T KNOW IF WE HAVE TO PASS VALIDATE
 ##    def validate(self, request, auth='', roles=_noroles):
 ##        return self.Users.validate(request, auth, roles)
@@ -485,7 +485,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Really add users
         return self.getDefaultUserSource()._doAddUser(
             name,
-            password, 
+            password,
             roles,
             domains,
             **kw)
@@ -497,12 +497,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         to make the actual changes to a user. The 'password' will be the
         original input password, unencrypted. The implementation of this
         method is responsible for performing any needed encryption.
-        
+
         A None password should not change it (well, we hope so)
         """
         roles = list(roles)
         groups = list(groups)
-        
+
         # Change groups affectation
         cur_groups = self.getGroups()
         given_roles = tuple(self.getUser(name).getRoles()) + tuple(roles)
@@ -531,7 +531,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def _updateUser(self, name, password = None, roles = None, domains = None, groups = None):
         """
         _updateUser(self, name, password = None, roles = None, domains = None, groups = None)
-        
+
         Front-end to _doChangeUser, but with a better default value support.
         We guarantee that None values will let the underlying UF keep the original ones.
         This is not true for the password: some buggy UF implementation may not
@@ -590,7 +590,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             roles = []
         if groups is None:
             groups = []
-        
+
         for x in range(0, 10):  # Password will be 10 chars long
             password = "%s%s" % (password, random.choice(string.lowercase), )
 
@@ -654,14 +654,14 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         password = ""
         for x in range(0, 10):  # Password will be 10 chars long
             password = "%s%s" % (password, random.choice(string.lowercase), )
-        return self.Groups.acl_users._doChangeUser(name, password, 
+        return self.Groups.acl_users._doChangeUser(name, password,
                                                   roles, domains, **kw)
 
     security.declarePrivate("_updateUser")
     def _updateGroup(self, name, roles = None, groups = None):
         """
         _updateUser(self, name, roles = None, groups = None)
-        
+
         Front-end to _doChangeUser, but with a better default value support.
         We guarantee that None values will let the underlying UF keep the original ones.
         This is not true for the password: some buggy UF implementation may not
@@ -743,9 +743,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/03/24 08:39:06 $"[7:-2]
+        rev_date = "$Date: 2004/05/04 21:48:46 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
-    
+
 
     reset_entry = "__None__"            # Special entry used for reset
 
@@ -770,13 +770,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         deleteUser(self, user, REQUEST = {}, ) => used in ZMI
         """
         pass
-        
+
 
     security.declareProtected(Permissions.manage_users, "changeOrCreateUsers")
     def changeOrCreateUsers(self, users = [], groups = [], roles = [], new_users = [], default_password = '', REQUEST = {}, ):
         """
         changeOrCreateUsers => affect roles & groups to users and/or create new users
-        
+
         All parameters are strings or lists (NOT tuples !).
         NO CHECKING IS DONE. This is an utility method, it's not part of the official API.
         """
@@ -802,7 +802,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Passwords management
         passwords_list = []
-        
+
         # Create brand new users
         for new in new_users:
             # Strip name
@@ -813,7 +813,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # Avoid erasing former users
             if name in map(lambda x: x.getId(), self.getUsers()):
                 continue
-            
+
             # Use default password or generate a random one
             if default_password:
                 password = default_password
@@ -825,7 +825,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
             # Store the newly created password
             passwords_list.append({'name':name, 'password':password})
-        
+
         # Update existing users
         for user in users:
             self._updateUser(name = user, groups = groups, roles = roles, )
@@ -844,7 +844,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def deleteUsers(self, users = [], REQUEST = {}):
         """
         deleteUsers => explicit
-        
+
         All parameters are strings. NO CHECKING IS DONE. This is an utility method !
         """
         # Delete them
@@ -859,7 +859,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def changeOrCreateGroups(self, groups = [], roles = [], nested_groups = [], new_groups = [], REQUEST = {}, ):
         """
         changeOrCreateGroups => affect roles to groups and/or create new groups
-        
+
         All parameters are strings. NO CHECKING IS DONE. This is an utility method !
         """
         # Manage roles / groups deletion
@@ -888,7 +888,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if not name:
                 continue
             self._doAddGroup(name, roles, groups = add_groups)
-        
+
         # Update existing groups
         for group in groups:
             self._updateGroup(group, roles = roles, groups = nested_groups)
@@ -902,7 +902,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def deleteGroups(self, groups = [], REQUEST = {}):
         """
         deleteGroups => explicit
-        
+
         All parameters are strings. NO CHECKING IS DONE. This is an utility method !
         """
         # Delete groups
@@ -953,7 +953,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     for role in roles:
                         for perm_key in self.computeSetting(path, folder, role, permissions, cache).keys():
                             cache[path][(kind, actor)][perm_key] = 1
-                        
+
                 else:
                     # Get role information
                     self.computeSetting(path, folder, actor, permissions, cache)
@@ -1021,7 +1021,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         get an unique handle for each legend item.
         """
         return "%02d" % index
-            
+
 
     security.declareProtected(Permissions.manage_users, "listUsersAndRoles")
     def listUsersAndRoles(self,):
@@ -1072,7 +1072,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def getSiteTree(self, obj=None, depth=0):
         """
         getSiteTree(self, obj=None, depth=0) => special structure
-        
+
         This is used by the security audit page
         """
         ret = []
@@ -1085,11 +1085,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 # Ignore user folders
                 if sub.getId() in ('acl_users', ):
                     continue
-                
+
                 # Ignore portal_* stuff
                 if sub.getId()[:len('portal_')] == 'portal_':
                     continue
-                
+
                 if sub.isPrincipiaFolderish:
                     ret.extend(self.getSiteTree(sub, depth + 1))
 
@@ -1173,7 +1173,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             }
         return dict
 
-        
+
     security.declarePrivate("tpValues")
     def tpValues(self):
         # Avoid returning HUUUUUUGE lists
@@ -1182,7 +1182,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             return []        # Do not use the tree
 
         # XXX - I DISABLE THE TREE BY NOW (Pb. with icon URL)
-        return [] 
+        return []
 
         # Then, use a simple computation to determine opportunity to use the tree or not
         ngroups = len(self.getGroupNames())
@@ -1211,7 +1211,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Return this top-level list
         top_level.sort(lambda x, y: cmp(x.sortId(), y.sortId()))
         return top_level
-        
+
 
     def tpId(self,):
         return self.getId()
@@ -1235,7 +1235,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 REQUEST.set('username', username)
                 REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
                 return self.restrictedTraverse('manage_user')()
-        
+
         # Default management screen
         return self.restrictedTraverse('manage_overview')()
 
@@ -1254,7 +1254,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Check if it's an attribute
         if hasattr(self.aq_base, name, ):
             return getattr(self, name)
-        
+
         # It's not an attribute, maybe it's a user/group
         # (this feature is used for the tree)
         if name.startswith('_'):
@@ -1338,7 +1338,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 current = []
             current.append(rec)
             idx += 1
-        
+
         if current:
             ret.append(current)
 
@@ -1416,7 +1416,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         getUserSourceFolder(self, id) => GRUFUsers object
         """
         return getattr(self, id)
-    
+
     security.declareProtected(Permissions.manage_users, "addUserSource")
     def addUserSource(self, factory_uri, REQUEST = {}):
         """
@@ -1453,12 +1453,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Check the source id
         if type(id) != type('s'):
             raise ValueError, "You must choose a valid source to delete and confirm it."
-        
+
         # Delete it
         self.manage_delObjects([id,])
         if REQUEST.has_key('RESPONSE'):
             return REQUEST.RESPONSE.redirect(self.absolute_url() + '/manage_GRUFSources')
-    
+
 
     security.declareProtected(Permissions.manage_users, "getDefaultUserSource")
     def getDefaultUserSource(self,):
@@ -1502,7 +1502,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         for t in meta_types:
             if t['name'] == self.meta_type:
                 continue        # Do not keep GRUF ! ;-)
-            
+
             if filter_classes:
                 try:
                     if t.get('instance', None) and class_utility.isBaseClass(AccessControl.User.BasicUserFolder, t['instance']):
@@ -1599,7 +1599,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if REQUEST.has_key('RESPONSE'):
             return REQUEST.RESPONSE.redirect(self.absolute_url() + '/manage_GRUFSources')
 
-    
+
 
     security.declarePrivate('_renameUserSource')
     def _renameUserSource(self, id, new_id, ):
@@ -1708,6 +1708,4 @@ class treeWrapper:
     def tpURL(self,):
         return self.tpId()
 
-InitializeClass(GroupUserFolder) 
-
-
+InitializeClass(GroupUserFolder)

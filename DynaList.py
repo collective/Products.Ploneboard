@@ -54,7 +54,7 @@ class DynaList:
             return self.__class__(list(other) + self.data())
     def __iadd__(self, other):
         raise NotImplementedError, "Not implemented"
-    
+
     def __mul__(self, n):
         return self.__class__(self.data()*n)
     __rmul__ = __mul__

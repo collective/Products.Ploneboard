@@ -32,7 +32,7 @@ host, port = ZopeTestCase.utils.startZServer(4)
 base = 'http://%s:%d/%s' %(host, port, ZopeTestCase._folder_name)
 
 from AccessControl import getSecurityManager
-    
+
 # Get global vars
 from Products.GroupUserFolder.global_symbols import *
 
@@ -74,11 +74,11 @@ except:
 
 
 class ManagementOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         return ('manager', 'secret')
-        
+
 class UnauthorizedOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         raise Unauthorized, 'The URLopener was asked for authentication'
 
 
@@ -126,11 +126,11 @@ class TestMultipleSources(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
 
         # Create nested-groups users
-        self.folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )        
+        self.folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )
         self.folder.acl_users._doAddUser('u9', 'secret', (), (), ('g1', 'ng2', ), )
-        self.folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )        
-        self.folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
-##        self.folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
+        self.folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )
+        self.folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )
+##        self.folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )
 
 ##        # Create a few folders to play with
         self.folder.manage_addProduct['OFSP'].manage_addFolder('lr')
@@ -203,5 +203,3 @@ else:
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(TestMultipleSources))
         return suite
-
-

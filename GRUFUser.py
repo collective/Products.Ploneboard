@@ -6,7 +6,7 @@
 
 """GroupUserFolder product"""
 # fakes a method from a DTML File
-from Globals import MessageDialog, DTMLFile 
+from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
 from AccessControl import Permissions
@@ -49,7 +49,7 @@ import traceback
 grufprefix = GRUFFolder.GRUFGroups._group_prefix
 _group_prefix = GRUFFolder.GRUFGroups._group_prefix
 
-class GRUFUser(AccessControl.User.BasicUser, Implicit): 
+class GRUFUser(AccessControl.User.BasicUser, Implicit):
     """
     Base class for all GRUF-catched User objects.
     There's, alas, many copy/paste from AccessControl.BasicUser...
@@ -60,7 +60,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
 ##    def __allow_access_to_unprotected_subobjects__(self, name, value=None):
 ##        # This is get back from AccessControl.User.BasicUser
 ##        deny_names=('name', '__', 'roles', 'domains', '_getPassword',
-##                    'authenticate', '_shared_roles', 
+##                    'authenticate', '_shared_roles',
 ##                    "_setUnderlying", "__init__", )
 ##        if name in deny_names:
 ##            return 0
@@ -69,10 +69,10 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     security.declarePrivate('_setUnderlying')
     def _setUnderlying(self, user):
         """
-        _setUnderlying(self, user) => Set the GRUFUser properties to 
+        _setUnderlying(self, user) => Set the GRUFUser properties to
         the underlying user's one.
-        Be careful that any change to the underlying user won't be 
-        reported here. $$$ We don't know yet if User object are 
+        Be careful that any change to the underlying user won't be
+        reported here. $$$ We don't know yet if User object are
         transaction-persistant or not...
         """
         self._original_name   = user.getUserName()
@@ -102,7 +102,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def __init__(self, underlying_user, GRUF, isGroup = 0, source_id = 'Users', ):
         # When calling, set isGroup it to TRUE if this user represents a group
         self._setUnderlying(underlying_user)
-        self._isGroup = isGroup   
+        self._isGroup = isGroup
         self._GRUF = GRUF
         self._source_id = source_id
         self.id = self._original_id
@@ -137,7 +137,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def getGroups(self, no_recurse = 0, already_done = [], prefix = GRUFFolder.GRUFGroups._group_prefix):
         """
         getGroups(self, no_recurse = 0, already_done = [], prefix = GRUFFolder.GRUFGroups._group_prefix) => list of strings
-        
+
         If this user is a user (uh, uh), get its groups.
         THIS METHODS NOW SUPPORTS NESTED GROUPS ! :-)
         The already_done parameter prevents infite recursions.
@@ -147,8 +147,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
 
         This method is private and should remain so.
         """
-        # List this user's roles. We consider that roles starting 
-        # with _group_prefix are in fact groups, and thus are 
+        # List this user's roles. We consider that roles starting
+        # with _group_prefix are in fact groups, and thus are
         # returned (prefixed).
         if self._groups is not None:
             return self._groups
@@ -159,11 +159,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         for role in self._original_roles:
             # Inspect group-like roles
             if role.startswith(prefix):
-                
+
                 # Prevent infinite recursion
                 if self._isGroup and role in already_done:
-                    continue 
-                    
+                    continue
+
                 # Get the underlying group
                 grp = self.aq_parent.getUser(role)
                 if not grp:
@@ -193,10 +193,10 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """
         ret = []
         for group in self.getGroups(**kw):
-          if group.startswith(grufprefix):
-            ret.append(group[len(grufprefix):])
+            if group.startswith(grufprefix):
+                ret.append(group[len(grufprefix):])
         return ret
-                
+
     security.declarePublic('getUserNameWithoutGroupPrefix')
     def getUserNameWithoutGroupPrefix(self):
         """Return the username of a user without a group prefix"""
@@ -216,7 +216,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     security.declarePublic('getId')
     def getId(self):
         """Get the ID of the user. The ID can be used, at least from
-        Python, to get the user from the user's UserDatabase 
+        Python, to get the user from the user's UserDatabase
         """
         # Return the right id
         if self.isGroup() and \
@@ -261,9 +261,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         if self._group_roles is not None:
             return self._group_roles
         ret = []
-        acl_users = self._GRUF.acl_users 
+        acl_users = self._GRUF.acl_users
         groups = acl_users.getGroupNames()
-        
+
         for group in self.getGroups():
             if not group in groups:
                 Log("Group", group, "is invalid. Ignoring.")
@@ -271,10 +271,10 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 # Ignored silently
                 continue
             ret.extend(acl_users.getGroup(group).getUserRoles())
-        
+
         self._group_roles = GroupUserFolder.unique(ret)
         return self._group_roles
-    
+
     security.declarePublic('getRolesInContext')
     def getRolesInContext(self, object, userid = None):
         """
@@ -318,7 +318,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 inner_obj=getattr(inner_obj, 'aq_inner', inner_obj)
                 continue
             break
-        
+
         return tuple(roles.keys())
 
     security.declarePublic('getDomains')
@@ -343,7 +343,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """Check whether the user has access to object. The user must
            have one of the roles in object_roles to allow access."""
 
-        if object_roles is _what_not_even_god_should_do: 
+        if object_roles is _what_not_even_god_should_do:
             return 0
 
         # Short-circuit the common case of anonymous access.
@@ -369,7 +369,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # Helge Tesdal, Plone Solutions AS, http://www.plonesolutions.com
         # We avoid using the getRoles() and getRolesInContext() methods to be able
         # to short circuit.
-        
+
         # Dict for faster lookup and avoiding duplicates
         object_roles_dict = {}
         for role in object_roles:
@@ -421,7 +421,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 continue
             break
         return None
-    
+
 
     security.declarePublic('hasRole')
     def hasRole(self, *args, **kw):
@@ -444,8 +444,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         '''
         if not self.isGroup():
             raise TypeError,'This method only aplies to groups'
-        
-        return [u for u in self.aq_parent.getUsers() 
+
+        return [u for u in self.aq_parent.getUsers()
                 if self.getId() in u.getGroups()]
 
 
@@ -489,7 +489,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # This will call the underlying object's methods
         # if they are not found in this user object.
         return self.__underlying__[name]
- 
+
     #                                                           #
     #                   Password changing                       #
     #                                                           #
@@ -500,7 +500,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # don't spam the user's roles with special roles
         roles = self._original_roles  # we must keep group roles
         roles = filter(lambda x: x not in ('Authenticated', 'Shared', 'Anonymous'), roles)
-        
+
         # set the profile on the user folder
         self.userFolderEditUser(
             self.getUserName(),

@@ -47,7 +47,7 @@ class Installation:
                     obj.title=title
                     self.out.write("Added '%s' tool.\n" % (tool,))
                     found = 1
-            if not found: 
+            if not found:
                 self.out.write("Couldn't add '%s' tool.\n" % (tool,))
 
     def installSubSkin(self, skinFolder):
@@ -63,9 +63,9 @@ class Installation:
                     path.append(skinFolder)
                 path = string.join( path, ', ' )
                 self.skinsTool.addSkinSelection( skin, path )
-                self.out.write('Subskin successfully installed into %s.\n' % skin)    
+                self.out.write('Subskin successfully installed into %s.\n' % skin)
             else:
-                self.out.write('*** Subskin was already installed into %s.\n' % skin) 
+                self.out.write('*** Subskin was already installed into %s.\n' % skin)
 
     def setupCustomModelsSkin(self, skin_name):
         """ Install custom skin folder
@@ -80,7 +80,7 @@ class Installation:
         """
         setup of types and skins
         """
-    
+
         # Former types deletion (added by PJG)
         for f in fti_list:
             if f['id'] in self.typesTool.objectIds():
@@ -100,7 +100,7 @@ class Installation:
             self.out.write('Type "%s" registered with the types tool\n' % (f['id']))
 
         # Install de chaque nouvelle subskin/layer
-        try:  
+        try:
             addDirectoryViews(self.skinsTool, 'skins', install_globals)
             self.out.write( "Added directory views to portal_skins.\n" )
         except:
@@ -113,7 +113,7 @@ class Installation:
         """
         isPlone2(self,) => return true if we're using Plone2 ! :-)
         """
-        return self.hasFormController()        
+        return self.hasFormController()
 
     def hasFormController(self,):
         """
@@ -171,7 +171,7 @@ class Installation:
             return
         This assumes that you set the domain 'mydomain' in 'translation_service'
         and the .../Products/YourProduct/i18n/potfile_en.po (...) contain your messages.
-    
+
         @param plone: the plone site
         @type plone: a 'Plone site' object
         @param prodglobals: see PloneSkinRegistrar.__init__
@@ -230,7 +230,3 @@ class Installation:
                 mc.manage_import(lang, fh.read())
                 fh.close()
         self.out.write("Done !")
-
-
-
-                

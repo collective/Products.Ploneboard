@@ -87,13 +87,13 @@ def LogCallStack(level,):
     for stackItem in stackItems:
         LOG_PROCESSOR[level](level, LOG_LABEL[level], "%s%s:%s:" % (space, os.path.basename(stackItem[0]), stackItem[1],), stackItems)
         space = " %s" % space
-    
+
 
 
 def FormatStack(stack):
     """
     FormatStack(stack) => string
-    
+
     Return a 'loggable' version of the stack trace
     """
     ret = ""
@@ -139,7 +139,7 @@ def LogzLog(level, label, data, stack):
     """
     zLOG.LOG("IngeniWeb", zLogLevelConverter[level], "", data + "\n", )
 
-    
+
 
 LOG_PROCESSOR = {
     LOG_NONE: LogzLog,
@@ -149,7 +149,7 @@ LOG_PROCESSOR = {
     LOG_NOTICE: LogzLog,
     LOG_DEBUG: LogFile,
     }
-    
+
 
 LOG_LABEL = {
     LOG_NONE: "",
@@ -159,4 +159,3 @@ LOG_LABEL = {
     LOG_NOTICE:   "NOTICE  ",
     LOG_DEBUG:    "DEBUG   ",
     }
-    

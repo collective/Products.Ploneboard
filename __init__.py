@@ -29,7 +29,7 @@ def initialize(context):
     except:
         # No registerdir available => we ignore
         pass
-    
+
     context.registerClass(
         GroupUserFolder.GroupUserFolder,
         permission='Add GroupUserFolders',

@@ -82,7 +82,7 @@ def Log(level, *args):
 def FormatStack(stack):
     """
     FormatStack(stack) => string
-    
+
     Return a 'loggable' version of the stack trace
     """
     ret = ""
@@ -128,7 +128,7 @@ def logZLog(level, label, data, stack):
     """
     zLOG.LOG("IngeniWeb", zLogLevelConverter[level], "", data + "\n", )
 
-    
+
 
 LOG_PROCESSOR = {
     LOG_NONE: logZLog,
@@ -138,7 +138,7 @@ LOG_PROCESSOR = {
     LOG_NOTICE: logZLog,
     LOG_DEBUG: logFile,
     }
-    
+
 
 LOG_LABEL = {
     LOG_NONE: "",
@@ -148,4 +148,3 @@ LOG_LABEL = {
     LOG_NOTICE:   "NOTICE  ",
     LOG_DEBUG:    "DEBUG   ",
     }
-    

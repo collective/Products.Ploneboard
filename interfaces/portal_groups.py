@@ -61,43 +61,43 @@ class portal_groups(Interface):
         Underlying user folder must support removing users via the usual Zope API."""
 
     def setGroupOwnership(group, object):
-    	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""
+        """Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""
 
     def setGroupWorkspacesFolder(id=""):
-    	""" Set the location of the Group Workspaces folder by id.
+        """ Set the location of the Group Workspaces folder by id.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders.
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders.
 
-     	If anyone really cares, we can probably make the id work as a path as well,
-     	but for the moment it's only an id for a folder in the portal root, just like the
-     	corresponding MembershipTool functionality. """
+        If anyone really cares, we can probably make the id work as a path as well,
+        but for the moment it's only an id for a folder in the portal root, just like the
+        corresponding MembershipTool functionality. """
 
     def getGroupWorkspacesFolderId():
-	""" Get the Group Workspaces folder object's id.
+        """ Get the Group Workspaces folder object's id.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders. """
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders. """
 
     def getGroupWorkspacesFolder():
-	""" Get the Group Workspaces folder object.
+        """ Get the Group Workspaces folder object.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders. """
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders. """
 
     def toggleGroupWorkspacesCreation():
-    	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
+        """ Toggles the flag for creation of a GroupWorkspaces folder upon first
         use of the group. """
 
     def getGroupWorkspacesCreationFlag():
-    	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
+        """Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
         upon the next use of the group (if one doesn't exist). """
 
     def getGroupWorkspaceType():
-	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
+        """Return the Type (as in TypesTool) to make the GroupWorkspace."""
 
     def setGroupWorkspaceType(type):
-	"""Set the Type (as in TypesTool) to make the GroupWorkspace. Expects the name of a Type."""
+        """Set the Type (as in TypesTool) to make the GroupWorkspace. Expects the name of a Type."""
 
     def createGrouparea(id):
         """Create a space in the portal for the given group, much like member home
@@ -110,4 +110,3 @@ class portal_groups(Interface):
         """Returns the full URL to the group's work area."""
 
     # and various roles things...
-

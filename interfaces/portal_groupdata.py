@@ -54,4 +54,3 @@ class GroupData(Interface):
     def getGroup():
         """ Returns the actual group implementation. Varies by group
         implementation (GRUF/Nux/et al)."""
-

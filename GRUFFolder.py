@@ -7,7 +7,7 @@
 """GroupUserFolder product"""
 
 # fakes a method from a DTML file
-from Globals import MessageDialog, DTMLFile 
+from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -76,7 +76,7 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
             return self.id
         else:
             return self.default_id      # Used for b/w compatibility
-    
+
     def getUserSourceId(self,):
         return self.getId()
 
@@ -91,7 +91,7 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
     security.declarePublic('header_text')
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's 
+        header_text(self,) => Text that appears in the content's
                               view heading zone
         """
         return ""
@@ -119,10 +119,10 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
 
         # Return () if nothing is there
         return ()
-        
 
 
-class GRUFUsers(GRUFFolder): 
+
+class GRUFUsers(GRUFFolder):
     """
     GRUFUsers : GRUFFolder that holds users
     """
@@ -159,15 +159,15 @@ class GRUFUsers(GRUFFolder):
 
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's view 
+        header_text(self,) => Text that appears in the content's view
                               heading zone
         """
         if not "acl_users" in self.objectIds():
             return "Please put an acl_users here before ever " \
                    "starting to use this object."
 
-        ret = """In this folder, groups are seen as ROLES from user's 
-                 view. To put a user into a group, affect him a role 
+        ret = """In this folder, groups are seen as ROLES from user's
+                 view. To put a user into a group, affect him a role
                  that matches his group.<br />"""
 
         return ret
@@ -222,7 +222,7 @@ class GRUFGroups(GRUFFolder):
 
     def header_text(self,):
         """
-        header_text(self,) => Text that appears in the content's 
+        header_text(self,) => Text that appears in the content's
                               view heading zone
         """
         ret = ""
@@ -230,7 +230,7 @@ class GRUFGroups(GRUFFolder):
             return "Please put an acl_users here before ever " \
                    "starting to use this object."
         return ret
-        
+
 
     def listGroups(self, prefixed = 1):
         """
@@ -250,7 +250,6 @@ class GRUFGroups(GRUFFolder):
         "Return list of user-defined roles"
         return self.listGroups()
 
-   
-InitializeClass(GRUFUsers) 
-InitializeClass(GRUFGroups) 
 
+InitializeClass(GRUFUsers)
+InitializeClass(GRUFGroups)

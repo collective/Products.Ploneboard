@@ -292,10 +292,10 @@ class IUserAtom(Interface):
         Return an empty list if the user or group doesn't belong to any group."""
 
     def getAllGroups():
-         """
-         Return the all the groups names (including transitive ones)  
-         that the user or group is a member of
-         """
+        """
+        Return the all the groups names (including transitive ones)  
+        that the user or group is a member of
+        """
 
     def isInGroup(groupid):
         """Return 1 if the user is member of the specified group id
@@ -365,8 +365,8 @@ class IGroup(Interface):
         This is the contrary of IUserAtom.isInGroup(groupid)"""
 
     def addUser(userid):
-         """Add a user the the current group"""
-         
+        """Add a user the the current group"""
+        
     def removeUser(userid):
-         """Remove a user from the current group"""
+        """Remove a user from the current group"""
 

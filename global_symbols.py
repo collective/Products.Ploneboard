@@ -45,7 +45,5 @@ INVALID_USER_NAMES = [
     'BASEPATH1', 'BASEPATH2', 'BASEPATH3', 'a_', 'URL', 'acl_users', 'misc_',
     'management_view', 'management_page_charset', 'REQUEST', 'RESPONSE',
     'MANAGE_TABS_NO_BANNER', 'tree-item-url', 'SCRIPT_NAME', 'n_', 'help_topic',
-    'Zope-Version', 'target', 
+    'Zope-Version', 'target',
     ]
-
-

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.22 2004/03/19 15:23:28 roeder Exp $
+$Id: GroupsTool.py,v 1.23 2004/05/04 21:48:46 dreamcatcher Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -163,7 +163,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             title = title.strip().lower()
         if not title:
             title = None
-            
+
         res = []
         portal = self.portal_url.getPortalObject()
         for g in portal.portal_groups.listGroups():

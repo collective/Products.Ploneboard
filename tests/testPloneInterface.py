@@ -68,11 +68,11 @@ except:
 
 
 class ManagementOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         return ('manager', 'secret')
-        
+
 class UnauthorizedOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         raise Unauthorized, 'The URLopener was asked for authentication'
 
 
@@ -85,7 +85,7 @@ class TestPloneInterface(PloneTestCase.PloneTestCase):
         self.mt = self.portal.portal_membership
         self.gt = self.portal.portal_groups
         self.acl_users = self.portal.acl_users
-        
+
     def testUserCreation(self,):
         """
         test user creation with plone
@@ -172,7 +172,7 @@ class TestPloneInterface(PloneTestCase.PloneTestCase):
         self.failUnless("SampleRole" not in self.acl_users.getUser("member1").getRoles())
         self.failUnless("Member" in self.acl_users.getUser("member1").getRoles())
 
-        
+
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=1)
 else:
@@ -181,4 +181,3 @@ else:
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(TestPloneInterface))
         return suite
-

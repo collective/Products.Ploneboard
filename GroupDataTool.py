@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.13 2004/04/14 00:25:34 k_vertigo Exp $
+$Id: GroupDataTool.py,v 1.14 2004/05/04 21:48:46 dreamcatcher Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -302,7 +302,7 @@ class GroupData (SimpleItem):
         Will always return true for groups
         """
         return 1
-    
+
 
     ### Group object interface ###
 
@@ -319,24 +319,24 @@ class GroupData (SimpleItem):
 
     security.declarePublic('getRoles')
     def getRoles(self):
-	"""Return the list of roles assigned to a user."""
-	return self.getGroup().getRoles()
+        """Return the list of roles assigned to a user."""
+        return self.getGroup().getRoles()
 
     security.declarePublic('getRolesInContext')
     def getRolesInContext(self, object):
         """Return the list of roles assigned to the user,  including local
-	roles assigned in context of the passed in object."""
-	return self.getGroup().getRolesInContext(object)
+        roles assigned in context of the passed in object."""
+        return self.getGroup().getRolesInContext(object)
 
     security.declarePublic('getDomains')
     def getDomains(self):
-	"""Return the list of domain restrictions for a user"""
-	return self.getGroup().getDomains()
+        """Return the list of domain restrictions for a user"""
+        return self.getGroup().getDomains()
 
     security.declarePublic('has_role')
     def has_role(self, roles, object=None):
-	"""Check to see if a user has a given role or roles."""
-	return self.getGroup().has_role(roles, object)
+        """Check to see if a user has a given role or roles."""
+        return self.getGroup().has_role(roles, object)
 
     # There are other parts of the interface but they are
     # deprecated for use with CMF applications.

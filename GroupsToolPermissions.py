@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsToolPermissions.py,v 1.4 2003/12/16 16:07:22 pjgrizel Exp $
+$Id: GroupsToolPermissions.py,v 1.5 2004/05/04 21:48:46 dreamcatcher Exp $
 """
 
 from Products.CMFCore.CMFCorePermissions import setDefaultRoles
@@ -27,6 +27,3 @@ setDefaultRoles(DeleteGroups, ('Manager', ))
 
 SetGroupOwnership = 'Set Group Ownership'
 setDefaultRoles(SetGroupOwnership, ('Manager', 'Owner'))
-
-
-

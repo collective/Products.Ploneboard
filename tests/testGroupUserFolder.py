@@ -30,7 +30,7 @@ ZopeTestCase.close(app)
 host, port = ZopeTestCase.utils.startZServer(4)
 base = 'http://%s:%d/%s' %(host, port, ZopeTestCase._folder_name)
 
-    
+
 # Get global vars
 #from Products.GroupUserFolder.global_symbols import *
 from Products.GroupUserFolder.interfaces import IUserFolder
@@ -73,11 +73,11 @@ except:
 
 
 class ManagementOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         return ('manager', 'secret')
-        
+
 class UnauthorizedOpener(urllib.FancyURLopener):
-    def prompt_user_passwd(self, host, realm): 
+    def prompt_user_passwd(self, host, realm):
         raise Unauthorized, 'The URLopener was asked for authentication'
 
 
@@ -165,11 +165,11 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.gruf_folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
 
         # Create nested-groups users
-        self.gruf_folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )        
+        self.gruf_folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )
         self.gruf_folder.acl_users._doAddUser('u9', 'secret', (), (), ('g1', 'ng2', ), )
-        self.gruf_folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )        
-        self.gruf_folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
-##        self.gruf_folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
+        self.gruf_folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )
+        self.gruf_folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )
+##        self.gruf_folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )
 
         # Create a few folders to play with
         self.gruf_folder.manage_addProduct['OFSP'].manage_addFolder('lr')
@@ -221,7 +221,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
             self.failUnless(u in un, "Invalid users list: '%s' is not in acl_users." % (u,))
         for u in un:
             self.failUnless(u in users, "Invalid users list: '%s' is in acl_users but shouldn't be there." % (u,))
-        
+
 
     def test01userRoles(self,):
         """
@@ -245,7 +245,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         # Remove the group & user
         self.gruf_folder.acl_users._doDelUsers(['utest',])
         self.gruf_folder.acl_users._doDelGroups(['gtest',])
-        
+
 
     def compareRoles(self, target, user, roles):
         """
@@ -375,7 +375,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         Test against double nesting
         """
         self.failUnless(self.compareGroups("group_compta", ('intranet', 'extranet', )))
-    
+
 
     def test08traversal(self,):
         """
@@ -391,7 +391,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         traversed = self.gruf_folder.acl_users.restrictedTraverse("u1")
         Log(LOG_DEBUG, traversed)
         self.failUnless(traversed.meta_type == "Group User Folder")
-          
+
 
     #                                                   #
     #               GRUF Interface testing              #
@@ -456,7 +456,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        page = urllib.urlopen(base+'/secret_html').read()
 ##        if page.find('Resource not found') >= 0:
 ##            self.fail('Resource not found')
-            
+
 ##    def testSecurity(self):
 ##        '''Test security of public resource'''
 ##        # Should be accessible
@@ -467,7 +467,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        '''Test security of protected resource'''
 ##        # Should be protected
 ##        self.assertRaises(Unauthorized, self.gruf_folder.restrictedTraverse, 'secret_html')
-    
+
 ##    def testWebSecurity(self):
 ##        '''Test web security of public resource'''
 ##        # Should be accessible
@@ -521,7 +521,7 @@ class TestGroupUserFolderCopy(TestGroupUserFolder):
         self._login()
         self.folder.manage_addProduct['OFSP'].manage_addFolder('gruf_folder2')
         folder2 = self.folder.gruf_folder2
-        
+
         # copy/paste GRUF inside
         copy = self.gruf_folder.manage_copyObjects(ids = ['acl_users',],)
         folder2.manage_pasteObjects(cb_copy_data = copy)
@@ -537,4 +537,3 @@ else:
         suite.addTest(unittest.makeSuite(TestGroupUserFolder))
         suite.addTest(unittest.makeSuite(TestGroupUserFolderCopy))
         return suite
-

@@ -1,6 +1,6 @@
 #!/usr/local/bin/python -O
 
-""" 
+"""
     Automatic Python Documentation in HTML
 
     This tool will parse all files in a given directory and build an
@@ -72,8 +72,8 @@
 
            http://starship.python.net/~lemburg/
 
-    
-    
+
+
 -----------------------------------------------------------------------------
 (c) Copyright by Marc-Andre Lemburg (mailto:mal@lemburg.com)
 
@@ -142,7 +142,7 @@ hrefprefix = '' # put infront of all external HTML-links... helps when
 #highlighted = 'http://starship.python.net/~lemburg/py2html.cgi/%s'
                 # URL of the source code highlighting mediator to be used;
                 # %s will be replaced by the hrefprefix+filename
-highlighted = '%s.html' 
+highlighted = '%s.html'
                 # If want to use static versions created with py2html.py,
                 # use this version
 
@@ -187,11 +187,11 @@ def parts(text,indent):
     l = map(tuple,l)
 #    print '** returning with parts:',`l`
     return l
-    
+
 def calc_bodyindent(text,start=0):
 
     """ calculate the bodyindent of the code starting at text[start:] """
-    
+
     # this one works in most cases
     rx = rx_bodyindent
     if rx.search(text,start) != -1:
@@ -204,7 +204,7 @@ def calc_bodyindent(text,start=0):
             a,b = rx.regs[1]
             return b-a
         else:
-            # didn't think of this one... 
+            # didn't think of this one...
             print 'bodyindent failed for:\n--|'+text[start:]+'|-- why?'
             return 0
 
@@ -216,7 +216,7 @@ def subst(find,sub,text):
     return string.joinfields(l,sub)
 
 def fix_linebreaks(text):
-    
+
     """ want to have Unix-style newlines everywhere (that is, no \r!) """
 
     text = subst('\r\n','\n',text)
@@ -261,7 +261,7 @@ def extract_version_string(text):
 def fullname(doc):
 
     """ return the full name of a doc-class, that is the names of its
-        owners and itself, concatenated with dots 
+        owners and itself, concatenated with dots
         -- the usual Python-fashion of naming things
     """
 
@@ -277,16 +277,16 @@ def get_parameters(paramstring,
                    filter=filter,len=len,map=map):
 
     """ Returns a list of parameter strings.
-    
+
         As a special feature, all parameters following an empty
         line are ignored in the list. This is useful for typical
         localization hacks like
 
         # func(a,b,c,
-        # 
+        #
         #      str=str,find=string.find):
         #     ...
-        
+
         The localizations are not shown in the generated docs.
 
         XXX Tuples in the parameter string are not supported !
@@ -418,7 +418,7 @@ class doc_type:
 class doc_class(doc_type):
 
     def __init__(self,text,sx,sy,owner=None):
-    
+
         """ parse the text part [sx:sy] for a class definition and all its
             members; instance-variables:
             * text    - original code
@@ -463,7 +463,7 @@ class doc_class(doc_type):
         self.parts = parts(text[start:sy],self.bodyindent)
         try:
             for x,y,type in self.parts:
-                if  type == 'def': 
+                if  type == 'def':
                     # got a method
                     self.methods.append(doc_method(text,start+x,start+y,self))
                 elif type == 'class':
@@ -525,7 +525,7 @@ class doc_class(doc_type):
 class doc_method(doc_type):
 
     def __init__(self,text,sx,sy,owner=None):
-    
+
         """ parse the text part [sx:sy] for a method definition and all its
             members; instance-variables:
             * text    - original code
@@ -567,7 +567,7 @@ class doc_method(doc_type):
         self.parts = parts(text[start:sy],self.bodyindent)
         try:
             for x,y,type in self.parts:
-                if  type == 'def': 
+                if  type == 'def':
                     # got a function
                     self.functions.append(doc_function(text,start+x,start+y,self))
                 elif type == 'class':
@@ -629,7 +629,7 @@ class doc_method(doc_type):
 class doc_function(doc_type):
 
     def __init__(self,text,sx,sy,owner=None):
-    
+
         """ parse the text part [sx:sy] for a method definition and all its
             members; instance-variables:
             * text    - original code
@@ -672,7 +672,7 @@ class doc_function(doc_type):
 #       print ' - function',self.parts,':\n',text[start:sy]
         try:
             for x,y,type in self.parts:
-                if  type == 'def': 
+                if  type == 'def':
                     # got a function
                     self.functions.append(doc_function(text,start+x,start+y,self))
                 elif type == 'class':
@@ -768,7 +768,7 @@ class doc_module(doc_type):
         self.doc = doc_string('',self)
         try:
             for x,y,type in self.parts:
-                if  type == 'def': 
+                if  type == 'def':
                     # got a function
                     self.functions.append(doc_function(self.text,x,y,self))
                 elif type == 'class':
@@ -937,7 +937,7 @@ class doc_project:
         output = output + '</BODY></HTML>'
         index.write(output)
         index.close()
-        
+
         # make content-file
         print '',self.content
         output = """
@@ -989,4 +989,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    

@@ -18,7 +18,7 @@ def showaq(self, indent=''):
     except: id = str(base)
     try: id = id()
     except: pass
-                         
+
     if hasattr(obj, 'aq_self'):
         if hasattr(obj.aq_self, 'aq_self'):
             rval = rval + indent + "(" + id + ")\n"
@@ -63,7 +63,7 @@ def _populateBaseMetaTypes(cl):
         ret = [cl.meta_type]
     except AttributeError:
         ret = []
-        
+
     for b in cl.__bases__:
         ret = list(listBaseMetaTypes(b, 1)) + ret
 
@@ -113,19 +113,19 @@ def objectItems(container, meta_types = []):
                 break
 
     return ret
-        
+
 
 
 def listBaseClasses(cl, reverse = 0):
     """
     listBaseClasses(cl, reverse = 0) => list of classes
-    
+
     List all the base classes of an object.
     When reverse is 0, return the self class first.
     When reverse is 1, return the self class last.
 
     WARNING : reverse is 0 or 1, it is an integer, NOT A BOOLEAN ! (optim issue)
-    
+
     CACHE RESULTS
 
     WARNING : for optimization issues, the ORIGINAL tuple is returned : please do not change it !
@@ -170,4 +170,3 @@ def _populateBaseClasses(cl):
         _BASECLASSES[cl] = (tuple(rev), tuple(ret), bases)
     finally:
         _BASECLASSESLOCK.release()
-
