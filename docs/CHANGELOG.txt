@@ -1,3 +1,18 @@
+2004-04-11 19:54  tiran
+
+	* __pkginfo__.py, version.txt, docs/HISTORY.txt: preparing next
+	  release
+
+2004-04-11 19:54  tiran
+
+	* docs/: atct-uml.png, atct-uml.zuml: Added uml diagram of ATCT
+	  classes
+
+2004-04-11 14:35  tiran
+
+	* docs/: CHANGELOG.txt, HISTORY.txt: Added Changelog Updated
+	  history
+
 2004-04-11 14:33  tiran
 
 	* customconfig.py.example: Added missing file
