@@ -42,7 +42,8 @@
               tal:attributes="action here/absolute_url"
               tal:define="global batch python:[];
 			  folder_contents python:1;
-                          standalone python:0;">
+                          standalone python:0;
+                          global contentTypes python: here.getAllowedTypes()" >
 	    <span class="legend" i18n:translate="legend_existing_languages">existing languages</span>
     
             <tal:block tal:repeat="lang existing_languages">
