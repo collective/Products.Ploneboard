@@ -44,7 +44,7 @@ if hasLDAP:
         LDAPUserFolder.manage_editGroupRoles = LDAPUserFolderAdapter.manage_editGroupRoles
         LDAPUserFolder._mangleRoles = LDAPUserFolderAdapter._mangleRoles
 
-    # Patch LDAPUF  : XXX FIXME: have to find something cleaner here.
+    # Patch LDAPUF  : XXX FIXME: have to find something cleaner here?
     patch_LDAPUF()
 
 

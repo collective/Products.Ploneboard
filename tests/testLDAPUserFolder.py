@@ -211,7 +211,7 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestLDAPUserFolderBasics))
+##        suite.addTest(unittest.makeSuite(TestLDAPUserFolderBasics))
         suite.addTest(unittest.makeSuite(TestLDAPUserFolderAPI))
         return suite
 

@@ -432,7 +432,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
         v = self._GRUF.getUserById(self.getId()).getProperty(name)
         if not v == value:
             Log(LOG_DEBUG, "Property '%s' for user '%s' should be '%s' and not '%s'" % (
-                name, self.getId(), v, value,
+                name, self.getId(), value, v,
                 ))
             raise NotImplementedError, "Property setting is not supported for '%s'." % (name,)
 
@@ -752,8 +752,15 @@ class GRUFGroup(GRUFUserAtom):
 
         # Extraction
         groupid = self.getId()
-        return [u for u in lst
-                if groupid in getattr(gruf.getUser(u), method)()]
+        groups_mapping = {}
+        for u in lst:
+            usr = gruf.getUser(u)
+            if not usr:
+                groups_mapping[u] = []
+                Log(LOG_WARNING, "Invalid user retreiving:", u)
+            else:
+                groups_mapping[u] = getattr(usr, method)()
+        return [u for u in lst if groupid in groups_mapping[u]]
 
     security.declarePrivate("getMemberIds")
     def getMemberIds(self, transitive = 1, ):

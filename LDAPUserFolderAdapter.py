@@ -104,6 +104,7 @@ def _mangleRoles(self, name, roles):
     # See "HERE IT IS" comment below.
 
     # Scan roles we are asking for to manage groups correctly
+    Log(LOG_DEBUG, "Scanning roles for", name, roles, )
     for role in roles:
         if not role in all_roles:
             continue                        # Do not allow propagation of invalid roles

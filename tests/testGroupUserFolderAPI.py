@@ -859,13 +859,13 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
 
         # Normal behaviour
         ob = self.sublr2
-        allowed = self.gruf.getAllLocalRoles(ob)
+        allowed = self.gruf._getAllLocalRoles(ob)
         self.failUnlessEqual(allowed, normal_allowed)
 
         # LR-blocking behaviour
         ob = self.sublr2
         self.gruf._acquireLocalRoles(ob, 0)
-        allowed = self.gruf.getAllLocalRoles(ob)
+        allowed = self.gruf._getAllLocalRoles(ob)
         self.failUnlessEqual(allowed, blocked_allowed)
 
 
