@@ -33,10 +33,16 @@
 	<h1 tal:content="here/title_or_id"
 	    metal:use-macro="edit_macros/header|default"/>
 
+        <p i18n:translate="" tal:content="here/TypeDescription|nothing"
+           tal:condition="here/TypeDescription|nothing
+           ">
+           Type Description
+        </p>
+
 	<form name="edit_form"
 	      method="post"
 	      enctype="multipart/form-data"
-	      tal:attributes="action template/getId" >
+	      tal:attributes="action python:here.absolute_url()+'/'+template.id" >
 
 	  <fieldset>
 
