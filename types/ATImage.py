@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
+$Id: ATImage.py,v 1.6 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,11 +30,14 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
+from Acquisition import aq_parent
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATImage import IATImage
-from Products.ATContentTypes.types.schemata import ATImageSchema
+from Products.ATContentTypes.types.schemata import ATImageSchema, ATExtImageSchema
+
+from OFS.Image import Image
 
 
 class ATImage(ATCTContent):
@@ -46,8 +49,9 @@ class ATImage(ATCTContent):
     meta_type      = 'ATImage'
     archetype_name = 'AT Image'
     immediate_view = 'image_view'
+    default_view   = 'image_view'
     suppl_views    = ()
-    newTypeFor     = 'Image'
+    newTypeFor     = ('Image', 'Portal Image')
     typeDescription= 'Using this form, you can enter details about the image, and upload\n' \
                      'an image if required.'
     typeDescMsgId  = 'description_edit_image'
@@ -98,3 +102,35 @@ class ATImage(ATCTContent):
         return self.image.tag(*args, **kwargs)
 
 registerType(ATImage, PROJECTNAME)
+
+
+class ATExtImage(ATImage):
+    """An Archetypes derived version of CMFDefault's Image with external storage"""
+
+    schema         =  ATExtImageSchema
+
+    content_icon   = 'image_icon.gif'
+    meta_type      = 'ATExtImage'
+    archetype_name = 'AT Ext Image'
+    newTypeFor     = ''
+    assocMimetypes = ()
+    assocFileExt   = ()
+
+    security       = ClassSecurityInfo()
+
+    def image(self,**kwargs):
+        """return the file with proper content type"""
+        REQUEST=kwargs.get('REQUEST',self.REQUEST)
+        RESPONSE=kwargs.get('RESPONSE',REQUEST.RESPONSE)
+        image  = self.getImage()
+        ct     = self.getContentType()
+        parent = aq_parent(self)
+        img    = Image(self.getId(), self.Title(), image, ct)
+        return img.__of__(parent).index_html(REQUEST,RESPONSE)
+   
+    # make it directly viewable when entering the objects URL
+    index_html=image
+
+
+if HAS_EXT_STORAGE:
+    registerType(ATExtImage, PROJECTNAME)

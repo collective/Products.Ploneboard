@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
+$Id: ATNewsItem.py,v 1.6 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -45,8 +45,9 @@ class ATNewsItem(ATDocument):
     meta_type      = 'ATNewsItem'
     archetype_name = 'AT News Item'
     immediate_view = 'newsitem_view'
+    default_view   = 'newsitem_view'
     suppl_views    = ()
-    newTypeFor     = 'NewsItem'
+    newTypeFor     = ('News Item', 'News Item')
     typeDescription= "A news item is a small piece of news that is published on the front\n" \
                      "page. Add the relevant details below, and press 'Save'."
     typeDescMsgId  = 'description_edit_news_item'

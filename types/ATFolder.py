@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.8 2004/04/17 20:02:00 tiran Exp $
+$Id: ATFolder.py,v 1.9 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -45,14 +45,16 @@ class ATFolderBase(ATCTOrderedFolder):
     content_icon   = 'folder_icon.gif'
     meta_type      = 'ATFolder'
     archetype_name = 'AT Folder'
+    immediate_view = 'folder_listing'
+    default_view   = 'folder_listing'
     suppl_views    = ()
-    newTypeFor     = 'Folder'
+    newTypeFor     = ('Folder', 'Plone Folder')
     typeDescription= ''
     typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
 
-    immediate_view = 'folder_listing'
+    
 
     __implements__ = ATCTOrderedFolder.__implements__, IATFolder
 
@@ -87,7 +89,6 @@ if HAS_PLONE2:
     from Products.CMFPlone.PloneFolder import ReplaceableWrapper
 
     class ATFolder(ATFolderBase):
-        newTypeFor     = 'Plone Folder'
 
         #
         # from CMFPlone.PloneFolder
@@ -131,9 +132,10 @@ class ATBTreeFolder(ATCTBTreeFolder):
     meta_type      = 'ATBTreeFolder'
     archetype_name = 'AT BTree Folder'
     immediate_view = 'folder_listing'
+    default_view   = 'folder_listing'
     suppl_views    = ()
     global_allow   = 0
-    newTypeFor     = 'Plone Large Folder'
+    newTypeFor     = ('Large Plone Folder', 'Large Plone Folder')
     TypeDescription= ''
     assocMimetypes = ()
     assocFileExt   = ()

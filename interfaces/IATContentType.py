@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.6 2004/04/09 22:02:19 tiran Exp $
+$Id: IATContentType.py,v 1.7 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -29,6 +29,7 @@ class IATContentType(Interface):
     """Marker interface for AT Content Types
     """
 
+    default_view = Attribute('''Default view template - used for TemplateMixin''')
     suppl_views = Attribute('''Supplementary views - used for TemplateMixin''')
 
     newTypeFor = Attribute('''Used to get the meta type of the original implementation''')

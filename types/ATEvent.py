@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.7 2004/04/09 22:02:20 tiran Exp $
+$Id: ATEvent.py,v 1.8 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -45,8 +45,9 @@ class ATEvent(ATCTContent):
     meta_type      = 'ATEvent'
     archetype_name = 'AT Event'
     immediate_view = 'event_view'
+    default_view   = 'event_view'
     suppl_views    = ()
-    newTypeFor     = 'Event'
+    newTypeFor     = ('Event', 'CMF Event')
     typeDescription= 'Fill in the details of the event you want to add.'
     typeDescMsgId  = 'description_edit_event'
     assocMimetypes = ()

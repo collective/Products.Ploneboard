@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.7 2004/04/17 19:46:08 yenzenz Exp $
+$Id: ATFavorite.py,v 1.8 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -43,10 +43,11 @@ class ATFavorite(ATCTContent):
     meta_type      = 'ATFavorite'
     archetype_name = 'AT Favorite'
     immediate_view = 'favorite_view'
+    default_view   = 'favorite_view'
     suppl_views    = ()
     include_default_actions = 0
-    #global_allow   = 0
-    newTypeFor     = 'Favorite'
+    global_allow   = 0
+    newTypeFor     = ('Favorite', 'Favorite')
     typeDescription= ''
     typeDescMsgId  = ''
     assocMimetypes = ()

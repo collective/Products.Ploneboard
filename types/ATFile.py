@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.10 2004/04/09 22:02:21 tiran Exp $
+$Id: ATFile.py,v 1.11 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -35,7 +35,9 @@ from Products.PortalTransforms.utils import TransformException
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATFile import IATFile
-from Products.ATContentTypes.types.schemata import ATFileSchema
+from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema
+
+from OFS.Image import File
 
 
 class ATFile(ATCTContent):
@@ -47,8 +49,9 @@ class ATFile(ATCTContent):
     meta_type      = 'ATFile'
     archetype_name = 'AT File'
     immediate_view = 'file_view'
+    default_view   = 'file_view'
     suppl_views    = ()
-    newTypeFor     = 'File'
+    newTypeFor     = ('File', 'Portal File')
     typeDescription= "Add the relevant details of the file to be added in the form below,\n" \
                      "select the file with the 'Browse' button, and press 'Save'."
     typeDescMsgId  = 'description_edit_file'
@@ -175,5 +178,37 @@ class ATFile(ATCTContent):
             source+=result
 
         return (source, mimetype, encoding)
- 
+
 registerType(ATFile, PROJECTNAME)
+
+
+class ATExtFile(ATFile):
+    """
+    """
+
+    schema         =  ATExtFileSchema
+
+    content_icon   = 'file_icon.gif'
+    meta_type      = 'ATExtFile'
+    archetype_name = 'AT Ext File'
+    newTypeFor     = ''
+    assocMimetypes = ()
+    assocFileExt   = ()
+
+    security       = ClassSecurityInfo()
+
+    def file(self,**kwargs):
+        """return the file with proper content type"""
+        REQUEST=kwargs.get('REQUEST',self.REQUEST)
+        RESPONSE=kwargs.get('RESPONSE',REQUEST.RESPONSE)
+        file   = self.getFile()
+        ct     = self.getContentType()
+        parent = aq_parent(self)
+        f      = File(self.getId(), self.Title(), file, ct)
+        return f.__of__(parent).index_html(REQUEST,RESPONSE)
+   
+    # make it directly viewable when entering the objects URL
+    index_html=file
+
+if HAS_EXT_STORAGE:
+    registerType(ATExtFile, PROJECTNAME)

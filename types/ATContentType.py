@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.6 2004/04/15 19:42:47 tiran Exp $
+$Id: ATContentType.py,v 1.7 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -55,8 +55,9 @@ class ATCTMixin(TemplateMixin):
     meta_type      = 'ATContentType'
     archetype_name = 'AT Content Type'
     immediate_view = 'base_view'
+    default_view   = 'base_view'
     suppl_views    = ()
-    newTypeFor     = ''
+    newTypeFor     = ()
     typeDescription= ''
     typeDescMsgId  = ''
     assocMimetypes = ()
@@ -99,7 +100,8 @@ class ATCTMixin(TemplateMixin):
     def getDefaultLayout(self):
         """Get the default layout used for TemplateMixin
         """
-        return self.immediate_view
+        return self.default_view
+
 
 InitializeClass(ATCTMixin)
 

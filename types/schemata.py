@@ -18,10 +18,12 @@
 #
 """
 
-$Id: schemata.py,v 1.19 2004/04/23 09:54:59 tiran Exp $
+$Id: schemata.py,v 1.20 2004/04/26 06:30:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
+
+from copy import deepcopy
 
 from Products.Archetypes.public import *
 from Products.Archetypes.TemplateMixin import schema as TemplateMixinSchema
@@ -31,12 +33,11 @@ from Products.CMFCore import CMFCorePermissions
 from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
 
-from Products.validation.config import validation
-from zLOG import LOG, ERROR
-try:
-    v = validation.validatorFor('isTidyHtmlWithCleanup')
-except KeyError, msg:
-    LOG(PROJECTNAME, ERROR, ': isTidyHtmlWithCleanup is not registered!')
+if HAS_EXT_STORAGE:
+    from Products.ExternalStorage.ExternalStorage import ExternalStorage
+else:
+    # dummy storage
+    from Products.Archetypes.Storage import Storage as ExternalStorage
 
 ATContentTypeBaseSchema = BaseSchema + Schema((
     TextField('description',
@@ -204,8 +205,7 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type File
 ###
-ATFileSchema = ATContentTypeSchema + Schema((
-    FileField('file',
+_ATFileField = FileField('file',
               required = 1,
               primary=1,
               widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
@@ -213,6 +213,16 @@ ATFileSchema = ATContentTypeSchema + Schema((
                                   label= "File",
                                   label_msgid = "label_file",
                                   i18n_domain = "plone"))
+
+_ATExtFileField = deepcopy(_ATFileField)
+_ATExtFileField.storage = ExternalStorage()#prefix="ATExtFile")
+
+ATFileSchema = ATContentTypeSchema + Schema((
+    _ATFileField,
+    ), marshall=PrimaryFieldMarshaller())
+
+ATExtFileSchema = ATContentTypeSchema + Schema((
+    _ATExtFileField,
     ), marshall=PrimaryFieldMarshaller())
 
 ###
@@ -225,8 +235,7 @@ ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
 ###
 # AT Content Type Image
 ###
-ATImageSchema = ATContentTypeSchema + Schema((
-    ImageField('image',
+_ATImageField = ImageField('image',
                required = 1,
                primary=1,
                sizes= {'preview' : (400, 400),
@@ -240,7 +249,18 @@ ATImageSchema = ATContentTypeSchema + Schema((
                                     label= "Image",
                                     label_msgid = "label_image",
                                     i18n_domain = "plone"))
+
+_ATExtImageField = deepcopy(_ATImageField)
+_ATExtImageField.storage = ExternalStorage()#prefix="ATExtImage")
+
+ATImageSchema = ATContentTypeSchema + Schema((
+    _ATImageField, 
     ), marshall=PrimaryFieldMarshaller())
+
+ATExtImageSchema = ATContentTypeSchema + Schema((
+    _ATExtImageField, 
+    ), marshall=PrimaryFieldMarshaller())
+
 
 ###
 # AT Content Type Link
