@@ -16,12 +16,19 @@
 
         <h1>Ploneboard configuration</h1>
 
-        <div class="description"> 
+        <div class="documentDescription"> 
         Here you can configure site settings for Ploneboard.
         </div>
-        <div>
-            <a href="prefs_manage_transforms">Manage transforms</a>
-        </div>
+
+        <ul class="configlets">
+            <li>
+                <a href="prefs_manage_transforms">
+                <img src="smiley_smile.png" alt="" />
+                Manage transforms
+                </a>
+            </li>
+        </ul>
+        
     </div>
                      
 </body>

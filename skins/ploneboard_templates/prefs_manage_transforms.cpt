@@ -14,50 +14,62 @@
 
 
 <div class="configlet">
-    <table tal:define="transforms here/portal_ploneboard/getTransforms">
-        <th>Transform name</th><th>Status</th><th>Data provider</th><th>Action</th>
-        <tr tal:repeat="transform transforms">
-            <tal:block tal:define="transform_name python: transform[0]; transform_status python: transform[2]; ">
-                <form class="group"
-            	    name="edit_form"
-                    action=""
-            	    method="post"
-            	    enctype="multipart/form-data"
-            	    tal:attributes="action template/getId" >
-                    <input type="hidden" name="form.submitted" value="1" />
-                    <input type="hidden" name="transform_name" value="" tal:attributes="value transform_name" />
-                    <td tal:content="transform_name"></td>
-                    <td><input type="checkbox" name="transform_status" tal:attributes="checked python:test(int(transform_status), 'checked', nothing)"></td>
-                    <td>
-                        <span tal:condition="python: here.portal_ploneboard.hasDataProvider(transform_name)" tal:omit-tag="">
-                            <a href="#" tal:attributes="href string: prefs_manage_dataprovider/?transform_name=${transform_name}">manage</a>
-                        </span>
-                    </td>
-                    <td><input type="submit" name="form.button.Update" value="Update"/><input type="submit" name="form.button.Remove" value="Remove"/></td>
-                </form>
-            </tal:block>
-        </tr>
-    </table>
 
-    <hr />
-    <form class="group"
-              name="edit_form"
-              action=""
-              method="post"
-              enctype="multipart/form-data"
-              tal:attributes="action template/getId" >
-        <input type="hidden" name="form.submitted" value="1" />
-        <table>
-            <tr>
-                <td>Transform name</td><td><input type="text" name="transform_name"/></td>
-            </tr>
-            <tr>
-                <td>Module</td><td><input type="text" name="module_name"/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" name="form.button.Add" value="Add"></td>
+    <fieldset>
+        <legend>Existing transforms</legend>
+        <table class="listing" tal:define="transforms here/portal_ploneboard/getTransforms">
+            <th>Transform name</th><th>Enabled?</th><th>Data provider</th><th>Action</th>
+            <tr tal:repeat="transform transforms">
+                <tal:block tal:define="transform_name python: transform[0]; transform_status python: transform[2]; ">
+                    <form class="group"
+                	    name="edit_form"
+                        action=""
+                	    method="post"
+                	    enctype="multipart/form-data"
+                	    tal:attributes="action template/getId" >
+                        <input type="hidden" name="form.submitted" value="1" />
+                        <input type="hidden" name="transform_name" value="" tal:attributes="value transform_name" />
+                        <td tal:content="transform_name"></td>
+                        <td class="listingCheckbox"><input type="checkbox" name="transform_status" tal:attributes="checked python:test(int(transform_status), 'checked', nothing)"></td>
+                        <td>
+                            <span tal:condition="python: here.portal_ploneboard.hasDataProvider(transform_name)" tal:omit-tag="">
+                                <a href="#" tal:attributes="href string: prefs_manage_dataprovider/?transform_name=${transform_name}">manage</a>
+                            </span>
+                        </td>
+                        <td style="font-size: 120%; padding-top: 1em;">
+                            <input class="standalone" type="submit" name="form.button.Update" value="Update" 
+                            />&nbsp;<input class="destructive" type="submit" name="form.button.Remove" value="Remove" />
+                        </td>
+                    </form>
+                </tal:block>
             </tr>
         </table>
+    </fieldset>
+
+    <form name="edit_form"
+          action=""
+          method="post"
+          enctype="multipart/form-data"
+          tal:attributes="action template/getId" >
+
+        <fieldset>
+            <legend>Add transform</legend>
+            <input type="hidden" name="form.submitted" value="1" />
+            
+            <div class="field">
+                <label>Transform name</label>
+                <input type="text" name="transform_name"/>
+            </div>
+            
+            <div class="field">
+                <label>Module</label>
+                <input type="text" name="module_name"/>
+            </div>
+                        
+            <div class="formControls">
+                <input class="context" type="submit" name="form.button.Add" value="Add">
+            </div>
+        </fieldset>
     </form>
 </div>
 

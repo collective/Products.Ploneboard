@@ -16,11 +16,6 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <div class="documentDescription"
-             tal:content="here/Description"> 
-           description
-        </div>
-        
         <table class="listing">
         
 

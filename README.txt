@@ -8,12 +8,14 @@ Ploneboard
 
   Contributors
 
-    **Helge Tesdal**, "PloneSolutions":http://www.plonesolutions.com -- *code, idea, architecture*
+    **Helge Tesdal**, "PloneSolutions":http://www.plonesolutions.com -- *Code, idea, architecture*
 
-    **Ruslan Spivak** -- *code*
+    **Ruslan Spivak** -- *Code*
 
-    **Alexander Limi**, "PloneSolutions":http://www.plonesolutions.com -- *user interface*
+    **Alexander Limi**, "PloneSolutions":http://www.plonesolutions.com -- *User interface*
 
-    **Vidar Andersen** -- *icons*
+    **Vidar Andersen** -- *Application icons*
 
-    **Kapil Thangavelu** -- *initial architecture*
+    **Johan H. Borg** -- *Smiley icons, Copyright 2003, used in Ploneboard with permission*
+
+    **Kapil Thangavelu** -- *Initial architecture*
