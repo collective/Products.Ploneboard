@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.3 2003/05/09 06:05:34 ctheune Exp $
+$Id: I18NLayer.py,v 1.4 2003/06/01 16:39:11 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.3 $"
+__version__ = "$Revision: 1.4 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -31,172 +31,13 @@ from Products.CMFCore.CMFCorePermissions import AddPortalFolders, AddPortalConte
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
-from ExtensionClass import Base
-from Globals import InitializeClass
 from zLOG import LOG, ERROR, INFO, PROBLEM, DEBUG
-from Products.Archetypes.public       import *
+from Products.Archetypes.public import *
 from Products.CMFPlone.PloneFolder import _getViewFor
 
-# PlacelessTranslation Service Negotiator Support
-try: 
-    from Products.PlacelessTranslationService.Negotiator \
-        import getLangPrefsMethod as pts_getLangPrefsMethod
-    getLangPrefsMethod = lambda req, get=pts_getLangPrefsMethod: get(req).getPreferredLanguages()
-except ImportError: 
-    getLangPrefsMethod = lambda req: map(
-        lambda x: x.split(';')[0].strip(),
-        req.get('HTTP_ACCEPT_LANGUAGE','').split(',')
-        )
+from I18NContent import I18NContentLayer
+from utils import CheckValidity
 
-_marker = []
-
-class I18NContentBase:
-
-    def __init__(self, layer, REQUEST, verifypermission=1):
-        self.layer=layer
-        if not hasattr(REQUEST, 'set'): REQUEST=get_request()
-        self.REQUEST=REQUEST
-        available_languages=self.getFilteredLanguageMap(verifypermission=verifypermission).keys()
-        self.languages=self.getLanguagesFromRequest() + list(available_languages)
-
-    def Layer(self):
-    	return self.layer
-
-    def Languages(self):
-    	return self.languages
-
-    def getLanguagesFromRequest(self):
-
-        language=self.REQUEST.cookies.get('I18N_CONTENT_LANGUAGE', None)
-        language_once=self.REQUEST.get('cl', None)
-        accept=self.getLanguagesFromTranslationService()
-        try: default_language=self.Layer().portal_properties.site_properties.default_language
-        except: default_language=None
-
-        languages=accept
-        if language: languages=[language,]+languages
-        if language_once and language_once != language: languages=[language_once,]+languages
-        if default_language: languages=languages+[default_language,]
-
-	return languages
-
-    def getLanguagesFromTranslationService(self):
-        return getLangPrefsMethod(self.REQUEST)
-
-    def getObject(self, verifypermission=1):
-        # returns the object holding language information
-        # for language self.language
-        # ovewrite for each implementation
-        raise NotImplementedError
-
-    def getFilteredLanguageMap(self, verifypermission=1):
-        # returns a language code to id mapping
-        raise NotImplementedError
-
-    def setServed(self, lang):
-        self.REQUEST.set('I18N_CONTENT_SERVED_LANGUAGE', lang)
-        self.served_language=lang
-
-    def Served(self):
-        try: return self.served_language
-        except AttributeError: return None
-
-    def existingLanguages(self, both=0):
-        existing_languages=()
-        existing_languages_long=()
-        for code, name in self.Layer().availableLanguages():
-            existing_languages=existing_languages+(code,)
-            existing_languages_long=existing_languages_long+(name,)
-        if not both: return existing_languages
-        else: return existing_languages, existing_languages_long
-
-class I18NContentLayer(I18NContentBase):
-
-    def getFilteredLanguageMap(self, verifypermission=1):
-        layer=self.Layer()
-        try: available_languages, available_languages_long =self.existingLanguages(both=1)
-        except: available_languages = available_languages_long = ()
-        available_languages=list(available_languages)
-        objs={}
-        # use objectmanager trick to find subobjects *very* fast
-        # NOTE: usually there should be much less objects inside an I18NLayer
-        #       than there are existing languages
-
-        pec=[layer.ContainmentContentType(),]
-
-        # create language validator
-        checker=CheckValidity(available_languages, available_languages_long)
-
-        # XXX: this does not work for images which spec is Image
-        #print "spec", spec
-        #print "ids", layer.objectIds()
-        #print "ids2", layer.objectIds(spec=spec)
-        for id in layer.objectIds():
-            if checker.check(id):
-                ob = getattr(layer, id)
-                if _checkPermission(CMFCorePermissions.View, ob) or not verifypermission:
-                    name = checker.name(id)
-                    objs.update({id: name})
-        return objs
-
-    def getObject(self, verifypermission=1):
-
-    	layer=self.Layer()
-    	base = aq_base(layer)
-
-        fallback=0
-        fallenback=None
-        #print "fallback, verify", fallback, verifypermission
-        for lang in self.Languages():
-            #print "lang", lang
-            if hasattr(base, lang):
-                ob = getattr(layer, lang)
-                #print "ob", repr(ob)
-                if verifypermission: allowed = _checkPermission(View, ob)
-                else: allowed = 1
-                #print "allowed", allowed
-
-                if allowed:
-                    if not fallback and lang != self.Languages()[0]:
-                        # we have fallen back but are not allowed to
-                        fallenback=lang
-                        break
-                    else:
-                        # not fallen back or allowed to
-                        self.setServed(lang)
-                        return ob
-        if not fallback and fallenback:
-            # we are fallen back but are not allowed to fall back
-            return None
-        if len(self.getFilteredLanguageMap(verifypermission=verifypermission).keys()):
-            # we have access to at least one language but are not fallen back
-            return None
-        if verifypermission and not _checkPermission(ModifyPortalContent, layer):
-            raise Unauthorized, "you are not allowed to access this object"
-        return None
-
-class CheckValidity:
-
-    def __init__(self, available_languages, available_languages_long):
-        self.available_languages=available_languages
-        self.available_languages_long=available_languages_long
-
-    def check(self, lang):
-        if self.available_languages:
-            # check
-            return lang in self.available_languages
-        else:
-            # failsave mode
-            # check if len(lang) is 2 or 3
-            if len(lang) == 2 or len(lang) == 3:
-                return 1
-            else: return 0
-
-    def name(self, lang):
-        if self.available_languages and self.available_languages_long:
-            i=self.available_languages.index(lang)
-            return self.available_languages_long[i]
-        else: return 'Unknown'
 
 schema = Schema((
 
@@ -210,32 +51,17 @@ schema = Schema((
         vocabulary="allowedContentTypeNames",
         widget=SelectionWidget
         ),
-
     ))
 
-def modify_fti(fti):
-    fti['name']='I18NLayer'
-    fti['filter_content_types']=1
-    # NOTE: we better hide the useless actions rather than delete them
-    #       to keep compatibilty with templates requesting them
-    for a in fti['actions']:
-        if a['id'] in ('references', 'metadata'): 
-            a['visible'] = 0
-    return fti
-
-from Products.Archetypes.interfaces.base import IBaseObject
-#from webdav.WriteLockInterface import WriteLockInterface
 
 class I18NLayer( BaseFolder ):
     """ container object which transparently wraps multiple
         subobjects as language representations
     """
     schema = schema
-
-    # XXX is that required ?
     isPrincipiaFolderish=0
-
     _containmentContentType=None
+
     actions = ({
         'id': 'view',
         'name': 'View',
@@ -256,80 +82,95 @@ class I18NLayer( BaseFolder ):
         })
 
     security = ClassSecurityInfo()
+
     # all stuff is public but not the protected
     security.declareObjectPublic()
+
 
     security.declarePrivate('retrieveContentLayer')
     def retrieveContentLayer(self, REQUEST=None, verifypermission=1):
         """ """
         # get request
-        if not REQUEST: 
+        if not REQUEST:
             try: REQUEST=self.REQUEST
             except: pass
         # make new contentlayer instance
         return I18NContentLayer(self, REQUEST, verifypermission=verifypermission)
+
 
     security.declarePrivate('retrieveLanguageContentUnprotected')
     def retrieveLanguageContentUnprotected(self):
         """ """
         return self.retrieveContentLayer(None,verifypermission=0).getObject(verifypermission=0)
 
+
     security.declarePublic('retrieveLanguageContent')
     def retrieveLanguageContent(self, REQUEST=None):
         """ """
         return self.retrieveContentLayer(REQUEST).getObject()
+
 
     security.declarePublic('retrieveI18NContentLayerOb')
     def retrieveI18NContentLayerOb(self, REQUEST=None):
         """ """
         return self
 
+
     security.declarePublic('retrieveI18NContentLayerURL')
     def retrieveI18NContentLayerURL(self, REQUEST=None):
         """ """
         return self.absolute_url()
+
 
     security.declarePublic('retrieveFilteredLanguages')
     def retrieveFilteredLanguages(self, REQUEST=None):
         """ """
         return self.retrieveContentLayer(REQUEST).getFilteredLanguageMap()
 
+
     security.declarePublic('retrieveExistingLanguages')
     def retrieveExistingLanguages(self, REQUEST=None):
         """ """
         return self.retrieveExistingLanguages()
+
 
     security.declarePublic('retrieveAcceptLanguages')
     def retrieveAcceptLanguages(self, REQUEST=None):
         """ """
         return self.retrieveContentLayer(REQUEST).getLanguagesFromTranslationService()
 
+
     def _checkId(self, id, allow_dup=0):
         ObjectManager._checkId(self, id, allow_dup)
         if not CheckValidity(None, None).check(id):
-           raise 'Bad Request', ( 'The id "%s" is not allowed.' % id)
-        # we are ok	
+            raise 'Bad Request', ( 'The id "%s" is not allowed.' % id)
+        # we are ok
+
 
     security.declarePrivate('mapCore')
-    def mapCore(self, name, *args, **kw):
-        """maps methods on the given language object
+    def mapCore(self, name, default=None, *args, **kw):
+        """
+        maps methods on the given language object
         """
 
         try: ob = self.retrieveLanguageContent()
         except: ob=None
         if ob is not None:
+
             if hasattr(aq_base(ob), name):
                 method = getattr(ob, name)
-            elif getattr(aq_base(ob), 'isPrincipiaFolderish'):
+            elif getattr(aq_base(ob), 'isPrincipiaFolderish') or isinstance(ob, I18NLayer):
                 # allow non existing attributes for folderish objects
-                return None
+                return default
             else:
                 raise "AttributeError", name
         else:
             method=I18NLayer.inheritedAttribute(name)
             args=(self,)+args
+
         if callable(method): return apply(method, args, kw)
         else: return method
+
 
     security.declarePublic('__call__')
     def __call__(self, *args, **kw):
@@ -357,7 +198,8 @@ class I18NLayer( BaseFolder ):
     view = __call__
 
     def index_html(self, REQUEST, RESPONSE):
-        '''return content if subobject has index_html method
+        '''
+        return content if subobject has index_html method
         '''
         # NOTE: this implies for images and files which are returned directly when
         #       called with index_html.
@@ -371,13 +213,15 @@ class I18NLayer( BaseFolder ):
             if i and c and i != c:
                 # XXX: probably we should set Content-Language somewhere here
                 return apply(ob.index_html, (REQUEST, RESPONSE,), {})
+
         # no object so return view method
         return apply(self.__call__, (REQUEST, RESPONSE,), {})
 
+ 
     security.declarePublic('allowedContentTypeNames')
     def allowedContentTypeNames(self):
         '''
-        returns a tuple with portal types current user can construct inside us 
+        returns a tuple with portal types current user can construct inside us
         '''
         allowed=self.allowedContentTypes()
 
@@ -389,30 +233,65 @@ class I18NLayer( BaseFolder ):
 
         return map(lambda ti: ti.getId(), allowed)
 
+
     security.declarePublic('ContainmentContentType')
     def ContainmentContentType(self):
-        '''returns the configured contenttype of this layer
+        '''
+        returns the configured contenttype of this layer
         '''
         return self._containmentContentType or "Document"
 
+
+    security.declarePublic('ContainmentMetaType')
+    def ContainmentMetaType(self):
+        '''
+        returns the configures metatype of this layer
+        '''
+        try:
+            typestool = getToolByName(self, 'portal_types')
+            ti=typestool.getTypeInfo(self.ContainmentContentType())
+            return ti.Metatype()
+        except:
+            return self.meta_type
+
+
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setContainmentContentType')
     def setContainmentContentType(self, content_type):
-        '''sets the configured contenttype for this layer
+        '''
+        sets the configured contenttype for this layer
         '''
         self._containmentContentType=content_type
 
+
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setI18NLayerAttributes')
     def setI18NLayerAttributes(self, id):
-        '''stores required attributes to a given object (has to be subobject of myself)
+        '''
+        stores required attributes to a given object (has to be subobject of myself)
         '''
         if not hasattr(aq_base(self),id): raise "AttributeError", id
         ob=getattr(self,id)
+
         if not _checkPermission(ModifyPortalContent, ob):
             raise "Unauthorized"
 
         # the language is the same as the id
         lang=id
-        setattr(ob, 'i18nContent_language', lang)
+        setattr(ob,'i18nContent_language', lang)
+
+
+    security.declarePublic('listFolderContents')
+    def listFolderContents(self, spec=None, contentFilter=None):
+        """ """
+        try: return self.mapCore('listFolderContents', default=(), spec=spec, contentFilter=contentFilter)
+        except: return I18NLayer.inheritedAttribute('listFolderContents')(self, spec=spec, contentFilter=contentFilter)
+
+
+    security.declarePublic('contentValues')
+    def contentValues(self, spec=None, filter=None):
+        """ """
+        try: return self.mapCore('contentValues', default=(), spec=spec, filter=filter)
+        except: return I18NLayer.inheritedAttribute('contentValues')(self, spec=spec, filter=filter)
+
 
     security.declarePublic('title_or_id')
     def title_or_id(self):
@@ -423,7 +302,8 @@ class I18NLayer( BaseFolder ):
 
     security.declarePublic('get_size')
     def get_size(self):
-        """WebDAV needs this
+        """
+        WebDAV needs this
         """
         try: return self.mapCore('get_size')
         except: return None
@@ -434,6 +314,11 @@ class I18NLayer( BaseFolder ):
     def getIcon(self, relative_to_portal=0):
         """ """
         return self.mapCore('getIcon', relative_to_portal=relative_to_portal)
+
+    security.declarePublic('CookedBody')
+    def CookedBody(self, stx_level=None, setlevel=0):
+        """ """
+        return self.mapCore('CookedBody', stx_level=stx_level, setlevel=setlevel)
 
     security.declarePublic('Title')
     def Title(self):
@@ -448,7 +333,7 @@ class I18NLayer( BaseFolder ):
     security.declarePublic('Subject')
     def Subject(self):
         """ """
-        return self.mapCore('Subject')
+        return self.mapCore('Subject', default=())
 
     security.declarePublic('Publisher')
     def Publisher(self):
@@ -516,7 +401,8 @@ class I18NLayer( BaseFolder ):
         return self.mapCore('Rights')
 
     def content_type(self):
-        """WebDAV needs this
+        """
+        WebDAV needs this
         """
         try: return self.Format()
         except: return 'application/unknown'
@@ -548,13 +434,15 @@ class I18NLayer( BaseFolder ):
 
     security.declareProtected(ModifyPortalContent, 'indexObject')
     def indexObject(self):
-        """Index the object in the portal catalog.
+        """
+            Index the object in the portal catalog.
         """
         pass
 
     security.declareProtected(ModifyPortalContent, 'unindexObject')
     def unindexObject(self):
-        """Unindex the object from the portal catalog.
+        """
+            Unindex the object from the portal catalog.
         """
         pass
 
@@ -569,6 +457,19 @@ class I18NLayer( BaseFolder ):
             unless specific indexes were requested.
         """
         pass
+
+
+def modify_fti(fti):
+    fti['name']='I18NLayer'
+    fti['filter_content_types']=1
+    fti['content_icon']='i18nlayer_icon.gif'
+    # NOTE: we better hide the useless actions rather than delete them
+    #       to keep compatibilty with templates requesting them
+    for a in fti['actions']:
+        if a['id'] in ('references', 'metadata'):
+            a['visible'] = 0
+    return fti
+
 
 registerType(I18NLayer)
 

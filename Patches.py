@@ -18,13 +18,14 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.1 2003/03/25 16:46:55 longsleep Exp $
+$Id: Patches.py,v 1.2 2003/06/01 16:39:11 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.1 $"
+__version__ = "$Revision: 1.2 $"
+
 
 ####################
-# <start patches> 
+# <start patches>
 
 # PATCH 1
 #
@@ -85,7 +86,6 @@ if not hasattr(Globals, 'get_request'):
 # PATCH 2
 #
 # Filters I18NLayer objects which dont represent an object
-
 from Products.CMFCore.PortalFolder import PortalFolder
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.CMFCorePermissions import ModifyPortalContent
@@ -96,28 +96,65 @@ def new__filteredItems(self, ids, filt):
     """
     result = self._old_filteredItems(ids, filt)
     outtypes=('I18NLayer',)
+
     i=0
-    for r in result:
+    x=0
+    length=len(result)
+
+    while(i < length):
+        inc=1
+        r = result[x]
         if getattr(r[1], 'portal_type') in outtypes:
-	    try: typ=r[1].Type()
+            try: typ=r[1].Type()
             except: typ=None
-	    if typ in outtypes:
+            if typ in outtypes:
                 if not _checkPermission(ModifyPortalContent, r[1]):
                     # only show empty I18NLayers when user may modify them
-                    del result[i]
+                    del result[x]
+                    inc=0
+        if inc: x=x+1
         i=i+1
-                
+
     return result
+
+
+def new_objectIds(self, spec=None):
+    # Returns a list of subobject ids of the current object.
+    # If 'spec' is specified, returns objects whose meta_type
+    # matches 'spec'.
+
+    # Returns a list of subobject ids of the current object.
+    # If 'spec' is specified, returns objects whose meta_type
+    # matches 'spec'.
+
+    # we also match i18nlayer subobjects here which match spec
+    
+    if spec is not None:
+        if type(spec)==type('s'):
+            spec=[spec]
+        set=[]
+        for ob in self._objects:
+            if ob['meta_type'] in spec:
+                set.append(ob['id'])
+            elif ob['meta_type'] == 'I18NLayer':
+                o=getattr(self, ob['id'])
+                if o.ContainmentMetaType() in spec:
+                    set.append(ob['id'])
+        return set
+    # return all if no spec
+    return map(lambda i: i['id'], self._objects)
 
 patch2 = 0
 if not hasattr(PortalFolder, '_old_filteredItems'):
     # Apply patch
     PortalFolder._old_filteredItems = PortalFolder._filteredItems
     PortalFolder._filteredItems = new__filteredItems
+    PortalFolder.objectIds = new_objectIds
 
     # First import (not a refresh)
     # applied patch
     patch2 = 1
+
 
 # PATCH 3
 #
@@ -135,6 +172,7 @@ if not hasattr(PortalContent, 'i18nContent_language'):
     # First import (not a refresh)
     # applied patch
     patch3 = 1
+
 
 # </finished patches>
 #####################

@@ -36,24 +36,24 @@ if here_url[:len(layer_url)] == layer_url:
         print "rest", rest
         print "langs", available_languages
         if rest[1] in available_languages.keys():
-	    if rest[1] != currentServed:
-		print "rest is currentServed"
+            if rest[1] != currentServed:
+                print "rest is currentServed"
                 currentServed=rest[1]
-	else:
-	    print "none was served"
-	    fallback=0
-	    currentServed=None
-	print "currentServed", currentServed
+        else:
+            print "none was served"
+            fallback=0
+            currentServed=None
+        print "currentServed", currentServed
     elif currentOnce:
         currentServed=currentOnce
     else:
-	currentServed=currentCookie
+        currentServed=currentCookie
 
 if not currentServed and fallback:
     for ac in context.retrieveAcceptLanguages():
-	if ac in available_languages.keys():
-	    currentServed=ac
-	    break		
+        if ac in available_languages.keys():
+            currentServed=ac
+            break		
 
 name=available_languages.get(currentServed, None)
 lang=currentServed, name
