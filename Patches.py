@@ -18,10 +18,10 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.8 2004/01/25 21:33:53 kayeva Exp $
+$Id: Patches.py,v 1.9 2004/01/25 21:44:47 kayeva Exp $
 """
 
-__version__ = "$Revision: 1.8 $"
+__version__ = "$Revision: 1.9 $"
 
 from types import StringType
 ####################
@@ -46,7 +46,7 @@ from types import StringType
 from thread import get_ident
 from Acquisition import aq_parent
 from ZPublisher import Publish, mapply
-from zLOG import LOG
+from zLOG import LOG, PROBLEM
 
 def get_request():
     """Get a request object"""
@@ -63,7 +63,7 @@ def new_publish(request, module_name, after_list, debug=0):
         # raised in the previous line, I haven't been able to reproduce it.
         # This try/except clause seems to work. I'd prefer to understand
         # what is happening.
-        LOG('I18NLayer', 'PROBLEM',
+        LOG('I18NLayer', PROBLEM,
             "The thread number %s don't has a request object associated." % id)
 
     return x
