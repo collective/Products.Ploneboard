@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.2 2004/04/04 21:47:10 tiran Exp $
+$Id: HistoryAware.py,v 1.3 2004/05/21 07:11:43 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -41,7 +41,13 @@ from Products.ATContentTypes.interfaces.IHistoryAware import IHistoryAware
 class HistoryAwareMixin:
     """History aware mixin class
     
-    Shows a diffed history of the content
+    Shows a unified diff history of the content
+    
+    This mixin is using some low level functions of the ZODB to get the last
+    transaction states (versions) of the current object. Older histories will
+    disapear after packing the database so DO NOT rely on the history
+    functionality. It's more a gimmick and nice helper to reviewers and site
+    managers.
     """
     
     __implements__ = IHistoryAware
@@ -52,11 +58,11 @@ class HistoryAwareMixin:
         'id'          : 'history',
         'name'        : 'History',
         'action'      : 'string:${object_url}/atct_history',
-        'permissions' : (CMFCorePermissions.ModifyPortalContent, )
+        'permissions' : (HISTORY_VIEW_PERMISSION, )
          },
     )
     
-    security.declarePrivate('getHistories')
+    security.declarePrivate('getHistorySource')
     def getHistorySource(self):
         """get source for HistoryAwareMixin
         
@@ -73,7 +79,8 @@ class HistoryAwareMixin:
         """Get a list of historic revisions.
         
         Returns metadata as well    
-        (object, time, transaction_note, user)"""
+        (object, time, transaction_note, user)
+        """
     
         historyList = self._p_jar.db().history(self._p_oid, None, max)
     
@@ -96,9 +103,9 @@ class HistoryAwareMixin:
 
         return lst
 
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'getDocumentComparisons')
+    security.declareProtected(HISTORY_VIEW_PERMISSION, 'getDocumentComparisons')
     def getDocumentComparisons(self, max=10, filterComment=0):
-        """
+        """Get history as unified diff
         """
         mTool = getToolByName(self, 'portal_membership')
         
