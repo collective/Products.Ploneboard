@@ -16,7 +16,9 @@ V1.7
 
   - FolderRecentChanges and FolderListing viewlets shows only when there are contents in the folder
 
-  - allow per-content custom css
+  - allow custom css in contentpanels
+
+  - change tab name:  'config' -> 'layout' 
 
 V1.6
 
