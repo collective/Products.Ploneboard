@@ -9,10 +9,11 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
 # 
+# THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.5 2004/01/30 19:41:47 plonista Exp $
+$Id: FSControllerValidator.py,v 1.6 2004/03/10 01:21:08 plonista Exp $
 """
 
 import copy

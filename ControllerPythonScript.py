@@ -9,6 +9,7 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
 #
+# THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##############################################################################
 
 """Controller Python Scripts Product
@@ -17,7 +18,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.7 $'[11:-2]
+__version__='$Revision: 1.8 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home

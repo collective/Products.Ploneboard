@@ -1,3 +1,17 @@
+##############################################################################
+#
+# Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
+# 
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE
+# 
+# THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
+##############################################################################
+
 import Globals
 from Shared.DC.Scripts.Script import Script
 from Shared.DC.Scripts.Bindings import NameAssignments as BaseNameAssignments
@@ -164,78 +178,5 @@ class FSPythonScript(BaseFSPythonScript, PythonScript):
     _setupBindings = PythonScript._setupBindings
     _metadata_map = PythonScript._metadata_map
     write = PythonScript.write
-    
-    # copies of functions from FSPythonScript above -- should probably just call them via some alternative inheritance
-#    def _setupBindings(self, names={}):
-#        self._bind_names = names = NameAssignments(names)
-#        return names
-
-#    def _metadata_map(self):
-#        m = {
-#            'title': self.title,
-#            'parameters': self._params,
-#           }
-#        bindmap = self.getBindingAssignments().getAssignedNames()
-#        for k, v in _nice_bind_names.items():
-#            m['bind '+k] = bindmap.get(v, '')
-#        return m
-
-#    def write(self, text):
-#        """ Change the Script by parsing a read()-style source text. """
-#        self._validateProxy()
-#        mdata = self._metadata_map()
-#        bindmap = self.getBindingAssignments().getAssignedNames()
-#        bup = 0
-#
-#        st = 0
-#        try:
-#            while 1:
-#                # Find the next non-empty line
-#                m = _nonempty_line.search(text, st)
-#                if not m:
-#                    # There were no non-empty body lines
-#                    body = ''
-#                    break
-#                line = m.group(0).strip()
-#                if line[:2] != '##':
-#                    # We have found the first line of the body
-#                    body = text[m.start(0):]
-#                    break
-#
-#                st = m.end(0)
-#                # Parse this header line
-#                if len(line) == 2 or line[2] == ' ' or '=' not in line:
-#                    # Null header line
-#                    continue
-#                k, v = line[2:].split('=', 1)
-#                k = k.strip().lower()
-#                v = v.strip()
-#                if not mdata.has_key(k):
-#                    SyntaxError, 'Unrecognized header line "%s"' % line
-#                if v == mdata[k]:
-#                    # Unchanged value
-#                    continue
-#
-#                # Set metadata value
-#                if k == 'title':
-#                    self.title = v
-#                elif k == 'parameters':
-#                    self._params = v
-#                elif k[:5] == 'bind ':
-#                    bindmap[_nice_bind_names[k[5:]]] = v
-#                    bup = 1
-#
-#            body = body.rstrip()
-#            if body:
-#                body = body + '\n'
-#            if body != self._body:
-#                self._body = body
-#            if bup:
-#                self.ZBindings_edit(bindmap)
-#            else:
-#                self._makeFunction()
-#        except:
-#            LOG(self.meta_type, ERROR, 'write failed', error=sys.exc_info())
-#            raise
 
 Globals.InitializeClass(FSPythonScript)

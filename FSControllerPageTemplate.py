@@ -9,10 +9,11 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
 # 
+# THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.8 2003/12/10 21:04:14 dreamcatcher Exp $
+$Id: FSControllerPageTemplate.py,v 1.9 2004/03/10 01:21:08 plonista Exp $
 """
 
 import copy

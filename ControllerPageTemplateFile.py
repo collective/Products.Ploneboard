@@ -9,10 +9,11 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
 # 
+# THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControllerPageTemplateFile.py,v 1.2 2003/11/12 23:11:37 plonista Exp $
+$Id: ControllerPageTemplateFile.py,v 1.3 2004/03/10 01:21:08 plonista Exp $
 """
 
 import os
