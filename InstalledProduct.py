@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.22 2004/07/28 01:35:05 dreamcatcher Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.23 2004/12/07 10:02:39 yenzenz Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from interfaces.portal_quickinstaller import IInstalledProduct
 from installer import uninstall_from_xml
-
+from zLOG import LOG, INFO, PROBLEM, ERROR
 
 def updatelist(a,b):
     for l in b:
@@ -39,8 +39,13 @@ def updatelist(a,b):
             a.append(l)
 
 def delObjects(cont, ids):
+    """ abbreviation to delete objects """
     delids=[id for id in ids if hasattr(cont,id)]
-    cont.manage_delObjects(delids)
+    for delid in delids:
+        try:
+            cont.manage_delObjects(delid)
+        except:
+            LOG("Quick Installer Tool: ", PROBLEM, "Failed to delete '%s' in '%s'" % (delid, cont.id))
 
 class InstalledProduct(SimpleItem):
     """ class storing information about an installed product"""
@@ -260,6 +265,7 @@ class InstalledProduct(SimpleItem):
         if 'skins' in cascade:
             portal_skins=getToolByName(self,'portal_skins')
             delObjects(portal_skins, self.skins)
+
 
         if 'actions' in cascade:
             portal_actions=getToolByName(self,'portal_actions')

@@ -1,7 +1,7 @@
 Philipp Auersperg (phil at bluedynamics.com)
 
-Copyright:   (c) 2003 BlueDynamics
-Licence:     GPL
+Copyright:   (c) 2003-2004 BlueDynamics, Austria
+Licence:     GPL - GNU General Public Licence 2.0 or later
 
 contributions from the following:
   Sylvain Thenault
@@ -9,3 +9,4 @@ contributions from the following:
   Alex Limi   (thx for the icon, dude :)
   Alan Runyan (runyaga at runyaga.com) - Useful hints and promotion :)
   Rocky Burt  (rocky at carterscove.com) - Thanks for contributing Support for TTW Products
+  Jens W. Klein (jens.klein@jensquadrat.com) - workaround for ugly reinstall bug

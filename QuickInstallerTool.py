@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.48 2004/09/18 10:36:31 dreamcatcher Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.49 2004/12/07 10:02:39 yenzenz Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -13,6 +13,7 @@
 import sys
 import traceback
 import os
+from types import StringTypes
 
 import Globals
 from Globals import HTMLFile, InitializeClass
@@ -37,7 +38,7 @@ from interfaces.portal_quickinstaller import IQuickInstallerTool
 from exceptions import RuntimeError
 from zLOG import LOG
 
-try: 
+try:
     from zExceptions import NotFound
 except ImportError:
     NotFound = 'NotFound'
@@ -218,7 +219,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         """
 
         __traceback_info__ = (p,)
-        
+
         if self.isProductInstalled(p):
             prod = self._getOb(p)
             msg = ('this product is already installed, '
@@ -449,7 +450,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         ininstall/reinstall is that it does not remove portal objects
         created  during install (e.g. tools, etc.)
         """
-        if type(products) in (type(''),type(u'')):
+        if type(products) in StringTypes:
             products=[products]
 
         # only delete everything EXCEPT portalobjects (tools etc) for reinstall
