@@ -1,1 +1,1 @@
-0.2-beta8 (CVS/Unreleased)
+0.2.0-rc1 (CVS/Unreleased)

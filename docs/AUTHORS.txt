@@ -13,6 +13,10 @@ Thomas Bechter:
 Kai Bielenberg:
 
 
+Godefroid Chapelle:
+ * ATTopic and criteria enhancements
+
+
 Christian Heimes:
  * maintainer
  * migration system
@@ -25,7 +29,6 @@ Christian Heimes:
 Jens Klein:
  * did some work on the forerunner model CMFPloneTypes (ex-maintainer)
  * restrained types support
- 
 
 Bill Schindler:
 

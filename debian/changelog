@@ -1,8 +1,14 @@
-zope-atcontenttypes (0.2-beta-8) unstable; urgency=low
+zope-atcontenttypes (0.2.0-rc1) unstable; urgency=low
 
   * New upstream release 
 
- -- Christian Heimes <heimes@faho.rwth-aachen.de>  Wed, 21 Jul 2004 17:29:51 +0200
+ -- Christian Heimes <heimes@faho.rwth-aachen.de>  Sun, 25 Jul 2004 09:40:21 +0200
+
+zope-atcontenttypes (0.2-beta-8) unstable; urgency=low
+
+  * New upstream release
+
+ -- Christian Heimes <heimes@faho.rwth-aachen.de>  Sun, 25 Jul 2004 09:39:48 +0200
 
 zope-cmfplonetypes (0.2-beta-7) unstable; urgency=low
 

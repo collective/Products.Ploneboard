@@ -1,10 +1,15 @@
-0.2-beta9
+0.2.0-rc1 - 2004-07-26
+
  * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 
 
  * Changed criteria tab to table UI [gotcha]
 
  * Added message when clicking remove on criteria without selecting first
    [gotcha]
+
+ * Depend on new AT 1.3.0-beta3 release [tiran]
+
+ * Changed ZMI add name of topic related types to 'ATContentTypes Topic' [tiran]
 
 0.2-beta8 - 2004-07-21
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.6 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: __init__.py,v 1.7 2004/07/25 07:45:19 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -105,7 +105,7 @@ def initialize(context):
 
     # topics
     utils.ContentInit(
-        PROJECTNAME + ' Content',
+        PROJECTNAME + ' Topic',
         content_types = tuple(topic_content_types),
         permission = ADD_TOPIC_PERMISSION,
         extra_constructors = tuple(topic_constructors),
