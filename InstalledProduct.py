@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.18 2004/03/10 09:45:50 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.19 2004/04/18 01:31:32 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -85,6 +85,12 @@ class InstalledProduct(SimpleItem):
     security.declareProtected(ManagePortal, 'update')
     def update(self,types=[],skins=[],actions=[],portalobjects=[],workflows=[],
         leftslots=[],rightslots=[],registrypredicates=[],installedversion='',logmsg='',status='installed',error=0,locked=0,hidden=0):
+        
+        #check for the availability of attributes before assiging
+        for att in ['types','skins','actions','portalobjects','workflows','leftslots','rightslots','registrypredicates']:
+            if not hasattr(self,att):
+                setattr(self,att,[])
+
         updatelist(self.types,types)
         updatelist(self.skins,skins)
         updatelist(self.actions,actions)
@@ -92,6 +98,7 @@ class InstalledProduct(SimpleItem):
         updatelist(self.workflows,workflows)
         updatelist(self.leftslots,leftslots)
         updatelist(self.rightslots,rightslots)
+            
         updatelist(self.registrypredicates,registrypredicates)
         self.transcript.insert(0,{'timestamp':DateTime(),'msg':logmsg})
         self.locked=locked
