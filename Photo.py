@@ -108,8 +108,8 @@ class DynVariant(Implicit, Traversable):
     def __getitem__(self, name):
 	if self.checkForVariant(name):
             return self.getPhoto(name).__of__(aq_parent(self))
-        else:
-            raise AttributeError, name
+	else:
+	    return aq_parent(self)
 
 
 class Photo(Image):
