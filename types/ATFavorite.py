@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.6 2004/04/09 22:02:20 tiran Exp $
+$Id: ATFavorite.py,v 1.7 2004/04/17 19:46:08 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -67,7 +67,7 @@ class ATFavorite(ATCTContent):
         if remote:
             if remote.startswith('/'):
                 remote = remote[1:]
-            return '%s/%s' % (utool(), url)
+            return '%s/%s' % (utool(), remote)
         else:
             return utool()
         
