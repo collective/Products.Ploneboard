@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.16 2003/09/23 22:22:54 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.17 2003/10/05 11:24:42 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -178,12 +178,16 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         install = self.getInstallMethod(p).__of__(portal)
 
         #Some heursitics to figure out if its already been installed
+        if swallowExceptions:
+            tran=get_transaction().sub()
+
         try:
+                
             res=install()
             status='installed'
             error=0
             if swallowExceptions:
-                get_transaction().commit(1)
+                tran.commit(1)
         except:
             tb=sys.exc_info()
             if str(tb[1]).endswith('already in use.'):
@@ -199,7 +203,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             del tb
             
             if swallowExceptions:
-                get_transaction().abort()   #this is very naughty
+                tran.abort(1)   #this is very naughty
             else:
                 raise
 
