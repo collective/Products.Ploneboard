@@ -1,0 +1,22 @@
+Source: zope-groupuserfolder
+Section: web
+Priority: optional
+Maintainer: Sylvain Thenault <sylvain.thenault@logilab.fr> 
+Build-Depends: debhelper (>= 3.0.0) 
+Standards-Version: 3.5.8
+
+Package: zope-groupuserfolder
+Architecture: all
+Depends: zope
+Description: Group management for Zope [dummy package]
+ GroupUserFolder is a kind of user folder that provides a special kind of user
+ management.
+ Some users are "flagged" as GROUP and then normal users will be able to belong
+ to one or
+ serveral groups.
+ .
+ .
+ This package is an empty dummy package that always depends on
+ a package built for Debian's default Python version.
+
+
