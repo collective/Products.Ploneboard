@@ -83,9 +83,20 @@ class UnauthorizedOpener(urllib.FancyURLopener):
 
 class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
-    def afterSetUp(self,):
+    def gruf_setup(self,):
         """
-        afterSetUp(self) => This method is called to create Folder with a GRUF inside.
+        gruf_setup(self,) => Basic gruf setup
+        """
+        # Replace default acl_user by a GRUF one
+        self.folder.manage_delObjects(['acl_users'])
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('testFolder')
+        self.gruf_folder = self.folder.testFolder
+        self.gruf_folder.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
+
+
+    def security_context_setup(self,):
+        """
+        Build a complex security environment
 
         It creates:
           * 3 roles, r1, r2 and r3
@@ -124,59 +135,64 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
          -----------------------------------------------------------------!
 
         """
-        # Replace default acl_user by a GRUF one
-        self.folder.manage_delObjects(['acl_users'])
-        self.folder.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
-
         # Create a few roles
-        self.folder._addRole("r1")
-        self.folder._addRole("r2")
-        self.folder._addRole("r3")
+        self.gruf_folder._addRole("r1")
+        self.gruf_folder._addRole("r2")
+        self.gruf_folder._addRole("r3")
 
         # Create a few groups
-        self.folder.acl_users._doAddGroup('g1', ())
-        self.folder.acl_users._doAddGroup('g2', ('r1', ))
-        self.folder.acl_users._doAddGroup('g3', ('r2', ))
-        self.folder.acl_users._doAddGroup('g4', ('r2', 'r3', ))
+        self.gruf_folder.acl_users._doAddGroup('g1', ())
+        self.gruf_folder.acl_users._doAddGroup('g2', ('r1', ))
+        self.gruf_folder.acl_users._doAddGroup('g3', ('r2', ))
+        self.gruf_folder.acl_users._doAddGroup('g4', ('r2', 'r3', ))
 
         # Create nested groups
-        self.folder.acl_users._doAddGroup('ng1', (), ('g1', ))
-        self.folder.acl_users._doAddGroup('ng2', (), ('g2', 'g3', ))
-        self.folder.acl_users._doAddGroup('ng3', (), ('g2', 'ng2', ))
-        self.folder.acl_users._doAddGroup('ng4', ('r3', ), ('g2', 'ng2', ))
-        self.folder.acl_users._doAddGroup('ng5', (), ('g2', 'ng4', ))
-##        self.folder.acl_users._doAddGroup('ng6', (), ('ng5', 'ng6', ))
+        self.gruf_folder.acl_users._doAddGroup('ng1', (), ('g1', ))
+        self.gruf_folder.acl_users._doAddGroup('ng2', (), ('g2', 'g3', ))
+        self.gruf_folder.acl_users._doAddGroup('ng3', (), ('g2', 'ng2', ))
+        self.gruf_folder.acl_users._doAddGroup('ng4', ('r3', ), ('g2', 'ng2', ))
+        self.gruf_folder.acl_users._doAddGroup('ng5', (), ('g2', 'ng4', ))
+##        self.gruf_folder.acl_users._doAddGroup('ng6', (), ('ng5', 'ng6', ))
 
         # Create a manager and a few users
-        self.folder.acl_users._doAddUser('manager', 'secret', ('Manager',), (), (), )
-        self.folder.acl_users._doAddUser('u1', 'secret', (), (), (), )
-        self.folder.acl_users._doAddUser('u2', 'secret', (), (), ('g1', ), )
-        self.folder.acl_users._doAddUser('u3', 'secret', (), (), ('g1', 'g2'), )
-        self.folder.acl_users._doAddUser('u4', 'secret', (), (), ('g1', 'g2', 'g3'), )
-        self.folder.acl_users._doAddUser('u5', 'secret', ('r1', ), (), ('g2', 'g3'), )
-        self.folder.acl_users._doAddUser('u6', 'secret', ('r1', ), (), ('g3', ), )
-        self.folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
+        self.gruf_folder.acl_users._doAddUser('manager', 'secret', ('Manager',), (), (), )
+        self.gruf_folder.acl_users._doAddUser('u1', 'secret', (), (), (), )
+        self.gruf_folder.acl_users._doAddUser('u2', 'secret', (), (), ('g1', ), )
+        self.gruf_folder.acl_users._doAddUser('u3', 'secret', (), (), ('g1', 'g2'), )
+        self.gruf_folder.acl_users._doAddUser('u4', 'secret', (), (), ('g1', 'g2', 'g3'), )
+        self.gruf_folder.acl_users._doAddUser('u5', 'secret', ('r1', ), (), ('g2', 'g3'), )
+        self.gruf_folder.acl_users._doAddUser('u6', 'secret', ('r1', ), (), ('g3', ), )
+        self.gruf_folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
 
         # Create nested-groups users
-        self.folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )        
-        self.folder.acl_users._doAddUser('u9', 'secret', (), (), ('g1', 'ng2', ), )
-        self.folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )        
-        self.folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
-##        self.folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
+        self.gruf_folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )        
+        self.gruf_folder.acl_users._doAddUser('u9', 'secret', (), (), ('g1', 'ng2', ), )
+        self.gruf_folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )        
+        self.gruf_folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
+##        self.gruf_folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
 
         # Create a few folders to play with
-        self.folder.manage_addProduct['OFSP'].manage_addFolder('lr')
-        self.folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
-        self.folder.lr.manage_addLocalRoles("u3", ("r3", ))
-        self.folder.lr.manage_addLocalRoles("u6", ("r3", ))
+        self.gruf_folder.manage_addProduct['OFSP'].manage_addFolder('lr')
+        self.gruf_folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
+        self.gruf_folder.lr.manage_addLocalRoles("u3", ("r3", ))
+        self.gruf_folder.lr.manage_addLocalRoles("u6", ("r3", ))
 
         # Special case of nesting
-        self.folder.acl_users._doAddGroup('extranet', (), ())
-        self.folder.acl_users._doAddGroup('intranet', (), ('extranet', ))
-        self.folder.acl_users._doAddGroup('compta', (), ('intranet', 'extranet' ))
+        self.gruf_folder.acl_users._doAddGroup('extranet', (), ())
+        self.gruf_folder.acl_users._doAddGroup('intranet', (), ('extranet', ))
+        self.gruf_folder.acl_users._doAddGroup('compta', (), ('intranet', 'extranet' ))
 
+
+    def afterSetUp(self,):
+        """
+        afterSetUp(self) => This method is called to create Folder with a GRUF inside.
+        """
+        self.gruf_setup()
+        self.security_context_setup()
 ##        # Need to commit so the ZServer threads see what we've done
 ##        get_transaction().commit()
+
+
 
 ##    def beforeClose(self):
 ##        # Commit after cleanup
@@ -191,7 +207,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         test00userNames(self,)
         Basic test of user and group names.
         """
-        un = self.folder.acl_users.getUserNames()
+        un = self.gruf_folder.acl_users.getUserNames()
         users = [
             'group_g1', 'group_g2', "group_g3", "group_g4",
             "group_ng1", "group_ng2", "group_ng3", "group_ng4", "group_ng5",
@@ -212,27 +228,31 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         test01userRoles => Test if the user "inherits" group roles
         """
         # Add a few roles
-        self.folder._addRole("userrole")
-        self.folder._addRole("grouprole")
+        self.gruf_folder._addRole("userrole")
+        self.gruf_folder._addRole("grouprole")
 
         # Add the group & the user
-        self.folder.acl_users._doAddGroup('gtest', ['grouprole'])
-        self.folder.acl_users._doAddUser('utest', 'secret', ('userrole', ), (), ('gtest', ), )
+        self.gruf_folder.acl_users._doAddGroup('gtest', ['grouprole'])
+        self.gruf_folder.acl_users._doAddUser('utest', 'secret', ('userrole', ), (), ('gtest', ), )
 
         # Check if the user has the right roles
-        usr = self.folder.acl_users.getUser('utest')
+        usr = self.gruf_folder.acl_users.getUser('utest')
         roles = usr.getRoles()
         self.failUnless('Authenticated' in roles)
         self.failUnless('userrole' in roles)
         self.failUnless('grouprole' in roles)
 
+        # Remove the group & user
+        self.gruf_folder.acl_users._doDelUsers(['utest',])
+        self.gruf_folder.acl_users._doDelGroups(['gtest',])
+        
 
     def compareRoles(self, target, user, roles):
         """
         compareRoles(self, target, user, roles) => do not raise if user has exactly the specified roles.
         If target is None, test user roles (no local roles)
         """
-        u = self.folder.acl_users.getUser(user)
+        u = self.gruf_folder.acl_users.getUser(user)
         if not u:
             raise RuntimeError, "compareRoles: Invalid user: '%s'" % user
         if target is None:
@@ -251,7 +271,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         """
         compareGroups(self, user, groups) => do not raise if user has exactly the specified groups.
         """
-        u = self.folder.acl_users.getUser(user)
+        u = self.gruf_folder.acl_users.getUser(user)
         if not u:
             raise RuntimeError, "compareGroups: Invalid user: '%s'" % user
         actual_groups = list(u.getGroups())
@@ -314,13 +334,13 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
         We just check that people has the right roles
         """
-        self.failUnless(self.compareRoles(self.folder.lr, "u1", ()))
-        self.failUnless(self.compareRoles(self.folder.lr, "u2", ("r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u3", ("r1", "r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u4", ("r1", "r2", "r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u5", ("r1", "r2", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u6", ("r1", "r2", "r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u7", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u1", ()))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u3", ("r1", "r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u4", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u5", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u7", ("r1", "r2", "r3", )))
 
 
     def test05nestedGroups(self,):
@@ -343,11 +363,11 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        self.failUnless(self.compareRoles(None, "u12", ("r1", "r2", "r3")))
 
         # Test the same with local roles (wow !)
-        self.failUnless(self.compareRoles(self.folder.lr, "u8", ("r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u9", ("r1", "r2", "r3", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u10", ("r1", "r2", )))
-        self.failUnless(self.compareRoles(self.folder.lr, "u11", ("r1", "r2", "r3")))
-##        self.failUnless(self.compareRoles(self.folder.lr, "u12", ("r1", "r2", "r3")))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u8", ("r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u9", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u10", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u11", ("r1", "r2", "r3")))
+##        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u12", ("r1", "r2", "r3")))
 
 
     def test06doubleNesting(self,):
@@ -362,16 +382,16 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         test traversal to ensure management screens are correctly accessible
         """
         # Check if we can traverse a GRUF to fetch a user (check a dummy method on it)
-        traversed = self.folder.acl_users.restrictedTraverse("u1")
+        traversed = self.gruf_folder.acl_users.restrictedTraverse("u1")
         Log(LOG_DEBUG, traversed)
         self.failUnless(traversed.meta_type == "Group User Folder")
 
         # Now, do the same but with a folder of the same name
-        self.folder.manage_addProduct['OFSP'].manage_addFolder('u1')
-        traversed = self.folder.acl_users.restrictedTraverse("u1")
+        self.gruf_folder.manage_addProduct['OFSP'].manage_addFolder('u1')
+        traversed = self.gruf_folder.acl_users.restrictedTraverse("u1")
         Log(LOG_DEBUG, traversed)
         self.failUnless(traversed.meta_type == "Group User Folder")
-
+          
 
     #                                                   #
     #               GRUF Interface testing              #
@@ -381,8 +401,8 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         """
         We test that GRUF's API is well protected
         """
-        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
-        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
+        self.assertRaises(Unauthorized, self.gruf_folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
+        self.assertRaises(Unauthorized, self.gruf_folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
         #urllib.urlopen(base+'/acl_users/getGRUFId')
 
 
@@ -394,7 +414,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        self.failUnless(
 ##            Verify.verifyObject(
 ##                IUserFolder.IUserFolder,
-##                self.folder.acl_users,
+##                self.gruf_folder.acl_users,
 ##                ),
 ##            )
 
@@ -402,7 +422,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        self.failUnless(
 ##            Verify.verifyObject(
 ##                IUserFolder.IUserFolder,
-##                self.folder.acl_users.getUser("u1"),
+##                self.gruf_folder.acl_users.getUser("u1"),
 ##                ),
 ##            )
 
@@ -410,7 +430,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##        self.failUnless(
 ##            Verify.verifyObject(
 ##                IUserFolder.IUserFolder,
-##                self.folder.acl_users.getUser("g1"),
+##                self.gruf_folder.acl_users.getUser("g1"),
 ##                ),
 ##            )
 
@@ -421,7 +441,7 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
 ##    def testAccess(self):
 ##        '''Test access'''
-##        page = self.folder.index_html(self.folder)
+##        page = self.gruf_folder.index_html(self.gruf_folder)
 
 ##    def testWeb(self):
 ##        '''Test web access'''
@@ -440,13 +460,13 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 ##    def testSecurity(self):
 ##        '''Test security of public resource'''
 ##        # Should be accessible
-##        try: self.folder.restrictedTraverse('index_html')
+##        try: self.gruf_folder.restrictedTraverse('index_html')
 ##        except Unauthorized: self.fail('Unauthorized')
 
 ##    def testSecurity2(self):
 ##        '''Test security of protected resource'''
 ##        # Should be protected
-##        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'secret_html')
+##        self.assertRaises(Unauthorized, self.gruf_folder.restrictedTraverse, 'secret_html')
     
 ##    def testWebSecurity(self):
 ##        '''Test web security of public resource'''
@@ -463,7 +483,48 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
 ##    def testAbsoluteURL(self):
 ##        '''Test absolute_url'''
-##        self.assertEquals(self.folder.absolute_url(), base)
+##        self.assertEquals(self.gruf_folder.absolute_url(), base)
+
+
+
+
+#                                                   #
+#                 Copy / Paste support              #
+#                                                   #
+
+class TestGroupUserFolderCopy(TestGroupUserFolder):
+    """
+    Same tests as the previous class, but AFTER a copy/paste operation
+    """
+    _setup_done = 0
+
+    def afterSetUp(self,):
+        """
+        afterSetUp(self,) => Basic gruf setup with a copy/paste
+        """
+        # Build a security context with the regular GRUF Folder
+        self.gruf_setup()
+        self.security_context_setup()
+
+        # Perform tests to ensure using GRUF and filling all caches
+        self.test00userNames()
+        self.test01userRoles()
+        self.test02securityMatrix()
+        self.test03usersBelongToGroups()
+        self.test04localRoles()
+        self.test05nestedGroups()
+        self.test06doubleNesting()
+
+        # Now copy/paste a re-build the security context in another folder
+        self._setupUser()
+        self._setRoles(['Manager', ], )
+        self._login()
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('gruf_folder2')
+        folder2 = self.folder.gruf_folder2
+        
+        # copy/paste GRUF inside
+        copy = self.gruf_folder.manage_copyObjects(ids = ['acl_users',],)
+        folder2.manage_pasteObjects(cb_copy_data = copy)
 
 
 
@@ -474,5 +535,6 @@ else:
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(TestGroupUserFolder))
+        suite.addTest(unittest.makeSuite(TestGroupUserFolderCopy))
         return suite
 
