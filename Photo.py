@@ -147,15 +147,6 @@ class Photo(Image):
 
     security = ClassSecurityInfo()
 
-
-    displays = {'thumbnail': (128,128),
-                'xsmall': (200,200),
-                'small': (320,320),
-                'medium': (480,480),
-                'large': (768,768),
-                'xlarge': (1024,1024)
-                }
-
     # make image variants accesable via url
     variant=DynVariantWrapper()
     security.declareProtected(CMFCorePermissions.View, 'Variants')
@@ -172,7 +163,7 @@ class Photo(Image):
     def getDisplays(self):
         result = []
 
-        for name, size in self.displays.items():
+        for name, size in self.photo_display_sizes().items():
             result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1]),'size':size})
 
         result.sort(lambda d1,d2: cmp(d1['size'][0]*d1['size'][0],d2['size'][1]*d2['size'][1])) #sort ascending by size
@@ -181,16 +172,16 @@ class Photo(Image):
     security.declarePrivate('checkForVariant')
     def checkForVariant(self, size):
 	"""Create variant if not there."""
-        if size in self.displays.keys():
+        if size in self.photo_display_sizes().keys():
 	    # Create resized copy, if it doesnt already exist
             if not self._photos.has_key(size):
                 self._photos[size] = OFS.Image.Image(size, size,
-                                                     self._resize(self.displays.get(size, (0,0))))
+                                                     self._resize(self.photo_display_sizes().get(size, (0,0))))
             # a copy with a content type other than image/* exists, this
             # probably means that the last resize process failed. retry
             elif not self._photos[size].getContentType().startswith('image'):
                 self._photos[size] = OFS.Image.Image(size, size,
-                                                     self._resize(self.displays.get(size, (0,0))))
+                                                     self._resize(self.photo_display_sizes().get(size, (0,0))))
 
             return 1
 
@@ -215,11 +206,11 @@ class Photo(Image):
 
         if height is None or width is None:
 
-            if size in self.displays.keys():
+            if size in self.photo_display_sizes().keys():
                 if not self._photos.has_key(size):
                     # This resized image isn't created yet.
                     # Calculate a size for it
-                    x,y = self.displays.get(size)
+                    x,y = self.photo_display_sizes().get(size)
                     try:
                         if self.width > self.height:
                             w=x
@@ -288,7 +279,7 @@ class Photo(Image):
         """
         Image.update_data(self, data, content_type, size)
         self._photos = OOBTree()
-
+        
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
         image = StringIO()
