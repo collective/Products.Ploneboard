@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.4 2004/05/04 18:26:23 tiran Exp $
+$Id: toolbox.py,v 1.5 2004/05/04 18:51:58 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -147,6 +147,8 @@ def switchCMF2ATCT(self):
     out = StringIO()
     for klass in atct_klasses:
         _switchToATCT(pt, cat, reg, klass, out)
+    # XXX maybe we need to reindex only portal_type and meta_type
+    cat.refreshCatalog(clear=1)
     return out.getvalue()
 
 def switchATCT2CMF(self):
@@ -158,12 +160,18 @@ def switchATCT2CMF(self):
     out = StringIO()
     for klass in atct_klasses:
         _switchToCMF(pt, cat, reg, klass, out)
+    # XXX maybe we need to reindex only portal_type and meta_type
+    cat.refreshCatalog(clear=1)
     return out.getvalue()
 
 def isSwitchedToATCT(self):
+    """Test wether the types are already switched to ATCT
+    
+    This test isn't very good but sufficient for our purpose
+    """
     pt = getToolByName(self,'portal_types')
     doc = pt.getTypeInfo('Document')
-    if doc and doc.meta_type == ATDocument.ATDocument.meta_type:
+    if doc.Metatype() == ATDocument.ATDocument.meta_type:
         return 1
     else:
         return 0
