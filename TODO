@@ -8,5 +8,14 @@ TODO-LIST
 
   * Improve performance.
 
-  * Improve users/groups admin screens (roles icon, show permissions in some way)
+  * Improve users/groups admin screens:
+     
+    - roles icon, show permissions in some way
+  
+    - use wizards instead of complex screens
 
+    - allow users and groups to be edited in a single screen (1 page per user/group)
+  
+    - replace audit's legend AA/AB/AC/AD by A0/A1/A2/A3/...
+
+    - use thin borders for audit table and fix cell width
