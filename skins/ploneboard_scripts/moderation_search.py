@@ -1,4 +1,4 @@
-## Script (Python) "list_pending_search.py"
+## Script (Python) "moderation.py"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -21,7 +21,7 @@
 query = {}
 query['sort_on'] = 'created'
 query['review_state'] = 'pending'
-query['portal_type'] = 'Message'
+query['portal_type'] = 'PloneboardMessage'
 query['path'] = '/'+ '/'.join(context.getPhysicalPath()[1:])
 
 reqget = context.REQUEST.get
@@ -34,12 +34,12 @@ def supplement_query(field, index_name=None, reqget=reqget, query=query):
 
 catalogresult = context.getInternalCatalog()(REQUEST=query)
 
-if context.portal_type == 'Ploneboard Conversation' or len(catalogresult) < 100:
+if context.portal_type == 'PloneboardConversation' or len(catalogresult) < 100:
     return [r.getObject() for r in catalogresult]
 
 result = []
 if context.portal_type == 'Ploneboard':
-    for forum in context.contentValues('Forum'):
+    for forum in context.contentValues('PloneboardForum'):
         query['path'] = '/'+ '/'.join(forum.getPhysicalPath()[1:])
         forumresult = context.getInternalCatalog()(REQUEST=query)
         if len(forumresult) > 50:
@@ -48,7 +48,7 @@ if context.portal_type == 'Ploneboard':
             result.extend([r.getObject() for r in forumresult])
     return result
 
-if context.portal_type == 'Ploneboard Forum':
+if context.portal_type == 'PloneboardForum':
     # We need a dynamic programming solution here as search for each 
     # conversation is prohibitively expensive
     forumid = context.getId()

@@ -33,7 +33,7 @@
             
             <p>
                 <a href="#"
-                   tal:condition="python: here.portal_type in ('Forum', 'Conversation', 'Message')"
+                   tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardMessage')"
                    tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
                    tal:content="here/aq_inner/aq_parent/Title">Up</a>
             </p>
@@ -48,7 +48,7 @@
                                  id resultid;" >
 
 
-                <div tal:condition="python: result.portal_type == 'Forum';">
+                <div tal:condition="python: result.portal_type == 'PloneboardForum'">
                     <a href="#"
                        tal:attributes="href resulturl">
                         <img src="#" 
@@ -65,7 +65,7 @@
                     messages in queue.
                 </div>
 
-                <div tal:condition="python: result.portal_type == 'Conversation'">
+                <div tal:condition="python: result.portal_type == 'PloneboardConversation'">
                     <a href="#"
                        tal:attributes="href resulturl">
                         <img src="#" 
@@ -82,7 +82,7 @@
                     messages in queue.
                 </div>
 
-                <div tal:condition="python: result.portal_type == 'Message'">
+                <div tal:condition="python: result.portal_type == 'PloneboardMessage'">
                     <a href="#" 
                        tal:attributes="href resulturl">
                         <img src="#" 
@@ -126,8 +126,8 @@
             </p>
             <p>
                 <a href="#"
-                   tal:attributes="href here/getBoard/absolute_url"
-                   tal:content="here/aq_inner/aq_parent/Title">Up</a>
+                   tal:attributes="href python:here.getBoard().absolute_url()"
+                   tal:content="python:here.getBoard().Title()">Up</a>
             </p>
         </div>
 
