@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.2 2004/04/26 06:32:10 tiran Exp $
+$Id: toolbox.py,v 1.3 2004/05/01 17:14:24 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -65,7 +65,7 @@ def recreateATImageScales(self):
 
     return out.getvalue()
 
-def _switchToATCT(pt, cat, klass):
+def _switchToATCT(pt, cat, reg, klass):
     """
     """
     atId = klass.__name__
@@ -79,12 +79,20 @@ def _switchToATCT(pt, cat, klass):
     pt.manage_renameObject(id, bakId)
     pt[bakId].manage_changeProperties(title=bakTitle, global_allow=0)
     _changePortalType(cat, id, bakId)
+
     # rename to the new
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
 
-def _switchToCMF(pt, cat, klass):
+    # adjust the content type registry
+    preds = reg.listPredicates()
+    for predid, pred in preds:
+        typ = pred[1]
+        if typ == atId:
+            reg.assignTypeName(predid, id) 
+
+def _switchToCMF(pt, cat, reg, klass):
     """
     """
     atId = klass.__name__
@@ -97,6 +105,7 @@ def _switchToCMF(pt, cat, klass):
     pt.manage_renameObject(id, atId)
     pt[bakId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
+
     # rename to the new type
     pt.manage_renameObject(bakId, id)
     if id not in not_global_allow:
@@ -105,6 +114,13 @@ def _switchToCMF(pt, cat, klass):
         global_allow = 0
     pt[id].manage_changeProperties(title='', global_allow=global_allow)
     _changePortalType(cat, bakId, id)
+
+    # adjust the content type registry
+    preds = reg.listPredicates()
+    for predid, pred in preds:
+        typ = pred[1]
+        if typ == id:
+            reg.assignTypeName(predid, bakId)
 
 def _changePortalType(cat, old, new):
     """
@@ -119,11 +135,13 @@ def _changePortalType(cat, old, new):
 def switchCMF2ATCT(self):
     pt = getToolByName(self,'portal_types')
     cat = getToolByName(self,'portal_catalog')
+    reg = getToolByName(self, 'content_type_registry') 
     for klass in atct_klasses:
-        _switchToATCT(pt, cat, klass)
+        _switchToATCT(pt, cat, reg, klass)
 
 def switchATCT2CMF(self):
     pt = getToolByName(self,'portal_types')
     cat = getToolByName(self,'portal_catalog')
+    reg = getToolByName(self, 'content_type_registry') 
     for klass in atct_klasses:
-        _switchToCMF(pt, cat, klass)
+        _switchToCMF(pt, cat, reg, klass)
