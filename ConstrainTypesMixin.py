@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.8 2004/10/05 23:38:44 tiran Exp $
+$Id: ConstrainTypesMixin.py,v 1.9 2004/10/16 21:24:32 tiran Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -28,6 +28,7 @@ __docformat__ = 'plaintext'
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from Acquisition import aq_parent
+from AccessControl import Unauthorized
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import CMFCorePermissions
@@ -175,7 +176,7 @@ class ConstrainTypesMixin:
     def invokeFactory( self, type_name, id, RESPONSE=None, *args, **kw):
         """ Invokes the portal_types tool """
         if not type_name in [fti.id for fti in self.allowedContentTypes()]:
-            raise ValueError, 'Disallowed subobject type: %s' % type_name
+            raise Unauthorized('Disallowed subobject type: %s' % type_name)
 
         pt = getToolByName( self, 'portal_types' )
         args = (type_name, self, id, RESPONSE) + args

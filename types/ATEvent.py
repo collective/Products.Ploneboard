@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.25 2004/10/08 16:23:16 tiran Exp $
+$Id: ATEvent.py,v 1.26 2004/10/16 21:24:32 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -63,7 +63,9 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     assocFileExt   = ('event', )
     cmf_edit_kws   = ('effectiveDay', 'effectiveMo', 'effectiveYear',
                       'expirationDay', 'expirationMo', 'expirationYear',
-                      'start_time', 'startAMPM', 'stop_time', 'stopAMPM')
+                      'start_time', 'startAMPM', 'stop_time', 'stopAMPM',
+                      'start_date', 'end_date', 'contact_name', 'contact_email',
+                      'contact_phone', 'event_url')
 
     __implements__ = ATCTContent.__implements__, IATEvent
 

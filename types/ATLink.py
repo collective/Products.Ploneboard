@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.15 2004/10/08 16:23:16 tiran Exp $
+$Id: ATLink.py,v 1.16 2004/10/16 21:24:32 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -56,7 +56,7 @@ class ATLink(ATCTContent):
     typeDescMsgId  = 'description_edit_link_item'
     assocMimetypes = ()
     assocFileExt   = ('link', 'url', )
-    cmf_edit_kws   = ()
+    cmf_edit_kws   = ('remote_url', )
 
     __implements__ = ATCTContent.__implements__, IATLink
 

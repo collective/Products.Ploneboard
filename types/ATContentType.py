@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.43 2004/10/08 16:23:16 tiran Exp $
+$Id: ATContentType.py,v 1.44 2004/10/16 21:24:32 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -166,7 +166,8 @@ class ATCTMixin(TemplateMixin):
             return portal_type
 
         # make it easy to derive from atct:
-        if hasattr(self,'newTypeFor') and self.newTypeFor:
+        newTypeFor = self.__class__.__dict__.get('newTypeFor', None)
+        if newTypeFor:
             correct_pt = self.newTypeFor[0]
         else:
             correct_pt = portal_type
