@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.3 2004/03/16 20:33:23 tiran Exp $
+$Id: Install.py,v 1.4 2004/03/18 13:17:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -68,7 +68,10 @@ def install(self):
         'switch_old_plone_types_on',    
         PROJECTNAME+'.switchOldPloneTypes', 
         'switch_old_plone_types_on')    
-
+    manage_addExternalMethod(portal,'migrateFromCMFtoATCT',
+        'Migrate from CMFDefault types to ATContentTypes',    
+        PROJECTNAME+'.migrateFromCMF', 
+        'migrate')    
     # changing workflow
     setupWorkflows(self, typeInfo, out)
 
@@ -93,7 +96,8 @@ def uninstall(self):
     
     # remove external methods for toggling between old and new types
     portal=getToolByName(self,'portal_url').getPortalObject()
-    for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off'):
+    for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off',
+     'migrateFromCMFtoATCT'):
         if hasattr(aq_base(portal), script):
             portal.manage_delObjects(ids=[script,])
     

@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.8 2004/03/16 20:33:23 tiran Exp $
+$Id: Migrator.py,v 1.9 2004/03/18 13:17:09 tiran Exp $
 """
 
 from copy import copy, deepcopy
@@ -83,6 +83,7 @@ class BaseMigrator:
     subtransaction = 30
 
     def __init__(self, obj):
+        print "called for %s " % obj.absolute_url(1)
         self.old = obj
         self.orig_id = self.old.getId()
 
@@ -319,3 +320,18 @@ class CMFItemMigrator(ItemMigrationMixin, BaseCMFMigrator):
 class CMFFolderMigrator(FolderMigrationMixin, BaseCMFMigrator):
     """
     """
+
+##class NestedATFolderMigration(CMFFolderMigrator):
+##    """
+##    """
+##    subtransaction = 1
+##    checkMethod = lambda: 1
+##       
+##    def migrate_recursive(self):
+##        """
+##        """
+##        for obj in self.new.objectValues():
+##            if self.checkMethod(obj):
+##                print obj.absolute_url()
+##                get_transaction().commit(1)
+##                self.__class__(obj)

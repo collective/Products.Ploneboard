@@ -18,21 +18,30 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.4 2004/03/16 20:33:23 tiran Exp $
+$Id: ATCTMigrator.py,v 1.5 2004/03/18 13:17:09 tiran Exp $
 """
 
 from common import *
 from Walker import CatalogWalker, RecursiveWalker
-from Migrator import CMFItemMigrator, CMFFolderMigrator
+from Migrator import CMFItemMigrator, CMFFolderMigrator#, NestedATFolderMigration
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
+from Acquisition import aq_parent
 
 
-def isATFolder(obj):
-    return IATFolder.isImplementedBy(obj)
+def isPloneFolder(obj, ob=None):
+    if ob:
+        # called as instance method
+        obj = ob
+    return getattr(obj, 'meta_type', None) == 'Plone Folder' and \
+           getattr(aq_parent(obj), 'meta_type', None) != 'Plone Folder'
 
-def isATBTreeFolder(obj):
-    return IATBTreeFolder.isImplementedBy(obj)
+def isLargePloneFolder(obj, ob=None):
+    if ob:
+        # called as instance method
+        obj = ob
+    return getattr(obj, 'meta_type', None) == 'Large Plone Folder' and \
+           getattr(aq_parent(obj), 'meta_type', None) != 'Large Plone Folder'
 
 
 class DocumentMigrator(CMFItemMigrator):
@@ -110,6 +119,7 @@ class NewsItemMigrator(DocumentMigrator):
 class FolderMigrator(CMFFolderMigrator):
     fromType = 'Folder'
     toType   = 'ATFolder'
+    # XXX checkMethod = isPloneFolder
     # no other attributes to migrate
     map = {}
 
@@ -123,7 +133,7 @@ migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
              ImageMigrator, LinkMigrator, NewsItemMigrator,
             )
 
-folderMigrators = ( (FolderMigrator,isATFolder), (LargeFolderMigrator,isATBTreeFolder)
+folderMigrators = ( (FolderMigrator,isPloneFolder), (LargeFolderMigrator,isLargePloneFolder)
             )
 
 def migrateAll(portal):
@@ -135,8 +145,13 @@ def migrateAll(portal):
         out+= w.go()
     for migrator, checkMethod in folderMigrators:
         out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
-        w = RecursiveWalker(migrator, portal, checkMethod)
-        out+= w.go()
+        while 1:
+            # loop around until we got 'em all :]
+            w = RecursiveWalker(migrator, portal, checkMethod)
+            o=w.go()
+            out+=o
+            if not o.strip():
+                break
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')
     count = wf.updateRoleMappings()
