@@ -39,23 +39,23 @@ class Walker:
             msg=('Migrating %s from %s to %s ... ' % 
                             ('/'.join(obj.getPhysicalPath()),
                              self.fromType, self.toType, ))
-            log(msg)
+            LOG(msg)
             self.out.append(msg)
             
             (success, msg) = self.migrator(obj)()
             if success:
-                log('done')
+                LOG('done')
                 self.out[-1]+='done\n'
             else:
                 msg='ERROR: \n %s\n' % msg
-                log(msg)
+                LOG(msg)
                 self.out[-1]+=msg
             if self.subtransaction and \
               (len(self.out) % self.subtransaction) == 0:
                 # submit a subtransaction after every X (default 30)
                 # migrated objects to safe your butt
                 get_transaction().commit(1)
-                log('comitted...')
+                LOG('comitted...')
                 
     def getOutput(self):
         """Get migration notes
@@ -63,7 +63,7 @@ class Walker:
         :return: objects (with acquisition wrapper) that needs migration
         :rtype: list of objects
         """
-        return '\.n'.join(self.out)
+        return '\n'.join(self.out)
     
 class CatalogWalker(Walker):
     """Walker using portal_catalog
@@ -81,7 +81,7 @@ class CatalogWalker(Walker):
         """
         ret = []
         brains = self.catalog(portal_type = self.fromType)
-        log("fromType: " + str(self.fromType))
+        LOG("fromType: " + str(self.fromType))
         for brain in brains:
             obj = brain.getObject()
             if obj:

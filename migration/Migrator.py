@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: Migrator.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -159,27 +159,23 @@ class BaseMigrator:
         Removes the old (if exists) and adds a new
         """
         for id in self.old.propertyIds():
-            if DEBUG:
-                log("propertyid: " + str(id))
+            LOG("propertyid: " + str(id))
             if id in ('title', 'description'):
                 # migrated by dc
                 continue
             if id in ('content_type', ):
                 # has to be taken care of separately
-                log("property with id: %s not migrated" % str(id))
+                LOG("property with id: %s not migrated" % str(id))
                 continue
             value = self.old.getProperty(id)
             type = self.old.getPropertyType(id)
-            if DEBUG:
-                log("value: " + str(value) + "; type: " + str(type))
+            LOG("value: " + str(value) + "; type: " + str(type))
             if self.new.hasProperty(id):
-                if DEBUG:
-                    log("return value of delProperty: " + str(self.new._delProperty(id)))
+                LOG("return value of delProperty: " + str(self.new._delProperty(id)))
                 else:
                     self.new._delProperty(id)
             else:
-                if DEBUG:
-                    log("property: " + str(self.new.getProperty(id)))
+                LOG("property: " + str(self.new.getProperty(id)))
             self.new.manage_addProperty(id, value, type)
 
     def migrate_owner(self):
@@ -189,15 +185,13 @@ class BaseMigrator:
         if hasattr(self.old, 'getWrappedOwner'):
             owner = self.old.getWrappedOwner()
             self.new.changeOwnership(owner)
-            if DEBUG:
-                log("changing owner via changeOwnership: %s" % str(self.old.getWrappedOwner()))
+            LOG("changing owner via changeOwnership: %s" % str(self.old.getWrappedOwner()))
         else:
             # fallback
             # not very nice but at least it works
             # trying to get/set the owner via getOwner(), changeOwnership(...)
             # did not work, at least not with plone 1.x, at 1.0.1, zope 2.6.2
-            if DEBUG:
-                log("changing owner via property _owner: %s" % str(self.old.getOwner(info = 1)))
+            LOG("changing owner via property _owner: %s" % str(self.old.getOwner(info = 1)))
             self.new._owner = self.old.getOwner(info = 1)
     
     def migrate_withmap(self):
@@ -217,8 +211,7 @@ class BaseMigrator:
             new.newmethod(oldmethod())
         """
         for oldKey, newKey in self.map.items():
-            if DEBUG:
-                log("oldKey: " + str(oldKey) + ", newKey: " + str(newKey))
+            LOG("oldKey: " + str(oldKey) + ", newKey: " + str(newKey))
             if not newKey:
                 newKey = oldKey
             oldVal = getattr(self.old, oldKey, None)
@@ -284,9 +277,8 @@ class ItemMigrationMixin:
     def renameOld(self):
         """Renames the old object
         """
-        if DEBUG:
-            log("renameOld | orig_id: " + str(self.orig_id) + "; old_id: " + str(self.old_id))
-            log(str(self.old.absolute_url()))
+        LOG("renameOld | orig_id: " + str(self.orig_id) + "; old_id: " + str(self.old_id))
+            LOG(str(self.old.absolute_url()))
         self.parent.manage_renameObject(self.orig_id, self.old_id)
 
     def createNew(self):

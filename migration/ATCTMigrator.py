@@ -18,12 +18,13 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATCTMigrator.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
 """
 
 from common import *
 from Walker import CatalogWalker
 from Migrator import CMFItemMigrator, CMFFolderMigrator
+from Products.CMFCore.utils import getToolByName
 
 class DocumentMigrator(CMFItemMigrator):
     fromType = 'Document'
@@ -121,8 +122,7 @@ def migrateAll(catalog):
         w = CatalogWalker(migrator, catalog)
         out+= w.go()
     wf = getToolByName(catalog, 'portal_workflow')
-    if DEBUG:
-        log('starting wf migration')
+    LOG('starting wf migration')
     count = wf.updateRoleMappings()
     out+='\n *** Workflow: %d object(s) updated. *** \n' % count
     return out

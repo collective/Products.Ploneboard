@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: common.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: common.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
 """
 
 from Products.Archetypes.debug import log as at_log
@@ -29,10 +29,10 @@ except:
     True=1
     False=0
 
-DEBUG      = True
-REMOVE_OLD = False # XXX for testing
+DEBUG      = False
+REMOVE_OLD = True
  
-def log(logmessage):
+def LOG(logmessage):
     """ wrap archetypes log method
     """
 
