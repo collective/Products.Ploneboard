@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.19 2004/02/23 12:48:10 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.20 2004/02/25 14:38:12 roeder Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -232,7 +232,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             for id in ids:
                 if hasattr(aq_base(gwf), id):
                     gwf._delObject(id)
-        
+
     security.declareProtected(SetGroupOwnership, 'setGroupOwnership')
     def setGroupOwnership(self, group, object):
         """Make the object 'object' owned by group 'group' (a portal_groupdata-ish object).
@@ -330,9 +330,16 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 space = self.getGroupareaFolder(id)
                 space.setTitle("%s workspace" % id)
                 space.setDescription("Container for objects shared by this group")
-                space.manage_delLocalRoles(space.users_with_local_role('Owner'))
-                self.setGroupOwnership(self.getGroupById(id), space)
-                
+
+                if hasattr(space, 'setInitialGroup'):
+                    # GroupSpaces can have their own policies regarding the group
+                    # that they are created for.
+                    user = self.getGroupById(id).getGroup()
+                    if user is not None:
+                        space.setInitialGroup(user)
+                else:
+                    space.manage_delLocalRoles(space.users_with_local_role('Owner'))
+                    self.setGroupOwnership(self.getGroupById(id), space)
 
     security.declareProtected(ManagePortal, 'getGroupWorkspaceType')
     def getGroupWorkspaceType(self):

@@ -1,6 +1,16 @@
+  * GroupsTool method createGrouparea now calls the GroupSpace
+    method setInitialGroup with the group that it is created for.
+    In case this method does not exists, the default behaviour
+    is employed. This is done so that the GroupSpace can decide on its
+    own what the policy should be regarding the group that it is 
+    initially created for.
+    See the implementation of GrufSpaces for an example of how this
+    can be used in order to give the initial group the role GroupMember.
+    2004/02/25 Maik Röder
+
   * Removed GroupSpace code, which can now be found in 
     http://ingeniweb.sourceforge.net/Products/GrufSpaces 
-    MR
+    2004/02/25 Maik Röder
 
 v2_0Beta3 - 20040224
 
