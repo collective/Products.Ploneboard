@@ -18,12 +18,14 @@
 #
 """
 
-$Id: ATLink.py,v 1.16 2004/10/16 21:24:32 tiran Exp $
+$Id: ATLink.py,v 1.17 2004/10/16 23:29:02 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
+
+import urlparse
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
@@ -61,6 +63,17 @@ class ATLink(ATCTContent):
     __implements__ = ATCTContent.__implements__, IATLink
 
     security       = ClassSecurityInfo()
+    
+    security.declareProtected(CMFCorePermissions.View, 'remote_url')
+    def setRemoteUrl(self, value, **kwargs):
+        """remute url mutator
+        
+        Use urlparse to sanify the url
+        Also see http://plone.org/collector/3296
+        """
+        if value:
+            value = urlparse.urlunparse(urlparse.urlparse(value))
+        self.getField('remoteUrl').set(self, value, **kwargs)
 
     security.declareProtected(CMFCorePermissions.View, 'remote_url')
     def remote_url(self):

@@ -9,6 +9,10 @@
    cmf_edit_kws was introduced to fix the issue.
    [tiran]
 
+ * ATLink: Use urlparse library to sanify the url to strip of additional
+   slashes. This is fixing http://plone.org/collector/3296 for ATCT.
+   [tiran]
+
 0.2.0-rc2 - 2004-10-06
 ======================
 
