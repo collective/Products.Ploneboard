@@ -1,5 +1,6 @@
 import types
 import AccessControl.User
+import copy
 
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
@@ -24,6 +25,7 @@ from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
 def modify_fti(fti):
     fti['global_allow'] = 0  # only allow Members to be added where explicitly allowed
+
 
 content_schema = FieldList((
     StringField('id',
@@ -210,22 +212,23 @@ class Member(BaseContent):
     listed = 0
     login_time = '2000/01/01'
     last_login_time = '2000/01/01/'
+
+
+    def dump(self, st=''):
+        import sys
+        sys.stdout.write(str(st)+'\n')
+        sys.stdout.write('_user = %s\n\n' % (str(aq_chain(self._user[0]))))
     
-    # the user folder containing the user associated with this member
-    _userFolder = None
-    _user = None
-
-
     ##IMPL DETAILS
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
         self.id = str(userid)
         self.password = None
-        self.roles = None
-        self.domains = None
+        self.roles = ()
+        self.domains = ()
         self._setPassword(self._generatePassword())
-        self._userFolder = None
-        self._createUser()
+        self._user = None
+        self._has_user = None
         # for plone compatibility
         self.listed = 0
         self.login_time = '2000/01/01'
@@ -354,10 +357,9 @@ class Member(BaseContent):
         if domains is None:
             domains = self.domains
 
-        if self._userFolder:
+        if self.hasUser():
             # if our user lives in a user folder, do this the right way
-
-            self.getUserFolder().userFolderEditUser(self.id, password, roles, domains)
+            self.getUser().aq_parent.userFolderEditUser(self.id, password, roles, domains)
         else:
             # we have a temporary user in hand -- set its attributes by hand
             self.getUser().__ = password
@@ -502,13 +504,19 @@ class Member(BaseContent):
 
     security.declarePublic('getUser')
     def getUser(self):
-        if self._userFolder:
-            # XXX should context be self.acl_users or self._userFolder?
-            return aq_base(self.getUserFolder().getUser(self.id)).__of__(self.acl_users) # restore the proper context
-        else:
-            if self._user is None:
-                self._createUser()
-            return aq_base(self._user).__of__(self.acl_users) # restore the proper context
+        # note that we store user in a list so that its acquisition context is preserved
+        if self._user is None:
+            self._createUser(create_acl_user=0)
+        return self._user[0]
+
+
+    def hasUser(self):
+        if self._has_user is None:
+            self._createUser(create_acl_user=0)
+        return self._has_user
+
+        # XXX should context be self.acl_users or self._user's original context?
+#        return aq_base(self._user).__of__(self.acl_users)
 
 
     # ########################################################################
@@ -550,13 +558,13 @@ class Member(BaseContent):
         registration_tool = getToolByName(self, 'portal_registration')
         user_created = 0
         # create a real user
-        if self._userFolder is None:
+        if not self.hasUser():
             # Limit the granted roles.
             # Anyone is always allowed to grant the 'Member' role.
             roles = self.getRoles()
             _limitGrantedRoles(roles, self, ('Member',))
             self.setRoles(roles)
-            self._createUser(force_create=1)
+            self._createUser(create_acl_user=1)
             user_created = 1
 
         # make the user the owner of the current member object
@@ -600,88 +608,154 @@ class Member(BaseContent):
 
 
     def _notifyOfCopyTo(self, container, op=0):
-        Member.inheritedAttribute('_notifyOfCopyTo')(self, container, op)
-        if op:
-            self._v_old_id = self.id
+        try:
+            Member.inheritedAttribute('_notifyOfCopyTo')(self, container, op)
+            if op:
+                self._v_old_user = self._user
+        except:
+            import traceback
+            import sys
+            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+            import pdb
+            pdb.set_trace()
+            raise
 
 
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, object, container):
-        BaseContent.manage_afterAdd(self, object, container)
-        assert(object is self)  # XXX - when would this not be true???
+        try:
+            BaseContent.manage_afterAdd(self, object, container)
+    #        assert(object is self)  # XXX - when would this not be true???
 
-        old_id = getattr(self, '_v_old_id', None)
-        if self.id == old_id:
-            return
+            old_user = getattr(object, '_v_old_user', None)
+            if old_user:
+                old_user = old_user[0]
+            if old_user and object.id == old_user.getUserName():
+                return
 
-        if hasattr(self, '_v_old_id'):
-            delattr(self, '_v_old_id')
-            if self._userFolder:
-                old_folder = self.getUserFolder()
-                
-                self._userFolder = [getToolByName(self, 'portal_url').getPortalObject().acl_users]
-                self._createUser()
-                # the old user was real -- transfer ownership and local roles to the new user
-                portal = getToolByName(self, 'portal_url').getPortalObject()
-                # change local roles and content ownership info
-                old_user_folder = self._getUserFolderForUser(old_id)
-                old_user = old_user_folder.getUser(old_id)
-                old_owner_info = Owned.ownerInfo(old_user)
-                new_owner = self.getUser().__of__(self.getUserFolder())
-                self._changeUserInfo(portal, old_owner_info, new_owner)
+            if hasattr(object, '_v_old_user'):
+                # object has been renamed
+                delattr(object, '_v_old_user')
+                if object.hasUser():
+                    # The old member had a real user, so we need to 
+                    # create a real user for the new member and transfer
+                    # ownership and local roles to the new member's user
+                    object._createUser(create_acl_user=1)
+                    portal = getToolByName(self, 'portal_url').getPortalObject()
+                    # change local roles and content ownership info
+                    old_owner_info = Owned.ownerInfo(old_user)
+                    new_owner = object.getUser()
+                    object._changeUserInfo(portal, old_owner_info, new_owner)
 
-                # delete the old user object if it is from portal.acl_users and not
-                # from root.acl_users
-                if old_folder == self.acl_users: 
-                    # delete the old user
-                    old_folder.userFolderDelUsers((old_id,))
-
+                    # Delete the old user object if it was from portal.acl_users but not
+                    # if it was from zope_root.acl_users
+                    if old_user.aq_parent == portal.acl_users: 
+                        # delete the old user
+                        portal.acl_users.userFolderDelUsers([old_user.getUserName()])
+        except:
+            import traceback
+            import sys
+            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+            import pdb
+            pdb.set_trace()
+            raise
 
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, object):
-        if self._userFolder:
-            self._userFolder = [getToolByName(self, 'portal_url').getPortalObject().acl_users]
-        self._createUser()
+        self._user = copy.deepcopy(self._user)
+        try:
+            if object.hasUser():
+                # the copied member had a real user -- create a real user for the copy
+                object._createUser(create_acl_user=1)
+        except:
+            import traceback
+            import sys
+            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+            import pdb
+            pdb.set_trace()
+            raise
 
 
     security.declarePrivate('manage_beforeDelete')
     def manage_beforeDelete(self, item, container):
-        BaseContent.manage_beforeDelete(self, item, container)
-        if hasattr(self, '_v_old_id'):
-            # if we are in the midst of a move, do nothing
-            return
+        self.dump('manage_beforeDelete')
+        try:
+            if hasattr(self, '_v_old_user'):
+                # if we are in the midst of a move, do nothing
+                return
 
-        portal = getToolByName(self, 'portal_url').getPortalObject()
+            BaseContent.manage_beforeDelete(self, item, container)
+            portal = getToolByName(self, 'portal_url').getPortalObject()
 
-        # recurse through the portal and delete all of the user's content
-        # XXX we should create some other options here
-        # XXX Do we really want to delete the user's stuff if s/he isn't in
-        #     the portal's acl_users folder?
-        self._changeUserInfo(portal, Owned.ownerInfo(self.getUser().__of__(self.getUserFolder())))
-        # delete the User object if it's in the current portal's acl_users folder
-        if self.getUserFolder() == portal.acl_users:
-            self.acl_users.userFolderDelUsers((self.id,))
+            # recurse through the portal and delete all of the user's content
+            # XXX we should create some other options here
+            # XXX Do we really want to delete the user's stuff if s/he isn't in
+            #     the portal's acl_users folder?
+            try:
+                self._changeUserInfo(portal, Owned.ownerInfo(self.getUser()))
+                
+                # delete the User object if it's in the current portal's acl_users folder
+                if self.getUser().aq_parent == portal.acl_users: 
+                    self._user = None # remove references to user
+                    portal.acl_users.userFolderDelUsers([self.id])
+            except:
+                import traceback
+                import sys
+                sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+                sys.stdout.write('self: %s\n' % (str(self)))
+                sys.stdout.write('item: %s\n' % str(item))
+                sys.stdout.write('container: %s\n' % str(container))
+                sys.stdout.write('_user[0]: %s\n' % str(self._user[0]))
+                sys.stdout.write('aq_chain(_user[0]): %s\n' % str(aq_chain(self._user[0])))
+                pass
+        except:
+            import traceback
+            import sys
+            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+            import pdb
+            pdb.set_trace()
+            raise
 
 
     security.declarePrivate('setUser')
     def setUser(self, user):
+        # re-wrap user
+        user = aq_base(user).__of__(aq_inner(aq_parent(user)))
+        import sys
+        sys.stdout.write('setUser: aq_chain(user) = %s\n' % (str(aq_chain(user))))
+        sys.stdout.write('setUser: aq_chain(aq_inner(user)) = %s\n' % (str(aq_chain(aq_inner(user)))))
+        sys.stdout.write('setUser: aq_chain(aq_inner(aq_parent(user))) = %s\n' % (str(aq_chain(aq_inner(aq_parent(user))))))
+        sys.stdout.write('setUser2: %s\n' % str(aq_chain(self._getUserById(user.getUserName()))))
         assert(user.getUserName() == self.id)
         self.password = user.__
         self.roles = user.roles
         self.domains = user.domains
-        self._userFolder = [self._getUserFolderForUser(user.getUserName())]
-        if self._userFolder is [None]:
-            self._userFolder = None
-            self._createUser()
+        if len(aq_chain(user)) > 0:
+            self._user = [user]
+        else:
+            self._user = [self._getUserById(user.getUserName())]
+        assert self._user != [None]
+        try:
+            self._user[0].aq_inner.aq_parent
+        except:
+            import pdb
+            pdb.set_trace()
+        self._has_user = 1
 
+        sys.stdout.write('setUser\n')
+        sys.stdout.write('self: %s\n' % (str(self)))
+        sys.stdout.write('user: %s\n' % str(user))
+        sys.stdout.write('_user[0]: %s\n' % str(self._user[0]))
+        sys.stdout.write('aq_chain(_user[0]): %s\n' % str(aq_chain(self._user[0])))
+        sys.stdout.write('\n\n')
 
     security.declarePrivate('_updateCredentials')
     def _updateCredentials(self):
         if self.REQUEST:
             # don't log out the current user
-            if self._userFolder and hasattr(self.getUserFolder().aq_base, 'credentialsChanged'):
+            if self._has_user and hasattr(self.getUser().aq_parent.aq_base, 'credentialsChanged'):
                 # Use an interface provided by LoginManager.
-                self.getUserFolder().credentialsChanged(self.getUser(), id, password)
+                self.getUser().aq_parent.credentialsChanged(self.getUser(), id, password)
             else:
                 p = getattr(self.REQUEST, '_credentials_changed_path', None)
                 if p is not None:
@@ -691,23 +765,20 @@ class Member(BaseContent):
 
 
     security.declarePrivate('_createUser')
-    def _createUser(self, force_create=0):
-        if force_create and self._userFolder is None:
-            self._userFolder = [getToolByName(self, 'portal_url').getPortalObject().acl_users]
-        if self._userFolder is None:
-            self._user = AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains)
+    def _createUser(self, create_acl_user=0):
+        acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users 
+        if not create_acl_user:
+            self._user = [AccessControl.User.SimpleUser(self.id, self.password, self.roles, self.domains).__of__(acl_users)]
+            self._has_user = 0
         else:
-            if not self.getUserFolder().getUser(self.id):
-                self.getUserFolder().userFolderAddUser(self.id, self.password, self.roles, self.domains)
-                self._user = None
-
-
-    # We keep the user folder in a list so that we don't destroy its acquisition context
-    def getUserFolder(self):
-        if self._userFolder:
-            return self._userFolder[0]
-        else:
-            return None
+            acl_users.userFolderAddUser(self.id, self.password, self.roles, self.domains)
+            self._user = [acl_users.getUser(self.id).__of__(acl_users)]
+            self._has_user = 1
+        try:
+            self._user[0].aq_inner.aq_parent
+        except:
+            import pdb
+            pdb.set_trace()
 
 
     security.declarePrivate('_getUserFolderForUser')
@@ -728,18 +799,23 @@ class Member(BaseContent):
             else:
                 return None
 
-    
+
     security.declarePrivate('_getUserById')
     def _getUserById(self, id):
+        """A utility method for finding a user by searching through
+        portal.acl_users as well as the acl_users folders for all
+        zope folders containing portal.
+        
+        Returns the user in the acquisition context of its containing folder"""
         acl_users = self._getUserFolderForUser(id)
         if acl_users is None:
             return None
-        return acl_users.getUser(id)
+        return acl_users.getUser(id).__of__(acl_users)
 
 
-    # utility method for altering information related to a user
-    # when a member is renamed or deleted
     def _changeUserInfo(self, context, old_user_info, new_user=None):
+        """A utility method for altering information related to a user
+        when a member is renamed or deleted"""
         old_user_id = old_user_info[1]
         if new_user:
             new_user_id = new_user.getUserName()
