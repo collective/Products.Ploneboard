@@ -28,8 +28,6 @@ schema = BaseSchema + Schema((
     StringField('DefaultFormat',
                 multiValued=0,
                 vocabulary="vocabPresFormatSel",
-#                relationship='has PresFormatSel',
-#                enforce_vocabulary=1,
                 widget=SelectionWidget(label="Default Presentation Format",
                                        label_msgid="label_presentation",
                                        description_msgid="help_presentation",
@@ -46,11 +44,9 @@ def buildPresentationSetSchema():
     
     presentation_set_schema = []
     for reftype in REFERENCE_TYPES:
-        reftype = reftype.replace('Reference', ' Reference')
-        elem = StringField(reftype+' Format',
+        reftype = reftype.replace('Reference', ' Reference')+' Format'
+        elem = StringField(reftype,
                            vocabulary = "vocabPresFormatDef",
-#                           relationship='has PresFormatDef',
-#                           enforce_vocabulary = 1,
                            default = 'Default',
                            widget = SelectionWidget(description_msgid = "help_formatset",
                                                     description = "Select the format how you want to present your list for this type of reference.",
