@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.35 2005/01/24 18:27:05 tiran Exp $
+$Id: ATDocument.py,v 1.36 2005/02/01 20:18:31 batlogg Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -59,10 +59,10 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     newTypeFor     = ('Document', 'Document')
     typeDescription= 'Fill in the details of this document.'
     typeDescMsgId  = 'description_edit_document'
-    assocMimetypes = ('application/pdf', 'application/xhtml+xml',
-                      'application/msword', 'message/rfc822', 'text/*',
+    assocMimetypes = ('application/xhtml+xml',
+                      'message/rfc822', 'text/*',
                      )
-    assocFileExt   = ('doc', 'txt', 'stx', 'rst', 'rest', 'pdf', 'py' )
+    assocFileExt   = ('txt', 'stx', 'rst', 'rest', 'py' )
     cmf_edit_kws   = ('text_format',)
 
     __implements__ = (ATCTContent.__implements__,
