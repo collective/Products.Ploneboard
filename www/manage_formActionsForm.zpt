@@ -11,13 +11,13 @@
 <h3>Form and Script Actions</h3>
 
 <p>This tool lets you set or override the default actions that are 
-executed when a Controlled Page Template is submitted or a Controlled Python Script 
+executed when a Controller Page Template is submitted or a Controller Python Script 
 returns.</p>
 
 <ul>
-   <li><b>Template/Script</b>: The Controlled Page Template or Controlled Python
+   <li><b>Template/Script</b>: The Controller Page Template or Controller Python
        Script for which you are setting actions.  Note that these <i>will only
-       affect</i> Controlled Page Templates and Controlled Python Scripts that return a
+       affect</i> Controller Page Templates and Controller Python Scripts that return a
        ControllerState object.  These actions <i>will be ignored</i> for ordinary 
        PageTemplates, ordinary Python Scripts, DTML Methods and DTML Documents.</li>
    <li><b>Status</b>: The status for which the given action is executed.  
@@ -30,7 +30,7 @@ returns.</p>
        pressed.  Leave the button field blank to use the same action for any 
        button.  To use this functionality, you must name each button in the template
        <tt>form.button.NAME</tt>.  For example, if you have <tt>&lt;input name="form.button.button1" type="submit"&gt;</tt>
-       in your Controlled Page Template, you can specify what happens when this button is pressed by
+       in your Controller Page Template, you can specify what happens when this button is pressed by
        entering <tt>button1</tt> in the button field.</li>
    <li><b>Action</b>: The type of action to execute.  The available types of 
        actions are as follows:

@@ -1,16 +1,16 @@
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add Controller Python Script"
+<h2 tal:define="form_title string:Add Controller Validator"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Controller Python Scripts allow you to add functionality to Zope by writing 
+Controller Validator allow you to add functionality to Zope by writing 
 scripts in the Python programming language that are exposed as callable Zope 
-objects.  Controller Python Scripts enable you to override script actions 
+objects.  Controller Validators enable you to override form and script validators
 without changing code.  You may choose to upload the script from a local file 
 by typing the file name or using the browse button.</p>
 
-<form action="manage_addControllerPythonScript" method="post" 
+<form action="manage_addControllerValidator" method="post" 
  enctype="multipart/form-data">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>

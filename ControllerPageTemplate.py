@@ -6,10 +6,10 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.CMFCorePermissions import ManagePortal, View
 from Products.CMFCore.utils import getToolByName
-from ControlledBase import ControlledBase
+from ControllerBase import ControllerBase
 from ControllerState import ControllerState
 from ValidationError import ValidationError
-from BaseControlledPageTemplate import BaseControlledPageTemplate
+from BaseControllerPageTemplate import BaseControllerPageTemplate
 from FormAction import FormActionContainer
 from FormValidator import FormValidatorContainer
 
@@ -18,17 +18,17 @@ from urllib import quote
 
 # ###########################################################################
 # Product registration and Add support
-manage_addControlledPageTemplateForm = PageTemplateFile('www/cptAdd', globals())
-manage_addControlledPageTemplateForm.__name__='manage_addControlledPageTemplateForm'
+manage_addControllerPageTemplateForm = PageTemplateFile('www/cptAdd', globals())
+manage_addControllerPageTemplateForm.__name__='manage_addControllerPageTemplateForm'
 
 
-def manage_addControlledPageTemplate(self, id, title=None, text=None,
+def manage_addControllerPageTemplate(self, id, title=None, text=None,
                                     REQUEST=None, submit=None):
     """Add a Controller Page Template with optional file content."""
 
     id = str(id)
     if REQUEST is None:
-        self._setObject(id, ControlledPageTemplate(id, text))
+        self._setObject(id, ControllerPageTemplate(id, text))
         ob = getattr(self, id)
         if title:
             ob.pt_setTitle(title)
@@ -37,9 +37,9 @@ def manage_addControlledPageTemplate(self, id, title=None, text=None,
         file = REQUEST.form.get('file')
         headers = getattr(file, 'headers', None)
         if headers is None or not file.filename:
-            zpt = ControlledPageTemplate(id)
+            zpt = ControllerPageTemplate(id)
         else:
-            zpt = ControlledPageTemplate(id, file, headers.get('content_type'))
+            zpt = ControllerPageTemplate(id, file, headers.get('content_type'))
 
         self._setObject(id, zpt)
 
@@ -54,7 +54,7 @@ def manage_addControlledPageTemplate(self, id, title=None, text=None,
     return ''
 
 # ###########################################################################
-class ControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
+class ControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
@@ -74,10 +74,10 @@ class ControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
     def __init__(self, *args, **kwargs):
         self.validators = FormValidatorContainer()
         self.actions = FormActionContainer()
-        return ControlledPageTemplate.inheritedAttribute('__init__')(self, *args, **kwargs)
+        return ControllerPageTemplate.inheritedAttribute('__init__')(self, *args, **kwargs)
 
     def __call__(self, *args, **kwargs):
-        return self._call(ControlledPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
+        return self._call(ControllerPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
 
 
-Globals.InitializeClass(ControlledPageTemplate)
+Globals.InitializeClass(ControllerPageTemplate)

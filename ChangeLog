@@ -1,3 +1,11 @@
+2003-09-23  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Renamed classes (ControlledX to ControllerX)
+
+   * Created separate ControllerValidator and FSControllerValidator classes
+
+   * Made new defaults for ControllerValidator and for ControllerPythonScript classes
+
 2003-08-17  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Modified the validation of validators in FormValidator to allow for

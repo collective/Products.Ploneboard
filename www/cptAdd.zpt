@@ -1,17 +1,17 @@
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add Controlled Page Template"
+<h2 tal:define="form_title string:Add Controller Page Template"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Controlled Page Templates allow you to use simple HTML or XML attributes to
-create dynamic templates.  Controlled Page Templates make it easy to add form
+Controller Page Templates allow you to use simple HTML or XML attributes to
+create dynamic templates.  Controller Page Templates make it easy to add form
 validation and let you override default validation scripts and form actions.  
 You may choose to upload the template text from a local file by typing the file 
 name or using the <em>browse</em> button.
 </p>
 
-<form action="manage_addControlledPageTemplate" method="post" 
+<form action="manage_addControllerPageTemplate" method="post" 
  enctype="multipart/form-data">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>

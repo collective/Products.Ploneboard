@@ -9,11 +9,11 @@
 <h3>Form Validators</h3>
 
 <p>This tool lets you set or override the default sequence of validators that are 
-executed when a Controlled Page Template is submitted.</p>
+executed when a Controller Page Template is submitted.</p>
 
 <ul>
-   <li><b>Template</b>: The Controlled Page Template for which you are setting
-       validators.  The form in question <i>must</i> be a Controlled Page Template.
+   <li><b>Template</b>: The Controller Page Template for which you are setting
+       validators.  The form in question <i>must</i> be a Controller Page Template.
        If it is an ordinary Page Template, a DTML Method, or a DTML Document 
        <i>these validators will be ignored!</i></li>
    <li><b>Context</b>: The type of context object for which the given sequence

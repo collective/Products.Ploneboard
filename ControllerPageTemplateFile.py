@@ -12,7 +12,7 @@
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControlledPageTemplateFile.py,v 1.4 2003/08/01 05:12:28 plonista Exp $
+$Id: ControllerPageTemplateFile.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
 """
 
 import os
@@ -20,14 +20,14 @@ import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.CMFCorePermissions import View
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile as BaseClass
-from BaseControlledPageTemplate import BaseControlledPageTemplate
+from BaseControllerPageTemplate import BaseControllerPageTemplate
 from utils import logException
 
 
-class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
-    """Wrapper for Controlled Page Template"""
+class ControllerPageTemplateFile(BaseClass, BaseControllerPageTemplate):
+    """Wrapper for Controller Page Template"""
      
-    meta_type = 'Controlled Page Template (File)'
+    meta_type = 'Controller Page Template (File)'
 
     manage_options=(
         ({'label':'Customize', 'action':'manage_main'},
@@ -43,7 +43,7 @@ class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
         filename = os.path.normpath(filename)
         if not os.path.splitext(filename)[1]:
             filename = filename + '.cpt'
-        retval = ControlledPageTemplateFile.inheritedAttribute('__init__')(self, filename, _prefix, **kw)
+        retval = ControllerPageTemplateFile.inheritedAttribute('__init__')(self, filename, _prefix, **kw)
 
         self.id = os.path.splitext(os.path.basename(filename))[0]
         self.filepath = self.filename
@@ -67,7 +67,7 @@ class ControlledPageTemplateFile(BaseClass, BaseControlledPageTemplate):
 
 
     def __call__(self, *args, **kwargs):
-        return self._call(ControlledPageTemplateFile.inheritedAttribute('__call__'), *args, **kwargs)
+        return self._call(ControllerPageTemplateFile.inheritedAttribute('__call__'), *args, **kwargs)
 
 
     security.declarePublic('writableDefaults')

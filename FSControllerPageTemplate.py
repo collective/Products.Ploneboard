@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControlledPageTemplate.py,v 1.5 2003/09/23 15:00:30 tesdal Exp $
+$Id: FSControllerPageTemplate.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -25,14 +25,14 @@ from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import expandpath
 from Products.CMFCore.FSPageTemplate import FSPageTemplate
 from Products.CMFCore.FSPageTemplate import FSPageTemplate as BaseClass
-from ControlledPageTemplate import ControlledPageTemplate
-from ControlledBase import ControlledBase
-from BaseControlledPageTemplate import BaseControlledPageTemplate
+from ControllerPageTemplate import ControllerPageTemplate
+from ControllerBase import ControllerBase
+from BaseControllerPageTemplate import BaseControllerPageTemplate
 from utils import logException
 
 
-class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
-    """Wrapper for Controlled Page Template"""
+class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
+    """Wrapper for Controller Page Template"""
      
     meta_type = 'Filesystem Controller Page Template'
 
@@ -69,12 +69,12 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
 
 
     def __call__(self, *args, **kwargs):
-        return self._call(FSControlledPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
+        return self._call(FSControllerPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
 
 
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
-        obj = ControlledPageTemplate(self.getId(), self._text, self.content_type)
+        obj = ControllerPageTemplate(self.getId(), self._text, self.content_type)
         obj.expand = 0
         obj.write(self.read())
         return obj
@@ -86,10 +86,10 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
         return 0
 
 
-d = FSControlledPageTemplate.__dict__
+d = FSControllerPageTemplate.__dict__
 d['source.xml'] = d['source.html'] = Src()
 
-Globals.InitializeClass(FSControlledPageTemplate)
+Globals.InitializeClass(FSControllerPageTemplate)
 
-registerFileExtension('cpt', FSControlledPageTemplate)
-registerMetaType('Controller Page Template', FSControlledPageTemplate)
+registerFileExtension('cpt', FSControllerPageTemplate)
+registerMetaType('Controller Page Template', FSControllerPageTemplate)

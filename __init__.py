@@ -1,6 +1,6 @@
-# $Id: __init__.py,v 1.2 2003/07/28 02:12:28 plonista Exp $
+# $Id: __init__.py,v 1.3 2003/09/23 17:57:56 plonista Exp $
 # $Source: /home/hazmat/projects/psvn/collective/CMFFormController/__init__.py,v $
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 """Initialize CMFFormController"""
 
 import sys
@@ -8,8 +8,8 @@ from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CMFCore.utils import registerIcon, ToolInit
 
 from config import *
-import ControlledPageTemplate, FSControlledPageTemplate
-import ControlledPythonScript, FSControlledPythonScript
+import ControllerPageTemplate, FSControllerPageTemplate
+import ControllerPythonScript, FSControllerPythonScript
 import FormController
 from Actions import RedirectTo, TraverseTo, RedirectToAction, TraverseToAction
 
@@ -22,18 +22,18 @@ def initialize(context):
              product_name='CMFFormController', icon='tool.gif',
             ).initialize( context )
     context.registerClass(
-        ControlledPageTemplate.ControlledPageTemplate,
-        constructors=(ControlledPageTemplate.manage_addControlledPageTemplateForm,
-                      ControlledPageTemplate.manage_addControlledPageTemplate),
+        ControllerPageTemplate.ControllerPageTemplate,
+        constructors=(ControllerPageTemplate.manage_addControllerPageTemplateForm,
+                      ControllerPageTemplate.manage_addControllerPageTemplate),
         icon='www/cpt.gif',
         )
     context.registerClass(
-        ControlledPythonScript.ControlledPythonScript,
-        constructors=(ControlledPythonScript.manage_addControlledPythonScriptForm,
-                      ControlledPythonScript.manage_addControlledPythonScript),
+        ControllerPythonScript.ControllerPythonScript,
+        constructors=(ControllerPythonScript.manage_addControllerPythonScriptForm,
+                      ControllerPythonScript.manage_addControllerPythonScript),
         icon='www/cpy.gif',
         )
-    registerIcon(FSControlledPageTemplate.FSControlledPageTemplate,
+    registerIcon(FSControllerPageTemplate.FSControllerPageTemplate,
                  'www/cpt.gif', globals())
-    registerIcon(FSControlledPythonScript.FSControlledPythonScript,
+    registerIcon(FSControllerPythonScript.FSControllerPythonScript,
                  'www/cpy.gif', globals())

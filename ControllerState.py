@@ -55,7 +55,7 @@ class ControllerState(AccessControl.Role.RoleManager):
             self.setId(kwargs['id'])
             del kwargs['id']
         if kwargs.has_key('button'):
-            self.setStatus(kwargs['button'])
+            self.setButton(kwargs['button'])
             del kwargs['button']
         if kwargs.has_key('status'):
             self.setStatus(kwargs['status'])

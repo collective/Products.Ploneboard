@@ -19,8 +19,8 @@ Using the CMFFormController
 
    Forms
 
-      To take advantage of CMFFormController, you need to use Controlled Page 
-      Templates rather than ordinary Page Templates. Controlled Page Templates act
+      To take advantage of CMFFormController, you need to use Controller Page 
+      Templates rather than ordinary Page Templates. Controller Page Templates act
       just like ordinary Page Templates, but they do some extra work when they are viewed.
    
       Here is a basic form that uses CMFFormController::
@@ -65,7 +65,7 @@ Using the CMFFormController
          validators.
 
 	    1. You can specify the validators in the .metadata properties
-               for filesystem-based Controlled Page Templates.
+               for filesystem-based Controller Page Templates.
 
             2. You can specify the validators via the ZMI (or programmatically).
                These values will be stored in the ZODB as attributes of the
@@ -81,7 +81,7 @@ Using the CMFFormController
 
          To create a .metadata file, simply create a file with the same name
          as your page template, and then append .metadata to the end of the name
-         of the file. For instance, you might have a Controlled Page Template called
+         of the file. For instance, you might have a Controller Page Template called
          'document_edit_form.cpt'. The properties for that file would be stored in
          a file called 'document_edit_form.cpt.metadata'
 
@@ -142,7 +142,7 @@ Using the CMFFormController
 
       Specifying Validators in the ZMI
 
-            If you look at a Controlled Page Template in the ZMI, you will see that
+            If you look at a Controller Page Template in the ZMI, you will see that
             it looks just like an ordinary Page Template with two extra tabs, Validation
             and Actions. Click on the Validation tab.
 
@@ -167,11 +167,11 @@ Using the CMFFormController
          Specifying Validators Programmatically
 
          The portal's 'portal_form_controller' tool has methods you can use to specify the
-         validators for a given ControlledPageTemplate. The API is as follows::
+         validators for a given ControllerPageTemplate. The API is as follows::
 
             portal_form_controller.setValidators(id, context_type, button, validators)
 
-         Here 'id' is the Id of the ControlledPageTemplate, 'context_type' is
+         Here 'id' is the Id of the ControllerPageTemplate, 'context_type' is
             the class name for the class of the context object, 'button' is the name 
             of the button pressed, and validators is a comma-delimited string or a list
             of strings. If you want a validator to act for any class, set context_type
@@ -191,8 +191,8 @@ Using the CMFFormController
          actions.
 
 	    1. You can specify the actions in the .metadata properties
-               for filesystem-based Controlled Page Templates and 
-               Controlled Python Scripts.
+               for filesystem-based Controller Page Templates and 
+               Controller Python Scripts.
 
             2. You can specify the actions via the ZMI (or programmatically).
                These values will be stored in the ZODB as attributes of the
@@ -265,7 +265,7 @@ Using the CMFFormController
 
          Specifying Actions in the ZMI
 
-            If you look at a Controlled Page Template in the ZMI, you will see that
+            If you look at a Controller Page Template in the ZMI, you will see that
             it looks just like an ordinary Page Template with two extra tabs, Validation
             and Actions. Click on the Actions tab.
 
@@ -290,11 +290,11 @@ Using the CMFFormController
          Specifying Actions Programmatically
 
             The portal's 'portal_form_controller' tool has methods you can use to specify the
-            actions for a given ControlledPageTemplate. The API is as follows::
+            actions for a given ControllerPageTemplate. The API is as follows::
 
                portal_form_controller.setAction(id, status, context_type, button, action_type, args)
 
-            Here 'id' is the Id of the ControlledPageTemplate, 'status'
+            Here 'id' is the Id of the ControllerPageTemplate, 'status'
             is the status for which the action will be executed, 'context_type' is
             the class name for the class of the context object, 'button' is the name 
             of the button pressed, 'action_type' is the type of action that will occur,
@@ -305,8 +305,8 @@ Using the CMFFormController
 
    Validation Scripts
 
-      When writing validation scripts, use Controlled Python Scripts instead of
-      ordinary Python Scripts. Controlled Python Scripts are just like ordinary
+      When writing validation scripts, use Controller Python Scripts instead of
+      ordinary Python Scripts. Controller Python Scripts are just like ordinary
       Scripts with the addition of a ZMI Actions tab.
 
       Let's take a look at a basic validation script that tests the REQUEST
@@ -357,7 +357,7 @@ Using the CMFFormController
    Scripts
 
       When writing scripts that do some processing after a validated form, 
-      you can use Controlled Python Scripts instead of ordinary Python Scripts
+      you can use Controller Python Scripts instead of ordinary Python Scripts
       to let site managers override their actions via the ZMI.
 
    Let's take a look at a basic script that sets a context attribute

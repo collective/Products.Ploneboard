@@ -7,7 +7,7 @@ from ZPublisher.mapply import mapply
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.CMFCorePermissions import ManagePortal, View
 from Products.CMFCore.utils import getToolByName
-from ControlledBase import ControlledBase
+from ControllerBase import ControllerBase
 from ControllerState import ControllerState
 from ValidationError import ValidationError
 from FormValidator import FormValidatorKey, FormValidator
@@ -18,7 +18,7 @@ import sys
 from urllib import quote
 
 
-class BaseControlledPageTemplate(ControlledBase):
+class BaseControllerPageTemplate(ControllerBase):
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
@@ -113,4 +113,4 @@ class BaseControlledPageTemplate(ControlledBase):
         REQUEST.set('controller_state', controller_state)
         return controller_state
 
-Globals.InitializeClass(BaseControlledPageTemplate)
+Globals.InitializeClass(BaseControllerPageTemplate)

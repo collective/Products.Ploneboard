@@ -19,24 +19,3 @@ if state.getErrors():
 
 # Make sure to return the ControllerState object
 return state
-
-################################################################################
-# Example form action code
-
-# Get the ControllerState object.  This is where you set error messages, 
-# status messages, and the final return status for the portal_form_controller.
-# Set is_validator=1 for a validation script; 0 otherwise
-state = context.portal_form_controller.getState(script, is_validator=0)
-
-# Set the state status (unnecessary in this case, as the default status is 'success')
-state.setStatus = 'success'
-
-# do something here
-context.n = context.REQUEST.get('n')
-
-# (Optional) set the default next action (this can be overridden
-# in the script's actions tab in the ZMI).
-state.setNextAction('redirect_to','http://www.plone.org')
-
-# Make sure to return the ControllerState object
-return state

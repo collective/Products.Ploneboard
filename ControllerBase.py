@@ -22,7 +22,7 @@ from FormAction import FormActionType, FormAction, FormActionContainer
 from FormValidator import FormValidator, FormValidatorContainer
 from globalVars import ANY_CONTEXT, ANY_BUTTON
 
-class ControlledBase:
+class ControllerBase:
     """Common functions for objects controlled by portal_form_controller"""
      
     security = ClassSecurityInfo()
@@ -238,4 +238,4 @@ class ControlledBase:
         """Can default actions and validators be modified?"""
         return 1
     
-InitializeClass(ControlledBase)
+InitializeClass(ControllerBase)

@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.8 2003/09/23 15:00:31 tesdal Exp $
+$Id: FSControllerPythonScript.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
 """
 
 import Globals, Acquisition
@@ -23,13 +23,13 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
 from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.FSPythonScript import FSPythonScript as BaseClass
-from ControlledPythonScript import ControlledPythonScript
+from ControllerPythonScript import ControllerPythonScript
 from ControllerState import ControllerState
-from ControlledBase import ControlledBase
+from ControllerBase import ControllerBase
 from utils import logException
 
-class FSControlledPythonScript (BaseClass, ControlledBase):
-    """FSControlledPythonScripts act like Controlled Python Scripts but are not 
+class FSControllerPythonScript (BaseClass, ControllerBase):
+    """FSControllerPythonScripts act like Controller Python Scripts but are not 
     directly modifiable from the management interface."""
 
     meta_type = 'Filesystem Controller Python Script'
@@ -53,7 +53,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
 
 
     def __call__(self, *args, **kwargs):
-        result = FSControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+        result = FSControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
         if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
             return self.getNext(result, self.REQUEST)
         return result
@@ -74,7 +74,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
 
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
-        obj = ControlledPythonScript(self.getId())
+        obj = ControllerPythonScript(self.getId())
         obj.write(self.read())
         return obj
 
@@ -84,7 +84,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
         """Can default actions and validators be modified?"""
         return 0
 
-Globals.InitializeClass(FSControlledPythonScript)
+Globals.InitializeClass(FSControllerPythonScript)
 
-registerFileExtension('cpy', FSControlledPythonScript)
-registerMetaType('Controller Python Script', FSControlledPythonScript)
+registerFileExtension('cpy', FSControllerPythonScript)
+registerMetaType('Controller Python Script', FSControllerPythonScript)

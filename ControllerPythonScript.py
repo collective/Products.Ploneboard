@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.5 $'[11:-2]
+__version__='$Revision: 1.1 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -31,7 +31,7 @@ from OFS.History import Historical
 from OFS.Cache import Cacheable
 from zLOG import LOG, ERROR, INFO, PROBLEM
 from Products.PythonScripts.PythonScript import PythonScript
-from ControlledBase import ControlledBase
+from ControllerBase import ControllerBase
 from FormAction import FormActionContainer
 
 # Track the Python bytecode version
@@ -49,20 +49,20 @@ _log_complaint = (
     ' of your server in a browser.')
 
 _default_file = os.path.join(package_home(globals()),
-                             'www', 'default_py')
+                             'www', 'default_cpy')
 
 _marker = []  # Create a new marker object
 
 # ###########################################################################
 # Product registration and Add support
-manage_addControlledPythonScriptForm = PageTemplateFile('www/cpyAdd', globals())
-manage_addControlledPythonScriptForm.__name__='manage_addControlledPythonScriptForm'
+manage_addControllerPythonScriptForm = PageTemplateFile('www/cpyAdd', globals())
+manage_addControllerPythonScriptForm.__name__='manage_addControllerPythonScriptForm'
 
-def manage_addControlledPythonScript(self, id, REQUEST=None, submit=None):
+def manage_addControllerPythonScript(self, id, REQUEST=None, submit=None):
     """Add a Python script to a folder.
     """
     id = str(id)
-    id = self._setObject(id, ControlledPythonScript(id))
+    id = self._setObject(id, ControllerPythonScript(id))
     if REQUEST is not None:
         file = REQUEST.form.get('file', '')
         if type(file) is not type(''): file = file.read()
@@ -76,7 +76,7 @@ def manage_addControlledPythonScript(self, id, REQUEST=None, submit=None):
     return ''
 
 
-class ControlledPythonScript(PythonScript, ControlledBase):
+class ControllerPythonScript(PythonScript, ControllerBase):
     """Web-callable scripts written in a safe subset of Python.
 
     The function may include standard python code, so long as it does
@@ -118,11 +118,11 @@ class ControlledPythonScript(PythonScript, ControlledBase):
 
     def __init__(self, *args, **kwargs):
         self.actions = FormActionContainer()
-        return ControlledPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
+        return ControllerPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 
     def __call__(self, *args, **kwargs):
-        result = ControlledPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
+        result = ControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
         if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
             return self.getNext(result, self.REQUEST)
         return result
