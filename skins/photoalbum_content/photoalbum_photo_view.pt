@@ -19,7 +19,7 @@
                      images python:here.contentValues(spec='Photo');
                      Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
-                     batch python:Batch(images, 1, int(b_start), orphan=1);
+                     batch python:Batch(images, 1, int(b_start), orphan=0);
                      image python:batch[0];
                      photo_display python:request.cookies.get('photo_display', 'medium');
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
