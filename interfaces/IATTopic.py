@@ -18,7 +18,7 @@
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.2 2004/03/20 16:08:53 tiran Exp $
+$Id: IATTopic.py,v 1.3 2004/04/04 21:45:04 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -27,15 +27,15 @@ from interface import Interface, Attribute
 from IATContentType import IATContentType
 
 class IATTopic(IATContentType):
-    """AT Topic interface
+    """AT Topic marker interface
     """
 
     def listCriteriaTypes():
-        """
+        """List available criteria types as dict
         """
 
     def listCriteriaMetaTypes():
-        """
+        """List available criteria
         """
 
     def listCriteria():

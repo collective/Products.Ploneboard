@@ -16,9 +16,9 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
-"""History aware interface
+"""History awareness marker interface
 
-$Id: IHistoryAware.py,v 1.1 2004/04/02 21:30:25 tiran Exp $
+$Id: IHistoryAware.py,v 1.2 2004/04/04 21:45:04 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -26,5 +26,5 @@ __docformat__ = 'restructuredtext'
 from interface import Interface, Attribute
 
 class IHistoryAware(Interface):
-    """XXX
+    """History awareness marker interface
     """

@@ -16,9 +16,9 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
-"""AT Event interface
+"""AT Event marker interface
 
-$Id: IATEvent.py,v 1.1 2004/03/20 16:08:53 tiran Exp $
+$Id: IATEvent.py,v 1.2 2004/04/04 21:45:04 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -27,5 +27,5 @@ from interface import Interface, Attribute
 from IATContentType import IATContentType
 
 class IATEvent(IATContentType):
-    """AT Event interface
+    """AT Event marker interface
     """

@@ -18,7 +18,7 @@
 #
 """AT Image Interface
 
-$Id: IATImage.py,v 1.1 2004/03/20 16:08:53 tiran Exp $
+$Id: IATImage.py,v 1.2 2004/04/04 21:45:04 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -27,5 +27,5 @@ from interface import Interface, Attribute
 from IATContentType import IATContentType
 
 class IATImage(IATContentType):
-    """AT Image Interface
+    """AT Image marker Interface
     """
