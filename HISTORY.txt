@@ -40,7 +40,7 @@ and clean
 
   - fix bug: css refinement: bulleted list not work now
 
-  - delete some unessasay viewlets and changed the Permission of the 'Review List' viewlet.
+  - delete some unnecessary viewlets and changed the Permission of the 'Review List' viewlet.
 
 V1.5.0
 
