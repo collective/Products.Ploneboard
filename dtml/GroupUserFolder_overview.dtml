@@ -23,7 +23,7 @@
       <th>Role(s)</th>
     </tr>
 
-    <dtml-in getUsers>
+    <dtml-in getPureUsers>
       <tr <dtml-if sequence-odd>class="row-hilite"<dtml-else>class="row-normal"</dtml-if>>
       <td><div class="list-item"><img src="&dtml-icon;">&nbsp;<dtml-var getId></div></td>
         <td><div class="list-item"><dtml-var "_.string.join(_['sequence-item'].getGroups(),', ')"></div></td>

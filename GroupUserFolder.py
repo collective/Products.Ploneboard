@@ -218,6 +218,32 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         return None
 
 
+    # ------------------------
+    # Group-specific operation
+    # ------------------------
+
+    def getPureUserNames(self, ):
+        """
+        Fetch the list of actual users from GRUFUsers.
+        """
+        if not "acl_users" in self.Users.objectIds():
+            return ()
+        return self.Users.getUserFolder().getUserNames()
+
+
+    def getPureUsers(self):
+        """Return a list of pure user objects"""
+        ret = []
+        for n in self.getPureUserNames():
+            ret.append(self.getUser(n))
+        return ret
+
+
+
+    # -----------------------------
+    # Private User Folder interface
+    # -----------------------------
+
     def _doAddUser(self, name, password, roles, domains, **kw):
         """Create a new user. This should be implemented by subclasses to
            do the actual adding of a user. The 'password' will be the
