@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.2 2003/02/16 13:09:22 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.3 2003/02/16 14:11:16 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -52,7 +52,6 @@ class InstalledProduct(SimpleItem):
     error=0 #error flag
     
     def manage_beforeDelete(self,object,container):
-        print 'beforedel'
         self.uninstall()
         
     def __init__(self,id,types,skins,actions,portalobjects,workflows,leftslots,rightslots,logmsg,status='installed',error=0):
