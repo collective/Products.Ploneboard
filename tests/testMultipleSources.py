@@ -84,16 +84,6 @@ class UnauthorizedOpener(urllib.FancyURLopener):
 
 class TestMultipleSources(ZopeTestCase.ZopeTestCase):
 
-
-    def login(self, user = None):
-        "user must be an acl_user's user"
-        self.logout()                   # Is this necessary ? Well, at least, it's clean.
-        if not user:
-            user = self._user
-        newSecurityManager(None, user)
-
-
-    
     def afterSetUp(self,):
         """
         afterSetUp(self) => This method is called to create Folder with a GRUF inside.
