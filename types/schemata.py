@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.22 2004/05/02 22:09:57 tiran Exp $
+$Id: schemata.py,v 1.23 2004/05/12 15:53:16 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,7 +26,7 @@ __docformat__ = 'restructuredtext'
 from copy import deepcopy
 
 from Products.Archetypes.public import *
-from Products.Archetypes.TemplateMixin import schema as TemplateMixinSchema
+#from Products.Archetypes.TemplateMixin import TemplateMixinSchema
 from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
 from Products.CMFCore import CMFCorePermissions
@@ -65,7 +65,7 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
                 mutator="setLayout",
                 write_permission=TEMPLATE_MIXIN_PERMISSION,
                 default_method="getDefaultLayout",
-                vocabulary="templates",
+                vocabulary="_voc_templates",
                 #enforceVocabulary=1,
                 widget=SelectionWidget(description="Choose a template that will be used for viewing this item.",
                                        description_msgid = "help_template_mixin",
