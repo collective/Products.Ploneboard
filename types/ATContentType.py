@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.24 2004/06/19 23:06:22 tiran Exp $
+$Id: ATContentType.py,v 1.25 2004/06/20 14:06:25 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -40,10 +40,13 @@ from Products.Archetypes.debug import _default_logger, _zlogger
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
+if HAS_PLONE2:
+    from Products.CMFPlone.PloneFolder import ReplaceableWrapper
+
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_inner, aq_parent
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
@@ -336,6 +339,24 @@ class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
         )
     )
 
+    def index_html(self):
+        """ Acquire if not present. """
+        if HAS_PLONE2:
+            _target = aq_parent(aq_inner(self)).aq_acquire('index_html')
+            return ReplaceableWrapper(aq_base(_target).__of__(self))
+        else:
+            OrderedBaseFolder.index_html(self)
+
+    index_html = ComputedAttribute(index_html, 1)
+
+    def __browser_default__(self, request):
+        """ Set default so we can return whatever we want instead
+        of index_html """
+        if HAS_PLONE2:
+            return getToolByName(self, 'plone_utils').browserDefault(self)  
+        else:
+            return OrderedBaseFolder.__browser_default__(self, request)
+
 InitializeClass(ATCTOrderedFolder)
 
 
@@ -362,6 +383,25 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
          },
         )
     )
+
+    security.declareProtected(CMFCorePermissions.View, 'index_html')
+    def index_html(self):
+        """
+        btree folders don't store objects as attributes, the implementation of index_html
+        method in plone folder assumes this and by virtue of its being invoked looked in
+        the parent container. we override here to check the btree data structs, and then
+        perform the same lookup as BasePloneFolder if we don't find it.
+        """
+        _target = self.get('index_html')
+        if _target is not None:
+            return _target
+        _target = aq_parent(aq_inner(self)).aq_acquire('index_html')
+        if HAS_PLONE2:
+            return ReplaceableWrapper(aq_base(_target).__of__(self))
+        else:
+            return aq_base(_target).__of__(self)
+
+    index_html = ComputedAttribute(index_html, 1)
 
 InitializeClass(ATCTBTreeFolder)
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.13 2004/05/15 01:53:07 tiran Exp $
+$Id: ATFolder.py,v 1.14 2004/06/20 14:06:25 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,19 +30,15 @@ if HAS_LINGUA_PLONE:
 else:
     from Products.Archetypes.public import registerType
 
-from Acquisition import aq_base, aq_inner, aq_parent
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from OFS.ObjectManager import REPLACEABLE
-from ComputedAttribute import ComputedAttribute
 
 from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, ATCTBTreeFolder, updateActions
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
 from Products.ATContentTypes.types.schemata import ATFolderSchema, ATBTreeFolderSchema
 
-
-class ATFolderBase(ATCTOrderedFolder):
+class ATFolder(ATCTOrderedFolder):
     """A simple folderish archetype"""
 
     schema         =  ATFolderSchema
@@ -59,8 +55,6 @@ class ATFolderBase(ATCTOrderedFolder):
     assocMimetypes = ()
     assocFileExt   = ()
 
-    
-
     __implements__ = ATCTOrderedFolder.__implements__, IATFolder
 
     security       = ClassSecurityInfo()
@@ -75,43 +69,6 @@ class ATFolderBase(ATCTOrderedFolder):
 ##          },    
 ##        )
 ##    )
-
-
-if HAS_PLONE2:
-    # ********** plone 2 **********
-    from Products.CMFPlone.PloneFolder import ReplaceableWrapper
-
-    class ATFolder(ATFolderBase):
-
-        #
-        # from CMFPlone.PloneFolder
-        #
-
-        def index_html(self):
-            """ Acquire if not present. """
-            _target = aq_parent(aq_inner(self)).aq_acquire('index_html')
-            return ReplaceableWrapper(aq_base(_target).__of__(self))
-    
-        index_html = ComputedAttribute(index_html, 1)
-    
-        def __browser_default__(self, request):
-            """ Set default so we can return whatever we want instead
-            of index_html """
-            return getToolByName(self, 'plone_utils').browserDefault(self)        
-        
-        #
-        # end of part from CMFPlone
-        #
-
-    # ********** plone 2 **********
-else:
-    # **********   cmf   **********
-    class ATFolder(ATFolderBase):
-        pass
-    
-    # **********   cmf   **********
-
-ATFolder.__doc__ = ATFolderBase.__doc__    
 
 registerType(ATFolder, PROJECTNAME)
 
