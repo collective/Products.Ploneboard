@@ -29,7 +29,7 @@ Log(LOG_NOTICE, "Starting %s at %d debug level" % (os.path.dirname(__file__), LO
 
 # Retreive version
 if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/version.txt'):
-    __version_file_ = open(os.path.abspath(os.path.dirname(__file__)) + '/version.txt', 'r+', )
+    __version_file_ = open(os.path.abspath(os.path.dirname(__file__)) + '/version.txt', 'r', )
     version__ = __version_file_.read()[:-1]
 else:
     version__ = "(UNKNOWN)"
