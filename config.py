@@ -23,7 +23,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.16 2004/04/12 01:38:54 tiran Exp $
+$Id: config.py,v 1.17 2004/04/27 00:17:53 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -106,6 +106,17 @@ else:
 MX_TIDY_MIMETYPES = (
     'text/html',
      )
+
+## ExternalStorage available?
+try:
+    from Products.ExternalStorage.ExternalStorage import ExternalStorage
+except ImportError:
+    HAS_EXT_STORAGE = False
+else:
+    HAS_EXT_STORAGE = True
+    
+# XXX: hardcode to false because ExternalStorage doesn't work
+HAS_EXT_STORAGE = False
 
 ## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'
