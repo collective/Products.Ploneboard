@@ -321,7 +321,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         if not "acl_users" in self.Groups.objectIds():
             return []
-        return self.Groups.listGroups(prefixed = 1)
+        return self.Groups.listGroups(prefixed = prefixed)
 
     security.declareProtected(Permissions.manage_users, "getGroups")
     def getGroups(self):
@@ -639,7 +639,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/09/23 19:45:42 $"[7:-2]
+        rev_date = "$Date: 2003/10/02 06:20:13 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
