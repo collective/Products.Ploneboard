@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.9 2004/05/10 00:23:54 tiran Exp $
+$Id: ATTopic.py,v 1.10 2004/05/11 22:56:00 lele Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -51,7 +51,7 @@ class ATTopic(ATCTFolder):
     newTypeFor     = ('Topic', 'Portal Topic')
     typeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
                      'criteria you specify. Topics may also contain sub-topics.'
-    typeDescMsgId  = ''
+    typeDescMsgId  = 'description_edit_topic'
     assocMimetypes = ()
     assocFileExt   = ()
     
