@@ -119,6 +119,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
                 ret.append(role)
         return tuple(ret)
 
+    def getUserNameWithoutGroupPrefix(self):
+        """Return the username of a user without a group prefix"""
+        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] == GRUFFolder.GRUFGroups._group_prefix:
+            return self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)]
+        return self._original_name
+
     def getUserName(self):
         """Return the username of a user"""
         if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] != GRUFFolder.GRUFGroups._group_prefix:

@@ -37,6 +37,11 @@ import AccessControl.User
 import GRUFFolder
 import GRUFUser
 
+#import zLOG
+#
+#def log(message,summary='',severity=0):
+#    zLOG.LOG('GroupUserFolder: ',severity,summary,message)
+
 
 _group_prefix_len = len(GRUFFolder.GRUFGroups._group_prefix)
 
@@ -132,14 +137,21 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         result = []
         local_roles = object.get_local_roles()
         prefix = self.getGroupPrefix()
+        #log('prefix is: "%s"' % (prefix,))
         for one_user in local_roles:
             massagedUsername = username = one_user[0]
             roles = one_user[1]
             userType = 'user'
             if prefix:
-                if username.startswith(prefix):
-                    massagedUsername = username[len(prefix):]
+                #log('username is: "%s"' % (username,))
+                if self.getGroup(username) or self.getGroup('%s%s' % (prefix, username)):
+                    #log('found group %s' % (username,))
+                    if username.startswith(prefix):
+                        massagedUsername = username[len(prefix):]
+                        #log('massagedUsername is: "%s"' % (massagedUsername,))
                     userType = 'group'
+                #else:
+                #    log('DID NOT FIND group %s' % (username,))
             else:
                 userType = 'unknown'
             result.append((massagedUsername, roles, userType))

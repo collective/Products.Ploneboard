@@ -139,8 +139,7 @@
 			
 			    <span class="card" tal:repeat="member here/acl_users/getGroups">
 					
-				<img src="defaultUser.gif" alt="Blank picture" border="0" width="75" height="100"
-				     tal:attributes="src python:here.portal_membership.getPersonalPortrait(member.getUserName()).absolute_url()" />
+				<img src="defaultGroup.gif" alt="Blank picture" border="0" width="75" height="100" />
 							     
 				<br />
 						
@@ -149,13 +148,13 @@
 				       name="member_ids:list" 
 				       value=""
 				       tabindex=""
-				       tal:attributes="value member/getUserName;
+				       tal:attributes="value member/getUserNameWithoutGroupPrefix;
 						       tabindex tabindex/next;"
 			       />
 						<br />
 						
-						<strong tal:condition="python:member.getUserName()"
-				tal:content="python:member.getUserName()">
+						<strong tal:condition="python:member.getUserNameWithoutGroupPrefix()"
+				tal:content="python:member.getUserNameWithoutGroupPrefix()">
 						username
 						</strong>
 				
@@ -367,13 +366,11 @@
 				   tal:attributes="href member_url">
 				<img src="defaultUser.gif" alt="Blank picture" 
                                      border="0" width="75" height="100" 
-                                     tal:condition="python:lrole[2] == 'user'"
+                                     tal:condition="python:test(lrole[2] == 'user', 1, 0)"
 				     tal:attributes="src python:here.portal_membership.getPersonalPortrait(lrole[0]).absolute_url()" />
 				<img src="defaultGroup.gif" alt="Blank picture" 
                                      border="0" width="75" height="100" 
-                                     tal:condition="python:lrole[2] == 'group'"
-                                      />
-                                                
+                                     tal:condition="python:test(lrole[2] == 'group', 1, 0)" />
 				</a>
 					<br />
 			
