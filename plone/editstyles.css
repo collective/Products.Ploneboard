@@ -24,21 +24,20 @@ div.slot_target {
 div.slot_target:hover {
   border: 1px solid &dtml-contentViewBorderColor;;
   background-color: &dtml-contentViewBackgroundColor;;
-  background-image: url("&dtml-portal_url;/composite_tool/uis/plone/target_image");
-  background-repeat: repeat;
+  background-image:
+  url("&dtml-portal_url;/composite_tool/uis/plone/target_image_hover");
 }
 
 div.slot_target_highlighted {
   padding: 4px;
   border: 1px solid &dtml-contentViewBorderColor;;
   background-color: &dtml-contentViewBackgroundColor;;
-  background-image: url("&dtml-portal_url;/composite_tool/uis/plone/target_image");
-  background-repeat: repeat;
+  background-image:
+  url("&dtml-portal_url;/composite_tool/uis/plone/target_image_active");
 }
 
 div.slot_element_body {
   padding-left: 20px;
-  display: block;
 }
 
 img.slot-element-grip {

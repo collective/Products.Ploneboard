@@ -20,6 +20,8 @@ class PloneUI(CommonUI):
     security.declarePublic('plone_edit_js')
     plone_edit_js = RawFile('plone_edit.js', 'text/javascript', _plone)
     target_image = RawFile('target_image.gif', 'image/gif', _plone)
+    target_image_hover = RawFile('target_image.gif', 'image/gif', _plone)
+    target_image_active = RawFile('target_image.gif', 'image/gif', _plone)
 
     editstyles_css = FSDTMLMethod("editstyles.css", os.path.join(_plone,
         "editstyles.css"))
