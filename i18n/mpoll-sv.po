@@ -55,3 +55,8 @@ msgstr "Öppen"
 
 msgid "help_open"
 msgstr "Webbfrågan är öppen och andra kan rösta om detta alternativ är markerat."
+msgid "the_others_mpoll"
+msgstr "The other polls"
+
+msgid "all_mpolls"
+msgstr "All polls:"

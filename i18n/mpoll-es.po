@@ -55,3 +55,9 @@ msgstr "Abierto"
 msgid "help_open"
 msgstr "Marque está opción para abrir la encuesta y aceptar votos de usuarios."
 
+
+msgid "the_others_mpoll"
+msgstr "The other polls"
+
+msgid "all_mpolls"
+msgstr "All polls:"

@@ -27,15 +27,15 @@
                     <form method="post"
                           tal:attributes="action string:${obj/absolute_url}/portal_form/mpoll_slot">
                           <div style="padding-bottom: 10px;" tal:repeat="item obj/getAnswers">
-                              <input tal:attributes="tabindex tabindex/next;
-                                                     value repeat/item/number;
+<!-- tabindex tabindex/next; -->
+                              <input tal:attributes="value repeat/item/number;
                                                      checked python:test(repeat['item'].start, 'checked', '')"
                                      type="radio"
                                      name="answer"
                                      class="noborder" />&nbsp;<span tal:content="item"></span>
                           </div>
-
-                          <input tal:attributes="tabindex tabindex/next"
+<!-- tal:attributes="tabindex tabindex/next" -->
+                          <input 
                                  type="submit"
                                  class="context"
                                  i18n:attributes="value"
@@ -44,7 +44,7 @@
 
                     </form>
 
-                    <div class="boxDetails"><a tal:attributes="href obj/absolute_url" i18n:translate="label_view_results">View results</a></div>
+                    <div class="boxDetails"><a tal:attributes="href obj/absolute_url" i18n:translate="label_view_results">View results</a>|<a href="mpoll_list" i18n:translate="the_others_mpoll">all mpolls</a></div>
 
                 </div>
             </tal:block>

@@ -1,6 +1,8 @@
-
-  - Spanish (es) translation contributed by Philipp von
-    Weitershausen <philikon@philikon.de>
+0.3
+  - Added list page(mpoll_list.pt) to list all avilable mpoll. 
+  - Added mpoll_poll.pt to do vote from the mpoll_view.pt page.  
+  - Patched mpoll_slot.pt, mpoll_view.pt, po files, Extentions/Install.py to come up with the new feature.
+    <walteyh@sohu.com>
 
 0.2
 

@@ -40,3 +40,9 @@ msgstr "Se han guardados sus cambios."
 msgid "This poll is closed."
 msgstr "La encuesta está cerrada."
 
+
+msgid "the_others_mpoll"
+msgstr "The other polls"
+
+msgid "all_mpolls"
+msgstr "All polls:"
