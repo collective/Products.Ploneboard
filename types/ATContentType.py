@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.16 2004/06/13 00:06:05 tiran Exp $
+$Id: ATContentType.py,v 1.17 2004/06/13 21:48:34 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -43,6 +43,7 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 from Globals import InitializeClass
+from Acquisition import aq_base
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
@@ -216,7 +217,8 @@ class ATCTFileContent(ATCTContent):
     def get_data(self):
         """CMF compatibility method
         """
-        return self.getPrimaryField().get(self)
+        data = aq_base(self.getPrimaryField().get(self))
+        return str(getattr(data, 'data', data))
 
     data = ComputedAttribute(get_data, 1)
 

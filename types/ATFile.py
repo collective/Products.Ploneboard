@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.24 2004/06/13 00:06:05 tiran Exp $
+$Id: ATFile.py,v 1.25 2004/06/13 21:48:34 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -91,6 +91,11 @@ class ATFile(ATCTFileContent):
             clean_filename = cleanupFilename(filename)
             if filename:
                 self.plone_utils.contentEdit(self, id=clean_filename)
+
+    def __str__(self):
+        """cmf compatibility
+        """
+        return self.get_data()
 
     security.declarePublic('getIcon')   
     def getIcon(self, relative_to_portal=0):
