@@ -15,8 +15,7 @@
     </div>
 
     <div class="portalMessage" i18n:translate="atct_lastchanges_warning">
-    This transactional last changes log which will be partly or fully removed
-    during a pack of the database.
+    This last changes log will be partly or fully removed during a pack of the database.
     </div>
 
     <tal:histories tal:repeat="history histories" tal:condition="histories">
