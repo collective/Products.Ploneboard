@@ -14,6 +14,11 @@ from Products.CMFCore.ActionsTool import ActionsTool
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.Expression import Expression
 
+viewlet_registery = []
+def registerViewlets(actions):
+    for action in actions:
+        viewlet_registery.append(action)
+
 class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool ):
 
     id = 'portal_contentpanels'
@@ -28,6 +33,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
                 #     , 
                 #     ) + 
                      PropertyManager.manage_options +
+                     ({ 'label' : 'Install All Viewlets', 'action' : 'manage_installAllViewlets' }, ) + 
                      SimpleItem.manage_options)
 
     def __init__(self):
@@ -51,6 +57,13 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
             self.addAction(action[0],action[1],action[2],
                            action[3],action[4],action[5],action[6])
 
+    security.declareProtected(ManagePortal, 'manage_installAllViewlets')
+    def manage_installAllViewlets(self, REQUEST = None):
+        """reinstall all registered actions
+        """
+        self.installActions(viewlet_registery)
+        if REQUEST:
+            REQUEST.RESPONSE.redirect('manage_editActionsForm')
 
     security.declarePublic('getViewletName')
     def getViewletName(self, viewletId):

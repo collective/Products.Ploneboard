@@ -6,9 +6,12 @@ import Products.CMFCore
 from Products.CMFCore import utils, CMFCorePermissions
 from Products.CMFCore.DirectoryView import registerDirectory
 import ContentPanelsTool
-
+from ContentPanelsTool import registerViewlets
+from config import *
 import sys
 this_module = sys.modules[ __name__ ]
+
+registerViewlets(VIEWLETS)
 
 factory_type_information = (
     (ContentPanels.factory_type_information)

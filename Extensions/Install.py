@@ -94,8 +94,7 @@ def install(self):
         addTool('ContentPanels Tool')
         out.write('Added ConentPanels Tool\n')
 
-    from Products.CMFContentPanels.config import actions
     p_cp=getToolByName(self, 'portal_contentpanels')
-    p_cp.installActions(actions)
+    p_cp.manage_installAllViewlets()
 
     return out.getvalue()

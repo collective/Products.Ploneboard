@@ -13,10 +13,3 @@ I will release a completely new product.
 
 - submit to Plone as a portlet proposal
 
-- Also, you mention in the documentation that there are heirarchical content
-  panels - I assumed that when you click the 'add panel' button inside a panel
-you can do that, but actually it just adds the panel after the one you click.
-How do you put panels inside other panels?
-
-  add a new kind of panel - sub-contentpanels, just click a icon, and you can 
-work on the new sub-contentpanels. And no need to create a sepreate contentpanels. I just get some ideas to achive this without much effort.

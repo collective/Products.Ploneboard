@@ -2,6 +2,12 @@ V1.8.3
 
   - add new global varible to viewlet: contentpanels, 
     where the panel belongs. 
+  - now in ZMI contentpanels has a properties tab
+  - portal_contentpanels have a installAllViewlets tab 
+    to install registered viewlets. you can register viewlets using::
+
+      from Products.CMFContentPanels import registerViewlets
+      registerViewlets( you_viewlets )
 
 V1.8.2
 

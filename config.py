@@ -32,7 +32,7 @@
 ###
 ###########################################################
 
-actions=[
+VIEWLETS = [
 
 ### PT: portal type specific viewlets
 
@@ -118,3 +118,4 @@ actions=[
 
 ###
 ]
+

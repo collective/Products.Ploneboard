@@ -72,6 +72,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
 
     meta_type = 'CMF Content Panels'
     security = ClassSecurityInfo()
+    manage_options = PortalContent.manage_options + DefaultDublinCoreImpl.manage_options
 
     def __init__(self, id, title='', description=''):
         DefaultDublinCoreImpl.__init__(self)
