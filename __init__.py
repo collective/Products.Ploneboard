@@ -4,20 +4,18 @@ from Products.CompositePack.config import *
 from Products.CompositePack import design
 from Products.CMFCore import utils as cmf_utils
 from Products.CMFCore.DirectoryView import registerDirectory
+from Products.CompositePage import tool as base_tool
 
 registerDirectory('skins', GLOBALS)
-
-from Products.CompositePage import tool
-tool.registerUI('plone', design.PloneUI())
-# Avoid shadowing name below
-del tool
+base_tool.registerUI('plone', design.PloneUI())
 
 def initialize(context):
 
     from Products.CompositePack import tool, viewlet
     from Products.CompositePack.composite import archetype
     from Products.CompositePack.viewlet import container
-
+    from Products.CompositePack.composite import cmfcompositepage
+    
     # register archetypes content with the machinery
     content_types, constructors, ftis = process_types(listTypes(PROJECTNAME),
                                                       PROJECTNAME)

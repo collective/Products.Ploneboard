@@ -12,6 +12,7 @@ class Viewlet(BaseContentMixin):
     __implements__ = BaseContent.__implements__ + (IViewlet,)
 
     meta_type = portal_type = archetype_name = 'CompositePack Viewlet'
+    global_allow = 0
 
     schema = MinimalSchema + Schema((
         StringField(

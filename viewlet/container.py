@@ -11,6 +11,7 @@ class ViewletContainer(BaseFolderMixin, UniqueObject):
     id = 'viewlets'
     meta_type = portal_type = archetype_name = 'CompositePack Viewlet Container'
     schema = MinimalSchema
+    global_allow = 0
 
     def all_meta_types(self):
         return BaseFolderMixin.all_meta_types(

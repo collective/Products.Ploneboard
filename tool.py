@@ -13,6 +13,7 @@ from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
 
 from Products.CompositePage.tool import CompositeTool as BaseTool
+from Products.CompositePack.config import TOOL_ID
 
 zmi_dir = os.path.join(Globals.package_home(globals()),'www')
 
@@ -22,7 +23,7 @@ class CompositeTool(Folder, BaseTool):
     """ CompositePack Tool """
 
     # XXX id = 'portal_composite'
-    id = 'composite_tool'
+    id = TOOL_ID
     meta_type = 'CompositePack Tool'
 
     security = ClassSecurityInfo()
@@ -35,6 +36,8 @@ class CompositeTool(Folder, BaseTool):
     _viewlets_by_type = None # PersistentMapping
     _default_viewlets = ('default_viewlet', )
     _default_default = 'default_viewlet'
+    def __repr__(self):
+        return "CompositePack Tool"
 
     security.declareProtected( ManagePortal, 'manage_selectViewlets')
     def manage_selectViewlets(self, REQUEST, manage_tabs_message=None):
@@ -279,5 +282,7 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     ob = dispatcher._getOb(ob.getId())
     container.addViewletContainer(ob, id=container.ViewletContainer.id,
                                   title='A Container for registered Viewlets')
+    container.addViewletContainer(ob, id='layouts',
+                                  title='A Container for registered Layouts')
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)

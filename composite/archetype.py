@@ -15,7 +15,8 @@ class Element(BaseContentMixin):
     """
     __implements__ = BaseContent.__implements__ + (ICompositeElement,)
     meta_type = portal_type = archetype_name = 'CompositePack Element'
-
+    global_allow = 0
+    
     schema = MinimalSchema + Schema((
         ReferenceField(
         'target',
