@@ -1,43 +1,152 @@
-2003-10-06 13:26  longsleep
+2003-12-09 15:30  tag v0_5_1
 
-        * ChangeLog: preparing for release
+2003-12-09 15:26  longsleep
+
+	* I18NLayer.py, utils.py: fixed AT1.2 compatibility we now require
+	the forked PlacelessTranslationService
+
+2003-12-09 13:06  longsleep
+
+	* I18NLayer.py, Patches.py: map tag method to support image kinds
+	patch BTreeFolder2Base to return I18NLayer containments when
+	matching spec
+
+2003-12-09 11:23  longsleep
+
+	* i18n/i18nlayer-ja.po: added japanese translation, thanks to
+	TANIGUCHI Takaki for the contribution
+
+2003-10-06 13:27  tag v0_5
+
+2003-10-06 13:27  longsleep
+
+	* ChangeLog (tags: v0_5): preparing for release
 
 2003-10-06 12:05  longsleep
-                                                                                
-        * tests/: framework.py, runalltests.py, test_I18Nlayer.py: prepare
-        for new unit tests
-                                                                                
+
+	* tests/: framework.py (tags: v0_5), runalltests.py (tags: v0_5),
+	test_I18Nlayer.py: prepare for new unit tests
+
+2003-10-03 10:46  elvix
+
+	* skins/i18n_layer/translate_item.pt: file translate_item.pt was
+	initially added on branch PloneSolutions.
+
+2003-10-02 17:14  elvix
+
+	* skins/i18n_layer/folder_contents.pt: file folder_contents.pt was
+	initially added on branch PloneSolutions.
+
 2003-10-02 16:08  longsleep
-                                                                                
-        * I18NContent.py, I18NLayer.py: dont cache redirects in index_html
-                                                                                
+
+	* I18NContent.py, I18NLayer.py (utags: v0_5): dont cache redirects
+	in index_html
+
+2003-10-02 11:11  longsleep
+
+	* I18NContent.py: fixed missing import
+
 2003-09-30 13:31  longsleep
-                                                                                
-        * I18NContent.py, I18NLayer.py: added support for the language tool
-        added forcing language urls option
 
-2003-09-13 11:12  batlogg
-    * language_tool is a seperate product. not broken anymore ;-)
+	* I18NContent.py, I18NLayer.py: added support for the language tool
+	added forcing language urls option
 
-2003-09-13 04:41  batlogg
-    * added language_tool. CAUTION currently broken :-(
+2003-09-26 12:00  elvix
 
-2003-09-12 00:44  batlogg
-    * tag solution2u, tag hotdi_neutralfields is obsolete
-    * inital version with the following new features
-    support for language independent fields (ArcheTypes),  easier handling,
-    multilingual drop-downs, radioboxes
+	* skins/i18n_layer/queryCatalog.py: file queryCatalog.py was
+	initially added on branch solution2u.
 
-2003-09-02 10:55  bartenst
+2003-09-25 16:32  hotdi
 
-        * checkin of patched I18NLayer (shared content support)
-	* hotdi made many changes, for a summary please view README
+	* TODO: file TODO was initially added on branch solution2u.
 
->>>>>>> 1.1.4.3
+2003-09-24 12:03  longsleep
+
+	* I18NObjectManager.py: file I18NObjectManager.py was initially
+	added on branch foldersupport.
+
+2003-09-13 10:58  batlogg
+
+	* config.py: file config.py was initially added on branch
+	solution2u.
+
+2003-09-13 04:43  batlogg
+
+	* LanguageTool.py: file LanguageTool.py was initially added on
+	branch solution2u.
+
+2003-09-13 04:43  batlogg
+
+	* tool.gif: file tool.gif was initially added on branch solution2u.
+
+2003-09-12 10:43  batlogg
+
+	* license.gpl: file license.gpl was initially added on branch
+	solution2u.
+
+2003-09-12 10:43  batlogg
+
+	* readme: file readme was initially added on branch solution2u.
+
+2003-09-02 23:50  longsleep
+
+	* skins/i18n_layer/breadcrumbs.py: file breadcrumbs.py was
+	initially added on branch hotdi_neutralfields.
+
+2003-09-02 23:50  longsleep
+
+	* skins/i18n_layer/createObject.py: file createObject.py was
+	initially added on branch hotdi_neutralfields.
+
+2003-09-02 23:50  longsleep
+
+	* I18NBaseContent.py: file I18NBaseContent.py was initially added
+	on branch hotdi_neutralfields.
+
+2003-09-02 23:50  longsleep
+
+	* VariableSchemaSupport.py: file VariableSchemaSupport.py was
+	initially added on branch hotdi_neutralfields.
+
+2003-09-02 23:50  longsleep
+
+	* README: file README was initially added on branch
+	hotdi_neutralfields.
+
+2003-08-21 15:26  longsleep
+
+	* I18NContent.py: turned on language fallbacks
+
+2003-08-18 16:25  longsleep
+
+	* skins/i18n_layer/: currentI18NContentLanguage.py,
+	i18ncontent_slot.pt (utags: v0_5): fixed a bug in current language
+	getter
+
+2003-08-18 16:03  longsleep
+
+	* I18NContent.py, I18NLayer.py, Patches.py (tags: v0_5),
+	skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/i18ncontent_slot.pt: use get_request to retrieve
+	the request fixed currentI18NContentLanguage getter support
+	translation of lanugage names
+
+2003-08-18 11:54  longsleep
+
+	* Patches.py, skins/i18n_layer/insideI18NLayer.py (tags: v0_5):
+	patch title_or_id to not return id of the language object fixed a
+	permission issue which wrapperish objects in layer checker
+
+2003-08-12 22:57  tag v0_4
+
+2003-08-12 22:57  longsleep
+
+	* ChangeLog (tags: v0_4): added a changelog
+
 2003-08-12 22:51  longsleep
 
-	* I18NContent.py, I18NLayer.py: some documentation added preparing
-	for release
+	* I18NContent.py, I18NLayer.py (utags: v0_4): some documentation
+	added preparing for release
 
 2003-08-12 22:28  longsleep
 
@@ -45,30 +154,30 @@
 
 2003-06-24 18:36  longsleep
 
-	* skins/i18n_layer/insideI18NLayer.py: added helper to detect if
-	inside an i18nlayer
+	* skins/i18n_layer/insideI18NLayer.py (tags: v0_4): added helper to
+	detect if inside an i18nlayer
 
 2003-06-17 11:03  longsleep
 
 	* i18n/i18nlayer-de.po,
-	skins/i18n_layer/i18nlayer_languages_form.pt: litte translation
-	correction
+	skins/i18n_layer/i18nlayer_languages_form.pt (utags: v0_4, v0_5):
+	litte translation correction
 
 2003-06-10 14:06  longsleep
 
-	* I18NLayer.py, i18n/i18nlayer-de.po, i18n/i18nlayer.pot: i18n to
-	the archetypes schema
+	* I18NLayer.py, i18n/i18nlayer-de.po, i18n/i18nlayer.pot (tags:
+	v0_5, v0_4): i18n to the archetypes schema
 
 2003-06-06 17:29  longsleep
 
-	* version.txt, i18n/i18nlayer-de.po, i18n/i18nlayer.pot,
-	skins/i18n_layer/currentI18NContentLanguage.py,
-	skins/i18n_layer/i18ncontent_slot.pt,
-	skins/i18n_layer/i18nlayer_default_fallback.pt,
+	* version.txt (tags: v0_5, v0_4), i18n/i18nlayer-de.po,
+	i18n/i18nlayer.pot, skins/i18n_layer/currentI18NContentLanguage.py
+	(tags: v0_4), skins/i18n_layer/i18ncontent_slot.pt (tags: v0_4),
+	skins/i18n_layer/i18nlayer_default_fallback.pt (tags: v0_5, v0_4),
 	skins/i18n_layer/i18nlayer_languages_form.pt,
-	skins/i18n_layer/setI18NContentCookie.py: lots of fixes done added
-	i18n attributes added i18n gettext template added german
-	translation
+	skins/i18n_layer/setI18NContentCookie.py (tags: v0_5, v0_4): lots
+	of fixes done added i18n attributes added i18n gettext template
+	added german translation
 	----------------------------------------------------------------------
 
 2003-06-04 23:10  longsleep
@@ -80,23 +189,28 @@
 
 2003-06-04 22:13  longsleep
 
-	* Extensions/Install.py,
+	* Extensions/Install.py (tags: v0_5, v0_4),
 	skins/i18n_layer/i18nlayer_languages_form.pt: fixed a couple of
 	bugs thanks to the reporters
 	----------------------------------------------------------------------
 
+2003-06-01 19:22  tag I18NLayer-0_4alpha
+
 2003-06-01 19:22  longsleep
 
-	* LICENSE.GPL: license forgotten
+	* LICENSE.GPL (tags: v0_5, v0_4, I18NLayer-0_4alpha): license
+	forgotten
 
 2003-06-01 19:21  longsleep
 
-	* version.txt: first alpha relase of i18nlayer archetypes
+	* version.txt (tags: I18NLayer-0_4alpha): first alpha relase of
+	i18nlayer archetypes
 	----------------------------------------------------------------------
 
 2003-06-01 19:16  longsleep
 
-	* Extensions/Install.py: also add i18ncontent slot to left slots
+	* Extensions/Install.py (tags: I18NLayer-0_4alpha): also add
+	i18ncontent slot to left slots
 	----------------------------------------------------------------------
 
 2003-06-01 18:40  longsleep
@@ -106,11 +220,12 @@
 
 2003-06-01 18:39  longsleep
 
-	* I18NContent.py, I18NLayer.py, Patches.py, utils.py,
-	skins/i18n_layer/currentI18NContentLanguage.py,
-	skins/i18n_layer/i18nlayer_icon.gif,
-	skins/i18n_layer/setI18NContentCookie.py: ported lots of stuff from
-	latest CMFTypes version to archetypes version
+	* I18NContent.py, I18NLayer.py, Patches.py (tags: v0_4), utils.py
+	(tags: v0_5, v0_4), skins/i18n_layer/currentI18NContentLanguage.py,
+	skins/i18n_layer/i18nlayer_icon.gif (tags: v0_5, v0_4),
+	skins/i18n_layer/setI18NContentCookie.py (utags:
+	I18NLayer-0_4alpha): ported lots of stuff from latest CMFTypes
+	version to archetypes version
 
 2003-05-09 08:05  ctheune
 
@@ -122,34 +237,27 @@
 
 2003-03-26 11:49  vladoi
 
-	* __init__.py: test
+	* __init__.py (tags: v0_5, v0_4, I18NLayer-0_4alpha): test
+
+2003-03-25 17:46  tag R1_0
 
 2003-03-25 17:46  longsleep
 
-	* .cvsignore, I18NLayer.py, Patches.py, __init__.py, refresh.txt,
-	version.txt, Extensions/Install.py, Extensions/__init__.py,
+	* .cvsignore, refresh.txt, Extensions/__init__.py,
 	skins/i18n_layer/createLanguageObject.py,
-	skins/i18n_layer/currentI18NContentLanguage.py,
 	skins/i18n_layer/deleteLanguageObject.py,
-	skins/i18n_layer/expireI18NContentCookie.py,
-	skins/i18n_layer/i18ncontent_slot.pt,
-	skins/i18n_layer/i18nlayer_default_fallback.pt,
-	skins/i18n_layer/i18nlayer_languages_form.pt,
-	skins/i18n_layer/setI18NContentCookie.py, tests/__init__.py,
-	tests/test_I18Nlayer.py: thanks to vlado I18NLayer is now an own
-	module
+	skins/i18n_layer/expireI18NContentCookie.py, tests/__init__.py
+	(utags: I18NLayer-0_4alpha, R1_0, v0_4, v0_5): thanks to vlado
+	I18NLayer is now an own module
 
 2003-03-25 17:46  longsleep
 
-	* .cvsignore, I18NLayer.py, Patches.py, __init__.py, refresh.txt,
-	version.txt, Extensions/Install.py, Extensions/__init__.py,
-	skins/i18n_layer/createLanguageObject.py,
+	* I18NLayer.py, Patches.py, __init__.py, version.txt,
+	Extensions/Install.py,
 	skins/i18n_layer/currentI18NContentLanguage.py,
-	skins/i18n_layer/deleteLanguageObject.py,
-	skins/i18n_layer/expireI18NContentCookie.py,
 	skins/i18n_layer/i18ncontent_slot.pt,
 	skins/i18n_layer/i18nlayer_default_fallback.pt,
 	skins/i18n_layer/i18nlayer_languages_form.pt,
-	skins/i18n_layer/setI18NContentCookie.py, tests/__init__.py,
-	tests/test_I18Nlayer.py: Initial revision
+	skins/i18n_layer/setI18NContentCookie.py, tests/test_I18Nlayer.py:
+	Initial revision
 
