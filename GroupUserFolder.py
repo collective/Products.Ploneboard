@@ -102,11 +102,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     security = ClassSecurityInfo()
 
     manage_options=( 
-        ( {'label':'Overview', 'action':'manage_overview'},
-          {'label':'Groups', 'action':'manage_groups'},
-          {'label':'Users', 'action':'manage_users'},
-          {'label':'Audit', 'action':'manage_audit'},
-          ) + \
+        (
+        {'label':'Audit', 'action':'manage_audit'},
+        {'label':'Overview', 'action':'manage_overview'},
+        {'label':'Groups', 'action':'manage_groups'},
+        {'label':'Users', 'action':'manage_users'},
+        ) + \
         OFS.ObjectManager.ObjectManager.manage_options + \
         RoleManager.manage_options + \
         Item.manage_options )

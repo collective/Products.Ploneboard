@@ -71,6 +71,6 @@ def initialize(context):
                   , icon="tool.gif"
                   ).initialize( context )
     except ImportError:
-        Log(LOG_NOTICE, "Unable to import GroupsTool and/or GroupDataTool (see exception in the log below)")
-        LogException()
+        Log(LOG_NOTICE, "Unable to import GroupsTool and/or GroupDataTool. \
+        This won't disable GRUF but if you use CMF/Plone you won't get benefit of its special features.")
     
