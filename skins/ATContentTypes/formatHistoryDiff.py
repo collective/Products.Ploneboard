@@ -10,10 +10,8 @@
 lst = []
 
 map = {
-#    '+' : '<span class="diffPlus">%s</span><br />',
-#    '-' : '<span class="diffMinus">%s</span><br />',
-    '+' : '<ins class="atcontenttypes-ins">%s</ins><br />',
-    '-' : '<del class="atcontenttypes-del">%s</del><br />',
+    '+' : '<ins>%s</ins><br />',
+    '-' : '<del>%s</del><br />',
     ' ' : '&nbsp;%s<br />',
     '@' : '<strong>%s</strong><br />',
 }

@@ -4,22 +4,22 @@
       i18n:domain="plone">
 <body>
 
-<metal:block metal:fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string:@import url($portal_url/atcontenttypes.css);"></style>
-</metal:block>
-
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main"
     tal:define="histories here/getDocumentComparisons">
     <h1 tal:content="string:Changes of ${here/Title}" class="documentFirstHeading">History</h1>
 
+    <div class="documentDescription">
+    Shows the history of the item, with new content in green (normal text),
+    and deleted content in red (strike-out text).
+    </div>
+
     <tal:histories tal:repeat="history histories" tal:condition="histories">
-      <h3>Comparison between
+      <h2>Comparison between
           <span tal:content="python:here.toPortalTime(history['oldTime'], 1)" />
           and
          <span tal:content="python:here.toPortalTime(history['newTime'], 1)" />
-      </h3>
+      </h2>
 
       <dl>
        <dt>Comment</dt>
@@ -27,9 +27,12 @@
        <dt>User</dt>
        <dd tal:content="history/member/fullname | history/user" />
       </dl>
-      <div class="atcontenttypes-diff"
-           tal:content="structure python:here.formatHistoryDiff(history['lines'])">
-      </div>
+      <fieldset>
+          <legend>Changes in this revision</legend>
+          <span tal:replace="structure python:here.formatHistoryDiff(history['lines'])">
+          The changes, with color coding.
+          </span>
+      </fieldset>
 
     </tal:histories>
 
