@@ -1,6 +1,8 @@
 NOTES
 -----
 
+WORKFLOWS:
+
 CMFMember uses workflow to control the fields available
 on base_view and base_edit.
 
@@ -27,3 +29,11 @@ object in acl_users.  The requisite object is created upon
 registration.  The member does not appear in catalog searches 
 and people can NOT access public information about the member 
 (full name, email address, etc)
+
+
+LARGE SITES w/LOTS of MEMBERS:
+
+CMFMember uses a BTreeFolder to store the members in, so your
+site should be able to scale to many thousands of users with
+no issues (from the Member POV anyways ;) )  The default Zope
+user folder (acl_users) is NOT a BTreeFolder, so be aware.

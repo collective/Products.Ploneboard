@@ -31,3 +31,5 @@ page as for publishing documents, which is completely inappropriate.
 * Integrate with Group User Folder.  I haven't looked at GUF at all,
 but I'm hoping that this won't be too involved, since the user folder
 is in theory more or less orthogonal to member data.
+
+* i18N this thing!
