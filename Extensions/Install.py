@@ -1,6 +1,6 @@
 from Products.CMFCore.TypesTool import ContentFactoryMetadata
 from Products.CMFCore.DirectoryView import addDirectoryViews
-from Products.CMFPhoto import CMFPhoto, CMFPhotoFolder, photo_globals
+from Products.CMFPhoto import Photo, photo_globals
 from Products.CMFCore.utils import getToolByName
 from cStringIO import StringIO
 import string
@@ -12,7 +12,7 @@ def install(self):
     typesTool = getToolByName(self, 'portal_types')
     skinsTool = getToolByName(self, 'portal_skins')
 
-    for f in (CMFPhotoFolder.factory_type_information, CMFPhoto.factory_type_information):
+    for f in (Photo.factory_type_information, ):
         if f['id'] not in typesTool.objectIds():
             cfm = apply(ContentFactoryMetadata, (), f)
             typesTool._setObject(f['id'], cfm)
