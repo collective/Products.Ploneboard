@@ -148,7 +148,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """ group prefix """
         return GRUFFolder.GRUFGroups._group_prefix
 
-    security.declareProtected(Permissions.change_permissions, "getLocalRolesForDisplay")
+    # XXX This method has NOT to be public !!! It is because of a CMF inconsistancy.
+    # folder_localrole_form is accessible to users who have the manage_properties permissions
+    # (according to portal_types/Folder/Actions information). This is silly !
+    # folder_localrole_form should be, in CMF, accessible only to those who have the
+    # manage_users permissions instead of manage_properties permissions.
+    # This is yet another one CMF bug we have to care about.
+    security.declarePublic("getLocalRolesForDisplay")
     def getLocalRolesForDisplay(self, object):
         ## This is used for plone's local roles display
         ## This method returns a tuple (massagedUsername, roles, userType, actualUserName)

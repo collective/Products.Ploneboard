@@ -6,8 +6,6 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 
 from OFS.Folder import manage_addFolder
 
-from global_symbols import *
-
 SKIN_NAME = "gruf"
 _globals = globals()
 

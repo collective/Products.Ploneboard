@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.2 2003/06/26 13:36:51 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.3 2003/06/27 19:23:00 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName, _dtmldir
@@ -22,7 +22,14 @@ from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore.CMFCorePermissions import SetOwnProperties
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
-from Products.CMFCore.MemberDataTool import CleanupTemp
+
+# Try/except around this to avoid import errors on Plone 1.0.3
+# XXX jcc => can you check this, please ?
+try:
+    from Products.CMFCore.MemberDataTool import CleanupTemp
+    _have_cleanup_temp = 1
+except:
+    _have_cleanup_temp = None
 
 from interfaces.portal_groupdata import portal_groupdata as IGroupDataTool
 from interfaces.portal_groupdata import GroupData as IGroupData
@@ -33,8 +40,9 @@ _marker = []  # Create a new marker object.
 class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBase):
     """ This tool wraps group objects, allowing transparent access to properties.
     """
-
-    __implements__ = (IGroupDataTool, ActionProviderBase.__implements__)
+    # The latter will work only with Plone 1.1 => hence, the if
+    if hasattr(ActionProviderBase, '__implements__'):
+        __implements__ = (IGroupDataTool, ActionProviderBase.__implements__)
 
     id = 'portal_groupdata'
     meta_type = 'CMF Group Data Tool'
@@ -95,7 +103,10 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
                     self._v_temps = {id:portal_group}
                     if hasattr(self, 'REQUEST'):
                         # No REQUEST during tests.
-                        self.REQUEST._hold(CleanupTemp(self))
+                        # XXX jcc => CleanupTemp doesn't seem to work on Plone 1.0.3.
+                        # Have to find a way to pass around...
+                        if _have_cleanup_temp:
+                            self.REQUEST._hold(CleanupTemp(self))
                 else:
                     temps[id] = portal_group
         else:

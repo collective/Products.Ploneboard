@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.3 2003/06/26 16:04:52 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.4 2003/06/27 19:23:00 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -31,6 +31,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     different way.
     """
     # Show implementation only if  IGroupsTool is defined
+    # The latter will work only with Plone 1.1 => hence, the if
     if hasattr(ActionProviderBase, '__implements__'):
         __implements__ = (IGroupsTool, ActionProviderBase.__implements__)
 
