@@ -11,7 +11,7 @@ COMPO_TYPE = 'CMF Composite Page'
 
 def install_tool(self, out):
     if hasattr(self, TOOL_ID):
-      uninstall(self, out)
+      uninstall_tool(self, out)
     self.manage_addProduct['CompositePack'].manage_addCompositeTool()
     out.write("CompositePack Tool Installed")
 
