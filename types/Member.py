@@ -9,7 +9,7 @@ from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID
     MAIL_PASSWORD_PERMISSION
 
 from AccessControl import ClassSecurityInfo, Owned
-from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
+from Acquisition import aq_inner, aq_parent, aq_base, aq_chain, aq_get
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
 from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
 from Products.Archetypes import registerType
@@ -242,8 +242,6 @@ class Member(BaseContent):
             if action.get('id', None) == 'view':
                 if _verifyActionPermissions(self, action):
                     action = self.restrictedTraverse(action['action'])
-                    import sys
-                    sys.stdout.write('action = %s\n' % str(action))
                     if action is not None:
                         return action(**kwargs)
         raise 'Unauthorized', ('No accessible views available for %s' %
@@ -529,8 +527,6 @@ class Member(BaseContent):
         if updateSelf:
             self._updateCredentials()
         # invoke any automated workflow transitions after update
-        import sys
-        sys.stdout.write('update\n')
         triggerAutomaticTransitions(self)
         return ret
 
@@ -542,8 +538,6 @@ class Member(BaseContent):
         if updateSelf:
             self._updateCredentials()
         # invoke any automated workflow transitions after update
-        import sys
-        sys.stdout.write('processForm\n')
         triggerAutomaticTransitions(self)
         return ret
 
@@ -568,20 +562,15 @@ class Member(BaseContent):
             user_created = 1
 
         # make the user the owner of the current member object
-        sys.stdout.write('registering: changeOwnership\n')
         self.changeOwnership(self.getUser(), 1)
-        sys.stdout.write('registering: afterAdd\n')
         # XXX - should we invoke this for members with users in the Zope root acl_user?
         registration_tool.afterAdd(self, id, self._getPassword(), None)
-        sys.stdout.write('registering: updateListed\n')
         self.updateListed()
 
         # only send mail if we had to create a new user -- this avoids
         # sending mail to users who are already registered at the Zope root level
         if user_created:
-            sys.stdout.write('registering: registeredNotify\n')
             registration_tool.registeredNotify(self.getUserName())
-        sys.stdout.write('registering: done\n')
 
 
     security.declarePrivate('disable')
@@ -625,7 +614,6 @@ class Member(BaseContent):
     def manage_afterAdd(self, object, container):
         try:
             BaseContent.manage_afterAdd(self, object, container)
-    #        assert(object is self)  # XXX - when would this not be true???
 
             old_user = getattr(object, '_v_old_user', None)
             if old_user:
@@ -662,7 +650,6 @@ class Member(BaseContent):
 
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, object):
-        self._user = copy.deepcopy(self._user)
         try:
             if object.hasUser():
                 # the copied member had a real user -- create a real user for the copy
@@ -678,7 +665,6 @@ class Member(BaseContent):
 
     security.declarePrivate('manage_beforeDelete')
     def manage_beforeDelete(self, item, container):
-        self.dump('manage_beforeDelete')
         try:
             if hasattr(self, '_v_old_user'):
                 # if we are in the midst of a move, do nothing
@@ -691,23 +677,12 @@ class Member(BaseContent):
             # XXX we should create some other options here
             # XXX Do we really want to delete the user's stuff if s/he isn't in
             #     the portal's acl_users folder?
-            try:
-                self._changeUserInfo(portal, Owned.ownerInfo(self.getUser()))
-                
-                # delete the User object if it's in the current portal's acl_users folder
-                if self.getUser().aq_parent == portal.acl_users: 
-                    self._user = None # remove references to user
-                    portal.acl_users.userFolderDelUsers([self.id])
-            except:
-                import traceback
-                import sys
-                sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
-                sys.stdout.write('self: %s\n' % (str(self)))
-                sys.stdout.write('item: %s\n' % str(item))
-                sys.stdout.write('container: %s\n' % str(container))
-                sys.stdout.write('_user[0]: %s\n' % str(self._user[0]))
-                sys.stdout.write('aq_chain(_user[0]): %s\n' % str(aq_chain(self._user[0])))
-                pass
+            self._changeUserInfo(portal, Owned.ownerInfo(self.getUser()))
+            
+            # delete the User object if it's in the current portal's acl_users folder
+            if self.getUser().aq_parent == portal.acl_users: 
+                self._user = None # remove references to user
+                portal.acl_users.userFolderDelUsers([self.id])
         except:
             import traceback
             import sys
@@ -721,11 +696,6 @@ class Member(BaseContent):
     def setUser(self, user):
         # re-wrap user
         user = aq_base(user).__of__(aq_inner(aq_parent(user)))
-        import sys
-        sys.stdout.write('setUser: aq_chain(user) = %s\n' % (str(aq_chain(user))))
-        sys.stdout.write('setUser: aq_chain(aq_inner(user)) = %s\n' % (str(aq_chain(aq_inner(user)))))
-        sys.stdout.write('setUser: aq_chain(aq_inner(aq_parent(user))) = %s\n' % (str(aq_chain(aq_inner(aq_parent(user))))))
-        sys.stdout.write('setUser2: %s\n' % str(aq_chain(self._getUserById(user.getUserName()))))
         assert(user.getUserName() == self.id)
         self.password = user.__
         self.roles = user.roles
@@ -735,19 +705,8 @@ class Member(BaseContent):
         else:
             self._user = [self._getUserById(user.getUserName())]
         assert self._user != [None]
-        try:
-            self._user[0].aq_inner.aq_parent
-        except:
-            import pdb
-            pdb.set_trace()
         self._has_user = 1
 
-        sys.stdout.write('setUser\n')
-        sys.stdout.write('self: %s\n' % (str(self)))
-        sys.stdout.write('user: %s\n' % str(user))
-        sys.stdout.write('_user[0]: %s\n' % str(self._user[0]))
-        sys.stdout.write('aq_chain(_user[0]): %s\n' % str(aq_chain(self._user[0])))
-        sys.stdout.write('\n\n')
 
     security.declarePrivate('_updateCredentials')
     def _updateCredentials(self):
@@ -774,11 +733,6 @@ class Member(BaseContent):
             acl_users.userFolderAddUser(self.id, self.password, self.roles, self.domains)
             self._user = [acl_users.getUser(self.id).__of__(acl_users)]
             self._has_user = 1
-        try:
-            self._user[0].aq_inner.aq_parent
-        except:
-            import pdb
-            pdb.set_trace()
 
 
     security.declarePrivate('_getUserFolderForUser')
@@ -827,8 +781,6 @@ class Member(BaseContent):
                 if self._changeUserInfo(o, old_user_info, new_user):
                     # delete object if need be
                     if o != self:
-                        import sys
-                        sys.stdout.write('deleting %s - %s\n' % (str(o), repr(o)))
                         context.manage_delObjects([o.getId()])
                     
             # remove any local roles the user may have had
@@ -847,12 +799,27 @@ class Member(BaseContent):
         owner = context.getOwner(1)
         if owner == old_user_info:
             if new_user_id is not None:
-                context.changeOwnership(new_user)
+                self._changeOwnership(context, new_user)
             else:
                 # mark this object for deletion
                 return 1
         return 0
 
+
+    def _changeOwnership(self, object, user):
+        # XXX This is a replacement for Owned.py's changeOwnership function
+        # Owned.changeOwnership is lame because when you change the owner of
+        # a folder, you also end up changing the owner of all of the folder's
+        # contents.
+        new=Owned.ownerInfo(user)
+        if new is None:
+            return # Special user!
+        old=aq_get(object, '_owner', None, 1)
+        if old==new:
+            return
+        if old is Owned.UnownableOwner: return
+        object._owner=new
+        
 
     # ########################################################################
     security.declarePrivate('_generatePassword')

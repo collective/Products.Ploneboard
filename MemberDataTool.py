@@ -169,12 +169,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
                 self.getMemberFactory()(name)
                 m = self.get(name)
                 m.setUser(user)
-                import sys
-                from Acquisition import aq_chain
-                sys.stdout.write('wrapUser(%s)\n' % str(user))
-                sys.stdout.write(str(aq_chain(user)))
                 triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
-                sys.stdout.write('done with trigger\n')
 
             # Return a wrapper with self as containment and
             # the user as context following CMFCore portal_memberdata

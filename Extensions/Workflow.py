@@ -8,13 +8,9 @@ from Products.CMFMember import MemberPermissions
 # any automatic transitions for which the guard conditions
 # are satisfied.
 def triggerAutomaticTransitions(ob):
-    import sys
-    sys.stdout.write('triggerAutomaticTransitions\n')
     wf_tool=getToolByName(ob, 'portal_workflow')
     if 'trigger' in [action.get('id',None) for action in wf_tool.getActionsFor(ob)]:
-        sys.stdout.write('triggerAutomaticTransitions: doActionsFor\n')
         wf_tool.doActionFor(ob, 'trigger')
-        sys.stdout.write('triggerAutomaticTransitions: done\n')
 
 def setupWorkflow(portal, out):
     wf_tool=portal.portal_workflow

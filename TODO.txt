@@ -3,12 +3,19 @@ TO DO
 I have gotten the code working at various points, but with all that 
 I've done recently, I'm not sure it still works.
 
+* Test migration
+
+* test disable member
+
+* add search page
+
+
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
 
 * Add portraits in. [WIRE PORTRAITS TO PLONE MACHINERY]
 
-test portrait migration
+* test portrait migration
 
 * Test member migration, make sure workflow variables are preserved and that user content is not trashed
 
