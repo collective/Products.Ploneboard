@@ -12,11 +12,12 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.6 2003/08/08 23:55:50 plonista Exp $
+$Id: FSControlledPythonScript.py,v 1.7 2003/09/12 22:49:03 tesdal Exp $
 """
 
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
+from OFS.Cache import Cacheable
 from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
@@ -38,7 +39,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
             {'label':'Customize', 'action':'manage_main'},
             {'label':'Test', 'action':'ZScriptHTML_tryForm'},
             {'label':'Actions','action':'manage_formActionsForm'},             
-           ))
+           ) + Cacheable.manage_options)
 
 
     # Use declarative security

@@ -12,11 +12,12 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControlledPageTemplate.py,v 1.3 2003/07/29 15:16:56 plonista Exp $
+$Id: FSControlledPageTemplate.py,v 1.4 2003/09/12 22:49:03 tesdal Exp $
 """
 
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
+from OFS.Cache import Cacheable
 from Products.PageTemplates.ZopePageTemplate import Src
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.CMFCore.DirectoryView import registerFileExtension, registerMetaType
@@ -40,7 +41,7 @@ class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
          {'label':'Test', 'action':'ZScriptHTML_tryForm'},
          {'label':'Validation','action':'manage_formValidatorsForm'},
          {'label':'Actions','action':'manage_formActionsForm'},
-        ))
+        ) + Cacheable.manage_options)
 
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
