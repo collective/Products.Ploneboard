@@ -1,5 +1,5 @@
-CompositePack is a product that allows the Plone Manager 
-to build composite pages by aggregating manually archetype content from his site.
+CompositePack is a product that allows the Plone Manager to build composite
+pages by aggregating manually archetype content from his site.
 
 A composite page has a layout which defines its structure. 
 Composition of content is made through the design view.
@@ -13,9 +13,12 @@ below how to register them).
 
 Products required
 =================
-CompositePage 0.2 http://hathawaymix.org/Software/CompositePage/CompositePage-0.2.tar.gz
-kupu : HEAD of http://codespeak.net/svn/kupu/trunk/kupu
-Archetypes: release-1_3-branch from SF archetypes project
+CompositePage 0.2
+    http://hathawaymix.org/Software/CompositePage/CompositePage-0.2.tar.gz
+kupu 
+    HEAD of http://codespeak.net/svn/kupu/trunk/kupu
+Archetypes
+    release-1_3-branch from SF archetypes project
 
 Layouts
 =======
@@ -24,40 +27,36 @@ The layout of a page is selected at creation time.
 Layouts have slots which define the places where content can be added. Those
 slots are named.
 
-Layout can be changed later if needed. When changing layout, if old and new layouts 
-do share slot names, the content placed in a slot of a given name in the old layout will be placed
-in the corresponding slot in the new layout. Content placed in slot that do not
-have correpsondance in the new layout are hidde, not deleted. 
-Switching to back to a layout will show items in their
-original location. Slots and composite elements unaccessible through
-design view can be deleted through ZMI.
+Layout can be changed later if needed. When changing layout, if old and new
+layouts do share slot names, the content placed in a slot of a given name in
+the old layout will be placed in the corresponding slot in the new layout.
+Content placed in slot that do not have correpsondance in the new layout are
+hidde, not deleted.  Switching to back to a layout will show items in their
+original location. Slots and composite elements unaccessible through design
+view can be deleted through ZMI.
 
 Design view
 ===========
 The design view is supported in Mozilla and IE6.
 
 The design view allows to select the pieces of content : when clicking on one
-of the dotted bars representing the slots, you get a menu.
-There are two options : Add.. and Add title... (see below for more about
-titles).
+of the dotted bars representing the slots, you get a menu.  There are two
+options : Add.. and Add title... (see below for more about titles).
 
-To add a composite element, select Add...
-You get a popup window wherein you can select the piece of
-content that you want to add to this slot. 
-This is a kupu drawer. It only shows instance of "composable"
-portal types (see below for setting up composables).
-You browse your site until you have found the piece of content you want to
-display. 
-When you press ok, the composite element is added to the comosite page. 
-It is displayed through its default viewlet. 
+To add a composite element, select Add...  You get a popup window wherein you
+can select the piece of content that you want to add to this slot.  This is a
+kupu drawer. It only shows instance of "composable" portal types (see below for
+setting up composables).  You browse your site until you have found the piece
+of content you want to display.  When you press ok, the composite element is
+added to the comosite page.  It is displayed through its default viewlet.
 Another viewlet can be selected later (see below).
 
 Once added, the composite element can be moved by drag and drop from one
 slot to another. Drag and Drop the icon associated with the composite element
 to one of the dotted bars.
 
-If you click the icon, you get another menu.
-There are three options : Edit..., Delete and Select viewlet.
+If you click the icon, you get another menu.  There are three options :
+Edit..., Delete and Select viewlet.
 
 Edit... sends you to the edit screen of the content pointed at by the element.
 
@@ -100,8 +99,8 @@ Setting up composables
 
 - Go to the "resources" tab,
 
-- Add content types to the composable resource list (use the names displayed in the
-  portal_types tool)
+- Add content types to the composable resource list (use the names displayed in
+  the portal_types tool)
 
 - Click Save button
 
@@ -113,7 +112,7 @@ Registering a viewlet
 - Go to the "composite_tool" in Plone root (i.e. in \manage),
 
 - Inside the composite tool, go into the "viewlets" folder and add a
-CompositePack Viewlet using the button at the top.
+  CompositePack Viewlet using the button at the top.
 
     The CompositePack Viewlet has three fields :
 
