@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.5 2004/05/04 18:51:58 tiran Exp $
+$Id: toolbox.py,v 1.6 2004/06/20 15:13:18 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -28,9 +28,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
     ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
 from Products.ATContentTypes.interfaces.IATImage import IATImage
-from Products.ATContentTypes.interfaces.IATDocument import IATDocument
-from Acquisition import aq_base
-
 
 not_global_allow = ('Favorite', 'Large Plone Folder')
 

@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATPortalTypeCriterion.py,v 1.1 2004/05/30 14:13:40 godchap Exp $
+$Id: ATPortalTypeCriterion.py,v 1.2 2004/06/20 15:13:23 tiran Exp $
 """
 
 __author__  = 'Godefroid Chapelle'
@@ -30,8 +30,7 @@ from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
-    ALL_INDICES, DATE_INDICES, STRING_INDICES, LIST_INDICES
-from Products.ATContentTypes.Permissions import ChangeTopics
+    STRING_INDICES
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion
 from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATPortalTypeCriterionSchema
@@ -50,6 +49,7 @@ class ATPortalTypeCriterion(ATBaseCriterion):
 
     shortDesc      = 'portal types values'
 
+    security.declareProtected(CMFCorePermissions.View, 'getValue')
     def getValue(self):
         # refresh vocabulary
         types_tool = getToolByName(self, TypesTool.id)
@@ -60,6 +60,7 @@ class ATPortalTypeCriterion(ATBaseCriterion):
         return self.getField('value').get(self)
       
     
+    security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         result = []
 

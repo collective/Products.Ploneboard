@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.26 2004/06/18 15:59:29 tiran Exp $
+$Id: ATFile.py,v 1.27 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,7 +26,6 @@ __docformat__ = 'restructuredtext'
 from Products.ATContentTypes.config import *
 
 from urllib import quote
-import sys
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType, BaseContent
@@ -36,18 +35,15 @@ else:
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from ComputedAttribute import ComputedAttribute
-from Acquisition import aq_parent, aq_base
+from Acquisition import aq_parent
 from Products.PortalTransforms.utils import TransformException
 
 from Products.ATContentTypes.types.ATContentType import ATCTFileContent, \
-    updateActions, cleanupFilename
+    cleanupFilename
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 from Products.ATContentTypes.types.schemata import ATFileSchema, ATExtFileSchema
 
-
 from OFS.Image import File
-from Acquisition import aq_parent
 
 class ATFile(ATCTFileContent):
     """A Archetype derived version of CMFDefault's File"""

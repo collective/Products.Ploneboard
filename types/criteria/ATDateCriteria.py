@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATDateCriteria.py,v 1.8 2004/06/01 09:10:52 zworkb Exp $
+$Id: ATDateCriteria.py,v 1.9 2004/06/20 15:13:23 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -25,13 +25,11 @@ __docformat__ = 'restructuredtext'
 from DateTime import DateTime
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
-    ALL_INDICES, DATE_INDICES, STRING_INDICES, LIST_INDICES
-from Products.ATContentTypes.Permissions import ChangeTopics
+    DATE_INDICES
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion
 from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATDateCriteriaSchema

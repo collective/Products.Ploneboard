@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.26 2004/06/17 23:22:29 tiran Exp $
+$Id: config.py,v 1.27 2004/06/20 15:13:17 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -105,6 +105,7 @@ except ImportError:
     HAS_PLONE2 = False
 else:
     HAS_PLONE2 = True
+    del ReplaceableWrapper
 
 ## mxTidy available?
 try:
@@ -113,6 +114,7 @@ except ImportError:
     HAS_MX_TIDY = False
 else:
     HAS_MX_TIDY = True
+    del mx.Tidy
 
 ## tidy only these document types
 MX_TIDY_MIMETYPES = (
@@ -126,6 +128,7 @@ except ImportError:
     HAS_EXT_STORAGE = False
 else:
     HAS_EXT_STORAGE = True
+    del ExternalStorage
 
 ## LinguaPlone addon?
 try:
@@ -134,6 +137,7 @@ except ImportError:
     HAS_LINGUA_PLONE = False
 else:
     HAS_LINGUA_PLONE = True
+    del registerType
 
 ## workflow mapping for the installer
 WORKFLOW_DEFAULT  = '(Default)'

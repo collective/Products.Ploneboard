@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.3 2004/05/21 07:11:43 tiran Exp $
+$Id: HistoryAware.py,v 1.4 2004/06/20 15:13:17 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -31,7 +31,6 @@ from DocumentTemplate.DT_Util import html_quote
 from Acquisition import aq_parent
 from Globals import InitializeClass
 
-from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.14 2004/06/20 14:06:25 tiran Exp $
+$Id: ATFolder.py,v 1.15 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,13 +30,14 @@ if HAS_LINGUA_PLONE:
 else:
     from Products.Archetypes.public import registerType
 
-from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, ATCTBTreeFolder, updateActions
-from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
-from Products.ATContentTypes.types.schemata import ATFolderSchema, ATBTreeFolderSchema
+from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, \
+    ATCTBTreeFolder
+from Products.ATContentTypes.interfaces.IATFolder import IATFolder, \
+    IATBTreeFolder
+from Products.ATContentTypes.types.schemata import ATFolderSchema,\
+    ATBTreeFolderSchema
 
 class ATFolder(ATCTOrderedFolder):
     """A simple folderish archetype"""
@@ -76,7 +77,7 @@ from Products.Archetypes.public import BaseBTreeFolder
     
 class ATBTreeFolder(ATCTBTreeFolder):
     """A simple btree folderish archetype"""
-    schema         =  ATFolderSchema
+    schema         =  ATBTreeFolderSchema
 
     content_icon   = 'folder_icon.gif'
     meta_type      = 'ATBTreeFolder'

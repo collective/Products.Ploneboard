@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.14 2004/05/09 23:15:18 tiran Exp $
+$Id: Validators.py,v 1.15 2004/06/20 15:13:17 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -27,12 +27,10 @@ from Products.ATContentTypes.config import *
 
 from Products.validation.config import validation
 from Products.validation.interfaces.IValidator import IValidator
-from Products.validation.validators.RegexValidator import RegexValidator
 
 import re
 from ZPublisher.HTTPRequest import FileUpload
 
-from TAL.TALParser import TALParser
 from TAL.HTMLTALParser import HTMLTALParser
 from TAL.TALGenerator import TALGenerator
 from Products.PageTemplates.Expressions import getEngine

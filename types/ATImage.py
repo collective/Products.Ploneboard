@@ -18,14 +18,12 @@
 #
 """
 
-$Id: ATImage.py,v 1.21 2004/06/18 15:59:29 tiran Exp $
+$Id: ATImage.py,v 1.22 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 from Products.ATContentTypes.config import *
-
-from urllib import quote
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
@@ -33,13 +31,11 @@ else:
     from Products.Archetypes.public import registerType
 
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
-from ComputedAttribute import ComputedAttribute
-from Acquisition import aq_parent, aq_base
+from Acquisition import aq_parent
 
 from Products.ATContentTypes.types.ATContentType import ATCTFileContent, \
-    updateActions, cleanupFilename
+    cleanupFilename
 from Products.ATContentTypes.interfaces.IATImage import IATImage
 from Products.ATContentTypes.types.schemata import ATImageSchema, ATExtImageSchema
 

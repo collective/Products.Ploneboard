@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATListCriterion.py,v 1.7 2004/05/14 11:40:16 godchap Exp $
+$Id: ATListCriterion.py,v 1.8 2004/06/20 15:13:23 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -24,13 +24,11 @@ __docformat__ = 'restructuredtext'
 
 from Products.Archetypes.public import *
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
-    ALL_INDICES, DATE_INDICES, STRING_INDICES, LIST_INDICES
-from Products.ATContentTypes.Permissions import ChangeTopics
+    STRING_INDICES
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion
 from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATListCriterionSchema
@@ -49,6 +47,7 @@ class ATListCriterion(ATBaseCriterion):
 
     shortDesc      = 'logical AND or OR of list values'
     
+    security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         # filter out empty strings
         result = []

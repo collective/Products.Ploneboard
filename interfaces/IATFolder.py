@@ -18,12 +18,12 @@
 #
 """AT Folder interface
 
-$Id: IATFolder.py,v 1.3 2004/04/04 21:45:04 tiran Exp $
+$Id: IATFolder.py,v 1.4 2004/06/20 15:13:19 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from interface import Interface, Attribute
+#from interface import Interface, Attribute
 from IATContentType import IATContentType
 
 class IATFolder(IATContentType):

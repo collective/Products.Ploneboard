@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.15 2004/05/21 07:44:03 tiran Exp $
+$Id: Install.py,v 1.16 2004/06/20 15:13:18 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,7 +30,7 @@ from StringIO import StringIO
 from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
 from Acquisition import aq_base
 
-from Products.Archetypes.interfaces.base import IBaseFolder, IBaseContent
+from Products.Archetypes.interfaces.base import IBaseFolder
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.interfaces.IATFile import IATFile

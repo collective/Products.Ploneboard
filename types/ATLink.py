@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.12 2004/06/18 14:13:59 tiran Exp $
+$Id: ATLink.py,v 1.13 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -31,10 +31,9 @@ else:
     from Products.Archetypes.public import registerType
 
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTContent
 from Products.ATContentTypes.interfaces.IATLink import IATLink
 from Products.ATContentTypes.types.schemata import ATLinkSchema
 

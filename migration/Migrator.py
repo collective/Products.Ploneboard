@@ -18,10 +18,10 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.13 2004/05/31 16:21:50 tiran Exp $
+$Id: Migrator.py,v 1.14 2004/06/20 15:13:19 tiran Exp $
 """
 
-from copy import copy, deepcopy
+from copy import copy
 
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_base, aq_parent

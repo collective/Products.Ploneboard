@@ -17,12 +17,12 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.5 2004/05/31 16:21:50 tiran Exp $
+$Id: CPTMigrator.py,v 1.6 2004/06/20 15:13:19 tiran Exp $
 """
 
 from common import *
 from Walker import CatalogWalker, RecursiveWalker
-from Migrator import CMFItemMigrator, CMFFolderMigrator, getTypeOf
+from Migrator import CMFItemMigrator, CMFFolderMigrator
 from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_parent
 

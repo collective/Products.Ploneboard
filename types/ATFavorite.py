@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.11 2004/06/18 16:00:15 tiran Exp $
+$Id: ATFavorite.py,v 1.12 2004/06/20 15:13:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -35,7 +35,7 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATContentType import ATCTContent
 from Products.ATContentTypes.interfaces.IATFavorite import IATFavorite
 from Products.ATContentTypes.types.schemata import ATFavoriteSchema
 

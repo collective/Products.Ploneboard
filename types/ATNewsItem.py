@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.11 2004/06/13 00:06:05 tiran Exp $
+$Id: ATNewsItem.py,v 1.12 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,12 +30,9 @@ if HAS_LINGUA_PLONE:
 else:
     from Products.Archetypes.public import registerType
 
-from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, \
-    updateActions, translateMimetypeAlias
+from Products.ATContentTypes.types.ATContentType import translateMimetypeAlias
 from Products.ATContentTypes.types.ATDocument import ATDocument
 from Products.ATContentTypes.interfaces.IATNewsItem import IATNewsItem
 from Products.ATContentTypes.types.schemata import ATNewsItemSchema

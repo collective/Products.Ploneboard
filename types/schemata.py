@@ -18,20 +18,17 @@
 #
 """
 
-$Id: schemata.py,v 1.34 2004/06/17 23:22:30 tiran Exp $
+$Id: schemata.py,v 1.35 2004/06/20 15:13:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
-
-from copy import deepcopy
 
 from Products.Archetypes.public import *
 #from Products.Archetypes.TemplateMixin import TemplateMixinSchema
 from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
 from DateTime import DateTime
-from Products.CMFCore import CMFCorePermissions
+import Products.ATContentTypes.Validators
 from Products.ATContentTypes.Permissions import ChangeEvents
-from Products.ATContentTypes import Validators
 from Products.ATContentTypes.config import *
 
 from Products.validation.validators.SupplValidators import MaxSizeValidator

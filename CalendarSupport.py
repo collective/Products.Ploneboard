@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.5 2004/05/21 07:44:03 tiran Exp $
+$Id: CalendarSupport.py,v 1.6 2004/06/20 15:13:17 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -29,9 +29,7 @@ import quopri # quoted printable
 from DateTime import DateTime
 from Globals import InitializeClass
 
-
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
