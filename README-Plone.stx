@@ -3,59 +3,97 @@ Last revision : 20021128
 
   IMPORTANT NOTICE
 
-    Before reading this document, please take time to read README.txt, which contains information that
-    is applicable to Plone as well.
-
+    Before reading this document, please take time to read README.txt,
+    which contains information that is applicable to Plone as well.
 
   ABSTRACT
 
-    Right out of the box, GRUF works fine with Plone - it is used in several production environments.
+    Right out of the box, GRUF works fine with Plone - it is used in
+    several production environments.
 
-    But be aware of the following facts : 
+    But be aware of the following facts:
 
+      - Membership and Memberdata tools are not (yet ?) supported by
+      the GRUF. We didn't find a generic enough way to do so by now.
 
-      - Membership and Memberdata tools are not (yet ?) supported by the GRUF. We didn't find a generic enough way to do so by now.
-        By "not supported", we just mean that Memberdata tools are not aware of the fact that users can belong to groups and thus do not provide
-        information about it. As group users are not meant to be logged in the portal - and as Memberdata and Membership tools are feed when
-        a user first logs in, those two tools won't know anything about groups.
+      By "not supported", we just mean that Memberdata tools are not
+      aware of the fact that users can belong to groups and thus do
+      not provide information about it. As group users are not meant
+      to be logged in the portal - and as Memberdata and Membership
+      tools are feed when a user first logs in, those two tools won't
+      know anything about groups.
 
-        THIS IS ABOUT TO CHANGE IN PLONE 1.1 ! Stay tuned ! :)
+      THIS IS ABOUT TO CHANGE IN PLONE 1.1 ! Stay tuned ! :)
 
-      - To support groups inside a CMF system, GRUF provides a GroupsTool and GroupDataTool.  These roughly correspond to the Membership and Memberdata tools.  The Groups tool provides a way to query for a list of available groups or retrieve a group by its name without accessing the acl_users object directly.  The GroupDataTool transparently stores properties for groups.  You must install these tools in your CMF/Plone site.
+      - To support groups inside a CMF system, GRUF provides a
+      GroupsTool and GroupDataTool.  These roughly correspond to the
+      Membership and Memberdata tools.  The Groups tool provides a way
+      to query for a list of available groups or retrieve a group by
+      its name without accessing the acl_users object directly.  The
+      GroupDataTool transparently stores properties for groups.  You
+      must install these tools in your CMF/Plone site.
 
+      - The goal of GRUF within CMF is to allow using LocalRoles with
+      Groups. But CMF/Plone, within skins, don't list ALL users but
+      only the users registered in MemberData tool. As GRUF doesn't
+      support MemberData, guess what happens...
 
-      - The goal of GRUF within CMF is to allow using LocalRoles with Groups. But CMF/Plone, within skins, don't list ALL users but only the users registered in MemberData tool. As GRUF doesn't support MemberData, guess what happens...
+    We found a solution to make GRUF work nearly perfectly with Plone
+    my modifying the LocalRoles skin (see below). It's enough to solve
+    most needs.
 
-    We found a solution to make GRUF work nearly perfectly with Plone my modifying the LocalRoles skin (see below). It's enough to solve most needs.
-
-    However, as of writing this help text, some people are about to integrate fully GRUF into Plone.
-
+    However, as of writing this help text, some people are about to
+    integrate fully GRUF into Plone.
 
   SOLUTIONS
 
     There are several ways to pass around those problems.
 
-    Once you're done with your Plone site creation (which is beyond the scope of this document), do the following things (they apply for both CMF and Plone).
+    Once you're done with your Plone site creation (which is beyond
+    the scope of this document), do the following things (they apply
+    for both CMF and Plone).
 
-    - Run the GroupUserFolder.Install External Method : it should replace your existing acl_users by a GRUF one so that you can enjoy GRUF's features.
+    - Run the GroupUserFolder.Install External Method : it should
+    replace your existing acl_users by a GRUF one so that you can
+    enjoy GRUF's features.
 
-	- In your CMF root, create a portal_groups tool and a portal_groupdata tool.  These are both found under the 'Add CMF Groups Tool' in the ZMI.  **Note:**  you must add one of each tool for groups to function correctly.
+    - In your CMF root, create a portal_groups tool and a
+    portal_groupdata tool.  These are both found under the 'Add CMF
+    Groups Tool' in the ZMI.  **Note:** you must add one of each tool
+    for groups to function correctly.
 
-    And then it works : you have the correct group behaviour with CMF. Be aware that Groups cannot be easily added to the system at this point ! Furthermore, it depends of your GRUF/Users/acl_users wether it's possible or not to "remotely" add users to your database (LDAP or SQL using external tools) and have them listed in Membership anyway. This is out of our scope by now.
+    And then it works : you have the correct group behaviour with
+    CMF. Be aware that Groups cannot be easily added to the system at
+    this point ! Furthermore, it depends of your GRUF/Users/acl_users
+    wether it's possible or not to "remotely" add users to your
+    database (LDAP or SQL using external tools) and have them listed
+    in Membership anyway. This is out of our scope by now.
 
-    The last trick is about Local Roles support. CMF/Plone always get users by fetching the Membership tool information. But even if your GRUF/Users/acl_users support "remote" user adding and your Membership tool support this, be aware that your GROUPS will not (and SHOULD NOT) be added to your Membership information. So if you want to add Local Roles to GROUPS, you have to edit the skin so that it finds users elsewhere. We provide a simple Plone implementation below.
+    The last trick is about Local Roles support. CMF/Plone always get
+    users by fetching the Membership tool information. But even if
+    your GRUF/Users/acl_users support "remote" user adding and your
+    Membership tool support this, be aware that your GROUPS will not
+    (and SHOULD NOT) be added to your Membership information. So if
+    you want to add Local Roles to GROUPS, you have to edit the skin
+    so that it finds users elsewhere. We provide a simple Plone
+    implementation below.
 
-    And now, you can happily user Users and Groups without breaking your existing authentication rules (ie. without dropping your former acl_users)
+    And now, you can happily user Users and Groups without breaking
+    your existing authentication rules (ie. without dropping your
+    former acl_users)
 
   BUGS / LIMITATIONS
 
     Group appending is not supported (may not ever be) outside the ZMI
 
-    Local Roles management for groups need skin update (we didn't find a way to avoid this and it seems to be difficult to imagine adding a concept in a thing that doesn't support it by default).
-
+    Local Roles management for groups need skin update (we didn't find
+    a way to avoid this and it seems to be difficult to imagine adding
+    a concept in a thing that doesn't support it by default).
 
   SKIN UPDATE
 
-    A few skins are provided with GRUF, allowing you to easily use custom forms for searching groups or setting LocalRoles.
+    A few skins are provided with GRUF, allowing you to easily use
+    custom forms for searching groups or setting LocalRoles.
 
-    This is for PLONE only (because of the skin structure) but it is the same principle for CMF.
+    This is for PLONE only (because of the skin structure) but it is
+    the same principle for CMF.
