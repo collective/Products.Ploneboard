@@ -1,1 +1,14 @@
+<span tal:define="portal_url here/portal_url">
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:porta
+l_url/contentpanels.css" />
+        <link rel="Stylesheet" type="text/css" tal:attributes="href string:porta
+l_url/contentpanelsCustom.css" />
+
+        <style type="text/css"
+           tal:define="customCSS here/getCustomCSS"
+           tal:condition="customCSS"
+           tal:content="structure string:&lt;!-- $customCSS   --&gt;">
+        </style>
+</span>
+
 <tal:block metal:use-macro="here/contentpanels_macros/macros/viewlet" />

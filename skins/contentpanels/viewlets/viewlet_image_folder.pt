@@ -1,0 +1,75 @@
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+<body>
+
+<div metal:define-macro="portlet">
+  <div class="portlet"
+       tal:define="theFolder python:test(here.isPrincipiaFolderish, here,
+here.aq_parent);
+                   results python: [item for item in
+theFolder.contentValues() if checkPermission('View',item)];
+                   dummy python:results.sort(lambda a,b:cmp(a.id(),b.id()))"
+       tal:condition="results">
+
+    <style><!--
+.CPImageTable table{
+   width:200px;
+   margin:5px;
+   float:left;
+   text-align:center;
+   background: #dee7ec;
+}
+.CPImageTable body{
+   width:99%;
+}
+.CPImageTable td{
+height:190px;
+}
+
+.CPTopicTitle {
+   border-top: 3px solid black;
+   margin: 20px;
+}
+.CPTopicTitle h4 {
+   text-align:left;
+   font-weight: bold;
+   font-size: 120%;
+}
+   --></style>
+
+    <div class="CPTopicTitle"><h4 tal:content="here/Title">folder
+title</h4></div>
+
+    <div class="CPImageTable">
+
+      <tal:block tal:repeat="item results">
+        <div tal:define="item item/getObject | nocall: item"
+tal:condition="python:item != None and item.getTypeInfo()">
+          <tal:block tal:define="url python:item.absolute_url()">
+        <div tal:condition="python:item.portal_type=='Image'">
+
+               <table border=0>
+                 <tr><td>
+                   <span tal:replace="item/Title"></span><br />
+                   <img src="#" alt="#" tal:attributes="src url; alt
+item/Title"><br />
+                   <span tal:define="d1
+python:item.Description().replace('\n', '<br />');
+                                          d2 python:d1.replace('@', '&#64')"
+                              tal:replace="structure d2"/>
+                 </td></tr>
+              </table>
+        </div>
+          </tal:block>
+        </div>
+      </tal:block>
+
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

@@ -44,9 +44,9 @@ def install_SubSkin(self, outStream, skinFolder):
                 path.append(skinFolder)
             path = string.join( path, ', ' )
             skinstool.addSkinSelection( skin, path )
-            outStream.write('CMFContentPanels subskin successfully installed into %s.\n' % skin)    
+            outStream.write('CMFContentPanels subskin successfully installed into %s.\n' % skin)
         else:
-            outStream.write('CMFContentPanels subskin was already installed into %s.\n' % skin)    
+            outStream.write('CMFContentPanels subskin was already installed into %s.\n' % skin)
 
 def install_Skins(self, out):
     """

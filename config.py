@@ -102,6 +102,10 @@ actions=[
 'string:here/portlet_recent/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
+('image_folder_viewlet', 'Image Folder',
+'string:here/viewlet_image_folder/macros/portlet',
+'', 'View', 'GL:folder', 1),
+
 ### global portlet
 
 ('portlet_language', 'Language',

@@ -4,6 +4,8 @@ V1.7.3
   - fix bug with nested contentpanels
   - new Brazilian Portuguese Translations. 
     thanks Luciano De Fazio(http://www.camaracatanduva.sp.gov.br )
+  - fix bug: css is lost when CP is set to left/right
+  - new picture viewlet. thanks Peter Shute (NUW)
 
 V1.7.2
 
