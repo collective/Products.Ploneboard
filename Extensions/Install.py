@@ -161,7 +161,7 @@ def install(self):
     setupWorkflow(self, out)
     setupSimpleWorkflow(self, out)
 
-    print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME
+    #print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME
     import sys
     sys.stdout.write(out.getvalue())
     
