@@ -40,7 +40,12 @@
                                 icon python:portal_url+'/'+'/'.join(obj.getIcon.split('/')[1:]);
                                 title_or_id python:obj.Title or obj.getId">
                 <a href="#" tal:attributes="href url">
-                        <img src="" alt="" tal:attributes="src icon; alt obj/Title" />
+                    <img src="#"
+                     height="16"
+                     width="16"
+                     alt=""
+                     tal:on-error="structure python:path('here/linkOpaque.gif')"
+                     tal:replace="structure python:path('here/%s' % obj.getIcon)" />
                 </a>
 
                 <a href="#" tal:condition="python:obj.portal_type not in ['Link', 'Image']"
