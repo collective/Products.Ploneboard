@@ -37,7 +37,7 @@
 	             method="post" 
       	       enctype="multipart/form-data"
                tal:attributes="action request/URL">
-	
+
             <span class="legend" i18n:translate="legend_personal_details">Personal Details</span>
 <!--         <p tal:content="python:str(errors)"/>-->
 
@@ -46,6 +46,7 @@
 <!--               <b tal:content="python:field.name" /> <span tal:content="python:field.write_permission"/>
                        <span tal:content="python:here.portal_membership.checkPermission(field.write_permission, here)"/>
                <br/>-->
+
                <metal:fieldMacro use-macro="python: here.widget(field.getName(), mode='edit')"/>
             </tal:fields>
 

@@ -59,7 +59,7 @@ class MembershipTool( BaseTool ):
         # no further creation of the member area takes place
 
         # do not create member_area for groups
-        if member_id in self.portal_groups.listGroupIds():
+        if hasattr(self, 'portal_groups') and member_id in self.portal_groups.listGroupIds():
             return
         
         pre = getattr(self, 'preCreateMemberArea', None)
@@ -90,7 +90,10 @@ class MembershipTool( BaseTool ):
          groups = []
          # can we allways asume that there is a groups_tool ??
          try:
-             groups = self.portal_groups.listGroupIds()
+             if hasattr(self, 'portal_groups'):
+                 groups = self.portal_groups.listGroupIds()
+             else:
+                 groups = []
              result = []
              for member in members:
                  if member.getUser().getUserName() in groups:

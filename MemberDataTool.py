@@ -214,12 +214,31 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             user = md.wrapUser(u)
             if not (user.listed or is_manager):
                 continue
+            # XXX fix me!  remove these try blocks and use accessor method
             if name:
+                userfullname = None
+                try:
+                    userfullname = user.getFullname()
+                except AttributeError:
+                    try:
+                        userfullname = user.fullname
+                    except AttributeError:
+                        pass
+                
                 if (u.getUserName().lower().find(name) == -1) and \
-                  ((not user.fullname) or user.fullname.lower().find(name) == -1):
+                  ((not userfullname) or userfullname.lower().find(name) == -1):
                     continue
             if email:
-                if (not user.email) or user.email.lower().find(email) == -1:
+                useremail = None
+                try:
+                    useremail = user.getEmail()
+                except AttributeError:
+                    try:
+                        useremail = user.email
+                    except AttributeError:
+                        pass
+
+                if (not useremail) or useremail.lower().find(email) == -1:
                     continue
             if roles:
                 user_roles = user.getRoles()

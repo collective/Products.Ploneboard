@@ -1023,9 +1023,14 @@ class Member(VariableSchemaSupport, BaseContent):
                     new_owner = object.getUser()
                     object._changeUserInfo(portal, old_owner_info, new_owner)
 
+                    # make the user the owner of the current member object
+                    object.manage_delLocalRoles([old_user.getUserName()])
+                    object.changeOwnership(new_owner, 1)
+                    object.manage_setLocalRoles(object.getUserName(), ['Owner'])
+
                     # Delete the old user object if it was from portal.acl_users but not
                     # if it was from zope_root.acl_users.
-                    if self._isPortalUser(old_user):
+                    if object._isPortalUser(old_user):
                         # delete the old user
                         if portal.acl_users.getUser(old_user.getUserName()):
                             portal.acl_users.userFolderDelUsers([old_user.getUserName()])
@@ -1040,6 +1045,10 @@ class Member(VariableSchemaSupport, BaseContent):
             if self.hasUser():
                 # the copied member had a real user -- create a real user for the copy
                 self._createUser(create_acl_user=1)
+                # make the user the owner of the current member object
+                self.manage_delLocalRoles(self.users_with_local_role('Owner'))
+                self.changeOwnership(self.getUser(), 1)
+                self.manage_setLocalRoles(self.getUserName(), ['Owner'])
         except:
             logException()
             raise
