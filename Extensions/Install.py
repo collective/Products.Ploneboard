@@ -4,6 +4,8 @@ from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.DirectoryView import addDirectoryViews
 
+from OFS.Folder import manage_addFolder
+
 SKIN_NAME = "gruf"
 _globals = globals()
 
@@ -39,6 +41,7 @@ def migrate_user_folder(out, obj):
     """
     Move a user folder into a temporary folder, create a GroupUserFolder,
     and then move the old user folder into the Users portion of the GRUF.
+    NOTE: You cant copy/paste between CMF and Zope folder.  *sigh*
     """
     id = obj.getId()
     if id == 'acl_users' and not isinstance(obj, GroupUserFolder):
@@ -47,9 +50,9 @@ def migrate_user_folder(out, obj):
         
         # move the existing acl_users into a temporary folder
         tempid = 'temp_acl_users_' + str( int(obj.ZopeTime()) )
-        container.manage_addFolder( tempid )
-        clipboard = container.manage_cutObjects( id )
-        container[tempid].manage_pasteObjects( clipboard )
+        manage_addFolder( container, tempid ) #dont use a CMF Folder
+        container[tempid].manage_pasteObjects( container.manage_cutObjects(id) )
+        get_transaction().commit(1) #put in _p_jar, muhahaha!
         
         # create a GRUF
         container.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
