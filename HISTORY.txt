@@ -1,8 +1,13 @@
+0.4
+
+  - use CMFFormController and remove portal_form to make it compatible with Plone 2.1
+    [panjunyong]
+
 0.3.1
   - serious BUG fix in Extentions/Install.py
     Yangh <walteyh@sohu.com>
   - Simplified Chinese (zh-cn) translation contributed by ZopeChina
-    <panjy@zopechina.ods.org>
+    <panjy@zopechina.com>
 
 0.3
   - Added list page(mpoll_list.pt) to list all avilable mpoll. 

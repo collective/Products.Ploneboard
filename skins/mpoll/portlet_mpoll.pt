@@ -9,7 +9,15 @@
 <!-- The vote box -->
 
 <div metal:define-macro="portlet"
-     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')[:1]">
+     tal:define="results python:here.portal_catalog.searchResults(
+                      meta_type='MPoll', 
+                      sort_on='Date', 
+                      sort_order='reverse', 
+                      review_state='published', 
+                      effective=here.ZopeTime(), 
+                      effective_usage='range:max', 
+                      expires=here.ZopeTime(), 
+                      expires_usage='range:min')[:1]">
 
     <div tal:condition="results" class="portlet">
     
@@ -24,7 +32,7 @@
 
                 <div class="portletContent odd" tal:define="obj result/getObject">
                     <form method="post"
-                          tal:attributes="action string:${obj/absolute_url}/portal_form/mpoll_slot">
+                          tal:attributes="action string:${obj/absolute_url}/mpoll_slot">
                           <div style="padding-bottom: 10px;" tal:repeat="item obj/getAnswers">
                               <input tal:attributes="value repeat/item/number;
                                                      checked python:test(repeat['item'].start, 'checked', '')"
@@ -37,7 +45,7 @@
                                  class="context"
                                  i18n:attributes="value"
                                  value="Vote" />
-                          <input type="hidden" name="form_submitted" value="1" value="mpoll_slot" />
+                          <input type="hidden" name="form.submitted" value="1"/>
 
                     </form>
 
