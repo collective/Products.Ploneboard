@@ -81,8 +81,8 @@ class CMFCompositePage(BaseFolder, PackComposite):
         # refresh vocabulary
         composite_tool = getToolByName(self, TOOL_ID)
         layouts = composite_tool.layouts.objectValues('CompositePack Viewlet')
-        template_ids = [layout.getTemplate().getId() for layout in layouts]
-        self.schema['layout'].vocabulary = template_ids
+        layouts = [(layout.getId(), layout.title_or_id()) for layout in layouts]
+        self.schema['layout'].vocabulary = DisplayList(layouts)
         return self.getField('layout').get(self)
       
     def setLayout(self,viewlet_id):
