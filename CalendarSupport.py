@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.3 2004/05/06 12:14:28 tiran Exp $
+$Id: CalendarSupport.py,v 1.4 2004/05/17 15:40:00 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
