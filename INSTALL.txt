@@ -1,6 +1,0 @@
-Extract the tarball (or check out the module from CVS) into the Products
-directory of your Zope instance
-
-Install this product into your portal using portal_quickinstaller
-
-See README.txt for usage instructions
