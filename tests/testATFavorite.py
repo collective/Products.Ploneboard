@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.4 2004/04/29 14:05:27 tiran Exp $
+$Id: testATFavorite.py,v 1.5 2004/05/15 00:51:34 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -70,7 +70,9 @@ class TestSiteATFavorite(ATCTSiteTestCase):
         user = self.getManagerUser()
         newSecurityManager(None, user)
 
-        self._portal.invokeFactory(type_name='ATFavorite', id='ATCT')
+        ttool = self._portal.portal_types
+        typeInfo = ttool.getTypeInfo('ATFavorite')
+        typeInfo.constructInstance(self._portal, 'ATCT')
         self._ATCT = getattr(self._portal, 'ATCT')
 
         self._portal.invokeFactory(type_name='Favorite', id='cmf')
@@ -194,7 +196,7 @@ class TestATFavoriteFields(ATCTFieldTestCase):
         self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
                         'Value is %s' % field.getLayerImpl('storage'))
         self.failUnless(ILayerContainer.isImplementedBy(field))
-        self.failUnless(field.validators == (),
+        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'},
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
                         'Value is %s' % id(field.widget))

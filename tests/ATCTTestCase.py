@@ -1,6 +1,6 @@
 """ATContentTypes tests
 
-$Id: ATCTTestCase.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATCTTestCase.py,v 1.2 2004/05/15 00:51:34 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -45,7 +45,7 @@ class ATCTFieldTestCase(ATCTTestCase, BaseSchemaTest):
         self.failUnless(field.type == 'text')
         self.failUnless(isinstance(field.storage, MetadataStorage))
         self.failUnless(field.getLayerImpl('storage') == MetadataStorage())
-        self.failUnless(field.validators == ())
+        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'})
         self.failUnless(isinstance(field.widget, TextAreaWidget))
         vocab = field.Vocabulary(dummy)
         self.failUnless(isinstance(vocab, DisplayList))
