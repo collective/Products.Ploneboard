@@ -44,10 +44,14 @@
               </tr>
               
               <tr 
-                  tal:repeat="user users" 
+                  tal:repeat="user users"
                 class="" 
                 tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')"
                 >
+                    <div tal:condition="user"
+                      tal:omit-tag=""
+                      x:comment="We ignore empty/invalid users"
+                      >
                 <div tal:define="
                   label_groups python:user.getGroups();
                   label_groups_no_recurse python:user.getGroups(no_recurse = 1);
@@ -96,6 +100,7 @@
                     </div>
                   </td>
                 </div>
+                      </div>
               </tr>
 
               <tr>
@@ -106,13 +111,14 @@
                     the underlying UserFolder cannot retreive the entire users list (for example, LDAPUserFolder
                     is limited in results size).
                   </div>
-                  <div class="list-item" tal:condition="have_users">
+                  <div class="list-item">
                     Some more users may be available but do not show up there.. This happens if
                     the underlying UserFolder cannot retreive the entire users list (for example, 
                     LDAPUserFolder is limited in results size and will return only cached users).
                   </div>
                   <div class="list-item">
-                    It might be very long to retreive the whole list but you can force it by <a href="?FORCE_ALL=1">Clicking here</a>.
+                    It might be very long to retreive, but you can 
+                        <b><a href="?FORCE_ALL=1">click here to retreive ALL users</a></b>.
                   </div>
                 </td>
               </tr>
