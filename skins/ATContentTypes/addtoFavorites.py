@@ -10,21 +10,23 @@
 #
 # Copied from CMFPlone 2.x
 #
-
+RESPONSE = context.REQUEST.RESPONSE
 homeFolder=context.portal_membership.getHomeFolder()
+view_url = '%s/%s' % (context.absolute_url(),
+                      context.getTypeInfo().getActionById('view')
+                     )
+
+if not homeFolder:
+    msg = 'portal_status_message=Can\'t access home folder. Favorite is not added'
+    return RESPONSE.redirect('%s?%s' % (view_url, msg))
+
 if not hasattr(homeFolder, 'Favorites'):
     homeFolder.invokeFactory('ATFolder', id='Favorites')
 
 targetFolder = homeFolder.Favorites
 new_id='fav_' + str(int( context.ZopeTime()))
 myPath=context.portal_url.getRelativeUrl(context)
-# remove '/' if myPath starts with a '/'
-if myPath.startswith('/'):
-    myPath=myPath[1:]
-    
-targetFolder.invokeFactory( 'ATFavorite', id=new_id, title=context.TitleOrId(), remoteUrl=myPath)
+targetFolder.invokeFactory( 'ATFavorite', id=new_id, title=context.TitleOrId(), remote_url=myPath)
 
-msg = 'portal_status_message=\''+context.title_or_id()+'\'+has+been+added+to+your+Favorites'
-return context.REQUEST.RESPONSE.redirect('%s/%s?%s' % ( context.absolute_url()
-                                                      , context.getTypeInfo().getActionById('view')
-                                                      , msg ))
+msg = 'portal_status_message=\'%s\' has been added to your Favorites' % context.title_or_id()
+return RESPONSE.redirect('%s?%s' % (view_url, msg))

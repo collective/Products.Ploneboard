@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.15 2004/04/14 15:56:42 ajung Exp $
+$Id: schemata.py,v 1.16 2004/04/18 17:06:03 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -218,9 +218,9 @@ ATFileSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type Folder
 ###
-ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeBaseSchema
+ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeSchema
 
-ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeBaseSchema
+ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
 
 ###
 # AT Content Type Image

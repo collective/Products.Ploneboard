@@ -1,5 +1,9 @@
 0.2-beta3
 
+ * Fixed default view of ATBTreeFolder and ATFolder (stage 2)
+   Both types are using ATContentTypeSchema with TemplateMixinSchema
+  [tiran]
+
  * Added a recreateATImageScales method as external method [tiran]
 
  * Added missing sharing tab to all ATCTContent based types [tiran]
@@ -7,8 +11,6 @@
  * Fixed AT Favorite [jensens]
 
  * Fixed atct_edit macro [tiran]
-
- * Fixed default view of ATBTreeFolder [tiran]
 
 0.2-beta2 - 2004-04-11
 
