@@ -841,6 +841,34 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         self.failUnless(self.gruf.isLocalRoleAcquired(self.subsublr2))
 
 
+    # Audit checks
+
+    def test_getAllLocalRoles(self):
+        # Allowed patterns
+        normal_allowed = {
+            'group_g1': ['r3', ],
+            'u6': ['r2', 'r3', ],
+            'test_user_1_': ['Owner', ],
+            'u3': ['r2', 'r3', ],
+            }
+        blocked_allowed = {
+            'u6': ['r2', ],
+            'test_user_1_': ['Owner', ],
+            'u3': ['r2', ],
+            }
+
+        # Normal behaviour
+        ob = self.sublr2
+        allowed = self.gruf.getAllLocalRoles(ob)
+        self.failUnlessEqual(allowed, normal_allowed)
+
+        # LR-blocking behaviour
+        ob = self.sublr2
+        self.gruf._acquireLocalRoles(ob, 0)
+        allowed = self.gruf.getAllLocalRoles(ob)
+        self.failUnlessEqual(allowed, blocked_allowed)
+
+
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=1)
 else:

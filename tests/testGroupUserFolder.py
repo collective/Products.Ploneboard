@@ -19,6 +19,7 @@ from AccessControl.SecurityManagement import newSecurityManager, noSecurityManag
 from AccessControl import Unauthorized
 from AccessControl import Permissions
 from AccessControl.User import UnrestrictedUser
+from AccessControl.PermissionRole import rolesForPermissionOn
 
 import urllib
 
@@ -325,6 +326,58 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
             self.failUnless(not failed, "Must have the permission here.")
         else:
             self.failUnless(failed, "Must NOT have the permission here.")
+
+
+    def test13TestCMFLRBehaviour(self,):
+        """Special test to check that CMF's allowedRolesAndUsers is okay
+        """
+        # Allowed patterns
+        normal_allowed = ['r1', 'r2', 'r3', 'user:group_g1', 'user:u6', 'user:u3']
+        normal_allowed.sort()
+        blocked_allowed = ["r1", "r2", "r3", "user:u3", "user:u6", ]
+        blocked_allowed.sort()
+            
+        # Normal behaviour
+        ob = self.subsublr2
+        allowed = {}
+        for r in rolesForPermissionOn('View', ob):
+            allowed[r] = 1
+        localroles = _mergedLocalRoles(ob)
+        for user, roles in localroles.items():
+            for role in roles:
+                if allowed.has_key(role):
+                    allowed['user:' + user] = 1
+        if allowed.has_key('Owner'):
+            del allowed['Owner']
+        allowed = list(allowed.keys())
+        allowed.sort()
+        self.failUnlessEqual(allowed, normal_allowed)
+
+        # LR-blocking behaviour
+        self.gruf._acquireLocalRoles(self.sublr2, 0)
+        ob = self.subsublr2
+        allowed = {}
+        for r in rolesForPermissionOn('View', ob):
+            allowed[r] = 1
+        localroles = _mergedLocalRoles(ob)
+        for user, roles in localroles.items():
+            for role in roles:
+                if allowed.has_key(role):
+                    allowed['user:' + user] = 1
+        if allowed.has_key('Owner'):
+            del allowed['Owner']
+        allowed = list(allowed.keys())
+        allowed.sort()
+        self.failUnlessEqual(allowed, blocked_allowed)
+        
+        
+
+def _mergedLocalRoles(object):
+    """Returns a merging of object and its ancestors'
+    __ac_local_roles__.
+    This will call gruf's methods. It's made that may to mimic the
+    usual CMF code."""
+    return object.acl_users.getAllLocalRoles(object)
 
 
 #                                                   #

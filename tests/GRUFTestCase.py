@@ -17,7 +17,7 @@ from AccessControl.Permissions import access_contents_information, view, add_doc
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl import Unauthorized
 from AccessControl.User import UnrestrictedUser
-
+from AccessControl import Permission
 import urllib
 
 
@@ -167,6 +167,15 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
         self.gruf.userFolderAddRole("r1")
         self.gruf.userFolderAddRole("r2")
         self.gruf.userFolderAddRole("r3")
+
+        # Set View permission on those roles
+        permissions = self.gruf_folder.ac_inherited_permissions(1)
+        for ip in range(len(permissions)):
+            name, value = permissions[ip][:2]
+            if name == "View":
+                break
+        p=Permission.Permission(name,value, self.gruf_folder)
+        p.setRoles(("r1", "r2", "r3", ))
 
         # Setup users and groups
         self.security_context_setup_groups()

@@ -361,6 +361,14 @@ class IUserFolder(Interface):
     def isLocalRoleAcquired(folder):
         """Return true if the specified folder allows local role acquisition.
         """
+
+    # Audit & security checking methods
+
+    def getAllLocalRoles(object):
+        """getAllLocalRoles(self, object): return a dictionnary {user: roles} of local
+        roles defined AND herited at a certain point. This will handle lr-blocking
+        as well.
+        """
         
 
 class IUserAtom(Interface):

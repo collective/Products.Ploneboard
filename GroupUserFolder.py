@@ -1316,7 +1316,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/07/09 14:17:08 $"[7:-2]
+        rev_date = "$Date: 2004/07/12 09:14:53 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1531,10 +1531,45 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return 1
 
 
-
     # ----------------------
     # Security audit methods
     # ----------------------
+
+
+    security.declareProtected(Permissions.manage_users, "getAllLocalRoles")
+    def getAllLocalRoles(self, object):
+        """getAllLocalRoles(self, object): return a dictionnary {useratom_id: roles} of local
+        roles defined AND herited at a certain point. This will handle lr-blocking
+        as well.
+        """
+        # Modified from AccessControl.User.getRolesInContext().
+        merged = {}
+        object = getattr(object, 'aq_inner', object)
+        while 1:
+            Log(LOG_DEBUG, "obj", object)
+            if hasattr(object, '__ac_local_roles__'):
+                dict = object.__ac_local_roles__ or {}
+                if callable(dict): dict = dict()
+                for k, v in dict.items():
+                    if not merged.has_key(k):
+                        merged[k] = {}
+                    for role in v:
+                        merged[k][role] = 1
+            if not self.isLocalRoleAcquired(object):
+                break
+            if hasattr(object, 'aq_parent'):
+                object=object.aq_parent
+                object=getattr(object, 'aq_inner', object)
+                continue
+            if hasattr(object, 'im_self'):
+                object=object.im_self
+                object=getattr(object, 'aq_inner', object)
+                continue
+            break
+        for key, value in merged.items():
+            merged[key] = value.keys()
+        return merged
+    
 
     security.declareProtected(Permissions.manage_users, "computeSecuritySettings")
     def computeSecuritySettings(self, folders, actors, permissions, cache = {}):
