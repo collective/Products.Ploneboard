@@ -4,7 +4,7 @@ try:
 except:
     memberdata_interface = 0
 
-from Globals import InitializeClass
+from Globals import InitializeClass, DTMLFile
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from Acquisition import aq_base, aq_parent
 from BTrees.OOBTree import OOBTree
@@ -20,6 +20,10 @@ from Products.Archetypes.debug import log
 from Products.Archetypes import registerType
 from Products.CMFMember import PKG_NAME
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
+from Products.CMFMember.types.Member import Member
+
+from Products.Archetypes.public import *
+
 import pdb
 
 from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataTool
@@ -33,6 +37,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         __implements__ = (IMemberData, ActionProviderBase.__implements__)
 
     security=ClassSecurityInfo()
+
+    manage_options=(
+        {'label':'Schema','action':'schemaForm'},
+        ) #+DefaultMemberDataTool.manage_options
 
     id = 'portal_memberdata'
     portal_type = meta_type = PKG_NAME + ' Tool'
@@ -64,7 +72,8 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     manage_options=( BTreeFolder2Base.manage_options +
                      ActionProviderBase.manage_options
-                   )
+                   )  +({'label':'Schema','action':'schemaForm'}, ) 
+    schemaForm = DTMLFile('dtml/schemaForm',globals())
 
     ##IMPL DETAILS
     def __init__(self):
@@ -421,6 +430,19 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         """
         self._deleteMember(id)
 
+    def setMemberSchema(self,member_schema,REQUEST=None):
+        ''' '''
+        member_schema=member_schema.strip().replace('\r','')
+        schema=eval(member_schema)
+        self.memberSchema=Member.schema + schema
+        self.member_schema=member_schema
+        
+        if REQUEST:
+            REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
+            
+    def getMemberSchema(self):
+        ''' '''
+        return getattr(self,'memberSchema',Member.schema ) #+ Schema((StringField('sssssss')))
 
 # Put this outside the MemberData tool so that it can be used for
 # conversion of old MemberData during installation

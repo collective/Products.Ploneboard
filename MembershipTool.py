@@ -65,5 +65,17 @@ class MembershipTool( BaseTool ):
         if post:
             post(member_id=member_id)
 
+    security.declarePrivate('addMember')
+    def addMember(self, id, password, roles, domains, properties=None):
+        '''Adds a new member to the user folder.  Security checks will have
+        already been performed.  Called by portal_registration.
+        '''
+        
+        memberdata_tool = getToolByName(self, 'portal_memberdata')
+        memberdata_tool.invokeFactory('Member',id)
+        member=getattr(memberdata_tool.aq_explicit,id)
+        member.edit(password=password,roles=roles,domains=domains,**(properties or {}))
+
+
 
 InitializeClass(MembershipTool)

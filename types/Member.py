@@ -26,6 +26,8 @@ from Products.Archetypes.interfaces.base import IBaseContent
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Field       import *
 from Products.Archetypes.Widget      import *
+from Products.Archetypes.Schema import Schemata
+
 from Products.Archetypes.debug import log
 from DateTime import DateTime
 from Products.CMFMember import RegistrationTool
@@ -33,6 +35,7 @@ import copy
 import random
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
+from Products.CMFMember.VariableSchemaSupport import VariableSchemaSupport
 
 # generate the addMember method ourselves so we can do some extra initialization
 security = ModuleSecurityInfo('Products.CMFMember.types.Member')
@@ -184,6 +187,12 @@ security_schema = FieldList((
                                       description='Confirm your new password')
                 ),
 
+    BooleanField('mail_me',
+                default=0,
+                searchable=1,
+                widget=BooleanWidget( label='Mail Password!', description="Mail the password to you after registration"),
+                ),
+                
     LinesField('roles',
                default=('Member',),
                mutator='setRoles',
@@ -215,6 +224,7 @@ security_schema = FieldList((
                widget=MultiSelectionWidget(label='Groups',
                                            description='Select groups this user')
                ), 
+
     
     LinesField('domains',
                default=(),
@@ -256,7 +266,7 @@ content_schema = id_schema + contact_schema + plone_schema + security_schema
 
 _marker = []
 
-class Member(BaseContent):
+class Member(VariableSchemaSupport, BaseContent):
     """A description of a member"""
 
     if memberdata_interface:
@@ -476,6 +486,10 @@ class Member(BaseContent):
         except AttributeError:
             return self.portal_skin
 
+    #for compatibility to CMFCore member handling
+    def setMemberProperties(self,props):
+        return self.edit(**props)
+    
     ######################################
     # group management methods
     
@@ -812,7 +826,7 @@ class Member(BaseContent):
 
         # only send mail if we had to create a new user -- this avoids
         # sending mail to users who are already registered at the Zope root level
-        if user_created:
+        if user_created and self.getMail_me():
             registration_tool.registeredNotify(self.getUserName())
 
 
@@ -918,10 +932,11 @@ class Member(BaseContent):
 
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, object):
+        print 'manage_afterClone:',object,self
         try:
-            if object.hasUser():
+            if self.hasUser():
                 # the copied member had a real user -- create a real user for the copy
-                object._createUser(create_acl_user=1)
+                self._createUser(create_acl_user=1)
         except:
             import traceback
             import sys
@@ -1277,5 +1292,8 @@ class Member(BaseContent):
                 return
             print >> out, 'Unable to set property %s from member %s\n' % (id, self.getMemberId())
             raise ValueError
-
+    
+    def getSchema(self):
+        return self.aq_parent.getMemberSchema()  
+    
 registerType(Member)
