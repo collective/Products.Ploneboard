@@ -6,5 +6,14 @@ Ploneboard
 
   http://plone.org/Members/tesdal/Ploneboard
 
+  Contributors
 
-  Contributors are in CREDITS.txt
+    **Helge Tesdal**, "PloneSolutions":http://www.plonesolutions.com -- *code, idea, architecture*
+
+    **Ruslan Spivak** -- *code*
+
+    **Alexander Limi**, "PloneSolutions":http://www.plonesolutions.com -- *user interface*
+
+    **Vidar Andersen** -- *icons*
+
+    **Kapil Thangavelu** -- *initial architecture*

@@ -12,3 +12,5 @@ action.success..Remove=traverse_to:string:remove_transform_script
 action.success..Add=traverse_to:string:add_transform_script
 action.failure=traverse_to:string:prefs_manage_transforms
 
+[security]
+View=0:Authenticated

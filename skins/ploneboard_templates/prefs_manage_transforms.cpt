@@ -10,9 +10,7 @@
 <body>
 
 <div metal:fill-slot="prefs_configlet_main"
-     tal:define="errors python:request.get('errors', {})"
-     tal:condition="here/rejectAnonymous" >
-
+     tal:define="errors python:request.get('errors', {})">
 
 
 <div class="configlet">

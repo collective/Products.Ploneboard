@@ -2,6 +2,7 @@
 title=Preview post
 
 [validators]
+validators..Preview=validate_posting
 validators..Save=validate_posting
 validators..Cancel=
 

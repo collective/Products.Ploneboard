@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.1 2003/11/26 17:43:17 tesdal Exp $
+$Id: PloneboardForum.py,v 1.2 2004/03/14 22:26:06 tesdal Exp $
 """
 
 from random import randint
@@ -110,22 +110,25 @@ class PloneboardForum(BaseBTreeFolder):
         return self.aq_inner.aq_parent
 
     security.declareProtected(AddMessage, 'addConversation')
-    def addConversation(self, subject, body, creator=None, script=1):
+    def addConversation(self, subject, messagesubject=None, body=None, creator=None, script=1):
         """Adds a new conversation to the forum."""
         # Add a new conversation and a message inside it.
+        # Only create message if body is not None
         id = self.generateId(conversation=1)
         kwargs = {'title' : subject, 'creator' : creator}
-        fconversation = PloneboardConversation(id, **kwargs)
-        self._setObject(id, fconversation)
-        m = getattr(self, id)
-        m._setPortalTypeName('PloneboardConversation')
-        m.notifyWorkflowCreated()
-        #m.addMessage(subject, body)
-        if script:
-            m.add_message_script(subject, body, creator)
-        else:
-            m.addMessage(subject, body, creator)
-        return m
+        conversation = PloneboardConversation(id, **kwargs)
+        self._setObject(id, conversation)
+        conversation = getattr(self, id)
+        conversation._setPortalTypeName('PloneboardConversation')
+        conversation.notifyWorkflowCreated()
+        if body:
+            if not messagesubject:
+                messagesubject = subject
+            if script:
+                conversation.add_message_script(messagesubject, body, creator)
+            else:
+                conversation.addMessage(messagesubject, body, creator)
+        return conversation
 
     security.declareProtected(ViewBoard, 'getConversation')
     def getConversation(self, conversation_id, default=None):
