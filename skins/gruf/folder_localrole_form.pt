@@ -294,7 +294,8 @@
 	<!-- START MODIF PAR PJG -->
 		 <hr />
 
-		   <form class="group">
+		   <form class="group"
+                         action="folder_localrole_form">
 
 			<span class="legend" i18n:translate="">View groups</span>
 				    
@@ -354,6 +355,40 @@
 		    <div class="row">
 
 
+			<span class="card">
+		    
+			    <span>
+				
+				<img src="http://localhost:8080/test/defaultGroup.gif"
+         alt="Blank picture" border="0" width="75"
+         height="100" />
+				
+					<br />
+			
+				<input class="noborder" type="checkbox"
+           name="member_ids:list" value="group_testGroup"
+            />
+			
+					</span>
+
+						
+					<br />
+					
+					<strong class="field">group_testGroup</strong>
+			
+					<br />
+						
+					<span>
+				Role(s): 
+				</span>
+				
+				<br />	
+					
+					Reviewer
+		    
+			</span>
+
+
 			<span class="card" 
 			      tal:repeat="lrole here/get_local_roles"
 			      tal:define="username python:here.portal_membership.getAuthenticatedMember().getUserName();">
@@ -382,6 +417,7 @@
 						
 					<br />
 					
+					<span tal:condition="python:test(lrole[0][0:6] == 'group_'
 					<strong class="field" tal:content="python:lrole[0]">
 					sequence-key; 
 					</strong>

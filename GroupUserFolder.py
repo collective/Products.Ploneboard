@@ -125,6 +125,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         self.id = "acl_users"
 
 
+    def getGroupPrefix(self):
+        return GRUFFolder.GRUFGroups._group_prefix
+
     def getGRUFPhysicalRoot(self,):
         return self.getPhysicalRoot()           # $$$ trick meant to be used within fake_getPhysicalRoot (see __init__)
 
