@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.21 2004/06/18 14:13:59 tiran Exp $
+$Id: ATContentType.py,v 1.22 2004/06/18 15:59:29 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -135,7 +135,9 @@ class ATCTMixin(TemplateMixin):
             self._signature = self.Schema().signature()
             self.mark_creation_flag()
         except Exception, msg:
-            log_exc()
+            if str(msg) != 'SESSION':
+                raise
+                #log_exc()
 
     security.declareProtected(CMFCorePermissions.View, 'getLayout')
     def getLayout(self, **kw):
@@ -263,6 +265,19 @@ class ATCTFileContent(ATCTContent):
         return f and f.getContentType() or 'text/plain' #'application/octet-stream'
 
     content_type = ComputedAttribute(get_content_type, 1)
+
+    security.declarePrivate('manage_afterAdd')
+    def manage_afterAdd(self, item, container):
+        """Rename myself using self._v_rename_to_filename
+        """
+        ATCTContent.manage_afterAdd(self, item, container)
+        filename = getattr(aq_base(self), '_v_rename_to_filename', None)
+        if filename is not None: # and filename != self.getId():
+            #get_transaction().commit(1) # make rename work
+            container.manage_renameObject(self.getId(), filename) 
+            if hasattr(aq_base(self), '_v_rename_to_filename'):
+                # after rename all _v_ are removed but just to be shure ...
+                del self._v_rename_to_filename
 
 InitializeClass(ATCTFileContent)
 
