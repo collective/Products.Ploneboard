@@ -17,13 +17,7 @@
     <metal:block tal:define="dummy python:request.RESPONSE.setHeader('pragma', 'no-cache')" />
     <metal:block metal:define-slot="head_slot" tal:replace="nothing" />
   </metal:block>
-  
-  <metal:block metal:fill-slot="javascript_head_slot">
-    <script type="text/javascript" tal:attributes="src here/ieemu.js/absolute_url"></script>
-    <script type="text/javascript" tal:attributes="src here/styley.js/absolute_url"></script>
-    <metal:block metal:define-slot="javascript_head_slot" />
-  </metal:block>
-</head>
+  </head>
 
 <body style="margin:1em;">
 
