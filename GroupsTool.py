@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.24 2004/05/18 08:23:36 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.25 2004/05/19 16:37:45 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -98,7 +98,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         """
         if id==None:
             return None
-        g = self.acl_users.getGroupByName(id, )
+        g = self.acl_users.getGroupByName(id, None)
         if g is not None:
             g = self.wrapGroup(g)
         return g
