@@ -26,6 +26,11 @@
     display: block;
 }
 
+.portrait {
+    float: right;
+    clear: both;
+}
+
 /* The listing classes */
 
 .listingConversation {
@@ -74,9 +79,10 @@
 }
 
 .boardMessageActions {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    border-style: &dtml-borderStyle; none none none;
+    background-color: &dtml-globalBackgroundColor;;
+    padding: 0.5em 0 0 1em;
 }
 
 .boardMessageActions {

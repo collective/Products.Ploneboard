@@ -5,11 +5,12 @@
       
 <head>
     <metal:css fill-slot="css_slot">
-
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-
+        <style type="text/css" media="all"
+               tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
 
 </head>
 
@@ -21,10 +22,7 @@
 
         <h2 tal:content="here/Title">Conversation title</h2>
 
-        <div class="documentDescription"
-             tal:content="here/Description"> 
-        description
-        </div>
+        <div class="visualClear"></div>	
 
         <div class="boardConversation"
              metal:define-macro="view_messages"
@@ -43,7 +41,7 @@
             
                 <div class="boardMessageBody">
             
-                    <div class="boardMessagePortrait" 
+                    <div class="portrait" 
                           tal:define="home python:container.portal_membership.getHomeUrl(message.Creator(), verifyPermission=1);
                                       portrait python: here.portal_membership.getPersonalPortrait(message.Creator());"> 
                         <a href="#" tal:attributes="href home">                    
@@ -61,6 +59,8 @@
                     
                 </div>
                 
+                <div class="visualClear"></div>
+
                 <div class="boardMessageActions" tal:condition="not: python: noreply == 1">
                 
                     <form tal:attributes="action string:${message/absolute_url}/portal_form/add_message_form">
@@ -70,8 +70,6 @@
                     </form>
 
                 </div>
-
-                <div class="visualClear"></div>
 
             </div>
         </div>
