@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.5 2004/09/12 19:04:44 runyaga Exp $
+$Id: ConstrainTypesMixin.py,v 1.6 2004/09/13 05:39:55 runyaga Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -76,8 +76,7 @@ class ConstrainTypesMixin:
         typetuples= [(fti.title_or_id(), fti.id)
                      for fti in self._getPossibleTypes()]
         typetuples.sort()
-        sorted = [(t[1],t[0]) for t in typetuples]
-        return DisplayList(sorted)
+        return DisplayList([(id, title) for title, id in typetuples])
 
     security.declarePrivate('recursiveGetLocallyAllowedTypes')
     def recursiveGetLocallyAllowedTypes(self):
