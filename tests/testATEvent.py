@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.5 2004/05/15 00:51:34 tiran Exp $
+$Id: testATEvent.py,v 1.6 2004/05/15 01:54:07 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -185,9 +185,12 @@ tests.append(TestSiteATEvent)
 class TestATEventFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
+        ATCTFieldTestCase.afterSetUp(self)
         self._dummy = ATEvent.ATEvent(oid='dummy')
         self._dummy.initializeArchetype()
+        # wrap dummy object in the acquisition context of the site
+        site = self.getPortal()
+        self._dummy = self._dummy.__of__(site)
         # more
 
     def test_locationField(self):
@@ -530,8 +533,7 @@ class TestATEventFields(ATCTFieldTestCase):
         
     def beforeTearDown(self):
         # more
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
+        ATCTFieldTestCase.beforeTearDown(self)
 
 tests.append(TestATEventFields)
 

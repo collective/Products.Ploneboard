@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFolder.py,v 1.2 2004/03/16 15:27:11 tiran Exp $
+$Id: testATFolder.py,v 1.3 2004/05/15 01:54:07 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -114,9 +114,12 @@ tests.append(TestSiteATFolder)
 class TestATFolderFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
+        ATCTFieldTestCase.afterSetUp(self)
         self._dummy = ATFolder.ATFolder(oid='dummy')
         self._dummy.initializeArchetype()
+        # wrap dummy object in the acquisition context of the site
+        site = self.getPortal()
+        self._dummy = self._dummy.__of__(site)
         # more
 
     def test_somefield(self):
@@ -127,8 +130,7 @@ class TestATFolderFields(ATCTFieldTestCase):
 
     def beforeTearDown(self):
         # more
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
+        ATCTFieldTestCase.beforeTearDown(self)
 
 tests.append(TestATFolderFields)
 

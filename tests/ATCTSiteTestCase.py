@@ -2,16 +2,27 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.2 2004/03/16 15:27:10 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.3 2004/05/15 01:54:07 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 import time
+#from Testing import ZopeTestCase
+#from AccessControl.SecurityManagement import newSecurityManager
+#from AccessControl.SecurityManagement import noSecurityManager
 from common import *
+
+from Products.Archetypes.Storage import AttributeStorage, MetadataStorage
+from Products.CMFCore  import CMFCorePermissions
+from Products.Archetypes.Widget import TextAreaWidget
+from Products.Archetypes.utils import DisplayList
+from Products.Archetypes.interfaces.layer import ILayerContainer
 from Products.Archetypes.tests import ArcheSiteTestCase
+from Products.Archetypes.tests.test_baseschema import BaseSchemaTest
 from Products.ATContentTypes.Extensions.Install import install as installATCT
+
 
 class ATCTSiteTestCase(ArcheSiteTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
@@ -27,6 +38,39 @@ class ATCTSiteTestCase(ArcheSiteTestCase.ArcheSiteTestCase):
         self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
                         % (old.Description(), new.Description()))
         # XXX more
+
+class ATCTFieldTestCase(ArcheSiteTestCase.ArcheSiteTestCase, BaseSchemaTest):
+    """ ATContentTypes test including AT schema tests """
+    
+    def test_description(self):
+        dummy = self._dummy
+        field = dummy.getField('description')
+
+        self.failUnless(ILayerContainer.isImplementedBy(field))
+        self.failUnless(field.required == 0)
+        self.failUnless(field.default == '')
+        self.failUnless(field.searchable == 1)
+        vocab = field.vocabulary
+        self.failUnless(vocab == ())
+        self.failUnless(field.enforceVocabulary == 0)
+        self.failUnless(field.multiValued == 0)
+        self.failUnless(field.isMetadata == 0)
+        self.failUnless(field.accessor == 'Description')
+        self.failUnless(field.mutator == 'setDescription')
+        self.failUnless(field.read_permission == CMFCorePermissions.View)
+        self.failUnless(field.write_permission ==
+                        CMFCorePermissions.ModifyPortalContent)
+        #XXX self.failUnless(field.generateMode == 'mVc', field.generateMode)
+        self.failUnless(field.generateMode == 'veVc', field.generateMode)
+        self.failUnless(field.force == '')
+        self.failUnless(field.type == 'text')
+        self.failUnless(isinstance(field.storage, MetadataStorage))
+        self.failUnless(field.getLayerImpl('storage') == MetadataStorage())
+        self.failUnless(field.validators == {'handlers': (), 'strategy': 'and'})
+        self.failUnless(isinstance(field.widget, TextAreaWidget))
+        vocab = field.Vocabulary(dummy)
+        self.failUnless(isinstance(vocab, DisplayList))
+        self.failUnless(tuple(vocab) == ())
 
 def setupATCT(app, quiet=0):
     get_transaction().begin()

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFile.py,v 1.3 2004/05/15 00:51:34 tiran Exp $
+$Id: testATFile.py,v 1.4 2004/05/15 01:54:07 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -115,9 +115,12 @@ tests.append(TestSiteATFile)
 class TestATFileFields(ATCTFieldTestCase):
 
     def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
+        ATCTFieldTestCase.afterSetUp(self)
         self._dummy = ATFile.ATFile(oid='dummy')
         self._dummy.initializeArchetype()
+        # wrap dummy object in the acquisition context of the site
+        site = self.getPortal()
+        self._dummy = self._dummy.__of__(site)
         # more
 
     def test_fileField(self):
@@ -165,8 +168,7 @@ class TestATFileFields(ATCTFieldTestCase):
 
     def beforeTearDown(self):
         # more
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
+        ATCTFieldTestCase.beforeTearDown(self)
 
 tests.append(TestATFileFields)
 

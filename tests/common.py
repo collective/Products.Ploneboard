@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.3 2004/04/17 04:27:23 dtremea Exp $
+$Id: common.py,v 1.4 2004/05/15 01:54:07 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -64,7 +64,7 @@ ZopeTestCase.installProduct('ATContentTypes', 1)
 # ATContentTypes tests
 ###
 from ATCTTestCase import ATCTTestCase
-from ATCTTestCase import ATCTFieldTestCase
+from ATCTSiteTestCase import ATCTFieldTestCase
 from ATCTSiteTestCase import ATCTSiteTestCase
 
 ###
