@@ -1,8 +1,15 @@
-    Added a de (German) translation for ZMI
+1.0fork-beta2 - 2003-11-24
+
+    No longer register a persistent service to zope translation
+    service registrs. Instead wrap PTS with a non persistent class
+
+    Added a de (German) translation for PTS ZMI
 
     Reimplemented hook to register own negotiaton method into 
-    Negotiator which was stripped out in 1.0beta1
+    Negotiator which was stripped out in 1.0beta1 (now works
+    with PloneLanguageTool again)
 
+    Python 2.1 compatibility
 
 1.0beta1 - 2003-10-??
 
