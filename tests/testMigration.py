@@ -60,7 +60,47 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         
         self.assertEquals(self.portal.portal_memberdata.a.portal_type, 'Member')
         self.assertEquals(self.portal.portal_memberdata.b.portal_type, 'Member')
+
+
+    def testMigrationPlone2CMFMemberCustomMData(self):
+        mdtool = self.portal.portal_memberdata
+        mstool = self.portal.portal_membership
+
+        # check that we have what we should have before migration
+        self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
+        self._compare_members()
+
+        # add new property to MemberData tool
+        newprop = 'bogosity'
+        mdtool.manage_addProperty(newprop, '', 'string')
+
+        # set value for new property for usera
+        newvalue = 'BOGUS!'
+        a = mstool.getMemberById(usera['id'])
+        setattr(a, newprop, newvalue)
+
+        # verify that the property exists
+        self.assertEquals(newvalue, getattr(a, newprop, None))
+
+        # migrate Plone member stuff to CMFMember
+        self.portal.cmfmember_control.upgrade()
+
+
+        # check that we still have everything we had before
+        self.assertEquals(self.portal.portal_memberdata.__class__.portal_type, 'MemberDataContainer')
+        self._compare_members()
         
+        self.assertEquals(self.portal.portal_memberdata.a.portal_type, 'Member')
+        self.assertEquals(self.portal.portal_memberdata.b.portal_type, 'Member')
+
+        # get the membership tool again... it's changed..
+        mstool = self.portal.portal_membership
+
+        # see if the custom property made it
+        a = mstool.getMemberById(usera['id'])
+        self.assertEquals(newvalue, getattr(a, newprop, None))
+
+
     def _compare_members(self):
         membership_tool = self.portal.portal_membership
 

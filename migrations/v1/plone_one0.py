@@ -118,7 +118,7 @@ def pathToUser(portal, path):
         return u
     return u.__of__(folder)
 
-def replaceTools(portal, convert=1):
+def replaceTools(portal, custSchema, convert=1):
     out = []
     typestool=getToolByName(portal, 'portal_types')
     memberdata_tool = getToolByName(portal, 'portal_memberdata')
@@ -160,6 +160,8 @@ def replaceTools(portal, convert=1):
 
         memberdata_tool = portal.portal_memberdata
         memberdata_tool.setTitle('Member profiles')
+        if custSchema:
+            memberdata_tool.setMemberSchema(custSchema)
 
         mdct.global_allow = 0
 
@@ -231,11 +233,51 @@ def updateVersionNumbers(portal):
     memberdata_tool = portal.portal_memberdata    
     memberdata_tool.setVersion(CMFMember.VERSION)
 
-def onezero(portal):
-    """ Upgrade from development Member to Member 1.0"""
-
+def migrateCustomMemberData(portal):
     out = []
-    for msg in replaceTools(portal): out.append(msg)
+    defaultFields = ['email', 'portal_skin', 'listed', 'login_time',
+                      'last_login_time', 'fullname', 'error_log_update',
+                      'formtooltips', 'visible_ids', 'wysiwyg_editor']
+    mdTool = portal.portal_memberdata
+    actual_md_dict = mdTool.propdict()
+    customFields = [md for md in actual_md_dict.keys() if md not in defaultFields]
+    typesMap = {'boolean':('BooleanField', ''),
+                'date':('DateTimeField', ''),
+                'float':('FloatField', ''),
+                'int':('IntegerField', ''),
+                'lines':('LinesField', ''),
+                'long':('IntegerField', ''),
+                'string':('StringField', ''),
+                'ustring':('StringField', ''),
+                'text':('TextField', ''),
+                'tokens':('LinesField', 'StringWidget'),
+                'utext':('TextField',''),
+                'utokens':('LinesField', 'StringWidget'),
+                'ulines':('LinesField', ''),
+                'selection':('StringField', 'SelectionWidget'),
+                'multiple selection':('LinesField', 'MultiSelectionWidget'),
+               }
+    custSchema = ""
+    for custField in customFields:
+        fieldType, widgetType = typesMap[actual_md_dict[custField]['type']]
+        if not widgetType:
+            custSchema += "%s('%s',),\n" % (fieldType, custField)
+        else:
+            custSchema += "%s('%s', widget=%s(label='%s',),),\n" % (fieldType,
+                                                                    custField,
+                                                                    widgetType,
+                                                                    custField)
+        out.append('Migrated custom field: %s' % custField)
+    if customFields:
+        custSchema = "Schema((\n%s\n))" % custSchema
+    return out, custSchema
+
+def onezero(portal):
+    """ Upgrade from default Plone Member to CMFMember 1.0"""
+    out = []
+    msgs, custSchema = migrateCustomMemberData(portal)
+    for msg in msgs: out.append(msg)
+    for msg in replaceTools(portal, custSchema): out.append(msg)
     for msg in setupMembership(portal): out.append(msg)
     for msg in setupRegistration(portal): out.append(msg)
     for msg in insertSkinsIntoSkinPath(portal): out.append(msg)
