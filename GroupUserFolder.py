@@ -1316,7 +1316,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/07/12 09:14:53 $"[7:-2]
+        rev_date = "$Date: 2004/07/12 16:07:31 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1546,7 +1546,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         merged = {}
         object = getattr(object, 'aq_inner', object)
         while 1:
-            Log(LOG_DEBUG, "obj", object)
             if hasattr(object, '__ac_local_roles__'):
                 dict = object.__ac_local_roles__ or {}
                 if callable(dict): dict = dict()
