@@ -11,13 +11,6 @@ import Products.CMFMember
 from Products.CMFMember.MemberDataContainer import MemberDataContainer
 from Products.CMFMember.Member import Member as MemberData
 
-# for functional testing
-from mechanize import Browser
-from urllib import urlencode
-from urlparse import urlparse
-import pullparser
-import re
-
 default_user = CMFMemberTestCase.default_user
 _d = {'__ac_name': default_user,
       '__ac_password': 'secret'}
@@ -26,8 +19,6 @@ class TestMemberDataContainer(ZopeTestCase.Functional, CMFMemberTestCase.CMFMemb
 
     def afterSetUp(self):
         CMFMemberTestCase.CMFMemberTestCase.afterSetUp(self)
-        self.b = Browser()
-        self.memberdata_url = self.portal.portal_memberdata.absolute_url()
  
     def testAddNewMemberAndPruneOrphans(self):
         self.membership.addMember('orphanSoon', 'secret',['Member'],[])
