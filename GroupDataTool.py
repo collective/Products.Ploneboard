@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.7 2003/10/22 16:36:03 tesdal Exp $
+$Id: GroupDataTool.py,v 1.8 2003/12/17 14:43:03 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -169,9 +169,18 @@ class GroupData (SimpleItem):
 
     security.declarePublic('getGroupMembers')
     def getGroupMembers(self):
-        """ Returns a list of the portal_memberdata-ish members of the group."""
+        """
+        Returns a list of the portal_memberdata-ish members of the group.
+        """
         md = self.portal_memberdata
-        return map(md.wrapUser, self.getGroup().getGroupUsers())
+        gd = self.portal_groupdata
+        ret = []
+        for usr in self.getGroup().getGroupUsers():
+            if usr.isGroup():
+                ret.append(gd.wrapGroup(usr))
+            else:
+                ret.append(md.wrapUser(usr))
+        return ret
 
     # FIXME: What permission should this be?
     security.declarePublic('addMember')
