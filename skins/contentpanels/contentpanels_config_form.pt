@@ -23,52 +23,52 @@
      tal:define="page request/pageIndex | python:'0';
                  global pageIndex python:int(page);" >
 
-    <h1 tal:content="here/title_or_id">
-    Title or id
+    <h1 i18n:translate="heading_layout_form">
+      <span i18n:name="cpTitle" 
+            tal:content="here/title_or_id"> Title or id </span>
+      (Page <span i18n:name="pageIndex" tal:content="python:pageIndex+1"/>)
     </h1>
 
-    <div style="float: right"
+    <div class="documentActions"
          tal:define="lastPage python:pageIndex-1;
                      nextPage python:pageIndex+1">
+      <ul><li>
       <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?addPage=1&amp;pageIndex=$nextPage">
          <img title="new page" alt="new page"
+              i18n:attributes="title"
               tal:attributes="src string:$portal_url/newPage.gif"/>
-      </a>
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$lastPage"
-         tal:condition="python: lastPage!=-1">
+      </a></li>
+      <li tal:condition="python: lastPage!=-1">
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$lastPage">
          <img title="move left" alt="move left"
               i18n:attributes="title"
               tal:attributes="src string:$portal_url/left.gif;"/>
-      </a>
-      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$nextPage" 
-         tal:condition="python: nextPage!=len(here.getPageTitles())">
+      </a></li>
+      <li tal:condition="python: nextPage!=len(here.getPageTitles())">
+      <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePage=1&amp;pageIndex=$pageIndex&amp;toPage=$nextPage" >
         <img title="move right" alt="move right"
              i18n:attributes="title"
              tal:attributes="src string:$portal_url/right.gif;"/>
-      </a>
+      </a></li>
+      <li tal:condition="python:len(here.getPageTitles()) > 1">
       <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?deletePage=1&amp;pageIndex=$pageIndex">
          <img title="delete this page" alt="delete this page"
               i18n:attributes="title"
               tal:attributes="src string:$portal_url/delete.gif;"/>
-      </a>
+      </a></li>
     </div>
 
     <metal:block metal:use-macro="here/contentpanels_macros/macros/cpPages"/>
 
-    <div class="documentDescription"
-         tal:content="here/Description">
-    description
-    </div>
-
     <form method="post" action="contentpanels_config"
-          tal:attributes="action string:${here/absolute_url}/contentpanels_submit"
-          tal:define="page request/pageIndex | python:'0';
-                      global pageIndex python:int(page)">
+        tal:attributes="action string:${here/absolute_url}/contentpanels_submit"
+        tal:define="page request/pageIndex | python:'0';
+                    global pageIndex python:int(page)">
 
-       <div style="text-align: right;">
+       <div>
            <input type="hidden" name="pageIndex" value="#"
                        tal:attributes="value pageIndex"/>
-           <span i18n:translate="label_title">Title:</span>
+           <span i18n:translate="label_page_title">Page Title:</span>
            <input type="text" name="pageInfo.pageTitle:record" size="18" value=''
              tal:attributes="value python: here.getPageInfo(pageIndex, 'pageTitle')"/>
            <span i18n:translate="label_align">Align:</span>
@@ -88,7 +88,7 @@
                tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellPad')"/>
            <input type="hidden" name="pageInfo.pageCellSpace:record" size="4" value="#" maxlength="4"
                tal:attributes="value python: here.getPageInfo(pageIndex, 'pageCellSpace')"/>
-           <input type="submit" name="save" class="sameline" i18n:attributes="value"  value="Save"/>
+           <input type="submit" name="save" class="context" i18n:attributes="value"  value="Save"/>
        </div>
 
        <table width="" align="" cellspacing="" cellpadding="" 
@@ -108,9 +108,11 @@ columns
                           nextColumn python:repeat['column'].index+1;"
               tal:attributes="width python:test(column['columnWidth']=='0', '', column['columnWidth'])" >
 
-            <div class="cpTools" style="white-space: nowrap; text-align: right">
+            <div style="white-space: nowrap; text-align: right; background-color: lightgreen">
               <div style="float: left">
-                <span i18n:translate="Column Width">Width</span>
+                <span i18n:translate="column_x_width">Column width 
+                     #<span i18n:name="columnIndex" 
+                          tal:content="python:repeat['column'].index+1"/></span>
                 <input type="text" title="Column Width"
                        name="columnInfos.columnWidth:records" size="4" value=""
                        i18n:attributes="title"
@@ -158,7 +160,7 @@ columns
                                  nextPanel python:repeat['panel'].index+1;"
                      tal:condition="panel">
 
-                  <tr class="cpTools">
+                  <tr style="background-color: lightgreen">
                     <td  style="text-align: right"
                          tal:define="panelContent python:here.getPanelObject(panel['panelObjectPath']);
                                     panelContent python:test(panelContent is not None, panelContent, here)">

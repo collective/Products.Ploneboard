@@ -5,20 +5,21 @@
 
 <metal:block metal:define-macro="cpPages"
      tal:omit-tag=""
-     tal:define="page_titles here/getPageTitles">
+     tal:define="page_titles here/getPageTitles;">
 
-<ul class="cpPages" tal:condition="python: len(page_titles) > 1">
+<div tal:condition="python: len(page_titles) > 1"
+     style="text-align:right">
     <tal:pages repeat="pageTitle page_titles">
-    <li tal:define="selected python: pageIndex == repeat['pageTitle'].index;"
-        tal:attributes="class python:test(selected, 'selected', 'plain')">
-        <a class="" href=""
-           tal:attributes="href string:${here/absolute_url}/${template/id}?pageIndex=${repeat/pageTitle/index}"
-           i18n:attributes="accesskey">
-                <span tal:replace="pageTitle">dummy</span>
-        </a>
-    </li>
+
+    <a style="border-bottom: 1px solid;"
+       tal:condition="python:pageIndex != repeat['pageTitle'].index"
+       tal:attributes="href string:${here/absolute_url}/${template/id}?pageIndex=${repeat/pageTitle/index}"
+       tal:content="pageTitle"> page title </a>
+
+    <span tal:condition="python:pageIndex == repeat['pageTitle'].index"
+            tal:content="pageTitle"> page title </span>
     </tal:pages>
-</ul>
+</div>
 
 </metal:block>
 

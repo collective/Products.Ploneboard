@@ -86,7 +86,7 @@ VIEWLETS = [
 'string:here/viewlets_folder_recent/macros/separate_line_description',
 '', 'View', 'GL:folder',1 ),
 
-('full_recent_changes', 'Full Recent changes',
+('full_recent_changes', 'Folder changes',
 'string:here/viewlet_full_changes/macros/viewlet',
 '', 'View', 'GL:folder',1 ),
 
@@ -126,7 +126,7 @@ VIEWLETS = [
 'string:here/viewlet_image_folder/macros/portlet',
 '', 'View', 'GL:folder', 1),
 
-('news_list', 'News discussion',
+('news_list', 'Discussion list',
 'string:here/viewlet_news/macros/news_list',
 '', "View","GL:folder",1),
 

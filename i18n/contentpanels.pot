@@ -18,16 +18,6 @@ msgstr ""
 "Domain: contentpanels\n"
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span i18n:translate="Column Width">
-#.  Width
-#. </span>
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <input i18n:attributes="title" name="columnInfos.columnWidth:records" size="4" tal:attributes="value column/columnWidth" title="Column Width" type="text" value=""/>
-msgid "Column Width"
-msgstr "Width"
-
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <input class="sameline" i18n:attributes="value" name="save" type="submit" value="Save"/>
 msgid "Save"
 msgstr ""
@@ -54,22 +44,8 @@ msgstr "ContentPanels is designed to build a complex view out of a combination o
 msgid "label_align"
 msgstr "Align:"
 
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span i18n:translate="label_panel_space">
-#.  Padding:
-#. </span>
 msgid "label_panel_space"
 msgstr "Padding:"
-
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span i18n:translate="label_title">
-#.  Title:
-#. </span>
-msgid "label_title"
-msgstr "Title:"
-
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <span i18n:translate="label_width">
@@ -269,3 +245,19 @@ msgstr ""
 msgid "Discussion list"
 msgstr ""
 
+# page title
+msgid "heading_layout_form"
+msgstr "${cpTitle} (Page ${pageIndex})"
+
+msgid "new page"
+msgstr ""
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_page_title">
+#.  Title:
+#. </span>
+msgid "label_page_title"
+msgstr "Page Title:"
+
+msgid "column_x_width"
+msgstr "Column width #${columnIndex}"

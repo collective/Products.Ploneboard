@@ -17,16 +17,6 @@ msgstr ""
 "Domain: contentpanels\n"
 "X-Is-Fallback-For: zh-cn zh-hk zh-mo zh-sg\n"
 
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span i18n:translate="Column Width">
-#.  Width
-#. </span>
-#. <input i18n:attributes="title" name="columnInfos.columnWidth:records" size="4" tal:attributes="value column/columnWidth" title="Column Width" type="text" value=""/>
-msgid "Column Width"
-msgstr "列宽"
-
-
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <input class="sameline" i18n:attributes="value" name="save" type="submit" value="Save"/>
 msgid "Save"
@@ -61,15 +51,6 @@ msgstr "排列"
 #. </span>
 msgid "label_panel_space"
 msgstr "面板间距"
-
-
-#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
-#. <span i18n:translate="label_title">
-#.  Title:
-#. </span>
-msgid "label_title"
-msgstr "标题"
-
 
 #: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
 #. <span i18n:translate="label_width">
@@ -273,3 +254,20 @@ msgid "Discussion list"
 msgstr "新闻、页面讨论"
 
 
+# page title
+msgid "heading_layout_form"
+msgstr "${cpTitle} (第${pageIndex}页)"
+
+msgid "new page"
+msgstr "添加页面"
+
+
+#: ../CMFContentPanels/skins/contentpanels/contentpanels_config_form.pt
+#. <span i18n:translate="label_page_title">
+#.  Title:
+#. </span>
+msgid "label_page_title"
+msgstr "本页标题"
+
+msgid "column_x_width"
+msgstr "第${columnIndex}列宽度"

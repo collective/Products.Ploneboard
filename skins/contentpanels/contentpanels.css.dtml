@@ -1,72 +1,6 @@
 /* <dtml-with base_properties> (do not remove this :) */
 
-/* content style */
-
-.sameline {
-    background: #dee7ec url(linkOpaque.gif) 9px 1px no-repeat;
-    cursor: hand;
-    font-size: 80%;
-    margin-bottom: 0em;
-    padding: 1px 1px 1px 15px;
-}
-
-.cpTools {
-    background-color: &dtml-contentViewBackgroundColor;;
-}
-
 /*
-** end content style
-** ------------------------------
-** begin page tab
-*/
-
-.cpPages {
-    background-color: transparent;
-    border-collapse: collapse;
-    padding-left: 1em;
-    line-height: normal;
-    margin-top: 0em;
-    margin-left: 0;
-    /* white-space: nowrap; */
-    list-style: none;
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-contentViewBorderColor;;
-    border-bottom-width: 0px;
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;
-    text-align:right;
-}
-
-.cpPages li {
-    display: inline;
-}
-
-.cpPages li a {
-    background-color: transparent;
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-contentViewBorderColor;;
-    border-top: &dtml-contentViewBackgroundColor; &dtml-borderWidth;;
-    border-style: &dtml-borderStyle;;
-    color: &dtml-contentViewFontColor;;
-    height: auto;
-    margin-right: 0.5em;
-    padding: 0em 1em;
-    line-height: normal;
-    text-decoration: none;
-    text-transform: &dtml-textTransform;;
-    z-index: 1;
-}
-.cpPages .selected a {
-    background-color: &dtml-contentViewBackgroundColor;;
-    color: &dtml-contentViewFontColor;;
-}
-.cpPages li a:hover {
-    background-color: &dtml-contentViewBackgroundColor;;
-    color: &dtml-contentViewFontColor;;
-}
-
-/*
-** end page tab
-** ---------------------------------------- 
 ** begin viewlet skins
 */
 
@@ -137,4 +71,3 @@
 }
 
 /* </dtml-with>  */
-
