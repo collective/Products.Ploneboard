@@ -91,7 +91,7 @@
         <option value="ReferenceBrowserWidget"
                 tal:content="string:ReferenceBrowserWidget"
                 tal:attributes="selected python: widget_name=='ReferenceBrowserWidget'"
-		tal:condition="exists:here/referencebrowser_popup"/>
+        		tal:condition="exists:here/referencebrowser_popup"/>
 
         <tal:comment tal:replace="nothing">
             <option value="Image" 
