@@ -49,9 +49,12 @@
               </tal:authors><br />
             <em>Publisher:</em> <span tal:content="result/getManufacturer" /><br />
             <em>Media:</em> <span tal:content="result/getMedia" /><br />
-            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+context.getAmazonInitialId(result)+'/base_edit?asin='+result.getAsin()">
-              [Add this item]
-            </a>
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/base_edit?id='+here.getAmazonInitialId(result)"
+              >[Add]</a>
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/'"
+              >[View]</a>
+            <a tal:attributes="href python:context.getParentNode().absolute_url()+'/portal_factory/Amazon%20Item/'+result.getAsin()+'/search_amazon_similar'"
+              >[Similar]</a>
           </dd>
         </tal:results>
         </dl>

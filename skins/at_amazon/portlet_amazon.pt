@@ -7,32 +7,51 @@
 <!-- The amazon box -->
 
 <div metal:define-macro="portlet"
-     tal:define="items here/getAmazonItems">
-    <div class="portlet" id="portlet-amazon">
-        <h5 i18n:translate="box_amazon">Related Items</h5>
-        <div class="portletBody">
-            <tal:block tal:repeat="obj items">
-                <div tal:define="oddrow repeat/obj/odd"
-                     tal:attributes="class python:test(oddrow, 'portletContent even', 'portletContent odd')"
-                     align="center" >
-                    <a href=""
-                       tal:attributes="href obj/absolute_url;
-                                       title obj/Title">
-                        <img alt="" tal:attributes="src obj/getImageUrlMedium" /><br />
-                        <span tal:replace="obj/Title" > Title </span><br />
-                    </a>
-                    <span tal:content="python:', '.join(obj.getAuthors())" />
-                    <tal:stars tal:define="rating obj/getAvgCustomerRating"
-                               tal:condition="rating">
-                      <br />
-                      <img tal:define="img_name python:('%.1f' % (int(2.0*rating + 0.5)/2.0)).replace('.','-');"
-                           tal:attributes="alt string:${rating} stars;
-                                           src string:http://g-images.amazon.com/images/G/01/detail/stars-${img_name}.gif" />
-                    </tal:stars>
-                </div>
-            </tal:block>
-        </div>
+     tal:define="context_is_book python:getattr(here, 'portal_type', None) == 'Amazon Item';
+                 global depth python:0; 
+                 global depth request/depth|depth;
+                 show_similar python:context_is_book and depth < 5;">
+  <tal:book tal:condition="show_similar">
+     <div tal:define="global items here/searchSimilarItems;
+                      global depth python:depth+1;" />
+  </tal:book>
+  <tal:not_book tal:condition="not:show_similar">
+     <div tal:define="global items here/getAmazonItems;
+                      global depth python:0;" />
+  </tal:not_book>
+  <div class="portlet" id="portlet-amazon">
+    <div class="padding">
+      <h5 i18n:translate="box_books">Books</h5>
+      <div class="portletBody">
+          <tal:block tal:repeat="obj items">
+              <div tal:define="oddrow repeat/obj/odd"
+                   tal:attributes="class python:test(oddrow, 'portletContent even', 'portletContent odd')"
+                   align="center" >
+                  <a href=""
+                     tal:attributes="href python:test(show_similar, container.absolute_url()+'/portal_factory/Amazon%20Item/'+obj.getAsin()+'/?depth:int='+str(depth), obj.absolute_url());
+                                     title obj/Title">
+                      <img alt="" tal:attributes="src obj/getImageUrlSmall" /><br />
+                      <span tal:replace="obj/Title" > Title </span>
+                  </a>
+                  <tal:authors tal:define="authors python:', '.join(obj.getAuthors()).strip()" 
+                               tal:condition="authors">
+                    <br /><span tal:content="authors" />
+                  </tal:authors>
+                  <tal:stars tal:define="rating obj/getAvgCustomerRating"
+                             tal:condition="rating">
+                    <br /><img tal:define="img_name python:('%.1f' % (int(2.0*rating + 0.5)/2.0)).replace('.','-');"
+                         tal:attributes="alt string:${rating} stars;
+                                         src string:http://g-images.amazon.com/images/G/01/detail/stars-${img_name}.gif" />
+                  </tal:stars>
+                  <tal:add tal:condition="python: show_similar and here.portal_membership.checkPermission('Add portal content', container)">
+                    <a tal:attributes="href python:container.absolute_url()+'/portal_factory/Amazon%20Item/'+obj.getAsin()+'/base_edit?id='+here.getAmazonInitialId(obj)+'&depth='+str(depth)"
+                     >[Add]</a>
+                  </tal:add>
+              </div>
+          </tal:block>
+      </div>
     </div>
+  </div>
 </div>
 </body>
 </html>

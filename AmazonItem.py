@@ -1,7 +1,9 @@
 import amazon
 import time
 
+from ZODB.POSException import ConflictError
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
+from Acquisition import aq_base
 import DateTime
 from Products.Archetypes.public import *
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
@@ -10,6 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from config import PROJECT_NAME, ADD_CONTENT_PERMISSION
 from Widget import ReadOnlyFloatWidget, ReadOnlyIntegerWidget, ReadOnlyLinesWidget, ReadOnlyStringWidget
 from utils import toAscii
+import re
 
 """
       Asin - Amazon ID ("ASIN" number) of this item
@@ -233,6 +236,14 @@ content_schema = Schema((
                                             description=None,),
                ),
 
+    StringField('third_party_used_price',
+                accessor='getThirdPartyUsedPrice',
+#                index = (':schema'),
+                default='',
+                widget=ReadOnlyStringWidget(label='Third Party Used Price',
+                                            description=None,),
+               ),
+
     IntegerField('total_customer_reviews',
                  accessor='getTotalCustomerReviews',
                  default=0,
@@ -267,14 +278,54 @@ content_schema = Schema((
     ))
 
 
-# # generate the addAmazonItem method ourselves so we can do some extra initialization
-# security = ModuleSecurityInfo('Products.ATAmazon.AmazonItem')
-# security.declareProtected(ADD_CONTENT_PERMISSION, 'addAmazonItem')
-# def addAmazonItem(self, id, **kwargs):
-#     o = AmazonItem(id)
-#     self._setObject(id, o)
-#     o = getattr(self, id)
-#     o.initializeArchetype(**kwargs)
+_cache = {}
+MAX_CACHE_AGE = 3600
+MAX_CACHE_SIZE = 500
+
+def searchByASIN(asin, license_key):
+    global _cache
+    now = time.time()
+    (t, matches) = _cache.get(asin, (0, None))
+    if t:
+        if now-t < MAX_CACHE_AGE:
+            return matches
+        del _cache[asin]
+    try:
+        matches = amazon.searchByASIN(asin, license_key=license_key)
+    except ConflictError:
+        raise
+    except:
+        return []
+    if len(_cache) > MAX_CACHE_SIZE:
+        _cache = {}
+    _cache[asin] = (now, matches)
+    return matches
+
+
+# generate the addAmazonItem method ourselves so we can do some extra initialization
+security = ModuleSecurityInfo('Products.ATAmazon.AmazonItem')
+security.declareProtected(ADD_CONTENT_PERMISSION, 'addAmazonItem')
+def addAmazonItem(self, id, **kwargs):
+    o = AmazonItem(id)
+    self._setObject(id, o)
+    o = getattr(self, id)
+    o.initializeArchetype(**kwargs)
+    # do we have an ASIN in hand?
+    for c in id:
+        if c < '0' or c > '9':
+            return
+    # maybe an ASIN -- try grabbing the object
+    amazon_developer_key = getattr(getToolByName(self, 'portal_properties').site_properties, 'amazon_developer_key', None)
+    if not amazon_developer_key:
+        return
+    try:
+        matches = searchByASIN(id, license_key=amazon_developer_key)
+        if matches:
+            o._init_from_xml(matches[0])
+    except ConflictError:
+        raise
+    except:
+        return []
 
 
 class AmazonItem(BaseContent):
@@ -291,6 +342,7 @@ class AmazonItem(BaseContent):
     amazon_url = None
     avg_customer_rating = None
     last_updated = None
+    _similar_items = []
 
     actions = ({ 'id': 'view',
                  'name': 'View',
@@ -299,20 +351,26 @@ class AmazonItem(BaseContent):
                  'category': 'object',
                },
                { 'id': 'amazon_search',
-                 'name': 'Amazon Search',
+                 'name': 'Search Amazon',
                  'action': 'string:${object_url}/search_amazon',
-                 'permissions': (CMFCorePermissions.View,),
+                 'permissions': (CMFCorePermissions.ModifyPortalContent,),
+                 'category': 'object',
+               },
+               { 'id': 'amazon_similar',
+                 'name': 'Similar Items',
+                 'action': 'string:${object_url}/search_amazon_similar',
+                 'permissions': (CMFCorePermissions.ModifyPortalContent,),
                  'category': 'object',
                },
                { 'id': 'details',
                  'name': 'Details',
                  'action': 'string:${object_url}/base_view',
-                 'permissions': (CMFCorePermissions.View,),
+                 'permissions': (CMFCorePermissions.ModifyPortalContent,),
                  'category': 'object',
                },
               )
               
-    immediate_view = 'search_amazon'
+    # immediate_view = 'search_amazon'
 
     def getAmazonDeveloperKey(self):
         amazon_developer_key = getattr(getToolByName(self, 'portal_properties').site_properties, 'amazon_developer_key', None)
@@ -325,7 +383,7 @@ class AmazonItem(BaseContent):
             raise ValueError, 'Set your Amazon associate ID in portal_properties/site_properties/amazon_associate_id'
         return amazon_associate_id.strip()
     
-    def _init_from_xml(self, item):
+    def _init_from_xml(self, item, get_similar=1):
         """Initialize an AmazonItem from the xml returned by a search"""
         # Note - I am converting from unicode to ascii all over to keep the
         # catalog from choking.  Ideally stuff should be converted to UTF-8,
@@ -348,6 +406,7 @@ class AmazonItem(BaseContent):
         sales_rank = getattr(item, 'SalesRank', 999999999)
         self.setSales_rank(getattr(item, 'SalesRank', 999999999))
         self.setThird_party_new_price(toAscii(getattr(item, 'ThirdPartyNewPrice', '')))
+        self.setThird_party_used_price(toAscii(getattr(item, 'UsedPrice', '')))
         self.setAmazon_price(toAscii(getattr(item, 'OurPrice', '')))
         self.setAmazon_url(toAscii(getattr(item, 'URL', '')))
         
@@ -405,7 +464,27 @@ class AmazonItem(BaseContent):
             if type(sp) != type([]):
                 sp = [sp]
         self.setSimilar_products(sp)
-            
+
+        items = []
+        if get_similar:
+            n = 0
+            for asin in sp:
+                try:
+                    matches = searchByASIN(asin, license_key=self.getAmazonDeveloperKey())
+                    if matches:
+                        item = AmazonItem(str(n)).__of__(self.getParentNode())
+                        item.initializeArchetype()
+                        item._init_from_xml(matches[0], get_similar=0)
+                        items.append(item)
+                        n += 1
+                except ConflictError:
+                    raise
+                except:
+                    pass
+    #        items.sort(lambda x,y: -cmp(x.getAvgCustomerRating(), y.getAvgCustomerRating()))
+            items.sort(lambda x,y: cmp(x.getSalesRank(), y.getSalesRank()))
+        self._similar_items = [aq_base(item) for item in items]
+        
         self.reindexObject()
         
     def update(self):
@@ -415,8 +494,10 @@ class AmazonItem(BaseContent):
             return
         matches = None
         try:
-            matches = amazon.searchByASIN(self.getAsin(), license_key=amazon_developer_key)
-        except IOError:
+            matches = searchByASIN(self.getAsin(), license_key=amazon_developer_key)
+        except ConflictError:
+            raise
+        except:
             pass
         if not matches:
             return
@@ -511,6 +592,10 @@ class AmazonItem(BaseContent):
         self.updateIfOld(3600)
         return self.third_party_new_price
 
+    def getThirdPartyUsedPrice(self):
+        self.updateIfOld(3600)
+        return self.third_party_used_price
+
     def getAmazonPrice(self):
         self.updateIfOld(3600)
         return self.amazon_price
@@ -519,19 +604,31 @@ class AmazonItem(BaseContent):
         self.updateIfOld(24*3600)
         return self.amazon_url
     
-    def powerSearch(self, author='', title='', subject='', isbn='', publisher='', search_type='heavy'):
+    def searchSimilarItems(self):
+        self.updateIfOld(24*3600)
+        return [item.__of__(self.getParentNode()) for item in self._similar_items]
+    
+    def powerSearch(self, author='', title='', keywords='', subject='', isbn='', publisher='', search_type='heavy'):
         s = ''
         if author:
             s += 'author: ' + author.strip()
         if title:
             s += 'title: ' + title.strip()
+        if keywords:
+            s += 'keywords: ' + keywords.strip()
         if subject:
             s += 'subject: ' + subject.strip()
         if isbn:
             s += 'isbn: ' + isbn.strip()
         if publisher:
             s += 'publisher: ' + publisher.strip()
-        matches = amazon.searchByPower(s, type=search_type, license_key=self.getAmazonDeveloperKey())
+        try:
+            matches = amazon.searchByPower(s, type=search_type, license_key=self.getAmazonDeveloperKey())
+        except amazon.AmazonError, e:
+            if str(e).startswith('There are no exact matches for the search'):
+                matches = []
+            else:
+                raise
         items = []
         n = 0
         for m in matches:

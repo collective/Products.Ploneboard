@@ -5,7 +5,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=n=5, item_folder_id='.books'
+##parameters=n=5, item_folder_id=None
 
 # This script is fairly expensive to call, so make sure the results are
 # cached.  If you display pricing information in the portlet, you should
@@ -36,15 +36,18 @@ def getAmazonItemsFromCatalog(items, asins, n, path):
             if len(items) == n:
                 return
 
+if item_folder_id is None:
+    item_folder_id = context.portal_properties.site_properties.amazon_item_folder_id
+
 items = []
 asins = {}
 if n == 0:
     return items
-# check for a folder with id book_folder_id
+# check for a folder with id item_folder_id
 ids = container.objectIds()
 if item_folder_id in ids:
     folder = getattr(container, item_folder_id)
-    for c in folder.contentValues(filter='Amazon Item', sort_on='sales_rank'):
+    for c in folder.contentValues(filter={'meta_type':'Amazon Item'}, sort_on='sales_rank'):
         asin = c.getAsin()
         if not asins.has_key(asin):
             items.append(c)

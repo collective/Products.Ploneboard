@@ -50,6 +50,22 @@
                        />
             </div>
             <div class="field">
+                <label for="keywords" i18n:translate="label_search_keywords">Keywords</label>
+
+                <div class="formHelp" i18n:translate="help_search_keywords">
+                Enter the book's keywords here.
+                </div>
+
+                <input type="text"
+                       id="keywords"
+                       name="keywords"
+                       size="50"
+                       tabindex=""
+                       tal:attributes="value request/keywords|nothing;
+                                       tabindex tabindex/next;"
+                       />
+            </div>
+            <div class="field">
                 <label for="subject" i18n:translate="label_search_subject">Subject</label>
 
                 <div class="formHelp" i18n:translate="help_search_subject">

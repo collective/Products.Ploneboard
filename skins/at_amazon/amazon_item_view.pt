@@ -46,19 +46,31 @@
         </p>
         <p tal:define="listPrice here/getListPrice;
                        amazonPrice here/getAmazonPrice;
+                       usedPrice here/getThirdPartyUsedPrice;
                        lp python:here.priceToFloat(listPrice);
                        ap python:here.priceToFloat(amazonPrice);
                        savings python:ap < lp;">
           <em>Price:</em> 
           <strike tal:condition="savings" tal:content="listPrice">List price</strike> 
           <font color="red"><b tal:content="amazonPrice">Price</b></font>
-          <span tal:condition="savings">&nbsp;&nbsp;&nbsp;&nbsp;<em>You save</em> $<span tal:content="python:'%.2f' % float(lp-ap)" /> (<span tal:content="python:'%d' % (100.0*float(lp-ap)/float(lp)+0.5)" />%)</span>
+          <span tal:condition="savings">&nbsp;&nbsp;&nbsp;&nbsp;<em>You save</em> 
+              $<span tal:content="python:'%.2f' % float(lp-ap)" /> (<span tal:content="python:'%d' % (100.0*float(lp-ap)/float(lp)+0.5)" />%)</span>
+          <tal:used tal:condition="python:usedPrice and here.priceToFloat(usedPrice) < ap">
+            <br />
+            <em>Used Price:</em> <font color="red"><b tal:content="usedPrice" /></font>&nbsp;&nbsp;&nbsp;&nbsp;
+              <em>You save</em> 
+              $<span tal:define="global up python:here.priceToFloat(usedPrice)" tal:content="python:'%.2f' % float(lp-up)" /> (<span tal:content="python:'%d' % (100.0*float(lp-up)/float(lp)+0.5)" />%)
+          </tal:used>
         </p>
         <p>
           <em>Availability:</em> 
           <span tal:content="here/getAvailability">Availability</span>
         </p>
 
+        <tal:add tal:condition="python:here.portal_membership.checkPermission('Add portal content', container) and here.portal_factory.isTemporary(here)">
+          <a tal:attributes="href python:container.absolute_url()+'/portal_factory/Amazon%20Item/'+here.getAsin()+'/base_edit?id='+here.getAmazonInitialId(here)"
+            >[Add this item]</a>
+        </tal:add>
         <p><a tal:attributes="href amazon_url">View details at Amazon.com</a></p>
 
         <div class="documentDescription"

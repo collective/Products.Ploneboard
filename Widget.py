@@ -1,3 +1,4 @@
+from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import DecimalWidget, IntegerWidget, LinesWidget, StringWidget
 
 class ReadOnlyFloatWidget(DecimalWidget):
@@ -5,24 +6,28 @@ class ReadOnlyFloatWidget(DecimalWidget):
     _properties.update({
         'macro' : "read_only_float_widget",
         })
+    security = ClassSecurityInfo()
 
 class ReadOnlyIntegerWidget(IntegerWidget):
     _properties = IntegerWidget._properties.copy()
     _properties.update({
         'macro' : "read_only_integer_widget",
         })
+    security = ClassSecurityInfo()
 
 class ReadOnlyLinesWidget(LinesWidget):
     _properties = LinesWidget._properties.copy()
     _properties.update({
         'macro' : "read_only_lines_widget",
         })
+    security = ClassSecurityInfo()
 
 class ReadOnlyStringWidget(StringWidget):
     _properties = StringWidget._properties.copy()
     _properties.update({
         'macro' : 'read_only_string_widget',
         })
+    security = ClassSecurityInfo()
 
 
 from Products.Archetypes.Registry import registerWidget
