@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.31 2004/09/13 15:59:22 tiran Exp $
+$Id: ATDocument.py,v 1.32 2004/09/27 14:55:32 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,8 +38,9 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from ComputedAttribute import ComputedAttribute
 
-from Products.ATContentTypes.types.ATContentType import ATCTContent, \
-    updateActions, translateMimetypeAlias
+from Products.ATContentTypes.types.ATContentType import ATCTContent
+from Products.ATContentTypes.types.ATContentType import updateActions
+from Products.ATContentTypes.types.ATContentType import translateMimetypeAlias
 from Products.ATContentTypes.HistoryAware import HistoryAwareMixin
 from Products.ATContentTypes.interfaces.IATDocument import IATDocument
 from Products.ATContentTypes.types.schemata import ATDocumentSchema
@@ -104,6 +105,16 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             value = tidyOutput
 
         field.set(self, value, **kwargs) # set is ok
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setFormat')
+    def setFormat(self, value, **kwargs):
+        """format mutator
+        
+        The default mutator is overwritten add a conversion from stupid CMF
+        content type (e.g. structured-text) to real mime types used by MTR.
+        """
+        value = translateMimetypeAlias(value)
+        ATCTContent.setFormat(self, value, **kwargs)
 
     # XXX test me
     text_format = ComputedAttribute(ATCTContent.getContentType, 1)

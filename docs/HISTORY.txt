@@ -78,6 +78,11 @@
  * Use a copy of the ATContentTypeSchema for every schema to make customizations
    easier. Fixed [ 1027283 ] Schema editing very hard.
    [tiran]
+
+ * Fixed [ 1035380 ] Problems with createMemberArea and ATCT by adding a
+   setFormat() method to ATDocument which is using the translate method to
+   map between stupid CMF content types and real mime types.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 
