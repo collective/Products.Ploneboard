@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.4 2004/09/27 18:16:37 spamsch Exp $
+$Id: config.py,v 1.5 2004/09/29 14:57:19 spamsch Exp $
 """
 
 SKINS_DIR = 'skins'
@@ -26,4 +26,4 @@ ManageSchemaPermission = 'ATSE: Manage schema'
 # ATTENTION: Setting this property to True can
 # lead to a complete data loss!!
 # Never activate it on production systems
-ALWAYS_SYNC_SCHEMA_FROM_DISC = False
+ALWAYS_SYNC_SCHEMA_FROM_DISC = True

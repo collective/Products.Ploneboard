@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.13 2004/09/27 18:16:37 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.14 2004/09/29 14:57:19 spamsch Exp $
 """
 
 from Globals import InitializeClass
@@ -62,7 +62,7 @@ class ParentManagedSchema:
 
             # looking for changes in the schema hold by the object
             self._v_schema = self._lookupChanges(schema_id)
-            self.initializeArchetype()
+            #self.initializeArchetype()
 
             for field in self._v_schema.fields():
 
@@ -108,7 +108,7 @@ class ParentManagedSchema:
             object_schema = self.schema
 
             if create_signature(atse_schema) != create_signature(object_schema):
-                LOG('ATSchemaEditorNG', INFO, 'Schema %s changed - refreshing' % atse_schema_id)
+                LOG('ATSchemaEditorNG', INFO, 'Schema <%s> changed - refreshing from disk' % atse_schema_id)
                 self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
 
         return self.aq_parent.atse_getSchemaById(atse_schema_id)

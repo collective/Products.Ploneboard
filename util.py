@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: util.py,v 1.5 2004/09/27 17:43:49 ajung Exp $
+$Id: util.py,v 1.6 2004/09/29 14:57:19 spamsch Exp $
 """
 
 import urllib
@@ -32,7 +32,6 @@ def redirect(RESPONSE, dest, msg=None,**kw):
 def create_signature(schema):
     """ Replacement for buggy signature impl in AT Schema """
 
-    disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
     s = 'Schema: {'
     for f in schema.fields():
 
@@ -40,15 +39,24 @@ def create_signature(schema):
              (f.__name__, inspect.getmodule(f.__class__).__name__, f.__class__.__name__,
               inspect.getmodule(f.widget.__class__).__name__, f.widget.__class__.__name__)
 
-        sorted_keys = f._properties.keys()
-        sorted_keys.sort()
-            
-        for k in sorted_keys:
-            if (type(k) not in disallowed):
-                if (type(f._properties[k]) not in disallowed):
-                    s = s + '%s:%s,' % (k, f._properties[k])
-                    
-        s = s + '}'
+        s += _property_extraction(f._properties)
+        s += _property_extraction(f.widget.__dict__)
+        s += '}'
 
     s = s + '}'
     return md5(s).digest()
+
+def _property_extraction(properties):
+
+    s = ''
+    disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
+
+    sorted_keys = properties.keys()
+    sorted_keys.sort()
+            
+    for k in sorted_keys:
+        if (type(k) not in disallowed):
+            if (type(properties[k]) not in disallowed):
+                s = s + '%s:%s,' % (k, properties[k])
+
+    return s
