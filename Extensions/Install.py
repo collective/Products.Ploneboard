@@ -22,6 +22,7 @@ def setupNavigation(p):
     portal_navigation = getToolByName(p, 'portal_navigation')
 
     portal_form.setValidators('mpoll_slot' , ['mpoll_validate_vote'])
+    portal_form.setValidators('mpoll_poll' , ['mpoll_validate_vote'])
     
     # set up navigation properties
     # Ploneboard
@@ -46,10 +47,14 @@ def setupNavigation(p):
                                        'script:mpoll_vote')
 
     portal_navigation.addTransitionFor('default',
-                                       'mpoll_slot',
+                                       'mpoll_poll',
                                        'success',
-                                       'script:mpoll_poll')
+                                       'script:mpoll_vote')
 
+    portal_navigation.addTransitionFor('default',
+                                       'mpoll_poll',
+                                       'failure',
+                                       'action:view')
 
 def install(self):
     out = StringIO()

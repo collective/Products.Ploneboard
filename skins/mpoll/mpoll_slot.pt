@@ -11,8 +11,7 @@
 <div metal:define-macro="voteBox"
      tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')[:1]">
 
-    <div class="box" tal:condition="results" tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                                 tabindex python:Iterator();">
+    <div tal:condition="results" class="box">
     
         <h5 i18n:translate="box_poll">Poll</h5>
 
@@ -27,16 +26,14 @@
                     <form method="post"
                           tal:attributes="action string:${obj/absolute_url}/portal_form/mpoll_slot">
                           <div style="padding-bottom: 10px;" tal:repeat="item obj/getAnswers">
-                              <input tal:attributes="tabindex tabindex/next;
-                                                     value repeat/item/number;
+                              <input tal:attributes="value repeat/item/number;
                                                      checked python:test(repeat['item'].start, 'checked', '')"
                                      type="radio"
                                      name="answer"
                                      class="noborder" />&nbsp;<span tal:content="item"></span>
                           </div>
 
-                          <input tal:attributes="tabindex tabindex/next"
-                                 type="submit"
+                          <input type="submit"
                                  class="context"
                                  i18n:attributes="value"
                                  value="Vote" />
