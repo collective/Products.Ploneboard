@@ -18,14 +18,15 @@
 #
 """AT News Item interface
 
-$Id: IATNewsItem.py,v 1.2 2004/04/04 21:45:04 tiran Exp $
+$Id: IATNewsItem.py,v 1.3 2004/04/09 22:02:20 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from interface import Interface, Attribute
 from IATContentType import IATContentType
+from IATDocument import IATDocument
 
-class IATNewsItem(IATContentType):
+class IATNewsItem(IATDocument):
     """AT News Item marker interface
     """

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.12 2004/04/04 21:48:32 tiran Exp $
+$Id: ATDocument.py,v 1.13 2004/04/09 22:02:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -50,7 +50,8 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     immediate_view = 'document_view'
     suppl_views    = ()
     newTypeFor     = 'Document'
-    TypeDescription= ''
+    typeDescription= 'Fill in the details of this document.'
+    typeDescMsgId  = 'description_edit_document'
     assocMimetypes = ('application/pdf', 'application/xhtml+xml',
                       'application/msword', 'message/rfc822', 'text/*',
                      )

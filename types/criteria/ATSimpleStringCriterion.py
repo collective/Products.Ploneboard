@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATSimpleStringCriterion.py,v 1.3 2004/03/29 07:21:01 tiran Exp $
+$Id: ATSimpleStringCriterion.py,v 1.4 2004/04/09 22:02:21 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -42,6 +42,8 @@ class ATSimpleStringCriterion(ATBaseCriterion):
     schema         = ATSimpleStringCriterionSchema
     meta_type      = 'ATSimpleStringCriterion'
     archetype_name = 'AT Simple String Criterion'
+    typeDescription= ''
+    typeDescMsgId  = ''
     
     def getCriteriaItems(self):
         result = []

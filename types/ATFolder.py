@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFolder.py,v 1.6 2004/03/29 07:21:00 tiran Exp $
+$Id: ATFolder.py,v 1.7 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,11 +32,12 @@ from OFS.ObjectManager import REPLACEABLE
 from ComputedAttribute import ComputedAttribute
 
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.types.ATContentType import ATCTOrderedFolder, ATCTBTreeFolder, updateActions
 from Products.ATContentTypes.interfaces.IATFolder import IATFolder, IATBTreeFolder
 from Products.ATContentTypes.types.schemata import ATFolderSchema, ATBTreeFolderSchema
 
 
-class ATFolderBase(OrderedBaseFolder):
+class ATFolderBase(ATCTOrderedFolder):
     """A simple folderish archetype"""
 
     schema         =  ATFolderSchema
@@ -46,17 +47,19 @@ class ATFolderBase(OrderedBaseFolder):
     archetype_name = 'AT Folder'
     suppl_views    = ()
     newTypeFor     = 'Folder'
-    TypeDescription= ''
+    typeDescription= ''
+    typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
 
     immediate_view = 'folder_listing'
 
-    __implements__ = OrderedBaseFolder.__implements__, IATFolder
+    __implements__ = ATCTOrderedFolder.__implements__, IATFolder
 
     security       = ClassSecurityInfo()
 
-    actions = ({
+    actions = updateActions(ATCTOrderedFolder,
+       ({
        'id'          : 'folderContents',
        'name'        : 'Contents',
        'action'      : 'string:${folder_url}/folder_contents',
@@ -69,19 +72,13 @@ class ATFolderBase(OrderedBaseFolder):
        'action'      : 'string:${folder_url}/',
        'permissions' : (CMFCorePermissions.View,)
         },
-
-       {
-       'id'          : 'edit',
-       'name'        : 'Edit',
-       'action'      : 'string:${folder_url}/atct_edit',
-       'permissions' : (CMFCorePermissions.ModifyPortalContent,),
-        },
        {
        'id'          : 'local_roles',
        'name'        : 'Local Roles',
        'action'      : 'string:${folder_url}/folder_localrole_form',
        'permissions' : (CMFCorePermissions.ManageProperties,),
         },
+       )
        )
 
 
@@ -126,7 +123,7 @@ registerType(ATFolder, PROJECTNAME)
 
 from Products.Archetypes.public import BaseBTreeFolder
     
-class ATBTreeFolder(BaseBTreeFolder):
+class ATBTreeFolder(ATCTBTreeFolder):
     """A simple btree folderish archetype"""
     schema         =  ATFolderSchema
 
@@ -142,7 +139,7 @@ class ATBTreeFolder(BaseBTreeFolder):
     assocFileExt   = ()
 
 
-    __implements__ = BaseBTreeFolder.__implements__, IATBTreeFolder
+    __implements__ = ATCTBTreeFolder.__implements__, IATBTreeFolder
 
     security       = ClassSecurityInfo()
 

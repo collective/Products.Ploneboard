@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.9 2004/04/05 14:56:56 tiran Exp $
+$Id: ATFile.py,v 1.10 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -49,7 +49,9 @@ class ATFile(ATCTContent):
     immediate_view = 'file_view'
     suppl_views    = ()
     newTypeFor     = 'File'
-    TypeDescription= ''
+    typeDescription= "Add the relevant details of the file to be added in the form below,\n" \
+                     "select the file with the 'Browse' button, and press 'Save'."
+    typeDescMsgId  = 'description_edit_file'
     assocMimetypes = ('application/*', 'audio/*', 'video/*', )
     assocFileExt   = ()
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
+$Id: ATLink.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -45,7 +45,9 @@ class ATLink(ATCTContent):
     immediate_view = 'link_view'
     suppl_views    = ()
     newTypeFor     = 'Link'
-    TypeDescription= ''
+    typeDescription= "A link is a pointer to a location on the internet or intranet.\n" \
+                     "Enter the relevant details below, and press 'Save'."
+    typeDescMsgId  = 'description_edit_link_item'
     assocMimetypes = ()
     assocFileExt   = ('link', 'url', )
 

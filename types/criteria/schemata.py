@@ -16,7 +16,7 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.1 2004/03/29 07:23:04 tiran Exp $
+$Id: schemata.py,v 1.2 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -114,7 +114,7 @@ ATDateCriteriaSchema = ATBaseCriterionSchema + Schema((
                 vocabulary=DateOptions,
                 widget=SelectionWidget(
                                 label="Value name",
-                                #label_msgid="label_criterion_field_name",
+                                label_msgid="label_date",
                                 #description="Should not contain spaces, underscores or mixed case. "\
                                 #            "Short Name is part of the item's web address.",
                                 #description_msgid="help_criterion_field_name",

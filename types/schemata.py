@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.9 2004/04/02 21:30:26 tiran Exp $
+$Id: schemata.py,v 1.10 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -70,7 +70,7 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
 ###
 ATDocumentSchema = ATContentTypeSchema + Schema((
     TextField('text',
-              required = 0,
+              required = 1,
               searchable = 1,
               primary = 1,
               validators = ('isTidyHtmlWithCleanup',),
@@ -81,6 +81,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
                                          'text/restructured',
                                          'text/html',
                                          'text/plain',
+                                         'text/plain-pre',
                                          'text/python-source',),
               widget = RichWidget(description = "The body text of the document.",
                                   description_msgid = "help_body_text",
@@ -104,6 +105,8 @@ ATEventSchema = ATContentTypeSchema + Schema((
                                       i18n_domain = "plone")),
     
     LinesField('eventType',
+               required = 1,
+               searchable = 1,
                vocabulary = 'getEventTypes',
                widget = MultiSelectionWidget(size = 6,
                                              description = "Select the type of event. Multiple event types possible.",
@@ -114,6 +117,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
 
     StringField('eventUrl',
                 required=0,
+                searchable = 1,
                 accessor='event_url',
                 validators = ('isEmptyUrl',),
                 widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
@@ -144,6 +148,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                                           i18n_domain = "plone")),
     StringField('contactName',
                 required=0,
+                searchable = 1,
                 accessor='contact_name',
                 widget = StringWidget(description = "Enter a contact person or organization for the event.",
                                       description_msgid = "help_contact_name",
@@ -152,6 +157,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                                       i18n_domain = "plone")),
     StringField('contactEmail',
                 required=0,
+                searchable = 1,
                 accessor='contact_email',
                 validators = ('isEmptyEmail',),
                 widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
@@ -161,6 +167,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                                       i18n_domain = "plone")),
     StringField('contactPhone',
                 required=0,
+                searchable = 1,
                 accessor='contact_phone',
                 validators = ('isEmptyInternationalPhoneNumber',),
                 widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
@@ -176,6 +183,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
 ATFavoriteSchema = ATContentTypeSchema + Schema((
     StringField('remoteUrl',
                 required = 1,
+                searchable = 1,
                 accessor='_getRemoteUrl',
                 primary=1,
                 validators = (),
@@ -230,6 +238,7 @@ ATImageSchema = ATContentTypeSchema + Schema((
 ATLinkSchema = ATContentTypeSchema + Schema((
     StringField('remoteUrl',
                 required = 1,
+                searchable = 1,
                 primary=1,
                 validators = ('isURL',),
                 widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
@@ -244,21 +253,24 @@ ATLinkSchema = ATContentTypeSchema + Schema((
 ###
 ATNewsItemSchema = ATContentTypeSchema + Schema((
     TextField('text',
-              required = 0,
+              required = 1,
               searchable = 1,
               primary = 1,
-              default_content_type = 'text/structured',
+              validators = ('isTidyHtmlWithCleanup',),
+              #validators = ('isTidyHtml',),
+              default_content_type = 'text/restructured',
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',
                                          'text/restructured',
                                          'text/html',
-                                         'text/plain'),
+                                         'text/plain',
+                                         ),
               widget = RichWidget(description = "The body text of the document.",
-                                    description_msgid = "help_body_text",
-                                    label = "Body text",
-                                    label_msgid = "label_body_text",
-                                    rows = 25,
-                                    i18n_domain = "plone")),
+                                  description_msgid = "help_body_text",
+                                  label = "Body text",
+                                  label_msgid = "label_body_text",
+                                  rows = 25,
+                                  i18n_domain = "plone")),
     #StringField('newstype',
     #            vocabulary=NEWS_TYPES,
     #           widget=SelectionWidget(label='Type of News',
@@ -267,7 +279,8 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
     #                                   description_msgid='help_newstype',
     #                                   i18n_domain='plone'),
     #            ),
-    ), marshall=RFC822Marshaller())
+    ), marshall=RFC822Marshaller()
+    )
 
 ###
 # AT Content Type Topic

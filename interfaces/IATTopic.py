@@ -18,7 +18,7 @@
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.3 2004/04/04 21:45:04 tiran Exp $
+$Id: IATTopic.py,v 1.4 2004/04/09 22:02:20 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -79,6 +79,9 @@ class IATTopic(IATContentType):
 class IATTopicCriterion(Interface):
     """AT Topic Criterion interface
     """
+
+    typeDescription = Attribute('''A short description used for the edit screen''')
+    typeDescMsgId = Attribute('''The i18n msgid of the type description''')
 
     def widget(field_name, mode="view", field=None, **kwargs):
         """redefine widget() to allow seperate field_names from field

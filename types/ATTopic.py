@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.6 2004/04/04 21:48:32 tiran Exp $
+$Id: ATTopic.py,v 1.7 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -49,10 +49,13 @@ class ATTopic(ATCTFolder):
     immediate_view = 'topic_view'
     suppl_views    = ()
     newTypeFor     = 'Topic'
-    TypeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
+    typeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
                      'criteria you specify. Topics may also contain sub-topics.'
+    typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
+    
+    immediate_view = 'topic_view'
 
     filter_content_types  = 1
     allowed_content_types = 'ATTopic'
@@ -61,16 +64,23 @@ class ATTopic(ATCTFolder):
 
     security       = ClassSecurityInfo()
     actions = updateActions(ATCTFolder,
-        ({
+        (
+        {
+        'id'          : 'view',
+        'name'        : 'View',
+        'action'      : 'string:${folder_url}/topic_view',
+        'permissions' : (CMFCorePermissions.View,)
+        },
+        {
         'id'          : 'criteria', 
         'name'        : 'Criteria',
-        'action'      : 'string:${object_url}/criterion_edit_form',
+        'action'      : 'string:${folder_url}/criterion_edit_form',
         'permissions' : (ChangeTopics,)
          },
         {
         'id'          : 'subtopics',
         'name'        : 'Subtopics',
-        'action'      : 'string:${object_url}/topic_subtopics_form',
+        'action'      : 'string:${folder_url}/topic_subtopics_form',
         'permissions' : (ChangeTopics,)
         },
        )

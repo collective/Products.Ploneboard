@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.6 2004/04/05 14:56:56 tiran Exp $
+$Id: ATEvent.py,v 1.7 2004/04/09 22:02:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -47,7 +47,8 @@ class ATEvent(ATCTContent):
     immediate_view = 'event_view'
     suppl_views    = ()
     newTypeFor     = 'Event'
-    TypeDescription= ''
+    typeDescription= 'Fill in the details of the event you want to add.'
+    typeDescMsgId  = 'description_edit_event'
     assocMimetypes = ()
     assocFileExt   = ('event', )
 
@@ -79,7 +80,7 @@ class ATEvent(ATCTContent):
         if type(value) is StringType:
             v = (value, )
         elif value:
-            v = v[0]
+            v = value[0]
         else:
             v = ()
 

@@ -18,7 +18,7 @@
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.5 2004/04/04 21:45:04 tiran Exp $
+$Id: IATContentType.py,v 1.6 2004/04/09 22:02:19 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -33,7 +33,8 @@ class IATContentType(Interface):
 
     newTypeFor = Attribute('''Used to get the meta type of the original implementation''')
 
-    TypeDescription = Attribute('''A short description used for the edit screen''')
+    typeDescription = Attribute('''A short description used for the edit screen''')
+    typeDescMsgId = Attribute('''The i18n msgid of the type description''')
 
     assocMimetypes = Attribute('''A tuple of mimetypes that are associated
                                   with this type. Format: ('bar/foo', 'foo/*',)

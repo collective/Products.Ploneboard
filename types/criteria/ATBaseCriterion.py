@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATBaseCriterion.py,v 1.4 2004/03/29 21:55:51 yenzenz Exp $
+$Id: ATBaseCriterion.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -45,6 +45,8 @@ class ATBaseCriterion(BaseContentMixin):
     schema = ATBaseCriterionSchema
     meta_type = 'ATBaseCriterion'
     archetype_name = 'Base Criterion'
+    typeDescription= ''
+    typeDescMsgId  = ''
     global_allow = 0
     
     def __init__(self, id, field=None):

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.3 2004/04/04 21:48:32 tiran Exp $
+$Id: ATContentType.py,v 1.4 2004/04/09 22:02:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,17 +36,16 @@ from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
 
 def updateActions(klass, actions):
-    retval = copy(klass.actions)
-    for action in actions:
-        id = action.get('id')
-        found = 0
-        for kaction in klass.actions:
-            kid = kaction.get('id')
-            if id == kid:
-                found = 1
-        if not found:
-            retval = retval + (action, )
-    return retval
+    kactions = copy(klass.actions)
+    aids  = [action.get('id') for action in actions ]
+    actions = list(actions)
+   
+    for kaction in kactions:
+        kaid = kaction.get('id')
+        if kaid not in aids:
+            actions.append(kaction)
+    
+    return tuple(actions)
 
 class ATCTMixin(TemplateMixin):
     """Mixin class for AT Content Types"""
@@ -58,7 +57,8 @@ class ATCTMixin(TemplateMixin):
     immediate_view = 'base_view'
     suppl_views    = ()
     newTypeFor     = ''
-    TypeDescription= ''
+    typeDescription= ''
+    typeDescMsgId  = ''
     assocMimetypes = ()
     assocFileExt   = ()
 
@@ -130,5 +130,22 @@ class ATCTFolder(ATCTMixin, BaseFolder):
 
 InitializeClass(ATCTFolder)
 
+class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
+    """Base class for orderable folderish AT Content Types"""
 
-__all__ = ('ATCTContent', 'ATCTFolder', )
+    __implements__ = OrderedBaseFolder.__implements__, IATContentType
+    
+    security       = ClassSecurityInfo()
+
+InitializeClass(ATCTOrderedFolder)
+
+class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
+    """Base class for folderish AT Content Types using a BTree"""
+
+    __implements__ = BaseBTreeFolder.__implements__, IATContentType
+    
+    security       = ClassSecurityInfo()
+
+InitializeClass(ATCTBTreeFolder)
+
+__all__ = ('ATCTContent', 'ATCTFolder', 'ATCTOrderedFolder', 'ATCTBTreeFolder', 'updateActions' )

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
+$Id: ATImage.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -48,7 +48,9 @@ class ATImage(ATCTContent):
     immediate_view = 'image_view'
     suppl_views    = ()
     newTypeFor     = 'Image'
-    TypeDescription= ''
+    typeDescription= 'Using this form, you can enter details about the image, and upload\n' \
+                     'an image if required.'
+    typeDescMsgId  = 'description_edit_image'
     assocMimetypes = ('image/*', )
     assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.4 2004/04/04 21:48:32 tiran Exp $
+$Id: ATNewsItem.py,v 1.5 2004/04/09 22:02:21 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -30,12 +30,14 @@ from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
+from Products.ATContentTypes.types.ATDocument import ATDocument
 from Products.ATContentTypes.interfaces.IATNewsItem import IATNewsItem
 from Products.ATContentTypes.types.schemata import ATNewsItemSchema
 
 
-class ATNewsItem(ATCTContent):
-    """An Archetypes derived version of CMFDefault's Document"""
+class ATNewsItem(ATDocument):
+    """A AT news item based on AT Document
+    """
 
     schema         =  ATNewsItemSchema
 
@@ -45,30 +47,14 @@ class ATNewsItem(ATCTContent):
     immediate_view = 'newsitem_view'
     suppl_views    = ()
     newTypeFor     = 'NewsItem'
-    TypeDescription= ''
+    typeDescription= "A news item is a small piece of news that is published on the front\n" \
+                     "page. Add the relevant details below, and press 'Save'."
+    typeDescMsgId  = 'description_edit_news_item'
     assocMimetypes = ()
     assocFileExt   = ('news', )
 
-    __implements__ = ATCTContent.__implements__, IATNewsItem
+    __implements__ = ATDocument.__implements__, IATNewsItem
 
     security       = ClassSecurityInfo()
     
-    # backward compat
-    text_format = 'text/plain'
-
-    security.declarePublic('CookedBody')
-    def CookedBody(self, stx_level='ignored'):
-        """CMF compatibility method
-        """
-        return self.getText()
-
-    def setText(self, value, **kwargs):
-        """CMF compatibility method
-        """
-        field = self.getField('text')
-        field.set(self, value, **kwargs)
-        bu = self.getRawText(maybe_baseunit=1)
-        if hasattr(bu, 'mimetype'):
-            self.text_format = str(bu.mimetype)
-
 registerType(ATNewsItem, PROJECTNAME)
