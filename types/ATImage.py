@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.12 2004/05/21 07:44:04 tiran Exp $
+$Id: ATImage.py,v 1.13 2004/05/21 18:22:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -86,6 +86,18 @@ class ATImage(ATCTContent):
         filename = field.getFilename(self)
         RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s"' % filename)
         return image.index_html(REQUEST, RESPONSE)
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setImage')
+    def setImage(self, value, **kwargs):
+        """Set id to uploaded id
+        """
+        field = self.getField('image')
+        # set first then get the filename
+        field.set(self, value, **kwargs)
+        filename = field.getFilename(self)
+        if filename:
+            # XXX mapping for bad chars like umlauts and spaces
+            self.plone_utils.contentEdit(self, id=filename)
 
     security.declareProtected(CMFCorePermissions.View, 'get_data')
     def get_data(self):

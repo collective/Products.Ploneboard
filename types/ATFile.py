@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.17 2004/05/21 07:44:04 tiran Exp $
+$Id: ATFile.py,v 1.18 2004/05/21 18:22:20 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -93,6 +93,18 @@ class ATFile(ATCTContent):
         """Download the file (use default index_html)
         """
         return self.index_html(REQUEST, RESPONSE)
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setFile')
+    def setFile(self, value, **kwargs):
+        """Set id to uploaded id
+        """
+        field = self.getField('file')
+        # set first then get the filename
+        field.set(self, value, **kwargs)
+        filename = field.getFilename(self)
+        if filename:
+            # XXX mapping for bad chars like umlauts and spaces
+            self.plone_utils.contentEdit(self, id=filename)
 
     security.declarePublic('getIcon')   
     def getIcon(self, relative_to_portal=0):
