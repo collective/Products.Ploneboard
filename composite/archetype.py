@@ -29,7 +29,7 @@ class Element(BaseContentMixin):
         ),
         ReferenceField(
         'viewlet',
-        vocabulary='_get_viewlets',
+        #vocabulary='_get_viewlets',
         relationship=VIEWLET,
         #allowed_types=('CompositePack Viewlet',),
         widget=ReferenceWidget(label='Viewlet',
