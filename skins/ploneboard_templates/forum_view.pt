@@ -13,7 +13,8 @@
 <body>
 
     <div metal:fill-slot="main"
-         tal:define="conversations here/getConversations">
+         tal:define="conversations here/getConversations;
+                     pss modules/Products/PythonScripts/standard;">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
@@ -32,10 +33,23 @@
         No conversations in this forum yet.     
         </p>
 
-        <form tal:attributes="action string:${here/absolute_url}/add_conversation_form">
+        <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
+              tal:condition="not: isAnon">
            <input class="standalone"
                   type="submit" 
                   value="Start a new Conversation" />
+        </form>
+
+        <form tal:condition="isAnon"
+              tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                            (here.portal_url(),
+                                            pss.url_quote(request['URL']))">
+
+            <input class="standalone" 
+                   type="submit" 
+                   value="Log in to start a Conversation"
+                   i18n:attributes="value"
+                   />
         </form>
 
         <table class="listing"
