@@ -86,7 +86,9 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         member_ids = [m.getUserName() for m in self.objectValues()]
         user_ids = self.acl_users.getUserNames()
         oc = 0
-        [oc+=1 for id in member_ids if id not in user_ids]
+        for id in member_ids:
+            if id not in user_ids:
+                oc += 1
                 
         return [{
             'member_count' : len(member_ids),

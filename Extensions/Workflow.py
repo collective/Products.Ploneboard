@@ -32,7 +32,9 @@ def setupWorkflow(portal, out):
         wf.variables.addVariable(v)
 
     if not hasattr(wf.scripts, 'register'):
-        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('register', 'Register a Member', 'CMFMember.Install', 'register')
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('register', 'Register a Member', 'CMFMember.Workflow', 'register')
+    if not hasattr(wf.scripts, 'disable'):
+        wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('disable', 'Disable a Member', 'CMFMember.Workflow', 'disable')
 
     perms = {}
     for p in (MemberPermissions.REGISTER_PERMISSION,
@@ -144,8 +146,8 @@ def setupWorkflow(portal, out):
         title='Make member profile public',
         new_state_id='public',
         props={'guard_roles':'Manager',
-               'trigger_type':TRIGGER_AUTOMATIC
-               }) #trigger_type=TRIGGER_AUTOMATIC})
+               'trigger_type':TRIGGER_AUTOMATIC},
+        after_script_name='register')
 
     # manual registration
     transition = wf.transitions['register_private']
@@ -154,7 +156,8 @@ def setupWorkflow(portal, out):
         new_state_id='private',
         actbox_name='Register member and make profile private',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Manager'})
+        props={'guard_roles':'Manager'},
+        after_script_name='register')
 
     # manual registration
     transition = wf.transitions['register_public']
@@ -163,7 +166,8 @@ def setupWorkflow(portal, out):
         new_state_id='public',
         actbox_name='Register member and make profile public',
         actbox_url='%(content_url)s/do_review',
-        props={'guard_roles':'Manager'})
+        props={'guard_roles':'Manager'},
+        after_script_name='register')
 
     # make profile public
     transition = wf.transitions['make_public']
@@ -234,3 +238,13 @@ def setupWorkflow(portal, out):
     wf_tool.setChainForPortalTypes((CMFMember.TYPE_NAME,), 'member_workflow')
     
     wf_tool.updateRoleMappings()
+
+# call the Member object's register() method
+def register(self, state_change):
+    obj=state_change.object
+    return obj.register()
+
+# call the Member object's disable() method
+def disable(self, state_change):
+    obj=state_change.object
+    return obj.disable()

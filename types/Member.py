@@ -22,6 +22,8 @@ from DateTime import DateTime
 
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
+def modify_fti(fti):
+    fti['global_allow'] = 0  # only allow Members to be added where explicitly allowed
 
 content_schema = FieldList((
     StringField('id',
@@ -327,14 +329,15 @@ class Member(BaseContent):
 
     security.declarePrivate('register')
     def register(self):
-        registration_tool = getToolByName(self, 'portal_registration')
-        # Limit the granted roles.
-        # Anyone is always allowed to grant the 'Member' role.
-        registration_tool._limitGrantedRoles(roles, self, ('Member',))
-
         # create a real user
         if self.acl_users.getUser(self.id) is None:
-            self.acl_users.userFolderAddUser(self.id, self._getPassword(), self.getRoles(), self.getDomains())
+            registration_tool = getToolByName(self, 'portal_registration')
+            # Limit the granted roles.
+            # Anyone is always allowed to grant the 'Member' role.
+            roles = self.getRoles()
+            registration_tool._limitGrantedRoles(roles, self, ('Member',))
+
+            self.acl_users.userFolderAddUser(self.id, self._getPassword(), roles, self.getDomains())
             self._v_user = self.acl_users.getUser(self.id)
 
         # make the user the owner of the current member object

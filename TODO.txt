@@ -11,7 +11,8 @@ be unit tests.  I have started some (see tests/).
 are more or less right.  An external method for registering users
 needs to be wired up to the auto_register, register_public, and
 register_private transitions.  The methods just needs to invoke
-the Member object's register method.
+the Member object's register method. [I have added the code to do
+this but have not tested it.  GD  4/15]
 
 * Wire up registration to use the new member creation.  (I am planning
 to clean up portal_factory so we don't end up with a bunch of half-
@@ -37,10 +38,14 @@ to log in.
 
 * Add portraits in.
 
+* Add listed in.  The listed variable can be set by the register()
+  method and then by some method that is called after the make_public /
+  make_private transitions are executed.
+
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
 
 * Add documentation to base_view, base_edit.  This will probably require
-some minor Archetypes mods, e.g. creating an EmptyField class.
-
-
+some minor Archetypes mods, e.g. creating an EmptyField class.  [Ben has
+just added a better Description() method -- need to look into it as a
+better way.]

@@ -17,7 +17,6 @@ GLOBALS = globals()
 
 DirectoryView.registerDirectory('skins', GLOBALS)
 
-
 def initialize(context):
     import sys
     ##Import Types here to register them
