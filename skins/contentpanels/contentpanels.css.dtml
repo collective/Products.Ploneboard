@@ -106,8 +106,11 @@
 }
 
 .notitlePortletWrapper .portletBody {
-    background: #FCFCFC;
     border: none;
+}
+
+.notitlePortletWrapper .portletContent {
+    padding: 0.5em;
 }
 
 /* zopezen skin */
@@ -119,9 +122,12 @@
 }
 
 .zopezenPortletWrapper .portletBody {
-    background: #FCFCFC;
     border: none;
     border-top: 1px solid black;
+}
+
+.zopezenPortletWrapper .portletContent {
+    padding: 0.5em;
 }
 
 /* default box */
@@ -130,6 +136,9 @@
   display: block
 }
 
+.boxPortletWrapper .portletContent {
+    padding: 0.5em;
+}
 
 /* </dtml-with>  */
 
