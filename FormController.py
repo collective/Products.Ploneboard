@@ -320,7 +320,14 @@ class FormController(UniqueObject, SimpleItemWithProperties):
             controller_state.set(id=id, context=obj.getParentNode())
         else:
             if controller_state is None:
-                raise ValueError, 'No controller state available'
+                raise ValueError, 'No controller state available.  ' + \
+                    'This commonly occurs when a ControllerValidator (.vpy) ' + \
+                    'script is invoked via the validation mechanism in the ' + \
+                    'portal_form tool.  If you are using a package designed to ' + \
+                    'be used with portal_form, you are probably inadvertently ' + \
+                    'invoking a validator designed for use with CMFFormController (e.g. validate_id).  ' + \
+                    'If you are using a package designed to be used with CMFFormController, you probably ' + \
+                    'have a "portal_form" in your URL that needs to be removed.'
         controller_state._setValidating(is_validator)
         self.REQUEST.set('controller_state', controller_state)
         return controller_state

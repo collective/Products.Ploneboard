@@ -5,6 +5,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.CMFCore.utils import getToolByName
 from Key import Key
 from globalVars import ANY_CONTEXT, ANY_BUTTON
+from utils import log
 
 _marker = []
 
@@ -26,6 +27,10 @@ class FormValidatorKey(Key):
         if context_type:
             if controller:
                 if not context_type in controller.listContextTypes():
+                    log('Unknown context type %s for template %s' % (str(context_type), str(object_id)))
+                    # Don't raise an exception because sometimes full list of
+                    # types may be unavailable (e.g. when moving a site)
+                    # raise ValueError, 'Illegal context type %s' % context_type
                     raise ValueError, 'Illegal context type %s' % context_type
         else:
             context_type = ANY_CONTEXT

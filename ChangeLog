@@ -1,3 +1,15 @@
+2003-12-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added more descriptive error message for "No controller state available"
+
+   * Added license.
+
+2003-12-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Changed exception for actions / validators with unknown context types to
+     a warning, since there appear to be times at which the complete list of
+     types is unavailable (e.g. during site copying / moving)
+
 2003-12-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Strip acquisition layers from actions and validators before doing
