@@ -74,6 +74,10 @@
  * Fixed [ 1026379 ] ATDocument: skipField in setContentType throws error by
    removing the custom setContentType method. It's not required any more.
    [tiran]
+
+ * Use a copy of the ATContentTypeSchema for every schema to make customizations
+   easier. Fixed [ 1027283 ] Schema editing very hard.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.49 2004/09/10 15:09:22 tiran Exp $
+$Id: schemata.py,v 1.50 2004/09/13 16:09:23 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -80,7 +80,7 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
 ###
 # AT Content Type Document
 ###
-ATDocumentSchema = ATContentTypeSchema + Schema((
+ATDocumentSchema = ATContentTypeSchema.copy() + Schema((
     TextField('text',
               required=True,
               searchable=True,
@@ -109,11 +109,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
 # AT Content Type Event
 ###
 
-# copy the base schema to set the description field as primary field
-ATEventBaseSchema = ATContentTypeSchema.copy()
-ATEventBaseSchema['description'].primary = True
-
-ATEventSchema = ATEventBaseSchema + Schema((
+ATEventSchema = ATContentTypeSchema.copy + Schema((
     StringField('location',
                 searchable=True,
                 write_permission = ChangeEvents,
@@ -219,10 +215,13 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
     ), marshall = RFC822Marshaller())
 
+# Set description as primary field
+ATEventSchema['description'].primary = True
+
 ###
 # AT Content Type Favorite
 ###
-ATFavoriteSchema = ATContentTypeSchema + Schema((
+ATFavoriteSchema = ATContentTypeSchema.copy() + Schema((
     StringField('remoteUrl',
                 required=True,
                 searchable=True,
@@ -242,7 +241,7 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
 # AT Content Type File
 ###
 
-ATFileSchema = ATContentTypeSchema + Schema((
+ATFileSchema = ATContentTypeSchema.copy() + Schema((
     FileField('file',
               required=True,
               primary=True,
@@ -265,8 +264,8 @@ ATExtFileSchema['file'].storage = ExternalStorage(prefix='atct', archive=False)
 # AT Content Type Folder
 ###
 
-ATFolderSchema      = ATContentTypeSchema
-ATBTreeFolderSchema = ATContentTypeSchema
+ATFolderSchema      = ATContentTypeSchema.copy()
+ATBTreeFolderSchema = ATContentTypeSchema.copy()
 
 if ENABLE_CONSTRAIN_TYPES_MIXIN:
     ATFolderSchema      = ATFolderSchema + ConstrainTypesMixinSchema
@@ -276,7 +275,7 @@ if ENABLE_CONSTRAIN_TYPES_MIXIN:
 # AT Content Type Image
 ###
 
-ATImageSchema = ATContentTypeSchema + Schema((
+ATImageSchema = ATContentTypeSchema.copy() + Schema((
     ImageField('image',
                required=True,
                primary=True,
@@ -304,7 +303,7 @@ ATExtImageSchema['image'].storage = ExternalStorage(prefix='atct', archive=False
 ###
 # AT Content Type Link
 ###
-ATLinkSchema = ATContentTypeSchema + Schema((
+ATLinkSchema = ATContentTypeSchema.copy() + Schema((
     StringField('remoteUrl',
                 required=True,
                 searchable=True,
@@ -322,7 +321,7 @@ ATLinkSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type News Item
 ###
-ATNewsItemSchema = ATContentTypeSchema + Schema((
+ATNewsItemSchema = ATContentTypeSchema.copy() + Schema((
     TextField('text',
               required=True,
               searchable=True,
@@ -357,7 +356,7 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
 ###
 # AT Content Type Topic
 ###
-ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
+ATTopicSchema = ATContentTypeSchema.copy() + Schema((
     BooleanField('acquireCriteria',
                 required=False,
                 mode="rw",
