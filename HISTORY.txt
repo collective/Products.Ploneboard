@@ -1,10 +1,12 @@
 V1.71
 
+  - support multi-rows now
+
+    new option in edit page: if you use the 'tile' page layout mode, each page becomes a new row!
+
   - move the viewlet selection drop down menu to the top-right
 
-  - fix bug with setting portlet position
-
-  - support multi-row now: using the 'tile' page layout mode, you can set each page as a row
+  - fix bug when setting portlet position
 
   - fix bug: 'NoneType' object has no attribute 'base_panel'
 

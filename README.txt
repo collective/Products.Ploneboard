@@ -27,6 +27,8 @@ Features
 
   * contentpanels content can be a plone portlet and show on the left/right column.
 
+  * support multi-rows: use 'tile' page layout mode, and each page becomes a new row!
+
 How to Use it?
 
   1. Install it. See INSTALL.txt for more information.
