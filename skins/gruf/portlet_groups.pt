@@ -11,7 +11,7 @@
         listGroupSpaceMemberUsers=here.portal_membership.getAuthenticatedMember().getUserName(),
         sort_on='Date',
         sort_order='reverse',
-        )[:5];
+        );
         portal_url here/portal_url;"
         tal:condition="results"
         >
@@ -27,7 +27,7 @@
                   <img src="#"
                        alt="Title"
                        tal:attributes="src string:${here/portal_url}/${obj/getIcon};alt here/title" />
-                    <span tal:replace="python:test(obj.Title, obj.Title, obj.getId)"> Extended Calendar Product </span>
+                    <span tal:replace="python:test(obj.Title, obj.Title, obj.getId)"> Groupspace Title </span>
                 </a>
               </div>
             </tal:block>
