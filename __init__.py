@@ -14,6 +14,7 @@
 
 """GroupUserFolder product"""
 
+import PatchCatalogTool
 import GroupUserFolder
 import GRUFFolder
 from global_symbols import *
