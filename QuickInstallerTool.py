@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.15 2003/09/13 11:48:31 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.16 2003/09/23 22:22:54 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -67,6 +67,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def __init__(self):
         self.id = 'portal_quickinstaller'
 
+    security.declareProtected(ManagePortal, 'getInstallMethod')
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
 
@@ -86,8 +87,10 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
         return None
 
+    security.declareProtected(ManagePortal, 'isProductInstallable')
     isProductInstallable=getInstallMethod
 
+    security.declareProtected(ManagePortal, 'listInstallableProducts')
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation '''
         pids=self.Control_Panel.Products.objectIds()
@@ -114,7 +117,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         return res
 
 
-
+    security.declareProtected(ManagePortal, 'listInstalledProducts')
     def listInstalledProducts(self, showHidden=0):
         ''' returns a list of products that are installed -> list of strings'''
         pids = [o.id for o in self.objectValues() if o.isInstalled() and (o.isVisible() or showHidden )]
@@ -127,6 +130,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
         return res
 
+    security.declareProtected(ManagePortal, 'getProductFile')
     def getProductFile(self,p,fname='readme.txt'):
         ''' returns a file of the product case-insensitive '''
         prodspath=os.path.split(package_home(globals()))[:-1]
@@ -139,6 +143,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         
         return None
         
+    security.declareProtected(ManagePortal, 'getProductReadme')
     getProductReadme=getProductFile
         
 
