@@ -601,7 +601,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
         ret = '''<a href="%(href)s" alt="%(alt)s"><font color="%(color)s">%(name)s</font></a>''' % {
             "color": color,
-            "href": "%s/%s/manage_workspace" % (acl_users.absolute_url(), self.getId(), ),
+            "href": "%s/%s/manage_workspace?FORCE_USER=1" % (acl_users.absolute_url(), self.getId(), ),
             "name": self.getUserNameWithoutGroupPrefix(),
             "alt": "%s (%s)" % (self.getUserNameWithoutGroupPrefix(), kind, ),
             }

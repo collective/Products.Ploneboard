@@ -153,6 +153,18 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #                             OFFICIAL INTERFACE                            #
     #                                                                           #
     
+    security.declarePublic("hasUsers")
+    def hasUsers(self, ):
+        """
+        From Zope 2.7's User.py:
+        This is not a formal API method: it is used only to provide
+        a way for the quickstart page to determine if the default user
+        folder contains any users to provide instructions on how to
+        add a user for newbies.  Using getUserNames or getUsers would have
+        posed a denial of service risk.
+        In GRUF, this method always return 1."""
+        return 1
+        
     security.declareProtected(Permissions.manage_users, "user_names")
     def user_names(self,):
         """
@@ -1314,7 +1326,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/12/27 12:10:36 $"[7:-2]
+        rev_date = "$Date: 2005/01/04 13:49:57 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

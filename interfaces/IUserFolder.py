@@ -83,6 +83,17 @@ class IUserFolder(Interface):
         all current User Folder implementations... except for GROUPS.]        
         """
 
+    def hasUsers():
+        """
+        From Zope 2.7's User.py:
+        This is not a formal API method: it is used only to provide
+        a way for the quickstart page to determine if the default user
+        folder contains any users to provide instructions on how to
+        add a user for newbies.  Using getUserNames or getUsers would have
+        posed a denial of service risk.
+        In GRUF, this method always return 1."""
+    
+
     # Search interface for users; they won't return groups in any case.
 
     def searchUsersByName(search_term):
