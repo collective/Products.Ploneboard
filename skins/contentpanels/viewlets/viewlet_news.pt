@@ -13,7 +13,6 @@
                                                                   , sort_on='Date'
                                                                   , sort_order='reverse'
                                                                   , review_state='published')[:5];
-                 results python:[]
 		"
                  
      tal:condition="results">
