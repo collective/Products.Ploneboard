@@ -60,9 +60,13 @@ actions=[
 'string:here/viewlet_contentpanels_body/macros/portlet', 
 '', 'View','PT:ContentPanels', 1),
 
-('plonechat_viewlet', 'Recent Messages',
+('plonechat_viewlet', 'recent messages',
 'string:here/viewlet_plonechat_body/macros/portlet',
 '', 'View','PT:PloneChat', 1),
+
+('viewlet_dynamicpage', 'dynamic page',
+'string:here/viewlet_dynamicpage/macros/portlet',
+'', 'View', 'PT:Dynamic Page', 1),
 
 ### GL: global viewlets
 

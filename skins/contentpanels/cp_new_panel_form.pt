@@ -29,6 +29,12 @@
        tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
        tal:content="string:@import url(${here/portal_url}/plone.css?${current_skin});">
 </style>
+
+<!-- Pull-down ECMAScript menu, only active if logged in -->
+<script     type="text/javascript"
+            tal:attributes="src string:${here/portal_url}/plone_menu.js">
+</script>
+
 </head>
       
 <body onload="focus();">
@@ -72,55 +78,44 @@
 
           <div class="discreet" tal:content="here/Description"></div>
 
-<fieldset>
-   <legend> portlets </legend>
-<div tal:condition="pt_viewlets">
-   <div><b>types specific</b></div>
-   <div>
-       <a tal:repeat="viewlet pt_viewlets"
-          href="#"
-          i18n:translate=""
-          tal:attributes="
- onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
-          tal:content="viewlet/name">viewlet </a>
-   </div>
+
+<div style="margin-top: 1em"><b>related portlets: </b></div>
+<div class="contentActions">
+<ul>
+
+   <tal:block tal:repeat="menu python:(
+                     {'viewlets':gn_personal_viewlets, 'title':'personal related', 'id':'gn_personal_viewlets'},
+                     {'viewlets':gn_portal_viewlets, 'title':'site wide', 'id':'gn_portal_viewlets'},
+                     {'viewlets':gl_viewlets, 'title':'content related', 'id':'globalViewlets'},
+                     {'viewlets':pt_viewlets, 'title':'content specific', 'id':'typesSpecific'},
+                     )">
+
+      <li tal:condition="menu/viewlets">
+        <div class="menuPosition">
+            <a href="#"
+               tal:attributes="onclick string:return buttonClick(event, '${menu/id}');;;
+                               onmouseover string:buttonMouseover(event, '${menu/id}');;;">
+               <span i18n:translate=""
+                     tal:content="menu/title">types specific</span></a>
+
+            <ul class="actionMenu" style=" display: block;"
+                tal:attributes="id menu/id"
+                onmouseover="menuMouseover(event)">
+                <metal:block tal:repeat="viewlet menu/viewlets">
+                <li>
+                    <a href="#"
+                       onMouseUp="if (activeButton != null) resetButton(activeButton);"
+                       tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+                       tal:content="viewlet/name">viewlet </a>
+                </li>
+                </metal:block>
+            </ul>
+        </div>
+    </li>
+
+  </tal:block>
+</ul>
 </div>
-
-<div tal:condition="gl_viewlets">
-   <div><b>global viewlets</b></div>
-   <div>
-       <a tal:repeat="viewlet gl_viewlets"
-          href="#"
-          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
-          i18n:translate=""
-          tal:content="viewlet/name">viewlet </a>
-   </div>
-</div>
-
-
-<div tal:condition="gn_portal_viewlets">
-   <div><b>portal viewlets</b></div>
-   <div>
-       <a tal:repeat="viewlet gn_portal_viewlets"
-          href="#"
-          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
-          i18n:translate=""
-          tal:content="viewlet/name ">viewlet </a>
-   </div>
-</div>
-
-
-<div tal:condition="gn_personal_viewlets">
-   <div><b>personal viewlets</b></div>
-   <div>
-       <a tal:repeat="viewlet gn_personal_viewlets"
-          href="#"
-          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
-          i18n:translate=""
-          tal:content="viewlet/name">viewlet</a>
-   </div>
-</div>
-</fieldset>
      </div>
 
        <!-- search form -->
@@ -180,4 +175,5 @@
 </div>
 </body>
 </html>
+
 

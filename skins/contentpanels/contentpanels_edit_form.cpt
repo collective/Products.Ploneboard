@@ -17,7 +17,7 @@
     </h1>
     
     <p i18n:translate="description_edit_contentpanels" i18n:domain="contentpanels">
-ContentPanels is designed to build a complex view out of a combination of portlets.  Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'config' tab to configure pages/columns/panels
+ContentPanels is designed to build a complex view out of a combination of portlets.  Various types of portlets for various types of contents (Document, Image, Folder, Topic, ZWiki Page, etc) can be combined in a single page. Enter the relevant details below, and press 'Save'. You can use the 'Layout' tab to configure pages/columns/panels
     </p>
 
    <form name="edit_form"
@@ -103,6 +103,27 @@ ContentPanels is designed to build a complex view out of a combination of portle
       </textarea>
      </div>
 
+     <div class="field"
+          tal:define="customCSS request/customCSS | here/getCustomCSS ">
+
+      <label for="description" i18n:translate="label_custom_css">custom CSS</label>
+
+      <div class="formHelp" i18n:translate="help_custom_css">
+        You can define custom CSS for this contentpanels here. Leave it blank if you don't know about CSS.
+      </div>
+
+      <textarea cols="80"
+                rows="5"
+                tabindex=""
+                id="customCSS"
+                name="customCSS"
+                tal:content="customCSS"
+                tal:attributes="tabindex tabindex/next;"
+                >
+       customCSS
+      </textarea>
+     </div>
+
      <div class="formControls"
           tal:define="process_creation request/process_creation|nothing;">
       <input class="context"
@@ -112,15 +133,8 @@ ContentPanels is designed to build a complex view out of a combination of portle
              value="Save"
              i18n:attributes="value"
              tal:attributes="tabindex tabindex/next;" />
-
-      <input class="standalone"
-             tabindex=""
-             type="submit"
-             name="form.button.Cancel"
-             value="Cancel"
-             i18n:attributes="value"
-             tal:attributes="tabindex tabindex/next;" />
      </div>
+
     </fieldset>
 
     <input type="hidden" name="form.submitted" value="1" />

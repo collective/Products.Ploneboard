@@ -3,9 +3,14 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="contentpanels">
 
-  <metal:block fill-slot="head_slot">
+  <metal:block fill-slot="css_slot">
         <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanels.css" />
         <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/contentpanelsCustom.css" />
+        <style type="text/css"
+               tal:define="customCSS here/getCustomCSS"
+               tal:condition="customCSS"> 
+            <!--<tal:block tal:content="structure customCSS"/> -->
+        </style>
   </metal:block>
 
 <body>

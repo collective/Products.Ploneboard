@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=id='', title=None, description=None, subject=None
+##parameters=id='', title=None, description=None, customCSS=''
 ##title=Edit contentpanels property
 ##
 
@@ -13,6 +13,9 @@ if not id:
     id = context.getId()
 
 new_context = context.portal_factory.doCreate(context, id)
+
+new_context.edit(customCSS)
+
 new_context.plone_utils.contentEdit(new_context
                                , id=id
                                , title=title

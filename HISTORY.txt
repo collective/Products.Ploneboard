@@ -8,13 +8,15 @@ V1.7
 
   - better error handler
 
-  - new PloneChat viewlet
+  - more viewlets for PloneChat and mxmDynamicPage
 
   - ContentPanels content can be a plone portlet now. See FAQ.txt
 
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl
 
   - FolderRecentChanges and FolderListing viewlets shows only when there are contents in the folder
+
+  - allow per-content custom css
 
 V1.6
 

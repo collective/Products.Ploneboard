@@ -18,6 +18,7 @@ import urlparse
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
+from Acquisition import aq_base
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalContent import PortalContent, NoWL
@@ -44,8 +45,8 @@ factory_type_information = ( {'id': 'ContentPanels',
                                         'action': 'contentpanels_edit_form',
                                         'permissions': (CMFCorePermissions.ModifyPortalContent,)
                                          }
-                                      , {'id': 'config',
-                                        'name': 'Config',
+                                      , {'id': 'layout',
+                                        'name': 'Layout',
                                         'action': 'contentpanels_config_form',
                                         'permissions': (CMFCorePermissions.ModifyPortalContent,)
                                          }
@@ -79,6 +80,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
     meta_type = 'CMF Content Panels'
     effective_date = expiration_date = None
     panelsConfig = []
+    customCSS = ''
     
     security = ClassSecurityInfo()
 
@@ -89,6 +91,16 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self.description=description
         self.clearPanels()
         self.addPage()
+
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'edit')
+    def edit(self, customCSS=''):
+        self.customCSS = customCSS
+
+    security.declarePublic('getCustomCSS')
+    def getCustomCSS(self):
+        customCSS = getattr(aq_base(self), 'customCSS', '')
+        return customCSS.strip()
 
     def clearPanels(self):
         self.panelsConfig = []
