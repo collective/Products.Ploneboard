@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.9 2004/02/16 12:14:17 tiran Exp $
+$Id: GettextMessageCatalog.py,v 1.10 2004/02/17 06:47:43 dtremea Exp $
 """
 
 from Acquisition import aq_parent
@@ -329,6 +329,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         self._prepareTranslations()
         return self._v_tro._info.get(name, None)
 
+    security.declareProtected(view_management_screens, 'Title')
     def Title(self):
         return self.title
         
@@ -403,6 +404,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
 
     zmi_test = ptFile('zmi_test', globals(), 'www', 'catalog_test')
 
+    security.declareProtected(view_management_screens, 'file_exists')
     def file_exists(self):
         try:
             file = open(self._pofile, 'rb')
@@ -410,6 +412,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
             return False
         return True
 
+    security.declareProtected(view_management_screens, 'getEncoding')
     def getEncoding(self):
         try:
             content_type = self.getHeader('content-type')
@@ -423,6 +426,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         info = self._v_tro._info
         return info.get(header)
 
+    security.declareProtected(view_management_screens, 'displayInfo')
     def displayInfo(self):
         self._prepareTranslations()
         try: info = self._v_tro._info
