@@ -18,16 +18,6 @@ except:
     # No registerdir available -> we ignore
     pass
 
-
-# Plone2 import try/except
-IS_PLONE2 = 0
-try:
-    import Products.CMFFormController
-    IS_PLONE2 = 1
-except:
-    pass
-
-
 # Used in Extension/install.py
 global groupuserfolder_globals
 groupuserfolder_globals=globals()
@@ -73,18 +63,7 @@ def initialize(context):
                   , product_name='GroupUserFolder'
                   , icon="tool.gif"
                   ).initialize( context )
-        if IS_PLONE2:
-            Log(LOG_DEBUG, "Using Plone2's GroupSpace feature")
-            import GroupSpace
-            ContentInit(
-                'The GroupSpace content type',
-                content_types = (GroupSpace.GroupSpace, ),
-                permission = GroupSpace.GroupSpace_addPermission,
-                extra_constructors = (GroupSpace.addGroupSpace, ),
-                fti = (GroupSpace.factory_type_information,),
-                ).initialize(context)
-            
+
     except ImportError:
         Log(LOG_NOTICE, "Unable to import GroupsTool and/or GroupDataTool. \
         This won't disable GRUF but if you use CMF/Plone you won't get benefit of its special features.")
-    
