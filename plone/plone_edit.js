@@ -2,6 +2,7 @@
 // Plone-specific editing scripts.  Referenced by plone/bottom.pt.
 // The variable "ui_url" is provided by common/header.pt.
 
+
 function plone_edit(element) {
   var path = element.getAttribute("full_path");
   window.document.location = path + "/edit_compo_element"; 
@@ -37,12 +38,13 @@ function composite_pack_prepare_element_menu(header) {
 
 function composite_prepare_change_viewlet_menu(header) {
   // Prepares the header of the element context menu.
-  var node, menuItem, slots, i;
+  var node, menuItem, i, parent;
+  var viewlets_titles, viewlets_ids;
   while (header.childNodes.length)
     header.removeChild(header.childNodes[0]);
   // change viewlet header
   menuItem = document.createElement("div");
-  menuItem.setAttribute("class", "context-menu-header");
+  menuItem.className = "context-menu-header";
   node = document.createTextNode('Select viewlet');
   menuItem.appendChild(node);
   header.appendChild(menuItem);
@@ -53,15 +55,20 @@ function composite_prepare_change_viewlet_menu(header) {
     viewlets_titles = parent.getAttribute("allowed_viewlets_titles").split("%");
     for (i = 0; i < viewlets_ids.length; i++) {
       menuItem = document.createElement("div");
-      menuItem.setAttribute("class", "context-menu-item");
-      onmouseup = "plone_change_viewlet(pd_selected_item, '" + viewlets_ids[i] + "')";
-      menuItem.setAttribute("onmouseup", onmouseup);
-      node = document.createTextNode(viewlets_titles[i]);
-      pd_setupContextMenuItem(menuItem);
-      menuItem.appendChild(node);
+      plone_setup_viewlet_menu_item(menuItem, viewlets_ids[i], viewlets_titles[i]);
       header.appendChild(menuItem);
     }
   }
   return true;
+}
+
+function plone_setup_viewlet_menu_item(menuItem, viewlet_id, viewlet_title) {
+      menuItem.className = "context-menu-item";
+      menuItem.onmouseup = function() {
+          plone_change_viewlet(pd_selected_item, viewlet_id);
+      };
+      node = document.createTextNode(viewlet_title);
+      menuItem.appendChild(node);
+      pd_setupContextMenuItem(menuItem);
 }
 
