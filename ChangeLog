@@ -1,3 +1,7 @@
+2003-03-03  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Minor cleanup, release RC3.
+
 2003-03-02  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fixes for 2773 (handling of image buttons) and 2779 (xml import problems)
