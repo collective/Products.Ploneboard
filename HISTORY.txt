@@ -2,6 +2,8 @@ V1.7.3
 
   - clear left_slot/right_slot setting when delete a contentpanels content 
   - fix bug with nested contentpanels
+  - new Brazilian Portuguese Translations. 
+    thanks Luciano De Fazio(http://www.camaracatanduva.sp.gov.br )
 
 V1.7.2
 
