@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.14 2004/09/29 14:57:19 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.15 2004/09/29 17:20:30 spamsch Exp $
 """
 
 from Globals import InitializeClass
@@ -42,7 +42,7 @@ class ParentManagedSchema:
         # Schema() seems to be called during the construction phase when there is
         # no acquisition context. So we return the default schema itself.
 
-        if not hasattr(self, 'aq_parent'): 
+        if not hasattr(self, 'aq_parent'):
             return self._wrap_schema(self.schema)
 
         # If we're called by the generated methods we can not rely on
@@ -62,7 +62,9 @@ class ParentManagedSchema:
 
             # looking for changes in the schema hold by the object
             self._v_schema = self._lookupChanges(schema_id)
-            #self.initializeArchetype()
+
+            if not hasattr(self, '_md'):
+                self.initializeArchetype()
 
             for field in self._v_schema.fields():
 

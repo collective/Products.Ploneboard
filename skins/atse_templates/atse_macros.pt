@@ -24,7 +24,7 @@
     <span class="label" i18n:translate="type">Type</span>
     <div>
       <select name="fielddata.type:record:string">
-        <span tal:repeat="item python: ('StringField', 'IntegerField', 'FloatField', 'FixedPointField', 'LinesField', 'DateTimeField', 'BooleanField')">
+        <span tal:repeat="item python: ('StringField', 'IntegerField', 'FloatField', 'FixedPointField', 'LinesField', 'DateTimeField', 'BooleanField', 'ReferenceField')">
           <option tal:attributes="value item;
                                   selected python: item==here.atse_getFieldType(field)"
                   tal:content="item" />
@@ -88,6 +88,10 @@
         <option value="InAndOut"
                 tal:content="string:InAndOut MultiSelect"
                 tal:attributes="selected python: widget_name=='InAndOutWidget' "/>
+        <option value="ReferenceBrowserWidget"
+                tal:content="string:ReferenceBrowserWidget"
+                tal:attributes="selected python: widget_name=='ReferenceBrowserWidget'"
+		tal:condition="exists:here/referencebrowser_popup"/>
 
         <tal:comment tal:replace="nothing">
             <option value="Image" 
@@ -288,6 +292,16 @@
           </div>
         </div>
       
+        <div tal:condition="python: field.getType().split('.')[-1] == 'ReferenceField'">
+          <br/>
+          <span class="label" i18n:translate="label">Relationship</span>
+          <div>
+            <input type="text" value="" size="40" 
+                   name="fielddata.relationship:record:string"
+                   tal:attributes="value python: field.relationship"/>
+          </div>
+        </div>
+
         <br/>
         <div>
           <div class="left">

@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.22 2004/09/27 18:41:36 spamsch Exp $
+$Id: SchemaEditor.py,v 1.23 2004/09/29 17:20:30 spamsch Exp $
 """
 
 import re
@@ -43,6 +43,7 @@ TYPE_MAP = {
 'BooleanField':    BooleanField,
 'LinesField':      LinesField,
 'DateTimeField':   DateTimeField,
+'ReferenceField':  ReferenceField,
 }
 
 WIDGET_MAP = {
@@ -67,6 +68,16 @@ WIDGET_MAP = {
 'Picklist':    PicklistWidget(),
 'InAndOut':    InAndOutWidget(),
 }
+
+# support for ATReferenceBrowserWidget
+HAS_ATREF_WIDGET = False
+try:
+    from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import ReferenceBrowserWidget
+    WIDGET_MAP['ReferenceBrowserWidget'] = ReferenceBrowserWidget()
+    HAS_ATREF_WIDGET = True
+    
+except ImportError:
+    pass
 
 class SchemaEditorError(Exception): pass
 
@@ -378,8 +389,11 @@ class SchemaEditor:
         widget = WIDGET_MAP.get(FD.widget, None)
         if not widget:
             raise SchemaEditorError(self.translate('atse_unknown_widget', 
-                                                  {'widget' : d.widget},
+                                                  {'widget' : FD.widget},
                                                   'unknown widget type: $widget'))
+
+        # support for relations
+        D['relationship'] = FD.get('relationship', 'defaultRelation')
 
         if FD.has_key('widgetsize'):
             widget.size = FD.widgetsize
