@@ -17,13 +17,14 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: utils.py,v 1.1 2004/05/01 16:55:10 tiran Exp $
+$Id: utils.py,v 1.2 2004/05/02 18:59:18 tiran Exp $
 """ 
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 from Products.CMFCore.utils import getToolByName
+from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 
 def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
     reg = getToolByName(self, 'content_type_registry')
