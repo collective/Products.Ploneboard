@@ -47,12 +47,7 @@ class CMFCompositePage(BaseFolder, Composite):
         path = composite_tool.layouts[viewlet_id].getTemplate_path()
         template_path = "/".join(path.split('/')[:-1])
         template_id = path.split('/')[-1]
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        source = portal.restrictedTraverse(template_path)
-        objs=source.manage_copyObjects([template_id,])
-        self.manage_pasteObjects(cb_copy_data=objs)
         
-        #import pdb; pdb.set_trace()
         self.template_path = template_id
         
         self.getField('layout').set(self, viewlet_id)
