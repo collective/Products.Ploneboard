@@ -15,7 +15,7 @@
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_parent
+from Acquisition import aq_base, aq_parent, aq_inner
 
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalContent import PortalContent
@@ -167,17 +167,16 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
                 objectPath = objectPath[2:]
 
                 if not self.isPrincipiaFolderish:
-                    folderContext = self.aq_parent
+                    folderContext = aq_parent(aq_inner(self))
                 else:
                     folderContext = self
 
                 panelObject = folderContext.restrictedTraverse(objectPath) 
-            else :
+            else:
                 panelObject = self.portal_url.getPortalObject().restrictedTraverse(objectPath)
         except:
             panelObject = None
         return panelObject
-
 
     security.declarePublic('getPanel')
     def getPanel(self, objectPath, panelSkin, viewletId):
