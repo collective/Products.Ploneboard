@@ -1,3 +1,38 @@
+2004-04-15 18:10  tiran
+
+	* Extensions/: Install.py, switchOldPloneTypes.py, toolbox.py:
+	  renamed switchOldPloneTypes.py to toolbox added
+	  recreateATImageScales
+
+2004-04-15 18:08  tiran
+
+	* README.txt, __pkginfo__.py: added bug tracker info
+
+2004-04-14 17:56  ajung
+
+	* types/schemata.py: whitespace fix
+
+2004-04-13 14:13  limi
+
+	* version.txt, skins/ATContentTypes/atct_history.pt,
+	  skins/ATContentTypes/formatHistoryDiff.py: Removed the CSS
+	  import, made ATCT use the Plone classes instead. Requires latest
+	  2.0 brach checkout of Plone for correct visual display.
+
+2004-04-12 03:38  tiran
+
+	* Validators.py, config.py, types/schemata.py: Try to make the
+	  validators *really* failsafe
+
+2004-04-11 21:44  tiran
+
+	* types/ATContentType.py: reenabled external editor icon in
+	  folder_contents
+
+2004-04-11 20:25  tiran
+
+	* docs/CHANGELOG.txt: update changelog
+
 2004-04-11 19:54  tiran
 
 	* __pkginfo__.py, version.txt, docs/HISTORY.txt: preparing next

@@ -1,3 +1,7 @@
+0.2-beta3
+
+ * added a recreateATImageScales method as external method
+
 0.2-beta2 - 2004-04-11
 
  * Update validators to reflect the last changes and fixes of the archetypes and
@@ -6,7 +10,6 @@
  * Added uml diagram of ATCT classes
 
  * misc small fixes and improvements
-   
    
 0.2-beta1 - 2004-04-09
 
