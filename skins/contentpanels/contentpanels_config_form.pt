@@ -167,28 +167,6 @@ columns
                           <img tal:attributes="src string:${here/portal_url}/${panelContent/getIcon}" />
                           <a tal:attributes="href panelContent/absolute_url" tal:content="panelContent/title_or_id"/>
                         </div>
-                        <input type="hidden"
-                               tal:attributes="value panel/panelObjectViewlet;
-                                   name string:CPI$columnIndex.panelObjectViewlet:records;"/>
-
-                        <input type="hidden" name="panelIndex" value="#"
-                               tal:attributes="value repeat/panel/index;
-                                               name string:CPI$columnIndex.panelIndex:records" />
-                        <input type="hidden" name="panelObjectPath" value="#"
-                               tal:attributes="value panel/panelObjectPath;
-                                               name string:CPI$columnIndex.panelObjectPath:records" />
-
-                        <select title="panel skin" name="panelSkin"
-                                i18n:attributes="ttile label_skin"
-                                tal:attributes="name string:CPI$columnIndex.panelSkin:records">
-                          <metal:block tal:repeat="skinInfo here/portal_contentpanels/getPanelSkins">
-                            <option value="slotpath"
-                                    tal:attributes="value python: skinInfo[1];
-                                             selected python: panel['panelSkin']==skinInfo[1];"
-                                    tal:content="python:skinInfo[0]"
-                                    i18n:translate="">css wrapper name</option>
-                          </metal:block>
-                        </select>
 
                         <a tal:attributes="href string:${here/absolute_url}/contentpanels_config?movePanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;toPanel=$lastPanel"
                            tal:condition="not: repeat/panel/start">
@@ -219,7 +197,7 @@ columns
                              i18n:attributes="title"
                              tal:attributes="src string:$portal_url/newPanel.gif"/>
                         </a>
-                        <a href="#" tal:attributes="onclick string:window.open('${panelContent/absolute_url}/cp_new_panel_form?cpPath=${here/absolute_url}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;viewletId=${panel/panelObjectViewlet}', 'cal','dependent=yes,width=620,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false"> 
+                        <a href="#" tal:attributes="onclick string:window.open('${panelContent/absolute_url}/cp_new_panel_form?cpPath=${here/absolute_url}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;viewletId=${panel/panelObjectViewlet}&amp;panelSkin=${panel/panelSkin}', 'cal','dependent=yes,width=620,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=200,titlebar=no');; return false"> 
                            <img tal:attributes="src string:$portal_url/contentpanels_icon.gif;
                                 title python:here.portal_contentpanels.getViewletName(panel['panelObjectViewlet'])"
                                 i18n:attributes="title"/>
@@ -237,7 +215,7 @@ columns
                   <tr>
                     <td>
                      <div tal:content="structure python: here.getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
-                         tal:on-error="string:This panel content is nolonger existed or you have no right to access it. We recommend you remove this panel."/>
+                         tal:on-error="string:This panel is broken."/>
                     </td>
                   </tr>
               </table>
@@ -246,14 +224,9 @@ columns
           </td>
           </tal:block>
         </tr>
-
-
       </table>
-
     </form>
-
  </div>
-
 </body>
 
 </html>

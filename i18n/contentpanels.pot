@@ -192,10 +192,10 @@ msgid "viewlet_context"
 msgstr "viewlet context"
 
 msgid "preview_viewlet"
-msgstr "preview viewlet"
+msgstr "preview"
 
-msgid "select_this_viewlet"
-msgstr "select this viewlet"
+msgid "select_this_panel"
+msgstr "select this panel"
 
 msgid "Title description"
 msgstr ""

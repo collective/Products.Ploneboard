@@ -183,10 +183,10 @@ msgid "viewlet_context"
 msgstr "关联内容"
 
 msgid "preview_viewlet"
-msgstr "预览面板视图"
+msgstr "预览"
 
-msgid "select_this_viewlet"
-msgstr "选择这个视图"
+msgid "select_this_panel"
+msgstr "选择这个面板"
 
 msgid "Title description"
 msgstr "标题描述"
@@ -233,4 +233,16 @@ msgstr "跳转到这个复合面板"
 
 msgid "Document content"
 msgstr "文档正文"
+
+msgid "label_viewlet"
+msgstr "视图"
+
+msgid "label_skin"
+msgstr "皮肤"
+
+msgid "label_preview"
+msgstr "预览"
+
+msgid "label_panel"
+msgstr "面板"
 

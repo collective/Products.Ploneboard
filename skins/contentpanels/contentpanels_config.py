@@ -40,7 +40,8 @@ elif request.has_key('addPanel'):
                    columnIndex=columnIndex,
                    panelIndex=panelIndex,
                    panelObjectPath=relativePath,
-                   panelObjectViewlet=panelObjectViewlet)
+                   panelObjectViewlet=panelObjectViewlet,
+                   panelSkin=panelSkin)
   else:
       context.addPanel(pageIndex=pageIndex, 
                    columnIndex=columnIndex, 

@@ -1,6 +1,6 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      i18n:domain="plone"
+      i18n:domain="contentpanels"
       tal:define="cpPath request/cpPath | here/absolute_url;
                   here python:request.has_key('cpPath') and here or here.isPrincipiaFolderish and here or here.aq_parent;
                   addPanel request/addPanel | string:edit;
@@ -8,6 +8,7 @@
                   columnIndex request/columnIndex;
                   panelIndex request/panelIndex;
                   viewletId request/viewletId | string:default_viewlet;
+                  panelSkin request/panelSkin | string:defaultPortletWrapper;
                   paramString string:cpPath=$cpPath&amp;addPanel=$addPanel&amp;pageIndex=$pageIndex&amp;panelIndex=$panelIndex&amp;columnIndex=$columnIndex;
 
                   path python:here.portal_url.getRelativeContentURL(here);
@@ -27,12 +28,15 @@
                       dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
           tal:attributes="content string:text/html;;charset=${charset}" />
 
-<title tal:content="string:panel at ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
+<title><tal:block i18n:translate="label_panel">panel</tal:block>(<tal:block tal:content="string:${pageIndex}-${columnIndex}-${panelIndex}"/>)</title>
 
 <style type="text/css" media="all"
        tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
        tal:content="string:@import url(${here/portal_url}/plone.css?${current_skin});">
 </style>
+
+   <link rel="Stylesheet" type="text/css" tal:attributes="href string:${here/portal_url}/contentpanels.css" />
+   <link rel="Stylesheet" type="text/css" tal:attributes="href string:${here/portal_url}/contentpanelsCustom.css" />
 
 </head>
       
@@ -40,11 +44,11 @@
 <div class="documentContent">
 
     <fieldset>
-        <legend i18n:translate="viewlet_context" i18n:domain="contentpanels">viewlet context</legend>
+        <legend i18n:translate="viewlet_context">viewlet context</legend>
     <div tal:define="breadcrumbs python:here.breadcrumbs(here)" style="white-space:nowrap;">
         <a tal:repeat="crumb python:breadcrumbs[:-2]"
            tal:content="python: crumb[0] + ' / '"
-           tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
+           tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString+'&amp;panelSkin='+panelSkin">Parent
         </a>
         <img src="#"  i18n:attributes="title"
                tal:attributes="src string:${here/portal_url}/${here/getIcon};
@@ -60,38 +64,63 @@
           <img src="#"  i18n:attributes="title"
                tal:attributes="src string:${here/portal_url}/${item/getIcon};
                                title python:item.getTypeInfo().Title()"/>
-          <a tal:attributes="href string:${item/absolute_url}/${template/getId}?$paramString"
+          <a tal:attributes="href string:${item/absolute_url}/${template/getId}?$paramString&amp;panelSkin=$panelSkin"
              tal:content="python:item.Title() or item.getId()">Title</a>
       </span>
     </div>
     </fieldset>
 
-    <fieldset>
-       <legend i18n:translate="preview_viewlet" i18n:domain="contentpanels">preview viewlet</legend>
+    <table class="listing" border="1" style="font-size: 100%">
+        <tbody>
+        <tr>
+          <th i18n:translate="label_viewlet" style="white-space:nowrap;">viewlet</th>
+          <td>
+            <tal:block tal:repeat="viewlet python:pt_viewlets + gl_viewlets + gn_portal_viewlets + gn_personal_viewlets">
+              <a href="#" style="white-space:nowrap; border-bottom: 1px solid; margin-right: 0.5em"
+                 tal:condition="python:viewlet['id'] != viewletId"
+                 i18n:translate=""
+                 tal:attributes="href string:${here/absolute_url}/${template/getId}?$paramString&amp;viewletId=${viewlet/id}&amp;panelSkin=$panelSkin"
+                 tal:content="viewlet/name">viewlet name</a>
 
-       <tal:repeat repeat="viewlet python:pt_viewlets + gl_viewlets + gn_portal_viewlets + gn_personal_viewlets">
-          <a href="#" style="white-space:nowrap; border-bottom: 1px solid; margin-right: 0.5em"
-             tal:condition="python:viewlet['id'] != viewletId"
-             i18n:translate="" i18n:domain="contentpanels"
-             tal:attributes="href string:${here/absolute_url}/${template/getId}?$paramString&amp;viewletId=${viewlet/id}"
-             tal:content="viewlet/name">viewlet name</a>
+              <span style="white-space:nowrap; background-color: lightgreen"
+                    tal:condition="python:viewlet['id'] == viewletId"
+                    tal:content="viewlet/name" for="select_the_viewlet" i18n:translate="">viewlet name
+              </span>
+            </tal:block>
 
-          <a style="white-space:nowrap; border: 1px dashed; margin-right: 0.5em; background-color: #dee7ec;"
-             title="select this viewlet"
-             i18n:attributes="title select_this_viewlet" i18n:domain="contentpanels"
-             tal:condition="python:viewlet['id'] == viewletId">
-              <input type="checkbox" id="select_the_viewlet"
-                     tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;">
-              <label tal:content="viewlet/name" for="select_the_viewlet" i18n:translate="" i18n:domain="contentpanels">viewlet name</label>
-          </a>
+          </td>
+        </tr>
+        <tr> 
+          <th i18n:translate="label_skin" style="white-space:nowrap;">skins</th> 
+          <td>
+            <tal:block tal:repeat="skinInfo here/portal_contentpanels/getPanelSkins">
+              <a i18n:translate=""
+                 tal:define="repeatSkin python:skinInfo[1]"
+                 tal:attributes="href string:${here/absolute_url}/${template/getId}?$paramString&amp;viewletId=$viewletId&amp;panelSkin=$repeatSkin"
+                 tal:condition="python:panelSkin!=repeatSkin"
+                 tal:content="python:skinInfo[0]"> css name </a>
 
-       </tal:repeat>
+              <span style="white-space:nowrap; background-color: lightgreen"
+                      tal:condition="python:panelSkin==skinInfo[1]"
+                      tal:content="python:skinInfo[0]" 
+                      i18n:translate="">css name
+              </span>
+            </tal:block>
+          </td>
+        </tr>
+        <tr>
+          <th i18n:translate="label_preview" style="white-space:nowrap;">preview</th>
+          <td style="padding: 1em 1em 1em 1em">
+            <div tal:define="viewletPath python:here.portal_contentpanels.getViewletPath(viewletId);"
+             tal:content="structure python:here.base_panel(here, contentpanels=here, panelSkin=panelSkin, viewletPath=viewletPath)"/>
+          </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" class="context" value="select this panel"
+           i18n:attributes="value select_this_panel"
+           tal:attributes="onclick string:opener.location.href='${baseurl}$viewletId&amp;panelSkin=$panelSkin';; window.close();;"/>
 
-      <hr/>
-      <div tal:define="viewletPath python:here.portal_contentpanels.getViewletPath(viewletId)"
-          tal:content="structure python:here.base_panel(here, contentpanels=here, panelSkin='', viewletPath=viewletPath)"/>
-
-    </fieldset>
 </div>
 </body>
 </html>

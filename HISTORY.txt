@@ -8,6 +8,7 @@ V1.8.3
 
       from Products.CMFContentPanels import registerViewlets
       registerViewlets( you_viewlets )
+  - more UI refinement
 
 V1.8.2
 
