@@ -183,7 +183,7 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         # get viewlet infomation
         viewletPath = self.portal_contentpanels.getViewletPath(viewletId)
 
-        if viewletPath:
+        if (panelObject is not None) and viewletPath:
             return panelObject.base_panel(panelObject,
                               contentpanels=self,
                               panelSkin=panelSkin,

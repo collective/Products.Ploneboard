@@ -6,6 +6,8 @@ V1.71
 
   - support multi-row now: using the 'tile' page layout mode, you can set each page as a row
 
+  - fix bug: 'NoneType' object has no attribute 'base_panel'
+
 V1.7
 
   - much faster: just use catalogBrain and remove global_defines at base_panel
