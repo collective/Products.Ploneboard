@@ -220,7 +220,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         u = self.Users.acl_users.getUser(name)
         if u:
             Log(LOG_DEBUG, "Returning a user object", name, u, u.__class__)
-            return GRUFUser.GRUFUser(u, self,).__of__(self) 
+            ret = GRUFUser.GRUFUser(u, self,).__of__(self)
+            Log(LOG_DEBUG, ret.aq_parent)
+            return ret
             # $$$ Check security for this !
         
         # If not found, fetch groups (then the user must be 
@@ -354,7 +356,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if "acl_users" in self.Users.objectIds():
             u = self.Users.acl_users.authenticate(name, password, request)
             if u:
-                return GRUFUser.GRUFUser(u, self,).__of__(self)         
+                return GRUFUser.GRUFUser(u, self,).__of__(self)
                 # $$$ Check security for this !
             return None                                                 
             # The user cannot be authenticated => we return None

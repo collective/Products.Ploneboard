@@ -18,7 +18,7 @@ from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from Acquisition import Implicit
+from Acquisition import Implicit, aq_inner, aq_parent, aq_base
 from Globals import Persistent
 from AccessControl.Role import RoleManager
 from OFS.SimpleItem import Item
@@ -111,6 +111,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self._isGroup = isGroup   
         self._GRUF = GRUF
         self.id = self._original_id
+        Log(LOG_DEBUG, self)
+        Log(LOG_DEBUG, type(self.__underlying__.aq_parent))
 
     def isGroup(self,):
         """Return 1 if this user is a group abstraction"""
@@ -349,7 +351,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         roles = filter(lambda x: x != 'Authenticated', roles) 
 
         # set the profile on the user folder 
-        self.aq_parent.userFolderEditUser(
+        self.userFolderEditUser(
             self.getUserName(),
             password,
             roles,
@@ -358,7 +360,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
 
     def __setattr__(self, name, value):
         # This is required password-changing support
-        Log(LOG_DEBUG, "__setattr__", name)
         if name == "__":
             self.changePassword(value)
         else:
