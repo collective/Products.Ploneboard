@@ -15,8 +15,8 @@ Quickstart
     2) Run it
 
     If you are using CMF 1.3, you will need to get ahold of CMF 1.4 and copy 
-    the file FSMetadata.py from the 1.4 CMFCore directory to the 1.3 CMFCore
-    directory.
+    the files FSMetadata.py and FSPythonScript.py from the 1.4 CMFCore directory
+    to the 1.3 CMFCore directory.
 
 Documentation
 
