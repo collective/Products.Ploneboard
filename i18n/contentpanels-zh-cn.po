@@ -112,7 +112,7 @@ msgstr "内容面板"
 msgid "View"
 msgstr "查看"
 
-msgid "Lastest Updates"
+msgid "Latest Updates"
 msgstr "最近更新"
 
 msgid "Body"

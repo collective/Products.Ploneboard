@@ -111,8 +111,8 @@ msgstr "Content View"
 msgid "View"
 msgstr "View"
 
-msgid "Lastest Updates"
-msgstr "Lastest Updates"
+msgid "Latest Updates"
+msgstr "Latest Updates"
 
 msgid "Body"
 msgstr "Body"

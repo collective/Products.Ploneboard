@@ -20,7 +20,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionProvid
     id = 'portal_contentpanels'
     meta_type = 'ContentPanels Tool'
     _actions = (ActionInformation(id='latest_updates_viewlet'
-                                , title='Lastest Updates'
+                                , title='Latest Updates'
                                 , action=Expression(
                 text='string:here/viewlet_folder_recent/macros/portlet')
                                 , condition=Expression(

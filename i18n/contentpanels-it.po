@@ -112,7 +112,7 @@ msgstr "Visualizzazione ContentPanels"
 msgid "View"
 msgstr "Visualizza"
 
-msgid "Lastest Updates"
+msgid "Latest Updates"
 msgstr "Ultimi aggiornamenti"
 
 msgid "Body"
