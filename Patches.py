@@ -18,10 +18,10 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.5 2003/12/09 12:06:51 longsleep Exp $
+$Id: Patches.py,v 1.6 2003/12/19 14:16:24 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.5 $"
+__version__ = "$Revision: 1.6 $"
 
 from types import StringType
 ####################
@@ -167,12 +167,13 @@ def new_BTreeobjectIds(self, spec=None):
             if ids is not None:
                 set = union(set, ids)
         lids = mti.get('I18NLayer', None)
-        ids = OIBTree()
-        for id in lids.keys():
-            o = self._getOb(id)
-            if o.ContainmentMetaType() in spec:
-                ids[id]=lids[id]
-            set = union(set, ids)
+        if lids is not None:
+            ids = OIBTree()
+            for id in lids.keys():
+                o = self._getOb(id)
+                if o.ContainmentMetaType() in spec:
+                    ids[id]=lids[id]
+                set = union(set, ids)
             
         if set is None:
             return ()
