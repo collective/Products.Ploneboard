@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.5 2003/06/10 12:06:03 longsleep Exp $
+$Id: I18NLayer.py,v 1.6 2003/08/12 20:28:43 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.5 $"
+__version__ = "$Revision: 1.6 $"
 
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
 from OFS.ObjectManager import ObjectManager
@@ -46,6 +46,7 @@ schema = Schema((
     ObjectField(
         'allowedType',
         required=1,
+        default=None,
         accessor="ContainmentContentType",
         mutator="setContainmentContentType",
         vocabulary="allowedContentTypeNames",
@@ -64,7 +65,6 @@ class I18NLayer( BaseFolder ):
     """
     schema = schema
     isPrincipiaFolderish=0
-    _containmentContentType=None
 
     actions = ({
         'id': 'view',
@@ -90,7 +90,7 @@ class I18NLayer( BaseFolder ):
     # all stuff is public but not the protected
     security.declareObjectPublic()
 
-
+    
     security.declarePrivate('retrieveContentLayer')
     def retrieveContentLayer(self, REQUEST=None, verifypermission=1):
         """ """
@@ -182,7 +182,7 @@ class I18NLayer( BaseFolder ):
         Invokes the default view
         '''
         # NOTE: returns view of an available object
-        #       if non is available returns language sheet depended on permission
+        #       if none is available returns language sheet depended on permission
         #       of the current user on the layer
 
         ob = self.retrieveLanguageContent()
