@@ -282,7 +282,19 @@
           </div>
         </div>
 
-	<br/>
+    	<br/>
+
+        <div>
+          <span class="label" i18n:translate="Validators">Validators</span>
+          <div>
+            <input type="text" value="" size="40" 
+                   name="fielddata.validators:record:string"
+                   tal:attributes="value python: ', '.join(getattr(field.widget, 'validators', ()))"/>
+          </div>
+        </div>
+
+    	<br/>
+
         <div>
           <span class="label" i18n:translate="label">Label</span>
           <div>
