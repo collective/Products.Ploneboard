@@ -682,12 +682,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         usr_cache = {}
         for id, depth, path in folders:
             folder = self.unrestrictedTraverse(path)
-            for kind, actor, display in actors:
+            for kind, actor, display, handle in actors:
                 if kind in ("user", "group"):
                     # Init structure
                     if not cache.has_key(path):
                         cache[path] = {(kind, actor): {}}
-                    elif not cache[path].has_key((kind, actor, display)):
+                    elif not cache[path].has_key((kind, actor)):
                         cache[path][(kind, actor)] = {}
                     else:
                         cache[path][(kind, actor)] = {}
@@ -764,6 +764,24 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Log(LOG_DEBUG, "Returning", cache[path][(kind, actor)])
         return cache[path][(kind, actor)]
 
+
+    security.declarePrivate('_getNextHandle')
+    def _getNextHandle(self, index):
+        """
+        _getNextHandle(self, index) => utility function to
+        get an unique handle for each legend item
+        """
+        # Build the handles list
+        handles = string.uppercase
+        index_max = len(handles)
+
+        # Get the one or two letters handle
+        if index < index_max:
+            return handles[index]
+        else:
+            return "%s%s" % (handles[index/26 - 1], handles[index%26], )
+            
+
     security.declareProtected(Permissions.manage_users, "listUsersAndRoles")
     def listUsersAndRoles(self,):
         """
@@ -775,13 +793,18 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         display_roles = request.get('display_roles', 0)
         display_groups = request.get('display_groups', 0)
         display_users = request.get('display_users', 0)
-        
+
+        role_index = 0
+        user_index = 0
+        group_index = 0
         ret = []
 
         # Collect roles
         if display_roles:
             for r in self.aq_parent.valid_roles():
-                ret.append(('role', r, r))
+                handle = "R%s" % self._getNextHandle(role_index)
+                role_index += 1
+                ret.append(('role', r, r, handle))
 
         # Collect users
         for u in self.getUserNames():
@@ -789,11 +812,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if hasattr(obj, 'isGroup'):
                 if obj.isGroup():
                     if display_groups:
-                        ret.append(('group', u, self.getUser(u).getUserNameWithoutGroupPrefix()))
+                        handle = "G%s" % self._getNextHandle(group_index)
+                        group_index += 1
+                        ret.append(('group', u, self.getUser(u).getUserNameWithoutGroupPrefix(), handle))
                         continue
 
             if display_users:
-                ret.append(('user', u, u))
+                handle = "U%s" % self._getNextHandle(user_index)
+                user_index += 1
+                ret.append(('user', u, u, handle))
 
         # Return list
         return ret

@@ -5,13 +5,13 @@
 
   
   <div tal:condition="request/doIt | nothing">
-    <h3 tal:condition="not: print">Audit results</h3>
+    <h3>Audit results</h3>
 
     <table 
            border="1"
            class="list-item"
            tal:define="
-      users_and_roles here/listUsersAndRoles;
+      global users_and_roles here/listUsersAndRoles;
       site_tree here/getSiteTree;
       table_cache python:here.computeSecuritySettings(site_tree, users_and_roles, [('R', request.read_permission), ('W', request.write_permission)]);
       "
@@ -19,15 +19,22 @@
       >
       <tr tal:define="width python:int(100/len(users_and_roles))">
         <td width="0" tal:attributes="width string:$width%"></td>
-        <td width="0"
+        <td width="0" align="center"
             tal:repeat="s users_and_roles"
           tal:attributes="width string:$width%"
           >
           <span tal:define="color python:test(s[0] == 'user', here.user_color, test(s[0] == 'group', here.group_color, here.role_color))">
             <font color="" tal:attributes="color color">
-              <b tal:content="python:s[2]" /><br />
+              <tal:block tal:condition="not:request/use_legend|nothing">
+                <b tal:content="python:s[2]" /><br />
+              </tal:block>
+              <tal:block tal:condition="request/use_legend|nothing">
+                <b tal:content="python:s[3]" />
+              </tal:block>
             </font>
-            (<font color="" tal:attributes="color color"><span tal:replace="python:s[0]" /></font>)
+            <span tal:condition="not:request/use_legend|nothing">
+              (<font color="" tal:attributes="color color"><span tal:replace="python:s[0]" /></font>)
+            </span>
           </span>
         </td>
       </tr>
@@ -62,9 +69,29 @@
           </tal:block>
         </td>
       </tr>
-
     </table>
+  </div>
 
+  <div tal:condition="request/use_legend|nothing">
+    <h3>Legend</h3>
+    <ol>
+      <table>
+        <tr class="list-header">
+          <th class="list-header">Id</th>
+          <th class="list-header">Label</th>
+          <th class="list-header">Kind</th>
+        </tr>
+        
+        <tr tal:repeat="actor users_and_roles">
+          <span tal:define="color python:test(actor[0] == 'user', here.user_color, test(actor[0] == 'group', here.group_color, here.role_color))">
+            <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[3]">Id</font></td>
+            <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[2]">Label</font></td>
+            <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[0]">Kind</font></td>
+          </span>
+        </tr>
+
+      </table>
+    </ol>
   </div>
 
   <div tal:condition="not: print" tal:omit-tag="">
@@ -127,6 +154,15 @@
                         <font color="" tal:attributes="color here/group_color">Groups</font><br />
                       <input type="checkbox" name="display_users" checked="" tal:attributes="checked request/display_users|python:test(request.get('doIt',None), 0, 0)">
                         <font color="" tal:attributes="color here/user_color">Users</font>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top"><div class="list-item">Use a legend</div></td>
+              <td>
+                <div class="list-item">
+                  <input type="checkbox" name="use_legend" checked="" tal:attributes="checked request/use_legend|nothing">
+                    (Use this feature to display actors names outside the table. This will reduce the table width, which may be useful for printing, for example.)
                 </div>
               </td>
             </tr>
