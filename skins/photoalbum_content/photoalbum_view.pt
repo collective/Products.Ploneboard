@@ -73,7 +73,7 @@
 
     <metal:block fill-slot="documentActions">
       <a tal:condition="python:here.aq_parent.meta_type=='Photo Album'" href="" tal:attributes="href string:${here/aq_parent/absolute_url}/view">
-        <img i18n:attributes="alt title" i18n:name="tooltip" tal:attributes="src string:$portal_url/folder_icon.gif" alt="Back" title="Back to album" />
+        <img i18n:attributes="alt title" tal:attributes="src string:$portal_url/folder_icon.gif" alt="Back" title="Back to album" />
       </a>
     </metal:block>
     
