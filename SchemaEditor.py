@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.6 2004/09/16 18:39:16 ajung Exp $
+$Id: SchemaEditor.py,v 1.7 2004/09/17 14:46:49 ajung Exp $
 """
 
 import re
@@ -86,7 +86,7 @@ class SchemaEditor:
             raise ValueError(self.translate('atse_exists', {schemata:name},
                              'Schemata "$schemata" already exists'))
         if not id_regex.match(name):
-            raise ValueError(self.translate('atse_invalid_id_for_schemata', {schemata:name},
+            raise ValueError(self.translate('atse_invalid_id_for_schemata', {'schemata':name},
                              '"$schemata" is an invalid ID for a schemata'))
 
         self._ms.addSchemata(name)
@@ -100,13 +100,19 @@ class SchemaEditor:
         """ delete a schemata """
 
         if name in self._undeleteable_schematas: 
-            raise RuntimeError(self.translate('atse_can_not_remove_schema', default='Can not remove this schema because it is protected from deletion'))
-        if len(self._ms.getSchemataNames()) == 1: 
-            raise RuntimeError(self.translate('atse_can_not_remove_last_schema', default='Can not remove the last schema'))
+            raise RuntimeError(self.translate('atse_can_not_remove_schema', 
+                                              default='Can not remove this schema because it is protected from deletion'))
+
+        if len(self._ms.getSchemataNames(True)) == 1: 
+            raise RuntimeError(self.translate('atse_can_not_remove_last_schema', 
+                                              default='Can not remove the last schema'))
+
         self._ms.delSchemata(name)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_deleted', default='Schemata deleted'), schemata=self._ms.getSchemataNames()[0])
+                      self.translate('atse_deleted', 
+                                     default='Schemata deleted'),   
+                                     schemata=self._ms.getSchemataNames()[0])
 
     ######################################################################
     # Field manipulation
@@ -118,21 +124,23 @@ class SchemaEditor:
 
         if name in self._undeleteable_fields:
             raise ValueError(self.translate('atse_field_not_deleteable',
-                                            {name:name},
+                                            {'name' : name},
                                             'field "$name" can not be deleted because it is protected from deletion',   
                                             ))
 
         old_schemata = self._ms[name].schemata
         self._ms.delField(name)    
 
-        if old_schemata in self._ms.getSchemataNames():
+        if old_schemata in self._ms.getSchemataNames(): # Schematas disappear if they are empty
             return_schemata = old_schemata
         else:
-            return_schemata = self._ms.getSchemataNames()[0]
+            return_schemata = self.atse_getSchemataNames(True)[0]
 	
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_field_deleted', default='Field deleted'), schemata=return_schemata)
+                      self.translate('atse_field_deleted', 
+                                     default='Field deleted'), 
+                                     schemata=return_schemata)
 
 
     security.declareProtected(ManageSchemaPermission, 'atse_update')
@@ -146,22 +154,27 @@ class SchemaEditor:
         if R.has_key('add_field'):
             if not R['name']:
                 raise ValueError(self.translate('atse_empty_field_name', 
-                                 default='Field name is empty'))
+                                                default='Field name is empty'))
 
             if not id_regex.match(R['name']):
-                raise ValueError(self.translate('atse_not_a_valid_id', {id:R['name']},
-                                 '"$id" is not a valid ID'))
+                raise ValueError(self.translate('atse_not_a_valid_id', 
+                                                {'id' : R['name']},
+                                                '"$id" is not a valid ID'))
 
             if R['name'] in [f.getName() for f in self._ms.fields()]:
-                raise ValueError(self.translate('atse_field_already_exists', {id:R['name']},
-                                 '"$id" exists already'))
+                raise ValueError(self.translate('atse_field_already_exists', 
+                                               {'id' : R['name']},
+                                               '"$id" exists already'))
 
             fieldset = FD.schemata    
             field = StringField(R['name'], schemata=fieldset, widget=StringWidget)
             self._ms.addField(field)
             self._p_changed = 1
             util.redirect(RESPONSE, 'atse_editor', 
-                          self.translate('atse_field_added', default='Field added'), schemata=fieldset, field=R['name'])
+                          self.translate('atse_field_added', 
+                                         default='Field added'), 
+                                         schemata=fieldset, 
+                                         field=R['name'])
             return            
 
         if   FD.type == 'StringField':     field = StringField
@@ -172,7 +185,7 @@ class SchemaEditor:
         elif FD.type == 'LinesField':      field = LinesField
         elif FD.type == 'DateTimeField':   field = DateTimeField
         else: raise TypeError(self.translate('atse_unknown_field', 
-                                              {field:FD.field},
+                                              {'field' : FD.field},
                                              'unknown field type: $field')) 
 
         D = {}    # dict to be passed to the field constructor
@@ -202,7 +215,7 @@ class SchemaEditor:
         elif FD.widget == 'Picklist':    widget = PicklistWidget()
         elif FD.widget == 'InAndOut':    widget = InAndOutWidget()
         else: raise ValueError(self.translate('atse_unknown_widget', 
-                                              {widget:d.widget},
+                                              {'widget' : d.widget},
                                               'unknown widget type: $widget'))
 
         if FD.has_key('widgetsize'):
@@ -274,7 +287,8 @@ class SchemaEditor:
         self._ms.moveSchemata(name, -1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_moved_left', default='Schemata moved to left'), schemata=name)
+                      self.translate('atse_moved_left', default='Schemata moved to left'), 
+                      schemata=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_schemataMoveRight')
     def atse_schemataMoveRight(self, name, RESPONSE=None):
@@ -282,7 +296,8 @@ class SchemaEditor:
         self._ms.moveSchemata(name, 1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_moved_right', default='Schemata moved to right'), schemata=name)
+                      self.translate('atse_moved_right', default='Schemata moved to right'), 
+                      schemata=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveLeft')
     def atse_fieldMoveLeft(self, name, RESPONSE=None):
@@ -290,7 +305,9 @@ class SchemaEditor:
         self._ms.moveField(name, -1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_field_moved_up', default='Field moved up'), schemata=self._ms[name].schemata, field=name)
+                      self.translate('atse_field_moved_up', default='Field moved up'), 
+                      schemata=self._ms[name].schemata, 
+                      field=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_fieldMoveRight')
     def atse_fieldMoveRight(self, name, RESPONSE=None):
@@ -298,7 +315,9 @@ class SchemaEditor:
         self._ms.moveField(name, 1)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_field_moved_down', default='Field moved down'), schemata=self._ms[name].schemata, field=name)
+                      self.translate('atse_field_moved_down', default='Field moved down'), 
+                      schemata=self._ms[name].schemata, 
+                      field=name)
 
     security.declareProtected(ManageSchemaPermission, 'atse_changeSchemataForField')
     def atse_changeSchemataForField(self, name, schemata_name, RESPONSE=None):
@@ -306,7 +325,9 @@ class SchemaEditor:
         self._ms.changeSchemataForField(name, schemata_name)
         self._p_changed = 1
         util.redirect(RESPONSE, 'atse_editor', 
-                      self.translate('atse_field_moved', default='Field moved to other fieldset'), schemata=schemata_name, field=name)
+                      self.translate('atse_field_moved', default='Field moved to other fieldset'), 
+                      schemata=schemata_name, 
+                      field=name)
 
 
     ######################################################################
