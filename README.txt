@@ -115,6 +115,14 @@ EXTENDING MEMBERS:
     data point.
 
 
+MAILING LIST:
+
+    Interested Users and Developers are welcome to join the 
+    cmfmember-dev mailing list hosted on sourceforge.
+
+    http://sf.net/projects/collective 
+
+
 BUGS:
 
     Please report bugs (which are different from feature requests) to:
