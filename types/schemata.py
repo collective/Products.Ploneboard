@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.28 2004/05/30 14:46:14 godchap Exp $
+$Id: schemata.py,v 1.29 2004/05/30 14:51:16 godchap Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -227,7 +227,7 @@ ATFileSchema = ATContentTypeSchema + Schema((
               required = 1,
               primary=1,
               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
-              swidget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
+              widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
                                   description_msgid = "help_file",
                                   label= "File",
                                   label_msgid = "label_file",
@@ -268,7 +268,7 @@ ATImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
+               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
                                     label= "Image",
@@ -287,7 +287,7 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
+               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
                                     label= "Image",
