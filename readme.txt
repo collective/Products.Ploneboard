@@ -10,6 +10,11 @@ Install
 
     see install.txt
 
+How to use it:
+
+    Go to ZMI portal_workflow/your_workflow, there is a new tab called
+'graph', click it and you will see the workflow graph!
+
 Credits
 
     Author: panjunyong(panjy@zopechina.com, http://www.zopechinac.com)
