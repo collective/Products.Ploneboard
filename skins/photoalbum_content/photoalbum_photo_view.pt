@@ -92,7 +92,7 @@
 	  </div>
 	</div>
 	
-	<div class="field" tal:define="displays here/getDisplays">
+	<div class="field" tal:define="displays image/getDisplays">
 	  <form id="cookie" action="setDisplayCookie">
 	    <input type="hidden" name="b_start:int" tal:attributes="value python:b_start or 0" />
 		<select onChange="javascript:document.getElementById('cookie').submit()" 
