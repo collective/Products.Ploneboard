@@ -1,8 +1,0 @@
-<br/>
-<h3><b tal:content="here/Title">title</b></h3>
-<div tal:content="here/Description">description</div>
-<br/>
-(This is rendered by the system panel viewer.
-<a href="#" tal:attributes="href here/absolute_url">Click Here</a> to go to the content)
-<br/>
-
