@@ -238,11 +238,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Return a list of usernames (including groups).
         Fetch the list from GRUFUsers and GRUFGroups.
         """
-        if not "acl_users" in self.Users.objectIds() or \
-           not "acl_users" in self.Groups.objectIds():
+        if not "acl_users" in self._getOb('Users').objectIds() or \
+           not "acl_users" in self._getOb('Groups').objectIds():
             return ()
-        return self.Users.acl_users.getUserNames() + \
-               self.Groups.getGroupNames()
+        return self._getOb('Users').acl_users.getUserNames() + \
+               self._getOb('Groups').getGroupNames()
 
     security.declareProtected(Permissions.manage_users, "getUsers")
     def getUsers(self):
@@ -640,7 +640,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/07/24 18:46:15 $"[7:-2]
+        rev_date = "$Date: 2003/07/26 19:05:49 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 

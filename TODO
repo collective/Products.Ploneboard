@@ -9,6 +9,9 @@ TODO-LIST
 
 [v1.4+ => Not planned yet]
 
+  * [ZMI] Improve ZMI for large users lists (batching, 'select all' buttons,
+    'expand all' for tree, ...)
+
   * [Core] Implement join()/leave() methods (and logic!) on groups
 
   * [Core] Implement some feature to make LDAPUF roles/groups binding easier
