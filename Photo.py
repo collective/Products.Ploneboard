@@ -11,6 +11,7 @@ from Products.CMFDefault.Image import Image
 from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2
 import OFS.Image
 from Acquisition import aq_parent, aq_base
+from cgi import escape
 
 from cStringIO import StringIO
 
@@ -168,8 +169,46 @@ class Photo(Image):
         except KeyError:
             photo = self
 
-        return Image.tag(photo, height, width, alt, scale, xscale, yscale, css_class, title, **args)
-        
+        if height is None: height=photo.height
+        if width is None:  width=photo.width
+
+        # Auto-scaling support
+        xdelta = xscale or scale
+        ydelta = yscale or scale
+
+        if xdelta and width:
+            width =  str(int(round(int(width) * xdelta)))
+        if ydelta and height:
+            height = str(int(round(int(height) * ydelta)))
+
+        result='<img src="%s?size=%s"' % (self.absolute_url(), escape(size))
+
+        if alt is None:
+            alt=getattr(self, 'title', '')
+        result = '%s alt="%s"' % (result, escape(alt, 1))
+
+        if title is None:
+            title=getattr(self, 'title', '')
+        result = '%s title="%s"' % (result, escape(title, 1))
+
+        if height:
+            result = '%s height="%s"' % (result, height)
+
+        if width:
+            result = '%s width="%s"' % (result, width)
+
+        if not 'border' in [ x.lower() for x in  args.keys()]:
+            result = '%s border="0"' % result
+
+        if css_class is not None:
+            result = '%s class="%s"' % (result, css_class)
+
+        for key in args.keys():
+            value = args.get(key)
+            result = '%s %s="%s"' % (result, key, value)
+
+        return '%s />' % result
+
 
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
@@ -201,7 +240,7 @@ class Photo(Image):
         return image
 
 
-    security.declareProtected(CMFCorePermissions.View, 'get_exif')
+    security.declareProtected(CMFCorePermissions.View, 'getEXIF')
     def getEXIF(self):
         """
 	Extracts the exif metadata from the image and returns
