@@ -1,3 +1,10 @@
+v1_21 - 20030710
+
+  * ZMI cosmetic fixes
+
+  * Fixed the bug that prevented LDAP-defined attributes to be acquired by GRUFUser.
+    This bug showed-up with LDAPUserFolder.
+
 v1_2 - 20030709
 
   * HTML documentation
