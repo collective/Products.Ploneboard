@@ -37,7 +37,7 @@
 	
 	<img tal:condition="image/size"
 	     src="#" 
-	     tal:attributes="src python:image.absolute_url()+'?display='+request.get('display', 'original')" />
+	     tal:attributes="src python:image.absolute_url()+'/'+request.get('display', '')" />
 	  
 	  
 	  <span class="description" tal:content="structure image/Description">

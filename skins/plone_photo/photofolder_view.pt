@@ -6,8 +6,11 @@
   <body>
     
     <div metal:fill-slot="main">
+
+      <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+      <script type="text/javascript" language="JavaScript" tal:attributes="src here/overlib.js/absolute_url"><!-- overLIB (c) Erik Bosrup --></script>
       
-      <script language="javascript">
+      <script type="text/javascript" language="javascript">
         <!--
         var newWin;
 	
@@ -36,60 +39,71 @@
 	               previous python:batch.previous;
 	               next python:batch.next">
 	
-        <p>Photo <span tal:replace="batch/start">10</span> of <span tal:replace="python:len(photos)">17</span>.<p>
+        <p>Photo <span tal:replace="batch/start">10</span> of <span tal:replace="python:len(photos)">17</span>.</p>
+	
+	<div tal:repeat="image batch">
+	  
+	  <div class="contentHeader">
+	    <h1 tal:content="image/title_or_id">Title or id</h1>
+	  </div>
+	  
+	  <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}', 'Image', ${image/width}+50, ${image/height}+50);; return false;;">
+	    <img tal:condition="image/size" src="#" 
+	      tal:attributes="src python:image.absolute_url()+'/'+request.get('display', '')"/>
+	  </a>
+	  
+	      
+	  <span class="description" tal:content="structure image/Description">
+	    Description
+	  </span>
+	  
+	  <small>
 	    
-	    <div tal:repeat="image batch">
-	      
-	      <div class="contentHeader">
-		<h1 tal:content="image/title_or_id">Title or id</h1>
-	      </div>
-	      
-	      <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}?display=original', 'Image', ${image/width}+50, ${image/height}+50);; return false;;">
-		<img tal:condition="image/size" src="#" 
-		     tal:attributes="src python:image.absolute_url()+'?size='+request.get('display', 'original')"/>
-	      </a>
-	      
-	      
-	      <span class="description" tal:content="structure image/Description">
-		Description
-	      </span>
-	      
-	      <small>
+	    <a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new">Edit image</a><br/>&nbsp;<br/>
 		
-		<a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new">Edit image</a><br/>&nbsp;<br/>
-		    
-		    <span i18n:translate="">Size:</span>
-		    <span tal:define="size python:image.getObjSize(image)" tal:content="size">                        
-		      File size
-		    </span>            
-		    
-		    <span tal:condition="python:test(image.size, 0, 1)" i18n:translate="">
-		      (No file has been uploaded)
-		    </span>
-		    
-		    -
-		    
-		    <span i18n:translate="">Content type:</span>
-		    <span tal:content="image/content_type">Content type</span>
-		  
-	      </small>
+		<span i18n:translate="">Size:</span>
+		<span tal:define="size python:image.getObjSize(image)" tal:content="size">                        
+		  File size
+		</span>            
+		
+		<span tal:condition="python:test(image.size, 0, 1)" i18n:translate="">
+		  (No file has been uploaded)
+		</span>
+		
+		-
+		
+		<span i18n:translate="">Content type:</span>
+		<span tal:content="image/content_type">Content type</span>
 	      
-	    </div>
-	    
-	    
-	    <p tal:condition="python:previous or next">
-	      <a tal:condition="previous"
-                 tal:attributes="href string:${request/URL0}?start:int=${previous/first}"
-                 href="previous_url">
-		<img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?display=thumbnail'" />
-	      </a>
-	      <a tal:condition="next"
-                 tal:attributes="href string:${request/URL0}?start:int=${next/first}"
-                 href="next_url">
-		<img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?display=thumbnail'" />
-	      </a>
-	    </p>
-	    
+	  </small>
+	  
+	</div>
+	
+	<div class="listingBar">
+	  <table width="100%">
+	    <tr>
+	      <td>
+		<span class="previous" tal:condition="previous">
+		  <a onmouseout="return nd();"
+		     tal:define="photo python:previous[0]"
+		    tal:attributes="href string:${request/URL0}?start:int=${previous/first};
+		    onmouseover string:return overlib('', BACKGROUND, '${photo/absolute_url}/thumbnail', HEIGHT, '${photo/height}', WIDTH, '${photo/width}', ABOVE);;">&laquo; previous
+		  </a>
+		</span>
+	      </td>
+	      <td>
+		<span class="next" tal:condition="next">
+		  <a onmouseout="return nd();"
+		     tal:define="photo python:next[0]"
+		    tal:attributes="href string:${request/URL0}?start:int=${next/first};
+		    onmouseover string:return overlib('', BACKGROUND, '${photo/absolute_url}/thumbnail', HEIGHT, '${photo/height}', WIDTH, '${photo/width}', ABOVE);;">next &raquo;
+		  </a>
+		</span>
+	      </td>
+	    </tr>
+	  </table>
+	</div>
+	
       </div>
     </div>
     

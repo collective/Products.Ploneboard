@@ -9,6 +9,8 @@ from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 
 from Products.CMFDefault.Image import Image
 
+from Products.BTreeFolder2.CMFBTreeFolder import CMFBTreeFolder
+
 import OFS.Image
 
 from cStringIO import StringIO
@@ -97,7 +99,7 @@ def addPhoto( self
     self._getOb(id).manage_upload(file)
 
 
-class Photo(Image):
+class Photo(Image, CMFBTreeFolder):
     """
     Implements a Photo, a scalable image
     """
@@ -129,12 +131,10 @@ class Photo(Image):
                 , language='en-US'
                 , rights=''
                 ):
+        CMFBTreeFolder.__init__(self, id)
         Image.__init__(self, id, title, file, content_type, precondition, 
                        subject, description, contributors, effective_date,
                        expiration_date, format, language, rights)
-
-        # Store resized photos here
-        self._photos = OOBTree()
     
     security = ClassSecurityInfo()
 
@@ -146,10 +146,10 @@ class Photo(Image):
         """
         size = REQUEST.get('display', '')
         if size in self.displays.keys():
-            if not size in self._photos.keys():
-                self._photos[size] = OFS.Image.Image('Image', 'Image',
-                                                     self._resize(self.displays.get(size, (0, 0))))
-            return self._photos.get(size).index_html(REQUEST, RESPONSE)
+            if not size in self.keys():
+                self._setObject(size, OFS.Image.Image('Image', 'Image',
+                                                     self._resize(self.displays.get(size, (0, 0)))))
+            return self.get(size).index_html(REQUEST, RESPONSE)
 
         return OFS.Image.Image.index_html(self, REQUEST, RESPONSE)
 
@@ -164,7 +164,7 @@ class Photo(Image):
         Returns the size of the file or image.
         """
         size = self.REQUEST.get('display', '')
-        photo = self._photos.get(size)
+        photo = self.get(size)
         if photo:
             return photo.get_size()
         else:
@@ -209,9 +209,10 @@ class Photo(Image):
 
         image.seek(0)
         self.manage_upload(image)
-        self._photos = OOBTree()
+        for id in self.keys():
+            self._delObject(id)
 
-        
+                    
     def _resize(self, size, quality=100):
         """Resize and resample photo."""
         image = StringIO()
@@ -240,6 +241,13 @@ class Photo(Image):
 
         image.seek(0)
         return image
+
+    def __bobo_traverse__(self, REQUEST, size):
+        if size in self.displays.keys() and size not in self.keys():
+            self._setObject(size, OFS.Image.Image('Image', 'Image',
+                                                  self._resize(self.displays.get(size, (0, 0)))))
+
+        return getattr(self, size, None)
     
     security.declareProtected(CMFCorePermissions.View, 'get_exif')
     def get_exif(self):
@@ -269,7 +277,16 @@ class Photo(Image):
 	    except:
 		pass
         return result
-                  
 
+    contentIds = CMFBTreeFolder.contentIds
+    contentValues = CMFBTreeFolder.contentValues
+    contentItems = CMFBTreeFolder.contentValues
+    objectCount = CMFBTreeFolder.objectCount
+    hasObject = CMFBTreeFolder.hasObject
+    objectIds = CMFBTreeFolder.objectIds
+    objectValues = CMFBTreeFolder.objectValues
+    objectItems = CMFBTreeFolder.objectItems
+
+                  
 InitializeClass(Photo)
 

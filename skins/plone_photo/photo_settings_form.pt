@@ -27,7 +27,7 @@
 	    </div>
 	  </div>
 	  
-	  <div class="field" tal:define="displays python:here.contentValues(spec='Portal Photo')[0].getDisplays()">
+	  <div class="field" tal:define="displays python:here.getDisplays()">
 	    
 	    <select id="display" name="display" tabindex="2" onfocus="formtooltip('display_help', 1)" onblur="formtooltip('display_help', 0)">
 	      <option value="original">Original size</option>

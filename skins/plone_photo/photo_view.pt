@@ -32,10 +32,10 @@
 	<h1 tal:content="here/title_or_id">Title or id</h1>
       </div>
       
-      <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${here/absolute_url}?display=original', 'Image', ${here/width}+50, ${here/height}+50);; return false;;">
+      <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${here/absolute_url}', 'Image', ${here/width}+50, ${here/height}+50);; return false;;">
         <img tal:condition="here/size"
 	     src="#" 
-	     tal:attributes="src python:here.absolute_url()+'?display='+request.get('display', 'original')" />
+	     tal:attributes="src python:here.absolute_url()+'/'+request.get('display', '')" />
       </a>
       
       <span class="description" tal:content="structure here/Description">
