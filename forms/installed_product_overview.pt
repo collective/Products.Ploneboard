@@ -2,20 +2,22 @@
 <body>
 <span tal:replace="structure here/manage_tabs" />
 
-<table border>
+
+<table width="100%">
+<tr valign="top">
+<td width="50%">
+<table border width="100%">
     <tr tal:repeat="entry python:['Types','Skins','Actions','PortalObjects','Workflows','Slots']">
         <th tal:content="entry"></th>
-        <td>
-            <table>
-                <tr tal:repeat="r python:getattr(here,'get'+entry)()">
+        <td width="100%" tal:define="method python: getattr(here,'get'+entry);
+                                     num python: len(method())">
+            <table tal:condition="python: num > 0">
+                <tr tal:repeat="r python:method()">
                     <td tal:content="r">entry</td>
                 </tr>
             </table>
+            <span tal:condition="python: num == 0">None</span>
         </td>
-    </tr>
-
-    <tr>
-        <th> Status </th><td tal:content="here/getStatus"> status </td>
     </tr>
 
     <tr tal:condition="here/hasError">
@@ -26,8 +28,22 @@
         </td>
     </tr>
 
-    
 </table>
+</td>
+<td>
+<table>
+    <tr>
+        <th align="right"> Status: </th><td tal:content="here/getStatus"> status </td>
+    </tr>
+    <tr>
+        <th align="right"> Contains Manual Uninstall: </th><td tal:content="python: test(here.getUninstallMethod(), 'true', 'false')"> manual uninstall </td>
+    </tr>
+
+</table>
+</td>
+</tr>
+</table>
+
 
 <hr>
 <h2>Transcript</h2>

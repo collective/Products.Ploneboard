@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.2 2003/03/02 22:31:02 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.3 2003/04/07 20:42:16 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -60,10 +60,18 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     
     def getInstallMethod(self,productname):
         ''' returns the installer method '''
+
+        productInCP = self.Control_Panel.Products[productname]
         
         for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
+
+            if mod in productInCP.objectIds():
+                modFolder = productInCP[mod]
+                if func in modFolder.objectIds():
+                    return modFolder[func]
+
             try:
-                return ExternalMethod('temp','temp',productname+'.'+mod, func)    
+                return ExternalMethod('temp','temp',productname+'.'+mod, func)
             except:
                 pass
             
@@ -75,7 +83,11 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         ''' list candidate CMF products for installation '''
         pids=self.Control_Panel.Products.objectIds()
         
+        import sys
+        sys.stdout.flush()
+
         pids = [pid for pid in pids if self.isProductInstallable(pid)]
+        sys.stdout.flush()
         
         if skipInstalled:
             installed=[p['id'] for p in self.listInstalledProducts()]

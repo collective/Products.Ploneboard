@@ -14,8 +14,14 @@ where it stores the infotmation about the installed products.
 The requirements for a product to be installable with
 QuickInstallerTool are quite simple (almost all existing CMF 
 products fulfill them):
-the product has to implement an external mtehod 'Install' in 
-a python module 'Install.py' in its Extensions directory.
+
+  External Product:  The product has to implement an external 
+                     method 'install' in a python module 'Install.py' 
+                     in its Extensions directory.
+
+  TTW Product: The product has to have a 'Install' folder
+               and have a python script titled 'install' inside
+               that folder.
 
 Products can be uninstalled and QuickInstellerTool removes
 the following items a product creates during install:
@@ -55,6 +61,17 @@ it is not necessary to enter thr ZMI for priduct management
 
 Customized uninstall
 ------------
-if there exists a method called 'uninstall' 
-in your Install.py this method is called before the
-standard removal of objects.
+In order to use a customize uninstall, the following
+requirements must be met:
+
+  External Product:  The product has to implement an external 
+                     method 'uninstall in a python module 'Install.py' 
+                     in its Extensions directory.
+
+  TTW Product: The product has to have a 'Install' folder
+               and have a python script titled 'uninstall' inside
+               that folder.  This script must also accept a 'portal'
+               parameter.
+
+Please note that the customized uninstall method is invoked before
+(and in addition to) the standard removal of objects.

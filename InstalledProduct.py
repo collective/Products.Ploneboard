@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.6 2003/03/05 17:18:56 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.7 2003/04/07 20:42:16 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -135,7 +135,14 @@ class InstalledProduct(SimpleItem):
     def getUninstallMethod(self):
         ''' returns the uninstaller method '''
         
+        productInCP = self.Control_Panel.Products[self.id]
+        
         for mod,func in (('Install','uninstall'),('Install','Uninstall'),('install','uninstall'),('install','Uninstall')):
+            if mod in productInCP.objectIds():
+                modFolder = productInCP[mod]
+                if func in modFolder.objectIds():
+                    return modFolder[func]
+
             try:
                 return ExternalMethod('temp','temp',self.id+'.'+mod, func)    
             except:
