@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.14 2004/02/25 16:43:05 longsleep Exp $
+$Id: I18NLayer.py,v 1.15 2004/03/01 11:17:33 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.14 $"
+__version__ = "$Revision: 1.15 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -153,9 +153,9 @@ class I18NLayer( TitleLessBaseFolder ):
 
 
     security.declarePublic('retrieveExistingLanguages')
-    def retrieveExistingLanguages(self, REQUEST=None):
+    def retrieveExistingLanguages(self, REQUEST=None, both=0):
         """ returns a list of existing languages """
-        return self.retrieveContentLayer(REQUEST).existingLanguages()
+        return self.retrieveContentLayer(REQUEST).existingLanguages(both=both)
 
     
     security.declarePublic('retrieveAcceptLanguages')
@@ -167,7 +167,13 @@ class I18NLayer( TitleLessBaseFolder ):
     def _checkId(self, id, allow_dup=0):
         # we only allow valid languages as id
         ObjectManager._checkId(self, id, allow_dup)
-        if not CheckValidity(None, None).check(id):
+        if id.startswith('.'):
+            # allow ids starting with . to make inline copy/paste/rename possible
+            return 
+        # check with the language validity checker
+        # try to retrieve valid language codes from plonelanguage tool
+        allowed_languages, allowed_languages_long = self.retrieveExistingLanguages(both=1)
+        if not CheckValidity(allowed_languages, allowed_languages_long).check(id):
             raise 'Bad Request', ( 'The id "%s" is not allowed.' % id)
         # we are ok
 

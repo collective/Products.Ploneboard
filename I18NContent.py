@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.8 2004/01/09 10:19:53 longsleep Exp $
+$Id: I18NContent.py,v 1.9 2004/03/01 11:17:33 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.8 $"
+__version__ = "$Revision: 1.9 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -89,11 +89,11 @@ class I18NContentBase:
         # for language self.language
 
         # ovewrite for each implementation
-        raise "NotImplementedError"
+        raise NotImplementedError
 
     def getFilteredLanguageMap(self, verifypermission=1):
         # returns a language code to id mapping
-        raise "NotImplementedError"
+        raise NotImplementedError
 
     def setServed(self, lang):
         # set cookies and response headers for multilingual content
@@ -109,17 +109,29 @@ class I18NContentBase:
 
     def existingLanguages(self, both=0):
         # return existing languages and existing languages name
-        existing_languages=()
-        existing_languages_long=()
-        for code, name in self.Layer().availableLanguages():
-            existing_languages=existing_languages+(code,)
-            existing_languages_long=existing_languages_long+(name,)
-        if not both: return existing_languages
-        else: return existing_languages, existing_languages_long
+        
+        # overwrite for each implementation
+        raise NotImplementedError
 
 
 class I18NContentLayer(I18NContentBase):
     """ zodb layer like content .. using seperate objects to store the different languages """
+
+    def existingLanguages(self, both=0):
+        # return existing languages and existing languages name
+        # either from PloneLanguageTool or 
+        # based on a script "availableLanguages" in the context of the Layer
+        existing_languages=()
+        existing_languages_long=()
+        try: full_list = self.Layer().portal_languages.getAvailableLanguages().items()
+        except AttributeError: full_list = self.Layer().availableLanguages()
+
+        # split up the list which contains ((code, name),)
+        for code, name in full_list:
+            existing_languages=existing_languages+(code,)
+            existing_languages_long=existing_languages_long+(name,)
+        if not both: return existing_languages
+        else: return existing_languages, existing_languages_long
 
     def getFilteredLanguageMap(self, verifypermission=1):
         # filter unaccessable language objects
