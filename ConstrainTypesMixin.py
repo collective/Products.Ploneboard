@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.2 2004/08/17 16:19:58 tiran Exp $
+$Id: ConstrainTypesMixin.py,v 1.3 2004/08/17 16:48:31 tiran Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -35,6 +35,7 @@ from Products.CMFCore.CMFCorePermissions import AddPortalContent
 from Products.Archetypes.public import Schema
 from Products.Archetypes.public import LinesField
 from Products.Archetypes.public import MultiSelectionWidget
+from Products.Archetypes.public import DisplayList
 
 from Products.ATContentTypes.interfaces.IConstrainTypes import IConstrainTypes
 from Products.ATContentTypes.config import CONSTRAIN_TYPES_MIXIN_PERMISSION
