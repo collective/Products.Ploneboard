@@ -13,6 +13,7 @@
                     errors python:request.get('errors', {});
                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
                     tabindex python:Iterator();
+                    portal_url here/portal_url;
 		    existing_languages python:here.retrieveFilteredLanguages().keys()">
 
         <h1 i18n:translate="heading_languages_sheet">
