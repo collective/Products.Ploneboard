@@ -1,5 +1,5 @@
 """
-$Id: MPoll.py,v 1.3 2003/04/04 13:32:07 magnusheino Exp $
+$Id: MPoll.py,v 1.4 2003/11/10 15:19:57 longsleep Exp $
 """
 from Products.Archetypes.public import *
 from BTrees.IOBTree import IOBTree
@@ -115,7 +115,7 @@ class MPoll(BaseContent):
 
             if self._votes.has_key(i):
                 votes = self._votes[i]()
-                percent = int(votes*100.0/result['total'])
+                percent = int(round(votes*100.0/result['total']))
             
             scores.append({'answer': answer,
                            'votes': votes,
