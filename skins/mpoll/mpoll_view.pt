@@ -37,7 +37,9 @@
 
 	<p>
 	<a href="mpoll_list" i18n:translate="the_others_mpoll">current 10 poll list</a>|
-	<a href="mpoll_poll" i18n:translate="box_poll">do vote</a>
+	<a tal:define="ab_url here/absolute_url"
+	   tal:attributes="href string:$ab_url/mpoll_poll"
+	   i18n:translate="box_poll">do vote</a>
 	</p>
     </div>
 </body>

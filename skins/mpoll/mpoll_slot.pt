@@ -9,7 +9,7 @@
 <!-- The vote box -->
 
 <div metal:define-macro="voteBox"
-     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')">
+     tal:define="results python:here.portal_catalog.searchResults(meta_type='MPoll', sort_on='Date', sort_order='reverse', review_state='published', effective=here.ZopeTime(), effective_usage='range:max', expires=here.ZopeTime(), expires_usage='range:min')[:1]">
 
     <div class="box" tal:condition="results" tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
                                  tabindex python:Iterator();">
@@ -27,15 +27,15 @@
                     <form method="post"
                           tal:attributes="action string:${obj/absolute_url}/portal_form/mpoll_slot">
                           <div style="padding-bottom: 10px;" tal:repeat="item obj/getAnswers">
-<!-- tabindex tabindex/next; -->
-                              <input tal:attributes="value repeat/item/number;
+                              <input tal:attributes="tabindex tabindex/next;
+                                                     value repeat/item/number;
                                                      checked python:test(repeat['item'].start, 'checked', '')"
                                      type="radio"
                                      name="answer"
                                      class="noborder" />&nbsp;<span tal:content="item"></span>
                           </div>
-<!-- tal:attributes="tabindex tabindex/next" -->
-                          <input 
+
+                          <input tal:attributes="tabindex tabindex/next"
                                  type="submit"
                                  class="context"
                                  i18n:attributes="value"
@@ -58,4 +58,5 @@
 </body>
 
 </html>
+
 
