@@ -33,8 +33,9 @@ class NameAssignments(BaseNameAssignments):
 
 class PythonScript(BasePythonScript):
 
-    def __init__(self, id):
+    def __init__(self, id, filepath=None):
         self.id = id
+        self._filepath = filepath
         self.ZBindings_edit(defaultBindings)
         self._makeFunction()
 
@@ -116,7 +117,7 @@ Globals.InitializeClass(PythonScript)
 class FSPythonScript(BaseFSPythonScript, PythonScript):
     def _createZODBClone(self):
         """Create a ZODB (editable) equivalent of this object."""
-        obj = PythonScript(self.getId())
+        obj = PythonScript(self.getId(), filepath=self._filepath)
         obj.write(self.read())
         return obj
 
@@ -131,7 +132,7 @@ class FSPythonScript(BaseFSPythonScript, PythonScript):
         and source in self.  If compile is set, compiles the
         function.
         '''
-        ps = PythonScript(self.id)
+        ps = PythonScript(self.id, filepath=self._filepath)
         ps.write(text)
         if compile:
             ps._makeFunction(1)

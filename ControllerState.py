@@ -125,18 +125,35 @@ class ControllerState(AccessControl.Role.RoleManager):
     def getErrors(self):
         """Return all errors in a dict of the form dict['name'] = errmsg"""
         err = {}
-        for k in self.errors.keys():
-            err[k] = self.errors[k][0]
+        for k,v in self.errors.items():
+            # make allowances for old-style string errors
+            if type(v) == type(''):
+                err[k] = v
+            else:
+                err[k] = v[0]
         return err
 
     def getI18NErrors(self):
         """Return all errors in a dict of the form dict['name'] = (errmsg, i18n_msgid)"""
-        return self.errors
+        err = {}
+        for k,v in self.errors.items():
+            # make allowances for old-style string errors
+            if type(v) == type(''):
+                err[k] = (v, None)
+            else:
+                err[k] = v
+        return err
 
     def setErrors(self, errors):
         """Set the error dictionary.  The dictionary should have entries of the
         form dict['name'] = (errmsg, i18n_msgid).  The msgid can be None"""
-        self.errors = errors
+        self.errors = {}
+        # make allowances for old-style errors
+        for k,v in errors.items():
+            if type(v) == type(''):
+                self.errors[k] = (v, None)
+            else:
+                self.errors[k] = v
 
     def getContext(self):
         """Get the context of the current form/script"""
