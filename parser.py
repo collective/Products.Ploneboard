@@ -37,8 +37,11 @@ class ActionParser:
 
     def parse(self,product_name):
         """parse the actions to a list consisting dictionaries with the action data"""
-        dirpath = expandpath(os.path.join(product_name,'Extensions'))
-        os.chdir(dirpath)
+        try:
+            dirpath = expandpath(os.path.join(product_name,'Extensions'))
+            os.chdir(dirpath)
+        except OSError:
+            return None
         try:
             self.lines=open('actions').readlines()
         except:
@@ -92,8 +95,11 @@ class PropertyParser:
 
     def parse(self,product_name):
         """parse the properties to a list consisting dictionaries with the property data"""
-        dirpath = expandpath(os.path.join(product_name,'Extensions'))
-        os.chdir(dirpath)
+        try:
+            dirpath = expandpath(os.path.join(product_name,'Extensions'))
+            os.chdir(dirpath)
+        except OSError:
+            return None
         try:
             self.lines=open('properties').readlines()
         except:

@@ -1,5 +1,8 @@
 unreleased
 
+ - Enabled uninstall of deleted products by making the parser.py handle
+   missing product directories slightly more gracefully.
+
  - Fixed multiple register bug
 
    QI doesn't assign an object to a product when it is already registered
@@ -23,7 +26,8 @@ unreleased
 
   - By Andy McKay
 
-    Remove the except: pass from trying to make a External method, if there is an error in the import log the error to ZLOG. Unfortunately there is a string error we have to try and catch as well. That string error occurs when the module cant be found, so we should ignore that.
+    Remove the except: pass from trying to make a External method, if there is an error in the import log the error to ZLOG. Unfortunately there is a string error we have to try and catch as well. That string error occurs when the module cant be found, so
+ we should ignore that.
 
   - content type registry support 
 
