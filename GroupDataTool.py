@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.8 2003/12/17 14:43:03 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.9 2003/12/17 15:35:14 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -278,6 +278,17 @@ class GroupData (SimpleItem):
 
     def __str__(self):
         return self.getGroupId()
+
+
+
+    security.declarePublic("isGroup")
+    def isGroup(self,):
+        """
+        isGroup(self,) => Return true if this is a group.
+        Will always return true for groups
+        """
+        return 1
+    
 
     ### Group object interface ###
 
