@@ -12,6 +12,7 @@ from Globals import MessageDialog, DTMLFile
 from AccessControl import ClassSecurityInfo
 from AccessControl import Permissions
 from AccessControl import getSecurityManager
+from AccessControl import Unauthorized
 from Globals import InitializeClass
 from Acquisition import aq_base, aq_inner, aq_parent
 from Acquisition import Implicit
@@ -159,8 +160,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         So, there might be a collision between a user name and a group name.
         [NOTA: This method is time-expensive !]
         """
-        if __include_users__:
-            LogCallStack(LOG_DEBUG, "This call can be VERY expensive!")
+##        if __include_users__:
+##            LogCallStack(LOG_DEBUG, "This call can be VERY expensive!")
         names = []
         ldap_sources = []
 
@@ -1034,7 +1035,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         prefix = GROUP_PREFIX
 
         # Prepare groups
-        Log(LOG_DEBUG, "Adding the user", name)
         roles = list(roles)
         gruf_groups = self.getGroupIds()
         for group in groups:
@@ -1048,7 +1048,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         self._v_batch_users = []
 
         # Really add users
-        Log(LOG_DEBUG, "Adding the user", name)
         return self.getDefaultUserSource()._doAddUser(
             name,
             password,
@@ -1317,7 +1316,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/15 10:04:42 $"[7:-2]
+        rev_date = "$Date: 2004/07/09 14:17:08 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1486,6 +1485,50 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Redirect
         if REQUEST.has_key('RESPONSE'):
             return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_groups")
+
+
+    #                                                                   #
+    #                   Local Roles Acquisition Blocking                #
+    #   Those two methods perform their own security check.             #
+    #                                                                   #
+
+    security.declarePublic("acquireLocalRoles")
+    def acquireLocalRoles(self, folder, status):
+        """
+        Enable or disable local role acquisition on the specified folder.
+        If status is true, it will enable, else it will disable.
+        Note that the user _must_ have the change_permissions permission on the
+        folder to allow changes on it.
+        If you want to use this code from a product, please use _acquireLocalRoles()
+        instead: this private method won't check security on the destination folder.
+        It's usually a bad idea to use _acquireLocalRoles() directly in your product,
+        but, well, after all, you do what you want ! :^)
+        """
+        # Perform security check on destination folder
+        if not getSecurityManager().checkPermission(Permissions.change_permissions, folder):
+            raise Unauthorized(name = "acquireLocalRoles")
+
+        return self._acquireLocalRoles(folder, status)
+
+    security.declarePrivate("acquireLocalRolesUnrestricted")
+    def _acquireLocalRoles(self, folder, status):
+        """Same as _acquireLocalRoles() but won't perform security check on the folder.
+        """
+        # Set the variable (or unset it if it's defined)
+        if not status:
+            folder.__ac_local_roles_block__ = 1
+        else:
+            if getattr(folder, '__ac_local_roles_block__', None):
+                folder.__ac_local_roles_block__ = None
+
+
+    security.declarePublic("isLocalRoleAcquired")
+    def isLocalRoleAcquired(self, folder):
+        """Return true if the specified folder allows local role acquisition.
+        """
+        if getattr(folder, '__ac_local_roles_block__', None):
+            return 0
+        return 1
 
 
 

@@ -129,6 +129,39 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
           u12      !   ng5, ng6     ! r1, r2, r3                          !
          -----------------------------------------------------------------!
 
+         Plus we have the following local roles matrix (roles inside parenthesis are implicitly
+         user-defined, roles inside brackets are implicitly lr-defined).
+
+         folder
+           |
+           |-- acl_users (GRUF)
+           |
+           |                                          r1    r2    r3
+           |                             /--
+           |                             | group_g1               x
+           |-- lr                        | u3        (x)          x
+               |                         | u6        (x)   (x)    x
+               |                         \--
+               |
+               |                         /--
+               |                         | group_g1              [x]
+               |-- sublr                 | u3        (x)    x    [x]
+               |                         | u6        (x)    x*   [x]
+               |                         \--
+               |
+               |                         /--
+               |                         | group_g1              [x]
+               |-- sublr2                | u3        (x)    x    [x]
+                   |                     | u6        (x)    x*   [x]
+                   |                     \--
+                   |
+                   |                     /--
+                   |                     | group_g1              [x]
+                   |-- subsublr2         | u3        (x)   [x]   [x]
+                                         | u6        (x)  [(x)]  [x]
+                                         \--
+                                         
+        *: u6 will have r2 as a localrole AND a userdefined role.
         """
         # Create a few roles
         self.gruf.userFolderAddRole("r1")
@@ -141,9 +174,24 @@ class GRUFTestCase(ZopeTestCase.ZopeTestCase):
         
         # Create a few folders to play with
         self.gruf_folder.manage_addProduct['OFSP'].manage_addFolder('lr')
-        self.gruf_folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
-        self.gruf_folder.lr.manage_addLocalRoles("u3", ("r3", ))
-        self.gruf_folder.lr.manage_addLocalRoles("u6", ("r3", ))
+        lr = self.gruf_folder.lr
+        lr.manage_addProduct['OFSP'].manage_addFolder("sublr")
+        sublr = self.gruf_folder.lr.sublr
+        lr.manage_addProduct['OFSP'].manage_addFolder("sublr2")
+        sublr2 = self.gruf_folder.lr.sublr2
+        sublr2.manage_addProduct['OFSP'].manage_addFolder("subsublr2")
+        subsublr2 = self.gruf_folder.lr.sublr2.subsublr2
+        lr.manage_addLocalRoles("group_g1", ("r3", ))
+        lr.manage_addLocalRoles("u3", ("r3", ))
+        lr.manage_addLocalRoles("u6", ("r3", ))
+        sublr.manage_addLocalRoles("u3", ("r2", ))
+        sublr.manage_addLocalRoles("u6", ("r2", ))
+        sublr2.manage_addLocalRoles("u3", ("r2", ))
+        sublr2.manage_addLocalRoles("u6", ("r2", ))
+        self.lr = lr
+        self.sublr = sublr
+        self.sublr2 = sublr2
+        self.subsublr2 = subsublr2
 
 
     def security_context_setup_users(self,):

@@ -337,6 +337,7 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
         inner_obj = getattr(object, 'aq_inner', object)
         while 1:
+            # Usual local roles retreiving
             local_roles = getattr(inner_obj, '__ac_local_roles__', None)
             if local_roles:
                 if callable(local_roles):
@@ -351,7 +352,13 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
                 for groupid in user_groups:
                     for role in dict.get(groupid, []):
                         roles[role] = 1
+                        
+            # LocalRole blocking
+            obj = getattr(inner_obj, 'aq_base', inner_obj)
+            if getattr(obj, '__ac_local_roles_block__', None):
+                break
 
+            # Loop management
             inner = getattr(inner_obj, 'aq_inner', inner_obj)
             parent = getattr(inner, 'aq_parent', None)
             if parent is not None:

@@ -2,7 +2,7 @@
 #                 Test GroupUserFolder                  #
 #                                                       #
 #                                                       #
-# (c)2002 Ingeniweb                                     #
+# (c)2002+ Ingeniweb                                    #
 
 
 import os, sys
@@ -799,6 +799,46 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
         u = self.gruf.getUser("u1")
         self.failUnless(u.getRealId() == "u1")
 
+
+    # Local roles management
+
+    def test_acquireLocalRoles(self,):
+        """
+        We block LR acquisition on sublr2.
+        See GRUFTestCase to understand what happens (basically, roles in brackets
+        will be removed from sublr2).
+        """
+        # Initial check
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", "r3", )))
+        
+        # Disable LR acquisition on sublr2 and test the stuff
+        self.gruf._acquireLocalRoles(self.sublr2, 0)
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", )))
+
+
+    def test_isLocalRoleAcquired(self,):
+        self.gruf._acquireLocalRoles(self.sublr2, 0)
+        self.failUnless(not self.gruf.isLocalRoleAcquired(self.sublr2))
+        self.failUnless(self.gruf.isLocalRoleAcquired(self.subsublr2))
+        self.gruf._acquireLocalRoles(self.subsublr2, 0)
+        self.failUnless(not self.gruf.isLocalRoleAcquired(self.sublr2))
+        self.failUnless(not self.gruf.isLocalRoleAcquired(self.subsublr2))
+        self.gruf._acquireLocalRoles(self.sublr2, 1)
+        self.failUnless(self.gruf.isLocalRoleAcquired(self.sublr2))
+        self.failUnless(not self.gruf.isLocalRoleAcquired(self.subsublr2))
+        self.gruf._acquireLocalRoles(self.subsublr2, 1)
+        self.failUnless(self.gruf.isLocalRoleAcquired(self.sublr2))
+        self.failUnless(self.gruf.isLocalRoleAcquired(self.subsublr2))
 
 
 if __name__ == '__main__':

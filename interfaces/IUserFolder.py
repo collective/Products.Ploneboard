@@ -105,6 +105,7 @@ class IUserFolder(Interface):
         THIS METHOD MAY BE VERY EXPENSIVE ON USER FOLDER KINDS WHICH DO NOT PROVIDE A
         SEARCHING METHOD (ie. every UF kind except LDAPUF).
         'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        [NOTA: This method is time-expensive !]
         """
 
     # Search interface for groups;
@@ -129,6 +130,7 @@ class IUserFolder(Interface):
         THIS METHOD MAY BE VERY EXPENSIVE ON GROUP FOLDER KINDS WHICH DO NOT PROVIDE A
         SEARCHING METHOD (ie. every UF kind except LDAPUF).
         'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        [NOTA: This method is time-expensive !]
         """
 
 
@@ -347,6 +349,17 @@ class IUserFolder(Interface):
     def getGroupMemberIds(groupid):
         """Same as listMemberUserIds but only return group ids.
         THIS METHOD CAN BE VERY EXPENSIVE AS IT NEEDS TO FETCH ALL USERS.
+        """
+
+
+    # Local roles acquisition blocking support
+    def acquireLocalRoles(folder, status):
+        """Enable or disable local role acquisition on the specified folder.
+        If status is true, it will enable, else it will disable.
+        """
+
+    def isLocalRoleAcquired(folder):
+        """Return true if the specified folder allows local role acquisition.
         """
         
 

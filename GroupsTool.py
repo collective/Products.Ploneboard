@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.30 2004/06/15 10:04:43 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.31 2004/07/09 14:17:08 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -215,9 +215,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         if id in self.listGroupIds():
             raise ValueError, "Group '%s' already exists." % (id, )
         self.acl_users.userFolderAddGroup(id, roles = roles, groups = groups )
-        Log(LOG_DEBUG, "In addGroup()")
         self.createGrouparea(id)
-        Log(LOG_DEBUG, "In addGroup()")
         self.getGroupById(id).setProperties(**kw)
 
     security.declareProtected(ManageGroups, 'editGroup')
@@ -321,12 +319,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
-        Log(LOG_DEBUG, )
         parent = self.aq_inner.aq_parent
         workspaces = self.getGroupWorkspacesFolder()
         pt = getToolByName( self, 'portal_types' )
 
-        Log(LOG_DEBUG, )
         if id and self.getGroupWorkspacesCreationFlag():
             if workspaces is None:
                 # add GroupWorkspaces folder

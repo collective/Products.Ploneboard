@@ -17,6 +17,7 @@ from Testing import ZopeTestCase
 from AccessControl.Permissions import access_contents_information, view, add_documents_images_and_files, change_images_and_files, view_management_screens
 from AccessControl.SecurityManagement import newSecurityManager, noSecurityManager, getSecurityManager
 from AccessControl import Unauthorized
+from AccessControl import Permissions
 from AccessControl.User import UnrestrictedUser
 
 import urllib
@@ -180,15 +181,28 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
 
         We just check that people has the right roles
         """
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u1", ()))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u2", ("r3", )))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u3", ("r1", "r3", )))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u4", ("r1", "r2", "r3", )))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u5", ("r1", "r2", )))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u6", ("r1", "r2", "r3", )))
-        self.failUnless(self.compareRoles(self.gruf_folder.lr, "u7", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.lr, "u1", ()))
+        self.failUnless(self.compareRoles(self.lr, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.lr, "u3", ("r1", "r3", )))
+        self.failUnless(self.compareRoles(self.lr, "u4", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.lr, "u5", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.lr, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.lr, "u7", ("r1", "r2", "r3", )))
+
+        self.failUnless(self.compareRoles(self.sublr, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.sublr, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.sublr, "u6", ("r1", "r2", "r3", )))
+
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", "r3", )))
+
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", "r3", )))
 
 
+        
     def test05nestedGroups(self,):
         """
         Test security on nested groups
@@ -252,62 +266,65 @@ class TestGroupUserFolder(GRUFTestCase.GRUFTestCase):
         #urllib.urlopen(base+'/acl_users/getGRUFId')
 
 
-
     #                                                   #
-    #              Classical security testing           #
+    #           LocalRole Acquisition Blocking          #
     #                                                   #
 
-##    def testAccess(self):
-##        '''Test access'''
-##        page = self.gruf_folder(self.gruf_folder)
+    def test11LocalRoleBlocking(self,):
+        """
+        We block LR acquisition on sublr2.
+        See GRUFTestCase to understand what happens (basically, roles in brackets
+        will be removed from sublr2).
+        """
+        # Initial check
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", "r3", )))
+        
+        # Disable LR acquisition on sublr2 and test the stuff
+        self.gruf._acquireLocalRoles(self.sublr2, 0)
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", )))
 
-##    def testWeb(self):
-##        '''Test web access'''
-##        urllib._urlopener = GRUFTestCase.UnauthorizedOpener()
-##        Log(LOG_DEBUG, base)
-##        page = urllib.urlopen(base).read()
-##        if page.find('Resource not found') >= 0:
-##            self.fail('Resource not found')
+        # Now we disable LR acq. on subsublr2 and check what happens
+        self.gruf._acquireLocalRoles(self.subsublr2, 0)
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", )))
 
-##    def testWeb2(self):
-##        '''Test web access to protected resource'''
-##        urllib._urlopener = GRUFTestCase.ManagementOpener()
-##        page = urllib.urlopen(base+'/secret_html').read()
-##        if page.find('Resource not found') >= 0:
-##            self.fail('Resource not found')
+        # We enable back on sublr2. subsublr2 mustn't change.
+        self.gruf._acquireLocalRoles(self.sublr2, 1)
+        self.failUnless(self.compareRoles(self.sublr2, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u3", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.sublr2, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u2", ()))
+        self.failUnless(self.compareRoles(self.subsublr2, "u3", ("r1", )))
+        self.failUnless(self.compareRoles(self.subsublr2, "u6", ("r1", "r2", )))
 
-##    def testSecurity(self):
-##        '''Test security of public resource'''
-##        # Should be accessible
-##        try: self.gruf_folder.restrictedTraverse('index_html')
-##        except Unauthorized: self.fail('Unauthorized')
+    def test12LocalRoleSecurity(self):
+        """Access TTW
+        """
+        try:
+            self.gruf.acquireLocalRoles(self.sublr2, 1)
+        except:
+            failed = 1
+        else:
+            failed = 0
 
-##    def testSecurity2(self):
-##        '''Test security of protected resource'''
-##        # Should be protected
-##        self.assertRaises(Unauthorized, self.gruf_folder.restrictedTraverse, 'secret_html')
-
-##    def testWebSecurity(self):
-##        '''Test web security of public resource'''
-##        # Should be accessible
-##        urllib._urlopener = GRUFTestCase.UnauthorizedOpener()
-##        try: urllib.urlopen(base+'/index_html')
-##        except Unauthorized: self.fail('Unauthorized')
-
-##    def testWebSecurity2(self):
-##        '''Test web security of protected resource'''
-##        # Should be protected
-##        urllib._urlopener = GRUFTestCase.UnauthorizedOpener()
-##        try:
-##            urllib.urlopen, base+'/secret_html'
-##        except Unauthorized:
-##            pass
-
-##    def testAbsoluteURL(self):
-##        '''Test absolute_url'''
-##        self.assertEquals(self.gruf_folder.absolute_url(), base)
-
-
+        if getSecurityManager().checkPermission(Permissions.change_permissions, self.sublr2,):
+            self.failUnless(not failed, "Must have the permission here.")
+        else:
+            self.failUnless(failed, "Must NOT have the permission here.")
 
 
 #                                                   #
