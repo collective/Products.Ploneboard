@@ -314,7 +314,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     security.declarePrivate('authenticate')
     def authenticate(self, password, request):
         # We prevent groups from authenticating
-        if self._isGroup():
+        if self._isGroup:
             return None
         return self.__underlying__.authenticate(password, request)
 
