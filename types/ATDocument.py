@@ -18,12 +18,14 @@
 #
 """
 
-$Id: ATDocument.py,v 1.9 2004/03/31 11:04:51 tiran Exp $
+$Id: ATDocument.py,v 1.10 2004/03/31 17:22:22 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
 import difflib
+from types import TupleType
+
 from DateTime import DateTime
 from OFS.History import historicalRevision
 from DocumentTemplate.DT_Util import html_quote
@@ -85,7 +87,9 @@ class ATDocument(ATCTContent):
     def setText(self, value, **kwargs):
         """Body text mutator
         
-        * set text_format for backward compatibility with std cmf types
+        * hook into mxTidy an replace the value with the tidied value
+        * set text_format for backward compatibility with std cmf types using setContentType
+        
         """
         field = self.getField('text')
 
@@ -95,33 +99,75 @@ class ATDocument(ATCTContent):
             value = tidyOutput
         
         field.set(self, value, **kwargs)
+        self.setContentType(kwargs.get('mimetype', None), skipField=True)
 
-        # XXX not nice
-        bu = self.getRawText(maybe_baseunit=1)
-        if hasattr(bu, 'mimetype'):
-            self.text_format = str(bu.mimetype)
+    def setContentType(self, mimetype, skipField=False):
+        """Set the mime type of the text field and the text_format
+        """
+        if not mimetype:
+            return
+        
+        if not skipField:
+            field = self.getField('text')
+            # AT lacks a setContentType() method :(
+            bu = field.getRaw(self, raw=1)
+            raw = bu.getRaw()
+            filename, encoding = bu.filename, bu.original_encoding
+            field.set(self, raw, mimetype=mimetype, filename=filename,
+                      encoding=encoding)
+        
+        self.text_format = mimetype
+
+    def guessMimetypeOfText(self):
+        """For ftp/webdav upload: get the mimetype from the id and data
+        """
+        mtr  = getToolByName(self, 'mimetypes_registry')
+        id   = self.getId()
+        data = self.getRawText()
+        ext  = id.split('.')[-1]
+        
+        if ext != id:
+            mimetype = mtr.classify(data, filename=ext)
+        else:
+            # no extension
+            mimetype = mtr.classify(data)
+
+        if not mimetype or (type(mimetype) is TupleType and not len(mimetype)):
+            # nothing found
+            return None
+        
+        if type(mimetype) is TupleType and len(mimetype):
+            mimetype = mimetype[0]
+        return mimetype.normalized()
 
     security.declarePrivate('getTidyOutput')
     def getTidyOutput(self, field):
-        """
+        """get the tidied output for a specific field from the request if available
         """
         request = self.REQUEST
         tidyAttribute = '%s_tidier_data' % field.getName()
         if isinstance(request, HTTPRequest):
-            return self.request.get(tidyAttribute, None)
+            return request.get(tidyAttribute, None)
 
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, item, container):
-        """Fix test when created througt webdav
+        """
+        Fix text when created througt webdav
+        Guess the right mimetype from the id/data
         """
         ATCTContent.manage_afterAdd(self, item, container)
 
         field = self.getField('text')
+        mimetype  = self.guessMimetypeOfText()
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator
         tidyOutput = self.getTidyOutput(field)
-        if tidyOutput:
+        if tidyOutput and mimetype:
+            field.set(self, tidyOutput, mimetype=mimetype)
+        elif tidyOutput:
             field.set(self, tidyOutput)
+        elif mimetype:
+            self.setContentType(mimetype, skipField=False)
 
     security.declarePrivate('getHistories')
     def getHistories(self, max=10):

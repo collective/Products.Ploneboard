@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.8 2004/03/29 07:20:52 tiran Exp $
+$Id: Install.py,v 1.9 2004/03/31 17:22:22 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -82,6 +82,8 @@ def install(self):
     
     # bind templates for TemplateMixin
     registerTemplates(self, typeInfo, out)
+
+    removeApplicationXPython(self, out)
 
     return out.getvalue()
 
@@ -231,3 +233,15 @@ def registerTemplates(self, typeInfo, out):
             views.append(view)
 
         atTool.bindTemplate(meta_type, views)
+
+def removeApplicationXPython(self, out):
+    """Fixed broken .py file extension in older version of PortalTransforms
+    """
+    mtr  = getToolByName(self, 'mimetypes_registry')
+    mimetypes = mtr.lookup('application/x-python')
+    if mimetypes:
+        for m in mimetypes:
+            mtr.unregister(m)
+        print >>out, 'Unregistering application/x-python from mimetypes_registry'
+    textpy = mtr.lookup('text/x-python')
+    mtr.register_extension('py', textpy)
