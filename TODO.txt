@@ -20,8 +20,6 @@ my mind now.
 
 - submit to Plone as a portlet proposal
 
-- Local published event/Local published news viewlet
-
 - Also, you mention in the documentation that there are heirarchical content
   panels - I assumed that when you click the 'add panel' button inside a panel
 you can do that, but actually it just adds the panel after the one you click.
