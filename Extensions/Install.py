@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.11 2004/04/15 16:10:36 tiran Exp $
+$Id: Install.py,v 1.12 2004/04/26 06:32:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -61,24 +61,24 @@ def install(self):
     
     # register switch methods to toggle old plonetypes on/off
     portal=getToolByName(self,'portal_url').getPortalObject()
-    manage_addExternalMethod(portal,'switch_old_plone_types_off',    
-        'switch_old_plone_types_off',    
+    manage_addExternalMethod(portal,'switchATCT2CMF',    
+        'Set reenable CMF type',    
         PROJECTNAME+'.toolbox', 
-        'switch_old_plone_types_off')    
-    manage_addExternalMethod(portal,'switch_old_plone_types_on',    
-        'switch_old_plone_types_on',    
+        'switchATCT2CMF')    
+    manage_addExternalMethod(portal,'switchCMF2ATCT',    
+        'Set ATCT as default content types',    
         PROJECTNAME+'.toolbox', 
-        'switch_old_plone_types_on')    
+        'switchCMF2ATCT')    
 
     manage_addExternalMethod(portal,'migrateFromCMFtoATCT',
         'Migrate from CMFDefault types to ATContentTypes',    
         PROJECTNAME+'.migrateFromCMF', 
         'migrate')    
 
-    manage_addExternalMethod(portal,'migrateFromCPTtoATCT',
-        'Migrate from CMFPloneTypes types to ATContentTypes',    
-        PROJECTNAME+'.migrateFromCPT', 
-        'migrate')    
+    #manage_addExternalMethod(portal,'migrateFromCPTtoATCT',
+    #    'Migrate from CMFPloneTypes types to ATContentTypes',    
+    #    PROJECTNAME+'.migrateFromCPT', 
+    #    'migrate')    
 
     manage_addExternalMethod(portal,'recreateATImageScales',    
         '',    
@@ -101,6 +101,12 @@ def install(self):
 def uninstall(self):
     out = StringIO()
     classes=listTypes(PROJECTNAME)
+    
+    # switch back to
+    try:
+        self.switchATCT2CMF()
+    except: #XXX CopyError
+        pass
 
     #unregister folderish classes in use_folder_contents
     props = getToolByName(self,'portal_properties').site_properties
@@ -118,7 +124,8 @@ def uninstall(self):
     # remove external methods for toggling between old and new types
     portal=getToolByName(self,'portal_url').getPortalObject()
     for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off',
-     'migrateFromCMFtoATCT', 'migrateFromCPTtoATCT', 'recreateATImageScales', ):
+     'migrateFromCMFtoATCT', 'migrateFromCPTtoATCT', 'recreateATImageScales',
+     'switchATCT2CMF', 'switchCMF2ATCT', ):
         if hasattr(aq_base(portal), script):
             portal.manage_delObjects(ids=[script,])
     

@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.1 2004/04/15 16:10:36 tiran Exp $
+$Id: toolbox.py,v 1.2 2004/04/26 06:32:10 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -25,8 +25,25 @@ __docformat__ = 'restructuredtext'
 
 from StringIO import StringIO
 from Products.CMFCore.utils import getToolByName
-from Products.ATContentTypes.types import ATDocument, ATEvent, \
-    ATFavorite, ATFile, ATFolder, ATImage, ATLink, ATNewsItem
+from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
+    ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
+from Products.ATContentTypes.interfaces.IATImage import IATImage
+
+
+not_global_allow = ('Favorite', 'Large Plone Folder')
+
+atct_klasses = (
+    ATDocument.ATDocument,
+    ATEvent.ATEvent,
+    ATFavorite.ATFavorite,
+    ATFile.ATFile,
+    ATFolder.ATFolder,
+    ATFolder.ATBTreeFolder,
+    ATImage.ATImage,
+    ATLink.ATLink,
+    ATNewsItem.ATNewsItem,
+    ATTopic.ATTopic,
+   )
 
 def recreateATImageScales(self):
     """Recreates AT Image scales (doesn't remove unused!)
@@ -34,10 +51,12 @@ def recreateATImageScales(self):
     out = StringIO()
     print >>out, "Updating AT Image scales"
     catalog = getToolByName(self, 'portal_catalog')
-    brains  = catalog(portal_type = 'ATImage')
+    brains  = catalog(portal_type = ('ATImage', 'Image'))
     for brain in brains:
         obj = brain.getObject()
         if not obj:
+            continue
+        if not IATImage.isImplementedBy(obj):
             continue
         field = obj.getField('image')
         if field:
@@ -46,100 +65,65 @@ def recreateATImageScales(self):
 
     return out.getvalue()
 
-def switch_old_plone_types_off(self):
-    ''' switch OldPloneTypes Off by setting its global_allow property in 
-        portal_types tool to 0
-    '''
-    switch_old_plone_types(self,0)
+def _switchToATCT(pt, cat, klass):
+    """
+    """
+    atId = klass.__name__
+    id = klass.newTypeFor[0]
+    bakId = 'CMF %s' % id
 
-def switch_old_plone_types_on(self):
-    ''' switch OldPloneTypes Off by setting its global_allow property in 
-        portal_types tool to 0
-    '''
-    switch_old_plone_types(self,1)
+    title = klass.archetype_name[3:]
+    bakTitle = bakId
     
-def switch_old_plone_types(self, state):
-    ''' toggle OldPloneTypes On/Off by setting its global_allow property in 
-        portal_types tool
-    '''
+    # move away the disabled type
+    pt.manage_renameObject(id, bakId)
+    pt[bakId].manage_changeProperties(title=bakTitle, global_allow=0)
+    _changePortalType(cat, id, bakId)
+    # rename to the new
+    pt.manage_renameObject(atId, id)
+    pt[id].manage_changeProperties(title=title)
+    _changePortalType(cat, atId, id)
+
+def _switchToCMF(pt, cat, klass):
+    """
+    """
+    atId = klass.__name__
+    id = klass.newTypeFor[0]
+    bakId = 'CMF %s' % id
+
+    atTitle = klass.archetype_name
     
-    assert state in [1,0]
-    
-    from Products.CMFCore.utils import getToolByName
-    pt   = getToolByName(self,'portal_types')
-    
-    typesmap=[ \
-        # schema of this map:
-            # (old plone type id, old plone type title)
-            # (new plone type id, new plone type title)
-            # 1 or 0 -> default of global allow
-        (
-            ('Large Plone Folder', 'Large Plone Folder'),    
-            ('ATBTreeFolder',      'AT BTree Folder'),
-            0,
-        ),
-        (
-            ('Document','Document'),
-            ('ATDocument','AT Document'),   
-            1,
-        ),
-        (
-            ('Event','Event'),
-            ('ATEvent','AT Event'),
-            1,
-        ),
-        (
-            ('Favorite','Favorite'),
-            ('ATFavorite','AT Favorite'),   
-            1,
-        ),
-        (
-            ('File','File'),
-            ('ATFile','AT File'),   
-            1,
-        ),        
-        (
-            ('Folder','Folder'),
-            ('ATFolder','AT Folder'),
-            1,
-        ),
-        (
-            ('Image','Image'),
-            ('ATImage','AT Image'),
-            1,
-        ),
-        (
-            ('Link','Link'),
-            ('ATLink','AT Link'),
-            1,
-        ),
-        (
-            ('News Item','News Item'),
-            ('ATNewsItem','AT News Item'),  
-            1,
-        ),
-        (
-            ('Topic','Topic'),
-            ('ATTopic','AT Topic'),
-            1,
-        ),
-        # do not rename the criterias for ATTopic.
-    ]
-    
-    for typetuple in typesmap:        
-        if not state:
-            # disable global allow
-            pt[typetuple[0][0]].manage_changeProperties(global_allow=0)
-            # prefix old types title with 'CMF '
-            pt[typetuple[0][0]].manage_changeProperties(title='CMF '+typetuple[0][1])
-            # change title of the AT Type to old types title
-            pt[typetuple[1][0]].manage_changeProperties(title=typetuple[0][1])
-        else:
-            # set  global allow to default
-            pt[typetuple[0][0]].manage_changeProperties(global_allow=typetuple[2])
-            # restore AT types title to default
-            pt[typetuple[1][0]].manage_changeProperties(title='AT '+typetuple[0][1])
-            # restore old types title to default
-            pt[typetuple[0][1]].manage_changeProperties(title=typetuple[0][1])
-        
-        
+    # move away the ATCT type
+    pt.manage_renameObject(id, atId)
+    pt[bakId].manage_changeProperties(title=atTitle)
+    _changePortalType(cat, id, atId)
+    # rename to the new type
+    pt.manage_renameObject(bakId, id)
+    if id not in not_global_allow:
+        global_allow = 1
+    else:
+        global_allow = 0
+    pt[id].manage_changeProperties(title='', global_allow=global_allow)
+    _changePortalType(cat, bakId, id)
+
+def _changePortalType(cat, old, new):
+    """
+    """
+    brains = cat(portal_type = old)
+    objs = [brain.getObject() for brain in brains ]
+    for obj in objs:
+        if not obj:
+            continue
+        obj._setPortalTypeName(new)
+
+def switchCMF2ATCT(self):
+    pt = getToolByName(self,'portal_types')
+    cat = getToolByName(self,'portal_catalog')
+    for klass in atct_klasses:
+        _switchToATCT(pt, cat, klass)
+
+def switchATCT2CMF(self):
+    pt = getToolByName(self,'portal_types')
+    cat = getToolByName(self,'portal_catalog')
+    for klass in atct_klasses:
+        _switchToCMF(pt, cat, klass)
