@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.21 2004/12/28 10:50:14 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.22 2004/12/31 12:53:34 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -56,7 +56,7 @@ class ManagedSchemaBase:
 
         # If we're called by the generated methods we can not rely on
         # the id and need to check for portal_type
-        if not self.lookup_provider.atse_isSchemaRegistered(self.portal_type):
+        if not self.lookup_provider().atse_isSchemaRegistered(self.portal_type):
             return self._wrap_schema(self.schema)
 
         if not schema_id:
