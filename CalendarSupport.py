@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.8 2005/01/24 18:18:42 tiran Exp $
+$Id: CalendarSupport.py,v 1.9 2005/01/25 17:52:42 yenzenz Exp $
 """
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -116,7 +116,7 @@ class CalendarSupportMixin:
         'id'          : 'ics',
         'name'        : 'iCalendar',
         # XXX 'action'      : 'python: "%s/ics_view" % object_url.replace("http://", "webcal://")',
-        'action'      : 'python:${object_url}/ics_view',
+        'action'      : 'string:${object_url}/ics_view',
         'permissions' : (CMFCorePermissions.View, ),
         'category'    : 'document_actions',
          },
