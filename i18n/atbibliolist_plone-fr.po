@@ -1,3 +1,4 @@
+
 msgid ""
 msgstr ""
 "Project-Id-Version: ATBiblioList 0.1\n"
@@ -19,233 +20,400 @@ msgstr ""
 msgid "Export Bibliography List"
 msgstr "Exporter la liste bibliographique"
 
+# status messages
+msgid "Selected references added."
+msgstr "Les références ont été ajoutées."
+msgid "No references selected."
+msgstr "Aucune référence n'est selectionée."
+msgid "Selected references removed."
+msgstr "Les références ont été supprimées"
+msgid "Selected references moved up."
+msgstr "Les références ont été déplacées vers le haut."
+msgid "Selected references moved down."
+msgstr "Les références ont été déplacées vers le bas."
+msgid "Selected references were sorted."
+msgstr "Les références ont été triées."
+msgid "Your changes have been saved."
+msgstr "Les modifications ont étés sauvegardés."
+
 # Object names
-msgid "Bibliography presentation format"
-msgstr "Format de présentation (biblio)"
-msgid "Presentation Folder"
-msgstr "Dossier de formats de presentations"
+msgid "Bibref Custom Style Folder"
+msgstr "Dossier de Styles Bibliographiques Personnalisés"
+msgid "Bibref Custom Style Set"
+msgstr "Set de Styles Bibliographiques Personnalisés"
+msgid "Bibref Custom Style"
+msgstr "Style Bibliographique Personnalisé"
+msgid "Bibref Style"
+msgstr "Style Bibliographique"
 msgid "Bibliography List"
 msgstr "Liste bibliographique"
 
+# Displaylist Items
+msgid "Bulleted list"
+msgstr "Liste à puces"
+msgid "Ordered list"
+msgstr "Liste numérotée"
+msgid "Simple lines list"
+msgstr "Liste simple"
+msgid "Table listing"
+msgstr "Tableau"
 
-#: list_pt.pt
-#.     <h1 i18n:translate="heading_skins_folder_listing">Filesystem Directory View Listing</h1><br />
-msgid "heading_skins_folder_listing"
-msgstr "Contenu du dossier du système de données"
+#: widget_bibreflist.pt
+#.            <th class="nosort" i18n:translate="header_bibrefs_listing">
+#.              Bibliography References
+#.            </th>
+msgid "header_bibrefs_listing"
+msgstr "Références Bibliographiques"
 
-#: ReferencePresentation.py
+#: widget_bibreflist.pt
+#.        <legend i18n:translate="legend_bibrefs_oldrefs">Listed References</legend>
+msgid "legend_bibrefs_oldrefs"
+msgstr "Références contenues dans la liste"
+
+#: widget_bibreflist.pt
+#.        <p tal:condition="not:old"
+#.         i18n:translate="empty_bibrefs_oldrefs">Nothing in the bibliography list</p>
+msgid "empty_bibrefs_oldrefs"
+msgstr "La liste est vide"
+
+#: widget_bibreflist.pt
+#.              <th class="nosort"><input class="noborder"
+#.                                        type="checkbox"
+#.                                        src="select_all_icon.gif"
+#.                                        name="selectButton"
+#.                                        title="Select all items"
+#.                                        onClick="toggleSelect(this, id='modReferences:list');"
+#.                                        tal:attributes="src string:$portal_url/select_all_icon.gif"
+#.                                        alt="Select all items"
+#.                                        i18n:attributes="title alt"
+#.                                        />
+msgid "Select all items"
+msgstr "Tout sélectionner"
+
+#: widget_bibreflist.pt
+#.              <th class="nosort"
+#.                  i18n:translate="header_bibliolist_oldrefs">Existing references</th>
+msgid "header_bibliolist_oldrefs"
+msgstr "Références existantes"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_delete" value="Remove"
+#.                 i18n:attributes="value" />
+msgid "Remove"
+msgstr "Supprimer"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_up" value="Up"
+#.                 i18n:attributes="value"/>
+msgid "Up"
+msgstr "Vers le haut"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_down" value="Down"
+#.                 i18n:attributes="value"/>
+msgid "Down"
+msgstr "Vers le bas"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_publication_year" value="('publication_year', 'cmp', 'desc')"> Publication Year </option>
+msgid "bibrefs_sort_publication_year"
+msgstr "Année de publication"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_authors" value="('Authors', 'nocase', 'asc'))"> Authors </option>
+msgid "bibrefs_sort_authors"
+msgstr "Auteurs"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_source" value="('Source', 'nocase', 'asc'))"> Source </option>
+msgid "bibrefs_sort_source"
+msgstr "Source"
+
+#: widget_bibreflist.pt
+#.         <option i18n:translate="bibrefs_sort_none" value=""> -------none-------</option>
+msgid "bibrefs_sort_none"
+msgstr "-------aucun------"
+
+#: widget_bibreflist.pt
+#.        <input type="submit" name="form.button.reference_sort" value="Sort"
+#.               i18n:attributes="value" />
+msgid "Sort"
+msgstr "Trier"
+
+#: widget_bibreflist.pt
+#.        <legend i18n:translate="legend_bibrefs_searchadd">Search/Add references</legend>
+msgid "legend_bibrefs_searchadd"
+msgstr "Recherchez/ajoutez des références"
+
+#: widget_bibreflist.pt
+#.       <input type="submit" name="form.button.reference_search" value="Search"
+#.              i18n:attributes="value" />
+msgid "Search"
+msgstr "Rechercher"
+
+#: widget_bibreflist.pt
+#.             <th class="nosort"
+#.                 i18n:translate="header_bibliolist_foundrefs">Found references</th>
+msgid "header_bibliolist_foundrefs"
+msgstr "Références trouvées"
+
+#: widget_bibreflist.pt
+#.         <input type="submit"
+#.                name="form.button.reference_add"
+#.                value="Add to list"
+#.                tal:condition="results"
+#.                i18n:attributes="value" />
+msgid "Add to list"
+msgstr "Ajouter à la liste"
+
+#: widget_bibreflist.pt
+#.       <p i18n:translate="empty_bibrefs_foundrefs" tal:condition="not:results">No matching bibliographic reference found.
+#.          Please try another search term.</p>
+msgid "empty_bibrefs_foundrefs"
+msgstr "Aucune référence bibliographique n'a été trouvée. Réessayez avec un autre terme de recherche."
+
+#: bibrefcustomstyleset_view.pt
+#: bibrefcustomstyle_view.pt
+#.           <dt tal:content="structure dummy_ref/type" i18n:translate=""/>
+# see CMFBibliographyAT
+
+#: listDownloadForm.pt
+#.   <h1 i18n:translate="heading_pubref_download">Download Bibliographic Entries</h1>
+msgid "heading_pubref_download"
+msgstr "Exporter les références bibliographiques"
+
+#: listDownloadForm.pt
+#.   <p i18n:translate="description_pubref_download"> 
+#.     Select the format from the drop-down list. Confirm by clicking 
+#.     <span i18n:name="download"><strong i18n:translate="">download</strong></span>.
+#.   </p>
+msgid "description_pubref_download"
+msgstr "Choisissez le format dans la liste. Confirmez en cliquant sur <span i18n:name='download'><strong i18n:translate=''>download</strong></span>."
+
+#: listDownloadForm.pt
+#.       <legend i18n:translate="label_bibliography_download">Download / Export</legend>
+msgid "label_bibliography_download"
+msgstr "Exporter"
+
+#: listDownloadForm.pt
+#.         <label i18n:translate="label_bibliography_download_format">Download Format</label>
+msgid "label_bibliography_download_format"
+msgstr "Format d'exportation"
+
+#: listDownloadForm.pt
+#.         <div class="formHelp" i18n:translate="help_bibliography_download_format">
+#.           Please select the format.
+#.         </div>
+msgid "help_bibliography_download_format"
+msgstr "Veuillez choisir le format."
+
+#: listDownloadForm.pt
+#.         <input class="context"
+#.                tabindex=""
+#.                type="submit"
+#.                name="submit"
+#.                value="Download"
+#.                i18n:attributes="value"
+#.                tal:attributes="tabindex tabindex/next;" />
+msgid "Download"
+msgstr "Exporter"
+
+#: BibliographyList.py
+# references_list
 msgid "label_references_list"
 msgstr "Références"
-
-#: ReferencePresentation.py
 msgid "help_references_list"
-msgstr "Choisisez les références que vous voulez mettre dans votre liste."
+msgstr "Choisissez les références que vous voulez ajouter à la liste ou organisez/supprimez les références de la liste."
 
-#: ReferencePresentation.py
+#: BibliographyList.py
+# PresentationStyle
 msgid "label_presentation"
-msgstr "Format de présentation"
-
-#: ReferencePresentation.py
+msgstr "Style de mise en page"
 msgid "help_presentation"
-msgstr "Choisisez le format d'affichage pour afficher votre liste."
+msgstr "Style d'affichage des références bibliographiques."
 
-#: ReferencePresentation.py
-msgid "label_formatAndOrder"
+#: BibliographyList.py
+# ListingLayout
+msgid "label_bibliolist_listing_format"
+msgstr "Style de la liste"
+msgid "help_bibliolist_listing_format"
+msgstr "Présentation de la liste."
+
+#: BibrefCustomStyleSet.py
+# DefaultStyle 
+msgid "label_styleset_default"
+msgstr "Style de présentation par défaut"
+msgid "help_styleset_default"
+msgstr "Style bibliographique par défaut."
+
+#: BibrefCustomStyleSet.py
+# dynamic list of reference types 
+msgid "help_styleset_list"
+msgstr "Style bibliographique pour ce type de référence."
+
+#: BibrefCustomStyle.py
+# refDisplay
+msgid "label_refpresentation_formatandorder"
 msgstr "Format"
+msgid "help_refpresentation_formatandorder"
+msgstr "Format désiré pour les références bibliographiques. Pour noter une donnée, utilisez les prochains paramètres: Auteur: %A | Titre: %T | Mois de publication: %m | Année de publication: %y | Journal: %J | Institution: %I | Organisation: %O | titre du livre: %B | Pages: %p | Volume: %v | Numéro: %n | Rédacteur(s): %E | indicateur de rédacteur: %F | Éditeur: %P | Adresse: %a | Pmid: %i | Édition: %e | Moyen de publication: %h | Chapitre: %c | École: %S | Référence de prépublication: %r | Séries: %s | '%' Symbole: %%"
 
-#: ReferencePresentation.py
-msgid "help_formatAndOrder"
-msgstr 'Entrez le format désiré des références bibliographiques. Pour noter une donnée, utilisez les prochains parametres: &#013; Autheur: %A &#013; Titre: %T &#013; Mois de publication: %m &#013; Année de publication: %y &#013; Journal: %J Institution: %I &#013; Organisation: %O &#013; titre du livre: %B &#013; Pages: %p &#013; Volume: %v &#013; Numméro: %n &#013; Rédacteur(s): %E &#013; Rédacteur(s): %F &#013; Editeur: %P &#013; Adresse: %a &#013; Pmid: %i &#013; Edition: %e &#013; Moyen de publication: %h &#013; Chapitre: %c &#013; Écome: %S &#013; Reference de prépublication: %p &#013; Series: %s &#013; Symbole "%": %%'
-
-#: ReferencePresentation.py
-msgid "label_nameOrderformat"
+#: BibrefCustomStyle.py
+# nameOrder
+msgid "label_refpresentation_nameorderformat"
 msgstr "Ordres des noms"
+msgid "help_refpresentation_nameorderformat"
+msgstr "Ordre d'affichage des noms et prénoms des auteurs."
 
-#: ReferencePresentation.py
-msgid "help_nameOrderformat"
-msgstr "Choisisez l'orde dans lequel vou voulez fficher les noms et prénoms d'auteurs"
-
-#: ReferencePresentation.py
-msgid "label_firstNameformat"
+#: BibrefCustomStyle.py
+# firstnameFormat
+msgid "label_refpresentation_firstnameformat"
 msgstr "Prénom de l'auteur (dans %A)"
+msgid "help_refpresentation_firstnameformat"
+msgstr "Format d'affichage du prénom de l'auteur."
 
-#: ReferencePresentation.py
-msgid "help_firstNameformat"
-msgstr "Choisisez un format d'affichage pour le prénom de l'auteur."
-
-#: ReferencePresentation.py
-msgid "label_2ndNameformat"
+#: BibrefCustomStyle.py
+# middlenameFormat
+msgid "label_refpresentation_middlenameFormat"
 msgstr "Autres prénoms de l'auteur (dans %A)"
+msgid "help_refpresentation_middlenameFormat"
+msgstr "Format d'affichage des autres prénoms de l'auteur."
 
-#: ReferencePresentation.py
-msgid "help_2ndNameformat"
-msgstr "Choisisez un format d'affichage pour les autres prénoms de l'auteur."
-
-
-#: ReferencePresentation.py
-msgid "label_famillyNameformat"
+#: BibrefCustomStyle.py
+# lastnameFormat
+msgid "label_refpresentation_lastnameformat"
 msgstr "Nom de famille de l'auteur (dans %A)"
+msgid "help_refpresentation_lastNameFormat"
+msgstr "Format d'affichage du nom de famille de l'auteur."
 
-#: ReferencePresentation.py
-msgid "help_famillyNameformat"
-msgstr "Choisisez un format d'affichage pour le nom de famille de l'auteur."
+#: BibrefCustomStyle.py
+# authorSeparator
+msgid "label_refpresentation_authorseparator"
+msgstr "Symbole(s) par défaut entre les auteurs."
+msgid "help_refpresentation_nameseparatorformat"
+msgstr "Caractere (ou mot) de séparation entre chaque auteur, sauf les deux derniers (espaces y compris)."
 
-#: ReferencePresentation.py
-msgid "label_nameseparatorformat"
-msgstr "Separateur de noms d'auteurs"
+#: BibrefCustomStyle.py
+# lastauthorSeparator
+msgid "label_refpresentation_lastauthorseparator"
+msgstr "Symbole(s) entre le dernier auteur et son prédécesseur."
+msgid "help_refpresentation_lastnameseparatorformat"
+msgstr "Caractère (ou mot) de séparation entre les deux derniers auteurs (espaces y compris)."
 
-#: ReferencePresentation.py
-msgid "help_nameseparatorformat"
-msgstr "le charactere (ou mot) de separation a mettre entre chaque auteur sauf les deux derniers.(espaces y compris)"
+#: BibrefCustomStyle.py
+# withAuthorUrl 
+msgid "label_refpresentation_authorswithurl"
+msgstr "Auteurs avec une page internet."
+msgid "help_refpresentation_authorswithurl"
+msgstr "Cochez la case pour lier les auteurs à leur URL (si l'URL existe)."
 
-#: ReferencePresentation.py
-msgid "label_lastnameseparatorformat"
-msgstr "Dernier separateur de noms d'auteurs"
-
-#: ReferencePresentation.py
-msgid "help_lastnameseparatorformat"
-msgstr "le charactere (ou mot) de separation a mettre entre les deux derniers auteurs.(espaces y compris)"
-
-#: ReferencePresentation.py
-msgid "label_titleformat"
+#: BibrefCustomStyle.py
+# titleFormat 
+msgid "label_refpresentation_titleformat"
 msgstr "Titre de la publication (%T)"
+msgid "help_refpresentation_titleformat"
+msgstr "Format d'affichage du titre de la publication."
+ 
+#: BibrefCustomStyle.py
+# withTitleUrl 
+msgid "label_refpresentation_titleurl"
+msgstr "Titre avec URL"
+msgid "help_refpresentation__titleurl"
+msgstr "Cochez si le titre doit être lié à son URL (si le URL existe)."
 
-#: ReferencePresentation.py
-msgid "help_titleformat"
-msgstr "Choisisez un format d'affichage pour le titre de la publication."
-
-#: ReferencePresentation.py
-msgid "label_publicationYearformat"
-msgstr "Année de publication (%y)"
-
-#: ReferencePresentation.py
-msgid "help_publicationYearformat"
-msgstr "Choisisez un format d'affichage pour l' année de la publication"
-
-#: ReferencePresentation.py
-msgid "label_journalformat"
+#: BibrefCustomStyle.py
+# journalFormat 
+msgid "label_refpresentation_journalformat"
 msgstr "Journal (%J)"
+msgid "help_refpresentation_journalformat"
+msgstr "Format d'affichage du nom du journal."
 
-#: ReferencePresentation.py
-msgid "help_journalformat"
-msgstr "Choisisez un format d'affichage pour le nom du journal."
-
-#: ReferencePresentation.py
-msgid "label_pagesformat"
+#: BibrefCustomStyle.py
+# pagesFormat 
+msgid "label_refpresentation_pagesformat"
 msgstr "Pages (%p)"
+msgid "help_refpresentation_pagesformat"
+msgstr "Format d'affichage des numéros de pages."
+
+#: BibrefCustomStyle.py
+# volumeFormat 
+msgid "label_refpresentation_volumeformat"
+msgstr "Numéro de volume(%v)"
+msgid "help_refpresentation_volumeformat"
+msgstr "Format d'affichage ajusté du numéro de volume."
+
+#: BibrefCustomStyle.py
+# chapterFormat 
+msgid "label_refpresentation_chapterformat"
+msgstr "Numéro du chapitre (%c)"
+msgid "help_refpresentation_chapterformat"
+msgstr "Format d'affichage du numéro du chapitre."
+
+#: BibrefCustomStyle.py
+# numberFormat 
+msgid "label_refpresentation_numberformat"
+msgstr "Numéro du Magazine/Journal/Rapport(%n)"
+msgid "help_refpresentation_numberformat"
+msgstr "Format d'affichage du numéro de magazine, journal ou rapport."
+
+#: BibrefCustomStyle.py
+# seriesFormat 
+msgid "label_refpresentation_seriesformat"
+msgstr "Format de la serie (%s)"
+msgid "help_refpresentation_seriesformat"
+msgstr "Format d'affichage du nom de la série."
+
+#: BibrefCustomStyle.py
+# bookTitleFormat 
+msgid "label_refpresentation_booktitleformat"
+msgstr "Titre du livre (pour des références de parties de livres (%B)"
+msgid "help_refpresentation_booktitleformat"
+msgstr "Format d'affichage du titre du livre."
 
 #: ReferencePresentation.py
-msgid "help_pagesformat"
-msgstr "Choisisez un format d'affichage pour les numeros de pages."
+# msgid "label_publicationYearformat"
+# msgstr "Année de publication (%y)"
+# msgid "help_publicationYearformat"
+# msgstr "Format d'affichage de l'année de publication."
 
 #: ReferencePresentation.py
-msgid "label_volumeformat"
-msgstr "Volume (%v)"
+# msgid "label_editionformat"
+# msgstr "Edition (%e)"
+# msgid "help_editionformat"
+# msgstr "Format d'affichage du numéro de l'édition."
 
 #: ReferencePresentation.py
-msgid "help_volumeformat"
-msgstr "Choisisez un format d'affichage pour le numero du volume."
+# msgid "label_howpublishedformat"
+# msgstr "Moyen de publication(%h)"
+# msgid "help_howpublishedformat"
+# msgstr "Format d'affichage du moyen de publication."
 
 #: ReferencePresentation.py
-msgid "label_editionformat"
-msgstr "Edition (%e)"
+# msgid "label_editorformat"
+# msgstr "Rédacteur(s)(%E)"
+# msgid "help_editorformat"
+# msgstr "Format d'affichage du(des) nom(s) du(des) rédacteur(s)."
 
 #: ReferencePresentation.py
-msgid "help_editionformat"
-msgstr "Choisisez un format d'affichage pour le numero de l'édition."
+# msgid "label_publisherformat"
+# msgstr "Éditeur (%P)"
+# msgid "help_publisherformat"
+# msgstr "Format d'affichage du nom de l' éditeur."
 
 #: ReferencePresentation.py
-msgid "label_chapterformat"
-msgstr "Chapitre (%c)"
+# msgid "label_schoolformat"
+# msgstr "École (%S)"
+# msgid "help_schoolformat"
+# msgstr "Format d'affichage du nom de l'école."
 
 #: ReferencePresentation.py
-msgid "help_chapterformat"
-msgstr "Choisisez un format d'affichage pour les numeros de pages."
+# msgid "label_organisationformat"
+# msgstr "Organisation (%O)"
+# msgid "help_organistaionformat"
+# msgstr "Format d'affichage du nom de l'organisation."
 
 #: ReferencePresentation.py
-msgid "label_numberformat"
-msgstr "Numéro (%n)"
-
-#: ReferencePresentation.py
-msgid "help_numberformat"
-msgstr "Choisisez un format d'affichage pour le numéro du magazine/journal ou rapport."
-
-#: ReferencePresentation.py
-msgid "label_seriesformat"
-msgstr "Serie (%s)"
-
-#: ReferencePresentation.py
-msgid "help_seriesformat"
-msgstr "Choisisez un format d'affichage pour le nom de la serie."
-
-#: ReferencePresentation.py
-msgid "label_howpublishedformat"
-msgstr "Moyen de publication(%h)" 
-
-#: ReferencePresentation.py
-msgid "help_howpublishedformat"
-msgstr "Choisisez un format d'affichage pour le moyen de publication."
-
-#: ReferencePresentation.py
-msgid "label_editorformat"
-msgstr "Rédacteur(s)(%E)" 
-
-#: ReferencePresentation.py
-msgid "help_editorformat"
-msgstr "Choisisez un format d'affichage pour le(s) nom(s) du(des) rédacteur(s)."
-
-#: ReferencePresentation.py
-msgid "label_editorformat"
-msgstr "Rédacteur(s)(%E)" 
-
-#: ReferencePresentation.py
-msgid "help_editorformat"
-msgstr "Choisisez un format d'affichage pour le(s) nom(s) du(des) rédacteur(s)."
-
-# *editorFlagformat 
-#    -EditorFlag (%F)
-#    -'Choose a fitting format for the editor flag.'
-
-#: ReferencePresentation.py
-msgid "label_publisherformat"
-msgstr "Éditeur (%P)" 
-
-#: ReferencePresentation.py
-msgid "help_publisherformat"
-msgstr "Choisisez un format d'affichage pour le nom de l' éditeur."
-
-#: ReferencePresentation.py
-msgid "label_booktitleformat"
-msgstr "Titre du livre (%t)" 
-
-#: ReferencePresentation.py
-msgid "help_booktitleformat"
-msgstr "Choisisez un format d'affichage pour le titre du livre."
-
-#: ReferencePresentation.py
-msgid "label_schoolformat"
-msgstr "École (%S)" 
-
-#: ReferencePresentation.py
-msgid "help_schoolformat"
-msgstr "Choisisez un format d'affichage pour le nom de l'école."
-
-#: ReferencePresentation.py
-msgid "label_organisationformat"
-msgstr "Organisation (%O)" 
-
-#: ReferencePresentation.py
-msgid "help_organistaionformat"
-msgstr "Choisisez un format d'affichage pour le nom de l'organisation."
-
-#: ReferencePresentation.py
-msgid "label_institutionformat"
-msgstr "Institution (%I)" 
-
-#: ReferencePresentation.py
-msgid "help_institutionformat"
-msgstr "Choisisez un format d'affichage pour le nom de l'institution."
-
-# *typeformat 
-#     -Type of technical report (%t)
-#     -'Choose a fitting format for the field.'
+# msgid "label_institutionformat"
+# msgstr "Institution (%I)"
+# msgid "help_institutionformat"
+# msgstr "Format d'affichage du nom de l'institution."

@@ -65,8 +65,9 @@
                      results python:here.searchMatchingReferences(searchterm)">
 
       <fieldset>
-        <legend>Listed References</legend>
-        <p tal:condition="not:old">Nothing in the bibliography list</p>
+        <legend i18n:translate="legend_bibrefs_oldrefs">Listed References</legend>
+        <p tal:condition="not:old"
+           i18n:translate="empty_bibrefs_oldrefs">Nothing in the bibliography list</p>
 
         <div tal:condition="old"> <!-- Edit existing references -->
           <table class="listing">
@@ -112,35 +113,37 @@
                  i18n:attributes="value"/>
         
 <!--
+Does not work anymore due to recent changes in AT
+
         <table> <tr> <th colspan=2> sort: </th> </tr>
         <tr> <th> by: </th> <td><select name="sortlist:list">
-        <option value="('publication_year', 'cmp', 'desc')"> publication_year </option>
-        <option value="('Authors', 'nocase', 'asc'))"> Authors </option>
-        <option value="('Source', 'nocase', 'asc'))"> Source </option>
+        <option i18n:translate="bibrefs_sort_publication_year" value="('Publication Year ', 'cmp', 'desc')"> publication_year </option>
+        <option i18n:translate="bibrefs_sort_authors" value="('Authors', 'nocase', 'asc'))"> Authors </option>
+        <option i18n:translate="bibrefs_sort_source" value="('Source', 'nocase', 'asc'))"> Source </option>
         </select> </td>
         <tr> <th> and: </th> <td><select name="sortlist:list">
-        <option value=""> -------none-------</option>
-        <option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+        <option i18n:translate="bibrefs_sort_none" value=""> -------none-------</option>
+        <option value=",('publication_year', 'cmp', 'desc')"> Publication Year  </option>
         <option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
         <option value=",('Source', 'nocase', 'asc'))"> Source </option>
         </select></td>
         <tr> <th> and: </th> <td><select name="sortlist:list">
-        <option value=""> -------none-------</option>
-        <option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+        <option value=""> -------none-------</option> 
+        <option value=",('publication_year', 'cmp', 'desc')"> Publication Year  </option>
         <option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
         <option value=",('Source', 'nocase', 'asc'))"> Source </option>
         </select></td>
         </table>
-        <input type="submit" name="form.button.reference_sort" value="Sort"/>
+        <input type="submit" name="form.button.reference_sort" value="Sort"/> 
 -->
 
         </div> <!-- end editing existing references -->
       </fieldset>
 
-      <fieldset> <!-- search/add new references -->
-        <legend>Search/Add references</legend>
+      <fieldset> <!-- search/add new references --> 
+        <legend i18n:translate="legend_bibrefs_searchadd">Search/Add references</legend>
 
-        <input name="searchterm" tal:attributes="value searchterm|nothing" />&nbsp;
+        <input name="searchterm" tal:attributes="value searchterm|nothing" />&nbsp; 
         <input type="submit" name="form.button.reference_search" value="Search"
                i18n:attributes="value" />
 
@@ -152,7 +155,7 @@
                                         type="checkbox"
                                         src="select_all_icon.gif"
                                         name="selectButton"
-                                        title="Select all items"
+                                        title="Select all items" 
                                         onClick="toggleSelect(this, id='references:list');"
                                         tal:attributes="src string:$portal_url/select_all_icon.gif"
                                         alt="Select all items"
@@ -185,7 +188,7 @@
                  i18n:attributes="value" />
         </tal:block>
 
-        <p tal:condition="not:results">No matching bibliographic reference found.
+        <p i18n:translate="empty_bibrefs_foundrefs" tal:condition="not:results">No matching bibliographic reference found.
            Please try another search term.</p>
       </fieldset> <!-- end search/add new references -->
 

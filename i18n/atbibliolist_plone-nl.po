@@ -19,227 +19,417 @@ msgstr ""
 msgid "Export Bibliography List"
 msgstr "De bibliografische lijst exporteren"
 
+# status messages
+msgid "Selected references added."
+msgstr "Geselecteerde referenties werden toegevoegd."
+msgid "No references selected."
+msgstr "Geen referenties waren geselecteerd."
+msgid "Selected references removed."
+msgstr "Geselecteerde referenties werden verwijderd."
+msgid "Selected references moved up."
+msgstr "Geselecteerde referenties werden omhoog verplaatst."
+msgid "Selected references moved down."
+msgstr "Geselecteerde referenties werden omlaag verplaatst."
+msgid "Selected references were sorted."
+msgstr "Geselecteerde referenties werden gesorteerd."
+msgid "Your changes have been saved."
+msgstr "Uw aanpassingen werden opgeslagen."
+
 # Object names
-msgid "Bibliography presentation format"
-msgstr "Bibliografisch Voorstellingsformaat"
-
+msgid "Bibref Custom Style Folder"
+msgstr "Map van aangepaste bibliografische stijlen"
+msgid "Bibref Custom Style Set"
+msgstr "Set van aangepaste bibliografische stijlen"
+msgid "Bibref Custom Style"
+msgstr "Aangepaste bibliografische stijl"
+msgid "Bibref Style"
+msgstr "Bibliografische stijl"
 msgid "Presentation Folder"
-msgstr "Voorstellings Map"
-
+msgstr "Voorstellings map"
 msgid "Bibliography List"
-msgstr "Bibliografische Lijst"
+msgstr "Bibliografische lijst"
+
+# Displaylist Items
+msgid "Bulleted list"
+msgstr "Ongenumerde lijst"
+msgid "Ordered list"
+msgstr "Genummerde lijst"
+msgid "Simple lines list"
+msgstr "Gewone Lijst in regels"
+msgid "Table listing"
+msgstr "Tabelvorm"
+
+#: widget_bibreflist.pt
+#.            <th class="nosort" i18n:translate="header_bibrefs_listing">
+#.              Bibliography References
+#.            </th>
+msgid "header_bibrefs_listing"
+msgstr "Bibliografische referencies"
+
+#: widget_bibreflist.pt
+#.        <legend i18n:translate="legend_bibrefs_oldrefs">Listed References</legend>
+msgid "legend_bibrefs_oldrefs"
+msgstr "Vermelde verwijzingen"
+
+#: widget_bibreflist.pt
+#.        <p tal:condition="not:old"
+#.         i18n:translate="empty_bibrefs_oldrefs">Nothing in the bibliography list</p>
+msgid "empty_bibrefs_oldrefs"
+msgstr "Niets in de bibliografielijst"
+
+#: widget_bibreflist.pt
+#.              <th class="nosort"><input class="noborder"
+#.                                        type="checkbox"
+#.                                        src="select_all_icon.gif"
+#.                                        name="selectButton"
+#.                                        title="Select all items"
+#.                                        onClick="toggleSelect(this, id='modReferences:list');"
+#.                                        tal:attributes="src string:$portal_url/select_all_icon.gif"
+#.                                        alt="Select all items"
+#.                                        i18n:attributes="title alt"
+#.                                        />
+msgid "Select all items"
+msgstr "Selecteer alle punten"
+
+#: widget_bibreflist.pt
+#.              <th class="nosort"
+#.                  i18n:translate="header_bibliolist_oldrefs">Existing references</th>
+msgid "header_bibliolist_oldrefs"
+msgstr "Bestaande verwijzingen"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_delete" value="Remove"
+#.                 i18n:attributes="value" />
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_up" value="Up"
+#.                 i18n:attributes="value"/>
+msgid "Up"
+msgstr "Omhoog"
+
+#: widget_bibreflist.pt
+#.          <input type="submit" name="form.button.reference_down" value="Down"
+#.                 i18n:attributes="value"/>
+msgid "Down"
+msgstr "Omlaag"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_publication_year" value="('publication_year', 'cmp', 'desc')"> Publication Year </option>
+msgid "bibrefs_sort_publication_year"
+msgstr "Publicatiejaar"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_authors" value="('Authors', 'nocase', 'asc'))"> Authors </option>
+msgid "bibrefs_sort_authors"
+msgstr "Auteurs"
+
+#: widget_bibreflist.pt
+#.        <option i18n:translate="bibrefs_sort_source" value="('Source', 'nocase', 'asc'))"> Source </option>
+msgid "bibrefs_sort_source"
+msgstr "Bron"
+
+#: widget_bibreflist.pt
+#.         <option i18n:translate="bibrefs_sort_none" value=""> -------none-------</option>
+msgid "bibrefs_sort_none"
+msgstr "-------niets------"
+
+#: widget_bibreflist.pt
+#.        <input type="submit" name="form.button.reference_sort" value="Sort"
+#.               i18n:attributes="value" />
+msgid "Sort"
+msgstr "Sorteer"
+
+#: widget_bibreflist.pt
+#.        <legend i18n:translate="legend_bibrefs_searchadd">Search/Add references</legend>
+msgid "legend_bibrefs_searchadd"
+msgstr "Zoek/voeg verwijzingen toe"
+
+#: widget_bibreflist.pt
+#.        <input type="submit" name="form.button.reference_search" value="Search"
+#.               i18n:attributes="value" />
+msgid "Search"
+msgstr "Zoek"
+
+#: widget_bibreflist.pt
+#.              <th class="nosort"
+#.                  i18n:translate="header_bibliolist_foundrefs">Found references</th>
+msgid "header_bibliolist_foundrefs"
+msgstr "Gevonden referencies"
+
+#: widget_bibreflist.pt
+#.          <input type="submit"
+#.                 name="form.button.reference_add"
+#.                 value="Add to list"
+#.                 tal:condition="results"
+#.                 i18n:attributes="value" />
+msgid "Add to list"
+msgstr "Voeg aan de lijst toe"
+
+#: widget_bibreflist.pt
+#.        <p i18n:translate="empty_bibrefs_foundrefs" tal:condition="not:results">No matching bibliographic reference found.
+#.           Please try another search term.</p>
+msgid "empty_bibrefs_foundrefs"
+msgstr "Geen passende bibliografische verwijzing gevonden. Probeer met een ander zoekwoord."
+
+#: bibrefcustomstyleset_view.pt
+#: bibrefcustomstyle_view.pt
+#.            <dt tal:content="structure dummy_ref/type" i18n:translate=""/>
+# see CMFBibliographyAT
+
+#: listDownloadForm.pt
+#.    <h1 i18n:translate="heading_pubref_download">Download Bibliographic Entries</h1>
+msgid "heading_pubref_download"
+msgstr "Download de bibliografische referencies"
+
+#: listDownloadForm.pt
+#.    <p i18n:translate="description_pubref_download"> 
+#.      Select the format from the drop-down list. Confirm by clicking 
+#.      <span i18n:name="download"><strong i18n:translate="">download</strong></span>.
+#.    </p>
+msgid "description_pubref_download"
+msgstr "Selecteer het formaat van de drop-down lijst. Bevestig door op <span i18n:name='download'><strong i18n:translate=''>download</strong></span> te klikken."
+
+#: listDownloadForm.pt
+#.        <legend i18n:translate="label_bibliography_download">Download / Export</legend>
+msgid "label_bibliography_download"
+msgstr "Download/Exporteer"
+
+#: listDownloadForm.pt
+#.          <label i18n:translate="label_bibliography_download_format">Download Format</label>
+msgid "label_bibliography_download_format"
+msgstr "Download het formaat"
+
+#: listDownloadForm.pt
+#.          <div class="formHelp" i18n:translate="help_bibliography_download_format">
+#.            Please select the format.
+#.          </div>
+msgid "help_bibliography_download_format"
+msgstr "Gelieve het formaat te selecteren."
+
+#: listDownloadForm.pt
+#.          <input class="context"
+#.                 tabindex=""
+#.                 type="submit"
+#.                 name="submit"
+#.                 value="Download"
+#.                 i18n:attributes="value"
+#.                 tal:attributes="tabindex tabindex/next;" />
+msgid "Download"
+msgstr "Download"
 
 #: list_pt.pt
 #.     <h1 i18n:translate="heading_skins_folder_listing">Filesystem Directory View Listing</h1><br />
 msgid "heading_skins_folder_listing"
-msgstr "Filesystem map inhoud"
+msgstr "Inhoud van de filesystem map"
 
 
-#: ReferencePresentation.py
+
+
+#: BibliographyList.py
+# references_list
 msgid "label_references_list"
-msgstr "Referencies"
-
-#: ReferencePresentation.py
+msgstr "Referenties"
 msgid "help_references_list"
-msgstr "Kies les bibliographische verwijzingen die u in uw lijst wil plaatsen."
+msgstr "Kiest de verwijzingen die u in uw lijst wilt toevoegen/verwijderen."
 
-#: ReferencePresentation.py
+#: BibliographyList.py
+# PresentationStyle
 msgid "label_presentation"
-msgstr "Presentatie formaat"
-
-#: ReferencePresentation.py
+msgstr "Bibliographische stijl"
 msgid "help_presentation"
-msgstr "Kies het formaat van hoe uw uw lijst wil voorstellen."
+msgstr "Kies de stijl om uw lijst te tonen."
 
-#: ReferencePresentation.py
-msgid "label_formatandorder"
+#: BibliographyList.py
+# ListingLayout
+msgid "label_bibliolist_listing_format"
+msgstr "Stijl van de lijst"
+msgid "help_bibliolist_listing_format"
+msgstr "Hoe de lijst getoond wordt in het in het zichtpagina."
+
+
+
+#: BibrefCustomStyleSet.py
+# DefaultStyle 
+msgid "label_styleset_default"
+msgstr "Standaard presentatiestijl"
+msgid "help_styleset_default"
+msgstr "Kies de stadaard bibliografische stijl om uw lijst te presenteren."
+ 
+#: BibrefCustomStyleSet.py
+# dynamic list of reference types 
+msgid "help_styleset_list"
+msgstr "Kies de bibliografische stijl om uw lijst te presenteren voor dit type van referentie."
+
+
+
+#: BibrefCustomStyle.py
+# refDisplay
+msgid "label_refpresentation_formatandorder"
 msgstr "Formaat"
+msgid "help_refpresentation_formatandorder"
+msgstr "Geef het gewenste formaat voor de bibliographische verwijzingen. Om een 'veld' voor te stellen gebruikt u de volgende symbolen: Auteur: %A | Titel: %T | Publicatiemaand: %m | Publicatiejaar: %y | Nieuwsblad: %J | Instelling: %I | Organisatie: %O | Titel van het boek: %B | Paginas: %p | Volumenummer: %v | Nummer: %n | Redacteur(s): %E | Redacteuraanwijzer: %F | Uitgever: %P | Adres: %a | Pmid: %i | Editie/druk: %e | Uitgavewijze: %h | Hoofdstuk: %c | School: %S | Prepublicatie server: %r | Reeks: %s | '%' Symbool: %%"
 
-#: ReferencePresentation.py
-msgid "help_formatandorder"
-msgstr 'Geef het gewenste formaat voor de bibliographische verwijzingen. Om een "veld" voor te stellen gebruikt u de volgende symbolen: Auteur: %A, Titel: %T, Publicatiemaand: %m, Publicatiejaar: %y, Nieuwsblad: %J, Instelling: %I, Organisatie: %O, Titel van het boek: %T, Paginas: %p, Volumenummer: %v, Nummer: %n; Type verslag: %t, Redacteur(s): %E, Uitgever/Uitgeverij: %P, Adres: %a, Pmid: %i, Editie/druk: %e, Uitgavewijze: %h, Hoofdstuk: %c, School: %S, prepublicatie server: %r, Reeks: %s, "%" symbool: %%'
-
-#: ReferencePresentation.py
-msgid "label_nameorderformat"
+#: BibrefCustomStyle.py
+# nameOrder
+msgid "label_refpresentation_nameorderformat"
 msgstr "Volgorde van Namen"
+msgid "help_refpresentation_nameorderformat"
+msgstr "Kies de volgorde waarin u de voornamen en familienaam van een auteur wilt plaatsen."
 
-#: ReferencePresentation.py
-msgid "help_nameorderformat"
-msgstr "Kies de volgorde waarin u de voornaamen en familienaam van een auteur wilt plaatsen."
-
-#: ReferencePresentation.py
-msgid "label_firstnameformat"
+#: BibrefCustomStyle.py
+# firstnameFormat
+msgid "label_refpresentation_firstnameformat"
 msgstr "Voornaam van de auteur (in %A)"
-
-#: ReferencePresentation.py
-msgid "help_firstnameformat"
+msgid "help_refpresentation_firstnameformat"
 msgstr "Kies een voorstellingswijze voor de voornaam van de auteur."
 
-#: ReferencePresentation.py
-msgid "label_2ndnameformat"
+#: BibrefCustomStyle.py
+# middlenameFormat
+msgid "label_refpresentation_middlenameFormat"
 msgstr "Andere voornamen van de auteur (in %A)"
-
-#: ReferencePresentation.py
-msgid "help_2ndnameformat"
+msgid "help_refpresentation_middlenameFormat"
 msgstr "Kies een voorstellingswijze voor de andere voornamen van de auteur."
 
-
-#: ReferencePresentation.py
-msgid "label_famillynameformat"
+#: BibrefCustomStyle.py
+# lastnameFormat
+msgid "label_refpresentation_lastnameformat"
 msgstr "Famillienaam van de auteur (in %A)"
-
-#: ReferencePresentation.py
-msgid "help_famillynameformat"
+msgid "help_refpresentation_lastNameFormat"
 msgstr "Kies een voorstellingswijze voor de famillienaam van de auteur."
 
-#: ReferencePresentation.py
-msgid "label_nameseparatorformat"
-msgstr "Auteurs-scheidingsteken"
-
-#: ReferencePresentation.py
-msgid "help_nameseparatorformat"
+#: BibrefCustomStyle.py
+# authorSeparator
+msgid "label_refpresentation_authorseparator"
+msgstr "Auteurs-scheidingsteken."
+msgid "help_refpresentation_nameseparatorformat"
 msgstr "Het scheidingsteken (of woord) dat tussen elk auteur komt te staan behalve de 2 laatste. (Spaties ingegrepen)"
 
-#: ReferencePresentation.py
-msgid "label_lastnameseparatorformat"
-msgstr "Laatste auteurs-scheidingsteken"
-
-#: ReferencePresentation.py
-msgid "help_lastnameseparatorformat"
+#: BibrefCustomStyle.py
+# lastauthorSeparator
+msgid "label_refpresentation_lastauthorseparator"
+msgstr "Auteurs-scheidingsteken voor de 2 laatste auteurs."
+msgid "help_refpresentation_lastnameseparatorformat"
 msgstr "Het scheidingsteken (of woord) dat tussen de 2 laatste auteurs komt te staan. (Spaties ingegrepen)"
 
-#: ReferencePresentation.py
-msgid "label_titleformat"
+#: BibrefCustomStyle.py
+# withAuthorUrl 
+msgid "label_refpresentation_authorswithurl"
+msgstr "Auteurs met homepage."
+msgid "help_refpresentation_authorswithurl"
+msgstr "Vink dit aan als de auteurs naar hun URL (als de URL bestaat) moeten verwijzen."
+
+#: BibrefCustomStyle.py
+# titleFormat 
+msgid "label_refpresentation_titleformat"
 msgstr "Titel van de publicatie(%T)"
+msgid "help_refpresentation_titleformat"
+msgstr "Kies een voorstellingswijze voor de titel van de publicatie."
+ 
+#: BibrefCustomStyle.py
+# withTitleUrl 
+msgid "label_refpresentation_titleurl"
+msgstr "Titel met URL"
+msgid "help_refpresentation__titleurl"
+msgstr "Vink dit aan als de titel naar zijn URL (als de URL bestaat) moet verwijzen."
 
-#: ReferencePresentation.py
-msgid "help_titleformat"
-msgstr "Kies een voorstellingswijze voor het titel van de publicatie."
-
-#: ReferencePresentation.py
-msgid "label_publicationYearformat"
-msgstr "Jaar van publicatie (%y)"
-
-#: ReferencePresentation.py
-msgid "help_publicationYearformat"
-msgstr "Kies een voorstellingswijze voor het jaar van publicatie."
-
-#: ReferencePresentation.py
-msgid "label_journalformat"
+#: BibrefCustomStyle.py
+# journalFormat 
+msgid "label_refpresentation_journalformat"
 msgstr "Nieuwsblad (%J)"
-
-#: ReferencePresentation.py
-msgid "help_journalformat"
+msgid "help_refpresentation_journalformat"
 msgstr "Kies een voorstellingswijze voor de naam van het nieuwsblad."
 
-#: ReferencePresentation.py
-msgid "label_pagesformat"
+#: BibrefCustomStyle.py
+# pagesFormat 
+msgid "label_refpresentation_pagesformat"
 msgstr "Paginas (%p)"
-
-#: ReferencePresentation.py
-msgid "help_pagesformat"
+msgid "help_refpresentation_pagesformat"
 msgstr "Kies een voorstellingswijze voor de paginanummers."
 
-#: ReferencePresentation.py
-msgid "label_volumeformat"
+#: BibrefCustomStyle.py
+# volumeFormat 
+msgid "label_refpresentation_volumeformat"
 msgstr "Volumenummer (%v)"
-
-#: ReferencePresentation.py
-msgid "help_volumeformat"
+msgid "help_refpresentation_volumeformat"
 msgstr "Kies een voorstellingswijze voor het volumenummer."
 
-#: ReferencePresentation.py
-msgid "label_editionformat"
-msgstr "Uitgavenummer (%e)"
-
-#: ReferencePresentation.py
-msgid "help_editionformat"
-msgstr "Kies een voorstellingswijze voor het uitgavenummer."
-
-#: ReferencePresentation.py
-msgid "label_chapterformat"
+#: BibrefCustomStyle.py
+# chapterFormat 
+msgid "label_refpresentation_chapterformat"
 msgstr "Hoofdstuk (%c)"
-
-#: ReferencePresentation.py
-msgid "help_chapterformat"
+msgid "help_refpresentation_chapterformat"
 msgstr "Kies een voorstellingswijze voor het hoofdstuknummer."
 
-#: ReferencePresentation.py
-msgid "label_numberformat"
-msgstr "Nummer (%n)"
+#: BibrefCustomStyle.py
+# numberFormat 
+msgid "label_refpresentation_numberformat"
+msgstr "Nieuwsblad-, magazine-, of rapportnummer (%n)"
+msgid "help_refpresentation_numberformat"
+msgstr "Kies een voorstellingswijze voor het nummer van het magazine, nieuwsblad of rapport."
 
-#: ReferencePresentation.py
-msgid "help_numberformat"
-msgstr "Kies een voorstellingswijze voor het nummer van het magazine, journaal of rapport."
-
-#: ReferencePresentation.py
-msgid "label_seriesformat"
-msgstr "Reeks (%s)"
-
-#: ReferencePresentation.py
-msgid "help_seriesformat"
+#: BibrefCustomStyle.py
+# seriesFormat 
+msgid "label_refpresentation_seriesformat"
+msgstr "Reeksnaam(%s)"
+msgid "help_refpresentation_seriesformat"
 msgstr "Kies een voorstellingswijze voor de naam van de reeks."
 
-#: ReferencePresentation.py
-msgid "label_howpublishedformat"
-msgstr "Publicatiemethode(%h)" 
-
-#: ReferencePresentation.py
-msgid "help_howpublishedformat"
-msgstr "Kies een voorstellingswijze voor de publicatiemethode."
-
-#: ReferencePresentation.py
-msgid "label_editorformat"
-msgstr "Redacteur(s)(%E)" 
-
-#: ReferencePresentation.py
-msgid "help_editorformat"
-msgstr "Kies een voorstellingswijze voor de naam/namen van de redacteur(s)."
-
-# *editorFlagformat 
-#    -EditorFlag (%F)
-#    -'Choose a fitting format for the editor flag.'
-
-#: ReferencePresentation.py
-msgid "label_publisherformat"
-msgstr "Uitgever (%P)" 
-
-#: ReferencePresentation.py
-msgid "help_publisherformat"
-msgstr "Kies een voorstellingswijze voor de naam van de uitgever/uitgeverij."
-
-#: ReferencePresentation.py
-msgid "label_booktitleformat"
-msgstr "Titel van het boek(%t)" 
-
-#: ReferencePresentation.py
-msgid "help_booktitleformat"
+#: BibrefCustomStyle.py
+# bookTitleFormat 
+msgid "label_refpresentation_booktitleformat"
+msgstr "Boektitel (voor referenties naar een deel van een boek) (%B)"
+msgid "help_refpresentation_booktitleformat"
 msgstr "Kies een voorstellingswijze voor de titel van het boek."
 
-#: ReferencePresentation.py
-msgid "label_schoolformat"
-msgstr "School (%S)" 
+
+
 
 #: ReferencePresentation.py
-msgid "help_schoolformat"
-msgstr "Kies een voorstellingswijze voor de naam van de school."
+# msgid "label_publicationYearformat"
+# msgstr "Publicatiejaar (%y)"
+# msgid "help_publicationYearformat"
+# msgstr "Kies een voorstellingswijze voor het jaar van publicatie."
 
 #: ReferencePresentation.py
-msgid "label_organisationformat"
-msgstr "Organisatie (%O)" 
+# msgid "label_editionformat"
+# msgstr "Uitgavenummer (%e)"
+# msgid "help_editionformat"
+# msgstr "Kies een voorstellingswijze voor het uitgavenummer."
 
 #: ReferencePresentation.py
-msgid "help_organistaionformat"
-msgstr "Kies een voorstellingswijze voor de naam van de organisatie."
+# msgid "label_howpublishedformat"
+# msgstr "Publicatiemethode(%h)"
+# msgid "help_howpublishedformat"
+# msgstr "Kies een voorstellingswijze voor de publicatiemethode."
 
 #: ReferencePresentation.py
-msgid "label_institutionformat"
-msgstr "Instituut (%I)" 
+# msgid "label_editorformat"
+# msgstr "Redacteur(s)(%E)"
+# msgid "help_editorformat"
+# msgstr "Kies een voorstellingswijze voor de naam/namen van de redacteur(s)."
 
 #: ReferencePresentation.py
-msgid "help_institutionformat"
-msgstr "Kies een voorstellingswijze voor de naam van het instituut."
+# msgid "label_publisherformat"
+# msgstr "Uitgever (%P)"
+# msgid "help_publisherformat"
+# msgstr "Kies een voorstellingswijze voor de naam van de uitgever/uitgeverij."
 
-# *typeformat 
-#     -Type of technical report (%t)
-#     -'Choose a fitting format for the field.'
+#: ReferencePresentation.py
+# msgid "label_schoolformat"
+# msgstr "School (%S)"
+# msgid "help_schoolformat"
+# msgstr "Kies een voorstellingswijze voor de naam van de school."
+
+#: ReferencePresentation.py
+# msgid "label_organisationformat"
+# msgstr "Organisatie (%O)"
+# msgid "help_organistaionformat"
+# msgstr "Kies een voorstellingswijze voor de naam van de organisatie."
+
+#: ReferencePresentation.py
+# msgid "label_institutionformat"
+# msgstr "Instituut (%I)"
+# msgid "help_institutionformat"
+# msgstr "Kies een voorstellingswijze voor de naam van het instituut."

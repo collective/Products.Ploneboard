@@ -21,7 +21,7 @@
     
         <dl>
           <div tal:repeat= "dummy_ref here/formatDummyList">
-            <dt tal:content="structure dummy_ref/type" />
+            <dt tal:content="structure dummy_ref/type" i18n:translate="" />
             <dd tal:content="structure dummy_ref/result" />
           </div>
         </dl>

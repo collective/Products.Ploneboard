@@ -27,6 +27,7 @@ registerDirectory('skins', GLOBALS)
 def initialize(context):
     """ Import Types here to register them """
     import BibliographyList
+    import BibliographyTopic
     import BibrefCustomStyleFolder
     import BibrefCustomStyle
     import BibrefCustomStyleSet

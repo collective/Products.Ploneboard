@@ -75,6 +75,7 @@ schema = BaseSchema + Schema((
                 ),
     ))
 
+
 class BibliographyList(BaseContent):
     """ Bibliography list class 
     """

@@ -15,10 +15,11 @@
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
-from Products.Archetypes.public import DisplayList, registerType
-from Products.Archetypes.public import BaseContent
+from Products.Archetypes.public import DisplayList
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import StringField, SelectionWidget
+from Products.Archetypes.public import StringField
+from Products.Archetypes.public import BaseContent, registerType
+from Products.Archetypes.Widget import SelectionWidget
 
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES
 from BibrefStyle import IBibrefStyle
@@ -31,9 +32,9 @@ schema = BaseSchema + Schema((
                  default='stl_minimal',
 #                 enforce_vocabulary=1,
                  widget=SelectionWidget(label="Default Presentation Style",
-                                        label_msgid="label_presentation",
-                                        description_msgid="help_presentation",
-                                        description="Select the style you want to present your list with",
+                                        label_msgid="label_styleset_default",
+                                        description_msgid="help_styleset_default",
+                                        description="Select the default bibliographic style you want to present your list with.",
                                         i18n_domain="plone",
                                         format="select",
                                         ),
@@ -50,10 +51,12 @@ def buildStyleSetSchema():
         elem = StringField(reftype,
                            vocabulary = "vocabCustomStyleDef",
                            default = 'Default',
-                           widget = SelectionWidget(description_msgid = "help_formatset",
-                                                    description = "Select the format how you want to present your list for this type of reference.",
-                                                    i18n_domaine = "plone",
-                                                    format = 'pulldown',
+                           widget = SelectionWidget(label=reftype.replace('Reference Style', 'Reference'),
+                                                    label_msgid="",
+                                                    description_msgid="help_styleset_list",
+                                                    description="Select the bibliographic style how you want to present your list for this type of reference.",
+                                                    i18n_domain="plone",
+                                                    format='pulldown',
                                                     ),
                            )
         presentation_set_schema.append(elem)
