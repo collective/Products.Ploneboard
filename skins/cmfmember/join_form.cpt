@@ -1,3 +1,19 @@
+<tal:block metal:define-macro="master"
+		  tal:define="errors options/state/getErrors|nothing;
+                      Iterator python:modules['Products.Archetypes'].IndexIterator;
+                      tabindex python:Iterator();
+                      schematas here/Schemata;
+                      fieldsets python:[key for key in schematas.keys() if (key != 'metadata') and (schematas[key].filterFields(regfield=1))];
+                      default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
+                      fieldset request/fieldset|options/fieldset|default_fieldset;
+					  fields python:schematas[fieldset].fields();
+                      portal_type python:here.getPortalTypeName().lower();
+                      edit_template python:'%s_edit' % portal_type;
+                      edit_macros python:path('here/%s/macros|here/edit_macros/macros' % edit_template);
+                      is_multipage python: len(fieldsets) &gt; 1;
+					  css python:here.getUniqueWidgetAttr(fields, 'helper_css');
+                      js python:here.getUniqueWidgetAttr(fields, 'helper_js');">
+			
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en-US"
       lang="en-US"
@@ -6,6 +22,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="plone">
+
 
   <metal:block
      fill-slot="top_slot"
@@ -17,24 +34,29 @@
        condition="macro">
       <metal:block use-macro="macro" />
     </tal:block>
+
+	<tal:css condition="css"
+             repeat="item css">
+      <style type="text/css"
+             media="all"
+             tal:condition="python:exists('portal/%s' % item)"
+             tal:content="string:@import url($portal_url/$item);">
+      </style>
+    </tal:css>
+    <tal:js condition="js"
+            repeat="item js">
+      <script type="text/javascript"
+              charset="iso-8859-1"
+              tal:condition="python:exists('portal/%s' % item)"
+              tal:attributes="src string:$portal_url/$item">
+      </script>
+    </tal:js>
+
   </metal:block>
 
   <body>
     <div metal:fill-slot="main">
-      <div
-          metal:define-macro="main"
-          tal:define="errors options/state/getErrors|nothing;
-                      Iterator python:modules['Products.Archetypes'].IndexIterator;
-                      tabindex python:Iterator();
-                      schematas here/Schemata;
-                      fieldsets python:[key for key in schematas.keys() if (key != 'metadata') and (schematas[key].filterFields(regfield=1))];
-                      default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
-                      fieldset request/fieldset|options/fieldset|default_fieldset;
-                      portal_type python:here.getPortalTypeName().lower();
-                      edit_template python:'%s_edit' % portal_type;
-                      edit_macros python:path('here/%s/macros|here/edit_macros/macros' % edit_template);
-                      is_multipage python: len(fieldsets) &gt; 1;"
-          tal:omit-tag="">
+      <div metal:define-macro="main" tal:omit-tag="">
         <h1 i18n:translate="heading_registration_form">Registration Form</h1>
         
         <form name="edit_form"
@@ -118,5 +140,8 @@
     </div>
 
   </body>
+
 </html>
+  </tal:block>
+
 

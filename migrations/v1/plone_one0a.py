@@ -11,6 +11,7 @@ from Products.CMFCore import CMFCorePermissions
 from StringIO import StringIO
 #from Products.CMFPlone.setup.ConfigurationMethods import modifyMembershipTool
 from Products.CMFMember.CatalogTool import CatalogTool
+from Products.CMFMember.MembershipTool import MembershipTool
 
 
 import os, types
@@ -19,7 +20,7 @@ from os.path import isdir, join
 def _migrateTool(portal, toolid, name, attrs):
     orig=getToolByName(portal, toolid)
     portal.manage_delObjects(toolid)
-    portal.manage_addProduct['CMFMember'].manage_addTool(name)
+    portal.manage_addProduct[CMFMember.PKG_NAME].manage_addTool(name)
     tool = getToolByName(portal, toolid)
     for attr in attrs:
         setattr(tool, attr, aq_base(getattr(aq_base(orig), attr)))
@@ -176,9 +177,13 @@ def replaceTools(portal, custSchema, convert=1):
 #        addTool('CMFMember Registration Tool', None)
 #        out.append('Added CMFMember Registration tool')
 
-        _migrateTool(portal, 'portal_registration', 'CMFMember Registration Tool', ['_actions'])
+        _migrateTool(portal, 'portal_registration',
+                     'CMFMember Registration Tool',
+                     ['_actions'])
         out.append('Migrated registration tool to CMFMember Registration tool')
-        _migrateTool(portal, 'portal_catalog', CatalogTool.meta_type, ['_actions', '_catalog'])
+        _migrateTool(portal, 'portal_catalog',
+                     CatalogTool.meta_type,
+                     ['_actions', '_catalog'])
         out.append('Migrated catalog to Member Catalog tool')
 
         catalog = portal.portal_catalog
@@ -187,25 +192,44 @@ def replaceTools(portal, custSchema, convert=1):
         catalog.addColumn('indexedOwner')
         catalog.addColumn('indexedUsersWithLocalRoles')
         # XXX be sure to migrate portraits before replacing the membership tool
+        ms_actions = []
         if hasattr(portal, 'portal_membership'):
-            portal.manage_delObjects(['portal_membership'])
-        addTool('CMFMember Membership Tool', None)
-        out.append('Added CMFMember Membership Tool')
+            _migrateTool(portal, 'portal_membership',
+                         MembershipTool.meta_type,
+                         ['_actions'])
+            out.append('Migrated membership tool to CMFMember Membership Tool')
+        else:
+            addTool('CMFMember Membership Tool', None)
+            out.append('Added CMFMember Membership Tool')
 
-        factory = MemberDataContainer.getMemberFactory(memberdata_tool, 'Member')
+        
 
+        # Get the default member type from the control tool
+        # Could be other types then default.
+        memberdata_tool.setDefaultType(getToolByName(portal, 'cmfmember_control').getDefaultMemberType())
+        
+        # Get the factory for the default cmfmember type
+        factory = MemberDataContainer.getMemberFactory(memberdata_tool, memberdata_tool.getTypeName())
+        
         workflow_tool = getToolByName(portal, 'portal_workflow')
         users = ''
         for id in oldMemberData.keys():
             factory(id)
             new_member = memberdata_tool.get(id)
             new_member._migrate(oldMemberData[id], ['portrait'], out)
-            workflow_tool.doActionFor(new_member, 'migrate') # put member in registered state without sending registration mail
+
+            try:
+                workflow_tool.doActionFor(new_member, 'migrate') # put member in registered state without sending registration mail
+            except:
+                #No migrate transition in the workflow.
+                pass
+                
             # change ownership for migrated member
             new_member.changeOwnership(new_member.getUser(), 1)
             new_member.manage_setLocalRoles(new_member.getUserName(), ['Owner'])
+            
             users += id + ', '
-        out.append(users + ' migrated')
+        out.append(users + ' migrated to ' + memberdata_tool.getTypeName())
         return out
 
 def insertSkinsIntoSkinPath(portal):

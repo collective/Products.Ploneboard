@@ -1,3 +1,32 @@
+2004-09-16  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Removed simple_member_workflow.  This was a single
+      state workflow that was unused (and practically
+      unusable)
+
+    * lots of other miscellaneous improvements... I'm not
+      going to track them all here anymore, but i'm making
+      good notes when committing, please see CVS history
+      for details
+
+2004-08-04  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Member object now empties the stored 'password'
+      attribute as soon as a permanent user object
+      is created (password retrieval is delegated to
+      the user object)
+
+2004-08-02  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * MemberDataContainer.getMemberSchema() now returns
+      an acquisition-wrapped schema to work with the newly
+      functioning Archetypes security
+
+2004-07-26  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Slight changes to migration code to preserve any custom
+      portal_membership actions  
+
 2004-06-25  Rob Miller <ra@burningman.com> (rafrombrc)
 
     * Added 'absolute_url' metadata to the member_catalog brains

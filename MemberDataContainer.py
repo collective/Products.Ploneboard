@@ -6,7 +6,7 @@ except:
 
 from Globals import InitializeClass, DTMLFile
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
-from Acquisition import aq_base, aq_parent
+from Acquisition import aq_base, aq_parent, ImplicitAcquisitionWrapper
 from BTrees.OOBTree import OOBTree
 from OFS.SimpleItem import SimpleItem
 from OFS.PropertyManager import PropertyManager
@@ -99,7 +99,6 @@ class MemberDataContainer(BaseBTreeFolder):
     global_allow = 0
 
     _defaultMember = None
-    
     defaultMemberSchema = Member.schema
     _instanceVersion = ''
 
@@ -121,6 +120,7 @@ class MemberDataContainer(BaseBTreeFolder):
                      ActionProviderBase.manage_options
                      )
     
+
     if expose_var_schema:
         manage_options += ({'label':'Schema','action':'schemaForm'}, )
         security.declareProtected(CMFCorePermissions.ManageProperties, 'schemaForm')
@@ -130,10 +130,10 @@ class MemberDataContainer(BaseBTreeFolder):
     # Implementation of CMFCore.interfaces.portal_memberdata.portal_memberdata
     security.declarePrivate('wrapUser')
     def wrapUser(self, user):
-        '''
+        """
         If possible, returns the Member object that corresponds
         to the given User object.
-        '''
+        """
         try:
             name = user.getUserName()
             m = self.get(name, None)
@@ -156,9 +156,10 @@ class MemberDataContainer(BaseBTreeFolder):
             sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
             raise
 
-    security.declareProtected(CMFCorePermissions.ManageProperties, 'getMemberDataContents')
+    security.declareProtected(CMFCorePermissions.ManageProperties,
+                              'getMemberDataContents')
     def getMemberDataContents(self):
-        '''
+        """
         Returns a list containing a dictionary with information
         about the _members BTree contents: member_count is the
         total number of member instances stored in the memberdata-
@@ -166,7 +167,7 @@ class MemberDataContainer(BaseBTreeFolder):
         that for one reason or another are no longer in the
         underlying acl_users user folder.
         The result is designed to be iterated over in a dtml-in
-        '''
+        """
 
         members = self.objectValues()
         oc = 0
@@ -180,7 +181,8 @@ class MemberDataContainer(BaseBTreeFolder):
             'orphan_count' : oc
             }]
 
-    security.declareProtected(CMFCorePermissions.ManageProperties, 'pruneMemberDataContents')
+    security.declareProtected(CMFCorePermissions.ManageProperties,
+                              'pruneMemberDataContents')
     def pruneMemberDataContents(self):
         """
         Check for every Member object if it's orphan and delete it.
@@ -195,8 +197,10 @@ class MemberDataContainer(BaseBTreeFolder):
                 self.pruneOrphan(member.getUserName())
 
     def fixOwnership(self):
-        """A utility method for transferring ownership for users who no longer
-        exist"""
+        """
+        A utility method for transferring ownership for users who no longer
+        exist
+        """
 
         portal = getToolByName(self, 'portal_url').getPortalObject()
         catalog = getToolByName(self, 'portal_catalog')
@@ -228,10 +232,12 @@ class MemberDataContainer(BaseBTreeFolder):
 
 
     def handleOrphanedContent(self, object, new_user=None):
-        """Handle orphaned content.  If new_user is not None, ownership is
+        """
+        Handle orphaned content.  If new_user is not None, ownership is
         transferred to the new user.  If new_user is None, the policy is
         determined by container properties.  Returns 1 if the object's
-        ownership changes."""
+        ownership changes.
+        """
         if new_user:
             changeOwnership(object, new_user)
             return 1
@@ -247,28 +253,35 @@ class MemberDataContainer(BaseBTreeFolder):
                     logException()
                 return 0
             else:
-                member = getToolByName(self, 'portal_membership').getAuthenticatedMember()
+                member = getToolByName(self,
+                                       'portal_membership').getAuthenticatedMember()
                 new_user = member.getUser()
                 changeOwnership(object, new_user)
                 return 1
 
     security.declarePublic('index_html')
     def index_html(self, REQUEST, RESPONSE):
-        """Return Member search form as default page."""
+        """
+        Return Member search form as default page.
+        """
         search_form = self.restrictedTraverse('member_search_form')
         return search_form(REQUEST, RESPONSE)
 
 
     security.declarePrivate('_deleteMember')
     def _deleteMember(self, id):
-        """Remove a member"""
+        """
+        Remove a member
+        """
         self._delObject(id)
 
     # XXX This is untested implementation.
     ### and what uses this? should I test it?
     security.declarePrivate( 'searchMemberDataContents' )
     def searchMemberDataContents( self, search_param, search_term ):
-        """ Search members """
+        """
+        Search members
+        """
 
         results=[]
         if search_param == 'username':
@@ -285,14 +298,16 @@ class MemberDataContainer(BaseBTreeFolder):
             query['portal_type'] = allowed_content_types
             results=catalog(query)
 
-        return [{'username':getattr(r,'id'), 'email':getattr(r,'email')} for r in [r.getObject() for r in results] if hasattr(r,'id')]
+        return [{'username':getattr(r,'id'),'email':getattr(r,'email')} \
+                for r in [r.getObject() for r in results] if hasattr(r,'id')]
 
 
     def searchForMembers( self, REQUEST=None, **kw ):
-        """ do a catalog search on a sites members.
-            Expects basic
-            if the keyword brains is set to a non zero/null value, search will return only member_catalog metadata.
-            Otherwise, memberdata objects returned. """
+        """
+        Do a catalog search on a sites members. If the keyword brains is set
+        to a non zero/null value, search will return only member_catalog metadata.
+        Otherwise, memberdata objects returned.
+        """
 
         if REQUEST:
             search_dict = getattr(REQUEST, 'form', REQUEST)
@@ -354,19 +369,20 @@ class MemberDataContainer(BaseBTreeFolder):
 
         results=catalog(query) 
 
-        if results and not (search_dict.has_key('brains') or REQUEST.get('brains', None)):
+        if results and not (search_dict.has_key('brains') \
+                            or REQUEST.get('brains', None)):
             results = [r.getObject() for r in results]
 
         return filter(None, results)
 
     security.declarePrivate('registerMemberData')
     def registerMemberData(self, m, id):
-        '''
+        """
         Adds the given member data to the _members dict.
         This is done as late as possible to avoid side effect
         transactions and to reduce the necessary number of
         entries.
-        '''
+        """
         self._setObject(id, m)
 
     def _getMemberInstance(self):
@@ -386,45 +402,49 @@ class MemberDataContainer(BaseBTreeFolder):
 
     ## Folderish Methods
 
-    security.declareProtected(CMFCorePermissions.AddPortalContent, 'invokeFactory')
-    def invokeFactory( self
-                     , type_name
-                     , id
-                     , RESPONSE=None
-                     , *args
-                     , **kw
-                     ):
-        """Overriding invokeFactory to be able to have different Member types per
-        instance base. We do a change in the portal_types.MemberDataContainer's
-        allowed content types before we add a new member. After the creation we
-        change to default value.
-        """
-        portal_types = getToolByName(self, 'portal_types')
-        type_info = portal_types.getTypeInfo('MemberDataContainer')
-        old_content_types = type_info.allowed_content_types
-        type_info.allowed_content_types = self.getAllowedMemberTypes()
-        new_id = BaseBTreeFolder.invokeFactory(self, type_name, id, RESPONSE, *args, **kw)
-        type_info.allowed_content_types = old_content_types
-        return new_id
+#     security.declareProtected(CMFCorePermissions.AddPortalContent, 'invokeFactory')
+#     def invokeFactory( self
+#                      , type_name
+#                      , id
+#                      , RESPONSE=None
+#                      , *args
+#                      , **kw
+#                      ):
+#         """
+#         Overriding invokeFactory to be able to have different Member types per
+#         instance base. We do a change in the portal_types.MemberDataContainer's
+#         allowed content types before we add a new member. After the creation we
+#         change to default value.
+#         """
+#         portal_types = getToolByName(self, 'portal_types')
+#         type_info = portal_types.getTypeInfo('MemberDataContainer')
+#         old_content_types = type_info.allowed_content_types
+#         type_info.allowed_content_types = self.getAllowedMemberTypes()
+#         new_id = BaseBTreeFolder.invokeFactory(self, type_name, id, RESPONSE, *args, **kw)
+#         type_info.allowed_content_types = old_content_types
+#         return new_id
 
     def allowedContentTypes(self):
-        '''
-        Returns a list of TypeInfo objects for the specified types in allowedMemberTypes.
-        This method is used to get a list of addable objects in i.e. Plone.
-        '''
+        """
+        Returns a list of TypeInfo objects for the specified types in
+        allowedMemberTypes. This method is used to get a list of addable
+        objects in i.e. Plone.
+        """
         result = []
         portal_types = getToolByName(self, 'portal_types')
         for contentType in self.getAllowedMemberTypes():
             result.append(portal_types.getTypeInfo(contentType))
         return result
 
-# Removed since we now can control allowed content types per instance
-# It could and should be use when the in & out widget is available to
-# populate vocabulary for allowed content types.
+    # Removed since we now can control allowed content types per instance
+    # It could and should be use when the in & out widget is available to
+    # populate vocabulary for allowed content types.
     def all_type_names(self):
-        """Get vocabulary for allowed member types"""
+        """
+        Get vocabulary for allowed member types
+        """
 
-        return getToolByName(self, 'portal_types').listContentTypes()
+        return getToolByName(self, 'cmfmember_control').getAvailableMemberTypes()
 
     def filtered_meta_types(self, user=None):
         # Filters the list of available meta types.
@@ -435,7 +455,7 @@ class MemberDataContainer(BaseBTreeFolder):
                 meta_types.append(meta_type)
         return meta_types
 
-
+    
     security.declareProtected(CMFCorePermissions.ListPortalMembers, 'contentValues')
     def contentValues(self, spec=None, filter=None):
         objects = [v.__of__(self) for v in self.objectValues()]
@@ -506,7 +526,8 @@ class MemberDataContainer(BaseBTreeFolder):
             new_member._migrate(old_member, [], out)
 
             # copy workflow state
-            old_member_state = workflow_tool.getInfoFor(old_member, 'review_state', '')
+            old_member_state = workflow_tool.getInfoFor(old_member,
+                                                        'review_state', '')
             print >> out, 'state = %s' % (old_member_state,)
             transitions = workflow_transfer.get(old_member_state, [])
             print >> out, 'transitions = %s' % (str(transitions),)
@@ -531,19 +552,24 @@ class MemberDataContainer(BaseBTreeFolder):
     ##SUBCLASS HOOKS
     security.declarePrivate('pruneOrphan')
     def pruneOrphan(self, id):
-        """Called when a member object exists for something not in the
+        """
+        Called when a member object exists for something not in the
         acl_users folder
         """
         self._deleteMember(id)
+
 
     if expose_var_schema:
         security.declareProtected(CMFCorePermissions.ManageProperties,
                                   'setMemberSchema')
     else:
         security.declarePrivate('setMemberSchema')
-
     def setMemberSchema(self,member_schema,REQUEST=None):
-        ''' '''
+        """
+        Takes a string containing python code which defines a schema.  This
+        string is eval'ed and the resulting schema is appended to the default
+        Member schema.
+        """
         member_schema=member_schema.strip().replace('\r','')
         schema=eval(member_schema)
         self.memberSchema=self.defaultMemberSchema + schema
@@ -552,16 +578,23 @@ class MemberDataContainer(BaseBTreeFolder):
         if REQUEST:
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 
-    security.declareProtected(CMFCorePermissions.ManageProperties,
+    security.declareProtected(CMFCorePermissions.View,
                               'getMemberSchema')
     def getMemberSchema(self):
-        ''' '''
-        return getattr(self,'memberSchema',self.defaultMemberSchema )
+        """
+        Returns acquisition wrapped member schema.
+        """
+        schema = getattr(self,'memberSchema',self.defaultMemberSchema )
+        schema = ImplicitAcquisitionWrapper(schema, self)
+        return schema
 
     # AT methods
     def setAllowedMemberTypes(self, memberTypes, **kwargs):
-        """Overriding default mutator since TypesTool checks the
-        variable allowed_content_types directly.  No checking for whether types are real, proper, etc."""
+        """
+        Overriding default mutator since TypesTool checks the
+        variable allowed_content_types directly.  No checking
+        for whether types are real, proper, etc.
+        """
 
 
         self.allowed_content_types = memberTypes
@@ -570,9 +603,8 @@ class MemberDataContainer(BaseBTreeFolder):
 
         type_tool = getToolByName(self, 'portal_types')
         
-        mdct = type_tool.MemberDataContainer
-        mdc_allowed_types = mdct.getProperty('allowed_content_types')
-        mdct.manage_changeProperties({'allowed_content_types':self.allowed_content_types})
+        mdc = type_tool.getTypeInfo(self)
+        mdc.manage_changeProperties(allowed_content_types=memberTypes)
 
     def _vocabAllowedMemberTypes(self):
         return self.getAllowedMemberTypes()
@@ -580,8 +612,10 @@ class MemberDataContainer(BaseBTreeFolder):
 # Put this outside the MemberData tool so that it can be used for
 # conversion of old MemberData during installation
 def getMemberFactory(self, type_name):
-    """return a callable that is the registered object returning a
-    contentish member object"""
+    """
+    Return a callable that is the registered object returning a
+    contentish member object
+    """
     # Assumptions: there is a types_tool type called Member, you
     # want one of these in the folder, changing this changes the
     # types of members in your site.

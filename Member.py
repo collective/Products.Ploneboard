@@ -33,9 +33,10 @@ from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, \
      EDIT_ID_PERMISSION, VIEW_OTHER_PERMISSION, EDIT_PROPERTIES_PERMISSION, \
      VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, \
      EDIT_SECURITY_PERMISSION, MAIL_PASSWORD_PERMISSION, ADD_PERMISSION, \
-     VIEW_PERMISSION
+     VIEW_PERMISSION, REGISTER_PERMISSION
 from Products.CMFMember import RegistrationTool, VERSION
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
+
 from Products.CMFMember.utils import logException, changeOwnership, unique
 
 # generate the addMember method ourselves so we can do some extra
@@ -363,7 +364,7 @@ login_info_schema = Schema((
                                'view':'visible'},
                       ),
                   ),
-
+    
     ComputedField('listed',
                   mode='r',
                   read_permission=VIEW_OTHER_PERMISSION,
@@ -409,6 +410,10 @@ class Member(VariableSchemaSupport, BaseContent):
     last_login_time = '2000/01/01/'
     # version used in migrating
     version = VERSION
+
+    # used simply to register the permission with zope
+    security.declareProtected(REGISTER_PERMISSION, 'bogus')
+    bogus = 'bogus'
 
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
@@ -468,6 +473,9 @@ class Member(VariableSchemaSupport, BaseContent):
     def Title(self):
         return self.id
 
+    def index_html(self):
+        """ Acquire if not present. """
+        return self.view()
 
     security.declarePublic('getUserName')
     def getUserName(self):
@@ -507,23 +515,18 @@ class Member(VariableSchemaSupport, BaseContent):
                 # CMFMember stuff
                 return ()
 
-            if hasattr(user,'getUserRoles'):
-                roles=user.getUserRoles()
-            else:
-                roles=user.getRoles()
+            roles=user.getRoles()
         except TypeError:
             #XXX The user is not in this acl_users so we get None
             if self.getUser().roles is None:
                 self.getUser().roles=('Member',)
             roles=self.getUser().getRoles()
 
-        # XXX removing spurious duplicate roles... where do they come from?
-        r = list(roles)
-        for i in r:
-            while r.count(i) > 1:
-                r.remove(i)
-        roles = tuple(r)
-        return roles
+        # Remove duplicate roles
+        rolefilter = {}
+        for r in roles:
+            rolefilter[r] = 1
+        return tuple(rolefilter.keys())
 
 
     security.declarePublic('getFilteredRoles')
@@ -630,11 +633,9 @@ class Member(VariableSchemaSupport, BaseContent):
 
     security.declarePrivate('setSecurityProfile')
     def setSecurityProfile(self, password=None, roles=None, domains=None):
-        """Set the user's basic security profile"""
-        if password is None:
-            password = self.password
-        else:
-            self.password = password
+        """
+        Set the user's basic security profile
+        """
         if roles is None:
             roles = self.roles
         else:
@@ -646,12 +647,19 @@ class Member(VariableSchemaSupport, BaseContent):
 
         if self.hasUser():
             # if our user lives in a user folder, do this the right way
-            aq_parent(aq_inner(self.getUser())).userFolderEditUser(self.id, password, roles, domains)
+            aq_parent(aq_inner(self.getUser())).userFolderEditUser(self.id,
+                                                                   password,
+                                                                   roles,
+                                                                   domains)
 
             if hasattr(self, '_v_user'):
                 delattr(self, '_v_user')  # remove the cached user
         else:
             # we have a temporary user in hand -- set its attributes by hand
+            if password is None:
+                password = self.password
+            else:
+                self.password = password
             user = self.getUser()
             if hasattr(user, 'changePassword'):
                 # for GRUF
@@ -1025,12 +1033,14 @@ class Member(VariableSchemaSupport, BaseContent):
 
         if hasattr(user, '_getPassword'):
             # for GRUF
-            self.password = user._getPassword()
+            #self.password = user._getPassword()
+            self.password = '' # don't store passwords here!
             self.roles = user.getRoles()
             self.domains = user.getDomains()
         else:
             # for ordinary acl_users
-            self.password = user.__
+            #self.password = user.__
+            self.password = '' # don't store passwords here!
             self.roles = user.roles
             self.domains = user.domains
 
@@ -1055,6 +1065,7 @@ class Member(VariableSchemaSupport, BaseContent):
         acl_users.userFolderAddUser(self.id, self.password, self.roles, self.domains)
         user = acl_users.getUser(self.id).__of__(acl_users)
         self._userInfo = self._getInfoFromUser(user)
+        self.password = '' # clear out the password
         self._v_user = (user,)
 
 
@@ -1062,7 +1073,10 @@ class Member(VariableSchemaSupport, BaseContent):
         """Create a temporary placeholder user for this member to use for
         delegation until a real acl_users user is created"""
         acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users
-        self._v_user = (User.SimpleUser(self.id, self.password, self.roles, self.domains).__of__(acl_users),)
+        self._v_user = (User.SimpleUser(self.id,
+                                        self.password,
+                                        self.roles,
+                                        self.domains).__of__(acl_users),)
 
 
     def _getInfoFromUser(self, user):
@@ -1113,7 +1127,14 @@ class Member(VariableSchemaSupport, BaseContent):
     def _updateCredentials(self):
         if self.REQUEST:
             # don't log out the current user
-            assert self.hasUser()
+            if not self.hasUser():
+                # Make an extra check to see if the user is there
+                acl_users = getToolByName(self, 'portal_url').getPortalObject().acl_users
+                user = acl_users.getUserById(self.getId(), None)
+                if user is not None:
+                    self.setUser(user)
+                else:
+                    raise AssertionError
             user = self.getUser()
             acl_users = aq_parent(user)
             if hasattr(aq_base(acl_users), 'credentialsChanged'):
@@ -1146,11 +1167,14 @@ class Member(VariableSchemaSupport, BaseContent):
 
 
     def _getUserById(self, id):
-        """A utility method for finding a user by searching through
+        """
+        A utility method for finding a user by searching through
         portal.acl_users as well as the acl_users folders for all
         zope folders containing portal.
 
-        Returns the user in the acquisition context of its containing folder"""
+        Returns the user in the acquisition context of its containing
+        folder.
+        """
         acl_users = self._getUserFolderForUser(id)
         if acl_users is None:
             return None
@@ -1158,7 +1182,8 @@ class Member(VariableSchemaSupport, BaseContent):
 
 
     def _changeUserInfo(self, move, old_user, new_user=None):
-        """A utility method for transferring/deleting local roles and ownership
+        """
+        A utility method for transferring/deleting local roles and ownership
         when a member is copied, renamed, or deleted.
 
         If move = 0, local roles are copied from old_user to new_user and
@@ -1167,7 +1192,8 @@ class Member(VariableSchemaSupport, BaseContent):
         If move = 1, local roles are moved from old_user to new_user.
         If new_user is None, old_user's local roles are simply removed.
         Ownership is transferred from old_user to new_user.  If new_user is
-        None, objects owned by old_user are deleted."""
+        None, objects owned by old_user are deleted.
+        """
 
         old_user_id = old_user.getUserName()
 
@@ -1387,6 +1413,9 @@ class Member(VariableSchemaSupport, BaseContent):
             if hasattr(object, '_migrating'):
                 return
 
+            if hasattr(object, 'getPassword'):
+                self.password = object.getPassword()
+
             old_user = getattr(object, '_v_old_user', None)
             if old_user:
                 delattr(object, '_v_old_user')
@@ -1454,6 +1483,8 @@ class Member(VariableSchemaSupport, BaseContent):
         try:
             if hasattr(self, '_v_old_user'):
                 # if we are in the midst of a move, do nothing
+                Member.inheritedAttribute('manage_beforeDelete')(self, item,
+                                                                 container)
                 return
 
             if hasattr(self, '_migrating'):
@@ -1509,26 +1540,27 @@ class Member(VariableSchemaSupport, BaseContent):
     # replacement for portal_registration's mailPassword function
     security.declareProtected(MAIL_PASSWORD_PERMISSION, 'mailPassword')
     def mailPassword(self):
-        """ Email a forgotten password to a member."""
+        """
+        Email a forgotten password to a member.
+        """
         # assert that the email address is valid
         email = self.getProperty('email')
         utils = getToolByName(self, 'plone_utils')
         if (not email) or (not utils.validateSingleEmailAddress(email)):
             raise 'ValueError', 'Invalid email address.'
 
-        password = self.getPassword()
         # Rather than have the template try to use the mailhost, we will
         # render the message ourselves and send it from here (where we
         # don't need to worry about 'UseMailHost' permissions).
+        self.REQUEST.set('password', self.getPassword())
         mail_text = self.mail_password_template( self
                                                , self.REQUEST
                                                , member=self
-                                               , password=password
+                                               , email=email
                                                )
         host = self.MailHost
         host.send( mail_text )
-        return self.mail_password_response( self, self.REQUEST )
-
+        
 
     # ########################################################################
     # utility methods
@@ -1594,7 +1626,8 @@ class Member(VariableSchemaSupport, BaseContent):
                         pass
 
             # move the user over
-            self.setUser(old_member.getUser())
+            if old_member.hasUser():
+                self.setUser(old_member.getUser())
 
     def _migrateGetOldValue(self, old, id, out):
         """Try to get a value from an old member object using a variety of

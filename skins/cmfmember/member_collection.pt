@@ -1,9 +1,16 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="plone">
 
 <!-- ***********************************************************************************
 
 Hijacked from plip18, thanks to Phil and others.
+
+Ce que j'ai modifi'checkbox'" en remplapartout les "folder_contents" par "results" pour standardiser. 
 
 ********************************************************************************* -->
 

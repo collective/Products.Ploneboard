@@ -6,6 +6,7 @@ from Testing import ZopeTestCase
 from Products.CMFMember.tests import CMFMemberTestCase
 from Products.CMFCore.utils import getToolByName
 from Interface.Verify import verifyClass
+from AccessControl.SecurityManagement import newSecurityManager
 
 import Products.CMFMember
 from Products.CMFMember.MemberDataContainer import MemberDataContainer
@@ -19,9 +20,6 @@ allowed_types = ('Member',)
 
 class TestMemberDataContainer(CMFMemberTestCase.CMFMemberTestCase):
 
-    def afterSetUp(self):
-        CMFMemberTestCase.CMFMemberTestCase.afterSetUp(self)
- 
     def testAddNewMemberAndPruneOrphans(self):
         self.membership.addMember('orphanSoon', 'secret',['Member'],[])
         noMembers = self.memberdata.getMemberDataContents()[0]
@@ -83,6 +81,7 @@ class TestMemberDataContainer(CMFMemberTestCase.CMFMemberTestCase):
         # check member types for instance 
         self.assertEqual(list(self.memberdata.getAllowedMemberTypes()),
                         ['Member1','Member2'])
+
 
 class TestMemberData(CMFMemberTestCase.CMFMemberTestCase):
 

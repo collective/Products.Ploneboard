@@ -14,16 +14,13 @@ EDIT_PROPERTIES_PERMISSION = CMFCorePermissions.SetOwnProperties
 EDIT_PASSWORD_PERMISSION = CMFCorePermissions.SetOwnPassword
 # Change a member's roles and domains
 EDIT_SECURITY_PERMISSION = 'Manage users'
+# Appear in searches
+VIEW_PERMISSION = CMFCorePermissions.View
 # View a member's roles and domains
 VIEW_SECURITY_PERMISSION = 'Manage users'
 # View a member's public information
-VIEW_PUBLIC_PERMISSION = 'CMFMember: View'
+VIEW_PUBLIC_PERMISSION = VIEW_PERMISSION
 # View a member's private information
 VIEW_OTHER_PERMISSION = EDIT_PROPERTIES_PERMISSION
-# Appear in searches
-VIEW_PERMISSION = CMFCorePermissions.View
 # Enable password mailing
 MAIL_PASSWORD_PERMISSION = CMFCorePermissions.MailForgottenPassword
-
-
-

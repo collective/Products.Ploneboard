@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.9 2004/07/12 22:32:00 svincic Exp $
+$Id: ControlTool.py,v 1.10 2004/09/18 20:54:38 svincic Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -20,6 +20,7 @@ from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore import CMFCorePermissions
 
+from Products.CMFMember.Extensions.Workflow import setupWorkflow
 from Products.CMFMember.MemberDataContainer import getMemberFactory
 import Products.CMFMember as CMFMember
 
@@ -74,6 +75,9 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     global_allow = 0
     use_folder_tabs = 0
     
+    # Used to set the default type in MemberDataContainer and migrations
+    default_member_type = 'Member'
+    
     actions = (
         { 'id'            : 'migrations',
           'name'          : 'Migrations',
@@ -96,13 +100,13 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
     security = ClassSecurityInfo()
 
-    security.declareProtected(ManagePortal, 'manage_overview')
-    security.declareProtected(ManagePortal, 'manage_migrate')
-    security.declareProtected(ManagePortal, 'manage_setup')
+    #security.declareProtected(ManagePortal, 'manage_overview')
+    #security.declareProtected(ManagePortal, 'manage_migrate')
+    #security.declareProtected(ManagePortal, 'manage_setup')
 
-    manage_migrate = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration.pt', globals())
-    manage_overview = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration_overview.pt', globals())
-    manage_setup = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_setup.pt', globals())
+    #manage_migrate = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration.pt', globals())
+    #manage_overview = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration_overview.pt', globals())
+    #manage_setup = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_setup.pt', globals())
 
     version = ''
     
@@ -113,6 +117,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
             self.setSchemaCollector('type')
         except :
             pass
+            
         
     # Add a visual note
     def om_icons(self):
@@ -175,6 +180,22 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
         """ All known member migrations """
         return _memberPaths
         
+    
+    security.declareProtected(ManagePortal, 'getDefaultMemberType')
+    def getDefaultMemberType(self):
+        """ Return default member type set in the migration form or from the MemberDataContainer. """
+        return self.default_member_type
+        
+    security.declareProtected(ManagePortal, 'getAvailableMemberTypes')
+    def getAvailableMemberTypes(self):
+        """ Return available member types. Used in migration. """
+        return getToolByName(self, 'portal_types').listContentTypes()
+
+    security.declareProtected(ManagePortal, 'getAvailableWorkflows')
+    def getAvailableMemberWorkflows(self):
+        """ Return available workflows. Used to define default workflow. """
+        return getToolByName(self, 'portal_workflow').objectIds()
+
 
     security.declareProtected(ManagePortal, 'getFileSystemVersion')
     def getFileSystemVersion(self):
@@ -313,14 +334,26 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     ##############################################################
 
     security.declareProtected(ManagePortal, 'upgrade')
-    def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1):
+    def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1, default_member_type='Member', default_workflow=None, upgrade_workflows=False):
         """ perform the upgrade """
-
-        #get_transaction().commit(1)
-
+        
         # keep it simple
         out = []
+        
+        # reinstall CMFMember default workflows
+        if upgrade_workflows:
+            setupWorkflow(getToolByName(self, 'portal_url'), out, force_reinstall=True)
+            out.append(('Workflows reinstalled', zLOG.INFO))
 
+        self.default_member_type = default_member_type
+        
+        # Set the default workflow for the selected default member type
+        if default_workflow:
+            wf_tool = getToolByName(self, 'portal_workflow')
+            wf_tool.setChainForPortalTypes((default_member_type,), default_workflow)
+            wf_tool.updateRoleMappings()
+            out.append(('Workflow for %s  set to %s' % (default_member_type, default_workflow), zLOG.INFO))
+            
         self._check()
         failed = 0
         if dry_run:
@@ -410,7 +443,8 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                 if not swallow_errors:
                     for msg, sev in out: log(msg, severity=sev)
                     raise
-
+                    
+        
         if dry_run:
             out.append(("Dry run selected, transaction aborted", zLOG.INFO))
             # abort all work done in this transaction, this roles back work
@@ -423,11 +457,9 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
         self._log = out
 
-        if REQUEST :
-            REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-
-        return 'Migrated...'
-
+        if REQUEST:
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + '/prefs_cmfmember_migration')
+        
     def getConfiglets(self):
         return tuple(configlets)
     ##############################################################
@@ -447,9 +479,9 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
         res = function(self.aq_parent)
         return newversion, res
 
-def registerUpgradePath(oldversion, newversion, function, type = 'Member'):
+def registerUpgradePath(oldversion, newversion, function, type = 'Standard'):
     """ Basic register func """
-    if type != 'Memmber':
+    if type != 'Member':
         _upgradePaths[oldversion.lower()] = [newversion.lower(), function]
     else:
         _memberPaths[oldversion.lower()] = [newversion.lower(), function]

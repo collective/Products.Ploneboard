@@ -33,18 +33,21 @@ def addWorkflowScripts(wf):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Make a Member profile private', 'CMFMember.Workflow', 'makePrivate')
     
 
-def setupWorkflow(portal, out):
+def setupWorkflow(portal, out, force_reinstall=None):
     wf_tool=portal.portal_workflow
-
-    if not 'member_approval_workflow' in wf_tool.objectIds():
-        wf_tool.manage_addWorkflow('member_approval_workflow (Portal Member Workflow: Approval Required)',
-                                   'member_approval_workflow')
-        addWorkflowScripts(wf_tool['member_approval_workflow'])
-
-    if not 'member_auto_workflow' in wf_tool.objectIds():
-        wf_tool.manage_addWorkflow('member_auto_workflow (Portal Member Workflow: Automatic Approval)',
-                                   'member_auto_workflow')
-        addWorkflowScripts(wf_tool['member_auto_workflow'])
+    
+    workflows = { 'member_approval_workflow' : 'member_approval_workflow (Portal Member Workflow: Approval Required)',
+                  'member_auto_workflow'     : 'member_auto_workflow (Portal Member Workflow: Automatic Approval)' }
+    
+    exist = lambda wf: wf in wf_tool.objectIds() 
+   
+    for wf in workflows.keys():
+        if exist(wf) and force_reinstall:
+            wf_tool.manage_delObjects([wf])
+        if not exist(wf):
+            wf_tool.manage_addWorkflow( workflows[wf],
+                                        wf)
+            addWorkflowScripts(wf_tool[wf])
 
     wf_tool.updateRoleMappings()
 

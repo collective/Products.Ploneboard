@@ -6,6 +6,7 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
+
 os.environ['EVENT_LOG_FILE'] = os.path.join(os.getcwd(), 'zLOG.log')
 os.environ['EVENT_LOG_SEVERITY'] = '-300'
 
@@ -54,7 +55,62 @@ class TestRegistration(ZopeTestCase.Functional, CMFMemberTestCase.CMFMemberTestC
         msg = self.getTheTag(p, "div", **{'class':'portalMessage'})
         # XXX this is not i18n smart, how do we handle this?
         self.failUnless("You have been registered" in msg)
-        get_transaction().commit(1)
+        #get_transaction().commit(1)
+
+    def tryToGetThePassword(self, userId):
+        self.b.open(self.portal_url+'/mail_password_form')
+        self.b.select_form('mail_password')
+        self.b['userid'] = userId
+        destination = self.b.open(self.b.click())
+
+        # If not authorized we'll end up on the login_form
+        url = self.b.geturl()
+        return 'login_form' not in url and 'mail_password' in url
+        
+    def testMailForgottenPasswordApprovalUser(self):
+        wf_tool = self.portal.portal_workflow
+        wf_tool.setChainForPortalTypes(('Member',), 'member_approval_workflow')
+        wf_tool.updateRoleMappings()
+        member = self.membership.getMemberById( self.portal_user_info['id'])
+        member.setEmail('nobody@neverexistingdomain.fake')
+        # Verify that we start in public state 
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'public')
+        self.failUnless( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
+        # Going to disable
+        wf_tool.doActionFor( member, 'disable' )
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'disabled')
+        self.failIf( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
+        # and to private 
+        # you can only enable the member back to old state, should it be like that?
+        wf_tool.doActionFor( member, 'enable_public' )
+        wf_tool.doActionFor( member, 'make_private' )
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'private')
+        self.failUnless( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
+    def testMailForgottenPasswordAutoUser(self):
+        wf_tool = self.portal.portal_workflow
+        wf_tool.setChainForPortalTypes(('Member',), 'member_auto_workflow')
+        wf_tool.updateRoleMappings()
+        member = self.membership.getMemberById( self.portal_user_info['id'])
+        member.setEmail('nobody@neverexistingdomain.fake')
+        # Verify that we start in public state 
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'public')
+        self.failUnless( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
+        # Going to disable
+        wf_tool.doActionFor( member, 'disable' )
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'disabled')
+        self.failIf( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
+        # and to private 
+        # you can only enable the member back to old state, should it be like that?
+        wf_tool.doActionFor( member, 'enable_public' )
+        wf_tool.doActionFor( member, 'make_private' )
+        self.failUnless(wf_tool.getInfoFor(member, 'review_state') == 'private')
+        self.failUnless( self.tryToGetThePassword( self.portal_user_info['id'] ) )
+        
 
 if __name__ == '__main__':
     framework()

@@ -11,5 +11,5 @@ now=DateTime()
 ### XXX REAL CODE --> REMOVED FOR DEVEL ###
 type_name = context.portal_memberdata.getTypeName()
 #type_name = context.portal_memberdata.typeName
-id=type_name.replace(' ', '_')+'.'+now.strftime('%Y-%m-%d')+'.'+now.strftime('%M%S')
+id=type_name.replace(' ', '_').lower()+'.'+now.strftime('%Y-%m-%d')+'.'+now.strftime('%M%S')
 context.REQUEST.RESPONSE.redirect('%s/portal_memberdata/portal_factory/%s/%s/join_form' % (context.portal_url(), type_name, id))

@@ -2,7 +2,7 @@
 title=Register
 
 [validators]
-validators = validate_base
+validators = validate_registration, validate_base
 
 [actions]
 action.failure = traverse_to:string:join_form

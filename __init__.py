@@ -36,6 +36,10 @@ def initialize(context):
     homedir = package_home(GLOBALS)
     target_dir = os.path.join(homedir, 'skins', SKIN_NAME)
     
+    # This policy enables an option to install CMFMember at Plone site creation
+    import PloneWithCMFMemberSitePolicy
+    PloneWithCMFMemberSitePolicy.register(context, GLOBALS)
+    
     content_types, constructors, ftis = process_types(listTypes(PKG_NAME),
                                                       PKG_NAME)
 

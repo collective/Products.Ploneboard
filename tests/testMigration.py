@@ -21,8 +21,10 @@ from Products.CMFCore.utils import getToolByName, ToolInit
 from DateTime import DateTime
 import string
 
-usera = {'id':'a','password':'123', 'roles':('Member',), 'domains':('127.0.0.1',), 'email':'A', 'fullname':'A Fuler'}
-userb = {'id':'b', 'password':'456', 'roles':('Member','Reviewer',), 'domains':(), 'email':'B', 'fullname':'B Fuler'}
+usera = {'id':'a','password':'123', 'roles':('Member',),
+         'domains':('127.0.0.1',), 'email':'A', 'fullname':'A Fuler'}
+userb = {'id':'b', 'password':'456', 'roles':('Member','Reviewer',),
+         'domains':(), 'email':'B', 'fullname':'B Fuler'}
 
 
 from Products.CMFMember.utils import TYPESMAP
@@ -63,14 +65,16 @@ propName = lambda proptype: '%s_prop' % string.join(proptype.split(), '_')
 class TestMigration( PloneTestCase.PloneTestCase ):
 
     def testMigrationPlone2CMFMemberCustomMData(self):
-        """ Tests migration from Plone to CMFMember w/ custom member data properties """
+        # Tests migration from Plone to CMFMember w/ custom member data
+        # properties
         self.makeMembers()
 
         mdtool = self.portal.portal_memberdata
         mstool = self.portal.portal_membership
 
         # check that we have what we should have before migration
-        self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
+        self.assertEquals(self.portal.portal_memberdata.__class__,
+                          CMFPlone.MemberDataTool.MemberDataTool)
         self._compare_members()
 
         # add new properties to MemberData tool
@@ -103,7 +107,8 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         mdtool = self.portal.portal_memberdata
         mstool = self.portal.portal_membership
 
-        self.assertEquals(self.portal.portal_memberdata.__class__, MemberDataContainer)
+        self.assertEquals(self.portal.portal_memberdata.__class__,
+                          MemberDataContainer)
         self.assertEquals(mstool.getMemberById(usera['id']).__class__, Member)
         self.assertEquals(mstool.getMemberById(userb['id']).__class__, Member)
 
@@ -114,11 +119,13 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         self.failIf(len(errors) > 0, string.join(errors, '\n'))
 
     def testMigrationPlone2CMFMemberZ(self):
-        """ Tests migration from Plone default to CMFMember.  Must run after the
-            custom memberdata test or it will cause that one to fail... :-P"""
+        # Tests migration from Plone default to CMFMember.  Must run after the
+        # custom memberdata test or it will cause that one to fail... :-P
+
         self.makeMembers()
         # check that we have what we should have before migration
-        self.assertEquals(self.portal.portal_memberdata.__class__, CMFPlone.MemberDataTool.MemberDataTool)
+        self.assertEquals(self.portal.portal_memberdata.__class__,
+                          CMFPlone.MemberDataTool.MemberDataTool)
         self._compare_members()
 
         install_cmfmember(self.portal)
@@ -133,7 +140,8 @@ class TestMigration( PloneTestCase.PloneTestCase ):
 
         # check that we still have everything we had before
         
-        self.assertEquals(self.portal.portal_memberdata.__class__, MemberDataContainer)
+        self.assertEquals(self.portal.portal_memberdata.__class__,
+                          MemberDataContainer)
         self._compare_members()
         
         self.assertEquals(self.portal.portal_memberdata.a.__class__, Member)
@@ -158,10 +166,12 @@ class TestMigration( PloneTestCase.PloneTestCase ):
     def compareProperties(self, md):
         data = self.populateDict()
         md_data = ()
-        hasAccessor = lambda field: field.schemata != 'metadata' and field.getAccessor(md)
+        hasAccessor = lambda field: field.schemata != 'metadata' \
+                      and field.getAccessor(md)
         if md.__class__ == Member:
             schema = md.Schema()
-            md_data = [ ( x.getName(), x.getAccessor(md)() ) for x in schema.filterFields(hasAccessor)] 
+            md_data = [ ( x.getName(), x.getAccessor(md)() ) \
+                        for x in schema.filterFields(hasAccessor)] 
         else:
             md_data = [ ( x, md.getProperty(x))  for x in data.keys() ] 
 
@@ -199,7 +209,8 @@ class TestMigration( PloneTestCase.PloneTestCase ):
             return val
 
         # Check raw data
-        errors = [ "%s %s != %s" %(x, getProp(x), data[x]) for x in data.keys() if getProp(x) != data[x] ]
+        errors = [ "%s %s != %s" %(x, getProp(x), data[x]) for \
+                   x in data.keys() if getProp(x) != data[x] ]
 
         md_tool = self.portal.portal_memberdata
         def getVocab(prop):
@@ -238,24 +249,18 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         self.assertEqual(b_props.keys(), b_props.values())        
 
     def afterSetUp( self ):
-        # create an admin user
-        #self.portal.acl_users.userFolderAddUser('test_admin', 'qwerty', ('Manager','Member',), ())
-        #import pdb; pdb.set_trace()
-        #get_transaction().commit(1)
-        # assume role of test_admin
         self.loginPortalOwner()
-            
-        #newSecurityManager(None, self.portal.acl_users.getUser('test_admin').__of__(self.portal.acl_users))
 
     def makeMembers(self):
-        #import pdb; pdb.set_trace()
         membership_tool = self.portal.portal_membership
-        membership_tool.addMember(usera['id'], usera['password'], usera['roles'], usera['domains'])
+        membership_tool.addMember(usera['id'], usera['password'],
+                                  usera['roles'], usera['domains'])
         user_a = membership_tool.getMemberById(usera['id'])
         user_a.setMemberProperties({'email':usera['email'],
                                     'fullname':usera['fullname']})
 
-        membership_tool.addMember(userb['id'], userb['password'], userb['roles'], userb['domains'])
+        membership_tool.addMember(userb['id'], userb['password'],
+                                  userb['roles'], userb['domains'])
         user_b = membership_tool.getMemberById(userb['id'])
         user_b.setMemberProperties({'email':userb['email'],
                                     'fullname':userb['fullname']})

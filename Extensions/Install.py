@@ -20,8 +20,6 @@ from os.path import isdir, join
 import Products.CMFMember as CMFMember
 from Products.CMFMember.Extensions.Workflow \
     import setupWorkflow, workflow_transfer
-from Products.CMFMember.Extensions.SimpleWorkflow \
-    import setupWorkflow as setupSimpleWorkflow
 
 from Products.CMFMember.MemberCatalogTool import MemberCatalogTool
 
@@ -49,9 +47,7 @@ def uninstall(self):
 
 def installDependencies(self, out):
     qi=getToolByName(self, 'portal_quickinstaller')
-    qi.installProduct('PortalTransforms',)
     qi.installProduct('Archetypes')
-
 
 def installControlTool(self, out):
     """
@@ -117,8 +113,10 @@ def installMember(self, out):
     at.setCatalogsByType('Member', ['member_catalog', 'portal_catalog'])
 
     # register with portal factory
-    ft = getToolByName(self, 'portal_factory')    portal_factory_types = ft.getFactoryTypes().keys()
-    if 'Member' not in portal_factory_types:        portal_factory_types.append('Member')    ft.manage_setPortalFactoryTypes(listOfTypeIds=portal_factory_types)
+    site_props = self.portal_properties.site_properties
+    if not hasattr(site_props,'portal_factory_types'):
+        site_props._setProperty('portal_factory_types',('Member',), 'lines')
+
     # add a form_controller action so that preference edit traverses back
     # to the preferences panel
     fc = getToolByName(self, 'portal_form_controller')
@@ -188,6 +186,5 @@ def install(self):
     wf_tool.updateRoleMappings()
 
     setupWorkflow(self, out)
-    setupSimpleWorkflow(self, out)
 
     return out.getvalue()

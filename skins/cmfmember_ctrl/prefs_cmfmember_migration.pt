@@ -7,7 +7,12 @@
       i18n:domain="plone"
       metal:use-macro="here/prefs_main_template/macros/master">
 
+
+    <metal:override fill-slot="portlets_one_slot">
+      <metal:prefs use-macro="here/portlet_cmfmember/macros/portlet" />
+    </metal:override>
 <body>
+
 
 
 <div metal:fill-slot="prefs_configlet_main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
@@ -33,21 +38,20 @@
       <b>File system version:</b> <tal:block tal:replace="here/getFileSystemVersion"/><br />
     </p>
 
-    <p tal:condition="not: here/needUpgrading" i18n:translate="cmfmember_up_to_date">
+    <div class="portalMessage"
+         tal:condition="not: here/needUpgrading" i18n:translate="cmfmember_up_to_date">
+        <tal:block replace="structure here/info.gif"/>
         Your CMFMember instance is up to date. 
-    </p>
+    </div>
 
     <tal:block tal:condition="here/needUpgrading">
-    <div class="documentDescription"
-         i18n:translate="description_cmfmember_migration">
-	 <span style="background-color:red; color: white; font-weight: bold">
-	 Please ensure you have a backup of your site before
-	 performing migration.</span> 
-         <br />
-	 Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
+    <div class="portalMessage">
+        <strong i18n:translate="warning_cmfmember_migration">Please ensure you have a backup 
+         of your site before performing migration.</strong>
     </div>
 
     <p i18n:translate="">
+       Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.<br/>
        Your CMFMember instance is out of date. Click "upgrade" to bring this CMFMember version up to date with your file system.
     </p>
     <form action="upgrade" method="post">
@@ -55,14 +59,64 @@
           <legend i18n:translate="legen_normal_migration">Normal migration</legend>
 
           <div class="field">
-	    <label i18n:translate="label_dry_run">Dry run</label>
-
+            <input name="dry_run" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+	        <label i18n:translate="label_dry_run">Dry run</label>
+            
             <div i18n:translate="help_dry_run"
                  class="formHelp">
-		 Print the result of the migration without actually writing anything to the database.
+ 		         Print the result of the migration without actually writing anything to the database.
             </div>
-    	    <input name="dry_run" type="checkbox" value="1:int" checked="checked"/>
           </div>
+          
+          <div class="field">
+             <input name="upgrade_workflows" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+             <label i18n:translate="label_upgrade_workflows">Upgrade Workflows</label>
+            <div i18n:translate="help_upgrade_workflows"
+                 class="formHelp">
+                  This will reinstall CMFMember workflows and all <strong>your changes to the workflows will be lost</strong>. 
+                  If you have own workflows those will not be touched.
+            </div>
+            
+          </div>
+          
+          <div class="field" 
+          	   tal:condition="here/getAvailableMemberTypes">
+          <label i18n:translate="label_default_workflow">Default Member and Workflow</label>
+            <div i18n:translate="help_default_workflow"
+                 class="formHelp">
+                  Choose the default member type and workflow.
+            </div>
+            <select name="default_member_type"
+                    tal:define="defaultMemberType here/getDefaultMemberType">
+              <tal:block tal:repeat="wf here/getAvailableMemberTypes">
+                 <option tal:content="wf"
+                         tal:condition="python:test(not wf == defaultMemberType)">Member type</option>
+                 <option tal:content="wf" selected
+                         tal:condition="python:test(wf == defaultMemberType)">Selected member type</option>
+
+              </tal:block>
+            </select>
+            <select name="default_workflow">
+              <tal:block tal:repeat="wf here/getAvailableMemberWorkflows">
+                 <option tal:content="wf">Workflow</option>
+              </tal:block>
+            </select>
+          </div>
+          
+          <div class="field"
+               tal:condition="not: here/getAvailableMemberTypes|nothing">
+          <label i18n:translate="label_default_workflow">Default Workflow</label>
+            <div i18n:translate="help_default_workflow"
+                 class="formHelp">
+                  Choose the default workflow for CMFMember.
+            </div>
+            <select name="default_workflow">
+              <tal:block tal:repeat="wf here/avialableMemberWorkflows|nothing">
+                 <option tal:content="wf">Workflow</option>
+              </tal:block>
+            </select>
+          </div>
+          
         <div class="formControls">
 	  <input class="context" 
                  type="submit" 
@@ -92,13 +146,13 @@
           </div>
 
           <div class="field">
-	    <label i18n:translate="label_dry_run">Dry run</label>
+             <input name="dry_run" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+	         <label i18n:translate="label_dry_run">Dry run</label>
 
             <div i18n:translate="help_dry_run"
                  class="formHelp">
 		 Print the result of the migration without actually writing anything to the database.
             </div>
-    	    <input name="dry_run" type="checkbox" checked="checked" value="1:int" />
           </div>
         <div class="formControls">
 	  <input class="context" 

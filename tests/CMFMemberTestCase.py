@@ -1,12 +1,12 @@
 
 from Testing import ZopeTestCase
+from Testing.ZopeTestCase.utils import setupCoreSessions
 
 # Add products/dependencies here as needed
-ZopeTestCase.installProduct('CMFMember')
-ZopeTestCase.installProduct('PortalTransforms')
-ZopeTestCase.installProduct('Archetypes')
-ZopeTestCase.installProduct('MimetypesRegistry')
-ZopeTestCase.installProduct('ZCatalog')
+DEPS = ('Archetypes', 'PortalTransforms', 'MimetypesRegistry',
+        'ZCatalog', 'CMFMember')
+for product in DEPS:
+    ZopeTestCase.installProduct(product, 1)
     
 from Products.CMFPlone.tests import PloneTestCase
 from Products.Archetypes.Extensions.Install import install as install_archetypes
@@ -26,10 +26,15 @@ default_user = 'unittest_admin'
 # m = portal.portal_membership.getMemberById(root_user_info['id'])
 # m.setMemberProperties({'email': 'foo@bar.com'})
 
+setupCoreSessions(ZopeTestCase.Zope.app())
 
 class CMFMemberTestCase(PloneTestCase.PloneTestCase):
 
     def afterSetUp(self):
+        sdm = self.app.session_data_manager
+        self.app.REQUEST.set('SESSION', sdm.getSessionData())
+        install_archetypes(self.portal)
+        self._refreshSkinData()
         self.setupUsers()
         self.setupCMFMember()
         self.qi = self.portal.portal_quickinstaller

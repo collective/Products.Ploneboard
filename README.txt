@@ -5,6 +5,12 @@ expanded and configured via an AT schema (or via subclassing). For
 more about the goals of the project, please see GOALS.txt.
 
 
+REQUIREMENTS:
+
+    - Archetypes-1.3.0-beta4
+
+    - Plone-2.0.3
+
 WARNINGS:
 
     Before you get all excited about upgrading, please be aware of the
@@ -62,24 +68,11 @@ WARNINGS:
       or something like that...
 
 
-REQUIREMENTS:
-
-    - Archetypes 1.3 from the release-1_3-branch, the upcoming
-      Archetypes1.3 release will be from this branch.  (NOTE: recent
-      iterations of the release-1_3-branch require the MimetypesRegistry
-      product to be installed separately.)
-
-    - Plone-2.0.1 or greater.  (Plone 2.0-final will NOT suffice,
-      there is a fix to MembershipTool's getMemberById() method that
-      is required to make the unit tests pass.)
-
-
 INSTALLATION:
 
     1. Put CMFMember (and the Requirements) in your Zope Products directory.
 
     1a. Run the test suite.  This will require ZopeTestCase available from
-
         Stefan Holek, whose testing technique is unstoppable:
 
         http://zope.org/Members/shh/ZopeTestCase
@@ -128,7 +121,6 @@ WORKFLOWS:
 
 EXTENDING MEMBERS:
 
-
     CMFMember allows you to customize the member data. You can customize
     the data either using a TTW (through-the-web) schema editor, or by
     creating an Archetypes module that subclasses CMFMember.Member.
@@ -171,16 +163,7 @@ MAILING LIST:
     http://sf.net/projects/collective
 
 
-MAILING LIST:
-
-    Interested Users and Developers are welcome to join the
-    cmfmember-dev mailing list hosted on sourceforge.
-
-    http://sf.net/projects/collective
-
-
 BUGS:
-
 
     Please report bugs (which are different from feature requests) to
     the following collector:

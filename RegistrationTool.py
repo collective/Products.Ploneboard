@@ -4,9 +4,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.RegistrationTool import RegistrationTool as BaseTool
 
 from Globals import InitializeClass
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager, PermissionRole, Unauthorized
 from Products.CMFCore import CMFCorePermissions
-
+from MemberPermissions import MAIL_PASSWORD_PERMISSION
 # - remove '1', 'l', and 'I' to avoid confusion
 # - remove '0', 'O', and 'Q' to avoid confusion
 # - remove vowels to avoid spelling words
@@ -55,7 +55,8 @@ class RegistrationTool( BaseTool ):
     # MAIL_PASSWORD_PERMISSION so that members can be disabled.
     security.declarePublic( 'mailPassword' )
     def mailPassword(self, forgotten_userid, REQUEST):
-        """ Email a forgotten password to a member.
+        """
+        Email a forgotten password to a member.
         o Raise an exception if user ID is not found.
         """
         membership_tool = getToolByName(self, 'portal_membership')
@@ -63,28 +64,16 @@ class RegistrationTool( BaseTool ):
 
         if member is None:
             raise 'NotFound', 'The username you entered could not be found.'
-
-        password = member.getPassword()
-        email = member.getProperty('email')
-
-        # assert that the email address is valid
-        utils = getToolByName(self, 'plone_utils')
-        if (not email) or (not utils.validateSingleEmailAddress(email)):
-            raise 'ValueError', 'Invalid email address.'
-
-        # Rather than have the template try to use the mailhost, we will
-        # render the message ourselves and send it from here (where we
-        # don't need to worry about 'UseMailHost' permissions).
-        mail_text = str(self.mail_password_template( self
-                                                   , REQUEST
-                                                   , member=member
-                                                   , password=password
-                                                   , email=email
-                                                   ))
-
-        host = self.MailHost
-        host.send( mail_text )
-        return self.mail_password_response( self, REQUEST )
+            
+        # we have to do our own security check since we are in a tool
+        # and bypassing Zope security; we can't call member.mailPassword
+        # directly since in private state it's not viewable by anonymous
+        necessary_roles = PermissionRole.rolesForPermissionOn(MAIL_PASSWORD_PERMISSION ,member)
+        for role in getSecurityManager().getUser().getRolesInContext( member ):
+            if role in necessary_roles: 
+                member.mailPassword()
+                return self.mail_password_response(self, REQUEST)
+        raise(Unauthorized)
 
 
     # Get a password of the prescribed length

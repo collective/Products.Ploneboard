@@ -27,3 +27,7 @@ def registerMigrations():
     MigrationTool.registerUpgradePath('1.0 beta2',
                                       '1.0 beta3',
                                       v1.one0b2_one0b3.oneZeroBeta3)
+
+    MigrationTool.registerUpgradePath('1.0 beta3',
+                                      '1.0 beta4',
+                                      null)
