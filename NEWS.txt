@@ -1,4 +1,4 @@
-1.0fork-beta3 - 2004-01-??
+1.0fork-beta3 - 2004-01-07
 
     Added a builtin mo compiler based on the msgfmt tool from the python source
     package. No need to compile the po files to mo files. Thanks to
