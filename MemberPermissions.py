@@ -4,6 +4,8 @@ from Products.CMFCore import CMFCorePermissions
 ADD_PERMISSION = CMFCorePermissions.AddPortalMember
 # Register a new member, i.e. create a User object and enable a member to log in
 REGISTER_PERMISSION = 'CMFMember: Register member'
+# Disable a membership
+DISABLE_PERMISSION = 'Manage users'
 # Modify the member's ID -- should only happen during preregistration
 EDIT_ID_PERMISSION = 'CMFMember: Set member id'
 # Change a member's password

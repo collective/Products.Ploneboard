@@ -150,6 +150,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             import sys
             sys.stdout.write('wrapUser(%s)\n' % str(user))
             triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
+            sys.stdout.write('done with trigger\n')
 
         # Return a wrapper with self as containment and
         # the user as context following CMFCore portal_memberdata
@@ -172,6 +173,9 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             tempFolder = PortalFolder('temp').__of__(self)
             getMemberFactory(tempFolder)('default')
             self._defaultMember = getattr(tempFolder,'default')
+            getattr(tempFolder,'default').unindexObject()
+            tempFolder.unindexObject() # don't store _defaultMember in the catalog
+            self._defaultMember.unindexObject() # don't store _defaultMember in the catalog
         return self._defaultMember
 
     security.declarePublic('getProperty')
@@ -235,6 +239,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     def _checkId(self, id, allow_dup=0):
         PortalFolder._checkId(self, id, allow_dup)
         BTreeFolder2Base._checkId(self, id, allow_dup)
+
 
     ##SUBCLASS HOOKS
     security.declarePrivate('pruneOrphan')

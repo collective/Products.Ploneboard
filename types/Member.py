@@ -5,12 +5,13 @@ import AccessControl.User
 from Products.CMFMember import MemberPermissions
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
     EDIT_REGISTRATION_PERMISSION, VIEW_OTHER_PERMISSION, EDIT_OTHER_PERMISSION, \
-    VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, EDIT_SECURITY_PERMISSION
+    VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, EDIT_SECURITY_PERMISSION, \
+    MAIL_PASSWORD_PERMISSION
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
-from Products.CMFCore.utils import getToolByName, _limitGrantedRoles
+from Products.CMFCore.utils import getToolByName, _limitGrantedRoles, _verifyActionPermissions
 from Products.Archetypes import registerType
 from Products.Archetypes.BaseContent import BaseContent
 from Products.Archetypes.interfaces.base import IBaseContent
@@ -118,6 +119,7 @@ content_schema = FieldList((
                ),
     
     StringField('password',
+                default=None,
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
@@ -166,13 +168,6 @@ content_schema = FieldList((
                                   description='If you would like to restrict this user to logging in only from certain domains, enter those domains here.')
                ),
 
-#    ObjectField('listed',
-#                default=1,
-#                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-#                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
-#                searchable=0,
-#                widget=BooleanWidget(label="Listed")),
-
     DateTimeField('login_time',
                   default='2000/01/01',  # for Plone 1.0.1 compatibility
                   mode='r',
@@ -210,7 +205,20 @@ class Member(BaseContent):
     def __init__(self, userid):
         BaseContent.__init__(self, userid)
         self.id = str(userid)
+        self._setPassword(self.generatePassword())
         self.listed = 0
+
+
+    def view(self, **kwargs):
+        return self.getTypeInfo().getActions()
+        for action in actions:
+            if action.get('id', None) == 'view':
+                if _verifyActionPermissions(obj, action):
+                    action = obj.restrictedTraverse(action['action'])
+                    if action is not None:
+                        return action(**kwargs)
+        raise 'Unauthorized', ('No accessible views available for %s' %
+                               '/'.join(self.getPhysicalPath()))
 
 
     security.declarePublic('getMemberId')
@@ -218,7 +226,7 @@ class Member(BaseContent):
         return self.getUserName()
 
 
-    # #####################################
+    # ###############################
     # Validators
 
     security.declarePrivate('validate_id')
@@ -264,7 +272,17 @@ class Member(BaseContent):
                      + 'Please try again.'
 
 
-    # ####################################
+    def isValid(self):
+        import sys
+        sys.stdout.write('isValid\n')
+        errors = {}
+        # make sure object has required data and metadata
+        self.Schema().validate(self, None, errors, 1, 1)
+        if errors:
+            return 0
+        return 1
+
+    # ###############################
     # Contract with portal_membership
     
     security.declareProtected(MemberPermissions.EDIT_OTHER_PERMISSION, 'setProperties')
@@ -274,29 +292,23 @@ class Member(BaseContent):
         """
         #We know this is an Archetypes based object so we look for
         #mutators there first
+
+        # if mapping is not a dict, assume it is REQUEST
+        if mapping:
+            if not type(mapping) == type({}):
+                data = {}
+                for k,v in mapping.form.items():
+                    data[k] = v
+                mapping = data
+        else:
+            mapping = {}
+
         if kwargs:
             # mapping could be a request object thats not really a dict,
             # this is what we get
-            data = {}
-            for k,v in mapping.form.items():
-                data[k] = v
-            data.update(kwargs)
-            mapping = data
+            mapping.update(kwargs)
 
-        for key, value in mapping.items():
-            field = self.schema.get(key)
-            mutator = None
-            if field:
-                mutator = getattr(self, field.mutator, None)
-                if not mutator:
-                    # Oops? Try the pattern 'setFoo'
-                    mutator = getattr(self, 'set%s' % key.capitalize(), None)
-
-            if mutator:
-                mutator(value)
-            else:
-                # XXX fall back to properties? or attributes
-                pass
+        self.update(**mapping)
 
 
     security.declarePrivate('setMemberProperties')
@@ -364,7 +376,10 @@ class Member(BaseContent):
 
     security.declarePrivate('register')
     def register(self):
+        import sys
+        sys.stdout.write('registering\n')
         registration_tool = getToolByName(self, 'portal_registration')
+        user_created = 0
         # create a real user
         if self.acl_users.getUser(self.id) is None:
             # Limit the granted roles.
@@ -374,16 +389,28 @@ class Member(BaseContent):
 
             self.acl_users.userFolderAddUser(self.id, self._getPassword(), roles, self.getDomains())
             self._v_user = self.acl_users.getUser(self.id)
+            user_created = 1
 
         # make the user the owner of the current member object
+        sys.stdout.write('registering: changeOwnership\n')
         self.changeOwnership(self.getUser(), 1)
+        sys.stdout.write('registering: afterAdd\n')
+        # XXX - should we invoke this for members with users in the Zope root acl_user?
         registration_tool.afterAdd(self, id, self._getPassword(), None)
+        sys.stdout.write('registering: updateListed\n')
         self.updateListed()
+
+        # only send mail if we had to create a new user -- this avoids
+        # sending mail to users who are already registered at the Zope root level
+        if user_created:
+            sys.stdout.write('registering: registeredNotify\n')
+            registration_tool.registeredNotify(self.getUserName())
+        sys.stdout.write('registering: done\n')
 
 
     security.declarePrivate('disable')
     def disable(self):
-        # XXX FIXME implement this method
+        self._setPassword(self.generatePassword())
         self.listed = 0
 
 
@@ -396,7 +423,6 @@ class Member(BaseContent):
 
 
     # ###############################
-
 
     security.declareProtected(MemberPermissions.EDIT_ID_PERMISSION, 'setId')
     def setId(self, id):
@@ -454,7 +480,9 @@ class Member(BaseContent):
             if self.getUser().roles is None:
                 self.getUser().roles=('Member',)
             roles=self.getUser().getRoles()
-        return roles
+        # filter out Authenticated, etc
+        allowed = self.valid_roles()
+        return tuple([r for r in roles if r in allowed])
 
 
     security.declarePrivate('getDomains')
@@ -550,12 +578,39 @@ class Member(BaseContent):
         return self.id
 
 
-    # XXX REFACTOR ME
-    # This is used for a hack in MemberDataTool
-    def _getTypeName(self):
-        return 'CMFMember Content'
+    # ###########################
+    def generatePassword(self):
+        try:
+            registration_tool = getToolByName(self, 'portal_registration')
+            return registration_tool.generatePassword()
+        except AttributeError:
+            # during migration we generate Member objects that don't have
+            # access to the portal -- punt
+            return None
+
+    # replacement for portal_registration's mailPassword function
+    security.declareProtected(MAIL_PASSWORD_PERMISSION, 'mailPassword')
+    def mailPassword(self):
+        """ Email a forgotten password to a member."""
+        # assert that we can actually get an email address, otherwise
+        # the template will be made with a blank To:, this is bad
+        if not member.getProperty('email'):
+            raise 'ValueError', 'Member does not have an email address.'
+        
+        # Rather than have the template try to use the mailhost, we will
+        # render the message ourselves and send it from here (where we
+        # don't need to worry about 'UseMailHost' permissions).
+        mail_text = self.mail_password_template( self
+                                               , self.REQUEST
+                                               , member=self
+                                               , password=self._getPassword()
+                                               )
+        host = self.MailHost
+        host.send( mail_text )
+        return self.mail_password_response( self, REQUEST )
 
 
+    # ###########################
     security.declarePrivate('manage_beforeDelete')
     def manage_beforeDelete(self, item, container):
         BaseContent.manage_beforeDelete(self, item, container)
@@ -607,5 +662,12 @@ class Member(BaseContent):
                 return 1
         return 0
 
+
+
+
+    # XXX REFACTOR ME
+    # This is used for a hack in MemberDataTool
+    def _getTypeName(self):
+        return 'CMFMember Content'
 
 registerType(Member)

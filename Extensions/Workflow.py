@@ -3,7 +3,6 @@ from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC, TRIGGER_WORKFLOW_
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
 from Products.CMFMember import MemberPermissions
-from Products.CMFMember.MemberPermissions import REGISTER_PERMISSION
 
 # Execute the 'trigger' transition -- this should trigger
 # any automatic transitions for which the guard conditions
@@ -23,11 +22,11 @@ def setupWorkflow(portal, out):
     wf = wf_tool['member_workflow']
     wf.setProperties(title='Portal Member Workflow')
 
-    for s in ('new', 'pending', 'private', 'public'):
+    for s in ('new', 'pending', 'private', 'public', 'disabled'):
         wf.states.addState(s)
     wf.states.setInitialState('new')
 
-    for t in ('trigger', 'auto_pending', 'auto_register', 'register_public', 'register_private', 'make_private', 'make_public'):
+    for t in ('trigger', 'auto_pending', 'auto_register', 'register_public', 'register_private', 'make_private', 'make_public', 'disable'):
         wf.transitions.addTransition(t)
 
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
@@ -96,7 +95,7 @@ def setupWorkflow(portal, out):
     state = wf.states['private']
     state.setProperties(
         title='Registered user, private profile',
-        transitions=('trigger', 'make_public',))
+        transitions=('trigger', 'make_public','disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Owner', 'Manager'))
@@ -113,7 +112,7 @@ def setupWorkflow(portal, out):
     state = wf.states['public']
     state.setProperties(
         title='Registered user, public profile',
-        transitions=('trigger', 'make_private',))
+        transitions=('trigger', 'make_private','disable',))
     state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
     state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
@@ -125,6 +124,23 @@ def setupWorkflow(portal, out):
     state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Authenticated', 'Manager')) # allow Anonymous to let everyone search for public members
     state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
     
+    # Disabled
+    state = wf.states['disabled']
+    state.setProperties(
+        title='Disabled',
+        transitions=('trigger', 'register_public', 'register_private',))
+    state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+
     # TRANSITIONS
 
     # dummy transition used to trigger automatic transitions    
@@ -142,7 +158,8 @@ def setupWorkflow(portal, out):
         title='Lock member properties until registered',
         actbox_name='Lock member properties until registered',
         new_state_id='pending',
-        trigger_type=TRIGGER_AUTOMATIC)
+        trigger_type=TRIGGER_AUTOMATIC,
+        props={'guard_expr':'here/isValid'})
 
     # if Manager creates a member, automatically register the member
     transition = wf.transitions['auto_register']
@@ -151,7 +168,8 @@ def setupWorkflow(portal, out):
         actbox_name='Automatically approve member',
         new_state_id='public',
         trigger_type=TRIGGER_AUTOMATIC,
-        props={'guard_permissions':REGISTER_PERMISSION},
+        props={'guard_permissions':MemberPermissions.REGISTER_PERMISSION,
+               'guard_expr':'here/isValid'},
         after_script_name='register')
 
     # manual registration
@@ -160,8 +178,8 @@ def setupWorkflow(portal, out):
         title='Approve member, make profile private',
         actbox_name='Register member and make profile private',
         new_state_id='private',
-        actbox_url='%(content_url)s/do_review',
-        props={'guard_permissions':REGISTER_PERMISSION},
+        props={'guard_permissions':MemberPermissions.REGISTER_PERMISSION,
+               'guard_expr':'here/isValid'},
         after_script_name='register')
 
     # manual registration
@@ -170,8 +188,8 @@ def setupWorkflow(portal, out):
         title='Approve member, make profile public',
         actbox_name='Register member and make profile public',
         new_state_id='public',
-        actbox_url='%(content_url)s/do_review',
-        props={'guard_permissions':REGISTER_PERMISSION},
+        props={'guard_permissions':MemberPermissions.REGISTER_PERMISSION,
+               'guard_expr':'here/isValid'},
         after_script_name='register')
 
     # make profile public
@@ -180,7 +198,6 @@ def setupWorkflow(portal, out):
         title='Make member profile public',
         actbox_name='Make member profile public',
         new_state_id='public',
-        actbox_url='%(content_url)s/do_review',
         props={'guard_roles':'Owner; Manager'},
         after_script_name='updateListed')
     
@@ -190,10 +207,17 @@ def setupWorkflow(portal, out):
         title='Make member profile private',
         actbox_name='Make member profile private',
         new_state_id='private',
-        actbox_url='%(content_url)s/do_review',
         props={'guard_roles':'Owner; Manager'},
         after_script_name='updateListed')
-    
+
+    # disable member
+    transition = wf.transitions['disable']
+    transition.setProperties(
+        title='Disable member',
+        actbox_name='Disable member',
+        new_state_id='disabled',
+        props={'guard_permissions':MemberPermissions.DISABLE_PERMISSION,},
+        after_script_name='disable')
 
     # standard CMF variables so we can use content_status_history page, etc
     wf.variables.setStateVar('review_state')
@@ -231,15 +255,6 @@ def setupWorkflow(portal, out):
                        actbox_url='%(portal_url)s/search?review_state=pending',
                        props={'var_match_review_state':'pending',
                               'guard_permissions':p_review})
-
-
-    # set up worklists
-    worklist = wf.worklists['member_queue']
-    worklist.setProperties(description='Members to approve',
-                       actbox_name='Members (%(count)d)',
-                       actbox_url='%(portal_url)s/member_search?review_state=pending',
-                       props={'var_match_review_state':'pending',
-                              'guard_roles':'Manager'})
 
 
     wf_tool.setChainForPortalTypes((CMFMember.TYPE_NAME,), 'member_workflow')

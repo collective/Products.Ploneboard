@@ -3,17 +3,7 @@ TO DO
 I have gotten the code working at various points, but with all that 
 I've done recently, I'm not sure it still works.
 
-* Grant Add Portal Content permission to anonymous within
-  portal_memberdata
-
-* Grant new CMFMember perms to appropriate roles  
-
-* Find out why workflow transitions are executing for partially
-  created Member objects
-
-* Set initial non-empty passwords
-
-* Find out why temp/ stuff remained in zodb
+* check security on attributes  (e.g. can i get here/member/password?)
 
 * Make sure the code actually works.  Main untested code: member 
 deletion and renaming, all workflow methods.  There really should
@@ -23,6 +13,12 @@ be unit tests.  I have started some (see tests/).
 to clean up portal_factory so we don't end up with a bunch of half-
 created members lying around.)  Registration should be able to just
 use base_edit but we'll need to put in some explanatory text.
+
+
+* make sure that if existing user from parent folder acl_user is wrapped,
+  a new user is not created
+  
+* Create pending member worklists.
 
 * Put in a search page.  Ideally the search page will show up as
 portal_metadata's index_html page.  It would be nice if the results
@@ -35,13 +31,6 @@ generation stuff, so this might be really simple.
 to do this?" confirmation before you delete a member, since all their
 content gets nuked as well.  Additionally, there should be the option
 to assign ownership of their content to somebody else.
-
-* Add a disable member function.  Disabled members should not be able
-to log in.
-
-* Modify registration tool's send password method to check Member perms.
-
-* Create pending member worklists.
 
 * Refactor.  It would be nice to separate out a MemberDataBase class
 from which potential member classes can inherit.
@@ -60,3 +49,21 @@ the user already exists in acl_users (I think).
   make_private transitions are executed.
 
 * Add portraits in.
+
+* Find out why workflow transitions are executing for partially
+  created Member objects
+* Grant Add Portal Content permission to anonymous within
+  portal_memberdata
+
+* Grant new CMFMember perms to appropriate roles  
+
+* Set initial non-empty passwords
+
+* Modify registration tool's send password method to check Member perms.
+
+* Add a disable member function.  Disabled members should not be able
+to log in.
+
+* Create pending member worklists.
+
+* Find out why temp/ stuff remained in zodb

@@ -2,6 +2,7 @@ from Products.Archetypes.debug import log, log_exc
 from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.PortalFolder import PortalFolder
 from StringIO import StringIO
 
@@ -19,8 +20,11 @@ def installMember(self, out):
 def replaceTools(self, out, convert=1):
     portal = getToolByName(self, 'portal_url').getPortalObject()
     memberdata_tool = getToolByName(self, 'portal_memberdata')
+    catalog = getToolByName(self, 'portal_catalog')
 
     _v_tempFolder = PortalFolder('temp').__of__(self)
+#    catalog.unindexObject(_v_tempFolder)
+
     factory = MemberDataTool.getMemberFactory(_v_tempFolder)
 
     for u in portal.acl_users.getUsers():
@@ -39,28 +43,37 @@ def replaceTools(self, out, convert=1):
                     print >> out, '%s.%s = %s\n' % (str(old_member.getMemberId()), new_field.name, str(value))
                 except:
                     pass
+        catalog.unindexObject(new_member)  # don't index stuff in temp folder
 
     memberdata_tool = None
-    # delete the old memberdata tool
-    portal.manage_delObjects(['portal_memberdata'])
+    # delete the old tools
+    if hasattr(portal, 'portal_memberdata'):
+        portal.manage_delObjects(['portal_memberdata'])
+    if hasattr(portal, 'portal_registration'):
+        portal.manage_delObjects(['portal_registration'])
 
-    ap = portal.manage_addProduct[CMFMember.PKG_NAME]
     addTool = portal.manage_addProduct[CMFMember.PKG_NAME].manage_addTool
     addTool(CMFMember.PKG_NAME + ' Tool', None)
-    
+    addTool('Default Registration Tool', None)
+
     memberdata_tool = getToolByName(self, 'portal_memberdata')
+    registration_tool = getToolByName(self, 'portal_registration')
+    
 
     # move the old members into the new memberdata tool
     for m in _v_tempFolder.objectValues():
         memberdata_tool.registerMemberData(m, m.id)
+        member = memberdata_tool.getMemberById(m.id)
+        catalog.reindexObject(member)
 
     # XXX eventually should copy over workflow state, references, etc to allow for schema upgrades
 
+    # Allow Anonymous to add objects to memberdata tool
+    memberdata_tool.manage_permission(CMFCorePermissions.AddPortalContent, ('Anonymous','Authenticated','Manager',), acquire=1 )
     # Only allow Member objects to be added in the memberdata tool
     portal.manage_permission(CMFMember.ADD_PERMISSION, (), acquire=0)
     memberdata_tool = getToolByName(portal, 'portal_memberdata')
     memberdata_tool.manage_permission(CMFMember.ADD_PERMISSION, ('Manager',), acquire=1)
-
 
     # XXX This seems kind of evil.
     # For a object to be displayed in contentValues it must be registered with the
@@ -79,6 +92,11 @@ def replaceTools(self, out, convert=1):
     memberarea.allowed_content_types=(CMFMember.TYPE_NAME,)
     memberarea.global_allow = 0  # make MemberArea not implicitly addable
     memberdata_tool._setPortalTypeName('MemberArea')
+
+
+    # monkey patch portal_registration's mail_password function
+#    registration_tool = getToolByName(portal, 'portal_registration')
+#    registration_tool.mailPassword = memberdata_tool.mailPassword
 
 
 def _getOldValue(old, new, id, out):

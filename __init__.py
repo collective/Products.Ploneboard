@@ -36,12 +36,17 @@ def initialize(context):
         ).initialize(context)
     
     import MemberDataTool
+    import RegistrationTool
     tools = (
         MemberDataTool.MemberDataTool,
+        RegistrationTool.RegistrationTool,
         )
 
+    import sys
+    sys.stdout.write('tools = %s\n' % (str(tools)))
     utils.ToolInit(PKG_NAME + ' Tool', tools=tools,
                    product_name=PKG_NAME,
                    icon="tool.gif",
                    ).initialize(context)
+    sys.stdout.write('done\n')
     
