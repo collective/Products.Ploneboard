@@ -1,6 +1,10 @@
 0.3-DEVEL - unreleased
 ======================
 
+  * prepare ATFolder for use with TemplateMixin, use generic /view instead of 
+    /folder_listing as default and immediate view.
+    [yenzenz]
+
   * Use a seperate schemata for ConstrainTypesMixin. We may have many mixins.
    This way, we can avoid a long edit form when edit the content.
    [panjunyong]

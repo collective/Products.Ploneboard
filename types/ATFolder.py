@@ -47,8 +47,8 @@ class ATFolder(ATCTOrderedFolder):
     content_icon   = 'folder_icon.gif'
     meta_type      = 'ATFolder'
     archetype_name = 'AT Folder'
-    immediate_view = 'folder_listing'
-    default_view   = 'folder_listing'
+    immediate_view = 'view'
+    default_view   = 'view'
     suppl_views    = ()
     newTypeFor     = ('Folder', 'Plone Folder')
     typeDescription= ''
