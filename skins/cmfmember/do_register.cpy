@@ -22,8 +22,8 @@ state.setContext(portal)
 # handle navigation for multi-page edit forms
 # copied from Archetypes' content_edit.cpy with
 # minor changes to work with the join machinery
-next = not REQUEST.get('form_next',None) is None
-previous = not REQUEST.get('form_previous',None) is None
+next = not REQUEST.get('form.button.next',None) is None
+previous = not REQUEST.get('form.button.previous',None) is None
 if next or previous:
     fieldset = REQUEST.get('fieldset', None)
 
