@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.24 2004/07/04 22:09:48 tiran Exp $
+$Id: ATDocument.py,v 1.25 2004/07/04 22:34:10 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -173,11 +173,11 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         Guess the right mimetype from the id/data
         """
         ATCTContent.manage_afterAdd(self, item, container)
+        field = self.getField('text')
 
         # hook for mxTidy / isTidyHtmlWithCleanup validator
         tidyOutput = self.getTidyOutput(field)
         if tidyOutput:
-            field = self.getField('text')
             if hasattr(self, '_v_renamed'):
                 mimetype = field.getContentType(self)
                 del self._v_renamed
