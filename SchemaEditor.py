@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.10 2004/09/23 15:55:30 ajung Exp $
+$Id: SchemaEditor.py,v 1.11 2004/09/23 16:22:41 ajung Exp $
 """
 
 import re
@@ -33,6 +33,39 @@ allowed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/ ().
 
 def remove_unallowed_chars(s):
     return ''.join([c  for c in s  if c in allowed])
+
+TYPE_MAP = {
+'StringField':     StringField,
+'IntegerField':    IntegerField,
+'FloatField':      FloatField,
+'FixedPointField': FixedPointField,
+'BooleanField':    BooleanField,
+'LinesField':      LinesField,
+'DateTimeField':   DateTimeField,
+}
+
+WIDGET_MAP = {
+'String':      StringWidget(),
+'Select':      SelectionWidget(format='select'),
+'Flex':        SelectionWidget(format='flex'),
+'Radio':       SelectionWidget(format='radio'),
+'Textarea':    TextAreaWidget(),
+'Calendar':    CalendarWidget(),
+'Boolean':     BooleanWidget(),
+'MultiSelect': MultiSelectionWidget(),
+'Keywords':    KeywordWidget(),
+'Richtext':    RichWidget(),
+'Password':    PasswordWidget(),
+'Lines':       LinesWidget(),
+'Visual':      VisualWidget() ,
+'Epoz':        EpozWidget(),
+'Image':       ImageWidget(),
+'Integer':     IntegerWidget(),
+'Decimal':     DecimalWidget(),
+'Reference':   ReferenceWidget(),
+'Picklist':    PicklistWidget(),
+'InAndOut':    InAndOutWidget(),
+}
 
 class SchemaEditorError(Exception): pass
 
@@ -109,10 +142,10 @@ class SchemaEditor:
 
         if name in S.getSchemataNames():
             raise SchemaEditorError(self.translate('atse_exists', {schemata:name},
-                             'Schemata "$schemata" already exists'))
+                                    'Schemata "$schemata" already exists'))
         if not id_regex.match(name):
             raise SchemaEditorError(self.translate('atse_invalid_id_for_schemata', {'schemata':name},
-                             '"$schemata" is an invalid ID for a schemata'))
+                                    '"$schemata" is an invalid ID for a schemata'))
 
         S.addSchemata(name)
         self._schemas[schema_id] = S
@@ -128,21 +161,22 @@ class SchemaEditor:
 
         if name in S._undeleteable_schematas: 
             raise SchemaEditorError(self.translate('atse_can_not_remove_schema', 
-                                              default='Can not remove this schema because it is protected from deletion'))
+                                    default='Can not remove this schema because it is protected from deletion'))
 
         if len(self.atse_getSchemataNames(schema_id, True)) == 1: 
             raise SchemaEditorError(self.translate('atse_can_not_remove_last_schema', 
-                                              default='Can not remove the last schema'))
+                                    default='Can not remove the last schema'))
 
         for field in S.getSchemataFields(name): 
             if field.getName() in S._undeleteable_fields:
                 raise SchemaEditorError(self.translate('atse_schemata_contains_undeleteable_fields', 
-                                                  default='The schemata contains fields that can not be deleted'))
+                                        default='The schemata contains fields that can not be deleted'))
 
         
         S.delSchemata(name)
         self._schemas[schema_id] = S
-        util.redirect(RESPONSE, schema_template,
+        util.redirect(RESPONSE, 
+                      schema_template,
                       self.translate('atse_deleted', 
                                      default='Schemata deleted'),   
                                      schemata=S.getSchemataNames()[0])
@@ -172,7 +206,8 @@ class SchemaEditor:
             return_schemata = self.atse_getSchemataNames(schema_id, True)[0]
 	
         self._schemas[schema_id] = S
-        util.redirect(RESPONSE, schema_template,
+        util.redirect(RESPONSE, 
+                      schema_template,
                       self.translate('atse_field_deleted', 
                                      default='Field deleted'), 
                                      schemata=return_schemata)
@@ -212,14 +247,9 @@ class SchemaEditor:
                                          field=R['name'])
             return            
 
-        if   FD.type == 'StringField':     field = StringField
-        elif FD.type == 'IntegerField':    field = IntegerField
-        elif FD.type == 'FloatField':      field = FloatField
-        elif FD.type == 'FixedPointField': field = FixedPointField
-        elif FD.type == 'BooleanField':    field = BooleanField
-        elif FD.type == 'LinesField':      field = LinesField
-        elif FD.type == 'DateTimeField':   field = DateTimeField
-        else: raise SchemaEditorError(self.translate('atse_unknown_field', 
+        field = TYPE_MAP.get(FD.type, None)
+        if not field:
+            raise SchemaEditorError(self.translate('atse_unknown_field', 
                                               {'field' : FD.field},
                                              'unknown field type: $field')) 
 
@@ -229,27 +259,8 @@ class SchemaEditor:
         D['createindex'] = FD.get('createindex', 0)
          
         # build widget
-        if   FD.widget == 'String':      widget = StringWidget()
-        elif FD.widget == 'Select':      widget = SelectionWidget(format='select')
-        elif FD.widget == 'Flex':        widget = SelectionWidget(format='flex')
-        elif FD.widget == 'Radio':       widget = SelectionWidget(format='radio')
-        elif FD.widget == 'Textarea':    widget = TextAreaWidget()
-        elif FD.widget == 'Calendar':    widget = CalendarWidget()
-        elif FD.widget == 'Boolean':     widget = BooleanWidget()
-        elif FD.widget == 'MultiSelect': widget = MultiSelectionWidget()
-        elif FD.widget == 'Keywords':    widget = KeywordWidget()
-        elif FD.widget == 'Richtext':    widget = RichWidget()
-        elif FD.widget == 'Password':    widget = PasswordWidget()
-        elif FD.widget == 'Lines':       widget = LinesWidget()
-        elif FD.widget == 'Visual':      widget = VisualWidget()
-        elif FD.widget == 'Epoz':        widget = EpozWidget()
-        elif FD.widget == 'Image':       widget = ImageWidget()
-        elif FD.widget == 'Integer':     widget = IntegerWidget()
-        elif FD.widget == 'Decimal':     widget = DecimalWidget()
-        elif FD.widget == 'Reference':   widget = ReferenceWidget()
-        elif FD.widget == 'Picklist':    widget = PicklistWidget()
-        elif FD.widget == 'InAndOut':    widget = InAndOutWidget()
-        else: 
+        widget = WIDGET_MAP.get(FD.widget, None)
+        if not widget:
             raise SchemaEditorError(self.translate('atse_unknown_widget', 
                                                   {'widget' : d.widget},
                                                   'unknown widget type: $widget'))
