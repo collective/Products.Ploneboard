@@ -17,16 +17,18 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.5 2004/01/07 11:25:47 longsleep Exp $
+$Id: GettextMessageCatalog.py,v 1.6 2004/01/27 23:07:56 longsleep Exp $
 """
 
+from Acquisition import aq_parent
 from gettext import GNUTranslations
-import os, types, codecs
+import os, sys, types, codecs, traceback, zLOG
 from OFS.Traversable import Traversable
-from Persistence import Persistent
+from Persistence import Persistent, Overridable
 from Acquisition import Implicit
 from App.Management import Tabs
 import re
+from OFS.Uninstalled import BrokenClass
 from PlacelessTranslationService import log, Registry
 from msgfmt import Msgfmt
 from DateTime import DateTime
@@ -82,6 +84,97 @@ def getMessage(catalog, id, orig_text=None):
         msg = unicode(msg, catalog._charset)
     return msg
 
+
+class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
+    """ broken message catalog """
+    meta_type = title = 'Broken Gettext Message Catalog'
+    icon='p_/broken'
+
+    __roles__=('Manager',)
+    title__roles__=__roles__
+
+ 
+    def __init__(self, pofile, error):
+        self._pofile = pofile
+        self.id = os.path.split(self._pofile)[-1]
+        self._mod_time = self._getModTime()
+        self.error = traceback.format_exception(error[0],error[1],error[2])
+
+    # modified time helper
+    def _getModTime(self):
+        """
+        """
+        try:
+            mtime = os.stat(self._pofile)[8]
+        except IOError:
+            mtime = 0
+        return mtime
+
+    def getIdentifier(self):
+        """
+        """
+        return self.id
+
+    def getId(self):
+        """
+        """
+        return self.id
+
+    getError__roles__ = __roles__
+    def getError(self):
+        """
+        """
+        return self.error
+
+    Title__roles__ = __roles__
+    def Title(self):
+        return self.title
+
+
+    def get_size(self):
+        """Get the size of the underlying file."""
+        return os.path.getsize(self._pofile)
+
+
+    def reload(self, REQUEST=None):
+        """ Forcibly re-read the file """
+        # get pts
+        pts = aq_parent(self)
+        name = self.getId()
+        pofile = self._pofile
+        pts._delObject(name)
+        try: pts.addCatalog(GettextMessageCatalog(pofile))
+        except:
+            exc=sys.exc_info()
+            log('Message Catalog has errors', zLOG.PROBLEM, name, exc)
+            pts.addCatalog(BrokenMessageCatalog(pofile, exc))
+        self = pts._getOb(name)
+        if hasattr(REQUEST, 'RESPONSE'):
+            if not REQUEST.form.has_key('noredir'):
+                REQUEST.RESPONSE.redirect(self.absolute_url())
+        
+
+    file_exists__roles__ = __roles__
+    def file_exists(self):
+        try:             
+            file = open(self._pofile, 'rb')
+        except:
+            return False
+        return True
+
+
+    def manage_afterAdd(self, item, container): pass
+    def manage_beforeDelete(self, item, container): pass
+    def manage_afterClone(self, item): pass
+                                                            
+    manage_options = (
+        {'label':'Info', 'action':''},
+        )
+                                                            
+    index_html = ptFile('index_html', globals(), 'www', 'catalog_broken')
+
+
+
 class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     """
     Message catalog that wraps a .po file in the filesystem and stores
@@ -97,9 +190,20 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         self._pofile = pofile
         self.id = os.path.split(self._pofile)[-1]
         self._mod_time = self._getModTime()
-        self._prepareTranslations()
+        self._prepareTranslations(0)
 
-    def _prepareTranslations(self):
+    def _prepareTranslations(self, catch=1):
+        """Try to generate the translation object
+           if fails remove us from registry
+        """
+        try: self._doPrepareTranslations()
+        except:
+            if self.getId() in translationRegistry.keys():
+                del translationRegistry[self.getId()]
+            if not catch: raise
+            else: pass 
+
+    def _doPrepareTranslations(self):
         """Generate the translation object from a po file
         """
         self._updateFromFS()
@@ -140,8 +244,18 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
             del translationRegistry[self.getId()]
         if hasattr(self, '_v_tro'):
             del self._v_tro
-        self._prepareTranslations()
-        log('reloading %s: %s' % (self.getId(), self.title))
+        name = self.getId()
+        pts = aq_parent(self)
+        pofile=self._pofile
+        try:
+            self._prepareTranslations(0)
+            log('reloading %s: %s' % (self.getId(), self.title))
+        except:
+            pts._delObject(name)
+            exc=sys.exc_info()
+            log('Message Catalog has errors', zLOG.PROBLEM, name, exc)
+            pts.addCatalog(BrokenMessageCatalog(pofile, exc))
+        self = pts._getOb(name)
         if hasattr(REQUEST, 'RESPONSE'):
             if not REQUEST.form.has_key('noredir'):
                 REQUEST.RESPONSE.redirect(self.absolute_url())
@@ -228,7 +342,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         """Read the data from the filesystem.
         
         """ 
-        file = open(self._pofile, 'r')
+        file = open(self._pofile, 'rb')
         data = []
         try:
              # XXX need more checks here
@@ -315,7 +429,10 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     displayInfo__roles__ = __roles__
     def displayInfo(self):
         self._prepareTranslations()
-        info = self._v_tro._info
+        try: info = self._v_tro._info
+        except: 
+            # broken catalog probably
+            info={}
         keys = info.keys()
         keys.sort()
         return [{'name': k, 'value': info[k]} for k in keys] + [

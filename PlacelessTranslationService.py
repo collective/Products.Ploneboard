@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.9 2004/01/07 10:08:39 longsleep Exp $
+$Id: PlacelessTranslationService.py,v 1.10 2004/01/27 23:07:57 longsleep Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -26,6 +26,7 @@ from OFS.Folder import Folder
 from types import DictType, StringType, UnicodeType
 from Negotiator import negotiator
 from Domain import Domain
+from msgfmt import PoSyntaxError
 import os
 try:
     from pax import XML
@@ -143,6 +144,8 @@ class PlacelessTranslationService(Folder):
         self._fallbacks = fallbacks
 
     def _registerMessageCatalog(self, catalog):
+        from GettextMessageCatalog import BrokenMessageCatalog
+        if isinstance(catalog, BrokenMessageCatalog): return
         domain = catalog.getDomain()
         catalogRegistry.setdefault((catalog.getLanguage(), domain), []).append(catalog.getIdentifier())
         for lang in catalog.getOtherLanguages():
@@ -164,7 +167,7 @@ class PlacelessTranslationService(Folder):
         self._p_changed = 1
 
     def _load_dir(self, basepath):
-        from GettextMessageCatalog import GettextMessageCatalog
+        from GettextMessageCatalog import GettextMessageCatalog, BrokenMessageCatalog
         log('looking into ' + basepath, zLOG.BLATHER)
         if not os.path.isdir(basepath):
             log('it does not exist', zLOG.BLATHER)
@@ -184,19 +187,29 @@ class PlacelessTranslationService(Folder):
         for name in names:
             ob = self._getOb(name, _marker)
             try:
+                if isinstance(ob, BrokenMessageCatalog):
+                    # remove broken catalog
+                    self._delObject(name)
+                    ob = _marker
+            except: pass
+            try:
                 if ob is _marker:
                     self.addCatalog(GettextMessageCatalog(os.path.join(basepath, name)))
                 else:
                     self.reloadCatalog(ob)
-            except ValueError:
-                log('Message Catalog has no metadata', zLOG.PROBLEM, name, sys.exc_info())
-            except:
-                log('Message Catalog has errors', zLOG.PROBLEM, name, sys.exc_info())
+            except IOError:
+                # io error probably cause of missing or 
+                # not accessable 
                 try:
                     # remove false catalog from PTS instance
                     self._delObject(name)
                 except:
                     pass
+            except:
+                 exc=sys.exc_info()
+                 log('Message Catalog has errors', zLOG.PROBLEM, name, exc)
+                 self.addCatalog(BrokenMessageCatalog(os.path.join(basepath, name), exc))
+                 
         log('Initialized:', detail = repr(names) + (' from %s\n' % basepath))
 
     def manage_renameObject(self, id, new_id, REQUEST=None):
@@ -213,9 +226,11 @@ class PlacelessTranslationService(Folder):
 
     def reloadCatalog(self, catalog):
         # trigger an exception if we don't know anything about it
-        self._getOb(catalog.id)
+        id=catalog.id
+        self._getOb(id)
         self._unregisterMessageCatalog(catalog)
         catalog.reload()
+        catalog=self._getOb(id)
         self._registerMessageCatalog(catalog)
 
     def addCatalog(self, catalog):

@@ -1,0 +1,23 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+<tal:block i18n:domain="PlacelessTranslationService">
+
+<h1 tal:content="here/Title" i18n:translate="">Gettext message catalog</h1>
+
+<blockquote>
+<pre tal:content="structure python:'<br />'.join(here.getError())" />
+</blockquote>
+
+<tal:block define="can_reload here/file_exists">
+<form action="reload" tal:condition="can_reload">
+<input type="submit" value="Reload this catalog" i18n:attributes="value" />
+</form>
+
+<h3 tal:condition="not:can_reload" i18n:translate="">
+  This catalog cannot be reloaded because the corresponding file does not exist
+</h3>
+</tal:block>
+
+</tal:block>
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
