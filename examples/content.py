@@ -19,6 +19,7 @@ class Container(SchemaEditor, BaseFolder):
 
         # do not show metadata fieldset
         self.atse_registerObject( Target1, ('metadata', ))
+        self.schema_editor_tool.atse_registerObject( Target1, ('metadata', ))
         BaseFolder.manage_afterAdd(self, item, container)
 
 registerType(Container)

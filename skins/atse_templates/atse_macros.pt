@@ -3,7 +3,7 @@
     <h5 i18n:translate="selection">Registered Objects</h5>
     <div class="portletBody">
      <div style="margin: 5px 1px 5px 1px;">
-      <form method="POST" action="atse_selectRegisteredSchema">
+         <form method="POST" tal:attributes="action string:${context/absolute_url}/atse_selectRegisteredSchema">
       <input type="hidden" name="schema_template" value="#"
              tal:attributes="value SCHEMA_TEMPLATE">
       <select name="selection:string">
@@ -178,15 +178,15 @@
                              id python: test(set==fieldset, 'atse_selected', '')"/>
         </div>
         <div class="right">
-            <a tal:attributes="href string:atse_schemataMoveLeft?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
-            <a tal:attributes="href string:atse_schemataMoveRight?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="arrowDown.gif" title="Move down"></a> 
-            <a tal:attributes="href string:atse_delSchemata?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="delete.gif" title="Delete"></a> 
+            <a tal:attributes="href string:${context/absolute_url}/atse_schemataMoveLeft?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
+            <a tal:attributes="href string:${context/absolute_url}/atse_schemataMoveRight?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="arrowDown.gif" title="Move down"></a> 
+            <a tal:attributes="href string:${context/absolute_url}/atse_delSchemata?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${set}"><img src="delete.gif" title="Delete"></a> 
         </div>
         <div class="clear"> </div>
       </div>
 
       <div>
-        <form action="atse_addSchemata" method="post">
+          <form tal:attributes="action string:${context/absolute_url}/atse_addSchemata" method="post">
          <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" />
          <input type="hidden" name="schema_template" tal:attributes="value SCHEMA_TEMPLATE" />
          <input type="text" name="name" value="" >
@@ -209,15 +209,15 @@
               tal:content="string: ${field/getName}" />
         </div>
         <div class="right">
-          <a tal:attributes="href string:atse_fieldMoveLeft?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowUp.gif" title="Move up"></a> 
-          <a tal:attributes="href string:atse_fieldMoveRight?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowDown.gif" title="Move down"></a> 
-          <a tal:attributes="href string:atse_delField?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="delete.gif" title="Delete"></a> 
+            <a tal:attributes="href string:${context/absolute_url}/atse_fieldMoveLeft?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowUp.gif" title="Move up"></a> 
+                <a tal:attributes="href string:${context/absolute_url}/atse_fieldMoveRight?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowDown.gif" title="Move down"></a> 
+          <a tal:attributes="href string:${context/absolute_url}/atse_delField?schema_template=$SCHEMA_TEMPLATE&schema_id=$SCHEMA_ID&name=${field/getName}"><img src="delete.gif" title="Delete"></a> 
         </div>
         <div class="clear"> </div>
       </div>
 
       <div>
-        <form action="atse_update" method="post">
+          <form tal:attributes="action string:${context/absolute_url}/atse_update" method="post">
           <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" />
           <input type="hidden" name="schema_template" tal:attributes="value SCHEMA_TEMPLATE" />
           <input type="hidden" name="fielddata.schemata:record:string"    
@@ -239,7 +239,7 @@
     <h5 i18n:translate="field_definition">Field definition for <b tal:content="request/field"/></h5>
     <div class="portletBody" id="atse_fieldeditor">
 
-      <form action="atse_update" method="post"
+        <form tal:attributes="action string:${context/absolute_url}/atse_update" method="post"
             tal:define="field python: here.atse_getField(SCHEMA_ID, request['field']);
                         widget python: field.widget;
                         widget_name python:field.getWidgetName()">

@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.20 2004/12/10 07:17:04 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.21 2004/12/28 10:50:14 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -21,11 +21,12 @@ from Products.CMFCore.CMFCorePermissions import View
 from Products.Archetypes.Schema import ManagedSchema
 from zLOG import LOG, INFO
 from interfaces import IParentManagedSchema
+from Products.CMFCore.utils import getToolByName
 
 from util import create_signature
 import config
 
-class ParentManagedSchema:
+class ManagedSchemaBase:
     """ mix-in class for AT content-types whose schema is managed by
         the parent container and retrieved through acquisition.
     """
@@ -55,7 +56,7 @@ class ParentManagedSchema:
 
         # If we're called by the generated methods we can not rely on
         # the id and need to check for portal_type
-        if not self.aq_parent.atse_isSchemaRegistered(self.portal_type):
+        if not self.lookup_provider.atse_isSchemaRegistered(self.portal_type):
             return self._wrap_schema(self.schema)
 
         if not schema_id:
@@ -118,13 +119,32 @@ class ParentManagedSchema:
         if config.ALWAYS_SYNC_SCHEMA_FROM_DISC == True:
             
             # looking if schema has changed
-            atse_schema = self.aq_parent.atse_getSchemaById(atse_schema_id)
+            atse_schema = self.lookup_provider().atse_getSchemaById(atse_schema_id)
             object_schema = self.schema
 
             if create_signature(atse_schema) != create_signature(object_schema):
                 LOG('ATSchemaEditorNG', INFO, 'Schema <%s> changed - refreshing from disk' % atse_schema_id)
-                self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
+                self.lookup_provider().atse_reRegisterSchema(atse_schema_id, object_schema)
 
-        return self.aq_parent.atse_getSchemaById(atse_schema_id)
+        return self.lookup_provider().atse_getSchemaById(atse_schema_id)
+
+
+
+class ParentManagedSchema(ManagedSchemaBase):
+    """ base class for content-types whose schema is managed by the parent folder """
+    
+    def lookup_provider(self):
+        """ return schema provider instance """
+        return self.aq_parent
 
 InitializeClass(ParentManagedSchema)
+
+
+class ToolManagedSchema(ManagedSchemaBase):
+    """ base class for content-types whose schema is managed by a global tool"""
+
+    def lookup_provider(self):
+        """ return schema provider instance """
+        return getToolByName(self, TOOL_NAME, None)
+
+InitializeClass(ToolManagedSchema)

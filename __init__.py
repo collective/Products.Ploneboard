@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: __init__.py,v 1.5 2004/12/10 07:17:04 ajung Exp $
+$Id: __init__.py,v 1.6 2004/12/28 10:50:14 ajung Exp $
 """
 
 from Products.CMFCore.DirectoryView import registerDirectory
@@ -34,6 +34,15 @@ def initialize(context):
     content_types, constructors, ftis = process_types(listTypes(PKG_NAME),
                                                       PKG_NAME)
 
+    import SchemaEditorTool as SET
+
+    context.registerClass( 
+        SET.SchemaEditorTool,
+        permission='Add SchemaEditorTool', 
+        constructors=(SET.manage_addSchemaEditorToolForm, SET.manage_addSchemaEditorTool),
+        icon='www/index.gif'
+        )
+
     Products.CMFCore.utils.ContentInit(
         '%s Example Content' % PKG_NAME,
         content_types      = content_types,
@@ -41,3 +50,4 @@ def initialize(context):
         extra_constructors = constructors,
         fti                = ftis,
         ).initialize(context)
+
