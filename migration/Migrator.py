@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.16 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: Migrator.py,v 1.17 2004/08/04 14:48:47 tiran Exp $
 """
 
 from copy import copy
@@ -27,6 +27,7 @@ from Products.CMFCore.utils import getToolByName
 from Acquisition import aq_base, aq_parent
 from DateTime import DateTime
 from Persistence import PersistentMapping
+from OFS.Uninstalled import BrokenClass
 
 from common import *
 
@@ -195,6 +196,7 @@ class BaseMigrator:
             if self.new.hasProperty(id):
                 self.new._delProperty(id)
             LOG("property: " + str(self.new.getProperty(id)))
+            __traceback_info__ = (self.new, id, value, type)
             self.new.manage_addProperty(id, value, type)
 
     def migrate_owner(self):
@@ -342,8 +344,17 @@ class FolderMigrationMixin(ItemMigrationMixin):
 
         It seems to work for me very well :)
         """
-        for obj in self.old.objectValues():
-            id = obj.getId()
+        #for obj in self.old.objectValues():
+        #    if isinstance(obj, BrokenClass):
+        #        log('WARNING: Loosing BrokenObject in %s' % \
+        #            self.old.absolute_url(1))
+        #        continue
+        #    id = obj.getId()
+        #    self.new._setObject(id, aq_base(obj))
+
+        # using objectIds() should be safe with BrokenObjects
+        for id in self.old.objectIds():
+            obj = getattr(self.old.aq_inner.aq_explicit, id)
             self.new._setObject(id, aq_base(obj))
 
 class CMFItemMigrator(ItemMigrationMixin, BaseCMFMigrator):
