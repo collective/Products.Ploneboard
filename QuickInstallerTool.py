@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.11 2003/07/16 02:55:24 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.12 2003/07/19 08:32:42 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -126,59 +126,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             res.append({'id':r,'status':p.getStatus(),'hasError':p.hasError(),'isLocked':p.isLocked(),'isHidden':p.isHidden()})
  
         return res
-        
-    security.declareProtected(ManagePortal, 'installProducts')
-    def installProducts(self,products=[],stoponerror=0,REQUEST=None):
-        ''' '''
-        res='''
-    Installed Products
-    ====================
-    '''
-        ok=1
-        #return products
-        for p in products:
-            res += p +':'
-            try:
-                r=self.installProduct(p,swallowExceptions=1)
-                res +='ok:\n'
-                if r:
-                    r += str(r)+'\n'
-            except Exception,e:
-                ok=0
-                if stoponerror:
-                    raise
-                res += 'failed:'+str(e)+'\n'
-            except :
-                ok=0
-                if stoponerror:
-                    raise
-                res += 'failed\n'
-            
-        if REQUEST :
-            REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
-                    
-        return res
 
-    
-    def isProductInstalled(self,productname):
-        ''' checks wether a product is installed (by name) '''
-        o=self._getOb(productname,None)
-        return o and o.isInstalled()
-
-
-    security.declareProtected(ManagePortal, 'notifyInstalled')
-    def notifyInstalled(self,p,locked=1,hidden=0,**kw):
-        ''' marks a product that has been installed without QuickInstaller
-         as installed '''
-
-        if p in self.objectIds():
-            p=getattr(self,p)
-            p.update(locked=locked, hidden=hidden, **kw)
-        else:
-            ip=InstalledProduct(p,locked=locked, hidden=hidden, **kw)
-            self._setObject(p,ip)
-
-            
     security.declareProtected(ManagePortal, 'installProduct')
     def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name '''
@@ -264,7 +212,59 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
             self._setObject(p,ip)
             
         return res
+        
+    security.declareProtected(ManagePortal, 'installProducts')
+    def installProducts(self,products=[],stoponerror=0,REQUEST=None):
+        ''' '''
+        res='''
+    Installed Products
+    ====================
+    '''
+        ok=1
+        #return products
+        for p in products:
+            res += p +':'
+            try:
+                r=self.installProduct(p,swallowExceptions=1)
+                res +='ok:\n'
+                if r:
+                    r += str(r)+'\n'
+            except Exception,e:
+                ok=0
+                if stoponerror:
+                    raise
+                res += 'failed:'+str(e)+'\n'
+            except :
+                ok=0
+                if stoponerror:
+                    raise
+                res += 'failed\n'
+            
+        if REQUEST :
+            REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
+                    
+        return res
 
+    
+    def isProductInstalled(self,productname):
+        ''' checks wether a product is installed (by name) '''
+        o=self._getOb(productname,None)
+        return o and o.isInstalled()
+
+
+    security.declareProtected(ManagePortal, 'notifyInstalled')
+    def notifyInstalled(self,p,locked=1,hidden=0,**kw):
+        ''' marks a product that has been installed without QuickInstaller
+         as installed '''
+
+        if p in self.objectIds():
+            p=getattr(self,p)
+            p.update(locked=locked, hidden=hidden, **kw)
+        else:
+            ip=InstalledProduct(p,locked=locked, hidden=hidden, **kw)
+            self._setObject(p,ip)
+
+            
     security.declareProtected(ManagePortal, 'uninstallProducts')
     def uninstallProducts(self, products, REQUEST=None):
         ''' removes a list of products '''
