@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.12 2004/04/26 06:32:09 tiran Exp $
+$Id: Install.py,v 1.13 2004/05/01 16:55:09 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,6 +36,7 @@ from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.interfaces.IATFile import IATFile
 
 from Products.ATContentTypes.config import *
+from Products.ATContentTypes.Extensions.utils import setupMimeTypes, registerTemplates
 
 def install(self):
     out = StringIO()
@@ -89,7 +90,8 @@ def install(self):
     setupWorkflows(self, typeInfo, out)
     
     # setup content type registry
-    setupMimeTypes(self, typeInfo, out)
+    old = ('link', 'news', 'document', 'file', 'image')
+    setupMimeTypes(self, typeInfo, old=old, moveDown=(IATFile,), out=out)
     
     # bind templates for TemplateMixin
     registerTemplates(self, typeInfo, out)
@@ -158,99 +160,6 @@ def setChainFor(portal_type, chain, wftool, out):
     if chain != '(Default)':
         # default is default :)
         wftool.setChainForPortalTypes(portal_type, chain)
-
-def setupMimeTypes(self, typeInfo, out):
-    reg = getToolByName(self, 'content_type_registry')
-    
-    old = ('link', 'news', 'document', 'file', 'image')
-    moveBottom = []
-    moveTop = []
-
-    for o in old:
-        # remove old
-        if reg.getPredicate(o):
-            reg.removePredicate(o)
-    
-    for t in typeInfo:
-        klass       = t['klass']
-        portal_type = t['portal_type']
-
-        if not IATContentType.isImplementedByInstancesOf(klass):
-            # not a AT ContentType (maybe criterion) - skip
-            continue
-        
-        # major minor
-        for name, mm in getMajorMinorOf(klass):
-            if reg.getPredicate(name):
-                reg.removePredicate(name)
-            reg.addPredicate(name, 'major_minor')
-            reg.getPredicate(name).edit(**mm)
-            reg.assignTypeName(name, portal_type)
-            if IATFile.isImplementedByInstancesOf(klass):
-                moveBottom.append(name)
-        # extensions
-        name, extlist = getFileExtOf(klass)
-        if extlist:
-            if reg.getPredicate(name):
-                reg.removePredicate(name)
-            reg.addPredicate(name, 'extension')
-            reg.getPredicate(name).edit(extlist)
-            reg.assignTypeName(name, portal_type)
-            if IATFile.isImplementedByInstancesOf(klass):
-                moveBottom.append(name)
-            else:
-                moveTop.append(name)
-
-    # move ATFile to the bottom because ATFile is a fallback
-    last = len(reg.listPredicates())-1
-    for name in moveBottom:
-        reg.reorderPredicate(name, last)
-        
-    # move extension based rules to the top
-    for name in moveTop:
-        reg.reorderPredicate(name, 0)
-
-def getMajorMinorOf(klass):
-    """helper method for setupMimeTypes
-    """
-    retval = []
-    for mt in klass.assocMimetypes:
-        ma, mi = mt.split('/')
-        if mi == '*':
-            mi   = ''
-            name = '%s' % ma
-        else:
-            name = '%s_%s' % (ma, mi)
-        retval.append( (name, {'major' : ma, 'minor' : mi}) )
-    return retval
-
-def getFileExtOf(klass):
-    """helper method for setupMimeTypes
-    """
-    name = '%s_ext' % klass.meta_type
-    return (name, klass.assocFileExt)
-
-def registerTemplates(self, typeInfo, out):
-    """
-    """
-    atTool = getToolByName(self, 'archetype_tool')
-    for t in typeInfo:
-        klass          = t['klass']
-        meta_type      = klass.meta_type
-        immediate_view = getattr(klass, 'immediate_view', 'base_view')
-        suppl_views    = getattr(klass, 'suppl_views', ())
-
-        views = ['base_view',]
-
-        if immediate_view != 'base_view':
-            atTool.registerTemplate(immediate_view)
-            views.append(immediate_view)
-
-        for view in suppl_views:
-            atTool.registerTemplate(view)
-            views.append(view)
-
-        atTool.bindTemplate(meta_type, views)
 
 def removeApplicationXPython(self, out):
     """Fixed broken .py file extension in older version of PortalTransforms
