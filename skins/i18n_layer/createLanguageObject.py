@@ -24,7 +24,7 @@ try:
     if hasattr(context, 'portal_factory'):
         factory_types = context.portal_factory.getFactoryTypes()
 except: pass
-if not type_name in factory_types:
+if not type_name in factory_types.keys():
     # no portal factory support
     context.invokeFactory(id=id, type_name=type_name)
     o=getattr(context, id, None)
