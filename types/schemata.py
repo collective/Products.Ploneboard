@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.11 2004/04/10 16:31:10 tiran Exp $
+$Id: schemata.py,v 1.12 2004/04/10 19:40:52 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -222,8 +222,10 @@ ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
                primary=1,
-               sizes= {'thumb':(128,128),
-                       'icon':(32,32)
+               sizes= {'thumb'   : (128, 128),
+                       'tile'    :  (64, 64),
+                       'icon'    :  (32, 32),
+                       'listing' :  (16, 16),
                       },
                widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
                                     description_msgid = "help_image",
