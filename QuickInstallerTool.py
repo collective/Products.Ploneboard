@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.40 2004/03/05 21:03:36 zopezen Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.41 2004/03/17 11:45:28 achilles_ Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -266,6 +266,17 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         leftslotsafter=getattr(portal,'left_slots',[])
         rightslotsafter=getattr(portal,'right_slots',[])
         registrypredicatesafter=[pred[0] for pred in type_registry.listPredicates()]
+
+        if callable(rightslotsafter):
+            rightslotsafter = rightslotsafter()
+        if callable(leftslotsafter):
+            leftslotsafter = leftslotsafter()
+
+        if callable(rightslotsbefore):
+            rightslotsbefore = rightslotsbefore()
+        if callable(leftslotsbefore):
+            leftslotsbefore = leftslotsbefore()
+
 
         types=[t for t in typesafter if t not in typesbefore]
         skins=[s for s in skinsafter if s not in skinsbefore]
