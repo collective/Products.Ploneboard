@@ -69,7 +69,7 @@
       </tal:block>
 	
       <a tal:condition="image/size" tal:attributes="href string:${image/absolute_url}/view">
-	<img src="#" tal:replace="structure python:image.tag(prefered_size)" />
+	<img src="#" tal:replace="structure python:image.tag(size=prefered_size)" />
       </a>
 	
       <p style="margin-top: 2em;" tal:content="structure image/Description">
