@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.11 2004/05/26 08:55:54 tiran Exp $
+$Id: ATContentType.py,v 1.12 2004/06/09 13:59:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -116,6 +116,29 @@ class ATCTMixin(TemplateMixin):
         """Get the default layout used for TemplateMixin
         """
         return self.default_view
+    
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'edit')
+    def edit(self, *args, **kwargs):
+        """Reimplementing edit() to have a compatibility method for the old
+        cmf edit() method
+        """
+        if len(args) != 0:
+            # use cmf edit method
+            return self.cmf_edit(*args, **kwargs)
+        
+        fieldNames = [field.getName() for field in self.Schema().fields()]
+        for name in kwargs.keys():
+            if name not in fieldNames:
+                # we are trying to
+                return self.cmf_edit(**kwargs)
+        # standard AT edit - redirect to update()
+        return self.update(self, **kwargs)
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, *args, **kwargs):
+        """Overwrite this method to make AT compatible with the crappy CMF edit()
+        """
+        raise NotImplementedError("cmf_edit method isn't implemented")
 
 InitializeClass(ATCTMixin)
 

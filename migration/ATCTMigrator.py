@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.7 2004/05/31 16:21:50 tiran Exp $
+$Id: ATCTMigrator.py,v 1.8 2004/06/09 13:59:19 tiran Exp $
 """
 
 from common import *
@@ -52,19 +52,12 @@ def isLargePloneFolder(obj, ob=None):
 class DocumentMigrator(CMFItemMigrator):
     fromType = ATDocument.ATDocument.newTypeFor[0]
     toType   = ATDocument.ATDocument.__name__
-    # mapped in custom()
-    # map = {'text' : 'setText'}
+    map = {'text' : 'setText'}
     
     def custom(self):
-        mapping = {
-                    'html' : 'text/html',
-                    'structured-text': 'text/structured',
-                    'plain' : 'text/plain',
-                  }
         oldFormat = self.old.text_format
-        newFormat = mapping.get(oldFormat, 'text/plain')
-        oldText = self.old.text
-        self.new.setText(oldText, mimetype = newFormat)
+        # ATDocument does automagically conversion :]
+        self.new.setContentType(oldFormat)
 
 class EventMigrator(CMFItemMigrator):
     fromType = ATEvent.ATEvent.newTypeFor[0]
@@ -119,7 +112,7 @@ class NewsItemMigrator(DocumentMigrator):
     fromType = ATNewsItem.ATNewsItem.newTypeFor[0]
     toType   = ATNewsItem.ATNewsItem.__name__
     # see DocumentMigrator
-    # map = {'text' : 'setText'}
+    map = {'text' : 'setText'}
 
 class FolderMigrator(CMFFolderMigrator):
     fromType = ATFolder.ATFolder.newTypeFor[0]

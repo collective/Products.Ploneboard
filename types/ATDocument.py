@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.20 2004/06/03 02:24:21 tiran Exp $
+$Id: ATDocument.py,v 1.21 2004/06/09 13:59:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -42,6 +42,12 @@ from Products.ATContentTypes.HistoryAware import HistoryAwareMixin
 from Products.ATContentTypes.interfaces.IATDocument import IATDocument
 from Products.ATContentTypes.types.schemata import ATDocumentSchema
 
+mapping = {
+            'html' : 'text/html',
+            'structured-text': 'text/structured',
+            'restructuredtext': 'text/x-rst',
+            'plain' : 'text/plain',
+          }
 
 class ATDocument(ATCTContent, HistoryAwareMixin):
     """An Archetypes derived version of CMFDefault's Document"""
@@ -75,6 +81,12 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     
     # backward compat
     text_format = 'text/plain'
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, text_format, text, file='', safety_belt='', **kwargs):
+        assert file == '', 'file currently not supported' # XXX
+        self.setText(text, mimetype=text_format)
+        self.update(**kwargs)
 
     security.declareProtected(CMFCorePermissions.View, 'CookedBody')
     def CookedBody(self, stx_level='ignored'):
@@ -112,6 +124,9 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """
         if not mimetype:
             return
+        
+        # old name to mimetype mapping like plain to text/plain
+        mimetype = mapping.get(mimetype, mimetype)
         
         if not skipField:
             field = self.getField('text')

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATLink.py,v 1.9 2004/05/15 01:53:07 tiran Exp $
+$Id: ATLink.py,v 1.10 2004/06/09 13:59:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -66,5 +66,9 @@ class ATLink(ATCTContent):
         """CMF compatibility method
         """
         return self.getRemoteUrl()
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, remote_url):
+        self.update(remoteUrl = remote_url)
 
 registerType(ATLink, PROJECTNAME)

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATImage.py,v 1.15 2004/05/26 08:55:54 tiran Exp $
+$Id: ATImage.py,v 1.16 2004/06/09 13:59:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -89,6 +89,10 @@ class ATImage(ATCTFileContent):
         """Generate image tag using the api of the ImageField
         """
         return self.image.tag(*args, **kwargs)
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, precondition='', file=''):
+        self.update(image=file)
 
 registerType(ATImage, PROJECTNAME)
 

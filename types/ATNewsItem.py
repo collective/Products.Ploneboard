@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATNewsItem.py,v 1.9 2004/05/15 01:53:07 tiran Exp $
+$Id: ATNewsItem.py,v 1.10 2004/06/09 13:59:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -62,5 +62,12 @@ class ATNewsItem(ATDocument):
     __implements__ = ATDocument.__implements__, IATNewsItem
 
     security       = ClassSecurityInfo()
+
+    security.declarePrivate('cmf_edit')
+    def cmf_edit(self, text, description=None, text_format=None, **kwargs):
+        if description is not None:
+            self.setDescription(description)
+        self.setText(text, mimetype=text_format)
+        self.update(**kwargs)
     
 registerType(ATNewsItem, PROJECTNAME)
