@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.54 2005/01/24 18:27:05 tiran Exp $
+$Id: schemata.py,v 1.55 2005/01/28 08:43:03 dannybloe Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -243,8 +243,7 @@ ATFavoriteSchema = ATContentTypeSchema.copy() + Schema((
                 primary=True,
                 validators = (),
                 widget = StringWidget(
-                        description=("The address of the location. Prefix is "
-                                     "optional; if not provided, the link will be relative."),
+                        description="External links must start with a prefix (usually http://)",
                         description_msgid = "help_url",
                         label = "URL",
                         label_msgid = "label_url",
@@ -263,7 +262,7 @@ ATFileSchema = ATContentTypeSchema.copy() + Schema((
               validators = MaxSizeValidator('checkFileMaxSize',
                                             maxsize=MAX_FILE_SIZE),
               widget = FileWidget(
-                        description = "Select the file to be added by clicking the 'Browse' button.",
+                        description = "Click browse to select the file to upload. An existing file will be replaced by the upload.",
                         description_msgid = "help_file",
                         label= "File",
                         label_msgid = "label_file",
@@ -304,7 +303,7 @@ ATImageSchema = ATContentTypeSchema.copy() + Schema((
                validators = MaxSizeValidator('checkFileMaxSize',
                                              maxsize=MAX_IMAGE_SIZE),
                widget = ImageWidget(
-                        description = "Select the image to be added by clicking the 'Browse' button.",
+                        description = "Click browse to select the image to upload. An existing image will be replaced by the upload.",
                         description_msgid = "help_image",
                         label= "Image",
                         label_msgid = "label_image",
