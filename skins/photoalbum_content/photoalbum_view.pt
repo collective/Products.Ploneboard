@@ -59,7 +59,7 @@
 	  <td>
 	    <tal:block tal:condition="batch"
 	      tal:repeat="image batch">
-	      <span class="card" style="background: white; border-color: white; height: 130px; width:130px; margin: 0.5em;">
+	      <span class="card" style="background: transparent; border-color: transparent; height: 130px; width:130px; margin: 0.5em;">
 		<a tal:define="id python:int(b_start)+int(repeat['image'].number()-1)" tal:attributes="href string:${here/absolute_url}/photoalbum_photo_view?b_start=$id">
 		  <img tal:replace="structure python:image.tag(size='thumbnail', title=image.Description())" />
 		</a>
