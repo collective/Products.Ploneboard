@@ -118,7 +118,10 @@ class BiblioListTool(UniqueObject, Folder):
         cstyles = catalog(portal_type=('BibrefCustomStyle','BibrefCustomStyleSet'))
         for cstyle in cstyles:
             obj = cstyle.getObject()
-            styles.append((obj.UID(),obj.title_or_id()+' (Custom Style)'))
+            if cstyle.meta_type == 'BibrefCustomStyle':
+                styles.append((obj.UID(),obj.title_or_id()+' (Custom Style)'))
+            if cstyle.meta_type == 'BibrefCustomStyleSet':
+                styles.append((obj.UID(),obj.title_or_id()+' (Custom Style Set)'))
         return tuple(styles)
 
     def getEntryDict(self, entry):

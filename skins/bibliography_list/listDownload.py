@@ -17,6 +17,7 @@ RESPONSE.setHeader('Content-Disposition',
                    'attachment; filename=%s' %\
                    context.getId() + '.' + format)
 
+bibtool = context.portal_bibliography
 output = ''
 field = context.getField('references_list')
 for uid in getattr(context, field.edit_accessor)():
