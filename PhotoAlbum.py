@@ -62,8 +62,12 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
     def __init__(self, id):
         SkinnedFolder.__init__(self, id)
         BTreeFolder2Base.__init__(self, id)
-        self._resized_photos = BTreeFolder2('Photos')
+        self.resized_photos = BTreeFolder2('Photos')
 
+    security.declarePublic('getResizedImage')
+    def getResizedImage(self, REQUEST=None):
+        """ """
+        return self.resized_photos.get(REQUEST.get('image')).index_html(REQUEST, REQUEST.response)
 
     def __before_publishing_traverse__(self, ob, REQUEST):
         # Get the traversal stack
@@ -74,42 +78,24 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
             size = stack[0]
 
             if size in self.displays.keys():
-                # Set requested size in REQUEST, and remove it from the
-                # traversal stack
-                REQUEST.set('size', size)
-                REQUEST.set('TraversalRequestNameStack', stack[1:])
+                # Compose the name used for storing resized copies
+                name = stack[1]
+                resized_name = '%s_%s' % (name, size)
+
+                # Create resized copy, if it doesnt already exist
+                if not resized_name in self.resized_photos.keys():
+                    resolution = self.displays.get(size, (0,0))
+                    raw = str(getattr(self, name).data)
+                    image = OFS.Image.Image('Image', 'Image', self._resize(raw, resolution))
+                    self.resized_photos._setObject(resized_name, image)
+
+                REQUEST.set('image', resized_name)
+                REQUEST.set('TraversalRequestNameStack', ['getResizedImage'])
 
         except IndexError:
             # This should never happen. Folder is being traversed,
             # but the travese stack is empty.
             pass
-
-
-    def __bobo_traverse__(self, REQUEST, name):
-        # Only intercept traversal if this is the last element
-        # being requested
-        stack = REQUEST.get('TraversalRequestNameStack', [])
-        if not stack:
-
-            # Size really should be set at this point
-            size = REQUEST.get('size', None)
-            if size in self.displays.keys():
-
-                # Compose the name used for storing resized copies
-                resized_name = '%s_%s' % (name, size)
-
-                # Create resized copy, if it doesnt already exist
-                if not resized_name in self._resized_photos.keys():
-                    resolution = self.displays.get(size, (0,0))
-                    raw = str(getattr(self, name).data)
-                    image = OFS.Image.Image('Image', 'Image', self._resize(raw, resolution))
-                    self._resized_photos._setObject(resized_name, image)
-
-                return getattr(self._resized_photos, resized_name, None)
-
-        # Original image requested
-        # do normal traversal
-        return getattr(self, name)
 
     
     def _resize(self, image, size, quality=100):
@@ -149,14 +135,14 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
         """
         # Collect a list of all resized copies
         remove_list = []
-        for resized in self._resized_photos.keys():
+        for resized in self.resized_photos.keys():
             if resized.startswith(id):
                 remove_list.append(resized)
 
         # Then remove them
         for item in remove_list:
             try:
-                self._resized_photos._delObject(item)
+                self.resized_photos._delObject(item)
             except:
                 LOG('CMFPhotoAlbum', ERROR, 'Failed to remove resized copy',
                     error = sys.exc_info())
