@@ -295,7 +295,9 @@
 		 <hr />
 
 		   <form class="group"
-                         action="folder_localrole_form">
+                         name="grouplocalrole"
+                         action="folder_localrole_form"
+                         tal:attributes="action string:${here/absolute_url}/${template/getId}" >
 
 			<span class="legend" i18n:translate="">View groups</span>
 				    
@@ -354,43 +356,8 @@
 		
 		    <div class="row">
 
-
-			<span class="card">
-		    
-			    <span>
-				
-				<img src="http://localhost:8080/test/defaultGroup.gif"
-         alt="Blank picture" border="0" width="75"
-         height="100" />
-				
-					<br />
-			
-				<input class="noborder" type="checkbox"
-           name="member_ids:list" value="group_testGroup"
-            />
-			
-					</span>
-
-						
-					<br />
-					
-					<strong class="field">group_testGroup</strong>
-			
-					<br />
-						
-					<span>
-				Role(s): 
-				</span>
-				
-				<br />	
-					
-					Reviewer
-		    
-			</span>
-
-
 			<span class="card" 
-			      tal:repeat="lrole here/get_local_roles"
+			      tal:repeat="lrole python:here.acl_users.getLocalRolesForDisplay(here)"
 			      tal:define="username python:here.portal_membership.getAuthenticatedMember().getUserName();">
 		    
 			    <span>
@@ -398,8 +365,15 @@
 				   tal:define="member_url python:here.portal_membership.getHomeUrl(lrole[0])"
 				   tal:omit-tag="not: member_url"
 				   tal:attributes="href member_url">
-				<img src="defaultUser.gif" alt="Blank picture" border="0" width="75" height="100" 
+				<img src="defaultUser.gif" alt="Blank picture" 
+                                     border="0" width="75" height="100" 
+                                     tal:condition="python:lrole[2] == 'user'"
 				     tal:attributes="src python:here.portal_membership.getPersonalPortrait(lrole[0]).absolute_url()" />
+				<img src="defaultGroup.gif" alt="Blank picture" 
+                                     border="0" width="75" height="100" 
+                                     tal:condition="python:lrole[2] == 'group'"
+                                      />
+                                                
 				</a>
 					<br />
 			
@@ -417,7 +391,7 @@
 						
 					<br />
 					
-					<span tal:condition="python:test(lrole[0][0:6] == 'group_'
+
 					<strong class="field" tal:content="python:lrole[0]">
 					sequence-key; 
 					</strong>

@@ -127,6 +127,23 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
     def getGroupPrefix(self):
         return GRUFFolder.GRUFGroups._group_prefix
+    
+    def getLocalRolesForDisplay(self, object):
+        result = []
+        local_roles = object.get_local_roles()
+        prefix = self.getGroupPrefix()
+        for one_user in local_roles:
+            massagedUsername = username = one_user[0]
+            roles = one_user[1]
+            userType = 'user'
+            if prefix:
+                if username.startswith(prefix):
+                    massagedUsername = username[len(prefix):]
+                    userType = 'group'
+            else:
+                userType = 'unknown'
+            result.append((massagedUsername, roles, userType))
+        return tuple(result)    
 
     def getGRUFPhysicalRoot(self,):
         return self.getPhysicalRoot()           # $$$ trick meant to be used within fake_getPhysicalRoot (see __init__)
