@@ -204,7 +204,8 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
                 for groupid in self.getGroups():
                     for r in dict.get(groupid, []):
                         group_roles.append(r)
-##                        group_roles.extend(self._GRUF.getGroup(groupid).getRolesInContext(object))            $$$ Removed for performance reasons, seems to work ! ;-)
+##                        group_roles.extend(self._GRUF.getGroup(groupid).getRolesInContext(object))              #     $$$ Removed for performance reasons, seems to work ! ;-)
+                    Log(LOG_DEBUG, "Group", groupid, "LR", group_roles)
 
             # Prepare next iteration
             inner = getattr(object, 'aq_inner', object)
@@ -219,6 +220,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
             break
         
         roles=list(roles) + local.keys() + group_roles
+        Log(LOG_DEBUG, "Roles", roles)
         return GroupUserFolder.unique(roles)
 
     def getDomains(self):

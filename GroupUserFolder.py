@@ -249,9 +249,18 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
 
     def authenticate(self, name, password, request):
-        # Pass the request along to the underlying user-related UserFolder object
+        """
+        Pass the request along to the underlying user-related UserFolder object
+        THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code in AccessControl/User.py
+        """
         if "acl_users" in self.Users.objectIds():
-            return self.Users.acl_users.authenticate(name, password, request)
+            u = self.Users.acl_users.authenticate(name, password, request)
+            if u:
+                return GRUFUser.GRUFUser(u, self,).__of__(self)         # $$$ Check security for this !
+            return None                                                 # The user cannot be authenticated => we return None
+
+        # No acl_users in the Users folder => we refuse authentication
+        return None
     
 ##    ## I DON'T KNOW IF WE HAVE TO PASS VALIDATE
 ##    def validate(self, request, auth='', roles=_noroles):
