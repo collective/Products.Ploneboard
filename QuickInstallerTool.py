@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.46 2004/07/28 01:35:05 dreamcatcher Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.47 2004/08/19 16:18:17 shh42 Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -35,8 +35,12 @@ from InstalledProduct import InstalledProduct
 
 from interfaces.portal_quickinstaller import IQuickInstallerTool
 from exceptions import RuntimeError
-import zExceptions
 from zLOG import LOG
+
+try: 
+    from zExceptions import NotFound
+except ImportError:
+    NotFound = 'NotFound'
 
 from installer import install_from_xml
 
@@ -106,7 +110,7 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
                 # catch a string exception
                 err = sys.exc_type
                 #print err, sys.exc_type, sys.exc_value
-                if err not in ("Module Error", zExceptions.NotFound):
+                if err not in ("Module Error", NotFound):
                     msg = "%s: %s" % (err, sys.exc_value)
                     LOG("Quick Installer Tool: ", 100, "%s" % productname, msg)
 
