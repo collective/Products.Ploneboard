@@ -1,4 +1,4 @@
-
+import sys
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
@@ -31,24 +31,24 @@ factory_type_information = {
         }
        ,{ 'id'            : 'settings' 
           , 'name'          : 'Settings'
-          , 'action'        : 'photo_settings_form'
+          , 'action'        : 'portal_form/photo_settings_form'
           , 'permissions'   :
           (CMFCorePermissions.View,)
           , 'category'      : 'object'
           }
       , { 'id'            : 'rotate'
           , 'name'          : 'Rotate'
-          , 'action'        : 'photo_rotate_form'
+          , 'action'        : 'portal_form/photo_rotate_form'
           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
           }
       , { 'id'            : 'edit'
           , 'name'          : 'Edit'
-          , 'action'        : 'image_edit_form'
+          , 'action'        : 'portal_form/image_edit_form'
           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
           }
       , { 'id'            : 'metadata'
           , 'name'          : 'Metadata'
-          , 'action'        : 'metadata_edit_form'
+          , 'action'        : 'portal_form/metadata_edit_form'
           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
           }
       )
@@ -183,9 +183,15 @@ class Photo(Image):
         """Rotate photo"""
         image = StringIO()
         
-        from popen2 import popen2
-        imgout, imgin = popen2('convert -rotate %s - -'
+        if sys.platform == 'win32':
+            from win32pipe import popen2
+            imgin, imgout = popen2('convert -rotate %s - -'
+                               % (degrees,), 'b')
+        else:
+            from popen2 import popen2
+            imgout, imgin = popen2('convert -rotate %s - -'
                                % (degrees,))
+
         imgin.write(str(self.data))
         imgin.close()
         image.write(imgout.read())
@@ -202,14 +208,19 @@ class Photo(Image):
 
         width, height = size
         
-        from popen2 import popen2
-        imgout, imgin = popen2('convert -quality %s -geometry %sx%s - -'
-                               % (quality, width, height))
+        if sys.platform == 'win32':
+            from win32pipe import popen2
+            imgin, imgout = popen2('convert -quality %s -geometry %sx%s - -'
+                                   % (quality, width, height), 'b')
+        else:
+            from popen2 import popen2
+            imgout, imgin = popen2('convert -quality %s -geometry %sx%s - -'
+                                   % (quality, width, height))
+
         imgin.write(str(self.data))
         imgin.close()
         image.write(imgout.read())
         imgout.close()
-        
         image.seek(0)
         return image
     
