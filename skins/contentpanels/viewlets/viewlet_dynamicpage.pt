@@ -2,9 +2,7 @@
       lang="en-US"
       i18n:domain="mxmdynamicpage">
 
-<div metal:define-macro="portlet" tal:omit-tag="">
-
-<div metal:fill-slot="main"
+<div metal:define-macro="portlet"
      tal:define="first_list here/first_list;
                  second_list here/second_list;
                  third_list here/third_list;
@@ -131,15 +129,8 @@
 
     </div>
 
-    <div metal:use-macro="here/document_byline/macros/byline">
-      Get the byline - contains details about author and modification date.
-    </div>
-
-    
   </td></tr>
   </table>
-
-</div>
 
 </div>
 
