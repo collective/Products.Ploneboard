@@ -21,22 +21,22 @@ def install(self):
             out.write('Object "%s" already existed in the types tool\n' % (
                 f['id']))
 
-    if 'photo_content' not in skinsTool.objectIds():
-        addDirectoryViews(skinsTool, 'skins', photo_globals)
-        out.write("Added 'photo_content' directory views to portal_skins\n")
+##    if 'photo_content' not in skinsTool.objectIds():
+##        addDirectoryViews(skinsTool, 'skins', photo_globals)
+##        out.write("Added 'photo_content' directory views to portal_skins\n")
 
-    skins = skinsTool.getSkinSelections()
-    for skin in skins:
-        path = skinsTool.getSkinPath(skin)
-        path = map(string.strip, string.split(path,','))
-        if 'photo_content' not in path and skin.startswith('Plone'):
-            path.append('photo_content')
+##    skins = skinsTool.getSkinSelections()
+##    for skin in skins:
+##        path = skinsTool.getSkinPath(skin)
+##        path = map(string.strip, string.split(path,','))
+##        if 'photo_content' not in path and skin.startswith('Plone'):
+##            path.append('photo_content')
 
-            path = string.join(path, ', ')
-            skinsTool.addSkinSelection(skin, path)
-            out.write("Added 'photo_content' to %s skins\n" % skin)
-        else:
-            out.write('Skipping %s skin\n' % skin)
+##            path = string.join(path, ', ')
+##            skinsTool.addSkinSelection(skin, path)
+##            out.write("Added 'photo_content' to %s skins\n" % skin)
+##        else:
+##            out.write('Skipping %s skin\n' % skin)
 
     portal_prop=getToolByName(self, 'portal_properties')
     nav=portal_prop.navigation_properties
