@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.9 2004/03/20 19:22:35 tiran Exp $
+$Id: Validators.py,v 1.10 2004/04/11 12:32:58 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -27,12 +27,12 @@ from Products.ATContentTypes.config import *
 
 if VALIDATION_IN_PRODUCTS:
     from Products.validation import validation
-    from Products.validation.interfaces import ivalidator
-    from Products.validation.validators import RegexValidator
+    from Products.validation.interfaces.IValidator import IValidator
+    from Products.validation.validators.RegexValidator import RegexValidator
 else:
     from validation import validation
-    from validation.interfaces import ivalidator
-    from validation.validators import RegexValidator
+    from validation.interfaces.IValidator import IValidator
+    from validation.validators.RegexValidator import RegexValidator
 
 import re
 from ZPublisher.HTTPRequest import FileUpload
@@ -61,7 +61,7 @@ class EmptyEmailValidator:
     """
     """
 
-    __implements__ = (ivalidator,)
+    __implements__ = IValidator
 
     def __init__(self, name):
         self.name = name
@@ -75,11 +75,11 @@ class EmptyEmailValidator:
 validation.register(EmptyEmailValidator('isEmptyEmail'))
 
 
-class EmptyUrlValidator:
+class EmptyURLValidator:
     """
     """
 
-    __implements__ = (ivalidator,)
+    __implements__ = IValidator
 
     def __init__(self, name):
         self.name = name
@@ -90,14 +90,14 @@ class EmptyUrlValidator:
         else:
             return validation.validate('isUrl', value)
 
-validation.register(EmptyUrlValidator('isEmptyUrl'))
+validation.register(EmptyURLValidator('isEmptyURL'))
 
 
 class EmptyInternationalPhoneNumberValidator:
     """
     """
     
-    __implements__ = (ivalidator,)
+    __implements__ = IValidator
 
     def __init__(self, name):
         self.name = name
@@ -118,7 +118,7 @@ class TidyHtmlValidator:
     Do not clean up the value
     """
 
-    __implements__ = (ivalidator,)
+    __implements__ = IValidator
 
     def __init__(self, name):
         self.name = name
@@ -153,7 +153,7 @@ class TidyHtmlWithCleanupValidator:
     Clean up
     """
 
-    __implements__ = (ivalidator,)
+    __implements__ = IValidator
 
     def __init__(self, name):
         self.name = name

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.12 2004/04/10 19:40:52 tiran Exp $
+$Id: schemata.py,v 1.13 2004/04/11 12:32:59 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -119,7 +119,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='event_url',
-                validators = ('isEmptyUrl',),
+                validators = ('isURL',),
                 widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
                                       description_msgid = "help_url",
                                       label = "Event URL",
@@ -159,7 +159,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_email',
-                validators = ('isEmptyEmail',),
+                validators = ('isEmail',),
                 widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
                                       description_msgid = "help_contact_email",
                                       label = "Contact E-mail",
@@ -169,7 +169,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 required=0,
                 searchable = 1,
                 accessor='contact_phone',
-                validators = ('isEmptyInternationalPhoneNumber',),
+                validators = ('isInternationalPhoneNumber',),
                 widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
                                       description_msgid = "help_contact_phone",
                                       label = "Contact Phone",
