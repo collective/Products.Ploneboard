@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFolder.py,v 1.3 2004/05/15 01:54:07 tiran Exp $
+$Id: testATFolder.py,v 1.4 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -22,44 +22,13 @@ def editATCT(obj):
 
 tests = []
 
-class TestATFolder(ATCTTestCase):
-
-    def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
-        self._dummy = ATFolder.ATFolder(oid='dummy')
-        self._dummy.initializeArchetype()
-
-    def testSomething(self):
-        # Test something
-        self.failUnless(1==1)
-
-    def beforeTearDown(self):
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
-
-tests.append(TestATFolder)
-
 class TestSiteATFolder(ATCTSiteTestCase):
 
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-
-        self._portal.invokeFactory(type_name='ATFolder', id='ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        self._portal.invokeFactory(type_name='Folder', id='cmf')
-        self._cmf = getattr(self._portal, 'cmf')
-
-    def testTypeInfo(self):
-        ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == 'ATFolder', ti.getId())
-        self.failUnless(ti.Title() == 'AT Folder', ti.Title())
-        #self.failUnless(ti.getIcon() == 'folder_icon.gif', ti.getIcon())
-        self.failUnless(ti.Metatype() == 'ATFolder', ti.Metatype())
+    klass = ATFolder.ATFolder
+    portal_type = 'ATFolder'
+    title = 'AT Folder'
+    meta_type = 'ATFolder'
+    icon = 'folder_icon.gif'
 
     def test_edit(self):
         old = self._cmf
@@ -80,7 +49,7 @@ class TestSiteATFolder(ATCTSiteTestCase):
         title       = old.Title()
         description = old.Description()
         mod         = old.ModificationDate()
-        create      = old.CreationDate()
+        created     = old.CreationDate()
 
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
@@ -89,19 +58,11 @@ class TestSiteATFolder(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.failUnless(isinstance(migrated, ATFolder.ATFolder),
-                        migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == 'ATFolder',
-                        migrated.getTypeInfo().getId())
-
-        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
-                        % (migrated.Title(), title))
-        self.failUnless(migrated.Description() == description,
-                        'Description mismatch: %s / %s' % (migrated.Description(), description))
-        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (migrated.ModificationDate(), mod))
-        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+        self.compareAfterMigration(migrated)
+        self.compareDC(migrated, title=title, description=description, mod=mod,
+                       created=created)
+                       
+        # XXX more
 
 
     def beforeTearDown(self):

@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.9 2004/05/24 17:45:40 tiran Exp $
+$Id: testATDocument.py,v 1.10 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -45,46 +45,14 @@ def editATCT(obj):
 
 tests = []
 
-
-class TestATDocument(ATCTTestCase):
-
-    def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
-        self._dummy = ATDocument.ATDocument(oid='dummy')
-        self._dummy.initializeArchetype()
-
-    def testSomething(self):
-        # Test something
-        self.failUnless(1==1)
-
-    def beforeTearDown(self):
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
-
-tests.append(TestATDocument)
-
 class TestSiteATDocument(ATCTSiteTestCase):
-
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-
-        self._portal.invokeFactory(type_name='ATDocument', id='ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        self._portal.invokeFactory(type_name='Document', id='cmf')
-        self._cmf = getattr(self._portal, 'cmf')
-
-    def testTypeInfo(self):
-        ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == 'ATDocument', ti.getId())
-        self.failUnless(ti.Title() == 'AT Document', ti.Title())
-        #self.failUnless(ti.getIcon() == 'document_icon.gif', ti.getIcon())
-        self.failUnless(ti.Metatype() == 'ATDocument', ti.Metatype())
-        
+    
+    klass = ATDocument.ATDocument
+    portal_type = 'ATDocument'
+    title = 'AT Document'
+    meta_type = 'ATDocument'
+    icon = 'document_icon.gif'
+    
     def test_edit(self):
         old = self._cmf
         new = self._ATCT
@@ -102,7 +70,7 @@ class TestSiteATDocument(ATCTSiteTestCase):
         title       = old.Title()
         description = old.Description()
         mod         = old.ModificationDate()
-        create      = old.CreationDate()
+        created     = old.CreationDate()
         body        = old.CookedBody()
 
         # migrated (needs subtransaction to work)
@@ -113,47 +81,16 @@ class TestSiteATDocument(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.failUnless(isinstance(migrated, ATDocument.ATDocument),
-                        migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == 'ATDocument',
-                        migrated.getTypeInfo().getId())
-
-        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
-                        % (migrated.Title(), title))
-        self.failUnless(migrated.Description() == description,
-                        'Description mismatch: %s / %s' % (migrated.Description(), description))
-        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (migrated.ModificationDate(), mod))
-        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+        self.compareAfterMigration(migrated)
+        self.compareDC(migrated, title=title, description=description, mod=mod,
+                       created=created)
 
         self.failUnless(migrated.CookedBody() == body, 'Body mismatch: %s / %s' \
                         % (migrated.CookedBody(), body))
 
-    def beforeTearDown(self):
-        # logout
-        noSecurityManager()
-        del self._ATCT
-        del self._cmf
-        ATCTSiteTestCase.beforeTearDown(self)
-
-tests.append(TestSiteATDocument)
-
-class TestSiteATDocumentRename(ATCTSiteTestCase):
-
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-        
-        self._portal.invokeFactory(type_name='ATDocument', id='ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-        self._ATCT.setText(example_rest, mimetype="text/x-rst")
-
     def test_rename(self):
         doc = self._ATCT
+        doc.setText(example_rest, mimetype="text/x-rst")
         self.failUnless(str(doc.getField('text').getContentType(doc)) == "text/x-rst")
         #make sure we have _p_jar
         get_transaction().commit(1)
@@ -164,7 +101,8 @@ class TestSiteATDocumentRename(ATCTSiteTestCase):
         doc = getattr(self._portal, new_id)
         self.failUnless(str(doc.getField('text').getContentType(doc)) == "text/x-rst")
 
-tests.append(TestSiteATDocumentRename)
+
+tests.append(TestSiteATDocument)
 
 class TestATDocumentFields(ATCTFieldTestCase):
 

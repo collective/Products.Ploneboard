@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.7 2004/05/24 17:45:40 tiran Exp $
+$Id: testATFavorite.py,v 1.8 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -48,42 +48,13 @@ def editATCT(obj):
 
 tests = []
 
-class TestATFavorite(ATCTTestCase):
-
-    def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
-        self._dummy = ATFavorite.ATFavorite(oid='dummy')
-        self._dummy.initializeArchetype()
-
-    def beforeTearDown(self):
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
-
-tests.append(TestATFavorite)
-
 class TestSiteATFavorite(ATCTSiteTestCase):
 
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-
-        ttool = self._portal.portal_types
-        typeInfo = ttool.getTypeInfo('ATFavorite')
-        typeInfo.constructInstance(self._portal, 'ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        self._portal.invokeFactory(type_name='Favorite', id='cmf')
-        self._cmf = getattr(self._portal, 'cmf')
-
-    def testTypeInfo(self):
-        ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == 'ATFavorite', ti.getId())
-        self.failUnless(ti.Title() == 'AT Favorite', ti.Title())
-        #self.failUnless(ti.getIcon() == 'link_icon.gif', ti.getIcon())
-        self.failUnless(ti.Metatype() == 'ATFavorite', ti.Metatype())
+    klass = ATFavorite.ATFavorite
+    portal_type = 'ATFavorite'
+    title = 'AT Favorite'
+    meta_type = 'ATFavorite'
+    icon = 'favorite_icon.gif'
 
     def test_edit(self):
         old = self._cmf
@@ -117,7 +88,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
         title       = old.Title()
         description = old.Description()
         mod         = old.ModificationDate()
-        create      = old.CreationDate()
+        created     = old.CreationDate()
         url         = old.getRemoteUrl()
 
 
@@ -128,22 +99,14 @@ class TestSiteATFavorite(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.failUnless(isinstance(migrated, ATFavorite.ATFavorite),
-                        migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == 'ATFavorite',
-                        migrated.getTypeInfo().getId())
-
-        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
-                        % (migrated.Title(), title))
-        self.failUnless(migrated.Description() == description,
-                        'Description mismatch: %s / %s' % (migrated.Description(), description))
-        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (migrated.ModificationDate(), mod))
-        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+        self.compareAfterMigration(migrated)
+        self.compareDC(migrated, title=title, description=description, mod=mod,
+                       created=created)
+                       
+        # XXX more
 
         self.failUnless(migrated.getRemoteUrl() == url, 'URL mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+                        % (migrated.getRemoteUrl(), url))
 
     def beforeTearDown(self):
         # logout

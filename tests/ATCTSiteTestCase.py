@@ -2,20 +2,22 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
 import time
+
 from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
 from common import dcEdit, EmptyValidator
 
 from Products.Archetypes.Storage import AttributeStorage, MetadataStorage
-from Products.CMFCore  import CMFCorePermissions
+from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.Widget import TextAreaWidget
 from Products.Archetypes.utils import DisplayList
 from Products.Archetypes.interfaces.layer import ILayerContainer
@@ -23,24 +25,97 @@ from Products.Archetypes.tests import ArchetypesTestCase
 from Products.Archetypes.tests.test_baseschema import BaseSchemaTest
 from Products.ATContentTypes.Extensions.Install import install as installATCT
 
+from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from Products.CMFCore.interfaces.DublinCore import DublinCore as IDublinCore
+from Products.CMFCore.interfaces.DublinCore import MutableDublinCore as IMutableDublinCore
+
 from Products.CMFPlone.tests import PloneTestCase
 portal_name = PloneTestCase.portal_name
 portal_owner = PloneTestCase.portal_owner
 
 class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
+    
+    klass = None
+    portal_type = ''
+    title = ''
+    meta_type = ''
+    icon = ''
+    
+    def afterSetUp(self):
+        self._portal = self.app.portal
+        # login as manager
+        user = self.getManagerUser()
+        newSecurityManager(None, user)
+        
+        ttool = getToolByName(self._portal, 'portal_types')
+        atctFTI = ttool.getTypeInfo(self.portal_type)
+        cmfFTI = ttool.getTypeInfo(self.klass.newTypeFor[0])
+        
+        atctFTI.constructInstance(self._portal, 'ATCT')
+        self._ATCT = getattr(self._portal, 'ATCT')
+
+        cmfFTI.constructInstance(self._portal, 'cmf')
+        self._cmf = getattr(self._portal, 'cmf')
+
     def test_dcEdit(self):
-        if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
-            return
+        #if not hasattr(self, '_cmf') or not hasattr(self, '_ATCT'):
+        #    return
         old = self._cmf
         new = self._ATCT
         dcEdit(old)
         dcEdit(new)
-        self.failUnless(old.Title() == new.Title(), 'Title mismatch: %s / %s' \
-                        % (old.Title(), new.Title()))
-        self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
-                        % (old.Description(), new.Description()))
+        self.compareDC(old, new)
+
+    def testTypeInfo(self):
+        ti = self._ATCT.getTypeInfo()
+        self.failUnless(ti.getId() == self.portal_type, ti.getId())
+        self.failUnless(ti.Title() == self.title, ti.Title())
+        self.failUnless(ti.getIcon() == self.icon, ti.getIcon())
+        self.failUnless(ti.Metatype() == self.meta_type, ti.Metatype())
+
+    def testDoesImplemendDC(self):
+        self.failUnless(IDublinCore.isImplementedBy(self._ATCT))
+        self.failUnless(IMutableDublinCore.isImplementedBy(self._ATCT))
+        
+    def testDoesImplementATCT(self):
+        self.failUnless(IATContentType.isImplementedBy(self._ATCT))
+
+    def compareDC(self, first, second=None, **kwargs):
+        """
+        """
+        if second:
+            title = second.Title()
+            description = second.Description()
+            mod = second.ModificationDate()
+            created = second.CreationDate()
+        else:
+            title = kwargs.get('title')
+            description = kwargs.get('description')
+            mod = kwargs.get('mod')
+            created = kwargs.get('created')
+            
+        time.sleep(1)
+        self.failUnless(first.Title() == title, 'Title mismatch: %s / %s' \
+                        % (first.Title(), title))
+        self.failUnless(first.Description() == description,
+                        'Description mismatch: %s / %s' % (first.Description(), description))
+        self.failUnless(first.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
+                        % (first.ModificationDate(), mod))
+        self.failUnless(first.CreationDate() == created, 'Creation date mismatch: %s / %s' \
+                        % (first.CreationDate(), created))
         # XXX more
+
+    def compareAfterMigration(self, migrated):
+        self.failUnless(isinstance(migrated, self.klass),
+                        migrated.__class__)
+        self.failUnless(migrated.getTypeInfo().getId() == self.portal_type,
+                        migrated.getTypeInfo().getId())
+
+    def beforeTearDown(self):
+        # logout
+        noSecurityManager()
+
 
 class ATCTFieldTestCase(ArchetypesTestCase.ArcheSiteTestCase, BaseSchemaTest):
     """ ATContentTypes test including AT schema tests """

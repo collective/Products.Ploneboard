@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATLink.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
+$Id: testATLink.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -34,44 +34,13 @@ def editATCT(obj):
 
 tests = []
 
-class TestATLink(ATCTTestCase):
-
-    def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
-        self._dummy = ATLink.ATLink(oid='dummy')
-        self._dummy.initializeArchetype()
-
-    def testSomething(self):
-        # Test something
-        self.failUnless(1==1)
-
-    def beforeTearDown(self):
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
-
-tests.append(TestATLink)
-
 class TestSiteATLink(ATCTSiteTestCase):
 
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-
-        self._portal.invokeFactory(type_name='ATLink', id='ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        self._portal.invokeFactory(type_name='Link', id='cmf')
-        self._cmf = getattr(self._portal, 'cmf')
-
-    def testTypeInfo(self):
-        ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == 'ATLink', ti.getId())
-        self.failUnless(ti.Title() == 'AT Link', ti.Title())
-        #self.failUnless(ti.getIcon() == 'link_icon.gif', ti.getIcon())
-        self.failUnless(ti.Metatype() == 'ATLink', ti.Metatype())
+    klass = ATLink.ATLink
+    portal_type = 'ATLink'
+    title = 'AT Link'
+    meta_type = 'ATLink'
+    icon = 'link_icon.gif'
 
     def testLink(self):
         obj = self._ATCT
@@ -103,7 +72,7 @@ class TestSiteATLink(ATCTSiteTestCase):
         title       = old.Title()
         description = old.Description()
         mod         = old.ModificationDate()
-        create      = old.CreationDate()
+        created     = old.CreationDate()
         url         = old.getRemoteUrl()
 
 
@@ -114,22 +83,14 @@ class TestSiteATLink(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.failUnless(isinstance(migrated, ATLink.ATLink),
-                        migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == 'ATLink',
-                        migrated.getTypeInfo().getId())
-
-        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
-                        % (migrated.Title(), title))
-        self.failUnless(migrated.Description() == description,
-                        'Description mismatch: %s / %s' % (migrated.Description(), description))
-        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (migrated.ModificationDate(), mod))
-        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+        self.compareAfterMigration(migrated)
+        self.compareDC(migrated, title=title, description=description, mod=mod,
+                       created=created)
+                       
+        # XXX more
 
         self.failUnless(migrated.getRemoteUrl() == url, 'URL mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
+                        % (migrated.getRemoteUrl(), url))
 
     def beforeTearDown(self):
         # logout

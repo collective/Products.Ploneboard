@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.8 2004/05/24 17:45:40 tiran Exp $
+$Id: testATEvent.py,v 1.9 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from common import *
+from Products.ATContentTypes.Permissions import ChangeEvents
 
 LOCATION = 'my location'
 EV_TYPE  = 'Meeting'
@@ -48,44 +49,13 @@ def editATCT(obj):
 
 tests = []
 
-class TestATEvent(ATCTTestCase):
-
-    def afterSetUp(self):
-        ATCTTestCase.afterSetUp(self)
-        self._dummy = ATEvent.ATEvent(oid='dummy')
-        self._dummy.initializeArchetype()
-
-    def testSomething(self):
-        # Test something
-        self.failUnless(1==1)
-
-    def beforeTearDown(self):
-        del self._dummy
-        ATCTTestCase.beforeTearDown(self)
-
-tests.append(TestATEvent)
-
 class TestSiteATEvent(ATCTSiteTestCase):
 
-    def afterSetUp(self):
-        ATCTSiteTestCase.afterSetUp(self)
-        self._portal = self.app.portal
-        # login as manager
-        user = self.getManagerUser()
-        newSecurityManager(None, user)
-
-        self._portal.invokeFactory(type_name='ATEvent', id='ATCT')
-        self._ATCT = getattr(self._portal, 'ATCT')
-
-        self._portal.invokeFactory(type_name='Event', id='cmf')
-        self._cmf = getattr(self._portal, 'cmf')
-
-    def testTypeInfo(self):
-        ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == 'ATEvent', ti.getId())
-        self.failUnless(ti.Title() == 'AT Event', ti.Title())
-        #self.failUnless(ti.getIcon() == 'event_icon.gif', ti.getIcon())
-        self.failUnless(ti.Metatype() == 'ATEvent', ti.Metatype())
+    klass = ATEvent.ATEvent
+    portal_type = 'ATEvent'
+    title = 'AT Event'
+    meta_type = 'ATEvent'
+    icon = 'event_icon.gif'
 
     def test_edit(self):
         old = self._cmf
@@ -125,7 +95,7 @@ class TestSiteATEvent(ATCTSiteTestCase):
         title       = old.Title()
         description = old.Description()
         mod         = old.ModificationDate()
-        create      = old.CreationDate()
+        created     = old.CreationDate()
         
         start = old.start()
         end   = old.end()
@@ -143,21 +113,10 @@ class TestSiteATEvent(ATCTSiteTestCase):
 
         migrated = getattr(self._portal, id)
 
-        self.failUnless(isinstance(migrated, ATEvent.ATEvent),
-                        migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == 'ATEvent',
-                        migrated.getTypeInfo().getId())
-
-        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
-                        % (migrated.Title(), title))
-        self.failUnless(migrated.Description() == description,
-                        'Description mismatch: %s / %s' % (migrated.Description(), description))
-        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (migrated.ModificationDate(), mod))
-        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
-                        % (migrated.CreationDate(), create))
-
-
+        self.compareAfterMigration(migrated)
+        self.compareDC(migrated, title=title, description=description, mod=mod,
+                       created=created)
+                       
         self.failUnless(migrated.location == location, 'Location mismatch: %s / %s' \
                         % (migrated.location, location))
         self.failUnless(migrated.Subject() == ev_type, 'EventType mismatch: %s / %s' \
@@ -215,7 +174,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -256,7 +215,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -300,7 +259,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -326,7 +285,8 @@ class TestATEventFields(ATCTFieldTestCase):
 
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 1, 'Value is %s' % field.required)
-        self.failUnless(isinstance(field.default, DateTime), 'Value is %s' % str(field.default))
+        self.failUnless(field.default == None , 'Value is %s' % str(field.default))
+        self.failUnless(field.default_method == DateTime , 'Value is %s' % str(field.default_method))
         self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
@@ -342,7 +302,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -369,7 +329,8 @@ class TestATEventFields(ATCTFieldTestCase):
 
         self.failUnless(ILayerContainer.isImplementedBy(field))
         self.failUnless(field.required == 1, 'Value is %s' % field.required)
-        self.failUnless(isinstance(field.default, DateTime), 'Value is %s' % str(field.default))
+        self.failUnless(field.default == None , 'Value is %s' % str(field.default))
+        self.failUnless(field.default_method == DateTime , 'Value is %s' % str(field.default_method))
         self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
         self.failUnless(field.vocabulary == (), 
                         'Value is %s' % str(field.vocabulary))
@@ -385,7 +346,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -427,7 +388,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -469,7 +430,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)
@@ -511,7 +472,7 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.read_permission == CMFCorePermissions.View,
                         'Value is %s' % field.read_permission)
         self.failUnless(field.write_permission ==
-                        CMFCorePermissions.ModifyPortalContent,
+                        ChangeEvents,
                         'Value is %s' % field.write_permission)
         self.failUnless(field.generateMode == 'veVc',
                         'Value is %s' % field.generateMode)

@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.6 2004/05/24 17:45:40 tiran Exp $
+$Id: common.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -146,6 +146,5 @@ else:
 ###
 # ATContentTypes tests
 ###
-from ATCTTestCase import ATCTTestCase
 from ATCTSiteTestCase import ATCTFieldTestCase
 from ATCTSiteTestCase import ATCTSiteTestCase
