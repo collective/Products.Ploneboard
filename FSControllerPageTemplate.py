@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.4 2003/11/12 23:11:37 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.5 2003/12/02 08:10:40 plonista Exp $
 """
 
 import copy
@@ -77,10 +77,7 @@ class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
 
 
     def __call__(self, *args, **kwargs):
-        try:
-            return self._call(FSControllerPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
-        except:
-            logException()
+        return self._call(FSControllerPageTemplate.inheritedAttribute('__call__'), *args, **kwargs)
 
 
     def _createZODBClone(self):
