@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.17 2004/09/29 17:59:30 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.18 2004/09/29 18:26:56 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -43,7 +43,10 @@ class ParentManagedSchema:
         # no acquisition context. So we return the default schema itself.
 
         if not hasattr(self, 'aq_parent'):
-            return self._wrap_schema(self.schema)
+            if hasattr(self, 'schema'):
+                return self._wrap_schema(self.schema)
+            else:
+                raise ValueError('Instance has no "schema" attribute defined')
 
         # If we're called by the generated methods we can not rely on
         # the id and need to check for portal_type
