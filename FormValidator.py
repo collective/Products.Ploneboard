@@ -6,6 +6,7 @@ from Products.CMFCore.utils import getToolByName
 from Key import Key
 from globalVars import ANY_CONTEXT, ANY_BUTTON
 from utils import log
+from Acquisition import aq_base
 
 _marker = []
 
@@ -114,7 +115,7 @@ class FormValidatorContainer(SimpleItem):
         return newobj
 
     def set(self, validator):
-        self.validators[validator.getKey()] = validator
+        self.validators[aq_base(validator.getKey())] = aq_base(validator)
         self._p_changed = 1
         
     def get(self, key):

@@ -1,3 +1,8 @@
+2003-12-19  Jim Roepcke <jim@roepcke.com> (jimroepcke)
+
+   * Remove acquisition wrappers from keys and values before putting them in
+     the action and validator containers.
+
 2003-12-19  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Moved warning for actions / validators with unknown context types to

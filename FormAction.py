@@ -7,6 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Key import Key
 from globalVars import ANY_CONTEXT, ANY_BUTTON
 from utils import log
+from Acquisition import aq_base
 
 _marker = []
 
@@ -156,7 +157,7 @@ class FormActionContainer(SimpleItem):
         return newobj
 
     def set(self, action):
-        self.actions[action.getKey()] = action
+        self.actions[aq_base(action.getKey())] = aq_base(action)
         self._p_changed = 1
         
     def get(self, key):
