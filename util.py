@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: util.py,v 1.4 2004/09/27 17:31:12 spamsch Exp $
+$Id: util.py,v 1.5 2004/09/27 17:43:49 ajung Exp $
 """
 
 import urllib
@@ -30,9 +30,7 @@ def redirect(RESPONSE, dest, msg=None,**kw):
         RESPONSE.redirect(url) 
 
 def create_signature(schema):
-    """
-    Replacement for buggy signature impl in AT Schema
-    """
+    """ Replacement for buggy signature impl in AT Schema """
 
     disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
     s = 'Schema: {'
