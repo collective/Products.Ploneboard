@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.20 2004/05/21 18:44:03 tiran Exp $
+$Id: config.py,v 1.21 2004/05/26 02:54:19 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -81,6 +81,10 @@ TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
 
+## maximum upload size for ATImage and ATFile in MB. 0 is infinitiv
+MAX_FILE_SIZE = 0.0
+MAX_IMAGE_SIZE = 0.0
+
 ###############################################################################
 ## private options
 
@@ -91,7 +95,7 @@ GLOBALS = globals()
 
 CONFIGUREABLE = ('MX_TIDY_ENABLED', 'MX_TIDY_OPTIONS', 'EXT_STORAGE_ENABLE',
                  'ENABLE_TEMPLATE_MIXIN', 'TEMPLATE_MIXIN_PERMISSION',
-                 'HISTORY_VIEW_PERMISSION', )
+                 'HISTORY_VIEW_PERMISSION', 'MAX_FILE_SIZE', 'MAX_IMAGE_SIZE', )
 
 ## using special plone 2 stuff?
 try:
