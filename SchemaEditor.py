@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.13 2004/09/23 17:42:17 ajung Exp $
+$Id: SchemaEditor.py,v 1.14 2004/09/23 18:29:00 ajung Exp $
 """
 
 import re
@@ -102,7 +102,7 @@ class SchemaEditor:
         self._schemas[id] = S
 
     security.declareProtected(ManageSchemaPermission, 'atse_unregisterSchema')
-    def atse_registerSchema(self, schema_id):
+    def atse_unregisterSchema(self, schema_id):
         """ unregister schema """
         if not self._schemas.has_key(schema_id):
             raise SchemaEditorError('No such schema: %s' % schema_id)
