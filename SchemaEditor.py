@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.24 2004/10/25 16:05:53 ajung Exp $
+$Id: SchemaEditor.py,v 1.25 2004/11/02 19:09:44 ajung Exp $
 """
 
 import re
@@ -335,9 +335,9 @@ class SchemaEditor:
         self._schemas[schema_id] = S
         util.redirect(RESPONSE, 
                       schema_template,
-                      self.translate('atse_field_deleted', 
-                                     default='Field deleted'), 
-                                     schemata=return_schemata)
+                      self.translate('atse_field_deleted', default='Field deleted'), 
+                      schema_id=schema_id,
+                      schemata=return_schemata)
 
     security.declareProtected(ManageSchemaPermission, 'atse_update')
     def atse_update(self, schema_id, schema_template, fielddata,  REQUEST, RESPONSE=None):
@@ -368,10 +368,10 @@ class SchemaEditor:
             S.addField(field)
             self._schemas[schema_id] = S
             util.redirect(RESPONSE, schema_template,
-                          self.translate('atse_field_added', 
-                                         default='Field added'), 
-                                         schemata=fieldset, 
-                                         field=R['name'])
+                          self.translate('atse_field_added', default='Field added'), 
+                          schema_id=schema_id,
+                          schemata=fieldset, 
+                          field=R['name'])
             return            
 
         field = TYPE_MAP.get(FD.type, None)

@@ -2,6 +2,8 @@
 
     - added support for validators
 
+    - fixed some missing parameters in redirection URLs
+
 0.2 (1.10.2004)
 
     - Added developer mode: Look @ config.py for information
