@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.2 2004/03/16 15:27:10 tiran Exp $
+$Id: common.py,v 1.3 2004/04/17 04:27:23 dtremea Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -49,10 +49,10 @@ ZopeTestCase.installProduct('CMFFormController', 1)
 ZopeTestCase.installProduct('GroupUserFolder', 1)
 ZopeTestCase.installProduct('ZCTextIndex', 1)
 ZopeTestCase.installProduct('CMFPlone', 1)
-ZopeTestCase.installProduct('MailHost', quiet=1)
-ZopeTestCase.installProduct('PageTemplates', quiet=1)
-ZopeTestCase.installProduct('PythonScripts', quiet=1)
-ZopeTestCase.installProduct('ExternalMethod', quiet=1)
+ZopeTestCase.installProduct('MailHost', 1)
+ZopeTestCase.installProduct('PageTemplates', 1)
+ZopeTestCase.installProduct('PythonScripts', 1)
+ZopeTestCase.installProduct('ExternalMethod', 1)
 ZopeTestCase.installProduct('ZCatalog', 1)
 ZopeTestCase.installProduct('Archetypes', 1)
 ZopeTestCase.installProduct('ArchExample', 1)
@@ -121,13 +121,12 @@ except ImportError:
         return ()
     def flattenInterfaces(interfaces, remove_duplicates=1):
         return ()
-    class BrokenImplementation(ExeATCTion): pass
-    class DoesNotImplement(ExeATCTion): pass
-    class BrokenMethodImplementation(ExeATCTion): pass
+    class BrokenImplementation(Exception): pass
+    class DoesNotImplement(Exception): pass
+    class BrokenMethodImplementation(Exception): pass
 else:
     from Interface.Implements import getImplementsOfInstances, \
          getImplements, flattenInterfaces
     from Interface.Verify import verifyClass, verifyObject
     from Interface.Exceptions import BrokenImplementation, DoesNotImplement
     from Interface.Exceptions import BrokenMethodImplementation
-
