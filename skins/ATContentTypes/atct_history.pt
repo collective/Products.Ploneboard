@@ -7,9 +7,9 @@
 <metal:main fill-slot="main">
     <tal:main-macro metal:define-macro="main"
     tal:define="histories here/getDocumentComparisons">
-    <h1 tal:content="string:Changes to ${here/Title}" class="documentFirstHeading">History</h1>
+    <h1 i18n:translate="atct_history_changes_of" class="documentFirstHeading">Changes of <span tal:content="here/Title" i18n:name="title" /></h1>
 
-    <div class="documentDescription" i18n:translate="atct_lastchanges_description">
+    <div class="documentDescription" i18n:translate="atct_history_lastchanges_description">
     Shows the last changes of the item, with new content in green (normal text),
     and deleted content in red (strike-out text).
     </div>
@@ -22,20 +22,20 @@
     </div>
 
     <tal:histories tal:repeat="history histories" tal:condition="histories">
-      <h2>Comparison between
-          <span tal:content="python:here.toPortalTime(history['oldTime'], 1)" />
+      <h2 i18n:translate="atct_history_comparison_between">Comparison between
+          <span i18n:name="from" tal:content="python:here.toPortalTime(history['oldTime'], 1)" />
           and
-         <span tal:content="python:here.toPortalTime(history['newTime'], 1)" />
+         <span i18n:name="to" tal:content="python:here.toPortalTime(history['newTime'], 1)" />
       </h2>
 
       <dl>
-       <dt>Comment</dt>
+       <dt i18n:translate="atct_history_comment">Comment</dt>
        <dd tal:content="history/description" />
-       <dt>User</dt>
+       <dt i18n:translate="atct_history_user">User</dt>
        <dd tal:content="history/member/fullname | history/user" />
       </dl>
       <fieldset>
-          <legend>Changes in this revision</legend>
+          <legend i18n:translate="atct_history_changes_revision">Changes in this revision</legend>
           <span tal:replace="structure python:here.formatHistoryDiff(history['lines'])">
           The changes, with color coding.
           </span>
@@ -44,7 +44,7 @@
     </tal:histories>
 
     <tal:nohistories tal:condition="not: histories">
-      <p i18n:translate="atct_lastchanges_notavailable">
+      <p i18n:translate="atct_history_lastchanges_notavailable">
        No changes available for this document
       </p>
     </tal:nohistories>

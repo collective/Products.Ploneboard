@@ -58,6 +58,7 @@ from Acquisition import aq_parent
 from ExtensionClass import Base
 from OFS import ObjectManager
 from zExceptions import BadRequest
+from webdav.Lockable import ResourceLockedError
 
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 from Products.ATContentTypes.types.schemata import ATContentTypeSchema
@@ -330,6 +331,38 @@ class ATCTFileContent(ATCTContent):
         return f and f.getContentType() or 'text/plain' #'application/octet-stream'
 
     content_type = ComputedAttribute(get_content_type, 1)
+
+    security.declarePrivate('update_data')
+    def update_data(self, data, content_type=None, size='ignored'):
+        kwargs = {}
+        if content_type is not None:
+            kwargs['mimetype'] = content_type
+        self.setFile(data, **kwargs)
+        ##self.ZCacheable_invalidate()
+        ##self.ZCacheable_set(None)
+        ##self.http__refreshEtag()
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent,
+                              'manage_edit')
+    def manage_edit(self, title, content_type, precondition='',
+                    filedata=None, REQUEST=None):
+        """
+        Changes the title and content type attributes of the File or Image.
+        """
+        if self.wl_isLocked():
+            raise ResourceLockedError, "File is locked via WebDAV"
+
+        self.setTitle(title)
+        ##self.setContentType(content_type)
+        ##if precondition: self.precondition=str(precondition)
+        ##elif self.precondition: del self.precondition
+        if filedata is not None:
+            self.update_data(filedata, content_type, len(filedata))
+        ##else:
+        ##    self.ZCacheable_invalidate()
+        if REQUEST:
+            message="Saved changes."
+            return self.manage_main(self,REQUEST,manage_tabs_message=message)
 
     def _setATCTFileContent(self, value, **kwargs):
         """Set id to uploaded id

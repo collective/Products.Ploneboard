@@ -23,6 +23,7 @@ are permitted provided that the following conditions are met:
 
 from Products.Archetypes.debug import log as at_log
 from StringIO import StringIO
+import sys
 
 try:
     dummy = True

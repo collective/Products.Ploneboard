@@ -1,12 +1,7 @@
 0.3-DEVEL - unreleased
 ======================
 
- * migrate empty folder now
-
- * Local roles and Creator are kept when migration.
-   [panjunyong]
-
- * Use a seperate schemata for ConstrainTypesMixin. We may have many mixins.
+  * Use a seperate schemata for ConstrainTypesMixin. We may have many mixins.
    This way, we can avoid a long edit form when edit the content.
    [panjunyong]
 
@@ -19,6 +14,42 @@
 
 0.2.0-rc5 - unreleased
 ======================
+
+ * Fixed a bug in the migration walker. Empty folders aren't skipped any more.
+   [panjunyong]
+
+ * Increase debugging in Migration suite to find issues with missing types in
+   globalAllow.
+   [tiran]
+
+ * Ported atct_topic_view icon fix from HEAD.
+
+ * Don't create ATDocuments when uploading .pdf and .doc files
+  [batlogg]
+
+ * Resurrected warning message when we hit a broken object in the folder
+   migration.
+   [tiran]
+
+ * Local roles and Creator are kept when migration.
+   [panjunyong]
+
+ * Update requirements to the soon to release AT 1.3.2 version and svn.
+
+ * Added update_data and manage_edit compat. methods to ATFile and ATImage.
+   [tiran]
+
+ * Added temporary fix for [ 1095242 ] EditableBody in ATNewsItem requires
+   Modify portal content. It will stay in ATNewsItem until Plone is fixed.
+   [tiran]
+
+ * Fixed [ 1075193 ] infinite recursion in ATEvent. The __cmp__ hook was fixed
+   a while ago but I forgot to mention it here.
+   [tiran]
+
+ * Fixed [ 1098347 ] validate_add_criterion.vpy has errors. The file was dos
+   encoded
+   [tiran]
 
  * Applied patch from [ 1104069 ] ATCT migration -- more ordering issues
    which fixes some more ordering issues

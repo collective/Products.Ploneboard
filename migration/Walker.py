@@ -62,8 +62,16 @@ class Walker:
         XXX This is a required hack :/
         """
         ttool = getToolByName(self.portal, 'portal_types')
-        ftiTo = ttool.getTypeInfo(self.toType)
-        ftiFrom = ttool.getTypeInfo(self.fromType)
+
+        tt_ids = ttool.objectIds()
+        toType = self.toType
+        fromType = self.fromType
+        __traceback_info__ = (self, toType, toType in tt_ids,
+                              fromType, fromType in tt_ids,
+                              self.migrator, ttool.objectIds(),
+                             )
+        ftiTo = ttool.getTypeInfo(toType)
+        ftiFrom = ttool.getTypeInfo(fromType)
         self.toGlobalAllow = ftiTo.globalAllow()
         self.fromGlobalAllow = ftiFrom.globalAllow()
         ftiTo.global_allow = 1

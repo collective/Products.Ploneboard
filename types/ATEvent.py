@@ -204,11 +204,23 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     duration = ComputedAttribute(_duration)
 
     def __cmp__(self, other):
-        if not isinstance(other, self.__class__):
-            # XXX Should fix this.
-            return cmp(None, False)
-        return cmp((self.start_date, self.duration, self.title),
-                   (other.start_date, other.duration, other.title))
+        """Compare method
+        
+        If other is based on ATEvent, compare start, duration and title.
+        #If other is a number, compare duration and number
+        If other is a DateTime instance, compare start date with date
+        In all other cases there is no specific order
+        """
+        if IATEvent.isImplementedBy(other):
+            return cmp((self.start_date, self.duration, self.Title()),
+                       (other.start_date, other.duration, other.Title()))
+        #elif isinstance(other, (int, long, float)):
+        #    return cmp(self.duration, other)
+        elif isinstance(other, DateTime):
+            return cmp(self.start(), other)
+        else:
+            # XXX come up with a nice cmp for types
+            return cmp(self.Title(), other)
 
     def __hash__(self):
         return hash((self.start_date, self.duration, self.title))

@@ -227,6 +227,8 @@ class BaseMigrator:
             self.new._owner = self.old.getOwner(info = 1)
 
     def migrate_localroles(self):
+        """Migrate local roles
+        """
         self.new.__ac_local_roles__ = None
         # clean the auto-generated creators by Archetypes ExtensibleMeatadata
         self.new.setCreators([])
@@ -236,6 +238,7 @@ class BaseMigrator:
             self.new.manage_setLocalRoles(owner.getId(), ['Owner'])
         else:
             self.new.__ac_local_roles__ = copy(local_roles)
+
 
     def migrate_withmap(self):
         """Migrates other attributes from obj.__dict__ using a map
@@ -371,17 +374,8 @@ class FolderMigrationMixin(ItemMigrationMixin):
     """Migrates a folderish object
     """
 
-    def XXX_migrate_children(self):
+    def migrate_children(self):
         """Copy childish objects from the old folder to the new one
-
-        XXX: Oh hell that's very inefficient and I'm very shure that it will
-        blow up the zodb. See alternative
-        """
-        for obj in self.old.objectValues():
-            self.new.manage_clone(obj, obj.getId())
-
-    def migrate_alternativeChildren(self):
-        """Just an idea
 
         I don't know wether it works or fails due the ExtensionClass, ZODB and
         acquisition stuff of zope

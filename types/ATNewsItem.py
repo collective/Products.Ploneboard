@@ -63,6 +63,11 @@ class ATNewsItem(ATDocument):
 
     security       = ClassSecurityInfo()
 
+    # XXX plone news template requires the View permission but
+    # would be better ModifyPortalContent
+    # BBB will be changed in the future. Don't rely on it!
+    security.declareProtected(CMFCorePermissions.View, 'EditableBody')
+
     security.declarePrivate('cmf_edit')
     def cmf_edit(self, text, description=None, text_format=None, **kwargs):
         if description is not None:

@@ -59,10 +59,8 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     newTypeFor     = ('Document', 'Document')
     typeDescription= 'Fill in the details of this document.'
     typeDescMsgId  = 'description_edit_document'
-    assocMimetypes = ('application/xhtml+xml',
-                      'message/rfc822', 'text/*',
-                     )
-    assocFileExt   = ('txt', 'stx', 'rst', 'rest', 'py' )
+    assocMimetypes = ('application/xhtml+xml', 'message/rfc822', 'text/*',)
+    assocFileExt   = ('txt', 'stx', 'rst', 'rest', 'py',)
     cmf_edit_kws   = ('text_format',)
 
     __implements__ = (ATCTContent.__implements__,
