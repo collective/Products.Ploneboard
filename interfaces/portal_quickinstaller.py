@@ -27,8 +27,12 @@ class IQuickInstallerTool(Interface):
          the **kw param is passed to the constructor of InstalledProduct
          '''
 
-    def installProduct(self,p,locked=0,hidden=0):
-        ''' installs a product by name '''
+    def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
+        ''' installs a product by name 
+            throws AlreadyInstalled exception, if components of the product are already installed
+            
+            if swallowExceptions is true, exceptions are caught and logged
+        '''
 
     def uninstallProducts( products, REQUEST=None):
         ''' removes a list of products '''

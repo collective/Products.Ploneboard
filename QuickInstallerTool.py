@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.10 2003/07/15 03:09:31 runyaga Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.11 2003/07/16 02:55:24 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         for p in products:
             res += p +':'
             try:
-                r=self.installProduct(p)
+                r=self.installProduct(p,swallowExceptions=1)
                 res +='ok:\n'
                 if r:
                     r += str(r)+'\n'
@@ -180,7 +180,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
             
     security.declareProtected(ManagePortal, 'installProduct')
-    def installProduct(self,p,locked=0,hidden=0):
+    def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name '''
         
         if self.isProductInstalled(p):
@@ -209,25 +209,29 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         error=1
         install = self.getInstallMethod(p).__of__(portal)
 
+        #Some heursitics to figure out if its already been installed
         try:
-            #Some heursitics to figure out if its already been installed
-            try:
-                res=install()
-                status='installed'
-                error=1
-                #get_transaction().commit(1)
-            except:
-                tb=sys.exc_info()
-                if tb[1].endswith('already in use.'):
-                    self.error_log.raising(tb)
-                    raise AlreadyInstalled
-                res+='failed:'+'\n'+'\n'.join(traceback.format_exception(tb[0],tb[1],tb[2]))
+            res=install()
+            status='installed'
+            error=0
+            if swallowExceptions:
+                get_transaction().commit(1)
+        except:
+            tb=sys.exc_info()
+            if tb[1].endswith('already in use.'):
                 self.error_log.raising(tb)
-                #get_transaction().abort()   #this is very naughty
+                res='this product has already been installed without Quickinstaller!'
+                if not swallowExceptions:
+                    raise AlreadyInstalled
+            
+            res+='failed:'+'\n'+'\n'.join(traceback.format_exception(tb[0],tb[1],tb[2]))
+            self.error_log.raising(tb)
+            
+            if swallowExceptions:
+                get_transaction().abort()   #this is very naughty
+            else:
                 raise
-        except AlreadyInstalled:
-            #Continue normal operation
-            pass
+                
 
         typesafter=portal_types.objectIds()
         skinsafter=portal_skins.objectIds()
