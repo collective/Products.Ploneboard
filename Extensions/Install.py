@@ -28,8 +28,11 @@ def uninstall_tool(self, out):
 def uninstall_kupu_resource(self, out):
       if hasattr(self, KUPU_TOOL_ID):
           kupu_tool = getattr(self, KUPU_TOOL_ID)
-          kupu_tool.deleteResourceTypes([COMPOSABLE])
-          out.write("Composable Resource deleted in Kupu Library Tool")
+          try:
+              kupu_tool.deleteResourceTypes([COMPOSABLE])
+              out.write("Composable Resource deleted in Kupu Library Tool")
+          except KeyError:
+              pass
       else:
           out.write("Kupu Library Tool not available")
         
