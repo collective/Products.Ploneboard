@@ -18,6 +18,11 @@ class portal_groups(Interface):
     Parallels the portal_membership interface of CMFCore"""
 ##    id = Attribute('id','Must be set to "portal_groups"')
 
+    def isGroup(u):
+        """Test if a user/group object is a group or not.
+        You must pass an object you get earlier with wrapUser() or wrapGroup()
+        """
+
     def getGroupById(id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""

@@ -92,6 +92,20 @@ class TestGroupsTool(GroupTestCase, testInterface.TestInterface):
         ActionProviderBase.__implements__,
     )
 
+
+    def test_isGroup(self,):
+        g1 = self.groups.getGroupById("g1")
+        g1.addMember("g2")
+        ngroups = 0
+        nusers = 0
+        for u in g1.getGroupMembers():
+            if self.groups.isGroup(u):
+                ngroups += 1
+            else:
+                nusers += 1
+        self.failUnlessEqual(ngroups, 1)
+        self.failUnlessEqual(nusers, 3)
+
     def test_getGroupById(self, ):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.19 2004/06/09 13:45:59 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.20 2004/06/09 14:01:49 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -337,7 +337,9 @@ class GroupData (SimpleItem):
     def isGroup(self,):
         """
         isGroup(self,) => Return true if this is a group.
-        Will always return true for groups
+        Will always return true for groups.
+        As MemberData objects do not support this method, it is quite useless by now.
+        So one can use groupstool.isGroup(g) instead to get this information.
         """
         return 1
 

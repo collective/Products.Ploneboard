@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.28 2004/06/08 10:26:03 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.29 2004/06/09 14:01:49 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -126,6 +126,16 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def listGroupNames(self):
         """Returns a list of the available groups' ids as entered (without group prefixes)."""
         return self.acl_users.getGroupNames()
+
+    security.declarePublic("isGroup")
+    def isGroup(self, u):
+        """Test if a user/group object is a group or not.
+        You must pass an object you get earlier with wrapUser() or wrapGroup()
+        """
+        base = aq_base(u)
+        if hasattr(base, "isGroup") and base.isGroup():
+            return 1
+        return 0
 
 ##    security.declarePrivate('getPureUserNames')
 ##    def getPureUserNames(self):
