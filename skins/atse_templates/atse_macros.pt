@@ -282,7 +282,7 @@
         <div>
           <span class="label" i18n:translate="default">Default</span>
           <div>
-            <input type="text" value="" size="40" 
+            <input type="text" value="" size="60" 
                    name="fielddata.default:record:string"
                    tal:attributes="value python: here.atse_field_default(field)"/>
           </div>
@@ -293,7 +293,7 @@
         <div>
           <span class="label" i18n:translate="Validators">Validators</span>
           <div>
-            <input type="text" value="" size="40" 
+            <input type="text" value="" size="60" 
                    name="fielddata.validators:record:string"
                    tal:attributes="value python: ', '.join(getattr(field.widget, 'validators', ()))"/>
           </div>
@@ -304,9 +304,18 @@
         <div>
           <span class="label" i18n:translate="label">Label</span>
           <div>
-            <input type="text" value="" size="40" 
+            <input type="text" value="" size="60" 
                    name="fielddata.label:record:string"
                    tal:attributes="value python: field.widget.label"/>
+          </div>
+        </div>
+
+        <div>
+          <span class="label" i18n:translate="Help">Help</span>
+          <div>
+            <input type="text" value="" size="60" 
+                   name="fielddata.help:record:string"
+                   tal:attributes="value python: field.widget.help"/>
           </div>
         </div>
       
@@ -314,7 +323,7 @@
           <br/>
           <span class="label" i18n:translate="label">Relationship</span>
           <div>
-            <input type="text" value="" size="40" 
+            <input type="text" value="" size="60" 
                    name="fielddata.relationship:record:string"
                    tal:attributes="value python: field.relationship"/>
           </div>
