@@ -19,7 +19,6 @@ from Products.Archetypes.public import BaseSchema, Schema
 from Products.Archetypes.public import ReferenceField, ReferenceField, StringField
 from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWidget
-from Products.Archetypes.Registry import registerWidget
 
 # possible types of bibliographic references by module 'CMFBibliography'
 search_types = (
@@ -46,6 +45,11 @@ class ReferencesWidget(TypesWidget):
     _properties.update({
         'macro' : "references_widget",
         })
+try:
+    from Products.Archetypes.Registry import registerWidget
+    registerWidget(ReferencesWidget)
+except ImportError:
+    pass
 
 schema = BaseSchema + Schema((
     ReferenceField('references_list',
@@ -404,4 +408,3 @@ class BibliographyList(BaseContent):
             return base10_integer
 
 registerType(BibliographyList)
-registerWidget(ReferencesWidget)
