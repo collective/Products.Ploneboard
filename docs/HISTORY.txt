@@ -1,6 +1,9 @@
 0.3-DEVEL - unreleased
 ======================
 
+ * Local roles and Creator are kept when migration.
+   [panjunyong]
+
  * Use a seperate schemata for ConstrainTypesMixin. We may have many mixins.
    This way, we can avoid a long edit form when edit the content.
    [panjunyong]
