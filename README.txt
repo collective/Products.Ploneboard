@@ -1,7 +1,7 @@
 GroupUserFolder
 
 
-(c)2002 Ingeniweb
+(c)2002-2003 Ingeniweb
 
 
 
@@ -50,6 +50,8 @@ STRUCTURE
 
   Just for information : one user can belong to zero, one or more groups.
   One group can have zero, one or more users affected.
+
+  [2003-05-10] There's currently no way to get a list of all users belonging to a particular group.
 
 
 GROUPS BEHAVIOUR
