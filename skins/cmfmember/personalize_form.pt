@@ -46,7 +46,7 @@
 <!--               <b tal:content="python:field.name" /> <span tal:content="python:field.write_permission"/>
                        <span tal:content="python:here.portal_membership.checkPermission(field.write_permission, here)"/>
                <br/>-->
-               <metal:fieldMacro use-macro="python: here.widget(field.name, mode='edit')"/>
+               <metal:fieldMacro use-macro="python: here.widget(field.getName(), mode='edit')"/>
             </tal:fields>
 
             <input type="hidden" name="form_submitted" value="register_member" />

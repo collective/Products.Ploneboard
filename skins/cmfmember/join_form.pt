@@ -45,7 +45,7 @@
             <span class="legend" i18n:translate="legend_personal_details">Personal Details</span>
 
             <tal:fields repeat="field python: schematas[fieldset].fields()">
-               <metal:fieldMacro use-macro="python: here.widget(field.name, mode='edit')"/>
+               <metal:fieldMacro use-macro="python: here.widget(field.getName(), mode='edit')"/>
             </tal:fields>
 
             <input type="hidden" name="form_submitted" value="register_member" />
