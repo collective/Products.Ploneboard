@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.12 2004/08/05 23:52:10 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.13 2004/12/05 16:39:39 shh42 Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -163,7 +163,6 @@ class ATCTFieldTestCase(BaseSchemaTest):
 def setupATCT(app, quiet=0):
     get_transaction().begin()
     _start = time.time()
-    print "Installing at content types"
     portal = app.portal
     if not quiet: ZopeTestCase._print('Installing ATContentTypes ... ')
 
