@@ -70,5 +70,8 @@ Credits
   * ausum's "CMFPortlets":http://www.zope.org/Members/ausum/CMFPortlets , many
    idea comes from CMFPortlets. Thanks!
 
-CMFContentPanels is in
-"Collective":http://sourceforge.net/projects/collective. 
+Bug report and feature request
+
+  CMFContentPanels is in
+"Collective":http://sourceforge.net/projects/collective now. you can report
+bugs and request new feature there.
