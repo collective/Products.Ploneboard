@@ -77,7 +77,7 @@
 	      <span class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
 		                             number_of_images python:len(images_in_album)">
 		<a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		  <img tal:replace="structure python:images_in_album[0].tag(size='thumbnail')" />
+		  <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail')" />
 		</a>
 		<br/><span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
 	    </span>
