@@ -27,10 +27,10 @@ class VarClassGen (ClassGenerator):
     def __init__(self, schema):
         self.schema=schema
 
-    def generateClass(self, klass, generator=None):
-        # rewrite of ClassGenerator's generateClass
-        # takes its own schema instead of the klass's schema
-        # makes possible to define instance-based schemata
+    def generateClass(self, klass):
+        #We are going to assert a few things about the class here
+        #before we start, set meta_type, portal_type based on class
+        #name
         klass.meta_type = klass.__name__
         klass.portal_type = klass.__name__
         klass.archetype_name = getattr(klass, 'archetype_name',
@@ -39,43 +39,19 @@ class VarClassGen (ClassGenerator):
         self.checkSchema(klass)
 
         fields = self.schema.fields()
-        
-        if not generator:
-            generator = Generator()
-            
+        generator = Generator()
         for field in fields:
+            assert not 'm' in field.mode, 'm is an implicit mode'
+
             #Make sure we want to muck with the class for this field
             if "c" not in field.generateMode: continue
             type = getattr(klass, 'type')
-
             for mode in field.mode: #(r, w)
-                attr = _modes[mode]['attr']
+                self.handle_mode(klass, generator, type, field, mode)
+                if mode == 'w':
+                    self.handle_mode(klass, generator, type, field, 'm')
 
-                # Did the field request a specific method name?
-                methodName = getattr(field, attr, None)
-                if not methodName:
-                    methodName = generator.computeMethodName(field, mode)
-
-                # Avoid name space conflicts
-                if not hasattr(klass, methodName):
-                    if type.has_key(methodName):
-                        raise GeneratorError("There is a conflict"
-                        "between the Field(%s) and the attempt"
-                        "to generate a method of the same name on"
-                        "class %s" % (
-                            methodName,
-                            klass.__name__))
-
-
-                    #Make a method for this klass/field/mode
-                    generator.makeMethod(klass, field, mode, methodName)
-                    self.updateSecurity(klass, field, mode, methodName)
-
-
-                #Note on the class what we did (even if the method existed)
-                attr = _modes[mode]['attr']
-                setattr(field, attr, methodName)
-
+        InitializeClass(klass)
         InitializeClass(klass)
     
 schemadict={}
