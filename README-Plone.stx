@@ -11,6 +11,18 @@ PLONE 2 INSTRUCTIONS
   work because of the API changes. If you want to have them working,
   please use (or merge) SVN branch called pjgrizel-gruf3-branch.
 
+  User searching with CMF and Plone has some limitations, especially
+  with LDAPUserFolder sources. Those limitations are :
+
+  * A user becomes a member when he logs in for the first time (this
+  first login populates MemberData). As a direct consequence, you won't
+  be able to find a user in Plone (for example in user control panel)
+  unless he's logged in at least once.
+
+  * User searching uses the getUsers() method, not the getUserNames()
+  method. That means that, with LDAPUserFolder, you will be able to
+  search only users which are in the CACHE. This may be fixed in Plone
+  later (2004-08-31: still not fixed).
 
 PLONE 1 INSTRUCTIONS
 

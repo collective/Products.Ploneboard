@@ -68,6 +68,10 @@
 <!-- Users / Roles / Groups tabular view -->
 <h4>Users overview</h4>
 <ol>
+      <p class="form-help">
+      There may be more users in your system than the ones presented here. 
+      See the <a href="manage_users">users tab</a> for more information.
+      </p>
   <tal:block 
     tal:define="
     global batch python:test(request.has_key('start'), 0, here.listUsersBatchTable());
