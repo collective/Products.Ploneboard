@@ -19,15 +19,18 @@
     <div metal:fill-slot="main">
       <div metal:define-macro="main"
 	   tal:define="errors options/state/getErrors|nothing;
-	   Iterator python:modules['Products.Archetypes'].IndexIterator;
-	   tabindex python:Iterator();
-	   schematas here/Schemata;
-	   fieldsets python:[key for key in schematas.keys() if key != 'metadata'];
-	   default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
-	   fieldset request/fieldset|options/fieldset|default_fieldset;
-	   portal_type python:here.getPortalTypeName().lower();
-	   edit_template python:'%s_edit' % portal_type;
-	   edit_macros python:path('here/%s/macros|here/edit_macros/macros' % edit_template);"
+           Iterator python:modules['Products.Archetypes'].IndexIterator;
+           tabindex python:Iterator();
+           schematas here/Schemata;
+           fieldsets python:[key for key in schematas.keys() if key != 'metadata'];
+           default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
+           fieldset request/fieldset|options/fieldset|default_fieldset;
+           portal_type python:here.getPortalTypeName().lower();
+           edit_template python:'%s_edit' % portal_type;
+           edit_macros python:path('here/%s/macros|here/edit_macros/macros' % edit_template);
+           lockable python:hasattr(here, 'wl_isLocked');
+           isLocked python:lockable and here.wl_isLocked();
+           "
 	   tal:omit-tag="">
 
 	<h1 tal:content="here/title_or_id"
