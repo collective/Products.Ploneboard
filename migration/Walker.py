@@ -85,7 +85,7 @@ class Walker:
                              self.fromType, self.toType, ))
             LOG(msg)
             self.out.append(msg)
-            print msg
+            #print msg
             
             migrator = self.migrator(obj)
             try:
