@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.8 2004/09/17 13:59:27 dreamcatcher Exp $
+$Id: __init__.py,v 1.9 2004/09/17 22:06:14 tesdal Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,7 +28,6 @@ import sys
 from Globals import package_home
 from Products.CMFCore.utils import ContentInit
 from Products.CMFCore import CMFCorePermissions
-from Products.Archetypes.public import *
 from Products.CMFCore.DirectoryView import registerDirectory
 
 # load customconfig and overwrite the configureable options of config
@@ -46,6 +45,12 @@ else:
     del config
 
 from Products.ATContentTypes.config import *
+
+if HAS_LINGUA_PLONE:
+    from Products.LinguaPlone.public import *
+else:
+    from Products.Archetypes.public import *
+
 import Products.ATContentTypes.migration
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
