@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.17 2004/06/18 16:00:49 tiran Exp $
+$Id: ATEvent.py,v 1.18 2004/06/20 18:45:55 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -149,5 +149,11 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
                     location=location, contactName=contact_name,
                     contactEmail=contact_email, contactPhone=contact_phone,
                     eventUrl=event_url)
+
+    #security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'update')
+    #def update(self, startDate=None, endDate=None, **kwargs):
+    #    if endDate < startDate:
+    #        endDate = startDate
+    #     ATCTContent.update(self, endDate=endDate, startDate=startDate, **kwargs)
 
 registerType(ATEvent, PROJECTNAME)
