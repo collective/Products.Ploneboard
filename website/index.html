@@ -193,9 +193,9 @@
                     with existing Zope 2.x (> 2.5), without the need to add, patch, modify or do anything to make it work.</li>
                   <li><strong>My existing Zope application ?</strong> Yes, provided you do not use non-official security functions.
                     GRUF is completely transparent.</li>
-                  <li><strong>LDAPUserFolder ?</strong> Yes, with groups beeing stored in LDAP database or not. Users adding is not
-                    supported now because LDAPUF doesn't comply with standard Zope security API for this part. It is, however, possible
-                    to come around this, but it needs a little coding (some volounteers ? :-))</li>
+                  <li><strong>LDAPUserFolder ?</strong> Yes, with groups beeing stored in LDAP database or not.<br />
+                    Users and groups adding/editing <b>is</b> supported starting from GRUF 3.0Beta1 version. <br />
+                        LDAPUF doesn't comply with standard Zope security API for this part so we had to monkeypatch it.</li>
                   <li><strong>ExUserFolder ?</strong> Yes, except for GRUF 1.3 version. GRUF 1.31 is reported to work again with XUF.</li>
                   <li><strong>SimpleUserFolder ?</strong> Yes.</li>
                   <li><strong>My coffee machine ?</strong> Not yet, but we're actively working on it&nbsp;!</li>
@@ -224,6 +224,7 @@
                 <ol>
                     <p>Releases are now hosted by SourceForge. The latest release can always be found <a href="http://sourceforge.net/project/showfiles.php?group_id=55262">here</a>.</p>
                     <ul>
+                      <li><b>3.0.1</b> (2004-05-25): API refactoring, far better LDAP support, far better test case.</li>
                       <li><b>2.0</b> (2004-03-02): Plone2 bugfixes, minor bugfixes, performance increase by Helge Tesdal, moved GroupSpaces support to another product</li>
                       <li><b>2.0Beta3</b> (2004-02-24): Plone2 bugfixes, minor bugfixes, performance increase with LDAPUserFolder</li>
                       <li><b>2.0Beta2</b> (2003-12-22): GroupSpaces support, Plone2 support, cosmetic ZMI improvements, minor bugfixes</li>
@@ -416,7 +417,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                 <font size="-3">
                   <!-- Created: Wed Jul  9 15:52:57 GMT 2003 -->
                   <!-- hhmts start -->
-Last modified: Tue Feb 24 11:02:53     2004
+Last modified: Tue May 25 11:03:41     2004
 <!-- hhmts end -->
                 </font>
               </p>
