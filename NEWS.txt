@@ -1,3 +1,9 @@
+    Added a de (German) translation for ZMI
+
+    Reimplemented hook to register own negotiaton method into 
+    Negotiator which was stripped out in 1.0beta1
+
+
 1.0beta1 - 2003-10-??
 
     Internationalized our own page templates (for ZMI) and added a
