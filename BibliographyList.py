@@ -58,7 +58,7 @@ schema = BaseSchema + Schema((
                 ),
     StringField('ListingFormat',
                 multiValued=0,
-                default = 'bulletted',
+                default = 'bulleted',
                 vocabulary=LISTING_VALUES,
                 enforce_vocabulary=1,
                 widget=SelectionWidget(label="Listing Format",
