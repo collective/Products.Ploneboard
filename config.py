@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.6 2004/03/17 19:38:57 tiran Exp $
+$Id: config.py,v 1.7 2004/03/17 20:46:43 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -53,7 +53,17 @@ except ImportError:
 else:
     HAS_MX_TIDY=1
 
+MX_TIDY_MIMETYPES = (
+    'text/html',
+     )
+
 MX_TIDY_OPTIONS= {
+    'drop_font_tags' : 1,
+    'input_xml' : 0,
+    'output_xhtml' : 1,
+    'quiet' : 1,
+    'show_warnings' : 1, # -v
+    'tab_size' : 4,
     }
 
 # Add attributes to be more CMF compatible?

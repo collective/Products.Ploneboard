@@ -19,7 +19,7 @@
 #
 """
 
-$Id: schemata.py,v 1.4 2004/03/17 19:38:58 tiran Exp $
+$Id: schemata.py,v 1.5 2004/03/17 20:46:44 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -38,7 +38,6 @@ ATContentTypeSchema = BaseSchema + Schema((
     TextField('description',
               default='',
               searchable=1,
-              validators = ('isTidyHtml',),
               accessor="Description",
               storage=MetadataStorage(),
               widget = TextAreaWidget(description = "Enter a brief description", 
@@ -56,6 +55,7 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
               required = 0,
               searchable = 1,
               primary = 1,
+              validators = ('isTidyHtml',),
               default_content_type = 'text/structured',
               default_output_type = 'text/html',
               allowable_content_types = ('text/structured',

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.2 2004/03/17 19:38:58 tiran Exp $
+$Id: ATDocument.py,v 1.3 2004/03/17 20:46:44 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -81,6 +81,9 @@ class ATDocument(BaseContent):
         """
         field = self.getField('text')
         field.set(self, value, **kwargs)
-        self.text_format = field.getContentType(self)
+        # XXX not nice
+        bu = self.getRawText(maybe_baseunit=1)
+        if hasattr(bu, 'mimetype'):
+            self.text_format = str(bu.mimetype)
 
 registerType(ATDocument, PROJECTNAME)
