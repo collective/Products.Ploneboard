@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.15 2004/09/29 17:20:30 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.16 2004/09/29 17:57:57 spamsch Exp $
 """
 
 from Globals import InitializeClass
@@ -77,9 +77,13 @@ class ParentManagedSchema:
                 def atse_get_method(self=self, name=name, *args, **kw):
                     return self.getField(name).get(self, **kw)
 
-                setattr(self, '_v_%s_accessor' % name, atse_get_method )
-                field.accessor = '_v_%s_accessor' % name
-                field.edit_accessor = field.accessor
+                # workaround for buggy widget/keyword AT template that
+                # uses field.accessor as catalog index name *grrrr*
+                # XXX find another way to fix that
+                if not name != 'subject':
+                    setattr(self, '_v_%s_accessor' % name, atse_get_method )
+                    field.accessor = '_v_%s_accessor' % name
+                    field.edit_accessor = field.accessor
 
                 def atse_set_method(value, self=self, name=name, *args, **kw):
                     if name != 'id':
