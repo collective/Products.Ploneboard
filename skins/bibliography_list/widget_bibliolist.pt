@@ -11,17 +11,36 @@
         tal:define="bl_tool here/portal_bibliolist;
                     format here/getPresentationFormat;
                     uids python:getattr(here, field.edit_accessor)();
-                    objs python:[here.archetype_tool.lookupObject(uid = uid) for uid in uids];
                     formatted_list python:bl_tool.formatList(uids, format);
-                    presformat here/tryPresentationFormat|nothing" >
+                    listing_type here/ListingType">
 
-      <ul>
+      <ul tal:condition="python:listing_type=='bulleted'">
         <li tal:repeat="ref formatted_list"
             tal:content="structure ref" />
       </ul>
+      <ol tal:condition="python:listing_type=='ordered'">
+        <li tal:repeat="ref formatted_list"
+            tal:content="structure ref" />
+      </ol>
+      <div tal:condition="python:listing_type=='lines'"
+           tal:repeat="ref formatted_list"
+           tal:content="structure ref" />
+	  <table class="listing"
+			 tal:condition="python:listing_type=='table' and formatted_list != ()">
+		<thead>
+		  <th i18n:translate="">Bibliography References</th>
+		</thead>
+		<tbody>
+		  <tal:block repeat="ref formatted_list">
+			<tr tal:define="oddrow repeat/ref/odd;"
+				tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+			  <td tal:content="structure ref" />
+			</tr>
+		  </tal:block>
+		</tbody>
+	  </table>
     
     </metal:view_macro>
-
     <div metal:define-macro="edit">
       <div metal:use-macro="here/widgets/field/macros/edit">
     <div metal:fill-slot="widget_body"

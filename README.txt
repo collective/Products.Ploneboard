@@ -37,8 +37,4 @@ To Do
 
   * Batch view for references widget
 
-  * select all in ref widget
-
-  * default view if no format yet defined (done 040616)
-
   * complete translation (i18n) support

@@ -19,7 +19,7 @@ from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWi
 from Products.Archetypes.Registry import registerWidget
 from roman import *
 
-# possible types of bibliographic references by module 'CMFBibliography'
+# possible types of bibliographic references in module 'CMFBibliographyAT'
 from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 from config import LISTING_VALUES
 
@@ -37,11 +37,10 @@ schema = BaseSchema + Schema((
                    multiValued=1,
                    relationship='lists reference',
                    widget=ReferencesWidget(label="References",
-                                           label_msgid="label_references_list",
-                                           description_msgid="help_references_list",
-                                           i18n_domain="plone",
-                                           description="Search and select references to add to the list or organize/remove listed references.",
-                                           ),
+                               label_msgid="label_references_list",
+                               description="Search and select references to add to the list or organize/remove listed references.",
+                               description_msgid="help_references_list",
+                               i18n_domain="plone",),
                    ),
     StringField('PresentationFormat',
                 multiValued=0,
@@ -115,22 +114,19 @@ class BibliographyList(BaseContent):
         """ build a DisplayList based on existing formats """
 
         formatList = []
+        # file system based formatters
         bltool = getToolByName(self, 'portal_bibliolist')
         for refFormatter in bltool.objectValues():
             formatList.append(('fmt_'+refFormatter.getId().lower(),
                                refFormatter.title_or_id()))
-        for refFormat in self.findCustomRefFormats():
+        # content type based formatters
+        catalog = getToolByName(self, 'portal_catalog')
+        presentationTypes = ('ReferencePresentation', 'ReferencePresentationSet')
+        for refFormat in formList = catalog(portal_type=presentationTypes):
             obj = refFormat.getObject()
             formatList.append((obj.UID(),obj.title_or_id()+' (Custom Format)'))
 
         return DisplayList(tuple(formatList))
 
-    def findCustomRefFormats(self):
-        """ lists existing formats to select from """
-
-        catalog = getToolByName(self, 'portal_catalog')
-        formList = catalog(portal_type=('ReferencePresentation','ReferencePresentationSet'))
-                
-        return formList        
 
 registerType(BibliographyList)
