@@ -74,9 +74,9 @@
 	  <td>
 	    <tal:block tal:condition="albums"
 	      tal:repeat="album albums">
-	      <span style="width:0%;" class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
+	      <span style="width: 140px;" class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
 		number_of_images python:len(images_in_album)">
-		<div style="width: 130px; margin:0.5em;">
+		<div>
 		  <a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
 		    <img tal:replace="structure python:modules['whrandom'].choice(images_in_album).tag(size='thumbnail');" />
 		  </a>
