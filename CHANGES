@@ -1,3 +1,9 @@
+v2_0Beta3 - 20040224
+
+  * Improved performance on LDAP Directories
+
+  * Fixed various Plone UI bugs (password & roles changing)
+
 v2_0Beta2 - 20031222
 
   * Added GroupSpace object for Plone websites (see website/GroupSpaceDesign_xx.stx)
