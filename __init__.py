@@ -16,13 +16,14 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.7 2004/01/07 10:08:39 longsleep Exp $
+$Id: __init__.py,v 1.8 2004/01/28 13:41:59 tiran Exp $
 '''.strip()
 
 from OFS.Application import get_products
 from AccessControl import ModuleSecurityInfo, allow_module, allow_class, allow_type
 from PlacelessTranslationService import PlacelessTranslationService, PTSWrapper, log
 from Negotiator import negotiator
+from MessageID import MessageIDFactory
 from Products.PageTemplates.GlobalTranslationService import setGlobalTranslationService
 import os, fnmatch, zLOG, sys, Zope, Globals, TranslateTags
 
