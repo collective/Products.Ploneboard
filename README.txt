@@ -1,21 +1,21 @@
-Ploneboard
+Overview
 
   Ploneboard is an easy to use web board. It utilizes the proven Plone user interface, 
   and is made for easy integration into Plone sites. The target audience is businesses 
   and developers wanting a discussion board in their Plone site.
 
-  http://plone.org/Members/tesdal/Ploneboard
+  "Ploneboard web site":http://www.plonesolutions.com/ploneboard
 
   Contributors
 
-    **Helge Tesdal**, "PloneSolutions":http://www.plonesolutions.com -- *Code, idea, architecture*
+    **Helge Tesdal**, "Plone Solutions":http://www.plonesolutions.com -- Code, idea, architecture
 
-    **Ruslan Spivak** -- *Code*
+    **Ruslan Spivak** -- Code
 
-    **Alexander Limi**, "PloneSolutions":http://www.plonesolutions.com -- *User interface*
+    **Alexander Limi**, "Plone Solutions":http://www.plonesolutions.com -- User interface, concepts
 
-    **Vidar Andersen** -- *Application icons*
+    **Vidar Andersen** -- Application icons
 
-    **Johan H. Borg** -- *Smiley icons, Copyright 2003, used in Ploneboard with permission*
+    **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with permission
 
-    **Kapil Thangavelu** -- *Initial architecture*
+    **Kapil Thangavelu** -- Initial architecture
