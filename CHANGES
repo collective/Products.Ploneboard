@@ -1,3 +1,9 @@
+v2_0 - 20040302
+
+  * Speedup improvements by Heldge Tesdal
+
+  * Fixed ZMI overview refreshing bug
+
   * GroupsTool method createGrouparea now calls the GroupSpace
     method setInitialGroup with the group that it is created for.
     In case this method does not exists, the default behaviour
