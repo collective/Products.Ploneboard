@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.16 2003/12/19 09:54:19 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.17 2003/12/22 09:30:01 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -49,7 +49,8 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security = ClassSecurityInfo()
 
-    groupworkspaces_id = "GroupWorkspaces"
+    groupworkspaces_id = "groups"
+    groupworkspaces_title = "Groups"
     groupWorkspacesCreationFlag = 1
     groupWorkspaceType = "Folder"
     groupWorkspaceContainerType = "Folder"
@@ -73,9 +74,9 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     manage_config = DTMLFile('dtml/configureGroupsTool', globals())
 
     security.declareProtected(ManagePortal, 'manage_setGroupWorkspacesFolder')
-    def manage_setGroupWorkspacesFolder(self, id='GroupWorkspaces', REQUEST=None):
+    def manage_setGroupWorkspacesFolder(self, id='groups', title='Groups', REQUEST=None):
         """ZMI method for workspace container name set."""
-        self.setGroupWorkspacesFolder(id)
+        self.setGroupWorkspacesFolder(id, title)
         return self.manage_config(manage_tabs_message="Workspaces folder name set to %s" % id)
 
     security.declareProtected(ManagePortal, 'manage_setGroupWorkspaceType')
@@ -240,7 +241,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 # should we have an error here?
 
     security.declareProtected(ManagePortal, 'setGroupWorkspacesFolder')
-    def setGroupWorkspacesFolder(self, id=""):
+    def setGroupWorkspacesFolder(self, id="", title=""):
         """ Set the location of the Group Workspaces folder by id.
 
         The Group Workspaces Folder contains all the group workspaces, just like the
@@ -250,6 +251,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
          but for the moment it's only an id for a folder in the portal root, just like the
          corresponding MembershipTool functionality. """
         self.groupworkspaces_id = id.strip()
+        self.groupworkspaces_title = title
 
     security.declareProtected(ManagePortal, 'getGroupWorkspacesFolderId')
     def getGroupWorkspacesFolderId(self):
@@ -258,6 +260,12 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         The Group Workspaces Folder contains all the group workspaces, just like the
         Members folder contains all the member folders. """
         return self.groupworkspaces_id
+
+    security.declareProtected(ManagePortal, 'getGroupWorkspacesFolderTitle')
+    def getGroupWorkspacesFolderTitle(self):
+        """ Get the Group Workspaces folder object's title.
+        """
+        return self.groupworkspaces_title
 
     security.declarePublic('getGroupWorkspacesFolder')
     def getGroupWorkspacesFolder(self):
@@ -301,7 +309,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
                 parent.invokeFactory(self.getGroupWorkspaceContainerType(), self.getGroupWorkspacesFolderId())
                 workspaces = self.getGroupWorkspacesFolder()
-                workspaces.setTitle(self.getGroupWorkspacesFolderId())
+                workspaces.setTitle(self.getGroupWorkspacesFolderTitle())
                 workspaces.setDescription("Container for " + self.getGroupWorkspacesFolderId())
                 # how about ownership?
 
