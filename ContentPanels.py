@@ -54,12 +54,6 @@ factory_type_information = ( {'id': 'ContentPanels',
                                           , 'action'        : 'metadata_edit_form'
                                           , 'permissions'   : (CMFCorePermissions.ModifyPortalContent, )
                                           }
-                                       , { 'id'            : 'contentpanels_viewlet'
-                                          , 'name'          : 'Nested ContentPanels'
-                                          , 'action'        : 'string:here/viewlet_contentpanels_body/macros/portlet'
-                                          , 'permissions'   : (CMFCorePermissions.View, )
-                                          , 'category' : 'panel_viewlets'
-                                          }
                                      )
                             },
                         )
@@ -148,6 +142,23 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
       except:
         panelObject = None
       return panelObject
+
+
+    security.declarePublic('getPanel')
+    def getPanel(self, objectPath, panelSkin, viewletId):
+        """ get a panel """
+        panelObject = self.getPanelObject(objectPath)
+
+        # get viewlet infomation
+        viewletPath = self.portal_contentpanels.getViewletPath(viewletId)
+
+        if viewletPath:
+            return panelObject.base_panel(panelObject,
+                              contentpanels=self,
+                              panelSkin=panelSkin,
+                              viewletPath=viewletPath)
+        else:
+            return 'no viewlet'
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'addPage' )
     def addPage(self, pageTitle='Untitled page', pageIndex=-1):
@@ -277,15 +288,15 @@ class ContentPanels(PortalContent, DefaultDublinCoreImpl):
         self._p_changed = 1
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'changePanel' )
-    def changePanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath, panelObjectViewlet, panelSkin):
+    def changePanel(self, pageIndex, columnIndex, panelIndex, panelObjectPath='', panelObjectViewlet='', panelSkin=''):
         ''' change the skin of a existing panel '''
         
-        if panelSkin == '':
-            return
-
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelSkin'] = panelSkin
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
-        self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectViewlet'] = panelObjectViewlet
+        if panelSkin:
+            self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelSkin'] = panelSkin
+        if panelObjectPath:
+            self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectPath'] = panelObjectPath
+        if panelObjectViewlet:
+            self.panelsConfig[pageIndex]['pageColumns'][columnIndex]['columnPanels'][panelIndex]['panelObjectViewlet'] = panelObjectViewlet
         self._p_changed = 1
 
     security.declareProtected( CMFCorePermissions.ModifyPortalContent, 'movePanel')

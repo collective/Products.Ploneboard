@@ -1,0 +1,88 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="contentpanels"
+      tal:define="cpPath request/cpPath | nothing;
+                  addPanel request/addPanel | string:edit;
+                  pageIndex request/pageIndex; 
+                  columnIndex request/columnIndex;
+                  panelIndex request/panelIndex;
+                  path python:here.portal_url.getRelativeContentURL(here);
+                  baseurl string:${cpPath}/contentpanels_config?addPanel=${addPanel}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;panelObjectPath=$path&amp;panelObjectViewlet=;
+                  typeId python: here.getTypeInfo().getId();
+                  viewlets python: here.portal_contentpanels.listFilteredActionsFor(here);
+                  pt_viewlets python:viewlets.get('PT:' + typeId, []);
+                  pt_viewlets python: [viewlet for viewlet in pt_viewlets if (viewlet['id']!='contentpanels_viewlet' or here.absolute_url() != cpPath)];
+                  gl_viewlets python:viewlets.get('GL:folder', []) + viewlets.get('GL:content', []) + viewlets.get('GL:all', []);
+                  gn_portal_viewlets python:viewlets.get('GN:portal', []);
+                  gn_personal_viewlets python:viewlets.get('GN:personal', []); ">
+
+<head tal:define="ztu modules/ZTUtils;">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
+          tal:define="charset site_properties/default_charset|string:utf-8;
+                      dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
+          tal:attributes="content string:text/html;;charset=${charset}" />
+<title tal:content="string:${here/Title} ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
+
+<style type="text/css" media="all"
+       tal:define="current_skin python:ztu.make_query(skin=request.get(here.portal_skins.getRequestVarname(), ''))"
+       tal:content="string:@import url(${here/portal_url}/plone.css?${current_skin});">
+</style>
+</head>
+      
+<body onload="focus();">
+
+<h1 tal:content="here/Title">title</h1>
+
+<div class="documentDescription"
+     tal:content="here/Description">description</div>
+
+<div tal:condition="pt_viewlets">
+   <div>portal types specific viewlets</div>
+   <div>
+       <a tal:repeat="viewlet pt_viewlets"
+          href="#"
+          i18n:translate=""
+          tal:attributes="
+ onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+<div tal:condition="gl_viewlets">
+   <div>global viewlets</div>
+   <div>
+       <a tal:repeat="viewlet gl_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+
+<div tal:condition="gn_portal_viewlets">
+   <div>general portal viewlets</div>
+   <div>
+       <a tal:repeat="viewlet gn_portal_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+
+<div tal:condition="gn_personal_viewlets">
+   <div>general personal viewlets</div>
+   <div>
+       <a tal:repeat="viewlet gn_personal_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+</body>
+</html>
+

@@ -18,128 +18,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
 
     id = 'portal_contentpanels'
     meta_type = 'ContentPanels Tool'
-    _actions = (ActionInformation(id='latest_updates_viewlet'
-                                , title='Recent Updates'
-                                , action=Expression(
-                text='string:here/viewlets_folder_recent/macros/base_portlet')
-                                , condition=Expression(
-                text='python: object.isPrincipiaFolderish')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='folder_list_viewlet'
-                                , title='Folder Listing'
-                                , action=Expression(
-                text='string:here/viewlets_folder_listing/macros/base_portlet')
-                                , condition=Expression(
-                text='python: object.isPrincipiaFolderish')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='default_viewlet'
-                                , title='Default Viewlet'
-                                , action=Expression(
-                text='string:here/viewlet_default/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='my_recent_changes'
-                                , title='My Recent Updates'
-                                , action=Expression(
-                text='string:here/portlet_mychanges/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_favorites'
-                                , title='My Favorites'
-                                , action=Expression(
-                text='string:here/portlet_favorites/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_calendar'
-                                , title='Calendar'
-                                , action=Expression(
-                text='string:here/portlet_calendar/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_events'
-                                , title='Events'
-                                , action=Expression(
-                text='string:here/portlet_events/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_review'
-                                , title='Review List'
-                                , action=Expression(
-                text='string:here/portlet_review/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('Review portal content',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_news'
-                                , title='News'
-                                , action=Expression(
-                text='string:here/portlet_news/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_language'
-                                , title='Language'
-                                , action=Expression(
-                text='string:here/portlet_language/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-               ,
-               ActionInformation(id='portlet_recent'
-                                , title='Recent Published'
-                                , action=Expression(
-                text='string:here/portlet_recent/macros/portlet')
-                                , condition=Expression(
-                text='python: 1')
-                                , permissions=('View',)
-                                , category='panel_viewlets'
-                                , visible=1
-                                 )
-
-               )
+    _actions = tuple()
 
     action_providers = ('portal_contentpanels',)
     security = ClassSecurityInfo()
@@ -166,5 +45,29 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionsTool 
     security.declarePublic('getPanelSkins')
     def getPanelSkins(self):
         return filter(lambda i: (i[0] != 'title'), list(self.propertyItems()))
+
+    security.declarePublic('getViewletName')
+    def getViewletName(self, viewletId):
+        """get a name of a viewlet"""
+        for action in self._listAllActions():
+            if action['id'] == viewletId:
+                return action['name']
+        return None
+
+    security.declarePublic('getViewletPath')
+    def getViewletPath(self, viewletId):
+        """get a name of a viewlet"""
+        for action in self._listAllActions():
+            if action['id'] == viewletId:
+                return action['url']
+        return None
+
+    def _listAllActions(self):
+        """this method should be refined. all actions can be cached"""
+        all_actions = self.listFilteredActions()
+        actions = []
+        for a in all_actions.values():
+            actions = actions + a
+        return actions
 
 InitializeClass( ContentPanelsTool )

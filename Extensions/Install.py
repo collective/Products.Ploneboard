@@ -70,90 +70,12 @@ def install_Skins(self, out):
     except:
         out.write( 'Unable to add CMFContentpanels directory view to portal_skins.\n')
 
-def install_Actions(self, out):
-    # for upgrade: delete actions 
-    portal_actions = getToolByName(self, 'portal_actions')
-    try:
-        portal_actions.deleteActionProvider('portal_contentpanels')
-    except:
-        pass
-
-    # global viewlet actions
-    # latest_updates_viewlet / news_viewlet
-    viewlets = ('latest_updates_viewlet', 'default_viewlet')
-    listA = portal_actions.listActions()
-    selections = tuple([i for i in range(0,len(listA)) if listA[i].id in viewlets])
-    if selections:
-        portal_actions.deleteActions(selections)
-
-    # new viewlet actions for types
-    actions=({"type":"Document",
-              "id":"document_viewlet",
-              "name":"Body",
-              "action":"here/viewlet_document_body/macros/portlet",
-              "condition":"",
-              "permission":"View",
-              "category":"panel_viewlets",
-              "visible":1},
-             {"type":"Topic",
-              "id":"view_viewlet",
-              "name":"Body",
-              "action":"here/viewlets_topic_list/macros/base_portlet",
-              "condition":"",
-              "permission":"View",
-              "category":"panel_viewlets",
-              "visible":1},
-             {"type":"Image",
-              "id":"view_viewlet",
-              "name":"Body",
-              "action":"here/viewlet_image_body/macros/portlet",
-              "condition":"",
-              "permission":"View",
-              "category":"panel_viewlets",
-              "visible":1},
-             {"type":"Wiki Page",
-              "id":"wiki_page_content",
-              "name":"Body",
-              "action":"here/viewlet_zwikipage_body/macros/portlet",
-              "condition":"",
-              "permission":"View",
-              "category":"panel_viewlets",
-              "visible":1},
-             )
-    portal_types = getToolByName(self, 'portal_types')
+def install_actions(self, actions=[]):
+    p_cp=getToolByName(self, 'portal_contentpanels')
     for action in actions:
-       portalType = portal_types.getTypeInfo(action['type'])
-       if not portalType:
-           continue
-       portalTypeActions = portalType.listActions()
-       for i in range(0, len(portalTypeActions)):
-           try: # is CMF 1.4+ ?
-               isExisted = action['id'] == portalTypeActions[i].id
-           except:
-               isExisted = action['id'] == portalTypeActions[i]['id']
-           if isExisted:
-               portalType.deleteActions((i,))
-               break
+        p_cp.addAction(action[0],action[1],action[2],
+           action[3],action[4],action[5],action[6])
 
-       try: # isCMF1_4+ ?
-           portalType.addAction(
-               id=action['id'],
-               name=action['name'],
-               action='string:'+action['action'],
-               condition=action['condition'],
-               permission=action['permission'],
-               category=action['category'],
-               visible=action['visible'])
-       except:
-           portalType.addAction(
-              id=action['id'],
-              name=action['name'],
-              action=action['action'],
-              permission=action['permission'],
-              category=action['category'],
-              visible=action['visible'])
-
-    out.write("Actions Setup Done\n")
 
 def install(self):
     """ Register the ContentPanels Skins with portal_skins and friends """
@@ -180,5 +102,7 @@ def install(self):
         addTool('ContentPanels Tool')
         out.write('Added ConentPanels Tool\n')
 
-    install_Actions(self, out)
+    from Products.CMFContentPanels.config import actions
+    install_actions(self, actions)
+
     return out.getvalue()

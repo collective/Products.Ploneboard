@@ -13,12 +13,6 @@ V2.0
   Each panel will call all the defines.
   I think we can define a small set of variables. 
 
-- make all viewlets defined at portal_contentpanels:
-
-  Just make the Category of the actions indicates the portal_type
-of the specific content type. Also I can define a general Category which is not
-content type related. 
-
 - It looks like you made a better interface for this. Seems to function much
 better now, but it is still strange that you can select the "global"
 viewlets after you have selected a particular content item.

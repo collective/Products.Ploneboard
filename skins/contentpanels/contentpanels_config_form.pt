@@ -211,25 +211,11 @@ columns
                                     i18n:translate="">css wrapper name</option>
                           </metal:block>
                         </select>
-                        <select name="panelObjectViewlet" title="content viewlet" width="6"
-                                tal:define="viewlets python: here.portal_actions.listFilteredActionsFor(panelContent).get('panel_viewlets', []);
-                                            viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent != here)];
-                                            portlets python: here.portal_contentpanels.listFilteredActionsFor(panelContent).get('panel_viewlets',[]);"
-                                i18n:attributes="title label_viewlet"
-                                tal:attributes="name string:CPI$columnIndex.panelObjectViewlet:records">
-                              <option value="viewletActionId" 	 
-                                      tal:repeat="viewlet_action viewlets"
-                                    tal:attributes="value viewlet_action/id; 	 
-                                           selected python: panel['panelObjectViewlet']==viewlet_action['id'];" 	 
-                                    i18n:translate=""
-                                    tal:content="viewlet_action/name">viewlet</option> 	 
-                              <option value="" tal:condition="viewlets">----</option>
-                              <option tal:repeat="viewlet_action portlets"
-                                    i18n:translate=""
-                                    tal:attributes="value viewlet_action/id;
-                                         selected python: panel['panelObjectViewlet']==viewlet_action['id'];"
-                                    tal:content="viewlet_action/name"> viewlet </option>
-                        </select>
+                        <input type="hidden" 
+                               tal:attributes="value panel/panelObjectViewlet;
+                                   name string:CPI$columnIndex.panelObjectViewlet:records;"/>
+                        <a href="#" tal:attributes="onclick string:window.open('${panelContent/absolute_url}/cp_viewlet_form?cpPath=${here/absolute_url}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false"
+                           tal:content="python: here.portal_contentpanels.getViewletName(panel['panelObjectViewlet'])"> viewlet name </a>
                         <input type="hidden" name="panelIndex" value="#"
                                tal:attributes="value repeat/panel/index;
                                                name string:CPI$columnIndex.panelIndex:records" />
@@ -242,7 +228,7 @@ columns
 
                   <tr>
                     <td>
-                     <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
+                     <div tal:content="structure python: here.getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
                          tal:on-error="string:This panel content is nolonger existed or you have no right to access it. We recommend you remove this panel."/>
                     </td>
                   </tr>

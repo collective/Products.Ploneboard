@@ -51,7 +51,7 @@ columns
 <!--
 panel should be here!!
 -->
-                 <div tal:content="structure python: here.contentpanels_getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
+                 <div tal:content="structure python: here.getPanel(panel['panelObjectPath'], panel['panelSkin'], panel['panelObjectViewlet'])"
                       tal:on-error="string:"/>
 
               </div>

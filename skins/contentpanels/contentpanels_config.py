@@ -34,7 +34,13 @@ elif request.has_key('moveColumn'):
 elif request.has_key('movePanel'):
   context.movePanel(pageIndex, columnIndex, panelIndex, toColumn, toPanel)
 elif request.has_key('addPanel'):
-  context.addPanel(pageIndex=pageIndex, 
+  if request['addPanel'] == 'edit':
+      context.changePanel(pageIndex=pageIndex,
+                   columnIndex=columnIndex,
+                   panelIndex=panelIndex,
+                   panelObjectViewlet=panelObjectViewlet)
+  else:
+      context.addPanel(pageIndex=pageIndex, 
                    columnIndex=columnIndex, 
                    panelIndex=panelIndex,
                    panelObjectViewlet=panelObjectViewlet, 

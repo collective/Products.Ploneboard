@@ -1,4 +1,9 @@
-V1.6.1
+V1.7
+
+  - All viewlets are defined at portal_contentpanels now. Category includes:
+
+    * 'PT: PORTAL_TYPE': it is PORTAL_TYPE specific
+    * 'global': general portlet, no content type related.
 
   - better error handler
 
