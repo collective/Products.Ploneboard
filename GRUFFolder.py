@@ -185,7 +185,7 @@ class GRUFGroups(GRUFFolder):
         return ret
         
 
-    def listGroups(self, prefixed = 0):
+    def listGroups(self, prefixed = 1):
         """
         Return a list of available groups.
         Group names are prefixed !
