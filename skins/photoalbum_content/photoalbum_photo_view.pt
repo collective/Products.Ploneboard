@@ -13,11 +13,10 @@
         Disable the tabs
       </tal:block>    
     </metal:block>
-
   
     <div metal:fill-slot="main"
          tal:define="images python:here.contentValues(spec='Photo');
-                     Batch python:modules['ZTUtils'].Batch;
+                     Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 1, int(b_start), orphan=1);
                      image python:batch[0];">
@@ -44,35 +43,20 @@
         }
 	-->
       </script>
-      
-      
-      <div class="listingBar">
-	<table style="width: 100%">
-	  <tr>
-	    <td style="width: 33%">
-	      <span class="previous" tal:define="p batch/previous | nothing" tal:condition="p"> 
-		<a href="#" tal:attributes="href string:?b_start=${p/first}"> &laquo; previous photo</a>
-	      </span>
-	    </td>
-	    <td style="width: 33%; text-align: center;">
-	      <input type="button" 
-		     value="Start slideshow" 
-			   class="context"
-		     tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
-	    </td>
-	    <td style="width: 33%">
-	      <span class="next" tal:define="n batch/next | nothing" tal:condition="n"> 
-		      <a href="#" tal:attributes="href string:?b_start=${batch/end}">next photo &raquo;</a>
-	      </span>
-	    </td>
-	  </tr>
-	</table>
-      </div>
-      
+
+      <span class="right">
+	<input type="button" 
+	       value="Start slideshow" 
+	       class="context"
+	       tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
+      </span>
+
       <div class="contentHeader">
         <h1 tal:content="image/title_or_id">Title or id</h1>
       </div>
-      
+
+      <div metal:use-macro="here/batch_macros/macros/navigation" />
+      	        
       <img tal:condition="image/size"
 	src="#" 
 	tal:replace="structure python:image.tag('medium')" />

@@ -13,6 +13,11 @@ photoalbum_globals = globals()
 
 DirectoryView.registerDirectory('skins', globals())
 
+from Products.CMFPlone import allow_class
+
+from Products.CMFPlone.PloneBatch import Batch
+allow_class(Batch)
+
 def initialize(registrar):
     utils.initializeBasesPhase2(z_bases, registrar)
     utils.ContentInit(

@@ -17,7 +17,7 @@
     <div metal:fill-slot="main"
          tal:define="images python:here.contentValues(spec='Photo');
                      albums python:here.contentValues(spec='Photo Album');
-                     Batch python:modules['ZTUtils'].Batch;
+                     Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 10, int(b_start), orphan=1);">
       
@@ -44,37 +44,20 @@
 	-->
       </script>
 
+      <span class="right">
+	<input type="button" 
+	       value="Start slideshow" 
+	       class="context"
+	       onClick="javascript:centeredWindow('photoalbum_slideshow'); return false;"/>
+      </span>
+
       <h1 tal:content="here/title_or_id">
 	Title or id
       </h1>
 
+      <div metal:use-macro="here/batch_macros/macros/navigation" />
+
       <table style="width: 100%;">
-	<tr>
-	  <td>
-	    <div class="listingBar">
-	      <table style="width: 100%">
-		<tr>
-		  <td style="width: 33%">
-		    <span class="previous" tal:define="p batch/previous | nothing" tal:condition="p"> 
-		      <a href="#" tal:attributes="href string:?b_start=${p/first}"> &laquo; previous photos</a>
-		    </span>
-		  </td>
-		  <td style="width: 33%; text-align: center;">
-		    <input type="button" 
-			   value="Start slideshow" 
-			   class="context"
-			   onClick="javascript:centeredWindow('photoalbum_slideshow'); return false;"/>
-		  </td>
-		  <td style="width: 33%">
-		    <span class="next" tal:define="n batch/next | nothing" tal:condition="n"> 
-		      <a href="#" tal:attributes="href string:?b_start=${batch/end}">next photos &raquo;</a>
-		    </span>
-		  </td>
-		</tr>
-	      </table>
-	    </div>
-	  </td>
-	</tr>
 	<tr>
 	  <td>
 	    <tal:block tal:condition="batch"
