@@ -54,9 +54,9 @@ Other usage notes:
 """
 
 __author__ = "Mark Pilgrim (f8dy@diveintomark.org)"
-__version__ = "0.64"
-__cvsversion__ = "$Revision: 1.1 $"[11:-2]
-__date__ = "$Date: 2004/06/26 12:08:24 $"[7:-2]
+__version__ = "0.64.1"
+__cvsversion__ = "$Revision: 1.2 $"[11:-2]
+__date__ = "$Date: 2004/07/14 22:31:38 $"[7:-2]
 __copyright__ = "Copyright (c) 2002 Mark Pilgrim"
 __license__ = "Python"
 # Powersearch and return object type fix by Joseph Reagle <geek@goatee.net>
@@ -129,9 +129,10 @@ def _checkLocaleSupported(locale):
 
 def setLocale(locale):
     """set locale"""
-    _checkLocaleSupported(locale)    
-    LOCALE = locale    
-        
+    global LOCALE
+    _checkLocaleSupported(locale)
+    LOCALE = locale
+
 def getLocale(locale=None):
     """get locale"""
     return locale or LOCALE

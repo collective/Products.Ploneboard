@@ -67,8 +67,9 @@
           <span tal:content="here/getAvailability">Availability</span>
         </p>
 
-        <tal:add tal:condition="python:here.portal_membership.checkPermission('Add portal content', container) and here.portal_factory.isTemporary(here)">
-          <a tal:attributes="href python:container.absolute_url()+'/portal_factory/Amazon%20Item/'+here.getAsin()+'/base_edit?id='+here.getAmazonInitialId(here)"
+        <tal:add tal:define="current_folder here/getAmazonCurrentFolder"
+                 tal:condition="python:here.portal_membership.checkPermission('Add portal content', current_folder) and here.portal_factory.isTemporary(here)">
+          <a tal:attributes="href python:current_folder.absolute_url()+'/portal_factory/Amazon%20Item/'+here.getAsin()+'/base_edit?id='+here.getAmazonInitialId(here)"
             >[Add this item]</a>
         </tal:add>
         <p><a tal:attributes="href amazon_url">View details at Amazon.com</a></p>
