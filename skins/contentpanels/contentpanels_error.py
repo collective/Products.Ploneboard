@@ -8,12 +8,13 @@
 ##title=
 ##
 
+# raise # uncomment this line for viewlet debug
+
 error=_['error']
 if error.type == 'Unauthorized':
   return ""
 else:
   err_log = context.error_log
-  # err_log.raising(sys.exc_info())
 
   return """<p>An error ocurred.</p>
             <p>Error type: %s</p>

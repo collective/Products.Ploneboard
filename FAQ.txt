@@ -34,3 +34,6 @@ rows?
 
       here/my-contentpanels/contentpanels_body
 
+5. how to debug my new viewlet? I can't see the traceback from the errorlog.
+
+   see contentpanels_error.py, uncoment the first line(just raise the exception)
