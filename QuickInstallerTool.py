@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.8 2003/07/09 07:25:37 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.9 2003/07/10 18:10:05 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def isProductInstalled(self,productname):
         ''' checks wether a product is installed (by name) '''
         o=self._getOb(productname,None)
-        return o and o.isInstalled(showHidden=1)
+        return o and o.isInstalled()
 
 
     security.declareProtected(ManagePortal, 'notifyInstalled')
