@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATSortCriterion.py,v 1.10 2004/07/19 11:57:36 godchap Exp $
+$Id: ATSortCriterion.py,v 1.11 2004/07/19 12:01:50 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -29,7 +29,6 @@ from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
     SORT_INDICES
-from Products.ATContentTypes.Permissions import ChangeTopics
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSortCriterion
 from Products.ATContentTypes.types.criteria.ATBaseCriterion import ATBaseCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATSortCriterionSchema

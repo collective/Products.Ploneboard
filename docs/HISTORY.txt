@@ -1,5 +1,5 @@
 0.2-beta8
- * Added validation for setup of sort order on topics
+ * Added validation for setup of sort order on topics [gotcha]
 
  * Fixed validation problem with mx tidy validator and file uploads
    [tiran]
