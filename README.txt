@@ -1,7 +1,7 @@
 GroupUserFolder
 
 
-(c)2002-2003 Ingeniweb
+(c)2002-03-04 Ingeniweb
 
 
 

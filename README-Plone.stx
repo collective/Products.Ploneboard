@@ -1,9 +1,18 @@
 HOW TO USE THE GRUF WITH CMF/PLONE ?
-Last revision : 20031220
+Last revision : 20040615
 
-  This document mostly applies to Plone1. GRUF is bundled 
-  with Plone 2.x, and its Installation is fully automatic 
+
+PLONE 2 INSTRUCTIONS
+
+  GRUF2 is bundled with Plone 2.x, and its Installation is fully automatic 
   (with Plone 2.x).
+  
+  You can use GRUF3 with Plone 2.0 BUT user/group control panels won't
+  work because of the API changes. If you want to have them working,
+  please use (or merge) SVN branch called pjgrizel-gruf3-branch.
+
+
+PLONE 1 INSTRUCTIONS
 
   IMPORTANT NOTICE
 

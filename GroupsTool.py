@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.29 2004/06/09 14:01:49 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.30 2004/06/15 10:04:43 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -26,7 +26,7 @@ from GroupsToolPermissions import ViewGroups
 from GroupsToolPermissions import SetGroupOwnership
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from interfaces.portal_groups import portal_groups as IGroupsTool
-
+from global_symbols import *
 
 
 class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
@@ -215,7 +215,9 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         if id in self.listGroupIds():
             raise ValueError, "Group '%s' already exists." % (id, )
         self.acl_users.userFolderAddGroup(id, roles = roles, groups = groups )
+        Log(LOG_DEBUG, "In addGroup()")
         self.createGrouparea(id)
+        Log(LOG_DEBUG, "In addGroup()")
         self.getGroupById(id).setProperties(**kw)
 
     security.declareProtected(ManageGroups, 'editGroup')
@@ -319,10 +321,12 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
+        Log(LOG_DEBUG, )
         parent = self.aq_inner.aq_parent
         workspaces = self.getGroupWorkspacesFolder()
         pt = getToolByName( self, 'portal_types' )
 
+        Log(LOG_DEBUG, )
         if id and self.getGroupWorkspacesCreationFlag():
             if workspaces is None:
                 # add GroupWorkspaces folder
@@ -338,10 +342,14 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
                 workspaces._setProperty('right_slots', (), 'lines')
 
+            Log(LOG_DEBUG, )
             if workspaces is not None and not hasattr(workspaces, id):
                 # add workspace to GroupWorkspaces folder
+                Log(LOG_DEBUG, self.getGroupWorkspaceType(), id)
                 workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
+                Log(LOG_DEBUG, )
                 space = self.getGroupareaFolder(id)
+                Log(LOG_DEBUG, )
                 space.setTitle("%s workspace" % id)
                 space.setDescription("Container for objects shared by this group")
 
@@ -356,7 +364,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                     self.setGroupOwnership(self.getGroupById(id), space)
                 portal_catalog = getToolByName( self, 'portal_catalog' )
                 portal_catalog.reindexObject(space)
-
+ 
     security.declareProtected(ManagePortal, 'getGroupWorkspaceType')
     def getGroupWorkspaceType(self):
         """Return the Type (as in TypesTool) to make the GroupWorkspace."""

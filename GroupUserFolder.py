@@ -1034,6 +1034,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         prefix = GROUP_PREFIX
 
         # Prepare groups
+        Log(LOG_DEBUG, "Adding the user", name)
         roles = list(roles)
         gruf_groups = self.getGroupIds()
         for group in groups:
@@ -1047,6 +1048,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         self._v_batch_users = []
 
         # Really add users
+        Log(LOG_DEBUG, "Adding the user", name)
         return self.getDefaultUserSource()._doAddUser(
             name,
             password,
@@ -1315,7 +1317,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/11 12:49:01 $"[7:-2]
+        rev_date = "$Date: 2004/06/15 10:04:42 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 

@@ -36,7 +36,6 @@ class LDAPGroupFolder(SimpleItem):
 
     security.declareProtected(view_management_screens, 'manage_main')
     manage_main = DTMLFile('dtml/groups', globals())
-
     
     
     def __setstate__(self, v):
@@ -66,6 +65,7 @@ class LDAPGroupFolder(SimpleItem):
         s = self.getGRUF().getUserSource(self._luf)
         if getattr(s, 'meta_type', None) != "LDAPUserFolder":
             # whoops, we moved LDAPUF... let's try to find it back
+            Log(LOG_WARNING, "LDAPUserFolder moved. Trying to find it back.")
             s = None
             for src in self.getGRUF().listUserSources():
                 if src.meta_type == "LDAPUserFolder":
