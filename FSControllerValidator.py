@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.4 2003/10/21 04:41:23 plonista Exp $
+$Id: FSControllerValidator.py,v 1.5 2004/01/30 19:41:47 plonista Exp $
 """
 
 import copy
@@ -41,7 +41,6 @@ class FSControllerValidator (BaseClass, ControllerBase):
             {'label':'Customize', 'action':'manage_main'},
             {'label':'Test', 'action':'ZScriptHTML_tryForm'},
            ) + Cacheable.manage_options)
-#            {'label':'Actions','action':'manage_formActionsForm'},             
 
     is_validator = 1
     
@@ -57,8 +56,6 @@ class FSControllerValidator (BaseClass, ControllerBase):
 
     def __call__(self, *args, **kwargs):
         result = FSControllerValidator.inheritedAttribute('__call__')(self, *args, **kwargs)
-#        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-#            return self.getNext(result, self.REQUEST)
         return result
 
 
@@ -66,10 +63,6 @@ class FSControllerValidator (BaseClass, ControllerBase):
     def manage_afterAdd(self, object, container):
         try:
             BaseClass.manage_afterAdd(self, object, container)
-            # Re-read .metadata after adding so that we can do validation checks
-            # using information in portal_form_controller.  Since manage_afterAdd
-            # is not guaranteed to run, we also call these in __init__
-#            self._read_action_metadata(self.getId(), self.filepath)
         except:
             logException()
             raise
@@ -79,7 +72,6 @@ class FSControllerValidator (BaseClass, ControllerBase):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControllerValidator(self.getId())
         obj.write(self.read())
-#        obj.actions = copy.copy(self.actions)
         return obj
 
 
