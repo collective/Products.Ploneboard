@@ -18,6 +18,8 @@ TODO-LIST
 
     - use thin borders for audit table and fix cell width
 
+    - add a 'toggle getUserNames()' button on 'Users' tab and use getUsers() by default
+
 [v3.0 => Planned 2003-06]
 
   DONE * [LDAP] Improve group mapping for already existing groups
