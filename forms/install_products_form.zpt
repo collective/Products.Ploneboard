@@ -42,7 +42,7 @@
           </td>
           <td>
             <a tal:condition="product/hasError"
-               tal:attributes="href product/id"
+               tal:attributes="href string:${product/id}/manage_workspace"
                class="form-help">
               <img src="/misc_/PageTemplates/exclamation.gif"
                    alt=""

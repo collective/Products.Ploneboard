@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.47 2004/08/19 16:18:17 shh42 Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.48 2004/09/18 10:36:31 dreamcatcher Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -217,6 +217,8 @@ class QuickInstallerTool(UniqueObject, ObjectManager, SimpleItem):
         """Install a product by name
         """
 
+        __traceback_info__ = (p,)
+        
         if self.isProductInstalled(p):
             prod = self._getOb(p)
             msg = ('this product is already installed, '
