@@ -17,7 +17,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.2 2004/03/16 15:27:10 tiran Exp $
+$Id: CPTMigrator.py,v 1.3 2004/04/09 22:28:01 tiran Exp $
 """
 
 from common import *
@@ -108,12 +108,22 @@ migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
              LargeFolderMigrator,
             )
 
-def migrateAll(catalog):
+def migrateAll(portal):
+    catalog = getToolByName(portal, 'portal_catalog')
     out = 'Migration: \n'
     for migrator in migrators:
         out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
         w = CatalogWalker(migrator, catalog)
         out+= w.go()
+    for migrator, checkMethod in folderMigrators:
+        out+='\n *** Migrating %s to %s\n\n *** ' % (migrator.fromType, migrator.toType)
+        while 1:
+            # loop around until we got 'em all :]
+            w = RecursiveWalker(migrator, portal, checkMethod)
+            o=w.go()
+            out+=o
+            if not o.strip():
+                break
     wf = getToolByName(catalog, 'portal_workflow')
     LOG('starting wf migration')
     count = wf.updateRoleMappings()
