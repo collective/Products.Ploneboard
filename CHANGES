@@ -1,3 +1,14 @@
+v1_32pre-plone2.0 - 20030923
+
+  * Pass __getitem__ access onto user objects (XUF compatibility)
+
+  * Allow ZMI configuration of group workspaces (CMF Tool)
+
+  * Added security declarations to CMF tools
+
+  * new getPureUserNames() and getPurseUsers() methods to get user
+    objects without group objects
+
 v1_31 - 20030731
 
   * Many performance improvements (tree and audit views)
