@@ -1,5 +1,5 @@
-# Copyright (C) 2003 strukturAG <simon@struktur.de>
-#                    http://www.strukturag.com, http://www.icoya.com
+# Copyright (C) 2003-2004 strukturAG <simon@struktur.de>
+# http://www.strukturag.com, http://www.icoya.com
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -18,10 +18,10 @@
 """
 Patches.
 
-$Id: Patches.py,v 1.6 2003/12/19 14:16:24 longsleep Exp $
+$Id: Patches.py,v 1.7 2004/01/09 10:19:53 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.6 $"
+__version__ = "$Revision: 1.7 $"
 
 from types import StringType
 ####################

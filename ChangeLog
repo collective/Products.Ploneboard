@@ -1,3 +1,15 @@
+2004-01-09 11:16  tag v0_5_2
+
+2003-12-22 12:12  longsleep
+                                                                                                
+        * skins/i18n_layer/i18nlayer_default_fallback.pt: fixed stuff
+                                                                                                
+2003-12-19 15:16  longsleep
+                                                                                                
+        * Patches.py: fixed major bug which broke BTreeFolder2 .. thanks to
+        the reporters (issue #862935)
+
+
 2003-12-09 15:30  tag v0_5_1
 
 2003-12-09 15:26  longsleep

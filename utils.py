@@ -1,5 +1,5 @@
-# Copyright (C) 2003 strukturAG <simon@struktur.de>
-#                    http://www.strukturag.com, http://www.icoya.com
+# Copyright (C) 2003-2004 strukturAG <simon@struktur.de>
+# http://www.strukturag.com, http://www.icoya.com
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -18,10 +18,10 @@
 """
 utilities
 
-$Id: utils.py,v 1.2 2003/12/09 14:26:35 longsleep Exp $
+$Id: utils.py,v 1.3 2004/01/09 10:19:53 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.2 $"
+__version__ = "$Revision: 1.3 $"
 
 
 # PlacelessTranslation Service Negotiator Support

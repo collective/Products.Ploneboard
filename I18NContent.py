@@ -1,5 +1,5 @@
-# Copyright (C) 2003 strukturAG <simon@struktur.de>
-#                    http://www.strukturag.com, http://www.icoya.com
+# Copyright (C) 2003-2004 strukturAG <simon@struktur.de>
+# http://www.strukturag.com, http://www.icoya.com
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.7 2003/10/02 14:08:10 longsleep Exp $
+$Id: I18NContent.py,v 1.8 2004/01/09 10:19:53 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.7 $"
+__version__ = "$Revision: 1.8 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper

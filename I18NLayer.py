@@ -1,4 +1,4 @@
-# Copyright (C) 2003 strukturAG <simon@struktur.de>
+# Copyright (C) 2003-2004 strukturAG <simon@struktur.de>
 # http://www.strukturag.com, http://www.icoya.com
 
 # This program is free software; you can redistribute it and/or
@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.12 2003/12/09 14:26:34 longsleep Exp $
+$Id: I18NLayer.py,v 1.13 2004/01/09 10:19:53 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.12 $"
+__version__ = "$Revision: 1.13 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
