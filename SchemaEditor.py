@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.20 2004/09/27 15:52:21 ajung Exp $
+$Id: SchemaEditor.py,v 1.21 2004/09/27 16:28:53 spamsch Exp $
 """
 
 import re
@@ -156,7 +156,24 @@ class SchemaEditor:
         if not self._schemas.has_key(schema_id):
             raise SchemaEditorError('No such schema: %s' % schema_id)
         del self._schemas[schema_id]
+
+    security.declareProtected(ManageSchemaPermission, 'atse_reRegisterSchema')
+    def atse_reRegisterSchema(self, schema_id, schema):
+        """ re-registering schema """
+
+        self.atse_unregisterSchema(schema_id)
+        self.atse_registerSchema(schema_id, schema)
+        self._p_changed = 1
         
+    security.declareProtected(ManageSchemaPermission, 'atse_reRegisterObject')
+    def atse_reRegisterObject(self, object):
+        """ re-registering object """
+
+        self.atse_unregisterSchema(object.portal_type)
+        self._obj_ptype.remove(object.portal_type)
+        self.atse_registerObject(object)
+        self._p_changed = 1
+
     security.declareProtected(View, 'atse_getSchemaById')
     def atse_getSchemaById(self, schema_id):
         """ return a schema by its schema_id """

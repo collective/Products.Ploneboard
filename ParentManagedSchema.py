@@ -9,14 +9,17 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.8 2004/09/27 15:52:21 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.9 2004/09/27 16:28:53 spamsch Exp $
 """
 
+import types
+from ExtensionClass import ExtensionClass
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Acquisition import ImplicitAcquisitionWrapper
 from Products.CMFCore.CMFCorePermissions import View
 from Products.Archetypes.Schema import ManagedSchema
+from zLOG import LOG, INFO
 
 class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
@@ -36,7 +39,7 @@ class ParentManagedSchema:
         """
 
         # Schema() seems to be called during the construction phase when there is
-        # not acquisition context. So we return the default schema itself.
+        # no acquisition context. So we return the default schema itself.
 
         if not hasattr(self, 'aq_parent'): 
             return self._wrap_schema(self.schema)
@@ -55,7 +58,9 @@ class ParentManagedSchema:
 
         self._v_schema = getattr(self, '_v_schema', None)
         if self._v_schema is None:
-            self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
+
+            # looking for changes in the schema hold by the object
+            self._v_schema = self._lookupChanges(schema_id)
             self.initializeArchetype()
             
             for field in self._v_schema.fields():
@@ -91,5 +96,45 @@ class ParentManagedSchema:
                     field.set(self, field.default)
 
         return self._wrap_schema(self._v_schema)
+
+    def _lookupChanges(self, atse_schema_id):
+        """
+        Checks if schema has changed
+        """
+
+        # looking if schema has changed
+        atse_schema = self.aq_parent.atse_getSchemaById(atse_schema_id)
+        object_schema = self.schema
+
+        # XXX what about registered objects?
+        if self._atse_signature(atse_schema) != self._atse_signature(object_schema):
+            LOG('ATSchemaEditorNG', INFO, 'Schema %s changed on disk - refreshing' % atse_schema_id)
+            self.aq_parent.atse_reRegisterSchema(atse_schema_id, object_schema)
+
+        return self.aq_parent.atse_getSchemaById(atse_schema_id)
+
+    def _atse_signature(self, schema):
+        """
+        Replacement for buggy signature impl in AT Schema
+        """
+
+        disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
+        s = 'Schema: {'
+        for f in schema.fields():
+            
+            s += '%s: {' % f.__class__.__name__
+            sorted_keys = f._properties.keys()
+            sorted_keys.sort()
+            
+            for k in sorted_keys:
+                if (type(k) not in disallowed):
+                    if (type(f._properties[k]) not in disallowed):
+                        s = s + '%s:%s,' % (k, f._properties[k])
+                    
+            s = s + '}'
+
+        s = s + '}'
+        return s
+        
 
 InitializeClass(ParentManagedSchema)
