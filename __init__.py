@@ -31,6 +31,8 @@ groupuserfolder_globals=globals()
 
 
 if hasLDAP:
+    import LDAPGroupFolder
+    
     def patch_LDAPUF():
         # Now we can patch LDAPUF
         from Products.LDAPUserFolder import LDAPUserFolder
