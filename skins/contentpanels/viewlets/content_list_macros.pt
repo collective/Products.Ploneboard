@@ -24,7 +24,7 @@
                 <a href="#"
 		   i18n:attributes="title"
                    tal:attributes="href url;
-                                   title item/Description() | nothing;">
+                                   title item/Description | nothing;">
                     <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
                     <span tal:replace="item/Title | item/getId">Title</span>
                 </a>
