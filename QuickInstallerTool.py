@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.37 2004/02/28 18:05:34 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.38 2004/02/28 18:13:37 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -110,6 +110,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'isProductInstallable')
     def isProductInstallable(self,productname):
+        ''' asks wether a product is installable by trying to get its install method'''
         try:
             meth=self.getInstallMethod(productname)
             return 1
