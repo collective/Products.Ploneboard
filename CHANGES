@@ -1,3 +1,7 @@
+  * Removed GroupSpace code, which can now be found in 
+    http://ingeniweb.sourceforge.net/Products/GrufSpaces 
+    MR
+
 v2_0Beta3 - 20040224
 
   * Improved performance on LDAP Directories
