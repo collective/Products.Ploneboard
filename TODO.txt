@@ -42,3 +42,5 @@ from which potential member classes can inherit.
 
 * Add documentation to base_view, base_edit.  This will probably require
 some minor Archetypes mods, e.g. creating an EmptyField class.
+
+

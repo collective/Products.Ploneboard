@@ -131,6 +131,7 @@ content_schema = FieldList((
                accessor='getRoles',
                vocabulary='valid_roles',
                enforceVocabulary=1,
+               multiValued=1,
                mode='rw',
                read_permission=VIEW_SECURITY_PERMISSION,
                write_permission=EDIT_SECURITY_PERMISSION,
@@ -395,7 +396,15 @@ class Member(BaseContent):
     security.declarePrivate('getRoles')
     def getRoles(self):
         """Return the list of roles assigned to a user."""
-        return self.getUser().getRoles()
+        roles=()
+        try:
+            roles=self.getUser().getRoles()
+        except TypeError:
+            #XXX The user is not in this acl_users so we get None
+            if self.getUser().roles is None:
+                self.getUser().roles=('Member',)
+            roles=self.getUser().getRoles()
+        return roles
 
 
     security.declarePrivate('getDomains')
@@ -463,8 +472,8 @@ class Member(BaseContent):
     def editors(self):
         return self.portal_properties.site_properties.available_editors
 
-    
     def valid_roles(self):
+        import pdb; pdb.set_trace()
         roles = list(self.getUser().valid_roles())
         # remove automatically added roles
         if 'Authenticated' in roles:
