@@ -7,7 +7,8 @@
                   b_start python:request.get('b_start', 0);
                   batch python:Batch(images, 1, int(b_start));
                   next python:batch.next;
-                  image python:batch[0];">
+                  image python:batch[0];
+                  prefered_size python:request.cookies.get('photoalbum_display', 'medium');">
 
   <head>
     <!-- Style sheets for CSS2 capable browsers (Mozilla, Opera, IE, Netscape6+, Konqueror etc. -->
@@ -24,14 +25,36 @@
 
   <body style="margin: 2em;">
 
-    <div tal:condition="image">
+    <div tal:condition="image" tal:define="delay python:request.get('delay', 'manual')">
       <h1 tal:content="image/title_or_id"/>
 	
-      <img tal:replace="structure python:image.tag('medium')" />
+      <img tal:replace="structure python:image.tag(prefered_size)" />
 	  
-      <meta tal:condition="next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:5;; URL=${request/URL0}?b_start:int=${next/first}" />
+      <meta tal:condition="python:next and delay!='manual'" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:5;; URL=${request/URL0}?b_start:int=${next/first}&delay=$delay" />
       <meta tal:condition="not:next" HTTP-EQUIV="Refresh" tal:attributes="CONTENT string:1;; URL=${request/URL1}/photoalbum_slideshow_end" />
     </div>
+
+    <form style="margin-top:1em;" id="delay_form">
+      <input type="hidden" name="b_start:int" tal:attributes="value b_start"/>
+      <select id="delay" name="delay" tabindex="1" onChange="javascript:document.getElementById('delay_form').submit()">
+	<option value="manual">Manual</option>
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10" selected="selected">10</option>
+	<option value="15">15</option>
+	<option value="20">20</option>
+	<option value="30">30</option>
+	<option value="45">45</option>
+	<option value="60">60</option>
+      </select>
+    </form>
 
   </body>
 </html>

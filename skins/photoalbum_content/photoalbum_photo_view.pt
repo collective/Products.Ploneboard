@@ -19,7 +19,10 @@
                      Batch python:modules['Products.CMFPlone'].Batch;
                      b_start python:request.get('b_start', 0);
                      batch python:Batch(images, 1, int(b_start), orphan=1);
-                     image python:batch[0];">
+                     image python:batch[0];
+                     prefered_size python:request.cookies.get('photoalbum_display', 'medium');
+                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                     tabindex python:Iterator();">
 
       <script language="javascript">
         <!--
@@ -54,33 +57,65 @@
       <div class="contentHeader">
         <h1 tal:content="image/title_or_id">Title or id</h1>
       </div>
-
-      <div metal:use-macro="here/batch_macros/macros/navigation" />
-      	        
-      <img tal:condition="image/size"
-	src="#" 
-	tal:replace="structure python:image.tag('medium')" />
+      
+      <div metal:use-macro="here/batch_macros/macros/navigation"></div>
 	
-	<p style="margin-top: 2em;" tal:content="structure image/Description">
-	  Description
-	</p>
+      <a tal:condition="image/size" tal:attributes="href string:${image/absolute_url}/view">
+	<img src="#" tal:replace="structure python:image.tag(prefered_size)" />
+      </a>
 	
-	<small>
+      <p style="margin-top: 2em;" tal:content="structure image/Description">
+	Description
+      </p>
+      
+      <small>
+	
+	<span i18n:translate="label_size">Size:</span>
+	
+	<span tal:define="size python:image.getObjSize(image)"
+	  tal:content="size">                        
+	  File size
+	</span>            
+	
+	<span tal:condition="python:test(image.size, 0, 1)"
+	  i18n:translate="no_file_uploaded">
+	  (No file has been uploaded)
+	</span>
+	
+      </small>
+      
+      <div class="row">
+	
+	<div style="width: 3em; text-align: left;" class="label">
+	  <span>Size</span>
 	  
-	  <span i18n:translate="label_size">Size:</span>
-	  
-	  <span tal:define="size python:image.getObjSize(image)"
-	    tal:content="size">                        
-	    File size
-	  </span>            
-	  
-	  <span tal:condition="python:test(image.size, 0, 1)"
-	    i18n:translate="no_file_uploaded">
-	    (No file has been uploaded)
-	  </span>
-	  
-	</small>
-
+	  <div id="display_help"
+	       class="help"
+	       style="visibility:hidden; left:-18em;">
+	    Select the size of the photos.
+	  </div>
+	</div>
+	
+	<div class="field" tal:define="displays here/getDisplays">
+	  <form id="cookie" action="setDisplayCookie">
+	    <input type="hidden" name="b_start:int" tal:attributes="value python:b_start or 0" />
+		<select onChange="javascript:document.getElementById('cookie').submit()" 
+			id="display" 
+			name="display" 
+			tal:attributes="tabindex tabindex/next" 
+		onfocus="formtooltip('display_help', 1)" 
+		onblur="formtooltip('display_help', 0)">
+		<option value="original">Original size</option>
+		<option tal:repeat="display displays" 
+		  tal:attributes="value display/name;
+		    selected python:test(prefered_size == display['name'], 'selected', '');" 
+		  tal:content="display/label/title">1</option>
+	      </select>
+	  </form>
+	</div>
+	
+      </div>
+      
     </div>
     
   </body>
