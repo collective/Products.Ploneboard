@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.1.1.2 2003/02/16 13:22:34 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.2 2003/03/02 22:31:02 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -58,19 +58,19 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def __init__(self):
         self.id = 'portal_quickinstaller'
     
-    def isProductInstallable(self,productname):
-        ''' checks wether a prod has a install script '''
+    def getInstallMethod(self,productname):
+        ''' returns the installer method '''
         
-        try:
-            ExternalMethod('temp','temp',productname+'.'+'Install','install')    
-            return 1
-        except:
+        for mod,func in (('Install','install'),('Install','Install'),('install','install'),('install','Install')):
             try:
-                ExternalMethod('temp','temp',productname+'.'+'Install','Install')    
-                return 1
+                return ExternalMethod('temp','temp',productname+'.'+mod, func)    
             except:
-                return 0
+                pass
             
+        return None
+    
+    isProductInstallable=getInstallMethod
+    
     def listInstallableProducts(self,skipInstalled=1):
         ''' list candidate CMF products for installation '''
         pids=self.Control_Panel.Products.objectIds()
@@ -170,10 +170,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         portalobjectsbefore=portal.objectIds()
         error=0
         
-        try:
-            install = ExternalMethod(emid,emid,p+'.'+'Install','install').__of__(portal)
-        except:
-            install = ExternalMethod(emid,emid,p+'.'+'Install','Install').__of__(portal)
+        install = self.getInstallMethod(p).__of__(portal)
 
         try:
             tran=get_transaction()
