@@ -25,17 +25,28 @@
   <input type="submit" value="Change" />
 </form>
 
+
+<h2>Set Group Workspaces Container Type</h2>
+<p>
+  Provide the name of the Type that will be created when creating the first Group Workspace.
+  This object will be at the root of your Plone site, with the id "GroupWorkspaces".
+</p>
+<form action="manage_setGroupWorkspaceContainerType" method="post">
+  <p><strong>Create worspaces container as type</strong> <input type="text" name="type" value="&dtml-getGroupWorkspaceContainerType;" /></p>
+  <input type="submit" value="Change" />
+</form>
+
+
 <h2>Set Group Workspaces Type</h2>
 <p>
   Provide the name of the Type that will be created to serve as the Group Workspaces. You may use
-  <code>Folder</code>, which is present by default, <code>GroupWorkspace</code>, which comes
+  <code>Folder</code>, which is present by default, <code>GroupSpace</code>, which comes
   with GRUF, or a type of you own definition. See the portal_types tool for types.
 </p>
 <form action="manage_setGroupWorkspaceType" method="post">
   <p><strong>Create workspaces as type</strong> <input type="text" name="type" value="&dtml-getGroupWorkspaceType;" /></p>
   <input type="submit" value="Change" />
 </form>
-
 
 
 <dtml-var manage_page_footer>

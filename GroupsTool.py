@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.15 2003/12/16 16:28:37 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.16 2003/12/19 09:54:19 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -52,9 +52,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     groupworkspaces_id = "GroupWorkspaces"
     groupWorkspacesCreationFlag = 1
     groupWorkspaceType = "Folder"
+    groupWorkspaceContainerType = "Folder"
 
     manage_options=(
-    		( { 'label' : 'Configure'
+            ( { 'label' : 'Configure'
                      , 'action' : 'manage_config'
                     },
                 ) + ActionProviderBase.manage_options +
@@ -73,23 +74,28 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security.declareProtected(ManagePortal, 'manage_setGroupWorkspacesFolder')
     def manage_setGroupWorkspacesFolder(self, id='GroupWorkspaces', REQUEST=None):
-    	"""ZMI method for workspace container name set."""
-	self.setGroupWorkspacesFolder(id)
+        """ZMI method for workspace container name set."""
+        self.setGroupWorkspacesFolder(id)
         return self.manage_config(manage_tabs_message="Workspaces folder name set to %s" % id)
 
     security.declareProtected(ManagePortal, 'manage_setGroupWorkspaceType')
     def manage_setGroupWorkspaceType(self, type='Folder', REQUEST=None):
-    	"""ZMI method for workspace type set."""
-	self.setGroupWorkspaceType(type)
+        """ZMI method for workspace type set."""
+        self.setGroupWorkspaceType(type)
         return self.manage_config(manage_tabs_message="Group Workspaces type set to %s" % type)
+
+    security.declareProtected(ManagePortal, 'manage_setGroupWorkspaceContainerType')
+    def manage_setGroupWorkspaceContainerType(self, type='Folder', REQUEST=None):
+        """ZMI method for workspace type set."""
+        self.setGroupWorkspaceContainerType(type)
+        return self.manage_config(manage_tabs_message="Group Workspaces container type set to %s" % type)
 
     security.declareProtected(ViewGroups, 'getGroupById')
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
-	#log("getting group with id %s" % id)
-	if id==None:
-		return None
+        if id==None:
+            return None
         prefix = self.acl_users.getGroupPrefix()
         g = self.acl_users.getGroup(id, prefixed=id.startswith(prefix))
         if g is not None:
@@ -111,7 +117,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     security.declareProtected(ViewGroups, 'listGroups')
     def listGroups(self):
         """Returns a list of the available portal_groupdata-ish objects."""
-	return [self.wrapGroup(elt) for elt in self.acl_users.getGroups()]
+        return [self.wrapGroup(elt) for elt in self.acl_users.getGroups()]
 
     security.declareProtected(ViewGroups, 'listGroupIds')
     def listGroupIds(self):
@@ -130,8 +136,8 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security.declareProtected(View, 'searchForGroups')
     def searchForGroups(self, REQUEST, **kw):
-	"""Return a list of groups meeting certain conditions. """
-	# arguments need to be better refined?
+        """Return a list of groups meeting certain conditions. """
+        # arguments need to be better refined?
         if REQUEST:
             dict = REQUEST
         else:
@@ -227,39 +233,39 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         For GRUF this is easy. Others may have to re-implement."""
         user = group.getGroup()
         if user is not None:
-	        object.changeOwnership(user)
-        	object.manage_setLocalRoles(user.getId(), ['Owner'])
+            object.changeOwnership(user)
+            object.manage_setLocalRoles(user.getId(), ['Owner'])
         else:
-        	pass
+            pass
                 # should we have an error here?
 
     security.declareProtected(ManagePortal, 'setGroupWorkspacesFolder')
     def setGroupWorkspacesFolder(self, id=""):
-    	""" Set the location of the Group Workspaces folder by id.
+        """ Set the location of the Group Workspaces folder by id.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders.
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders.
 
-     	If anyone really cares, we can probably make the id work as a path as well,
-     	but for the moment it's only an id for a folder in the portal root, just like the
-     	corresponding MembershipTool functionality. """
-    	self.groupworkspaces_id = id.strip()
+         If anyone really cares, we can probably make the id work as a path as well,
+         but for the moment it's only an id for a folder in the portal root, just like the
+         corresponding MembershipTool functionality. """
+        self.groupworkspaces_id = id.strip()
 
     security.declareProtected(ManagePortal, 'getGroupWorkspacesFolderId')
     def getGroupWorkspacesFolderId(self):
-	""" Get the Group Workspaces folder object's id.
+        """ Get the Group Workspaces folder object's id.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders. """
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders. """
         return self.groupworkspaces_id
 
     security.declarePublic('getGroupWorkspacesFolder')
     def getGroupWorkspacesFolder(self):
-	""" Get the Group Workspaces folder object.
+        """ Get the Group Workspaces folder object.
 
-    	The Group Workspaces Folder contains all the group workspaces, just like the
-    	Members folder contains all the member folders. """
-    	parent = self.aq_inner.aq_parent
+        The Group Workspaces Folder contains all the group workspaces, just like the
+        Members folder contains all the member folders. """
+        parent = self.aq_inner.aq_parent
         folder = getattr(parent, self.getGroupWorkspacesFolderId(), None)
         return folder
 
@@ -277,7 +283,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security.declareProtected(ManagePortal, 'getGroupWorkspacesCreationFlag')
     def getGroupWorkspacesCreationFlag(self):
-    	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
+        """Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
         upon the creation of the group (if one doesn't exist already). """
         return self.groupWorkspacesCreationFlag
 
@@ -285,46 +291,54 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
-	#log("creating workspace for group %s" % id)
-	parent = self.aq_inner.aq_parent
+        parent = self.aq_inner.aq_parent
         workspaces = self.getGroupWorkspacesFolder()
         pt = getToolByName( self, 'portal_types' )
 
         if id and self.getGroupWorkspacesCreationFlag():
-	        if workspaces is None:
-        		# add GroupWorkspaces folder
-			#log("need to create GroupWorkspaces folder")
+            if workspaces is None:
+                # add GroupWorkspaces folder
 
-			parent.invokeFactory(self.getGroupWorkspaceType(), self.getGroupWorkspacesFolderId())
-                        workspaces = self.getGroupWorkspacesFolder()
-			workspaces.setTitle(self.getGroupWorkspacesFolderId())
-                        workspaces.setDescription("Container for "+self.getGroupWorkspacesFolderId())
-                        # how about ownership?
+                parent.invokeFactory(self.getGroupWorkspaceContainerType(), self.getGroupWorkspacesFolderId())
+                workspaces = self.getGroupWorkspacesFolder()
+                workspaces.setTitle(self.getGroupWorkspacesFolderId())
+                workspaces.setDescription("Container for " + self.getGroupWorkspacesFolderId())
+                # how about ownership?
 
-                        # this stuff like MembershipTool...
-                        portal_catalog = getToolByName( self, 'portal_catalog' )
-                        portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
-			workspaces._setProperty('right_slots', (), 'lines')
+                # this stuff like MembershipTool...
+                portal_catalog = getToolByName( self, 'portal_catalog' )
+                portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
+                workspaces._setProperty('right_slots', (), 'lines')
 
-        	if workspaces is not None and not hasattr(workspaces, id):
-                	# add workspace to GroupWorkspaces folder
-			#log("creating workspace for group %s" % id)
-                        workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
-                        space = self.getGroupareaFolder(id)
-                        space.setTitle("%s workspace" % id)
-                        space.setDescription("Container for objects shared by this group")
-                        space.manage_delLocalRoles(space.users_with_local_role('Owner'))
-			self.setGroupOwnership(self.getGroupById(id), space)
+            if workspaces is not None and not hasattr(workspaces, id):
+                # add workspace to GroupWorkspaces folder
+                workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
+                space = self.getGroupareaFolder(id)
+                space.setTitle("%s workspace" % id)
+                space.setDescription("Container for objects shared by this group")
+                space.manage_delLocalRoles(space.users_with_local_role('Owner'))
+                self.setGroupOwnership(self.getGroupById(id), space)
+                
 
     security.declareProtected(ManagePortal, 'getGroupWorkspaceType')
     def getGroupWorkspaceType(self):
-	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
+        """Return the Type (as in TypesTool) to make the GroupWorkspace."""
         return self.groupWorkspaceType
 
     security.declareProtected(ManagePortal, 'setGroupWorkspaceType')
     def setGroupWorkspaceType(self, type):
-	"""Set the Type (as in TypesTool) to make the GroupWorkspace."""
-	self.groupWorkspaceType = type
+        """Set the Type (as in TypesTool) to make the GroupWorkspace."""
+        self.groupWorkspaceType = type
+
+    security.declareProtected(ManagePortal, 'getGroupWorkspaceContainerType')
+    def getGroupWorkspaceContainerType(self):
+        """Return the Type (as in TypesTool) to make the GroupWorkspace."""
+        return self.groupWorkspaceContainerType
+
+    security.declareProtected(ManagePortal, 'setGroupWorkspaceContainerType')
+    def setGroupWorkspaceContainerType(self, type):
+        """Set the Type (as in TypesTool) to make the GroupWorkspace."""
+        self.groupWorkspaceContainerType = type
 
     security.declarePublic('getGroupareaFolder')
     def getGroupareaFolder(self, id=None, verifyPermission=0):
@@ -347,12 +361,12 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security.declarePublic('getGroupareaURL')
     def getGroupareaURL(self, id=None, verifyPermission=0):
-            """Returns the full URL to the group's work area."""
-	    ga = self.getGroupareaFolder(id, verifyPermission)
-	    if ga is not None:
-	        return ga.absolute_url()
-	    else:
-	        return None
+        """Returns the full URL to the group's work area."""
+        ga = self.getGroupareaFolder(id, verifyPermission)
+        if ga is not None:
+            return ga.absolute_url()
+        else:
+            return None
 
     security.declarePrivate('wrapGroup')
     def wrapGroup(self, g, wrap_anon=0):
@@ -385,7 +399,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             # Get portal_groupdata to do the wrapping.
             gd = getToolByName(parent, 'portal_groupdata')
             try:
-            	#log("wrapping group %s" % g)
+                #log("wrapping group %s" % g)
                 portal_group = gd.wrapGroup(g)
 
                 # Check for the member area creation flag and
@@ -393,7 +407,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
                 # DISABLED: do it upon group creation
                 #if self.getGroupWorkspacesCreationFlag():
-                #	self.createGrouparea(portal_group.getGroupName())
+                #    self.createGrouparea(portal_group.getGroupName())
 
                 return portal_group
 
