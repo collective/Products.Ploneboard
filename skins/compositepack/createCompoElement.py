@@ -1,4 +1,4 @@
-##parameters=compopage_path, target_path
+##parameters=compopage_path, target_path, target_index
 
 portal = context.portal_url.getPortalObject()
 
@@ -7,6 +7,7 @@ factory = destination.manage_addProduct['CompositePack'].manage_addElement
 
 new_id = context.generateUniqueId()
 new_id = factory(id=new_id)
+destination.moveObjectToPosition(new_id, int(target_index))
 new_ob = getattr(destination, new_id)
 
 uid = context.UID()

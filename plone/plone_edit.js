@@ -11,17 +11,20 @@ function plone_edit(element) {
 function plone_add(target) {
   // Note that target_index is also available.
   var path = escape(target.getAttribute("target_path"));
-  draweropen(path);
+  var index = target.getAttribute("target_index");
+  draweropen(path, index);
 }
 
 function plone_add_title(target) {
   // Note that target_index is also available.
-  var form, target_path, compopage_path, title;
-  target_path = escape(target.getAttribute("target_path"));
+  var form, compopage_path, title;
+  var target_path = escape(target.getAttribute("target_path"));
+  var target_index = escape(target.getAttribute("target_index"));
   form = document.forms.modify_composites;
   compopage_path = form.elements.composite_path.value;
   title = escape(prompt('Input the title value', 'a title'));
-  url = "../createCompoTitle?target_path=" + target_path;
+  url = "createCompoTitle?target_path=" + target_path;
+  url = url + "&target_index=" + target_index;
   url = url + "&compopage_path=" + compopage_path;
   url = url + "&title=" + title;
   window.document.location = url;

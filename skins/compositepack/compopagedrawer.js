@@ -1,4 +1,4 @@
-// $Id: compopagedrawer.js,v 1.4 2004/05/25 13:57:49 godchap Exp $
+// $Id: compopagedrawer.js,v 1.5 2004/06/29 09:05:09 godchap Exp $
 
 //----------------------------------------------------------------------------
 
@@ -17,8 +17,9 @@ target_path) {
 
     this.compopagepath = compopagepath;
 
-    this.setTarget = function(target_path) {
+    this.setTarget = function(target_path, target_index) {
         this.target_path = target_path;
+        this.target_index = target_index;
     };
 
     this.save = function() {
@@ -33,7 +34,8 @@ target_path) {
 
         this.hide();
         window.document.location = uri + '/createCompoElement?compopage_path=' +
-            this.compopagepath + '&target_path=' + this.target_path;
+            this.compopagepath + '&target_path=' + this.target_path +
+            '&target_index=' + this.target_index;
     };
 
     
@@ -43,12 +45,12 @@ SelectDrawer.prototype = new LibraryDrawer;
 
 function CompoDrawerTool() {
 
-    this.openDrawerWithTarget = function(id, target_path) {
+    this.openDrawerWithTarget = function(id, target_path, target_index) {
         if (this.current_drawer) {
             this.closeDrawer();
             };
         var drawer = this.drawers[id];
-        drawer.setTarget(target_path);
+        drawer.setTarget(target_path, target_index);
         drawer.createContent();
         this.current_drawer = drawer;
     };
@@ -89,8 +91,8 @@ function cp_initdrawer(link_xsl_uri, link_libraries_uri, search_links_uri, compo
     
 };
 
-function draweropen(target_path) {
-                    drawertool.openDrawerWithTarget('selectdrawer', target_path); 
+function draweropen(target_path, target_index) {
+                    drawertool.openDrawerWithTarget('selectdrawer', target_path, target_index); 
 };
 
 
