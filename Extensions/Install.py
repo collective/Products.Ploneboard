@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.6 2004/03/20 18:41:42 tiran Exp $
+$Id: Install.py,v 1.7 2004/03/27 22:22:34 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -140,7 +140,8 @@ def setupMimeTypes(self, typeInfo, out):
     reg = getToolByName(self, 'content_type_registry')
     
     old = ('link', 'news', 'document', 'file', 'image')
-    moveDown = []
+    moveBottom = []
+    moveTop = []
 
     for o in old:
         # remove old
@@ -163,7 +164,7 @@ def setupMimeTypes(self, typeInfo, out):
             reg.getPredicate(name).edit(**mm)
             reg.assignTypeName(name, portal_type)
             if IATFile.isImplementedByInstancesOf(klass):
-                moveDown.append(name)
+                moveBottom.append(name)
         # extensions
         name, extlist = getFileExtOf(klass)
         if extlist:
@@ -173,12 +174,18 @@ def setupMimeTypes(self, typeInfo, out):
             reg.getPredicate(name).edit(extlist)
             reg.assignTypeName(name, portal_type)
             if IATFile.isImplementedByInstancesOf(klass):
-                moveDown.append(name)
+                moveBottom.append(name)
+            else:
+                moveTop.append(name)
 
     # move ATFile to the bottom because ATFile is a fallback
     last = len(reg.listPredicates())-1
-    for name in moveDown:
+    for name in moveBottom:
         reg.reorderPredicate(name, last)
+        
+    # move extension based rules to the top
+    for name in moveTop:
+        reg.reorderPredicate(name, 0)
 
 def getMajorMinorOf(klass):
     """helper method for setupMimeTypes
