@@ -71,6 +71,4 @@ Credits
    idea comes from CMFPortlets. Thanks!
 
 CMFContentPanels is in
-"Collective":http://sourceforge.net/projects/collective. (the latest release
-is not checked in yet, sorry.)
-
+"Collective":http://sourceforge.net/projects/collective. 

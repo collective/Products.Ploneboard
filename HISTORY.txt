@@ -11,6 +11,8 @@ V1.5.1
   5. refine the topic viewlet a bit: linke title is the content description
 now. (thanks Marc Lindahl)
 
+  6. source code back to sf.net/projects/collective now
+
 V1.5.0
 
   This version has a new viewlet/skin structure. Simpler code and more flexible
