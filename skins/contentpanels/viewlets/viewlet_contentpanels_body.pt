@@ -13,7 +13,7 @@
 
          <div class="portletBody">
 
-            <tal:block metal:use-macro="here/contentpanels_view/macros/viewlet" />
+            <tal:block metal:use-macro="here/contentpanels_macros/macros/viewlet" />
 
          </div>
 
