@@ -1,2 +1,0 @@
-<metal:defines use-macro="here/global_defines/macros/defines" />
-<metal:drawer use-macro="here/compopagedrawer/macros/compopagedrawer" />

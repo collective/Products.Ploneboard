@@ -1,1 +1,0 @@
-<div><a tal:attributes="href here/absolute_url" tal:content="here/title_or_id">Title here</a></div>
