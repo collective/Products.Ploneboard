@@ -154,14 +154,14 @@
 	       name="member_ids:list" 
 	       value=""
 	       tabindex=""
-	       tal:attributes="value member/getUserNameWithoutGroupPrefix;
+	       tal:attributes="value member/getUserName;
                 	       tabindex tabindex/next;"/>
 		      
         <br />
 		      
 	<strong tal:condition="python:member.getUserNameWithoutGroupPrefix()"
         	tal:content="python:member.getUserNameWithoutGroupPrefix()">
-	username
+	groupname
 	</strong>
 						
       </span>	
@@ -384,7 +384,7 @@
                                value="sequence-key"
                                tabindex=""
                                tal:condition="python:lrole[0]!=username"
-                               tal:attributes="value python:lrole[0];
+                               tal:attributes="value python:lrole[3];
                                                tabindex tabindex/next" 
                                />
                 

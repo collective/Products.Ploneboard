@@ -147,6 +147,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return GRUFFolder.GRUFGroups._group_prefix
     
     def getLocalRolesForDisplay(self, object):
+        ## This is used for plone's local roles display
+        ## This method returns a tuple (massagedUsername, roles, userType, actualUserName)
         result = []
         local_roles = object.get_local_roles()
         prefix = self.getGroupPrefix()
@@ -168,7 +170,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 #    log('DID NOT FIND group %s' % (username,))
             else:
                 userType = 'unknown'
-            result.append((massagedUsername, roles, userType))
+            result.append((massagedUsername, roles, userType, username))
         return tuple(result)    
 
     def getGRUFPhysicalRoot(self,):
@@ -312,7 +314,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # $$$ check security for this !
 
         # If still not found, well... we cannot do anything else.
-        Log(LOG_WARNING, "Didn't find group", name)
+        Log(LOG_DEBUG, "Didn't find group", name)
         return None
 
 

@@ -182,7 +182,6 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless('userrole' in roles)
         self.failUnless('grouprole' in roles)
 
-
     def test02securityMatrix(self,):
         """
         test02securityMatrix(self,) => Test the whole security matrix !

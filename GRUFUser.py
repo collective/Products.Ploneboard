@@ -106,13 +106,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         return 1
 
     def __init__(self, underlying_user, GRUF, isGroup = 0):
+        # When calling, set isGroup it to TRUE if this user represents a group
         self._setUnderlying(underlying_user)
-        # Set it to TRUE if this user represents a group
         self._isGroup = isGroup   
         self._GRUF = GRUF
         self.id = self._original_id
-        Log(LOG_DEBUG, self)
-        Log(LOG_DEBUG, type(self.__underlying__.aq_parent))
 
     def isGroup(self,):
         """Return 1 if this user is a group abstraction"""
@@ -260,6 +258,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     # ------------------------------
 
     def authenticate(self, password, request):
+        # We prevent groups from authenticating
+        if self._isGroup():
+            return None
         return self.__underlying__.authenticate(password, request)
 
 
