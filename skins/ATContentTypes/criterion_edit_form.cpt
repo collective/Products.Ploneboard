@@ -1,0 +1,137 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="container/main_template/macros/master"
+    i18n:domain="plone">
+
+<body>
+
+<div metal:fill-slot="main">
+
+    <h1>
+        <span i18n:translate="heading_criteria_for" tal:omit-tag="">
+            Criteria for
+            <span i18n:name="title" tal:content="here/getId" tal:omit-tag="" />
+        </span>
+    </h1>
+
+    <form action=""
+          method="post"
+          tal:attributes="action template/getId"
+          tal:define="criteria here/listCriteria;
+                      errors options/state/getErrors|nothing;
+                     "
+          tal:condition="criteria">
+
+        <fieldset>
+
+            <legend i18n:translate="legend_criteria_details">Criteria Details</legend>
+
+            <metal:block tal:repeat="criterion criteria">
+                  <span metal:use-macro="here/criterion_macros/macros/edit" />
+            </metal:block>
+
+	    <input type="hidden" name="form.submitted" value="1" />
+
+        <div class="formControls">
+
+          <input class="context"
+                 type="submit"
+                 value="Save"
+                 name="form.button.Save"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+          <input class="context"
+                 type="submit"
+                 value="Remove"
+                 name="form.button.Remove"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+          <input class="standalone"
+                 type="submit"
+                 value="Cancel"
+                 name="form.button.Cancel"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+      </fieldset>
+
+     </form>
+
+    <form action="" 
+          method="post" 
+          tal:attributes="action template/getId"
+          tal:define="errors options/state/getErrors|nothing;
+                     ">
+
+
+        <fieldset>
+    
+            <legend i18n:translate="legend_add_new_topic_criteria">Add New Topic Criteria</legend>
+
+            <div class="field" style="float:left">
+        
+                <label for="field" i18n:translate="label_criteria_field_name">Field name</label>
+        
+                <div class="formHelp" i18n:translate="help_criteria_field_name">
+		List Available Fields
+                </div>		
+        
+        <select name="field"
+                    id="field"
+                    tabindex=""
+                    tal:define="fields here/listAvailableFields;"
+                    tal:attributes="tabindex tabindex/next;">
+		
+                    <option value="" tal:repeat="field fields" tal:attributes="value field" tal:content="field">Field</option>
+
+                </select>
+
+            </div>
+        
+            <div class="field">
+
+                <label for="criterion_type" i18n:translate="label_criteria_type">Criteria type</label>
+
+                <div class="formHelp" i18n:translate="help_criteria_type">
+                List Criteria Types
+                </div>		
+        
+                <select name="criterion_type"
+                    id="criterion_type"
+                    tabindex=""
+                    tal:define="types here/listCriteriaTypes;"
+                    tal:attributes="tabindex tabindex/next;">
+
+                    <option value="" tal:repeat="type types" tal:attributes="value type/name" tal:content="type/name">Type</option>
+
+                </select>
+        
+            </div>
+        <input type="hidden" name="form.submitted" value="1" />            
+
+        <div class="formControls">
+          <input class="context"
+                 type="submit"
+                 value="Add"
+                 name="form.button.AddCriterion"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+        
+        </fieldset>
+    
+    </form>
+
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+
+#  ATContentTypes http://sf.net/projects/collective/
+#  Archetypes reimplementation of the CMF core types
+#  Copyright (c) 2003-2004 AT Content Types development team
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#
+"""
+
+$Id: schemata.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+""" 
+__author__  = ''
+__docformat__ = 'restructuredtext'
+
+from Products.Archetypes.public import *
+from Products.Archetypes.Marshall import RFC822Marshaller, PrimaryFieldMarshaller
+from DateTime import DateTime
+from Products.CMFCore import CMFCorePermissions
+#from Products.ATContentTypes.config import NEWS_TYPES
+from Products.ATContentTypes import Validators
+from Products.Archetypes.BaseBTreeFolder import has_btree
+if has_btree:
+    from Products.Archetypes.public import BaseBTreeFolder
+
+ATContentTypeSchema = BaseSchema + Schema((
+    TextField('description',
+              default='',
+              searchable=1,
+              accessor="Description",
+              storage=MetadataStorage(),
+              widget = TextAreaWidget(description = "Enter a brief description", 
+                                      description_msgid = "help_description",
+                                      label = "Description",
+                                      label_msgid = "label_description",
+                                      rows = 5,
+                                      i18n_domain = "plone")),
+            ))
+###
+# AT Content Type Document
+###
+ATDocumentSchema = ATContentTypeSchema + Schema((
+    TextField('text',
+              required = 0,
+              searchable = 1,
+              primary = 1,
+              default_content_type = 'text/structured',
+              default_output_type = 'text/html',
+              allowable_content_types = ('text/structured',
+                                         'text/restructured',
+                                         'text/html',
+                                         'text/plain'),
+              widget = RichWidget(description = "The body text of the document.",
+                                  description_msgid = "help_body_text",
+                                  label = "Body text",
+                                  label_msgid = "label_body_text",
+                                  rows = 25,
+                                  i18n_domain = "plone")),
+    ), marshall=RFC822Marshaller()
+    )
+
+###
+# AT Content Type Event
+###
+ATEventSchema = ATContentTypeSchema + Schema((
+    StringField('location',
+                searchable = 1,
+                widget = StringWidget(description = "Enter the location where the event will take place.",
+                                      description_msgid = "help_event_location",
+                                      label = "Event Location",
+                                      label_msgid = "label_event_location",
+                                      i18n_domain = "plone")),
+    
+    LinesField('eventType',
+               vocabulary = 'getEventTypes',
+               widget = MultiSelectionWidget(size = 6,
+                                             description = "Select the type of event. Multiple event types possible.",
+                                             description_msgid = "help_event_type",
+                                             label = "Event Type",
+                                             label_msgid = "label_event_type",
+                                             i18n_domain = "plone")),
+
+    StringField('eventUrl',
+                required=0,
+                validators = ('isEmptyUrl',),
+                widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
+                                      description_msgid = "help_url",
+                                      label = "Event URL",
+                                      label_msgid = "label_url",
+                                      i18n_domain = "plone")),
+    DateTimeField('startDate',
+                  required = 1,
+                  searchable = 1,
+                  accessor='start',
+                  default=DateTime(),
+                  widget = CalendarWidget(description="Enter the starting date and time, or click the calendar icon and select it. ",
+                                          description_msgid = "help_event_start",
+                                          label="Event Starts",
+                                          label_msgid = "label_event_start",
+                                          i18n_domain = "plone")),
+
+    DateTimeField('endDate',
+                  required = 1,
+                  searchable = 1,
+                  accessor='end',
+                  default=DateTime(),
+                  widget = CalendarWidget(description= "Enter the ending date and time, or click the calendar icon and select it. ",
+                                          description_msgid = "help_event_end",
+                                          label = "Event Ends",
+                                          label_msgid = "label_event_end",
+                                          i18n_domain = "plone")),
+    StringField('contactName',
+                required=0,
+                accessor='contact_name',
+                widget = StringWidget(description = "Enter a contact person or organization for the event.",
+                                      description_msgid = "help_contact_name",
+                                      label = "Contact Name",
+                                      label_msgid = "label_contact_name",
+                                      i18n_domain = "plone")),
+    StringField('contactEmail',
+                required=0,
+                accessor='contact_email',
+                validators = ('isEmptyEmail',),
+                widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
+                                      description_msgid = "help_contact_email",
+                                      label = "Contact E-mail",
+                                      label_msgid = "label_contact_email",
+                                      i18n_domain = "plone")),
+    StringField('contactPhone',
+                required=0,
+                accessor='contact_phone',
+                validators = ('isEmptyInternationalPhoneNumber',),
+                widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
+                                      description_msgid = "help_contact_phone",
+                                      label = "Contact Phone",
+                                      label_msgid = "label_contact_phone",
+                                      i18n_domain = "plone")),
+    ), marshall = RFC822Marshaller())
+
+###
+# AT Content Type Favorite
+###
+ATFavoriteSchema = ATContentTypeSchema + Schema((
+    StringField('remoteUrl',
+                required = 1,
+                accessor='_getRemoteUrl',
+                primary=1,
+                validators = (),
+                widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
+                                      description_msgid = "help_url",
+                                      label = "URL",
+                                      label_msgid = "label_url",
+                                      i18n_domain = "plone")),
+    ))
+
+###
+# AT Content Type File
+###
+ATFileSchema = ATContentTypeSchema + Schema((
+    FileField('file',
+              required = 1,
+              primary=1,
+              widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
+                                  description_msgid = "help_file",
+                                  label= "File",
+                                  label_msgid = "label_file",
+                                  i18n_domain = "plone"))
+    ), marshall=PrimaryFieldMarshaller())
+
+###
+# AT Content Type Folder
+###
+ATFolderSchema = OrderedBaseFolder.schema + ATContentTypeSchema
+
+if has_btree:
+    ATBTreeFolderSchema = BaseBTreeFolder.schema + ATContentTypeSchema
+else:
+    ATBTreeFolderSchema = BaseFolder.schema + ATContentTypeSchema
+
+
+###
+# AT Content Type Image
+###
+ATImageSchema = ATContentTypeSchema + Schema((
+    ImageField('image',
+               required = 1,
+               primary=1,
+               widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
+                                    description_msgid = "help_image",
+                                    label= "Image",
+                                    label_msgid = "label_image",
+                                    i18n_domain = "plone"))
+    ), marshall=PrimaryFieldMarshaller())
+
+###
+# AT Content Type Link
+###
+ATLinkSchema = ATContentTypeSchema + Schema((
+    StringField('remoteUrl',
+                required = 1,
+                primary=1,
+                validators = ('isURL',),
+                widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
+                                      description_msgid = "help_url",
+                                      label = "URL",
+                                      label_msgid = "label_url",
+                                      i18n_domain = "plone")),
+    ))
+
+###
+# AT Content Type News Item
+###
+ATNewsItemSchema = ATContentTypeSchema + Schema((
+    TextField('text',
+              required = 0,
+              searchable = 1,
+              primary = 1,
+              default_content_type = 'text/structured',
+              default_output_type = 'text/html',
+              allowable_content_types = ('text/structured',
+                                         'text/restructured',
+                                         'text/html',
+                                         'text/plain'),
+              widget = RichWidget(description = "The body text of the document.",
+                                    description_msgid = "help_body_text",
+                                    label = "Body text",
+                                    label_msgid = "label_body_text",
+                                    rows = 25,
+                                    i18n_domain = "plone")),
+    #StringField('newstype',
+    #            vocabulary=NEWS_TYPES,
+    #           widget=SelectionWidget(label='Type of News',
+    #                                   description='The type of news item.',
+    #                                   label_msgid='label_newstype',
+    #                                   description_msgid='help_newstype',
+    #                                   i18n_domain='plone'),
+    #            ),
+    ), marshall=RFC822Marshaller())
+
+###
+# AT Content Type Topic
+###
+ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
+    BooleanField('acquireCriteria',
+                required=0,
+                mode="rw",
+                default=0,
+                widget=BooleanWidget(
+                                label="Inherit Criteria",
+                                label_msgid="label_inherit_criteria",
+                                description="Toggles inheritance of criteria. For example, if you" \
+                                             "have specified that only items from the last three days" \
+                                             "should be shown in a Topic above the current one, this" \
+                                             "Topic will also have that criterion automatically.",
+                                description_msgid="help_inherit_criteria",
+                                i18n_domain = "plone"),
+                ),
+    ))

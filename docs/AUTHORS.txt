@@ -1,0 +1,30 @@
+AT Content Type development team
+================================
+
+Team members (in alphabetic order)
+----------------------------------
+
+Dominik Bartenstein:
+
+
+Thomas Bechter:
+
+
+Kai Bielenberg:
+
+
+Christian Heimes:
+ * Maintainer
+ * Migration system
+ * Basic unit testing suit and most of the unit tests
+ * Reimplementation of CMFTopic for ATContentTypes
+
+Jens Klein:
+
+
+Bill Schindler:
+
+
+Sylvain Thenault:
+
+

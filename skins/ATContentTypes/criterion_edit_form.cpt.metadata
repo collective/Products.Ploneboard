@@ -1,0 +1,11 @@
+[defaults]
+title=Edit Topic
+
+[validators]
+
+[actions]
+action.failure=traverse_to:string:criterion_edit_form
+action.success..Cancel=redirect_to:string:criterion_edit_form
+action.success..Save=traverse_to:string:criterion_save
+action.success..Remove=traverse_to:string:criterion_remove
+action.success..AddCriterion=traverse_to:string:criterion_add
