@@ -1,3 +1,9 @@
+v3_0Beta1
+
+  * API REFACTORING
+
+  * FAR BETTER LDAP SUPPORT (see README-LDAP.stx)
+
 v2_0 - 20040302
 
   * Reindexing new GroupSpace objects

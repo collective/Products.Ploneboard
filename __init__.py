@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2002-2003 Ingeniweb SARL
+# Copyright (c) 2002-2004+ Ingeniweb SARL
 #
 ##############################################################################
 
@@ -8,6 +8,7 @@
 
 import GroupUserFolder
 import GRUFFolder
+import LDAPGroupFolder
 from global_symbols import *
 
 # Plone import try/except
@@ -18,9 +19,29 @@ except:
     # No registerdir available -> we ignore
     pass
 
+
+
+
+def patch_LDAPUF():
+    # Now we can patch LDAPUF
+    from Products.LDAPUserFolder import LDAPUserFolder
+    import LDAPUserFolderAdapter
+    LDAPUserFolder._doAddUser = LDAPUserFolderAdapter._doAddUser
+    LDAPUserFolder._doDelUsers = LDAPUserFolderAdapter._doDelUsers
+    LDAPUserFolder._doChangeUser = LDAPUserFolderAdapter._doChangeUser
+    LDAPUserFolder._find_user_dn = LDAPUserFolderAdapter._find_user_dn
+    LDAPUserFolder.manage_editGroupRoles = LDAPUserFolderAdapter.manage_editGroupRoles
+    LDAPUserFolder._mangleRoles = LDAPUserFolderAdapter._mangleRoles
+
 # Used in Extension/install.py
 global groupuserfolder_globals
 groupuserfolder_globals=globals()
+
+
+
+# Patch LDAPUF  : XXX FIXME: have to find something cleaner here.
+patch_LDAPUF()
+
 
 def initialize(context):
 
@@ -34,6 +55,13 @@ def initialize(context):
         GroupUserFolder.GroupUserFolder,
         permission='Add GroupUserFolders',
         constructors=(GroupUserFolder.manage_addGroupUserFolder,),
+        icon='www/GroupUserFolder.gif',
+        )
+
+    context.registerClass(
+        LDAPGroupFolder.LDAPGroupFolder,
+        permission='Add GroupUserFolders',
+        constructors=(LDAPGroupFolder.addLDAPGroupFolderForm, LDAPGroupFolder.manage_addLDAPGroupFolder,),
         icon='www/GroupUserFolder.gif',
         )
 

@@ -1,0 +1,109 @@
+
+
+GRUF 3.0 NOTES WITH LDAPUserFolder
+
+
+Overview
+
+  LDAP support was not perfect with GRUF < 3. It worked perfectly in a read-only, 
+  non-groups situation, but setting groups inside LDAP was a pain (you had to put
+  two LDAPUserFolder objects, one for users, the other one for groups) and it was
+  not possible to nest groups nor to set specific roles on groups.
+
+  GRUF 3.0 solves part of this problem - and it's not been easy !
+  This document explains how GRUF 3 handles LDAPUserFolder sources.
+
+
+Issues
+
+  User mutation
+
+    With GRUF 2, it was not possible to create or change a user. It's now possible to change
+    a user quite easily.
+
+  Groups support
+
+    GRUF 3 now supports groups natively with different strategies. You have to choose which
+    strategy to use depending on where your groups are stored (in your LDAP database or not).
+
+    Whatever you choose, you can always create groups through GRUF. Remember that some group
+    assigning may need you to have the proper rights to edit your LDAP database.
+
+    Non-LDAP groups
+
+      This is the simplest case. Just drop a LDAPUserFolder in a user source, indicate
+      that you do not want to store groups in LDAP, keep the regular acl_users for the
+      groups, and you're done. It works straight out of the box.
+
+    LDAP groups
+
+      If you want to store your groups in LDAP, you have to understand a few things.
+
+      First of all, LDAP support *groups* and not *roles*. Zope natively supports *roles* and
+      not *groups*. So what LDAPUF (alone) does is basically mapping LDAP groups to Zope roles.
+
+      [BTW, you cannot assign a *role* to a user if that role doesn't already exist in LDAP,
+      even if you map, in LDAPUF, a group to that particular role.]
+
+      This is okay for the common usage but with GRUF, as *groups* now appear within Zope, it
+      gets more complicated. A LDAP group can be seen either as a *role* or a *group* within
+      Zope. We decide that with the following assertion::
+
+        If a LDAP group has the same name as a Zope role, then it's seen as a role. It's seen
+        as a group in any other case.
+
+      Within GRUF, you've got a new user source which is called LDAPGroupFolder. Just drop it
+      in place of your existing group source, AFTER you've instanciated your LDAPUF. That's all,
+      the binding is done directly: no need anymore to map LDAP groups to Zope "groles".
+
+    Implementation
+
+      To achieve such a result, we've been obligated to hotfix LDAPUF. Please be aware that
+      we NEVER modify a method, we just add new ones.
+
+      We integrated this product : http://zope.org/Members/volkerw/LDAPUserFolderExt/LDAPUSerFolder_0_4
+      So... it's not compatible anymore with GRUF 3 ! :-)
+
+      Warning: LDAPUF may cause some additional roles having the same name as groups to appear
+      in some GRUF pages. This is due to http://www.dataflake.org/tracker/issue_00376 issue.
+
+    Schema restrictions
+
+      To achieve such a result, your LDAP schema must conform to the following specification:
+
+      * all user keys must have a fillable cn, uid and sn attribute. This is right for inetOrgPerson 
+        stuff. This is required because at creation time we only know user's login (not his name
+        nor other information). So we fill those three required fields with his login.
+        This behaviour can be changed by customizing the gruf_ldap_required_fields script (within
+        Plone only).
+
+      * Groups *must* have the 'cn' as RDN. This is the same requirement as LDAPUF, by the way.
+
+      * Groups are from groupOfUniqueNames (this is LDAPUF's requirement)
+
+      * Users are stored WITHIN groups (and not groups within users). The attribute is 
+        "uniqueMember" or "member" (the first is prefered over the second). This is
+        LDAPUF's requirement anyway.
+
+FAQ
+
+  Q: Which LDAPUF versions are compatible with GRUF?
+
+  A: By now, only 2.4Beta2 has been tested successfuly. Other may work - but you have to test.
+
+
+  Q: How to create ROLES with LDAPUF ?
+
+  A: With GRUF support it's still possible. Just create an actual Zope role, and then create
+     a group with the same name in LDAPUF. Then that role will be assignable to your LDAP users.
+
+Todo
+
+  It remains some work.
+
+  * Do the LDAPUF hotfix only with GRUF-compatible versions
+
+  * Provide a better solution for user searching and fetching
+
+  * Provide user attribute edition methods
+

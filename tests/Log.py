@@ -1,8 +1,6 @@
 # ****************************
 # ****** LOG FACILITIES ******
 # ****************************
-# (c)2003 Ingeniweb SARL     #
-#                            #
 """
 One can override the following variables :
 
@@ -21,7 +19,7 @@ LOG_DEBUG = 5           => Debug (Debugging information)
 
 LOG_PROCESSOR : A dictionnary holding, for each key, the data processor.
 A data processor is a function that takes only one parameter : the data to print.
-Default : logFile for all keys.
+Default : LogFile for all keys.
 """
 
 
@@ -41,12 +39,14 @@ import threading
 import traceback
 import os
 import pprint
+import StringIO
 
 LOG_STACK_DEPTH = [-2]
 
-def Log(level, *args):
+def Log(level, *args, **kw):
     """
-    Log(level, *args) => Pretty-prints data on the console with additional information.
+    Log(level, *args, **kw) => Pretty-prints data on the console with additional information.
+    Use a STACK_OFFSET paramter to lower the stack depth
     """
     if LOG_LEVEL and level <= LOG_LEVEL:
         if not level in LOG_PROCESSOR.keys():
@@ -55,7 +55,7 @@ def Log(level, *args):
         stack = ""
         stackItems = traceback.extract_stack()
         for depth in LOG_STACK_DEPTH:
-            stackItem = stackItems[depth]
+            stackItem = stackItems[depth - kw.get('STACK_OFFSET', 0)]
             stack = "%s%s:%s:" % (stack, os.path.basename(stackItem[0]), stackItem[1],)
 ##        return "%s(%s)"%( os.path.basename(stackItem[0]), stackItem[1] )
 ##        pr = "%s %s %010.02f %08d/%02d > " % (LOG_LABEL[level], time.ctime(time.time()), time.clock(), thread.get_ident(), threading.activeCount())
@@ -91,25 +91,28 @@ def FormatStack(stack):
     return ret
 
 
-##def LogException():
-##    """
-##    LogException () => None
+def LogException():
+    """
+    LogException () => None
 
-##    Print an exception information on the console
-##    """
-##    Log(LOG_NOTICE, "EXCEPTION >>>")
-##    traceback.print_exc(file = LOG_OUTPUT)
-##    Log(LOG_NOTICE, "<<< EXCEPTION")
+    Print an exception information on the console
+    """
+    s = StringIO.StringIO()
+    Log(LOG_NOTICE, "EXCEPTION >>>", STACK_OFFSET = 1)
+    traceback.print_exc(file = s, )
+    s.seek(0)
+    Log(LOG_NOTICE, s.read())
+    Log(LOG_NOTICE, "<<< EXCEPTION", STACK_OFFSET = 1)
 
 
 LOG_OUTPUT = stderr
-def logFile(level, label, data, stack):
+def LogFile(level, label, data, stack):
     """
-    logFile : writes data to the LOG_OUTPUT file.
+    LogFile : writes data to the LOG_OUTPUT file.
     """
     LOG_OUTPUT.write(data+'\n')
     LOG_OUTPUT.flush()
-
+logFile = LogFile               # BCKW compatibility
 
 import zLOG
 
@@ -122,21 +125,21 @@ zLogLevelConverter = {
     LOG_DEBUG: zLOG.DEBUG,
     }
 
-def logZLog(level, label, data, stack):
+def LogzLog(level, label, data, stack):
     """
-    logZLog : writes data though Zope's logging facility
+    LogzLog : writes data though Zope's logging facility
     """
     zLOG.LOG("IngeniWeb", zLogLevelConverter[level], "", data + "\n", )
 
 
 
 LOG_PROCESSOR = {
-    LOG_NONE: logZLog,
-    LOG_CRITICAL: logZLog,
-    LOG_ERROR: logZLog,
-    LOG_WARNING: logZLog,
-    LOG_NOTICE: logZLog,
-    LOG_DEBUG: logFile,
+    LOG_NONE: LogzLog,
+    LOG_CRITICAL: LogzLog,
+    LOG_ERROR: LogzLog,
+    LOG_WARNING: LogzLog,
+    LOG_NOTICE: LogzLog,
+    LOG_DEBUG: LogFile,
     }
 
 

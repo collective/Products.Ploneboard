@@ -6,6 +6,14 @@
 <!-- Help text -->
 <p class="form-help">Here is an overview of users, their groups and roles. See the legend below.</p>
 
+<h4>About GRUF</h4>
+  <ol>
+    <p class="form-help">
+      You are currently running <strong>GRUF v.<span tal:replace="here/getGRUFVersion">version</span></strong><br />
+      Information, latest version, documentation... see 
+      <a target="_blank" href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder">The GRUF Webpage</a>.
+    </p>
+  </ol>
 
 <!-- Wizards -->
 <h4>What do you want to do from here ?</h4>

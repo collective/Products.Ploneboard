@@ -22,7 +22,7 @@
     <form action="" method="POST" tal:attributes="action here/absolute_url">
       <tal:block tal:define="
         label_groups python:user.getGroups();
-        label_groups_no_recurse python:user.getGroups(no_recurse = 1);
+        label_groups_no_recurse python:user.getImmediateGroups();
         label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
         groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
         groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);
@@ -120,7 +120,7 @@
                                      tal:condition="python: group.getUserName() != user.getUserName()"
                                 tal:attributes="
                                 value group/getUserName; 
-                                checked python:test(group.getUserName() in user.getGroups(no_recurse=1), '1', '')">
+                                checked python:test(group.getId() in user.getGroupIds(), '1', '')">
                             </td>
                             <td>
                               <div class="list-item" tal:content="structure group/asHTML"></div>
@@ -159,7 +159,7 @@
       XXX TODO ! XXX
       <h4>Group contents</h4>
       <ol>      
-      <table bgcolor="#EEEEEE" tal:define="content python:list(user.getGroups(no_recurse=1))">
+      <table bgcolor="#EEEEEE" tal:define="content python:list(user.getImmediateGroups())">
         <tr class="list-header">
           <th>Group/User</th>
           <th class="list-header">Member <br>of groups</th>
@@ -173,7 +173,7 @@
           >
           <div tal:define="
             label_groups python:user.getGroups();
-            label_groups_no_recurse python:user.getGroups(no_recurse = 1);
+            label_groups_no_recurse python:user.getImmediateGroups();
             label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
             groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
             groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);

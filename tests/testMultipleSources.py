@@ -177,7 +177,6 @@ class TestMultipleSources(ZopeTestCase.ZopeTestCase):
         self.failUnless(self.folder.acl_users.getUser('U1_01').getUserSourceId() == 'Users01')
         self.failUnless(self.folder.acl_users.getUnwrappedUser("U1_01").name == 'U1_01')
 
-
     def test04ChangeUserRole(self,):
         "Test if it possible to change a user's role using the sources API"
         self.setRoles(["Manager"])
@@ -191,7 +190,7 @@ class TestMultipleSources(ZopeTestCase.ZopeTestCase):
         self.failUnless(getSecurityManager().getUser().has_role("Manager"))
         sources = self.folder.acl_users.listAvailableUserSources(filter_permissions = 0, filter_classes = 1)
         self.failUnless(
-            sources == (('User Folder', "manage_addProduct/OFSP/manage_addUserFolder"),),
+            ('User Folder', "manage_addProduct/OFSP/manage_addUserFolder") in sources,
             "There should only have one UF, not %s" % (sources, ))
 
 

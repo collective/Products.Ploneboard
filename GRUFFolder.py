@@ -231,6 +231,13 @@ class GRUFGroups(GRUFFolder):
                    "starting to use this object."
         return ret
 
+    def _getGroup(self, id):
+        """
+        _getGroup(self, id) => same as getUser() but... with a group :-)
+        This method will return an UNWRAPPED object
+        """
+        return self.acl_users.getUser(id)
+
 
     def listGroups(self, prefixed = 1):
         """

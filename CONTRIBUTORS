@@ -11,4 +11,6 @@ CONTRIBUTORS
 
   Helge Tesdal <info@plonesolutions.com> merged PJ's multi-groups branch to the 1.32 GRUF version.
 
-  Maik Röder <maik.roeder@ingeniweb.com> moved GroupSpace out of GRUF
+  Maik Röder <maik.roeder@ingeniweb.com>: moved GroupSpace out of GRUF
+
+  Volker: LDAPGroupFolder initial coding

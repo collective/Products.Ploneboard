@@ -27,6 +27,10 @@ if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/version.txt'):
 else:
     version__ = "(UNKNOWN)"
 
+# Group prefix
+GROUP_PREFIX = "group_"
+GROUP_PREFIX_LEN = len(GROUP_PREFIX)
+
 # Batching range for ZMI pages
 MAX_USERS_PER_PAGE = 100
 
@@ -47,3 +51,8 @@ INVALID_USER_NAMES = [
     'MANAGE_TABS_NO_BANNER', 'tree-item-url', 'SCRIPT_NAME', 'n_', 'help_topic',
     'Zope-Version', 'target',
     ]
+
+# LDAPUserFolder-specific stuff
+LDAPUF_METHOD = "manage_addLDAPSchemaItem"      # sample method to determine if a uf is an ldapuf
+LDAP_GROUP_RDN = "cn"                           # rdn attribute for groups
+

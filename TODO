@@ -1,17 +1,14 @@
 TODO-LIST
 
-[v2.1]
+[v3.1]
+
+  * Plone tools refactoring (user interface must support nested groups, cleaning necessary,
+    API refactoring necessary)
 
   * Allow LocalRole blacklisting
 
-[v2.xx => Not planned yet]
-
   * [ZMI] Add an "Add group/roles" and "Remove group/roles" along with the
     current "Change" button on users/group view (thanks to Danny Bloemendaal)
-
-  DONE * Check users overview : users disapear sometimes
-
-  DONE * Pass to ZPL licence
 
   * [ZMI] Improve ZMI for large users lists (batching, 'select all' buttons,
     'expand all' for tree, ...)
@@ -20,17 +17,27 @@ TODO-LIST
 
   * [Core] Implement some feature to make LDAPUF roles/groups binding easier
 
-  DONE * [CMF/Plone] Test & Document change_password
-
-  DONE * [CMF/Plone] Test & Document searchResults
-
   * [CMF] Test within CMF (not only Plone)
 
-  * [Doc] Document the whole GRUF API
+  * [LDAP] Improve group mapping for already existing groups
 
   * [ZMI] Improve users/groups admin screens:
 
     - use thin borders for audit table and fix cell width
+
+[v3.0]
+
+  DONE * Apply security on API methods
+
+  DONE * Check users overview : users disapear sometimes
+
+  DONE * Pass to ZPL licence
+
+  DONE * [CMF/Plone] Test & Document change_password
+
+  DONE * [CMF/Plone] Test & Document searchResults
+
+  DONE * [Doc] Document the whole GRUF API
 
 [v1.4 => Planned 2003-08-31]
 

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.23 2004/05/04 21:48:46 dreamcatcher Exp $
+$Id: GroupsTool.py,v 1.24 2004/05/18 08:23:36 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -93,12 +93,12 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security.declareProtected(ViewGroups, 'getGroupById')
     def getGroupById(self, id):
-        """Returns the portal_groupdata-ish object for a group corresponding
-        to this id."""
+        """
+        Returns the portal_groupdata-ish object for a group corresponding to this id.
+        """
         if id==None:
             return None
-        prefix = self.acl_users.getGroupPrefix()
-        g = self.acl_users.getGroup(id, prefixed=id.startswith(prefix))
+        g = self.acl_users.getGroupByName(id, )
         if g is not None:
             g = self.wrapGroup(g)
         return g
@@ -200,7 +200,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         Underlying user folder must support adding users via the usual Zope API.
         Passwords for groups ARE irrelevant in GRUF."""
-        self.acl_users.Groups.acl_users.userFolderAddUser(id, password, roles, domains)
+        self.acl_users.userFolderAddGroup(id, roles, )
         self.createGrouparea(id)
 
     security.declareProtected(ManageGroups, 'editGroup')
@@ -209,7 +209,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         Underlying user folder must support editing users via the usual Zope API.
         Passwords for groups seem to be currently irrelevant in GRUF."""
-        self.acl_users.Groups.acl_users.userFolderEditUser(id, password, roles, permissions)
+        self.acl_users.userFolderEditGroup(id, roles, )
 
     security.declareProtected(DeleteGroups, 'removeGroups')
     def removeGroups(self, ids, keep_workspaces=0):
@@ -224,7 +224,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             for guser in gusers:
                 gdata.removeMember(guser.id)
 
-        self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
+        self.acl_users.userFolderDelGroups(ids)
         gwf = self.getGroupWorkspacesFolder()
         if not gwf: # _robert_
             return

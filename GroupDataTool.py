@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.14 2004/05/04 21:48:46 dreamcatcher Exp $
+$Id: GroupDataTool.py,v 1.15 2004/05/18 08:23:36 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -141,6 +141,9 @@ class GroupData (SimpleItem):
         # The reference will be removed by notifyModified().
         self._tool = tool
 
+    def _getGRUF(self,):
+        return self.acl_users
+
     security.declarePrivate('notifyModified')
     def notifyModified(self):
         # Links self to parent for full persistence.
@@ -190,34 +193,27 @@ class GroupData (SimpleItem):
                 ret.append(md.wrapUser(usr))
         return ret
 
+
+    def _getGroup(self,):
+        """
+        _getGroup(self,) => Get the underlying group object
+        """
+        return self._getGRUF().getGroupByName(self.getGroupName())
+
+
     # FIXME: What permission should this be?
     security.declarePublic('addMember')
     def addMember(self, id):
         """ Add the existing member with the given id to the group"""
-        user = self.acl_users.getUser(id)
-        prefix = self.acl_users.getGroupPrefix()
-
-        groups = list(user.getGroups())
-        groups.append(prefix + self.getGroupName())
-        self.acl_users._updateUser(
-            name = id,
-            groups = tuple(groups),
-            )
+        self._getGroup().addMember(id)
 
 
     # FIXME: What permission should this be?
     security.declarePublic('removeMember')
     def removeMember(self, id):
-        """ Remove the member with the provided id from the group """
-        user = self.acl_users.getUser(id)
-        prefix = self.acl_users.getGroupPrefix()
-
-        groups = list(user.getGroups())
-        groups.remove(prefix + self.getGroupName())
-        self.acl_users._updateUser(
-            name = id,
-            groups = tuple(groups),
-            )
+        """Remove the member with the provided id from the group.
+        """
+        self._getGroup().removeMember(id)
 
     security.declareProtected(SetOwnProperties, 'setProperties')
     def setProperties(self, properties=None, **kw):
@@ -309,7 +305,7 @@ class GroupData (SimpleItem):
     security.declarePublic('getGroupName')
     def getGroupName(self):
         """Return the name of the group, without any special decorations (like GRUF prefixes.)"""
-        return self.getGroup().getUserNameWithoutGroupPrefix()
+        return self.getGroup().getName()
 
     security.declarePublic('getId')
     def getGroupId(self):

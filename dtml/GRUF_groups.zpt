@@ -24,7 +24,7 @@
                 >
                 <div tal:define="
                   label_groups python:group.getGroups();
-                  label_groups_no_recurse python:group.getGroups(no_recurse = 1);
+                  label_groups_no_recurse python:group.getImmediateGroups();
                   label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
                   groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
                   groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);

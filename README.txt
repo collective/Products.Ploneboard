@@ -90,6 +90,8 @@ GRUF AND SimpleUserFolder
 
 GRUF AND LDAPUserFolder
 
+  [NEW IN 3.0 VERSION: PLEASE READ README-LDAP.stx INSTEAD]
+
   (As I do not have too much time to document it extensively, I include a discution in #plone with
   Ronan Amicel and Alan Runyan which might give you some clues about it. If you feel like writing
   doc for it, do not hesitate ! :-) )

@@ -4,7 +4,15 @@
 
   <h4>Users management</h4>
   <form action="" method="POST" tal:attributes="action request/URL1">
-    <ol tal:define="users here/getPureUsers">
+    <ol>
+      <tal:block tal:condition="python: not request.get('FORCE_ALL')">
+        <tal:block tal:define="global users here/getPureUsers">
+        </tal:block>
+      </tal:block>
+      <tal:block tal:condition="python: request.get('FORCE_ALL')">
+        <tal:block tal:define="global users python:map(lambda x:here.getUser(x), here.getPureUserNames())">
+        </tal:block>
+      </tal:block>
       <table cellspacing="10" width="90%">
         <tr>
           <!-- Users selection -->
@@ -75,11 +83,15 @@
               </tr>
 
               <tr tal:condition="not: users">
-                <td colspan="4">
+                <td colspan="4" tal:condition="python: not request.get('FORCE_ALL')">
                   <div class="list-item">
                     No user available. This happens either if you have no users defined or if
                     the underlying UserFolder cannot retreive the entire users list (for example, LDAPUserFolder
-                    is limited in results size)
+                    is limited in results size).
+                  </div>
+                  <div class="list-item">
+                    It is reported that <b><span tal:content="python:len(here.getPureUserNames())"></span> users</b> stand in the various user sources.<br />
+                      It might be very long to retreive the whole list but you can force it by <a href="?FORCE_ALL=1">Clicking here</a>.
                   </div>
                 </td>
               </tr>
