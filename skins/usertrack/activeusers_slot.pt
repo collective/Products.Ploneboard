@@ -1,0 +1,47 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+>
+<body>
+
+<div metal:define-macro="activeusersBox"
+       i18n:domain="ivysis"
+       tal:omit-tag=""
+       tal:condition="not: here/portal_membership/isAnonymousUser"       
+       
+                   >
+
+    <div class="box">
+        <h5 i18n:translate="ivysis_title_active_users">active users</h5>
+    
+        
+        <div class="body" tal:define="isMessageInstalled python:hasattr(here.portal_types,'Message')">
+    
+            <div class="content odd">
+                     
+                <div style="white-space: nowrap;"
+                     tal:repeat="ua here/portal_activeusers/listUserActivities">
+
+                    <a tal:attributes="href string:message_send_form?recipient=${ua/username}" tal:condition="isMessageInstalled" >
+                           <img tal:replace="structure here/mail_icon.gif" alt="Contact" />
+                    </a>
+    
+                    <a tal:attributes="href string:${here/Members/absolute_url}/${ua/username}" tal:content="ua/username">
+                        User name
+                    </a>
+    
+    
+                </div>
+            </div>
+        </div>
+     
+
+    </div>
+
+</div>
+    
+</body>
+
+</html>
+
