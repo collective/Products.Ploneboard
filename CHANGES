@@ -1,3 +1,9 @@
+v3_1_1 - 20040906
+
+  * Fixed a bug in getProperty() - it always returned None !
+
+  * Fixed a bug which caused AUTHENTICATED_USER source id to be invalid
+
 v3_1 - 20040831
 
   * Group-to-role mapping now works for LDAPGroupFolder
