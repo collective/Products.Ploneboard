@@ -1,14 +1,12 @@
 TODO-LIST
 
-[v1.3 => Not planned yet]
+[v1.22 => Planned 20030731]
 
-  * Document the whole GRUF API
+  * [CMF/Plone] Test & Document change_password
 
-  * Improve test plan
+  * [CMF/Plone] Test & Document searchResults
 
-  * Improve performance.
-
-  * Improve users/groups admin screens:
+  * [ZMI] Improve users/groups admin screens:
      
     - roles icon, show permissions in some way
   
@@ -19,3 +17,17 @@ TODO-LIST
     - replace audit's legend AA/AB/AC/AD by A0/A1/A2/A3/...
 
     - use thin borders for audit table and fix cell width
+
+[v1.3 => Not planned yet]
+
+  * [CMF] Test within CMF
+
+  * [Doc] Document the whole GRUF API
+
+  * [Test] Improve test plan
+
+  * [Perf] Improve performance.
+
+  * [Core] Implement nested groups
+
+  * [Core] Implement multi-UserFolder-sources

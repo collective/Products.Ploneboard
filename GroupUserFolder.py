@@ -29,6 +29,7 @@ import OFS
 from OFS import ObjectManager, SimpleItem
 from DateTime import DateTime
 from App import ImageFile
+from Products.PageTemplates import PageTemplateFile
 import AccessControl.Role, webdav.Collection
 import Products
 import os
@@ -113,10 +114,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     manage_main = OFS.ObjectManager.ObjectManager.manage_main
     manage_overview = DTMLFile('dtml/GRUF_overview', globals())
     manage_addUser = DTMLFile('dtml/addUser', globals())
-    manage_audit = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_audit', globals())
-    manage_groups = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
-    manage_users = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
-    manage_newusers = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
+    manage_audit = PageTemplateFile.PageTemplateFile('dtml/GRUF_audit', globals())
+    manage_groups = PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
+    manage_users = PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
+    manage_newusers = PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
 
     __ac_permissions__=(
         ('Manage users',
