@@ -163,11 +163,13 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
         # Fetch users first
         u = self.Users.acl_users.getUser(name)
         if u:
+            Log(LOG_DEBUG, "Returning a user object", name, u, u.__class__)
             return GRUFUser.GRUFUser(u, self,).__of__(self)            # $$$ Check security for this !
         
         # If not found, fetch groups (then the user must be prefixed by 'group_' prefix)
         u = self.Groups.getGroup(name)
         if u:
+            Log(LOG_DEBUG, "Returning a group object", name, u)
             return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)            # $$$ check security for this ! and check against double GRUFUser wrapping (what getGroup() is called ?)
  
         # If still not found, well... we cannot do anything else.
@@ -238,6 +240,20 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
             ret.append(self.getUser(n))
         return ret
 
+
+
+    # ------------------------
+    # Authentication interface
+    # ------------------------
+
+
+    def authenticate(self, name, password, request):
+        # Pass the request along to the underlying user-related UserFolder object
+        return self.Users.acl_users.authenticate(name, password, request)
+
+##    ## I DON'T KNOW IF WE HAVE TO PASS VALIDATE
+##    def validate(self, request, auth='', roles=_noroles):
+##        return self.Users.validate(request, auth, roles)
 
 
     # -----------------------------
