@@ -1,19 +1,19 @@
 ##############################################################################
 #
 # Copyright (c) 2001 Zope Corporation and Contributors. All Rights Reserved.
-# 
+#
 # This software is subject to the provisions of the Zope Public License,
 # Version 2.0 (ZPL).  A copy of the ZPL should accompany this distribution.
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
 # WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE
-# 
+#
 # THIS FILE CONTAINS MODIFIED CODE FROM ZOPE 2.6.2
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.9 2004/03/10 01:21:08 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.10 2004/04/06 21:41:37 dreamcatcher Exp $
 """
 
 import copy
@@ -37,7 +37,7 @@ from utils import log, logException
 
 class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
     """Wrapper for Controller Page Template"""
-     
+
     meta_type = 'Filesystem Controller Page Template'
 
     manage_options=(

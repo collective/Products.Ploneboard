@@ -18,6 +18,6 @@ class RedirectTo(BaseFormAction):
         return context.REQUEST.RESPONSE.redirect(url)
 
 
-registerFormAction('redirect_to', 
-                   factory, 
+registerFormAction('redirect_to',
+                   factory,
                    'Redirect to the URL specified in the argument (a TALES expression).  The URL can either be absolute or relative.')

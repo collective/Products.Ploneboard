@@ -21,13 +21,13 @@ class FormActionType(SimpleItem):
         self.id = id
         self.factory = factory
         self.description = description
-        
+
     def getId(self):
         return self.id
-    
+
     def getFactory(self):
         return self.factory
-    
+
     def getDescription(self):
         return self.description
 
@@ -35,10 +35,10 @@ InitializeClass(FormActionType)
 
 # ##############################################################################
 class FormActionKey(Key):
-    
+
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
-    
+
     def __init__(self, object_id, status, context_type, button, controller=None):
         object_id = object_id.strip()
         if controller:
@@ -62,7 +62,7 @@ class FormActionKey(Key):
 
         if not context_type:
             context_type = ANY_CONTEXT
-            
+
         if button is not None:
             button = button.strip()
         if not button:
@@ -75,13 +75,13 @@ class FormActionKey(Key):
 
     def getStatus(self):
         return self.key[1]
-    
+
     def getContextType(self):
         return self.key[2]
-    
+
     def getButton(self):
         return self.key[3]
-    
+
 InitializeClass(FormActionKey)
 
 
@@ -90,8 +90,8 @@ class FormAction(SimpleItem):
 
     security = ClassSecurityInfo()
     security.setDefaultAccess('allow')
-    
-    def __init__(self, object_id, status, context_type, button, 
+
+    def __init__(self, object_id, status, context_type, button,
                  action_type, action_arg, controller=None):
         from FormController import form_action_types
 
@@ -107,27 +107,27 @@ class FormAction(SimpleItem):
         self.action = form_action_types[action_type].getFactory()(action_arg)
 
     def __copy__(self):
-        return FormAction(self.getObjectId(), self.getStatus(), self.getContextType(), 
+        return FormAction(self.getObjectId(), self.getStatus(), self.getContextType(),
             self.getButton(), self.getActionType(), self.getActionArg())
 
     def getKey(self):
         return self.key
-    
+
     def getObjectId(self):
         return self.key.getObjectId()
 
     def getStatus(self):
         return self.key.getStatus()
-    
+
     def getContextType(self):
         return self.key.getContextType()
-    
+
     def getButton(self):
         return self.key.getButton()
 
     def getActionType(self):
         return self.action_type
-    
+
     def getActionArg(self):
         return self.action_arg
 
@@ -159,14 +159,14 @@ class FormActionContainer(SimpleItem):
     def set(self, action):
         self.actions[aq_base(action.getKey())] = aq_base(action)
         self._p_changed = 1
-        
+
     def get(self, key):
         return self.actions[key]
 
     def delete(self, key):
         del self.actions[key]
         self._p_changed = 1
-    
+
     def match(self, object_id, status, context_type, button):
         controller = getToolByName(self, 'portal_form_controller')
         action = None
@@ -198,7 +198,7 @@ class FormActionContainer(SimpleItem):
             pass
         return None
 
-    def getFiltered(self, object_id=_marker, status=_marker, context_type=_marker, 
+    def getFiltered(self, object_id=_marker, status=_marker, context_type=_marker,
                     button=_marker, action_type=_marker, action_arg=_marker):
         filtered = []
         keys = self.actions.keys()

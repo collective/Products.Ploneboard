@@ -32,11 +32,11 @@ class ControllerState(AccessControl.Role.RoleManager):
     # The default next action.  This can be overridden by values in the form
     # controller.
     next_action = None
-    
-    
+
+
     # A dict of variables including such things as portal_status_message.  Again,
     # each key corresponding to a message should have an i18n friendly value,
-    # e.g. something like (id, default string) 
+    # e.g. something like (id, default string)
     kwargs = {}
 
     # a dict of ids of validators already executed
@@ -78,7 +78,7 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.kwargs.update(kwargs)
         return self
 
-        
+
     def setError(self, id, message, msgid=None, new_status=None):
         """Add an error message to the current state object.  The new_status
         argument allows you to optionally change the object's status."""
@@ -92,12 +92,12 @@ class ControllerState(AccessControl.Role.RoleManager):
         if err:
             return err[0]
         return None
-    
+
     def getI18NError(self, id):
-        """Return the error message and i18n msgid associated with the form 
+        """Return the error message and i18n msgid associated with the form
         variable id.  The return value is the tuple (errmsg, i18n_msgid)."""
         return self.errors.get(id, None)
-        
+
     def getId(self):
         """Get the id of the calling script/page template"""
         return self.id
@@ -167,7 +167,7 @@ class ControllerState(AccessControl.Role.RoleManager):
     def setContext(self, context):
         """Set the context of the current form/script"""
         # Store the context in a list so that we don't nuke its acquisition chain.
-        # This is kind of an evil hack, but since we aren't persisting 
+        # This is kind of an evil hack, but since we aren't persisting
         # ControllerState objects, it shouldn't cause any big problems.
         self.context = [context]
         # self.context = context
@@ -183,16 +183,16 @@ class ControllerState(AccessControl.Role.RoleManager):
         self.kwargs = kwargs
 
     def getNextAction(self):
-        """Get the default next action (this action can be overridden in 
-        portal_form_controller).  The action will have the form 
+        """Get the default next action (this action can be overridden in
+        portal_form_controller).  The action will have the form
         {'action_type':action_type, 'args':args} where action_type is a string
-        (from portal_form_controller.validActionTypes), and args is a string 
+        (from portal_form_controller.validActionTypes), and args is a string
         that will be passed to the constructor when generating an action object"""
         return self.next_action
 
     def setNextAction(self, action):
-        """Set the default next action (this action can be overridden in 
-        portal_form_controller).  setNextAction can be called either with a 
+        """Set the default next action (this action can be overridden in
+        portal_form_controller).  setNextAction can be called either with a
         dictionary argument of the form {'action_type':action_type, 'args':args}
         or with a string of the form 'action_type:args'.  Here action_type is a
         string (from form_controller.validActionTypes) and args is a string that
@@ -218,7 +218,7 @@ class ControllerState(AccessControl.Role.RoleManager):
     # indicate that a validator has been executed
     def _addValidator(self, validator):
         self._validators[validator] = 1
-        
+
     # remove a validator from the list of already-executed validators
     def clearValidator(self, validator):
         if self._validators.has_key(validator):
@@ -227,7 +227,7 @@ class ControllerState(AccessControl.Role.RoleManager):
     # clear the list of already-executed validators
     def clearValidators(self):
         self._validators = {}
-        
+
     # see if given validators have been executed
     def hasValidated(self, validators=[]):
         if validators is None:
@@ -238,17 +238,17 @@ class ControllerState(AccessControl.Role.RoleManager):
             if not self._validators.has_key(v):
                 return 0
         return 1
-        
+
     def _setValidating(self, is_validating):
         self._is_validating = is_validating
-        
+
     def _isValidating(self):
         return self._is_validating
 
     def __str__(self):
         return 'id = %s\nstatus = %s\nbutton=%s\nerrors=%s\ncontext=%s\nkwargs=%s\nnext_action=%s\n' % \
-            (self.id, str(self.getStatus()), str(self.getButton()), 
-             str(self.getErrors()), str(self.getContext()), 
+            (self.id, str(self.getStatus()), str(self.getButton()),
+             str(self.getErrors()), str(self.getContext()),
              str(self.kwargs), str(self.next_action))
 
 Globals.InitializeClass(ControllerState)

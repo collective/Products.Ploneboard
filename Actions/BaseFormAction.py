@@ -9,6 +9,8 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFFormController.FormController import registerFormAction
 from Products.CMFFormController.utils import log
 from IFormAction import IFormAction
+from ZTUtils.Zope import make_query
+
 
 # ###########################################################################
 class BaseFormAction(Role.RoleManager):
@@ -38,7 +40,7 @@ class BaseFormAction(Role.RoleManager):
 
         portal = getToolByName(context, 'portal_url').getPortalObject()
         portal_membership = getToolByName(portal, 'portal_membership')
-        
+
         if context is None or not hasattr(context, 'aq_base'):
             folder = portal
         else:
@@ -77,10 +79,10 @@ class BaseFormAction(Role.RoleManager):
 
     def updateQuery(self, url, kwargs):
         """Utility method that takes a URL, parses its existing query string,
-        url encodes 
+        url encodes
         and updates the query string using the values in kwargs"""
-        import urlparse 
-        import urllib 
+        import urlparse
+        import urllib
         import cgi
 
         # parse the existing URL
@@ -89,18 +91,19 @@ class BaseFormAction(Role.RoleManager):
         qs = parsed_url[4]
         # parse the query into a dict
         d = cgi.parse_qs(qs, 1)
-        # XXX not sure if this is the right way to handle this
-        # parse_qs appears to return values in lists -- we concatenate them 
-        # with commas and combine into a single string
-        dict = {}
-        for (k,v) in d.items():
-            dict[k] = ','.join(v)
-        # update the dict
-        dict.update(kwargs)
+        ## update the dict
+        d.update(kwargs)
         # re-encode the string
-        parsed_url[4] = urllib.urlencode(dict)
+        # We use ZTUtils.make_query here because it
+        # does Zope-specific marshalling of lists,
+        # dicts, integers and DateTime.
+        # XXX *Normal* people should not be affected by this.
+        # but one can argue about the need of using
+        # standard query encoding instead for non-Zope
+        # destination urls.
+        parsed_url[4] = make_query(**d)
         # rebuild the URL
         return urlparse.urlunparse(parsed_url)
-        
-    
+
+
 # ###########################################################################
