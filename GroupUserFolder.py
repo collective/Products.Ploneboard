@@ -247,16 +247,46 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return names
 
     security.declareProtected(Permissions.manage_users, "getUsers")
-    def getUsers(self):
+    def getUsers(self, __include_groups__ = 1, __include_users__ = 1):
         """Return a list of user objects"""
         ret = []
-        for n in self.getUserNames():
-            ret.append(self.getUser(n))
+        names = []
+        
+        # Fetch groups first (then the user must be 
+        # prefixed by 'group_' prefix)
+        if __include_groups__:
+            for u in self.Groups.acl_users.getUsers():
+                if not u:
+                    continue        # Ignore empty users
 
-        return filter(None, ret)
-        # This prevents 'None' user objects to be returned. 
-        # This happens for example with LDAPUserFolder when a 
-        # LDAP query fetches too many records.
+                name = u.getId()
+                if name in names:
+                    continue        # Prevent double users inclusion
+
+                # Append group
+                names.append(name)
+                ret.append(
+                    GRUFUser.GRUFUser(u, self, isGroup = 1, source_id = "Groups").__of__(self)
+                    )
+
+        # Fetch users then
+        if __include_users__:
+            for src in self.listUserSources():
+                for u in src.getUsers():
+                    if not u:
+                        continue        # Ignore empty users
+
+                    name = u.getId()
+                    if name in names:
+                        continue        # Prevent double users inclusion
+
+                    # Append user
+                    names.append(name)
+                    ret.append(
+                        GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
+                        )
+
+        return ret
 
     security.declareProtected(Permissions.manage_users, "getUser")
     def getUser(self, name):
@@ -334,12 +364,16 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Return a list of user-like objects belonging to groups.
         """
         ret = []
-        for n in self.getGroupNames():
-            ret.append(self.getGroup(n))
-        return filter(None, ret)                        
-        # This prevents 'None' user objects to be returned. 
-        # This happens for example with LDAPUserFolder when a LDAP 
-        # query fetches too much records.
+
+        # Fetch groups
+        for u in self.Groups.acl_users.getUsers():
+            if not u:
+                continue
+            ret.append(GRUFUser.GRUFUser(u, self, isGroup = 1, source_id = "Groups").__of__(self))
+
+        # Return the list
+        return ret
+
 
     security.declareProtected(Permissions.manage_users, "getGroup")
     def getGroup(self, name, prefixed = 1):
@@ -386,12 +420,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def getPureUsers(self):
         """Return a list of pure user objects"""
         ret = []
-        for n in self.getPureUserNames():
-            ret.append(self.getUser(n))
-        return filter(None, ret)                        
-        # This prevents 'None' user objects to be returned. 
-        # This happens for example with LDAPUserFolder when a 
-        # LDAP query fetches too much records.
+        return self.getUsers(__include_groups__ = 0)
 
 
     # ------------------------
@@ -673,7 +702,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/01/20 18:07:03 $"[7:-2]
+        rev_date = "$Date: 2004/02/20 17:40:42 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -741,7 +770,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 continue
 
             # Avoid erasing former users
-            if name in self.getUserNames():
+            if name in map(lambda x: x.getId(), self.getUsers()):
                 continue
             
             # Use default password or generate a random one
@@ -980,7 +1009,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Collect users
         if display_users:
-            for u in self.getPureUserNames():
+            for u in map(lambda x: x.getId(), self.getPureUsers()):
                 obj = self.getUser(u)
                 html = obj.asHTML()
                 handle = "U%02d" % user_index
@@ -1082,9 +1111,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         noprefix = usr.getUserNameWithoutGroupPrefix()
         is_group = usr.isGroup()
         if usr.isGroup():
-            icon = self.absolute_url() + '/img_group'
+            icon = string.join(self.getPhysicalPath(), '/') + '/img_group'
+##            icon = self.absolute_url() + '/img_group'
         else:
-            icon = self.absolute_url() + '/img_user'
+            icon = ' img_user'
+##            icon = self.absolute_url() + '/img_user'
 
         # Subobjects
         belongs_to = []
@@ -1109,13 +1140,16 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if self._v_no_tree and self._v_cache_no_tree > time.time():
             return []        # Do not use the tree
 
+        # XXX - I DISABLE THE TREE BY NOW (Pb. with icon URL)
+        return [] 
+
         # Then, use a simple computation to determine opportunity to use the tree or not
         ngroups = len(self.getGroupNames())
         if ngroups > MAX_TREE_USERS_AND_GROUPS:
             self._v_no_tree = 1
             self._v_cache_no_tree = time.time() + TREE_CACHE_TIME
             return []
-        nusers = len(self.getUserNames())
+        nusers = len(self.getUsers())
         if ngroups + nusers > MAX_TREE_USERS_AND_GROUPS:
             meth_list = self.getGroups
         else:
@@ -1156,7 +1190,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Use individual usr/grp management screen (only if name is passed along the mgt URL)
         if username != "acl_users":
-            if username in self.getUserNames():
+            if username in map(lambda x: x.getId(), self.getUsers()):
                 REQUEST.set('username', username)
                 REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
                 return self.restrictedTraverse('manage_user')()
@@ -1193,7 +1227,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # This is only for performance reasons.
             # The following code block represent what we want to minimize
             if self._v_cache_tree[0] < time.time():
-                un = self.getUserNames()            # This is the cost we want to avoid
+                un = map(lambda x: x.getId(), self.getUsers())            # This is the cost we want to avoid
                 self._v_cache_tree = (time.time() + TREE_CACHE_TIME, un, )
             else:
                 un = self._v_cache_tree[1]
@@ -1223,7 +1257,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Return None if batching is not necessary
         """
         # Time-consuming stuff !
-        un = self.getPureUserNames()
+        un = map(lambda x: x.getId(), self.getPureUsers())
         if len(un) <= MAX_USERS_PER_PAGE:
             return None
         un.sort()
@@ -1276,7 +1310,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         # Rebuild the list if necessary
         if not self._v_batch_users:
-            un = self.getPureUserNames()
+            un = map(lambda x: x.getId(), self.getPureUsers())
             self._v_batch_users = un
 
         # Return the batch

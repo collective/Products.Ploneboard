@@ -1,3 +1,3 @@
 #!/bin/sh
-export PYTHONPATH="../../../../../bin/lib"
-../../../../../bin/python ./runalltests.py
+export PYTHONPATH="../../../../Python/lib"
+../../../../Python/python ./runalltests.py

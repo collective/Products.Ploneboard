@@ -1,0 +1,34 @@
+Here are the main and initial ideas behing GRUF :
+
+   First, we did spend a lot of time be fore starting to write this
+component. We've had a lot of design (yes, using paper and pen ;)),
+thinking a lot on how to be as much generic as possible . So the
+conclusion of our design sessions were :
+  
+  - a group has to be seen by zope like an user. This way, we can
+garantee that the _whole_ standar d security machinery of Zope will
+continue to work like a charm, without even an hotfix.
+  
+   - a first consequence of this is that GRUF will work out of the box
+   with any Zope application ; including Plone ;)
+   
+   - a second consequence is : groups just have to be stored into
+   another acl_users
+  
+  - GRUF must use _any_ existing acl_users component ; including LDAP
+  or sql one
+  
+  - GRUF as to be as transparent as possible to applications (read
+  "should act as a normal user folder")
+  
+  - Groups nesting should be supported
+  
+  - Multiple sources for users should be supported (ex : source 1 is
+  SQL, source 2 is LDAP, source 3 is another LDAP).
+  
+  API was designed. Test cases were written. Code was done.
+Documentation was written. First version went out. First customers
+were (very) happy. In this order ;)
+
+
+
