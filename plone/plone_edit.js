@@ -14,6 +14,19 @@ function plone_add(target) {
   draweropen(path);
 }
 
+function plone_add_title(target) {
+  // Note that target_index is also available.
+  var form, target_path, compopage_path, title;
+  target_path = escape(target.getAttribute("target_path"));
+  form = document.forms.modify_composites;
+  compopage_path = form.elements.composite_path.value;
+  title = escape(prompt('Input the title value', 'a title'));
+  url = "../createCompoTitle?target_path=" + target_path;
+  url = url + "&compopage_path=" + compopage_path;
+  url = url + "&title=" + title;
+  window.document.location = url;
+}
+
 function plone_change_viewlet(element, viewlet) {
   var form, url, element_path, compopage_path;
   form = document.forms.modify_composites;

@@ -4,10 +4,6 @@ from Products.CompositePack.config import PROJECTNAME
 from Products.CMFCore.utils import getToolByName
 
 class Viewlet(BaseContentMixin):
-    """A basic, Archetypes-based Composite Element
-    that uses references instead of path, and a dropdown
-    for selecting templates
-    """
 
     __implements__ = BaseContent.__implements__ + (IViewlet,)
 
@@ -16,11 +12,10 @@ class Viewlet(BaseContentMixin):
 
     schema = MinimalSchema + Schema((
         StringField(
-        'template_path',
-        widget=StringWidget(label='Template Path',
-                            description=('Path to the template to '
-                                         'be used for rendering '
-                                         'the viewlet.'))
+        'skin_method',
+        widget=StringWidget(label='Skin Method',
+                            description=('Method called for rendering '
+                                         'the viewlet/layout.'))
         ),
         ))
 
@@ -29,6 +24,6 @@ class Viewlet(BaseContentMixin):
         """ Return the template """
         purl = getToolByName(self, 'portal_url')
         portal = purl.getPortalObject()
-        return portal.restrictedTraverse(self.getTemplate_path())
+        return portal.restrictedTraverse(self.getSkin_method())
 
 registerType(Viewlet, PROJECTNAME)

@@ -201,7 +201,7 @@ class CompositeTool(Folder, BaseTool):
         if (pt is None) or (at is None):
             return ()
         else:
-            tis = [pt.getTypeInfo(ty['name']) for ty in at.listRegisteredTypes()
+            tis = [pt.getTypeInfo(ty['portal_type']) for ty in at.listRegisteredTypes()
                 if IReferenceable.isImplementedByInstancesOf(ty['klass'])]
             # remove types not installed
             # iow not in portal_types
@@ -322,7 +322,7 @@ class CompositeTool(Folder, BaseTool):
         viewlet.addViewlet(viewlets, 
                            id=id, 
                            title=description, 
-                           template_path=skin_method)
+                           skin_method=skin_method)
     
     security.declareProtected( ManagePortal, 'registerLayout' )
     def registerLayout(self, id, description, skin_method):
@@ -331,7 +331,7 @@ class CompositeTool(Folder, BaseTool):
         viewlet.addViewlet(layouts, 
                            id=id, 
                            title=description, 
-                           template_path=skin_method)
+                           skin_method=skin_method)
     
     security.declareProtected( ManagePortal, 'unregisterLayout' )
     def unregisterLayout(self, id):
@@ -365,5 +365,8 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     ob.registerLayout('three_slots', 'Three slots', 'three_slots')
     ob.registerViewlet('default_viewlet', 'Basic viewlet (getId)', 'default_viewlet')
     ob.registerViewlet('link_viewlet', 'Link Only', 'link_viewlet')
+    ob.registerViewlet('title_viewlet', 'Title', 'title_viewlet')
+    ob.setViewletsForType('CompositePack Titles', ['title_viewlet'],
+                          'title_viewlet')
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)

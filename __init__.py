@@ -15,6 +15,7 @@ def initialize(context):
     from Products.CompositePack.composite import archetype
     from Products.CompositePack.viewlet import container
     from Products.CompositePack.composite import cmfcompositepage
+    from Products.CompositePack.composite import titles
     
     # register archetypes content with the machinery
     content_types, constructors, ftis = process_types(listTypes(PROJECTNAME),
@@ -31,6 +32,7 @@ def initialize(context):
 
     registerClasses(context, PROJECTNAME, ['CompositePack Element',
                                            'CompositePack Viewlet',
+                                           'CompositePack Titles',
                                            'CompositePack Viewlet Container'])
 
     context.registerClass(

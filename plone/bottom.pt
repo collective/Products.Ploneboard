@@ -19,6 +19,8 @@
      filter="composite_prepare_target_menu(pd_filter_object)"></div>
 <div class="context-menu-item" onmouseup="plone_add(pd_selected_item)"
      filter="pd_selected_item">Add...</div>
+<div class="context-menu-item" onmouseup="plone_add_title(pd_selected_item)"
+     filter="pd_selected_item">Add title...</div>
 </div>
 
 

@@ -1,0 +1,2 @@
+<h1 tal:content="here/title" />
+<div tal:condition="here/description" tal:content="here/description" />

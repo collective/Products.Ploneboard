@@ -1,19 +1,16 @@
 from cgi import escape
 
+from OFS.Folder import Folder
+from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import *
 from Products.CompositePage.interfaces import IComposite
 from Products.CompositePage.composite import Composite, SlotGenerator
 from Products.CompositePage.slot import Slot, getIconURL
 from Products.CompositePack.config import PROJECTNAME, TOOL_ID
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.CMFCorePermissions import setDefaultRoles
+from Products.CMFCore import CMFCorePermissions 
 from Products.CMFCore.utils import getToolByName
 
-composite_schema = Schema((
-                       StringField('layout', 
-                                   widget=SelectionWidget(label='Layout',
-                                                          format='select'),
-                                  ) 
-                    ))
 
 
 edit_tag = '''<div class="slot_element" source_path="%s" icon="%s" title="%s"
@@ -61,16 +58,27 @@ class PackComposite(Composite):
     slots = PackSlotGenerator()
 
 
+DesignCompo = 'Design Composite Page'
+setDefaultRoles(DesignCompo, ('Manager',))
+
 class CMFCompositePage(BaseFolder, PackComposite):
     """A basic, Archetypes-based Composite Page
     """
     __implements__ = BaseFolder.__implements__ + (IComposite,)
     meta_type = portal_type = 'CMF Composite Page'
     archetype_name = 'Navigation Page'
+    immediate_view = 'design_view'
 
+    security = ClassSecurityInfo()
+    
     __occams_gestalt__ = 1
 
-    schema = BaseSchema + composite_schema
+    schema = BaseSchema + Schema((
+                       StringField('layout', 
+                                   widget=SelectionWidget(label='Layout',
+                                                          format='select'),
+                                  ) 
+                    ))
 
     actions = ({'id': 'view',
                 'name': 'View',
@@ -79,9 +87,9 @@ class CMFCompositePage(BaseFolder, PackComposite):
                },
                {'id': 'design',
                 'name': 'Design',
-                'action': 'string:${object_url}/design?ui=plone',
+                'action': 'string:${object_url}/design_view',
                 'condition':'object/getLayout',
-                'permissions': (CMFCorePermissions.ManagePortal,)
+                'permissions': (DesignCompo,)
                },
                )
 
@@ -91,9 +99,18 @@ class CMFCompositePage(BaseFolder, PackComposite):
 
     cp_view = Composite.__call__
 
+    security.declareProtected( DesignCompo, 'design_view')
+    def design_view(self):
+        '''design view for Plone
+        '''
+        return self.design(ui='plone')
+
     def __init__(self, oid, **kwargs):
         BaseFolder.__init__(self, oid)
         Composite.__init__(self)
+        f = Folder()
+        f._setId("titles")
+        self._setObject(f.getId(), f)
         
     def getLayout(self):
         # refresh vocabulary
@@ -106,7 +123,7 @@ class CMFCompositePage(BaseFolder, PackComposite):
     def setLayout(self, viewlet_id):
         composite_tool = getToolByName(self, TOOL_ID)
         ## fix me for no / in template path
-        path = composite_tool.layouts[viewlet_id].getTemplate_path()
+        path = composite_tool.layouts[viewlet_id].getSkin_method()
         template_path = "/".join(path.split('/')[:-1])
         template_id = path.split('/')[-1]
         
