@@ -1287,7 +1287,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/10/20 10:03:54 $"[7:-2]
+        rev_date = "$Date: 2004/11/16 12:08:44 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1374,14 +1374,19 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         for user in users:
             self._updateUser(id = user, groups = groups, roles = roles, )
 
-        # Redirect if no users have been created
-        if not passwords_list:
-            if REQUEST.has_key('RESPONSE'):
+        # Web request
+        if REQUEST.has_key('RESPONSE'):
+            # Redirect if no users have been created    
+            if not passwords_list:
                 return REQUEST.RESPONSE.redirect(self.absolute_url() + "/manage_users")
 
-        # Show passwords form
-        REQUEST.set('USER_PASSWORDS', passwords_list)
-        return self.manage_newusers(None, self)
+            # Show passwords form
+            else:
+                REQUEST.set('USER_PASSWORDS', passwords_list)
+                return self.manage_newusers(None, self)
+
+        # Simply return the list of created passwords
+        return passwords_list
 
 
     security.declareProtected(Permissions.manage_users, "deleteUsers")
