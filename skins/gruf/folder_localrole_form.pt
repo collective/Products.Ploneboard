@@ -48,7 +48,7 @@
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
     		
-    		    <span class="card" tal:repeat="member batch">
+    		    <div class="portrait" tal:repeat="member batch">
     				
                         <img src="defaultUser.gif" alt="Blank picture" border="0" width="75" height="100"
                              tal:attributes="src python:here.portal_membership.getPersonalPortrait(member['username']).absolute_url()" />
@@ -78,7 +78,7 @@
         				</span>						    
         		        
                 <span tal:condition="python:not member['email']">&nbsp;</span>
-    		    </span>
+    		    </div>
 
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
@@ -143,7 +143,7 @@
 			
       <input type="hidden" name="change_type" value="add" />
 
-      <span class="card" tal:repeat="member here/acl_users/getGroups">
+      <div class="portrait" tal:repeat="member here/acl_users/getGroups">
 					
         <img src="defaultGroup.gif" alt="Blank picture" border="0" width="75" height="100" />
 									     
@@ -164,7 +164,7 @@
 	groupname
 	</strong>
 						
-      </span>	
+      </div>	
 			
       <div class="row">
 						
