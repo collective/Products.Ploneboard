@@ -98,64 +98,63 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         afterSetUp(self) => This method is called to create Folder with a GRUF inside.
 
         It creates:
-          * two roles, role1 and role2, with no particular permissions
-          * two groups: group1 having role1 perm and group2 having role2 perm
-          * three users called 'testuser', 'testuser_g1' and 'testuser_g1_g2'.
+          * 3 roles, r1, r2 and r3
+          * 3 groups: g1, g2, g3
+          * n users as follows (roles are between parenthesis)
 
-        Then we create a few folders with the following permissions matrix:
-                group1          group2          role1           role2           Mgr
-                (LocalRole)     (LocalRole)     (Perms)         (Perms)
-                ===================================================================
-        a                                                                       R,W
-        b                                       R                               R,W
-        c       role1                           R                               R,W
-        
+                      !   g1    ! g2(r1)     ! g3(r2)     ! g4(r2,r3)  !  Resulting roles !
+          ------------!---------!------------!------------!------------!------------------!
+          u1          !         !            !            !            !   => (no role)   !
+          u2          !   X     !            !            !            !   => (no role)   !
+          u3          !   X     !      X     !            !            !   => r1          !
+          u4          !   X     !      X     !      X     !            !   => r1,r2       !
+          u5(r1)      !         !      X     !      X     !            !   => r1,r2       !
+          u6(r1)      !         !            !      X     !            !   => r1,r2       !
+          u7(r1)      !         !            !            !     X      !   => r1,r2,r3    !
+          ---------------------------------------------------------------------------------
+
+        It also creates a 'lr' folder in which g1 group and u3 and u6 are granted r3 role.
+
         """
         # Replace default acl_user by a GRUF one
         self.folder.manage_delObjects(['acl_users'])
         self.folder.manage_addProduct['GroupUserFolder'].manage_addGroupUserFolder()
 
         # Create a few roles
-        self.folder._addRole("role1")
-        self.folder._addRole("role2")
-        self.folder._addRole("role2")
-        self.folder._addRole("role_test")
+        self.folder._addRole("r1")
+        self.folder._addRole("r2")
+        self.folder._addRole("r3")
 
         # Create a few groups
-        self.folder.acl_users._doAddGroup('group1', ['role1'])
-        self.folder.acl_users._doAddGroup('group2', ['role2'])
-        self.folder.acl_users._doAddGroup('grouptest', ['roletest'])
+        self.folder.acl_users._doAddGroup('g1', ())
+        self.folder.acl_users._doAddGroup('g2', ('r1', ))
+        self.folder.acl_users._doAddGroup('g3', ('r2', ))
+        self.folder.acl_users._doAddGroup('g4', ('r2', 'r3', ))
 
         # Create a manager and a few users
-        self.folder.acl_users._doAddUser('manager', 'secret', ('Manager',), (), )
-        self.folder.acl_users._doAddUser('testuser', 'secret', (), (), )
-        self.folder.acl_users._doAddUser('testuser_g1', 'secret1', ('Manager',), (), )
-        self.folder.acl_users._doAddUser('testuser_g2', 'secret2', ('Manager',), (), )
+        self.folder.acl_users._doAddUser('manager', 'secret', ('Manager',), (), (), )
+        self.folder.acl_users._doAddUser('u1', 'secret', (), (), (), )
+        self.folder.acl_users._doAddUser('u2', 'secret', (), (), ('g1', ), )
+        self.folder.acl_users._doAddUser('u3', 'secret', (), (), ('g1', 'g2'), )
+        self.folder.acl_users._doAddUser('u4', 'secret', (), (), ('g1', 'g2', 'g3'), )
+        self.folder.acl_users._doAddUser('u5', 'secret', ('r1', ), (), ('g2', 'g3'), )
+        self.folder.acl_users._doAddUser('u6', 'secret', ('r1', ), (), ('g3', ), )
+        self.folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
 
-        # Create a few folders to play with
-        self.folder.manage_addProduct['OFSP'].manage_addFolder('a')
-        self.folder.manage_addProduct['OFSP'].manage_addFolder('b')
-        self.folder.manage_addProduct['OFSP'].manage_addFolder('c')
-        self.folder.b.manage_addLocalRoles("group1", "role_test")
+##        # Create a few folders to play with
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('lr')
+        self.folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
+        self.folder.lr.manage_addLocalRoles("u3", ("r3", ))
+        self.folder.lr.manage_addLocalRoles("u6", ("r3", ))
+        Log(LOG_DEBUG, self.folder.lr.__ac_local_roles__)
+        Log(LOG_DEBUG, self.folder.acl_users.getUser('group_g1').getRolesInContext(self.folder.lr))
 
-        # Create a few documents to play with
-        self.folder.addDTMLMethod('index_html', file='index_html: <dtml-var objectIds>')
-        self.folder.addDTMLMethod('secret_html', file='secret_html: <dtml-var objectIds>')
+##        # Need to commit so the ZServer threads see what we've done
+##        get_transaction().commit()
 
-        # Lock down secret_html
-        s = self.folder.secret_html
-        for p in ZopeTestCase._standard_permissions:
-            s.manage_permission(p, ['Manager'], acquire=0)
-
-        # Need to commit so the ZServer threads see what we've done
-        get_transaction().commit()
-
-
-    def beforeClose(self):
-        # Commit after cleanup
-        get_transaction().commit()
-
-
+##    def beforeClose(self):
+##        # Commit after cleanup
+##        get_transaction().commit()
 
     #                                                   #
     #           Basic GRUF behaviour testing            #
@@ -182,13 +181,57 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless('userrole' in roles)
         self.failUnless('grouprole' in roles)
 
+
+    def compareRoles(self, target, user, roles):
+        """
+        compareRoles(self, target, user, roles) => do not raise if user has exactly the specified roles,
+        else return a tuple (whished, actual).
+        If target is None, test user roles (no local roles)
+        """
+        u = self.folder.acl_users.getUser(user)
+        if target is None:
+            actual_roles = filter(lambda x: x not in ('Authenticated',), list(u.getRoles()))
+        else:
+            actual_roles = filter(lambda x: x not in ('Authenticated',), list(u.getRolesInContext(target)))
+            Log(LOG_DEBUG, "LR", target.getId(), user, actual_roles)
+        actual_roles.sort()
+        wished_roles = list(roles)
+        wished_roles.sort()
+        if actual_roles == wished_roles:
+            return 1
+        raise RuntimeError, "Wished roles: %s / Actual roles : %s" % (wished_roles, actual_roles)
+
+
     def test02securityMatrix(self,):
         """
         test02securityMatrix(self,) => Test the whole security matrix !
 
         We just check that people has the right roles
         """
-        pass
+        self.failUnless(self.compareRoles(None, "u1", ()))
+        self.failUnless(self.compareRoles(None, "u2", ()))
+        self.failUnless(self.compareRoles(None, "u3", ("r1", )))
+        self.failUnless(self.compareRoles(None, "u4", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(None, "u5", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(None, "u6", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(None, "u7", ("r1", "r2", "r3", )))
+
+
+    def test03localRoles(self,):
+        """
+        test03localRoles(self,) => Test the security matrix on a local role
+
+        We just check that people has the right roles
+        """
+        self.failUnless(self.compareRoles(self.folder.lr, "u1", ()))
+        self.failUnless(self.compareRoles(self.folder.lr, "u2", ("r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u3", ("r1", "r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u4", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u5", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u6", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u7", ("r1", "r2", "r3", )))
+
+
 
     #                                                   #
     #               GRUF Interface testing              #
@@ -207,51 +250,52 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
     #              Classical security testing           #
     #                                                   #
 
-    def testAccess(self):
-        '''Test access'''
-        page = self.folder.index_html(self.folder)
 
-    def testWeb(self):
-        '''Test web access'''
-        urllib._urlopener = UnauthorizedOpener()
-        page = urllib.urlopen(base+'/index_html').read()
-        if page.find('Resource not found') >= 0:
-            self.fail('Resource not found')
+##    def testAccess(self):
+##        '''Test access'''
+##        page = self.folder.index_html(self.folder)
 
-    def testWeb2(self):
-        '''Test web access to protected resource'''
-        urllib._urlopener = ManagementOpener()
-        page = urllib.urlopen(base+'/secret_html').read()
-        if page.find('Resource not found') >= 0:
-            self.fail('Resource not found')
+##    def testWeb(self):
+##        '''Test web access'''
+##        urllib._urlopener = UnauthorizedOpener()
+##        page = urllib.urlopen(base+'/index_html').read()
+##        if page.find('Resource not found') >= 0:
+##            self.fail('Resource not found')
+
+##    def testWeb2(self):
+##        '''Test web access to protected resource'''
+##        urllib._urlopener = ManagementOpener()
+##        page = urllib.urlopen(base+'/secret_html').read()
+##        if page.find('Resource not found') >= 0:
+##            self.fail('Resource not found')
             
-    def testSecurity(self):
-        '''Test security of public resource'''
-        # Should be accessible
-        try: self.folder.restrictedTraverse('index_html')
-        except Unauthorized: self.fail('Unauthorized')
+##    def testSecurity(self):
+##        '''Test security of public resource'''
+##        # Should be accessible
+##        try: self.folder.restrictedTraverse('index_html')
+##        except Unauthorized: self.fail('Unauthorized')
 
-    def testSecurity2(self):
-        '''Test security of protected resource'''
-        # Should be protected
-        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'secret_html')
+##    def testSecurity2(self):
+##        '''Test security of protected resource'''
+##        # Should be protected
+##        self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'secret_html')
     
-    def testWebSecurity(self):
-        '''Test web security of public resource'''
-        # Should be accessible
-        urllib._urlopener = UnauthorizedOpener()
-        try: urllib.urlopen(base+'/index_html')
-        except Unauthorized: self.fail('Unauthorized')
+##    def testWebSecurity(self):
+##        '''Test web security of public resource'''
+##        # Should be accessible
+##        urllib._urlopener = UnauthorizedOpener()
+##        try: urllib.urlopen(base+'/index_html')
+##        except Unauthorized: self.fail('Unauthorized')
 
-    def testWebSecurity2(self):
-        '''Test web security of protected resource'''
-        # Should be protected
-        urllib._urlopener = UnauthorizedOpener()
-        self.assertRaises(Unauthorized, urllib.urlopen, base+'/secret_html')
+##    def testWebSecurity2(self):
+##        '''Test web security of protected resource'''
+##        # Should be protected
+##        urllib._urlopener = UnauthorizedOpener()
+##        self.assertRaises(Unauthorized, urllib.urlopen, base+'/secret_html')
 
-    def testAbsoluteURL(self):
-        '''Test absolute_url'''
-        self.assertEquals(self.folder.absolute_url(), base)
+##    def testAbsoluteURL(self):
+##        '''Test absolute_url'''
+##        self.assertEquals(self.folder.absolute_url(), base)
 
 
 
