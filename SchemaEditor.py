@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.5 2004/09/16 18:24:16 ajung Exp $
+$Id: SchemaEditor.py,v 1.6 2004/09/16 18:39:16 ajung Exp $
 """
 
 import re
@@ -42,11 +42,13 @@ class SchemaEditor:
     def atse_init(self, 
                   schema,     
                   filtered_schemas=(), 
-                  undeleteable_fields=[], 
+                  undeleteable_fields=(), 
+                  undeleteable_schematas=('default', 'metadata'), 
                   domain='plone'):
         self._ms = ManagedSchema(schema.fields())
         self._filtered_schemas = filtered_schemas
         self._undeleteable_fields = undeleteable_fields
+        self._undeleteable_schematas = undeleteable_schematas 
         self._i18n_domain = domain
 
     security.declareProtected(View, 'atse_getSchema')
@@ -66,7 +68,7 @@ class SchemaEditor:
     def atse_getSchemata(self, name):
         """ return a schemata given by its name """
         s = ManagedSchema()
-        for f in self._ms.getSchemataFields(name):
+        for f in self._ms.getSchemataFields(name): # Can't we create a copy?
             s.addField(f)
         return ImplicitAcquisitionWrapper(s, self)
 
@@ -97,6 +99,8 @@ class SchemaEditor:
     def atse_delSchemata(self, name, RESPONSE=None):
         """ delete a schemata """
 
+        if name in self._undeleteable_schematas: 
+            raise RuntimeError(self.translate('atse_can_not_remove_schema', default='Can not remove this schema because it is protected from deletion'))
         if len(self._ms.getSchemataNames()) == 1: 
             raise RuntimeError(self.translate('atse_can_not_remove_last_schema', default='Can not remove the last schema'))
         self._ms.delSchemata(name)
