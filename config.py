@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.33 2004/09/27 15:23:33 tiran Exp $
+$Id: config.py,v 1.34 2004/09/28 22:53:21 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -72,7 +72,7 @@ EXT_STORAGE_ENABLE = False
 ENABLE_TEMPLATE_MIXIN = False
 
 ## TemplateMixin write permission. Only if the member has this permission he
-## is allowed to choose another permission then the default permission
+## is allowed to choose another template then the default permission
 TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 # TEMPLATE_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
@@ -85,7 +85,8 @@ CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ManagePortal
 #CONSTRAIN_TYPES_MIXIN_PERMISSION = CMFCorePermissions.ReviewPortalContent
 
 ## Document History view permission
-HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
+HISTORY_VIEW_PERMISSION = CMFCorePermissions.ReviewPortalContent
+# HISTORY_VIEW_PERMISSION = CMFCorePermissions.ModifyPortalContent
 # HISTORY_VIEW_PERMISSION = CMFCorePermissions.View
 
 ## maximum upload size for ATImage and ATFile in MB. 0 is infinitiv

@@ -83,6 +83,12 @@
    setFormat() method to ATDocument which is using the translate method to
    map between stupid CMF content types and real mime types.
    [tiran]
+
+ * Changed mx.Tidy test to work around [ 1033396 ] Error on refresh.
+   [tiran]
+
+ * Fixed [ 1036267 ] Some typos in customconfig.py
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 
