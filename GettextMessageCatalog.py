@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.4 2004/01/07 09:33:44 longsleep Exp $
+$Id: GettextMessageCatalog.py,v 1.5 2004/01/07 11:25:47 longsleep Exp $
 """
 
 from gettext import GNUTranslations
@@ -296,6 +296,21 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         except:
             return False
         return True
+
+    getEncoding__roles__ = __roles__
+    def getEncoding(self):
+        try:
+            content_type = self.getHeader('content-type')
+            enc = content_type.split(';')[1].strip()
+            enc = enc.split('=')[1]
+        except: enc='utf-8'
+        return enc
+
+    getHeader__roles__ = __roles__
+    def getHeader(self, header):
+        self._prepareTranslations()
+        info = self._v_tro._info
+        return info.get(header)
 
     displayInfo__roles__ = __roles__
     def displayInfo(self):
