@@ -152,8 +152,7 @@
         
             <input type="hidden"
                    name="id"
-                   tal:condition="python:not member.getProperty('visible_ids', '') or
-                                  not len(utool.getRelativeContentPath(here))"
+                   tal:condition="python:not member.getProperty('visible_ids', '') or not len(utool.getRelativeContentPath(here))"
                    tal:define="id python:request.get('id', here.getId())"
                    tal:attributes="value id"
                    />
