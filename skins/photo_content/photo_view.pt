@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+<div metal:fill-slot="main" tal:define="size request/size | string:small">
+
+    <div class="contentHeader">
+        <h1 tal:content="here/title_or_id">Title or id</h1> 
+    </div>
+
+    <img tal:condition="here/size" 
+         src="#" 
+         tal:attributes="src string:${here/absolute_url}?size=${size}" />
+
+    <p style="margin-top: 2em;" tal:content="here/Description">
+    Description
+    </p>
+    
+    <small>
+
+    <span i18n:translate="label_size">Size:</span>
+
+        <span tal:define="size python:here.getObjSize(here)"
+              tal:content="size">                        
+        File size
+        </span>            
+
+        <span tal:condition="python:test(here.size, 0, 1)"
+              i18n:translate="no_file_uploaded">
+          (No file has been uploaded)
+        </span>
+
+    </small>
+    
+    
+    <form name=show_photo tal:attributes="action string:${here/absolute_url}/view">
+        <select name="size" onChange="javascript:document.getElementById('show_photo').submit()" >
+            <tal:block tal:repeat="s here/getDisplays" >
+                <tal:block tal:define="selected python: test(s['name'] == size,'selected','');
+                            size string:${s/name}">
+                   <option  tal:attributes="selected selected; value size  " 
+                        tal:content="s/label" 
+                     > </option>
+                </tal:block>
+            </tal:block>
+    
+            <tal:block tal:define="selected python: test('original' == size,'selected','')">
+               <option  
+                   tal:attributes="selected selected;value string:original" 
+                    tal:content="string:original" i18n:translate="">  
+               original </option>
+            </tal:block>
+        </select>
+
+        <input class="context" 
+               tabindex=""
+               type="submit" 
+               name="Show" 
+               value="Show" 
+               i18n:attributes="value"
+                /> 
+        
+    </form>
+
+</div>
+
+</body>
+
+</html>
+
