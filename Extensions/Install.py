@@ -82,9 +82,21 @@ def installControlTool(self, out):
 def installMember(self, out):
     types = listTypes(CMFMember.PKG_NAME)
 
+    class args:
+        def __init__(self, **kw):
+            self.__dict__.update(kw)
+            
     # Member uses a special catalog 
     self.manage_addProduct['ZCatalog'].manage_addZCatalog(id='member_catalog', title='Members Only: CMFMember Catalog')
     self.member_catalog.addIndex(name='review_state', type='FieldIndex')
+    self.member_catalog.manage_addProduct[ 'ZCTextIndex' ].manage_addLexicon(
+        'member_lexicon',
+        elements=[
+        args(group= 'Case Normalizer' , name= 'Case Normalizer' ),
+        args(group= 'Stop Words' , name= " Don't remove stop words" ),
+        args(group= 'Word Splitter' , name= "Unicode Whitespace splitter" ),
+        ]
+        )
     
     installTypes(self, out,
                  types,
@@ -161,8 +173,4 @@ def install(self):
     setupWorkflow(self, out)
     setupSimpleWorkflow(self, out)
 
-    #print >> out, 'Successfully installed %s' % CMFMember.PKG_NAME
-    import sys
-    sys.stdout.write(out.getvalue())
-    
     return out.getvalue()
