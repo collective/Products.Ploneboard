@@ -22,7 +22,7 @@ class ContentPanelsTool( UniqueObject, SimpleItem, PropertyManager, ActionProvid
     _actions = (ActionInformation(id='latest_updates_viewlet'
                                 , title='Latest Updates'
                                 , action=Expression(
-                text='string:here/viewlet_folder_recent/macros/portlet')
+                text='string:here/viewlets_folder_recent/macros/base_portlet')
                                 , condition=Expression(
                 text='python: object.isPrincipiaFolderish')
                                 , permissions=('View',)

@@ -95,7 +95,7 @@ def install_Actions(self, out):
              {"type":"Topic",
               "id":"view_viewlet",
               "name":"Body",
-              "action":"here/viewlet_topic_list/macros/portlet",
+              "action":"here/viewlets_topic_list/macros/base_portlet",
               "condition":"",
               "permission":"View",
               "category":"panel_viewlets",
