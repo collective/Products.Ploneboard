@@ -148,5 +148,5 @@ BUGS
 
 LICENCE
 
-  GRUF is released under the terms of the GNU Public Licence (GPL). Specific arrangements can be found for closed-source projects : please contact us.
+  GRUF > 2 is released under the terms of the Zope Public Licence (ZPL). Specific arrangements can be found for closed-source projects : please contact us.
 
