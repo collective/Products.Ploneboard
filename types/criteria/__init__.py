@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.7 2004/06/28 21:00:49 godchap Exp $
+$Id: __init__.py,v 1.8 2004/07/12 10:15:47 godchap Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -33,7 +33,7 @@ ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
                'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex', 
                'ZCTextIndex',)
                
-DATE_INDICES = ('DateIndex', 'DateRangeIndex', )
+DATE_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex')
 
 STRING_INDICES = ('FieldIndex', 'KeywordIndex', 'PathIndex', 'TextIndex',
                   'TextIndexNG2', 'ZCTextIndex', )
