@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <body>
+  
+    <metal:block fill-slot="base">
+      <tal:block tal:define="dummy python:request.set('disable_border', 1)"
+	                     tal:replace="nothing">
+        Disable the tabs
+      </tal:block>    
+    </metal:block>
+
+  
+    <div metal:fill-slot="main"
+         tal:define="images python:here.contentValues(spec='Photo');
+                     Batch python:modules['ZTUtils'].Batch;
+                     b_start python:request.get('b_start', 0);
+                     batch python:Batch(images, 1, int(b_start), orphan=1);
+                     image python:batch[0];">
+
+      <script language="javascript">
+        <!--
+        var newWin;
+	
+        function centeredWindow(url, winname) {
+	w = screen.width - (screen.width * 0.25)
+	h = screen.height - (screen.height * 0.25)
+	windowLeft = (screen.width - w)/2;
+	windowTop = (screen.height - h)/2;
+	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
+	closeWindow();
+	newWin = window.open(url, winname, settings);
+	newWin.focus();
+        }
+	
+        function closeWindow() {
+	if (newWin && !newWin.closed) {
+	newWin.close();
+	}
+        }
+	-->
+      </script>
+      
+      
+      <div class="listingBar">
+	<table style="width: 100%">
+	  <tr>
+	    <td style="width: 33%">
+	      <span class="previous" tal:define="p batch/previous | nothing" tal:condition="p"> 
+		<a href="#" tal:attributes="href string:?b_start=${p/first}"> &laquo; previous photo</a>
+	      </span>
+	    </td>
+	    <td style="width: 33%; text-align: center;">
+	      <input type="button" 
+		     value="Start slideshow" 
+			   class="context"
+		     tal:attributes="onClick string:javascript:centeredWindow('photoalbum_slideshow?b_start=$b_start');; return false;;"/>
+	    </td>
+	    <td style="width: 33%">
+	      <span class="next" tal:define="n batch/next | nothing" tal:condition="n"> 
+		      <a href="#" tal:attributes="href string:?b_start=${batch/end}">next photo &raquo;</a>
+	      </span>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+      
+      <div class="contentHeader">
+        <h1 tal:content="image/title_or_id">Title or id</h1>
+      </div>
+      
+      <img tal:condition="image/size"
+	src="#" 
+	tal:replace="structure python:image.tag('medium')" />
+	
+	<p style="margin-top: 2em;" tal:content="structure image/Description">
+	  Description
+	</p>
+	
+	<small>
+	  
+	  <span i18n:translate="label_size">Size:</span>
+	  
+	  <span tal:define="size python:image.getObjSize(image)"
+	    tal:content="size">                        
+	    File size
+	  </span>            
+	  
+	  <span tal:condition="python:test(image.size, 0, 1)"
+	    i18n:translate="no_file_uploaded">
+	    (No file has been uploaded)
+	  </span>
+	  
+	</small>
+
+    </div>
+    
+  </body>
+  
+</html>
+
