@@ -9,6 +9,7 @@ import OFS.Image
 from cStringIO import StringIO
 import sys
 from zLOG import LOG, ERROR, WARNING
+from Acquisition import aq_parent, aq_base, aq_self
 
 factory_type_information =  { 'id'             : 'Photo Album',
                               'meta_type'      : 'Photo Album',
@@ -87,7 +88,8 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
     def __bobo_traverse__(self, REQUEST, name):
         # Only intercept traversal if this is the last element
         # being requested
-        if not REQUEST.get('TraversalRequestNameStack', []):
+        stack = REQUEST.get('TraversalRequestNameStack', [])
+        if not stack:
 
             # Size really should be set at this point
             size = REQUEST.get('size', None)
@@ -106,9 +108,10 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
                 return getattr(self._resized_photos, resized_name, None)
 
         # Original image requested
-        return getattr(self, name, None)
+        # do normal traversal
+        return getattr(self, name)
 
-
+    
     def _resize(self, image, size, quality=100):
         """Resize and resample photo."""
         result = StringIO()
