@@ -19,7 +19,7 @@ class IQuickInstallerTool(Interface):
     def isProductAvailable(productname):
         ''' is the product directory present (to check if it has been deleted from the Filesystem '''
         
-    def installProduct(self,p,locked=0,hidden=0,swallowExceptions=0):
+    def installProduct(p,locked=0,hidden=0,swallowExceptions=0):
         ''' installs a product by name 
             throws AlreadyInstalled exception, if components of the product are already installed
             
@@ -29,13 +29,13 @@ class IQuickInstallerTool(Interface):
     def installProducts(products=[], stoponerror=0, REQUEST=None):
         ''' installs the products specified in the products list'''
 
-    def getProductFile(self,p,fname='readme.txt'):
+    def getProductFile(p,fname='readme.txt'):
         ''' returns the content of a file of the product case-insensitive, if it does not exist -> None '''
 
-    def getProductReadme(self,p):
+    def getProductReadme(p):
         ''' returns the readme file of the product case-insensitive '''
 
-    def getProductVersion(self,p):
+    def getProductVersion(p):
         ''' returns the version string stored in version.txt'''
 
     def isProductInstalled(productname):
@@ -103,5 +103,5 @@ class IInstalledProduct(Interface):
            
            if the Product has an uninstall() method in its Install.py it gets called automatically
         '''
-    def getInstalledVersion(self):
+    def getInstalledVersion():
         ''' returns the version of the prod in the moment of installation '''
