@@ -1,0 +1,12 @@
+Source: zope-cmfformcontroller
+Section: web
+Priority: optional
+Maintainer: Christian Heimes <heimes@faho.rwth-aachen.de>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.0
+
+Package: zope-cmfformcontroller
+Architecture: any
+Depends: zope-cmf (>= 1.4.2)
+Description: Zope CMF Form Controller
+ The new form controller for CMF
