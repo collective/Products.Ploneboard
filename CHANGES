@@ -1,3 +1,13 @@
+v2_0Beta2 - 20031222
+
+  * Added GroupSpace object for Plone websites (see website/GroupSpaceDesign_xx.stx)
+
+  * Fixed __getattr__-related bug
+
+  * Fixed inituser-related bug
+ 
+  * Cosmetic fixes and minor bugs
+
 v2_0Beta1 - 20031026
 
   * Include support for multi-sources

@@ -1,27 +1,16 @@
 TODO-LIST
 
-[v2.xx => ]
+[v2.xx => Not planned yet]
+
+  * [GroupSpace] Provide a hook at instanciation time to create additional
+    objects in a GS by simply providing a Python Script in the skin
+
+  * [ZMI] Add an "Add group/roles" and "Remove group/roles" along with the
+    current "Change" button on users/group view (thanks to Danny Bloemendaal)
 
   * Check users overview : users disapear sometimes
 
-  * Pass to ZPL licence
-
-[v1.31 => Planned 2003-08-31]
-
-  * [Core] Fix impossible group removing in users view
-
-  * [ZMI] Optimize screens
-
-  * [CMF/Plone] Fix groups loss when changing pw
-
-[v1.4 => Planned 2003-08-31]
-
-  * [Core] Implement multi-UserFolder-sources
-
-  * [Core/ZMI] Implement something to list all members of a particular group
-    and put this view in individual group management screen.
-
-[v1.4+ => Not planned yet]
+  DONE * Pass to ZPL licence
 
   * [ZMI] Improve ZMI for large users lists (batching, 'select all' buttons,
     'expand all' for tree, ...)
@@ -30,9 +19,9 @@ TODO-LIST
 
   * [Core] Implement some feature to make LDAPUF roles/groups binding easier
 
-  * [CMF/Plone] Test & Document change_password
+  DONE * [CMF/Plone] Test & Document change_password
 
-  * [CMF/Plone] Test & Document searchResults
+  DONE * [CMF/Plone] Test & Document searchResults
 
   * [CMF] Test within CMF (not only Plone)
 
@@ -41,3 +30,19 @@ TODO-LIST
   * [ZMI] Improve users/groups admin screens:
 
     - use thin borders for audit table and fix cell width
+
+[v1.4 => Planned 2003-08-31]
+
+  DONE * [Core] Implement multi-UserFolder-sources
+
+  * [Core/ZMI] Implement something to list all members of a particular group
+    and put this view in individual group management screen.
+
+[v1.31 => Planned 2003-08-31]
+
+  DONE * [Core] Fix impossible group removing in users view
+
+  DONE * [ZMI] Optimize screens
+
+  DONE * [CMF/Plone] Fix groups loss when changing pw
+
