@@ -170,6 +170,32 @@ class GRUFGroups(GRUFFolder):
 
     _group_prefix = "group_"
 
+
+    class C__ac_roles__(Persistent, Implicit, DynaList.DynaList):
+        """
+        __ac_roles__ dynastring.
+        Do not forget to set _target to class instance.
+
+        XXX DynaList is surely not efficient but it's the only way
+        I found to do what I wanted easily. Someone should take
+        a look to PerstList instead to see if it's possible
+        to do the same ? (ie. having a list which elements are
+        the results of a method call).
+
+        However, even if DynaList is not performant, it's not
+        a critical point because this list is meant to be
+        looked at only when a User object is looked at INSIDE
+        GRUF (especially to set groups a user belongs to).
+        So in practice only used within ZMI.
+        """
+        def data(self,):
+            return self.userdefined_roles()
+
+
+    ac_roles = C__ac_roles__()
+    __ac_roles__ = ac_roles
+
+
     def _post_init(self,):
         self.id = "Groups"
 
@@ -197,6 +223,11 @@ class GRUFGroups(GRUFFolder):
             #XXX Please replace this w/ a sensible list comprehension    
             return map(lambda x, self=self: "%s%s" % 
               (self._group_prefix, x), self.acl_users.getUserNames())
+
+
+    def userdefined_roles(self):
+        "Return list of user-defined roles"
+        return self.listGroups()
 
    
 InitializeClass(GRUFUsers) 

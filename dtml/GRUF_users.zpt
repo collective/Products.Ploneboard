@@ -1,48 +1,77 @@
-<h1 tal:replace="structure here/manage_page_header">Header</h1>
-<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+  <h1 tal:replace="structure here/manage_page_header">Header</h1>
+  <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-  <h3>Users management</h3>
+  <h4>Users management</h4>
   <form action="" method="POST" tal:attributes="action template/absolute_url">
     <ol tal:define="users here/getPureUsers">
       <table cellspacing="10">
         <tr>
           <!-- Users selection -->
-          <td valign="middle">
+          <td valign="top">
             <table bgcolor="#EEEEEE">
-              <tr class="list-header">
+              <tr class="list-header" tal:condition="users">
                 <th>&nbsp;</th>
                 <th>User</th>
-                <th>Current group(s)</th>
-                <th>Current role(s)*</th>
+                <th class="list-header">Member <br>of groups</th>
+                <th class="list-header">Implicitly <br>member <br>of groups</th>
+                <th class="list-header">Has roles</th>
+                <th class="list-header">Implicitly <br>has roles <br>(from groups)</th>
               </tr>
               
-              <tr tal:repeat="user users" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
-                <td><div class="list-item"><input type="checkbox" name="users:list" value="" tal:attributes="value user"></td>
-                <td>
-                  <div class="list-item">
-                    <img src="" tal:attributes="src here/Users/icon" />
-                    <font color="" tal:attributes="color here/user_color" tal:content="user">User name</font>
-                  </div>
-                </td>
-                <td>
-                  <div class="list-item">
-                    <font color="" tal:attributes="color here/group_color"
-                       tal:content="python:modules['string'].join(user.getGroupsWithoutPrefix(),', ')">
-                    Group, group, group, group, ...
-                      </font>
-                  </div>
-                </td>
-                <td>
-                  <div class="list-item">
-                    <span tal:repeat="role python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles())">
-                      <font color=""
-                            tal:attributes="color here/role_color">
-                        <span tal:condition="python: role in user.getUserRoles()" tal:replace="role"></span><i tal:condition="python: role not in user.getUserRoles()" tal:content="role"></i><span tal:condition="not:repeat/role/end">, </span>
-                      </font>
+              <tr 
+                  tal:repeat="user users" 
+                class="" 
+                tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')"
+                >
+                <div tal:define="
+                  label_groups python:user.getGroups();
+                  label_groups_no_recurse python:user.getGroups(no_recurse = 1);
+                  label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
+                  groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
+                  groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);
+                  roles python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getRoles());
+                  roles_no_recurse python:filter(lambda x: x not in ('Authenticated', 'Shared'), user.getUserRoles());
+                  roles_recurse python:filter(lambda x: x not in roles_no_recurse, roles);"
+                  tal:omit-tag="">
+                  <td><div class="list-item"><input type="checkbox" name="users:list" value="" tal:attributes="value user"></td>
+                  <td>
+                    <div class="list-item">
+                      <img src="" tal:attributes="src here/Users/icon" />
+                        <strong tal:content="structure user/asHTML">
+                        </strong>
+                  </td>
+                  <td class="list-item">
+                    <span tal:repeat="group groups_no_recurse" >
+                      <span tal:replace="structure group/asHTML"></span><span tal:condition="not:repeat/group/end">, </span>
                     </span>
-                  </div>
-                </td>
+                  </td>
+                  <td class="list-item">
+                    <span tal:repeat="group groups_recurse" >
+                      <span tal:replace="structure python:group.asHTML(implicit=1)"></span><span tal:condition="not:repeat/group/end">, </span>
+                    </span>
+                  </td>
+                  <td class="list-item">
+                    <div class="list-item">
+                      <span tal:repeat="role roles_no_recurse" >
+                        <font color=""
+                              tal:attributes="color here/role_color">
+                          <span tal:replace="role"></span><span tal:condition="not:repeat/role/end">, </span>
+                        </font>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="list-item">
+                    <div class="list-item">
+                      <span tal:repeat="role roles_recurse" >
+                        <font color=""
+                              tal:attributes="color here/role_color">
+                          <i><span tal:replace="role"></span></i><span tal:condition="not:repeat/role/end">, </span>
+                        </font>
+                      </span>
+                    </div>
+                  </td>
+                </div>
               </tr>
 
               <tr tal:condition="not: users">
@@ -60,6 +89,14 @@
                 <td><div class="list-item">&nbsp;</div></td>
                 <td><div class="list-item">Create users:<br /><textarea name="new_users:lines" cols="20" rows="3"></textarea></div></td>
                 <td><div class="list-item"></div></td>
+              </tr>
+              <tr>
+                <td colspan="4" align="center"><br>
+                    <input type="submit" name="changeOrCreateUsers:method" value="Create / Change" />
+                      &nbsp;
+                      <input type="submit" name="deleteUsers:method" value="Delete" />
+                        <br>&nbsp;
+                </td>
             </table>
           </td>
 
@@ -72,10 +109,9 @@
               <tr>
                 <td>
                   <!-- Groups selection -->
-                  <table>
+                  <table width="100%">
                     <tr class="list-header">
-                      <th>&nbsp;</th>
-                      <th>Affect groups</th>
+                      <th colspan="2">Affect groups</th>
                     </tr>
                     
                     <tr tal:repeat="group here/getGroups">
@@ -83,24 +119,23 @@
                         <input type="checkbox" name="groups:list" value="" tal:attributes="value group">
                       </td>
                       <td>
-                        <div class="list-item"><font color="" tal:attributes="color here/group_color" tal:content="group/getUserNameWithoutGroupPrefix">Group (without prefix)</font></div>
+                        <div class="list-item" tal:content="structure group/asHTML"></div>
                       </td>
                     </tr>
                     
                     <!-- "(None)" item -->
                     <tr>
-                      <td><div class="list-item"><input type="checkbox" name="groups:list" value="__None__"></div></td>
+                      <td><div class="list-item"><input type="checkbox" name="nested_groups:list" value="__None__"></div></td>
                       <td><div class="list-item"><i>(None)</i></div></td>
                     </tr>
                   </table>
-
+                  
                   <br>
-
+                    
                     <!-- Roles selection -->
-                    <table>
+                    <table width="100%">
                       <tr class="list-header">
-                        <th>&nbsp;</th>
-                        <th>Affect roles</th>
+                        <th colspan="2">Affect roles</th>
                       </tr>
                       
                       <tr tal:repeat="role here/valid_roles">
@@ -125,37 +160,28 @@
         </tr>
       </table>
 
-      <!-- Actions -->
-      <p align="center">
-        <input type="submit" name="changeOrCreateUsers:method" value="Create / Change" />
-          &nbsp;
-          <input type="submit" name="deleteUsers:method" value="Delete" />
-      </p>
       <p class="form-help">
         If you do not select any role, roles won't be reseted for the selected users.<br />
-        If you do not select any group, groups won't be reseted for the selected users.<br />
-        To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
-      </p>
-      <p class="form-help">
-        * Remember than roles inherited from groups appear in itallics.
+          If you do not select any group, groups won't be reseted for the selected users.<br />
+            To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
       </p>
     </ol>
   </form>
 
 
-  <h3>Instructions</h3>
+  <h4>Instructions</h4>
   <ol>
-      <p class="form-help">
-        To change roles for one or several users, select them in the left form, 
-        select the roles you want to give them and the groups they belong to in the forms on the right and click "Change".<br />
-          You can also create one or several users by filling the text area (one user per line). 
-          The "Change" button will create them with the roles and group affectation you've selected. 
-          A random password will be generated for them, and it will be shown in a page so that you can click/paste them somewhere.<br />
-            If you want to kill some users, you can delete them by selecting them and clicking the "Delete" button.
-      </p>
+    <p class="form-help">
+      To change roles for one or several users, select them in the left form, 
+      select the roles you want to give them and the groups they belong to in the forms on the right and click "Change".<br />
+        You can also create one or several users by filling the text area (one user per line). 
+        The "Change" button will create them with the roles and group affectation you've selected. 
+        A random password will be generated for them, and it will be shown in a page so that you can click/paste them somewhere.<br />
+        If you want to kill some users, you can delete them by selecting them and clicking the "Delete" button.
+    </p>
   </ol>
 
-  <h3>Important notice / disclaimer</h3>
+  <h4>Important notice / disclaimer</h4>
   
   <ol>
     <p class="form-help">
@@ -169,4 +195,4 @@
     </p>
   </ol>
 
-<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
+  <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

@@ -42,6 +42,9 @@ from AccessControl.PermissionRole \
 from ComputedAttribute import ComputedAttribute
 
 
+import os
+import traceback
+
 
 # NOTE : _what_not_even_god_should_do is a specific permission defined by ZOPE
 # that indicates that something has not to be done within Zope.
@@ -116,14 +119,18 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """Return 1 if this user is a group abstraction"""
         return self._isGroup
 
+
     security.declarePrivate('getGroups')
-    def getGroups(self):
+    def getGroups(self, no_recurse = 0, already_done = [], prefix = GRUFFolder.GRUFGroups._group_prefix):
         """
+        getGroups(self, no_recurse = 0, already_done = [], prefix = GRUFFolder.GRUFGroups._group_prefix) => list of strings
+        
         If this user is a user (uh, uh), get its groups.
-        $$$ BY NOW, WE DO NOT AUTHORIZE GROUPS TO BELONG TO GROUPS. 
-        This excludes 'group inheritance'.
-        Maybe we could authorize this one day, then we should 
-        modify this behaviour.
+        THIS METHODS NOW SUPPORTS NESTED GROUPS ! :-)
+        The already_done parameter prevents infite recursions.
+        Keep it as it is, never give it a value.
+
+        If no_recurse is true, return only first level groups
 
         This method is private and should remain so.
         """
@@ -131,20 +138,44 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # with _group_prefix are in fact groups, and thus are 
         # returned (prefixed).
         ret = []
-        prefix = GRUFFolder.GRUFGroups._group_prefix
+
+        # Scan roles to find groups
         for role in self._original_roles:
-            if string.find(role, prefix) == 0:
+            # Inspect group-like roles
+            if role.startswith(prefix):
+                
+                # Prevent infinite recursion
+                if self._isGroup and role in already_done:
+                    continue 
+                    
+                # Get the underlying group
+                grp = self.aq_parent.getUser(role)
+                if not grp:
+                    continue    # Invalid group
+
+                # Do not add twice the current group
+                if role in ret:
+                    continue
+
+                # Append its nested groups (if recurse is asked)
                 ret.append(role)
+                if no_recurse:
+                    continue
+                for extend in grp.getGroups(already_done = ret):
+                    if not extend in ret:
+                        ret.append(extend)
+
+        # Return the groups
         return tuple(ret)
 
 
     security.declarePrivate('getGroupsWithoutPrefix')
-    def getGroupsWithoutPrefix(self,):
+    def getGroupsWithoutPrefix(self, **kw):
         """
         Same as getGroups but return them without a prefix.
         """
         ret = []
-        for group in self.getGroups():
+        for group in self.getGroups(**kw):
           if group.startswith(grufprefix):
             ret.append(group[len(grufprefix):])
         return ret
@@ -230,9 +261,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     
     security.declarePublic('getRolesInContext')
     def getRolesInContext(self, object, userid = None):
-        """Return the list of roles assigned to the user,
-           including local roles assigned in context of
-           the passed in object."""
+        """
+        Return the list of roles assigned to the user,
+        including local roles assigned in context of
+        the passed in object.
+        """
         if not userid:
             userid=self.getId()
         roles=self.getRoles()
@@ -245,13 +278,14 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             if local_roles:
                 if callable(local_roles):
                     local_roles=local_roles()
-                dict=local_roles or {}
-                for r in dict.get(userid, []):
+                local_roles = local_roles or {}
+                for r in local_roles.get(userid, []):
                     local[r]=1
 
                 # Get roles & local roles for groups
+                # This handles nested groups as well
                 for groupid in self.getGroups():
-                    for r in dict.get(groupid, []):
+                    for r in local_roles.get(groupid, []):
                         group_roles.append(r)
 
             # Prepare next iteration
@@ -366,7 +400,6 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     def __getattr__(self, name):
         # This will call the underlying object's methods
         # if they are not found in this user object.
-        Log(LOG_DEBUG, "Trying to get attribute", name)
         try:
             return self.__dict__['__underlying__'].restrictedTraverse(name)
         except AttributeError:
@@ -398,3 +431,31 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
             roles,
             self.getDomains(),
             )
+
+
+    #                                                           #
+    #                      HTML link support                    #
+    #                                                           #
+
+    def asHTML(self, implicit=0):
+        """
+        asHTML(self, implicit=0) => HTML string
+        Used to generate homogeneous links for management screens
+        """
+        acl_users = self.acl_users
+        if self.isGroup():
+            color = acl_users.group_color
+            kind = "Group"
+        else:
+            color = acl_users.user_color
+            kind = "User"
+
+        ret = '''<a href="%(href)s" alt="%(alt)s"><font color="%(color)s">%(name)s</font></a>''' % {
+            "color": color,
+            "href": "%s/%s/manage_workspace" % (acl_users.absolute_url(), self.getId(), ),
+            "name": self.getUserNameWithoutGroupPrefix(),
+            "alt": "%s (%s)" % (self.getUserNameWithoutGroupPrefix(), kind, ),
+            }
+        if implicit:
+            return "<i>%s</i>" % ret
+        return ret

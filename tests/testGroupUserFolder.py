@@ -115,6 +115,24 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
         It also creates a 'lr' folder in which g1 group and u3 and u6 are granted r3 role.
 
+
+        And then, it creates nested groups as follow (-> = belongs to group...):
+
+             u/g   !  belongs to... ! resulting roles                     !
+         ----------!----------------!-------------------------------------!
+          ng1      !   g1           ! (no role)                           !
+          ng2      !   g2, g3       ! r1, r2                              !
+          ng3      !   g2, ng2      ! r1, r2                              !
+          ng4(r3)  !   g2, ng2      ! r1, r2, r3                          !
+          ng5      !   g2, ng4      ! r1, r2, r3                          !
+          ng6      !   ng5, ng6     ! r1, r2, r3 (no circ. ref)           !
+          u8       !   ng1          ! (no role)                           !
+          u9       !   g1, ng2      ! r1, r2                              !
+          u10      !   ng2, ng3     ! r1, r2                              !
+          u11(r3)  !   ng2, ng3     ! r1, r2, r3                          !
+          u12      !   ng5, ng6     ! r1, r2, r3                          !
+         -----------------------------------------------------------------!
+
         """
         # Replace default acl_user by a GRUF one
         self.folder.manage_delObjects(['acl_users'])
@@ -131,6 +149,14 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddGroup('g3', ('r2', ))
         self.folder.acl_users._doAddGroup('g4', ('r2', 'r3', ))
 
+        # Create nested groups
+        self.folder.acl_users._doAddGroup('ng1', (), ('g1', ))
+        self.folder.acl_users._doAddGroup('ng2', (), ('g2', 'g3', ))
+        self.folder.acl_users._doAddGroup('ng3', (), ('g2', 'ng2', ))
+        self.folder.acl_users._doAddGroup('ng4', ('r3', ), ('g2', 'ng2', ))
+        self.folder.acl_users._doAddGroup('ng5', (), ('g2', 'ng4', ))
+##        self.folder.acl_users._doAddGroup('ng6', (), ('ng5', 'ng6', ))
+
         # Create a manager and a few users
         self.folder.acl_users._doAddUser('manager', 'secret', ('Manager',), (), (), )
         self.folder.acl_users._doAddUser('u1', 'secret', (), (), (), )
@@ -141,13 +167,23 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddUser('u6', 'secret', ('r1', ), (), ('g3', ), )
         self.folder.acl_users._doAddUser('u7', 'secret', ('r1', ), (), ('g4', ), )
 
+        # Create nested-groups users
+        self.folder.acl_users._doAddUser('u8', 'secret', (), (), ('ng1', ), )        
+        self.folder.acl_users._doAddUser('u9', 'secret', (), (), ('g1', 'ng2', ), )
+        self.folder.acl_users._doAddUser('u10', 'secret', (), (), ('ng2', 'ng3', ), )        
+        self.folder.acl_users._doAddUser('u11', 'secret', ('r3', ), (), ('ng2', 'ng3', ), )        
+##        self.folder.acl_users._doAddUser('u12', 'secret', (), (), ('ng5', 'ng6', ), )        
+
 ##        # Create a few folders to play with
         self.folder.manage_addProduct['OFSP'].manage_addFolder('lr')
         self.folder.lr.manage_addLocalRoles("group_g1", ("r3", ))
         self.folder.lr.manage_addLocalRoles("u3", ("r3", ))
         self.folder.lr.manage_addLocalRoles("u6", ("r3", ))
-        Log(LOG_DEBUG, self.folder.lr.__ac_local_roles__)
-        Log(LOG_DEBUG, self.folder.acl_users.getUser('group_g1').getRolesInContext(self.folder.lr))
+
+        # Special case of nesting
+        self.folder.acl_users._doAddGroup('extranet', (), ())
+        self.folder.acl_users._doAddGroup('intranet', (), ('extranet', ))
+        self.folder.acl_users._doAddGroup('compta', (), ('intranet', 'extranet' ))
 
 ##        # Need to commit so the ZServer threads see what we've done
 ##        get_transaction().commit()
@@ -172,8 +208,6 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddGroup('gtest', ['grouprole'])
         self.folder.acl_users._doAddUser('utest', 'secret', ('userrole', ), (), ('gtest', ), )
 
-        Log(LOG_DEBUG, self.folder.acl_users.getGroups())
-
         # Check if the user has the right roles
         usr = self.folder.acl_users.getUser('utest')
         roles = usr.getRoles()
@@ -184,22 +218,38 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
     def compareRoles(self, target, user, roles):
         """
-        compareRoles(self, target, user, roles) => do not raise if user has exactly the specified roles,
-        else return a tuple (whished, actual).
+        compareRoles(self, target, user, roles) => do not raise if user has exactly the specified roles.
         If target is None, test user roles (no local roles)
         """
         u = self.folder.acl_users.getUser(user)
+        if not u:
+            raise RuntimeError, "compareRoles: Invalid user: '%s'" % user
         if target is None:
             actual_roles = filter(lambda x: x not in ('Authenticated',), list(u.getRoles()))
         else:
             actual_roles = filter(lambda x: x not in ('Authenticated',), list(u.getRolesInContext(target)))
-            Log(LOG_DEBUG, "LR", target.getId(), user, actual_roles)
         actual_roles.sort()
         wished_roles = list(roles)
         wished_roles.sort()
         if actual_roles == wished_roles:
             return 1
-        raise RuntimeError, "Wished roles: %s / Actual roles : %s" % (wished_roles, actual_roles)
+        raise RuntimeError, "User %s: Wished roles: %s BUT current roles: %s" % (user, wished_roles, actual_roles)
+
+
+    def compareGroups(self, user, groups):
+        """
+        compareGroups(self, user, groups) => do not raise if user has exactly the specified groups.
+        """
+        u = self.folder.acl_users.getUser(user)
+        if not u:
+            raise RuntimeError, "compareGroups: Invalid user: '%s'" % user
+        actual_groups = list(u.getGroups())
+        actual_groups.sort()
+        wished_groups = map(lambda x: "group_%s" % x, list(groups))
+        wished_groups.sort()
+        if actual_groups == wished_groups:
+            return 1
+        raise RuntimeError, "User %s: Wished groups: %s BUT current groups: %s" % (user, wished_groups, actual_groups)
 
 
     def test02securityMatrix(self,):
@@ -217,9 +267,39 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless(self.compareRoles(None, "u7", ("r1", "r2", "r3", )))
 
 
-    def test03localRoles(self,):
+    def test03usersBelongToGroups(self,):
         """
-        test03localRoles(self,) => Test the security matrix on a local role
+        test03usersBelongToGroups(self,) => test that the users belong to the right groups.
+        This implies nested groups testing
+        """
+        # Check regular users
+        self.failUnless(self.compareGroups("u1", ()))
+        self.failUnless(self.compareGroups("u2", ("g1", )))
+        self.failUnless(self.compareGroups("u3", ("g1", "g2", )))
+        self.failUnless(self.compareGroups("u4", ("g1", "g2", "g3", )))
+        self.failUnless(self.compareGroups("u5", ("g2", "g3", )))
+        self.failUnless(self.compareGroups("u6", ("g3", )))
+        self.failUnless(self.compareGroups("u7", ("g4", )))
+
+        # Check nested groups
+        self.failUnless(self.compareGroups("group_ng1", ("g1", )))
+        self.failUnless(self.compareGroups("group_ng2", ("g2", "g3", )))
+        self.failUnless(self.compareGroups("group_ng3", ("g2", "g3", "ng2", )))
+        self.failUnless(self.compareGroups("group_ng4", ("g2", "g3", "ng2", )))
+        self.failUnless(self.compareGroups("group_ng5", ("g2", "g3", "ng2", "ng4", )))
+##        self.failUnless(self.compareGroups("ng6", ("ng5", )))
+
+        # Check nested-groups users
+        self.failUnless(self.compareGroups("u8", ("ng1", "g1", )))
+        self.failUnless(self.compareGroups("u9", ("ng2", "g1", "g2","g3",  )))
+        self.failUnless(self.compareGroups("u10", ("ng2", "ng3", "g2", "g3", )))
+        self.failUnless(self.compareGroups("u11", ("ng2", "ng3", "g2", "g3", )))
+##        self.failUnless(self.compareGroups("u12", ()))
+
+
+    def test04localRoles(self,):
+        """
+        Test the security matrix on a local role
 
         We just check that people has the right roles
         """
@@ -232,24 +312,63 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless(self.compareRoles(self.folder.lr, "u7", ("r1", "r2", "r3", )))
 
 
+    def test05nestedGroups(self,):
+        """
+        Test security on nested groups
+        """
+        # Test group roles
+        self.failUnless(self.compareRoles(None, "group_ng1", ()))
+        self.failUnless(self.compareRoles(None, "group_ng2", ('r1', 'r2', )))
+        self.failUnless(self.compareRoles(None, "group_ng3", ('r1', 'r2', )))
+        self.failUnless(self.compareRoles(None, "group_ng4", ('r1', 'r2', 'r3', )))
+        self.failUnless(self.compareRoles(None, "group_ng5", ('r1', 'r2', 'r3', )))
+##        self.failUnless(self.compareRoles(None, "group_ng6", ()))
+
+        # Test user roles
+        self.failUnless(self.compareRoles(None, "u8", ()))
+        self.failUnless(self.compareRoles(None, "u9", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(None, "u10", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(None, "u11", ("r1", "r2", "r3")))
+##        self.failUnless(self.compareRoles(None, "u12", ("r1", "r2", "r3")))
+
+        # Test the same with local roles (wow !)
+        self.failUnless(self.compareRoles(self.folder.lr, "u8", ("r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u9", ("r1", "r2", "r3", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u10", ("r1", "r2", )))
+        self.failUnless(self.compareRoles(self.folder.lr, "u11", ("r1", "r2", "r3")))
+##        self.failUnless(self.compareRoles(self.folder.lr, "u12", ("r1", "r2", "r3")))
+
+
+    def test06doubleNesting(self,):
+        """
+        Test against double nesting
+        """
+        self.failUnless(self.compareGroups("group_compta", ('intranet', 'extranet', )))
+    
 
     #                                                   #
     #               GRUF Interface testing              #
     #                                                   #
 
-    def test03GRUFMethods(self,):
+    def test10GRUFMethods(self,):
         """
-        test03GRUFMethods(self,) => We test that GRUF's API is well protected
+        We test that GRUF's API is well protected
         """
         self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
         self.assertRaises(Unauthorized, self.folder.restrictedTraverse, 'acl_users/getGRUFPhysicalRoot')
         urllib.urlopen(base+'/acl_users/getGRUFId')
 
 
+    def test11GRUFAPI(self,):
+        """
+        Test that gruf API for adding, removing and changing users and groups is okay
+        """
+        pass            # XXX TODO
+
+
     #                                                   #
     #              Classical security testing           #
     #                                                   #
-
 
 ##    def testAccess(self):
 ##        '''Test access'''

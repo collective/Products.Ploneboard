@@ -2,39 +2,74 @@
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-  <h3>Groups management</h3>
+  <h4>Groups management</h4>
   <form action="" method="POST" tal:attributes="action template/absolute_url">
     <ol>
-      <table cellspacing="10">
+      <table cellspacing="10" tal:define="groups here/getGroups">
         <tr>
           <!-- Groups selection -->
           <td valign="top">
             <table bgcolor="#EEEEEE">
-              <tr class="list-header">
+              <tr class="list-header" tal:condition="groups">
                 <th>&nbsp;</th>
                 <th>Group</th>
-                <th>Current role(s)</th>
+                <th class="list-header">Member <br>of groups</th>
+                <th class="list-header">Implicitly <br>member <br>of groups</th>
+                <th class="list-header">Has roles</th>
+                <th class="list-header">Implicitly <br>has roles <br>(from groups)</th>
               </tr>
               
-              <tr tal:repeat="group here/getGroups" class="" tal:attributes="class python:test(path('repeat/group/odd'), 'row-hilite', 'row-normal')">
-                <td><div class="list-item"><input type="checkbox" name="groups:list" value="" tal:attributes="value group"></td>
-                <td>
-                  <div class="list-item">
-                    <img src="" tal:attributes="src here/Groups/icon">
-                    <font color="" tal:attributes="color here/group_color">
-                      <span tal:content="group/getUserNameWithoutGroupPrefix">Group name</span>
-                    </font>
-                  </div>
-                </td>
-                <td>
-                  <div class="list-item">
-                    <i>
-                      <font color="" tal:attributes="color here/role_color" tal:content="python:modules['string'].join(filter(lambda x: x not in ('Authenticated', 'Shared'), group.getRoles()),', ')">
-                        Role, role, role, role, ...
-                      </font>
-                    </i>
-                  </div>
-                </td>
+              <tr 
+                  tal:repeat="group groups" class="" tal:attributes="class python:test(path('repeat/group/odd'), 'row-hilite', 'row-normal')"
+                >
+                <div tal:define="
+                  label_groups python:group.getGroups();
+                  label_groups_no_recurse python:group.getGroups(no_recurse = 1);
+                  label_groups_recurse python:filter(lambda x: x not in label_groups_no_recurse, label_groups);
+                  groups_no_recurse python:map(lambda x: here.getUser(x), label_groups_no_recurse);
+                  groups_recurse python:map(lambda x: here.getUser(x), label_groups_recurse);
+                  roles python:filter(lambda x: x not in ('Authenticated', 'Shared'), group.getRoles());
+                  roles_no_recurse python:filter(lambda x: x not in ('Authenticated', 'Shared'), group.getUserRoles());
+                  roles_recurse python:filter(lambda x: x not in roles_no_recurse, roles);"
+                  tal:omit-tag="">
+                  <td><div class="list-item"><input type="checkbox" name="groups:list" value="" tal:attributes="value group"></td>
+                  <td>
+                    <div class="list-item">
+                      <img src="" tal:attributes="src here/Groups/icon">
+                      <strong tal:content="structure group/asHTML">
+                      </strong>
+                    </td>
+                    <td class="list-item">
+                      <span tal:repeat="group groups_no_recurse" >
+                        <span tal:replace="structure group/asHTML"></span><span tal:condition="not:repeat/group/end">, </span>
+                      </span>
+                    </td>
+                    <td class="list-item">
+                      <span tal:repeat="group groups_recurse" >
+                        <span tal:replace="structure python:group.asHTML(implicit=1)"></span><span tal:condition="not:repeat/group/end">, </span>
+                      </span>
+                    </td>
+                    <td class="list-item">
+                      <div class="list-item">
+                        <span tal:repeat="role roles_no_recurse" >
+                          <font color=""
+                                tal:attributes="color here/role_color">
+                            <span tal:replace="role"></span><span tal:condition="not:repeat/role/end">, </span>
+                          </font>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="list-item">
+                      <div class="list-item">
+                        <span tal:repeat="role roles_recurse" >
+                          <font color=""
+                                tal:attributes="color here/role_color">
+                            <i><span tal:replace="role"></span></i><span tal:condition="not:repeat/role/end">, </span>
+                          </font>
+                        </span>
+                      </div>
+                    </td>
+                </div>
               </tr>
 
               <!-- New group -->
@@ -42,6 +77,16 @@
                 <td><div class="list-item">&nbsp;</div></td>
                 <td><div class="list-item">Create groups:<br /><textarea name="new_groups:lines" cols="20" rows="3"></textarea></div></td>
                 <td><div class="list-item"></div></td>
+                <td><div class="list-item"></div></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="list-item" align="center">
+                  <br />
+                    <input type="submit" name="changeOrCreateGroups:method" value="Create / Change" />
+                      &nbsp;
+                      <input type="submit" name="deleteGroups:method" value="Delete" />
+                        <br>&nbsp;
+              </tr>
             </table>
           </td>
 
@@ -49,12 +94,35 @@
             =>
           </td>
 
-          <!-- Roles selection -->
-          <td valign="middle">
-            <table bgcolor="#EEEEEE">
+          <td valign="middle" bgcolor="#EEEEEE">
+            <!-- Groups selection -->
+            <table width="100%">
               <tr class="list-header">
-                <th>&nbsp;</th>
-                <th>Affect roles</th>
+                <th colspan="2">Affect groups</th>
+              </tr>
+              
+              <tr tal:repeat="group here/getGroups">
+                <td>
+                  <input type="checkbox" name="nested_groups:list" value="" tal:attributes="value group">
+                </td>
+                <td>
+                  <div class="list-item" tal:content="structure group/asHTML"></div>
+                </td>
+              </tr>
+              
+              <!-- "(None)" item -->
+              <tr>
+                <td><div class="list-item"><input type="checkbox" name="nested_groups:list" value="__None__"></div></td>
+                <td><div class="list-item"><i>(None)</i></div></td>
+              </tr>
+            </table>
+            
+            <br>
+              
+              <!-- Roles selection -->
+              <table width="100%">
+              <tr class="list-header">
+                <th colspan="2">Affect roles</th>
               </tr>
               
               <tr tal:repeat="role here/valid_roles">
@@ -62,25 +130,25 @@
                   <input type="checkbox" name="roles:list" value="" tal:attributes="value role">
                 </td>
                 <td tal:condition="python:role not in ('Authenticated', 'Anonymous', 'Shared')">
-                  <div class="list-item"><i><font color="" tal:attributes="color here/role_color" tal:content="role">Role</font></i></div>
+                  <div class="list-item"><font color="" tal:attributes="color here/role_color" tal:content="role">Role</font></div>
                 </td>
               </tr>
+                <!-- "(None)" item -->
+                <tr>
+                  <td><div class="list-item"><input type="checkbox" name="roles:list" value="__None__"></div></td>
+                  <td><div class="list-item"><i>(None)</i></div></td>
+                </tr>
             </table>
           </td>
         </tr>
+
       </table>
 
-      <!-- Actions -->
-      <p align="center">
-        <input type="submit" name="changeOrCreateGroups:method" value="Create / Change" />
-          &nbsp;
-          <input type="submit" name="deleteGroups:method" value="Delete" />
-      </p>
 
     </ol>
   </form>
 
-  <h3>Instructions</h3>
+  <h4>Instructions</h4>
   <ol>
 
       <p class="form-help">
@@ -88,9 +156,14 @@
         You can also create one or several groups by filling the text area (one group per line). the "Change" button will create them with the roles you've selected.<br />
         If you are fed up with some groups, you can delete them by selecting them and clicking the "Delete" button.
       </p>
+      <p class="form-help">
+        If you do not select any role, roles won't be reseted for the selected groups.<br />
+        If you do not select any group, groups won't be reseted for the selected groups.<br />
+        To explicitly reset groups or roles, just click the "(None)" entry (and no other entry).
+      </p>
   </ol>
 
-  <h3>Important notice / disclaimer</h3>
+  <h4>Important notice / disclaimer</h4>
   
   <ol>
     <p class="form-help">

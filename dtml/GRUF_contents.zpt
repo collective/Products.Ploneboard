@@ -2,10 +2,18 @@
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
-  <h3>Users folders management</h3>
+  <ol>
+    <p class="form-help">
+      You are currently running <strong>GRUF v.<span tal:replace="here/getGRUFVersion">version</span></strong><br />
+      Information, latest version, documentation... see 
+      <a target="_blank" href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder">The GRUF Webpage</a>.
+    </p>
+  </ol>
+
+  <h4>Users folders management</h4>
   <ol>
     <p class="form-help">Use this form to check/manage the underlying user folders.</p>
-    <p class="form-help">BE CAREFUL THAT MISUSE OF THIS FORM CAN LEAD YOU TO UNRECOVERABLE LOSS OF USER DATA.</p>
+    <p tal:replace="nothing" class="form-help">BE CAREFUL THAT MISUSE OF THIS FORM CAN LEAD YOU TO UNRECOVERABLE LOSS OF USER DATA.</p>
 
     <form action="manage_changeUserFolders" method="POST">
       <!-- Users selection -->

@@ -26,3 +26,15 @@ else:
 from Log import *
 Log = Log
 Log(LOG_NOTICE, "Starting %s at %d debug level" % (os.path.dirname(__file__), LOG_LEVEL, ))
+
+
+# Retreive version
+if os.path.isfile(os.path.abspath(os.path.dirname(__file__)) + '/version.txt'):
+    __version_file_ = open(os.path.abspath(os.path.dirname(__file__)) + '/version.txt', 'r+', )
+    version__ = __version_file_.read()[:-1]
+else:
+    version__ = "(UNKNOWN)"
+
+# Max allowrd users or groups to enable tree view
+MAX_TREE_USERS_AND_GROUPS = 50
+

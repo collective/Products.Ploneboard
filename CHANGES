@@ -1,3 +1,23 @@
+v1_3 - 20030723
+
+  * GRUF NOW SUPPORTS NESTED GROUPS - Transparently, of course.
+
+  * Updated website information & screenshots
+
+  * Major ZMI improving, including everywhere-to-everywhere links,
+    edition of a single user or group, and minor cosmetic fixes
+
+  * The tree view in ZMI now show groups and user (if there's no more
+    than 50, to avoid having server outage)
+
+  * Improved performance
+
+  * Improved test plan
+
+  * Fixed a bug in password generation algorythm with non-iso Python installs
+
+  * Fixed a minor bug in group acquisition stack (it apparently had no side-effect)
+
 v1_21 - 20030710
 
   * ZMI cosmetic fixes

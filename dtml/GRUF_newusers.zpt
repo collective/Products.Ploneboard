@@ -11,7 +11,7 @@
     you won't have any (easy) way to retreive your user's passwords after!
   </p>
 
-  <h3>Generated passwords</h3>
+  <h4>Generated passwords</h4>
   <ol>
     <form action="" method="GET" tal:attributes="action string:${here/absolute_url}/manage_users">
       <table>

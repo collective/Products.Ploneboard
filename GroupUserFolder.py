@@ -87,6 +87,20 @@ def manage_addGroupUserFolder(self, dtself=None, REQUEST=None, **ignored):
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
 
+# ...this is used for direct user access...
+# superGetAttr is assigned to whatever ObjectManager.__getattr__
+# used to do.
+try:
+    superGetAttr = ObjectManager.__getattr__
+except:
+    try:
+        superGetAttr = ObjectManager.inheritedAttribute('__getattr__')
+    except:
+        superGetAttr = None
+
+
+
+
 class GroupUserFolder(OFS.ObjectManager.ObjectManager, 
                       AccessControl.User.BasicUserFolder ):
     """
@@ -103,11 +117,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     manage_options=( 
         (
-        {'label':'Contents', 'action':'manage_GRUFContents'},
-        {'label':'Audit', 'action':'manage_audit'},
+        {'label':'Sources', 'action':'manage_GRUFContents'},
         {'label':'Overview', 'action':'manage_overview'},
         {'label':'Groups', 'action':'manage_groups'},
         {'label':'Users', 'action':'manage_users'},
+        {'label':'Audit', 'action':'manage_audit'},
         ) + \
         OFS.ObjectManager.ObjectManager.manage_options + \
         RoleManager.manage_options + \
@@ -121,6 +135,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     manage_users = PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
     manage_newusers = PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
     manage_GRUFContents = PageTemplateFile.PageTemplateFile('dtml/GRUF_contents', globals())
+    manage_user = PageTemplateFile.PageTemplateFile('dtml/GRUF_user', globals())
 
     __ac_permissions__=(
         ('Manage users',
@@ -253,9 +268,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Fetch users first
         u = self.Users.acl_users.getUser(name)
         if u:
-            Log(LOG_DEBUG, "Returning a user object", name, u, u.__class__)
             ret = GRUFUser.GRUFUser(u, self,).__of__(self)
-            Log(LOG_DEBUG, ret.aq_parent)
             return ret
             # $$$ Check security for this !
         
@@ -264,10 +277,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         u = self.Groups.getGroup(name)
         if u:
-            Log(LOG_DEBUG, "Returning a group object", name, u)
-            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
-            # $$$ check security for this! and check against double 
-            # GRUFUser wrapping (what getGroup() is called ?)
+            # We changed that because the previous code returned
+            # a double-wrapped group object...
+            return u
  
         return None
 
@@ -341,7 +353,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Fetch group
         u = self.Groups.acl_users.getUser(name)
         if u:
-            return GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
+            ret = GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
+            return ret
             # $$$ check security for this !
 
         # If still not found, well... we cannot do anything else.
@@ -441,7 +454,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         original input password, unencrypted. The implementation of this
         method is responsible for performing any needed encryption.
         
-        A None password should make it change (well, we hope so)
+        A None password should not change it (well, we hope so)
         """
         roles = list(roles)
         groups = list(groups)
@@ -479,10 +492,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         if domains is None:
             domains = usr._original_domains
         if groups is None:
-            groups = usr.getGroups()
+            groups = usr.getGroups(no_recurse = 1)
 
         # Change the user
-        Log(LOG_DEBUG, "Change User", name, password, roles, domains, groups)
         return self._doChangeUser(name, password, roles, domains, groups)
 
     security.declarePrivate("_doDelUsers")
@@ -497,23 +509,70 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #                                   #
 
     security.declarePrivate("_doAddGroup")
-    def _doAddGroup(self, name, roles, **kw):
-        """Create a new group. Password will be randomly created, and domain will be none"""
-
+    def _doAddGroup(self, name, roles, groups = (), **kw):
+        """
+        Create a new group. Password will be randomly created, and domain will be None.
+        Supports nested groups.
+        """
+        # Prepare initial data
         domains = ()
         password = ""
+        if roles is None:
+            roles = []
+        if groups is None:
+            groups = []
+        
         for x in range(0, 10):  # Password will be 10 chars long
             password = "%s%s" % (password, random.choice(string.lowercase), )
+
+        # Compute roles
+        roles = list(roles)
+        prefix = GRUFFolder.GRUFGroups._group_prefix
+        gruf_groups = self.getGroupNames()
+        for group in groups:
+            if not group.startswith(prefix):
+                group = "%s%s" % (prefix, group, )
+            if group == "%s%s" % (prefix, name, ):
+                raise ValueError, "Infinite recursion for group '%s'." % (group, )
+            if not group in gruf_groups:
+                raise ValueError, "Invalid group: '%s'" % (group, )
+            roles.append(group)
+
+        # Actual creation
         return self.Groups.acl_users._doAddUser(
             name, password, roles, domains, **kw
             )
 
     security.declarePrivate("_doChangeGroup")
-    def _doChangeGroup(self, name, roles, **kw):
+    def _doChangeGroup(self, name, roles, groups = (), **kw):
         """Modify an existing group."""
+        roles = list(roles or [])
+        groups = list(groups or [])
+
         # Remove prefix if given
         if name.startswith(self.getGroupPrefix()):
             name = name[_group_prefix_len:]
+
+        # Check if group exists
+        grp = self.getGroup(name, prefixed = 0)
+        if grp is None:
+            raise ValueError, "Invalid group: '%s'" % (name,)
+
+        # Change groups affectation
+        cur_groups = self.getGroups()
+        given_roles = tuple(grp.getRoles()) + tuple(roles)
+        for group in groups:
+            if not group.startswith(_group_prefix, ):
+                group = "%s%s" % (_group_prefix, group, )
+            if group == "%s%s" % (_group_prefix, grp.id):
+                raise ValueError, "Cannot affect group '%s' to itself!" % (name, )        # Prevent direct inclusion of self
+            new_grp = self.getGroup(group)
+            if not new_grp:
+                raise ValueError, "Invalid or inexistant group: '%s'" % (group, )
+            if "%s%s" % (_group_prefix, grp.id) in new_grp.getGroups():
+                raise ValueError, "Cannot affect %s to group '%s' as it would lead to circular references." % (group, name, )        # Prevent indirect inclusion of self
+            if not group in cur_groups and not group in given_roles:
+                roles.append(group)
 
         # Perform the change
         domains = ""
@@ -522,6 +581,36 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             password = "%s%s" % (password, random.choice(string.lowercase), )
         return self.Groups.acl_users._doChangeUser(name, password, 
                                                   roles, domains, **kw)
+
+    security.declarePrivate("_updateUser")
+    def _updateGroup(self, name, roles = None, groups = None):
+        """
+        _updateUser(self, name, roles = None, groups = None)
+        
+        Front-end to _doChangeUser, but with a better default value support.
+        We guarantee that None values will let the underlying UF keep the original ones.
+        This is not true for the password: some buggy UF implementation may not
+        handle None password correctly but we do not care for Groups.
+
+        group name can be prefixed or not
+        """
+        # Remove prefix if given
+        if name.startswith(self.getGroupPrefix()):
+            name = name[_group_prefix_len:]
+
+        # Get the former values if necessary. Username must be valid !
+        usr = self.getGroup(name, prefixed = 0)
+        if roles is None:
+            # Remove invalid roles and group names
+            roles = usr._original_roles
+            roles = filter(lambda x: not x.startswith(_group_prefix), roles)
+            roles = filter(lambda x: x not in ('Anonymous', 'Authenticated', 'Shared'), roles)
+        if groups is None:
+            groups = usr.getGroups(no_recurse = 1)
+
+        # Change the user
+        return self._doChangeGroup(name, roles, groups)
+
 
     security.declarePrivate("_doDelGroup")
     def _doDelGroup(self, name):
@@ -545,7 +634,40 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     #      Pretty Management form methods       #
     #                                           #
 
+
+    security.declarePublic('getGRUFVersion')
+    def getGRUFVersion(self,):
+        """
+        getGRUFVersion(self,) => Return human-readable GRUF version as a string.
+        """
+        rev_date = "$Date: 2003/07/23 15:19:54 $"[7:-2]
+        return "%s / Revised %s" % (version__, rev_date)
+    
+
     reset_entry = "__None__"            # Special entry used for reset
+
+    security.declareProtected(Permissions.manage_users, "changeUser")
+    def changeUser(self, user, groups = [], roles = [], REQUEST = {}, ):
+        """
+        changeUser(self, user, groups = [], roles = [], REQUEST = {}, ) => used in ZMI
+        """
+        obj = self.getUser(user)
+        if obj.isGroup():
+            self._updateGroup(name = user, groups = groups, roles = roles, )
+        else:
+            self._updateUser(name = user, groups = groups, roles = roles, )
+
+
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + "/" + user + "/manage_workspace")
+
+    security.declareProtected(Permissions.manage_users, "deleteUser")
+    def deleteUser(self, user, REQUEST = {}, ):
+        """
+        deleteUser(self, user, REQUEST = {}, ) => used in ZMI
+        """
+        pass
+        
 
     security.declareProtected(Permissions.manage_users, "changeOrCreateUsers")
     def changeOrCreateUsers(self, users = [], groups = [], roles = [], new_users = [], REQUEST = {}, ):
@@ -592,7 +714,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             # Generate a random password
             password = ""
             for x in range(0, 8):  # Password will be 8 chars long
-                password = "%s%s" % (password, random.choice(string.lowercase + string.digits), )
+                password = "%s%s" % (password, random.choice("ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789"), )
             self._doAddUser(name, password, add_roles, (), add_groups, )
 
             # Store the newly created password
@@ -600,7 +722,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         
         # Update existing users
         for user in users:
-            Log(LOG_DEBUG, "update", user, groups, roles)
             self._updateUser(name = user, groups = groups, roles = roles, )
 
         # Redirect if no users have been created
@@ -629,22 +750,42 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
 
     security.declareProtected(Permissions.manage_users, "changeOrCreateGroups")
-    def changeOrCreateGroups(self, groups = [], roles = [], new_groups = [], REQUEST = {}, ):
+    def changeOrCreateGroups(self, groups = [], roles = [], nested_groups = [], new_groups = [], REQUEST = {}, ):
         """
         changeOrCreateGroups => affect roles to groups and/or create new groups
         
         All parameters are strings. NO CHECKING IS DONE. This is an utility method !
         """
+        # Manage roles / groups deletion
+        del_roles = 0
+        del_groups = 0
+        if self.reset_entry in roles:
+            roles.remove(self.reset_entry)
+            del_roles = 1
+        if self.reset_entry in nested_groups:
+            nested_groups.remove(self.reset_entry)
+            del_groups = 1
+        if not roles and not del_roles:
+            roles = None                # None instead of [] to avoid deletion
+            add_roles = []
+        else:
+            add_roles = roles
+        if not nested_groups and not del_groups:
+            nested_groups = None
+            add_groups = []
+        else:
+            add_groups = nested_groups
+
         # Create brand new groups
         for new in new_groups:
             name = string.strip(new)
             if not name:
                 continue
-            self._doAddGroup(name, roles)
+            self._doAddGroup(name, roles, groups = add_groups)
         
-        # Update groups
+        # Update existing groups
         for group in groups:
-            self._doChangeGroup(group, roles, )
+            self._updateGroup(group, roles = roles, groups = nested_groups)
 
         # Redirect
         if REQUEST.has_key('RESPONSE'):
@@ -686,7 +827,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         usr_cache = {}
         for id, depth, path in folders:
             folder = self.unrestrictedTraverse(path)
-            for kind, actor, display, handle in actors:
+            for kind, actor, display, handle, html in actors:
                 if kind in ("user", "group"):
                     # Init structure
                     if not cache.has_key(path):
@@ -726,7 +867,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             return cache[path][(kind, actor)]
 
         # Initilize cache structure
-        Log(LOG_DEBUG, "computeSetting", path, actor, )
         if not cache.has_key(path):
             cache[path] = {(kind, actor): {}}
         elif not cache[path].has_key((kind, actor)):
@@ -765,7 +905,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if can:
                 cache[path][(kind, actor)][perm_key] = 1
 
-        Log(LOG_DEBUG, "Returning", cache[path][(kind, actor)])
         return cache[path][(kind, actor)]
 
 
@@ -773,17 +912,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def _getNextHandle(self, index):
         """
         _getNextHandle(self, index) => utility function to
-        get an unique handle for each legend item
+        get an unique handle for each legend item.
         """
-        # Build the handles list
-        handles = string.uppercase
-        index_max = len(handles)
-
-        # Get the one or two letters handle
-        if index < index_max:
-            return handles[index]
-        else:
-            return "%s%s" % (handles[index/26 - 1], handles[index%26], )
+        return "%02d" % index
             
 
     security.declareProtected(Permissions.manage_users, "listUsersAndRoles")
@@ -806,9 +937,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Collect roles
         if display_roles:
             for r in self.aq_parent.valid_roles():
-                handle = "R%s" % self._getNextHandle(role_index)
+                handle = "R%02d" % role_index
                 role_index += 1
-                ret.append(('role', r, r, handle))
+                ret.append(('role', r, r, handle, r))
 
         # Collect users
         for u in self.getUserNames():
@@ -816,15 +947,17 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if hasattr(obj, 'isGroup'):
                 if obj.isGroup():
                     if display_groups:
-                        handle = "G%s" % self._getNextHandle(group_index)
+                        handle = "G%02d" % group_index
+                        html = obj.asHTML()
                         group_index += 1
-                        ret.append(('group', u, self.getUser(u).getUserNameWithoutGroupPrefix(), handle))
+                        ret.append(('group', u, obj.getUserNameWithoutGroupPrefix(), handle, html))
                         continue
 
             if display_users:
-                handle = "U%s" % self._getNextHandle(user_index)
+                html = obj.asHTML()
+                handle = "U%02d" % user_index
                 user_index += 1
-                ret.append(('user', u, u, handle))
+                ret.append(('user', u, u, handle, html))
 
         # Return list
         return ret
@@ -876,12 +1009,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # If there's a Plone site in the above folder, use plonish permissions
         hasPlone = 0
         p = self.aq_parent
-        Log(LOG_DEBUG, "p", p.meta_type)
         if p.meta_type == "CMF Site":
             hasPlone = 1
         else:
             for obj in p.objectValues():
-                Log(LOG_DEBUG, "obj", obj.meta_type)
                 if obj.meta_type == "CMF Site":
                     hasPlone = 1
                     break
@@ -896,8 +1027,154 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     }
 
 
+    #                                                                           #
+    #                           Users/Groups tree view                          #
+    #                                (ZMI only)                                 #
+    #                                                                           #
+
+
+    security.declarePrivate('getTreeInfo')
+    def getTreeInfo(self, usr, dict = {}):
+        "utility method"
+        # Prevend infinite recursions
+        name = usr.getUserName()
+        if dict.has_key(name):
+            return
+        dict[name] = {}
+
+        # Properties
+        noprefix = usr.getUserNameWithoutGroupPrefix()
+        is_group = usr.isGroup()
+        if usr.isGroup():
+            icon = self.Groups.icon
+        else:
+            icon = self.Users.icon
+
+        # Subobjects
+        belongs_to = []
+        for grp in usr.getGroups(no_recurse = 1):
+            belongs_to.append(grp)
+            self.getTreeInfo(self.getGroup(grp))
+
+        # Append (and return) structure
+        dict[name] = {
+            "name": noprefix,
+            "is_group": is_group,
+            "icon": icon,
+            "belongs_to": belongs_to,
+            }
+        return dict
+
+        
+    security.declarePrivate("tpValues")
+    def tpValues(self):
+        # Avoid returning HUUUUUUGE lists
+        ngroups = len(self.getGroupNames())
+        nusers = len(self.getUserNames())
+        if ngroups + nusers <= MAX_TREE_USERS_AND_GROUPS:
+            meth_list = self.getUsers
+        elif ngroups <= MAX_TREE_USERS_AND_GROUPS:
+            meth_list = self.getGroups
+        else:
+            return []
+
+        # Get top-level user and groups list
+        tree_dict = {}
+        top_level_names = []
+        top_level = []
+        for usr in meth_list():
+            self.getTreeInfo(usr, tree_dict)
+            if not usr.getGroups(no_recurse = 1):
+                top_level_names.append(usr.getUserName())
+        for id in top_level_names:
+            top_level.append(treeWrapper(id, tree_dict))
+
+        # Return this top-level list
+        top_level.sort(lambda x, y: cmp(x.sortId(), y.sortId()))
+        return top_level
+        
+
+    def tpId(self,):
+        return self.getId()
+
+
+    #                                                                           #
+    #                      Direct traversal to user or group info               #
+    #                                                                           #
+
+    def manage_workspace(self, REQUEST):
+        """
+        manage_workspace(self, REQUEST) => Overrided to allow direct user or group traversal
+        via the left tree view.
+        """
+        path = string.split(REQUEST.PATH_INFO, '/')[:-1]
+        username = path[-1]
+        if username in self.getUserNames():
+            REQUEST.set('username', username)
+            REQUEST.set('MANAGE_TABS_NO_BANNER', '1')   # Prevent use of the manage banner
+            return self.restrictedTraverse('manage_user')()
+        else:
+            # Default management screen
+            return self.restrictedTraverse('manage_GRUFContents')()
+
+
+    def __getattr__(self, name):
+        '''
+        Looks for the name of a user or a group.
+        '''
+        if name in self.getUserNames():
+            return self.restrictedTraverse('')
+
+        if superGetAttr is None:
+            raise AttributeError, name
+        return superGetAttr(self, name)
 
    
+class treeWrapper:
+    """
+    treeWrapper: Wrapper around user/group objects for the tree
+    """
+    def __init__(self, id, tree, parents = []):
+        """
+        __init__(self, id, tree, parents = []) => wraps the user object for dtml-tree
+        """
+        # Prepare self-contained information
+        self._id = id
+        self.name = tree[id]['name']
+        self.icon = tree[id]['icon']
+        self.is_group = tree[id]['is_group']
+        parents.append(id)
+        self.path = parents
+
+        # Prepare subobjects information
+        subobjects = []
+        for grp_id in tree.keys():
+            if id in tree[grp_id]['belongs_to']:
+                subobjects.append(treeWrapper(grp_id, tree, parents))
+        subobjects.sort(lambda x, y: cmp(x.sortId(), y.sortId()))
+        self.subobjects = subobjects
+
+    def id(self,):
+        return self.name
+
+    def sortId(self,):
+        if self.is_group:
+            return "__%s" % (self._id,)
+        else:
+            return self._id
+
+    def tpValues(self,):
+        """
+        Return 'subobjects'
+        """
+        return self.subobjects
+
+    def tpId(self,):
+        return self._id
+
+    def tpURL(self,):
+        return self.tpId()
+
 InitializeClass(GroupUserFolder) 
 
 

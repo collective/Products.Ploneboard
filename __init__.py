@@ -27,8 +27,6 @@ import AccessControl.User
 global groupuserfolder_globals
 groupuserfolder_globals=globals()
 
-
-
 def initialize(context):
 
     try:

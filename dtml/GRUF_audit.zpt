@@ -5,7 +5,7 @@
 
   
   <div tal:condition="request/doIt | nothing">
-    <h3>Audit results</h3>
+    <h4>Audit results</h4>
 
     <table 
            border="1"
@@ -26,7 +26,7 @@
           <span tal:define="color python:test(s[0] == 'user', here.user_color, test(s[0] == 'group', here.group_color, here.role_color))">
             <font color="" tal:attributes="color color">
               <tal:block tal:condition="not:request/use_legend|nothing">
-                <b tal:content="python:s[2]" /><br />
+                <b tal:content="structure python:s[4]" /><br />
               </tal:block>
               <tal:block tal:condition="request/use_legend|nothing">
                 <b tal:content="python:s[3]" />
@@ -73,7 +73,7 @@
   </div>
 
   <div tal:condition="request/use_legend|nothing">
-    <h3>Legend</h3>
+    <h4>Legend</h4>
     <ol>
       <table>
         <tr class="list-header">
@@ -85,7 +85,7 @@
         <tr tal:repeat="actor users_and_roles">
           <span tal:define="color python:test(actor[0] == 'user', here.user_color, test(actor[0] == 'group', here.group_color, here.role_color))">
             <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[3]">Id</font></td>
-            <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[2]">Label</font></td>
+            <td class="list-item"><font color="" tal:attributes="color color" tal:content="structure python:actor[4]">Label</font></td>
             <td class="list-item"><font color="" tal:attributes="color color" tal:content="python:actor[0]">Kind</font></td>
           </span>
         </tr>
@@ -95,7 +95,7 @@
   </div>
 
   <div tal:condition="not: print" tal:omit-tag="">
-    <h3>Audit settings</h3>
+    <h4>Audit settings</h4>
     <ol>
       <p>
         See help below if you do not understand those settings.
@@ -187,7 +187,7 @@
   <div tal:condition="not: print" tal:omit-tag="">
     <div tal:condition="not:request/doIt | nothing">
 
-      <h3>About the audit table</h3>
+      <h4>About the audit table</h4>
       <ol>
         <p>
           This management tab allows one to check how the site security is applied for the most useful cases.<br />
