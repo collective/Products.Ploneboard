@@ -91,7 +91,7 @@
               <tal:block tal:repeat="wf here/getAvailableMemberTypes">
                  <option tal:content="wf"
                          tal:condition="python:test(not wf == defaultMemberType)">Member type</option>
-                 <option tal:content="wf" selected
+                 <option tal:content="wf" selected="selected"
                          tal:condition="python:test(wf == defaultMemberType)">Selected member type</option>
 
               </tal:block>
