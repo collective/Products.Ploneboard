@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.42 2004/03/20 01:50:59 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.43 2004/04/07 20:13:39 bcsaller Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -36,6 +36,7 @@ from InstalledProduct import InstalledProduct
 
 from interfaces.portal_quickinstaller import IQuickInstallerTool
 from exceptions import RuntimeError
+import zExceptions
 from zLOG import LOG
 
 try:
