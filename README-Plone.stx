@@ -1,5 +1,12 @@
 HOW TO USE THE GRUF WITH CMF/PLONE ?
-Last revision : 20030923
+Last revision : 20031220
+
+  This document mostly applies to Plone1. GRUF is bundled 
+  with Plone 2.x, and its Installation is fully automatic 
+  (with Plone 2.x).
+
+  You will find GroupSpaces (for Plone 2.x) at the bottom
+  of this document.
 
   IMPORTANT NOTICE
 
@@ -101,6 +108,10 @@ Last revision : 20030923
     This is for PLONE only (because of the skin structure) but it is
     the same principle for CMF. You should probably check with Plone
     for the most recent skins.
+
+    PLONE 1 ONLY : YOU MUST CUSTOMIZE 'folder_localrole_form_plone1.pt' 
+    and rename it 'folder_localrole_form.pt' in your custom folder, in 
+    order to get group support in local roles screens. 
 
 
   GROUPSPACES
