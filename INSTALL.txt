@@ -1,4 +1,4 @@
-CMFContentpanels 1.5 and above is tested under Plone2 only.
+Version 1.2.2 is compatible with Plone 1.0.5. Version 1.3 and above is tested under Plone 2 only.
 
 Install
 
