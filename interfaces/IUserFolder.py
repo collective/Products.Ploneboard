@@ -107,6 +107,30 @@ class IUserFolder(Interface):
         'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
         """
 
+    # Search interface for groups;
+
+    def searchGroupsByName(search_term):
+        """Return group ids which match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        """
+
+    def searchGroupsById(search_term):
+        """Return groups whose id match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        """
+        
+    def searchGroupsByAttribute(attribute, search_term):
+        """Return group ids whose 'attribute' match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        This will return all groups whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON GROUP FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF).
+        'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        """
+
 
     # User access
 

@@ -560,6 +560,60 @@ class TestGroupUserFolderAPI(GRUFTestCase.GRUFTestCase, testInterface.TestInterf
             ['u1', 'u10', 'u11', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7', 'u8', 'u9', ],
             )
 
+    def test_searchGroupsByAttribute(self,):
+        # Not suitable for regular UFs
+        self.failUnlessRaises(
+            NotImplementedError,
+            self.gruf.searchGroupsByAttribute,
+            "a",
+            "b",
+            )
+
+    def test_searchGroupsByName(self,):
+        # Simple match
+        lst = self.gruf.searchGroupsByName("g3")
+        lst.sort()
+        self.failUnlessEqual(
+            lst,
+            ["group_g3", "group_ng3", ],
+            )
+
+        # Different case matching
+        lst = self.gruf.searchGroupsByName("g3")
+        lst.sort()
+        self.failUnlessEqual(
+            lst,
+            ["group_g3", "group_ng3", ],
+            )
+
+        # Multiple (different case) matching
+        s = self.gruf.searchGroupsByName("1")
+        s.sort()
+        self.failUnlessEqual(
+            s,
+            ["group_g1", "group_ng1", ]
+            )
+
+    def test_searchGroupsById(self,):
+        # Simple match
+        self.failUnlessEqual(
+            self.gruf.searchGroupsById("g5"),
+            ["group_ng5",],
+            )
+
+        # Different case matching
+        self.failUnlessEqual(
+            self.gruf.searchGroupsById("G5"),
+            ["group_ng5",],
+            )
+
+        # Multiple (different case) matching
+        s = self.gruf.searchGroupsById("G1")
+        s.sort()
+        self.failUnlessEqual(
+            s,
+            ["group_g1", "group_ng1", ]
+            )
 
     # Security management
 

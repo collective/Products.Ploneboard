@@ -2,6 +2,8 @@ TODO-LIST
 
 [v3.1]
 
+  * FIX DOCUMENTATION (especially README & INSTALLs)
+
   * Plone tools refactoring (user interface must support nested groups, cleaning necessary,
     API refactoring necessary)
 

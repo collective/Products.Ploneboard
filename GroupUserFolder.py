@@ -566,6 +566,75 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         return self.searchUsersByAttribute("id", search_term)
 
+
+    security.declareProtected(Permissions.manage_users, "searchGroupsByAttribute")
+    def searchGroupsByAttribute(self, attribute, search_term):
+        """Return group ids whose 'attribute' match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        This will return all groups whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON GROUP FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF).
+        'attribute' can be 'id' or 'name' for all UF kinds, or anything else for LDAPUF.
+        """
+        ret = []
+        src = self.Groups
+
+        # Use source-specific search methods if available
+        if hasattr(src.aq_base, "findGroup"):
+            # LDAPUF
+            id_attr = src._uid_attr
+            if attribute == 'name':
+                attr = src._login_attr
+            elif attribute == 'id':
+                attr = src._uid_attr
+            else:
+                attr = attribute
+            groups = src.findGroup(attr, search_term)
+            ret.extend(
+                [ u[id_attr] for u in groups ],
+                )
+        else:
+            # Other types of group folder
+            search_term = search_term.lower()
+
+            # Find the proper method according to the attribute type
+            if attribute == "name":
+                method = "getName"
+            elif attribute == "id":
+                method = "getId"
+            else:
+                raise NotImplementedError, "Attribute searching is only supported for LDAPGroupFolder by now."
+
+            # Actually search
+            for u in self.getGroups():
+                s = getattr(u, method)().lower()
+                if string.find(s, search_term) != -1:
+                    ret.append(u.getId())
+        return ret
+
+    security.declareProtected(Permissions.manage_users, "searchGroupsByName")
+    def searchGroupsByName(self, search_term):
+        """Return group ids whose name match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        This will return all groups whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON GROUP FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF)
+        """
+        return self.searchGroupsByAttribute("name", search_term)
+
+    security.declareProtected(Permissions.manage_users, "searchGroupsById")
+    def searchGroupsById(self, search_term):
+        """Return group ids whose id match the specified search_term.
+        If search_term is an empty string, behaviour depends on the underlying group folder:
+        it may return all groups, return only cached groups (for LDAPUF) or return no groups.
+        This will return all groups whose name contains search_term (whaterver its case).
+        THIS METHOD MAY BE VERY EXPENSIVE ON GROUP FOLDER KINDS WHICH DO NOT PROVIDE A
+        SEARCHING METHOD (ie. every UF kind except LDAPUF)
+        """
+        return self.searchGroupsByAttribute("id", search_term)
+
     #                                                                           #
     #                         SECURITY MANAGEMENT METHODS                       #
     #                                                                           #
@@ -1089,10 +1158,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 sources[src] = []
             sources[src].append(name)
         for src, names in sources.items():
-            try:
-                self.getUserSource(src)._doDelUsers(names)
-            except:
-                Log(LOG_DEBUG, "RAISING")
+            self.getUserSource(src)._doDelUsers(names)
 
         # Reset the users overview batch
         self._v_batch_users = []
@@ -1249,7 +1315,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/06/08 14:24:23 $"[7:-2]
+        rev_date = "$Date: 2004/06/08 15:03:39 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2125,7 +2191,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Rename a particular sub-object.
         Taken fro CopySupport.manage_renameObject() code, modified to disable verifications.
         """
-        Log(LOG_DEBUG, "renaming", id, new_id)
         try: self._checkId(new_id)
         except: raise CopyError, MessageDialog(
                       title='Invalid Id',
