@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.32 2004/08/17 16:59:40 tiran Exp $
+$Id: config.py,v 1.33 2004/09/27 15:23:33 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -125,12 +125,15 @@ else:
 
 ## mxTidy available?
 try:
-    import mx.Tidy
+    from mx import Tidy
 except ImportError:
     HAS_MX_TIDY = False
 else:
     HAS_MX_TIDY = True
-    del mx.Tidy
+    try:
+        del Tidy
+    except AttributeError:
+        pass
 
 ## tidy only these document types
 MX_TIDY_MIMETYPES = (
