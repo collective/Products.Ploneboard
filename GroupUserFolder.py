@@ -97,14 +97,16 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     isPrincipiaFolderish=1
 
     manage_options=( OFS.ObjectManager.ObjectManager.manage_options + \
-        ( {'label':'Overview', 'action':'manage_overview'}, ) + \
+        ( {'label':'Overview', 'action':'manage_overview'},
+          {'label':'Audit', 'action':'manage_audit'},
+          ) + \
         RoleManager.manage_options + \
         Item.manage_options )
 
     manage_main = OFS.ObjectManager.ObjectManager.manage_main
     manage_overview = DTMLFile('dtml/GroupUserFolder_overview', globals())
     manage_addUser = DTMLFile('dtml/addUser', globals())
-
+    manage_audit = Products.PageTemplates.PageTemplateFile.PageTemplateFile('dtml/GRUF_audit', globals())
 
     __ac_permissions__=(
         ('Manage users',
@@ -112,6 +114,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
           'getUserById', 'user_names', 'setDomainAuthenticationMode',
           'userFolderAddUser', 'userFolderEditUser', 'userFolderDelUsers',
           'getUnwrappedUser', 'getUnwrappedGroup',
+          'manage_audit', 'listUsersAndRoles', 'getSiteTree', 'getSecuritySetting',
           )
          ),
         )
@@ -389,6 +392,138 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
         return self.Users.acl_users._doDelUsers(names)
+
+
+
+
+    # ----------------------
+    # Security audit methods
+    # ----------------------
+
+    def listUsersAndRoles(self,):
+        """
+        listUsersAndRoles(self,) => list of tuples
+
+        This method is used by the Security Audit page.
+        """
+        request = self.REQUEST
+        display_roles = request.get('display_roles', 0)
+        display_groups = request.get('display_groups', 0)
+        display_users = request.get('display_users', 0)
+        
+        ret = []
+
+        # Collect roles
+        if display_roles:
+            for r in self.aq_parent.valid_roles():
+                ret.append(('role', r))
+
+        # Collect users
+        for u in self.getUserNames():
+            obj = self.getUser(u)
+            if hasattr(obj, 'isGroup'):
+                if obj.isGroup():
+                    if display_groups:
+                        ret.append(('group', u))
+                        continue
+
+            if display_users:
+                ret.append(('user', u))
+
+        # Return list
+        return ret
+
+
+    def getSiteTree(self, obj=None, depth=0):
+        """
+        getSiteTree(self, obj=None, depth=0) => special structure
+        
+        This is used by the security audit page
+        """
+        ret = []
+        if not obj:
+            obj = self.aq_parent
+
+        ret.append([obj.getId(), depth, string.join(obj.getPhysicalPath(), '/')])
+        for sub in obj.objectValues():
+            try:
+                if sub.getId() in ('acl_users', ):
+                    continue
+                if sub.isPrincipiaFolderish:
+                    ret.extend(self.getSiteTree(sub, depth + 1))
+
+            except:
+                # We ignore exceptions
+                pass
+
+        return ret
+
+
+    def listAuditPermissions(self,):
+        """
+        listAuditPermissions(self,) => return a list of eligible permissions
+        """
+        ps = self.permission_settings()
+        return map(lambda p: p['name'], ps)
+
+    def getDefaultPermissions(self,):
+        """
+        getDefaultPermissions(self,) => return default R & W permissions for security audit.
+        XXX TODO : check if CMF/plone is here to return the right permission set.
+        """
+        return {'R': 'Access contents information',
+                'W': 'Change Images and Files',
+                }
+
+
+    def getSecuritySetting(self, path, usr_or_role, permission='View'):
+        """
+        getSecuritySetting => this method is used for security audit to collect information about each object's security info
+        """
+        ret = ""
+        can = 0
+        obj = self.restrictedTraverse(path)
+
+        if usr_or_role[0] in ('user', 'group'):
+            # Process user permissions : get its roles
+            usr = self.getUser(usr_or_role[1])
+            roles = usr.getRolesInContext(obj,)
+
+            # Check each role
+            for role in roles:
+                can = self.getSecuritySetting(path, ('role', role), permission)
+                if can:
+                    break
+
+        else:
+            # Check acquisition of permission setting.
+            ps = obj.permission_settings()
+            acquired = 0
+            for p in ps:
+                if p['name'] == permission:
+                    acquired = not not p['acquire']
+
+            # If acquired, call the parent recursively
+            if acquired:
+                parent = obj.aq_parent.getPhysicalPath()
+                can = self.getSecuritySetting(parent, usr_or_role, permission)
+
+            # Else, check permission here
+            else:
+                for p in obj.rolesOfPermission(permission):
+                    if p['name'] == "Anonymous":
+                        # If anonymous is allowed, then everyone is allowed
+                        if p['selected']:
+                            can = 1
+                            break
+                    if p['name'] == usr_or_role[1]:
+                        if p['selected']:
+                            can = 1
+                            break
+
+        return can
+
+
 
    
 InitializeClass(GroupUserFolder) 

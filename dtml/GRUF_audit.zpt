@@ -1,0 +1,163 @@
+<h1 tal:replace="structure here/manage_page_header">Header</h1>
+<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+    tal:replace="structure here/manage_tabs">Tabs</h2>
+
+
+  
+  <div tal:condition="request/doIt | nothing">
+    <h3>Audit results</h3>
+
+  <table 
+      border="1"
+      tal:define="
+        users_and_roles here/listUsersAndRoles;
+        width python:int(100/len(users_and_roles))">
+      <tr>
+        <td width="0" tal:attributes="width string:$width%"></td>
+        <td width="0"
+          tal:repeat="s users_and_roles"
+          tal:attributes="width string:$width%"
+        >
+          <b tal:content="python:s[1]" /><br />
+          (<span tal:replace="python:s[0]" />)
+        </td>
+      </tr>
+
+      <tr tal:repeat="folder here/getSiteTree">
+        <td nowrap="1">
+          <span tal:repeat="x python:range(0,folder[1])" tal:omit-tag="">-</span>
+          <a href=""
+            tal:attributes="href python:folder[2]"
+            tal:content="python:folder[0]"
+          />
+        </td>
+        <td 
+          tal:repeat="s users_and_roles" 
+        >
+          <tal:block
+            tal:define="
+              R python:here.getSecuritySetting(folder[2], s, request.read_permission);
+              W python:here.getSecuritySetting(folder[2], s, request.write_permission)"
+          >
+            <span tal:condition="R">R</span>
+            <span tal:condition="W">W</span>
+            <span tal:condition="python: (not R) and (not W)">&nbsp;</span>
+          </tal:block>
+        </td>
+      </tr>
+
+    </table>
+
+  </div>
+
+    <h3>Audit settings</h3>
+    <ol>
+      <p>
+        See help below if you do not understand those settings.
+      </p>
+
+      <form action="manage_audit" method="GET">
+        <input type="hidden" name="doIt" value="1">
+        <table>
+          <tr class="list-header">
+            <th>Parameter</th>
+            <th class="list-header">Setting</th>
+          </tr>
+          <tr>
+            <td><div class="list-item">Read permission</div></td>
+            <td>
+              <select name="read_permission" size="1">
+                <option
+                  selected=0
+                  value=""
+                  tal:repeat="perm here/listAuditPermissions"
+                  tal:attributes="
+                    value perm;
+                    selected python:perm == here.getDefaultPermissions()['R'];
+                  "
+                  tal:content="perm"
+                />
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><div class="list-item">Write permission</div></td>
+            <td>
+              <select name="write_permission" size="1">
+                <option 
+                  selected=0
+                  value=""
+                  tal:repeat="perm here/listAuditPermissions"
+                  tal:attributes="
+                    value perm;
+                    selected python:perm == here.getDefaultPermissions()['W'];
+                  "
+                  tal:content="perm"
+                />
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><div class="list-item">Displayed actors</div></td>
+            <td>
+              <div class="list-item">
+                <input type="checkbox" name="display_roles" checked="1">Roles<br />
+                <input type="checkbox" name="display_groups" checked="1">Groups<br />
+                <input type="checkbox" name="display_users">Users
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><input type="submit" value="View"></td>
+          </tr>
+        </table>
+      </form>
+    </ol>
+
+
+  <div tal:condition="not:request/doIt | nothing">
+
+    <h3>About the audit table</h3>
+    <ol>
+      <p>
+        This management tab allows one to check how the site security is applied for the most useful cases.<br />
+          This allows you to have a precise abstract of the security settings for a little set of permissions as
+          if it simply were "Read" and "Write" permissions.
+      </p>
+
+      <p>
+        <strong>
+          This management tab won't change anything in your security settings. It is just intended to show information and not to modify anything.
+        </strong>
+      </p>
+      
+      <p>
+        Select, in the form below, the permissions you want to monitor and the kind of actors (roles, groups or users) you want to display.
+      </p>
+      
+      <ol>
+        <h4>Hint</h4>
+        <p>
+          Usually, for a regular Zope site, the
+          permission set would be mapped this way:
+        </p>
+        
+        <ul>
+          <li>Read: Access content information</li>
+          <li>Write: Change Images and Files</li>
+        </ul>
+        <p>
+          For a Plone site, the
+          permission set would be mapped this way:
+        </p>
+        
+        <ul>
+          <li>Read: Access content information</li>
+          <li>Write: Modify portal content</li>
+        </ul>
+      </ol>
+    </ol>
+  </div>
+
+<h1 tal:replace="structure here/manage_page_footer">Footer</h1>
