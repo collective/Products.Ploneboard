@@ -164,8 +164,7 @@
                          <option value=""
                                  tal:repeat="field fields"
                                  tal:attributes="value field;
-                                                 selected python:here.hasSortCriterion() and
-                                                      here.getSortCriterion().field==field;"
+                                                 selected python:here.hasSortCriterion() and here.getSortCriterion().field==field;"
                                  tal:content="field">Field</option>
 
                     </select>
