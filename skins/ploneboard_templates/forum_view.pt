@@ -24,13 +24,19 @@
         Forum Description
         </div>
         
+        <p class="discreet"
+             tal:condition="not: conversations">
+        No conversations in this forum yet.     
+        </p>
+
         <form tal:attributes="action string:${here/absolute_url}/portal_form/add_conversation_form">
            <input class="standalone"
                   type="submit" 
                   value="Start a new Conversation" />
         </form>
 
-        <table class="listing">
+        <table class="listing"
+               tal:condition="conversations">
 
             <thead>
                 <tr>
@@ -65,7 +71,7 @@
     
                     <td class="listingCheckbox"
                         tal:condition="not: conversation/getNumberOfReplies">
-                    No replies
+                        <span class="discreet">None</span>
                     </td>
 
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
@@ -85,6 +91,10 @@
                 </tal:showconversations>
             </tbody>
         </table>
+
+        <div class="documentByLine">
+        Ploneboard by <a class="link-plain" href="http://www.plonesolutions.com/ploneboard">Plone Solutions</a>
+        </div>
 
     </div>
                      
