@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.29 2003/11/27 14:49:30 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.30 2003/11/27 17:32:46 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -291,6 +291,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
                 res +='ok:\n'
                 if r:
                     r += str(r)+'\n'
+            except InvalidObjectReference,e:
+                raise 
             except Exception,e:
                 ok=0
                 if stoponerror:
