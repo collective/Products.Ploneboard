@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.16 2004/02/11 01:27:37 tiran Exp $
+$Id: PlacelessTranslationService.py,v 1.17 2004/02/11 01:30:08 tiran Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -147,7 +147,7 @@ class PlacelessTranslationService(Folder):
     # -3 for alpha, -2 for beta, -1 for release candidate
     # for forked releases internal is always 99
     # use an internal of >99 to recreate the PTS at evry startup (development mode)
-    _class_version = (1, -1, 5, 00)
+    _class_version = (1, -1, 5, 99)
     all_meta_types = ()
 
     security = ClassSecurityInfo()
