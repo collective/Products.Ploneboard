@@ -38,5 +38,5 @@ msgstr "Tomt album"
 #: from ../skins/photoalbum_content/photoalbum_view.pt
 #.   <p condition="python:not (albums or images)">This album is empty.</p>
 msgid "This album is empty."
-msgstr "Det h√§r albumet √§r tomt."
+msgstr "Det h‰r albumet ‰r tomt."
 
