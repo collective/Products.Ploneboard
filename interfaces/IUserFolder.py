@@ -159,17 +159,17 @@ class IGroup(Interface):
     def getGroups(self):
         """Return the names of the groups of this group"""
 
-     def getAllParentGroups():
+    def getAllParentGroups():
          """
          Return the all the groups names (including transitive ones)  
          that the user is a member of
          """
 
-     def getParentGroups():
+    def getParentGroups():
         """Return the names of the groups that the group is a member of"""
 
-     def attachUser(user):
+    def attachUser(user):
          """Attach a user the the current group"""
          
-     def removeUser(self, user):
+    def removeUser(self, user):
          """Remove a user from the current group"""
