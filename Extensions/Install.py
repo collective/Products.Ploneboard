@@ -16,13 +16,10 @@ def install_tool(self, out):
     out.write("CompositePack Tool Installed")
 
 def set_hidden_type_from_navtree(self, out):    
-    try:
-        self.portal_properties.navtree_properties.metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
-        self.portal_properties.navtree_properties.metaTypesNotToList.index(COMPO_TYPE)
-    except ValueError:
-        list(self.portal_properties.navtree_properties.metaTypesNotToList).append(COMPO_TYPE)
-    except:
-        raise
+    metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
+    if not COMPO_TYPE in metaTypesNotToList:
+        metaTypesNotToList.append(COMPO_TYPE)
+        self.portal_properties.navtree_properties.metaTypesNotToList = metaTypesNotToList
     out.write("CMF Composite Page hidden in navigation tree")
         
 def install_kupu_resource(self, out):
@@ -38,13 +35,10 @@ def uninstall_tool(self, out):
     out.write("CompositePack Tool UnInstalled")
 
 def unset_hidden_type_from_navtree(self, out):    
-    try:
-        self.portal_properties.navtree_properties.metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
-        self.portal_properties.navtree_properties.metaTypesNotToList.remove(COMPO_TYPE)
-    except ValueError:
-        pass
-    except:
-        raise
+    metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
+    if COMPO_TYPE in metaTypesNotToList:
+        metaTypesNotToList.remove(COMPO_TYPE)
+        self.portal_properties.navtree_properties.metaTypesNotToList = metaTypesNotToList
     out.write("CMF Composite Page hidden in navigation tree")
 
 def uninstall_kupu_resource(self, out):
@@ -63,7 +57,7 @@ def install(self):
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
 
-    hide_type_from_navtree(self, out)
+    set_hidden_type_from_navtree(self, out)
 
     install_subskin(self, out, GLOBALS)
     
@@ -76,6 +70,7 @@ def install(self):
     
 def uninstall(self):
     out = StringIO()
+    unset_hidden_type_from_navtree(self, out)
     uninstall_tool(self, out)
     uninstall_kupu_resource(self, out)
     out.write("Successfully uninstalled %s." % PROJECTNAME)
