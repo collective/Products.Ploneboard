@@ -281,6 +281,7 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
     """Adds a composite tool to a folder.
     """
     from Products.CompositePack.viewlet import container
+    from Products.CompositePack import viewlet
     ob = CompositeTool()
     dispatcher._setObject(ob.getId(), ob)
     ob = dispatcher._getOb(ob.getId())
@@ -288,5 +289,15 @@ def manage_addCompositeTool(dispatcher, REQUEST=None):
                                   title='A Container for registered Viewlets')
     container.addViewletContainer(ob, id='layouts',
                                   title='A Container for registered Layouts')
+    layouts = ob.layouts
+    viewlet.addViewlet(layouts, 
+                       id='two_slots', 
+                       title='Two slots', 
+                       template_path='portal_skins/compositepack/two_slots'
+                       )
+    viewlet.addViewlet(layouts, 
+                       id='three_slots', 
+                       title='Three slots', 
+                       template_path='portal_skins/compositepack/three_slots')
     if REQUEST is not None:
         return dispatcher.manage_main(dispatcher, REQUEST)
