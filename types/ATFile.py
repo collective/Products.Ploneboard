@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATFile.py,v 1.2 2004/03/13 18:17:14 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -57,6 +57,12 @@ class ATFile(BaseContent):
        'permissions' : (CMFCorePermissions.View,)
         },
        {
+       'id'          : 'download',
+       'name'        : 'Download',
+       'action'      : 'string:${object_url}',
+       'permissions' : (CMFCorePermissions.View,)
+        },
+       {
        'id'          : 'edit',
        'name'        : 'Edit',
        'action'      : 'string:${object_url}/atct_edit',
@@ -72,14 +78,20 @@ class ATFile(BaseContent):
 
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
-        """
-        Display the image, with or without standard_html_[header|footer],
-        as appropriate.
+        """Download the file
         """
         return self.file.index_html(REQUEST, RESPONSE)
 
+    security.declareProtected(CMFCorePermissions.View, 'download')
+    def download(self, REQUEST, RESPONSE):
+        """Download the file (use default index_html)
+        """
+        return self.index_html(REQUEST, RESPONSE)
+
     security.declarePublic('getIcon')   
     def getIcon(self, relative_to_portal=0):
+        """
+        """
         try: 
             mimetype_registry=getToolByName(self,'mimetypes_registry',None)
             contenttype = self.getField('file').getContentType(self)
@@ -101,7 +113,7 @@ class ATFile(BaseContent):
                 while res[:1] == '/':
                     res = res[1:]
                 return res
-        except:
+        except: # XXX iiigh except all!
             return BaseContent.getIcon(self, relative_to_portal)
 
     security.declarePublic('icon')
@@ -109,19 +121,25 @@ class ATFile(BaseContent):
 
     security.declareProtected(CMFCorePermissions.View, 'get_data')
     def get_data(self):
+        """
+        """
         return self.getFile()
 
     data = ComputedAttribute(get_data, 1)
 
     security.declareProtected(CMFCorePermissions.View, 'get_size')
     def get_size(self):
+        """
+        """
         f = self.getFile()
         return f and f.get_size() or 0
     
     security.declareProtected(CMFCorePermissions.View, 'get_content_type')
     def get_content_type(self):
+        """
+        """
         f = self.getFile()
-        return f and f.getContentType(self) or '' #'application/octet-stream'
+        return f and f.getContentType() or '' #'application/octet-stream'
 
     content_type = ComputedAttribute(get_content_type, 1)
  
