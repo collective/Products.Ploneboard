@@ -20,14 +20,22 @@ for schemata_name in context.atse_getSchemataNames(schema_id):
         widget = f.widget
         s = '\t%s("%s", \n' % (context.atse_getFieldType(f), f.getName())
         s += '\t\tschemata="%s",\n' % schemata_name 
+        s += '\t\trequired=%s,\n' % f.required
         s += '\t\twidget=%s(\n' % widget.getName()
         s += '\t\t\tlabel="%s",\n' % widget.label
         s += '\t\t\tlabel_msgid="%s",\n' % getattr(widget, 'label_msgid', '')
         s += '\t\t\ti18n_domain="%s",\n' % getattr(widget, 'i18n_domain', '')
-        for attr in ('rows', 'size', 'cols'):
+
+        if widget.getName() == 'TextAreaWidget':
+            attrs = ('rows', 'cols', 'validators')
+        else:
+            attrs = ('size', 'validators')
+
+        for attr in attrs:
             if hasattr(widget, attr):
                 value = getattr(widget, attr)
-                if isinstance(value, int):
+                if attr in ('rows', 'cols', 'size'): value = int(value)
+                if isinstance(value, int ) or isinstance(value, tuple):
                     s += '\t\t\t%s=%s,\n' % (attr, value)
                 else:
                     s += '\t\t\t%s="%s",\n' % (attr, value)
