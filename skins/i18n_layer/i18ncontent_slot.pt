@@ -2,53 +2,43 @@
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      i18n:domain="plone">
+      i18n:domain="i18nlayer">
 
 <body>
 
-<!-- The I18NContent box -->
+<div class="box" metal:define-macro="i18nContentBox" tal:condition="python:hasattr(here,'retrieveFilteredLanguages')" tal:define="current here/currentI18NContentLanguage">
 
-<table class="box" metal:define-macro="i18nContentBox" tal:condition="python:hasattr(here,'retrieveFilteredLanguages')" tal:define="current here/currentI18NContentLanguage">
+   <!-- The I18NContent box -->
+   <h5 i18n:translate="box_contentlanguages">Languages</h5>
 
-        <tr><th i18n:translate="box_contentlanguages">Languages</th><th class="empty">&nbsp;</th></tr>
+        <div class="body">
 
-        <tr metal:define-macro="i18nContentChooser" class="odd">
-         
-	    <form name="i18ncontentselector" method="POST" action="setI18NContentCookie" tal:attributes="action string:${here/absolute_url}/setI18NContentCookie">
-            <input type="hidden" name="here_url" value="" tal:attributes="value here/absolute_url" />
-            <input type="hidden" name="layer_url" value="" tal:attributes="value here/retrieveI18NContentLayerURL" />
-            <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().keys()">
-	       <input type="hidden" name="available_languages:list" value="" tal:attributes="value lang" />
-            </tal:block>
-            <td colspan="2">
-            
-	       <select name="lang" onChange="i18ncontentselector.submit();">
-                   <option value="">select a language</option>
-		<tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().items()">
-                   <option value="" tal:attributes="value python:lang[0]; selected python:current[0] == lang[0]" tal:content="python:lang[1]+' ('+lang[0]+')'" />
+            <div class="content odd">
+
+              <form name="i18ncontentselector" method="POST" action="setI18NContentCookie" tal:attributes="action string:${here/absolute_url}/setI18NContentCookie">
+                <input type="hidden" name="here_url" value="" tal:attributes="value here/absolute_url" />
+                <input type="hidden" name="layer_url" value="" tal:attributes="value here/retrieveI18NContentLayerURL" />
+                <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().keys()">
+	          <input type="hidden" name="available_languages:list" value="" tal:attributes="value lang" />
                 </tal:block>
-               </select>
-	       <table tal:replace="nothing" border="0" cellpadding="2" cellspacing="0">
-                <tr><td>
-                  <input type="checkbox" name="cookie" value="1" />
-                </td><td>persistent</td></tr>
-               </table>
-            </td>
-	    </form>
-        
-        </tr>
-	<tr class="even" tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here.retrieveI18NContentLayerOb()) or here.portal_membership.checkPermission('Add portal content', here.retrieveI18NContentLayerOb())">
 
-           <td colspan="2">
-	     <a href="#" tal:attributes="href string:${here/retrieveI18NContentLayerURL}/i18nlayer_languages_form">Manage languages</a>
-           </td>
+	        <select name="lang" onChange="i18ncontentselector.submit();">
+                  <option value="" i18n:domain="plone" i18n:translate="label_choose_language">Choose Language</option>
+		  <tal:block tal:repeat="lang python:here.retrieveFilteredLanguages().items()">
+                    <option value="" tal:attributes="value python:lang[0]; selected python:current[0] == lang[0]" tal:content="python:lang[1]+' ('+lang[0]+')'" />
+                  </tal:block>
+                </select>
+	      </form>
 
-	</tr>
+            </div>
 
-        <tr class="even"><td colspan="2">&nbsp;</td></tr>
+            <div class="content even" tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here.retrieveI18NContentLayerOb()) or here.portal_membership.checkPermission('Add portal content', here.retrieveI18NContentLayerOb())">
+              <a href="#" tal:attributes="href string:${here/retrieveI18NContentLayerURL}/i18nlayer_languages_form" i18n:translate="label_manage_languages">Manage languages</a>
+            </div>
 
+        </div>
+</div>
 
-</table>
 </body>
 
 </html>

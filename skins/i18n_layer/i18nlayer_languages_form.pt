@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="i18nlayer">
 
 <body>
 
@@ -18,7 +18,7 @@
         <h1 i18n:translate="heading_languages_sheet">
         Languages Sheet of this 
 	       <span i18n:name="itemtype">
-                  <span i18n:translate=""         
+                  <span i18n:domain="plone" i18n:translate=""
                         tal:content="python:here.getTypeInfo().Title()" 
                         tal:omit-tag="">Item type</span>
             </span>
@@ -43,25 +43,24 @@
 		<tal:block tal:define="dummy python:batch.append(getattr(here,lang))" />
             </tal:block>
 	 
-            <div class="row"><div class="label">List</div> 
+            <div class="row"><div i18nl:translate="label_list" class="label">List</div>
               <metal metal:use-macro="here/folder_contents/macros/folder_listing" />
 	    </div>
 
 	    <div class="row"><div class="label">&nbsp;</div>
-              <input class="context" type="submit" name="deleteLanguageObject:method" value="Delete" />
-              <!--<input class="context" type="submit" name="content_publishing_history:method" value="Change Status" />-->
+              <input class="context" type="submit" name="deleteLanguageObject:method" i18n:domain="plone" i18n:attributes="value" value="Delete" />
             </div>
 
 	</form>
     
-   
+
         <form class="group"
               name="edit_form"
               action="createLanguageObject"
               tal:attributes="action string:${here/absolute_url}/createLanguageObject"
               method="get">
 
-            <span class="legend" i18n:translate="">create new language</span>
+            <span class="legend" i18n:translate="legend_create_new_language">create new language</span>
 
             <div class="row">
                 <div class="label">
@@ -77,7 +76,7 @@
 			    tal:attributes="tabindex tabindex/next;"
 			    tal:define="available_languages python:list(here.availableLanguages()); sorted python:available_languages.sort( lambda x,y: cmp(x[1], y[1]) )">
 			    
-			    <option value="" i18n:translate="choose_language">Choose Language</option>
+			    <option value="" i18n:translate="label_choose_language">Choose Language</option>
 			    <tal:block tal:repeat="language available_languages">
 			      <option tal:condition="python:test(language[0] not in existing_languages, 1,0)" tal:attributes="value python:language[0]"
 			              tal:content="structure python:language[1]">Language</option>
@@ -94,9 +93,9 @@
                 <div class="label">&nbsp;</div>
                     <input class="context" 
                            tabindex=""
-                           type="submit" 
+                           type="submit"
                            name="Change" 
-                           value="Create" 
+                           value="Create"
                            i18n:attributes="value"
                            tal:attributes="tabindex tabindex/next;" /> 
             </div>
