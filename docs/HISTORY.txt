@@ -1,6 +1,10 @@
 0.3-DEVEL - unreleased
 ======================
 
+ * Removed default description text for upload fields for ATFile and ATImage. 
+   They are superflouous and don't really add any help to the user. Quite obvious
+   what the fields do/mean.
+
  * Fixed [ 1047878 ] For ical and vcal export, use action icons instead of tabs
    [tiran]
 
