@@ -241,5 +241,5 @@ msgstr "right"
 msgid "goto_this_contentpanels"
 msgstr "goto this contentpanels"
 
-msgid "Document body"
+msgid "Document content"
 msgstr ""

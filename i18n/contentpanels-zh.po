@@ -231,6 +231,6 @@ msgstr "右列"
 msgid "goto_this_contentpanels"
 msgstr "跳转到这个复合面板"
 
-msgid "Document body"
+msgid "Document content"
 msgstr "文档正文"
 

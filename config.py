@@ -36,7 +36,7 @@ actions=[
 
 ### PT: portal type specific viewlets
 
-('document_viewlet', 'Document body', 
+('document_viewlet', 'Document content', 
 "string: here/viewlet_document_body/macros/portlet",
 '', "View","PT:Document",1),
 
