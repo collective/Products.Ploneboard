@@ -223,6 +223,7 @@ class LDAPGroupFolder(SimpleItem):
         with this system, it's possible to differenciate between LDAP groups and LDAP roles.
         """
         self.getLUF().manage_addGroup(name)
+        self.manage_addGroupMapping(name, "group_" + name, None, )
         self._doChangeUser(name, password, roles, domains, **kw)
 
     security.declarePrivate('_doDelUsers')
@@ -237,10 +238,15 @@ class LDAPGroupFolder(SimpleItem):
 
     security.declarePrivate('_doChangeUser')
     def _doChangeUser(self, name, password, roles, domains, **kw):
-        """WARNING: If a role with exists with the same name as the group, we do not add
-        the group mapping for it, but we create it as if it were a Zope ROLE.
-        Ie. it's not possible to have a GRUF Group name = a Zope role name, BUT,
-        with this system, it's possible to differenciate between LDAP groups and LDAP roles.
+        """
+        This is used to change the groups (especially their roles).
+
+        [ THIS TEXT IS OUTDATED :
+          WARNING: If a ZOPE role with the same name as the GRUF group exists,
+          we do not add the group mapping for it, but we create it as if it were a Zope ROLE.
+          Ie. it's not possible to have a GRUF Group name = a Zope role name, BUT,
+          with this system, it's possible to differenciate between LDAP groups and LDAP roles.
+        ]
         """
         luf = self.getLUF()
         self._cache.remove(name)

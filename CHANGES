@@ -10,6 +10,11 @@
 
   * Fixed [ 1051387 ] addGroup fails if type 'Folder' is not implicitly addable.
 
+  * Fixed other minor or cosmetic bugs
+
+  * Group mapping is automatically created by LDAPGroupFolder when you create a group
+  with its interface.
+
 v3_1_1 - 20040906
 
   * Fixed a bug in getProperty() - it always returned None !
