@@ -1,0 +1,62 @@
+# Gettext Message File for CMFPhoto.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone 1.0\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: 2003-05-09 21:01 GMT+8\n"
+"Last-Translator: panjunyong <panjy@zopechina.ods.org>\n"
+"Language-Team: zopechina.com <panjy@zopechina.ods.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: zh_cn\n"
+"Language-name: Language\n"
+"Preferred-encodings: utf-8\n"
+"Domain: mpoll\n"
+
+msgid "box_poll"
+msgstr "投票"
+
+msgid "Vote"
+msgstr "投票"
+
+msgid "label_view_results"
+msgstr "查看投票结果"
+
+msgid "label_poll_results"
+msgstr "当前投票结果"
+
+msgid "label_poll_is_closed"
+msgstr "此项投票已经关闭"
+
+msgid "label_total_votes"
+msgstr "总投票数: ${total}"
+
+msgid "description_disclaimer"
+msgstr "注意：此投票仅仅反映了参与投票人的意见，并不代表所有人的意见。"
+
+msgid "label_question"
+msgstr "问题"
+
+msgid "help_question"
+msgstr "投票问题."
+
+msgid "label_answers"
+msgstr "答案"
+
+msgid "help_answers"
+msgstr "可选答案清单，每个答案一行."
+
+msgid "label_open"
+msgstr "开放"
+
+msgid "help_open"
+msgstr "选中次项，可开放接受用户的投票."
+
+msgid "do_vote"
+msgstr "投票"
+
+msgid "all_mpolls"
+msgstr "投票清单"

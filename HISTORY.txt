@@ -1,6 +1,8 @@
 0.3.1
   - serious BUG fix in Extentions/Install.py
     Yangh <walteyh@sohu.com>
+  - Simplified Chinese (zh-cn) translation contributed by ZopeChina
+    <panjy@zopechina.ods.org>
 
 0.3
   - Added list page(mpoll_list.pt) to list all avilable mpoll. 

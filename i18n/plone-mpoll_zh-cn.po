@@ -1,0 +1,39 @@
+# Gettext Message File for MPoll
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone 1.0\n"
+"POT-Creation-Date: 2003-01-19 11:42-100\n"
+"PO-Revision-Date: 2003-05-09 21:01 GMT+8\n"
+"Last-Translator: panjunyong <panjy@zopechina.ods.org>\n"
+"Language-Team: zopechina.com <panjy@zopechina.ods.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: LL\n"
+"Language-name: Chinese(Simplified)\n"
+"Preferred-encodings: utf-8\n"
+"Domain: plone\n"
+
+msgid "MPoll"
+msgstr "投票站"
+
+msgid "An error occured while processing your vote."
+msgstr "处理您的投票过程中，发生了一个错误"
+
+msgid "Your vote has been registered."
+msgstr "您已经成功投票。"
+
+msgid "You have already voted in this poll."
+msgstr "您在此已经投票"
+
+msgid "MPoll has been created."
+msgstr "投票创建成功"
+
+msgid "Your changes have been saved."
+msgstr "您的修改已经保存"
+
+msgid "This poll is closed."
+msgstr "此投票已经关闭"
+
