@@ -141,9 +141,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 ##            return self._original_id
 
         # Return the right id
-        if self.isGroup():
-            return "%s%s" % (GRUFFolder.GRUFGroups._group_prefix, self._original_id, )
-        return self._original_id
+        if self.isGroup() and self._original_name[:len(GRUFFolder.GRUFGroups._group_prefix)] != GRUFFolder.GRUFGroups._group_prefix:
+            return "%s%s" % (GRUFFolder.GRUFGroups._group_prefix, self._original_name, )
+        return self._original_name
 
     def _getPassword(self):
         """Return the password of the user."""
