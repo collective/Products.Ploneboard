@@ -340,3 +340,9 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):         #Persistent):
 ##    def __str__(self): return self.getUserName()
 ##    __repr__=__str__
 
+    def getGroupUsers(self):
+        ''' returns the users belonging to this group '''
+        if not self.isGroup():
+            raise TypeError,'This method only aplies to groups'
+        
+        return [u for u in self.aq_parent.getUsers() if self.getId() in u.getGroups()]
