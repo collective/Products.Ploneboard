@@ -1,5 +1,5 @@
 """
-$Id: MPoll.py,v 1.4 2003/11/10 15:19:57 longsleep Exp $
+$Id: MPoll.py,v 1.5 2004/06/14 21:38:19 pupq Exp $
 """
 from Products.Archetypes.public import *
 from BTrees.IOBTree import IOBTree
@@ -29,6 +29,7 @@ schema = ExtensibleMetadata.schema + Schema((
                                     description_msgid="help_question",
                                     i18n_domain="mpoll"),
                 ),
+
     LinesField('answers',
                required=1,
                searchable=1,
@@ -80,6 +81,13 @@ class MPoll(BaseContent):
             
         return self.Schema()['open'].set(self, value)
 
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setQuestion')
+    def setQuestion(self, value):
+        """Set the question & title"""
+        self.title = value
+        return self.Schema()['question'].set(self, value)
+        
+
     security.declareProtected(CMFCorePermissions.View, 'vote')
     def vote(self, answer):
         """Register a vote"""
@@ -95,11 +103,6 @@ class MPoll(BaseContent):
 
         self._votes[answer].change(1)
 
-    security.declareProtected(CMFCorePermissions.View, 'Title')
-    def Title(self):
-        """Return question as title, for plone ui"""
-        return self.getQuestion()
-    
     security.declareProtected(CMFCorePermissions.View, 'getVotes')
     def getVotes(self):
         """Result of this poll"""

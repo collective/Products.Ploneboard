@@ -41,7 +41,7 @@
 
                     </form>
 
-                    <div class="boxDetails"><a tal:attributes="href obj/absolute_url" i18n:translate="label_view_results">View results</a>|<a href="mpoll_list" i18n:translate="all_mpolls">All mpolls</a></div>
+                    <div class="boxDetails"><a tal:attributes="href obj/absolute_url" i18n:translate="label_view_results">Results</a> | <a href="mpoll_list" i18n:translate="all_mpolls">All polls</a></div>
 
                 </div>
             </tal:block>
