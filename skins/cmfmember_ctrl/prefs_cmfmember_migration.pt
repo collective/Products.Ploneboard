@@ -33,9 +33,9 @@
     <h1 i18n:translate="heading_cmfmember_migration">CMFMember migrations</h1>
 
 
-    <p i18n:translate="cmfmember_versions">
-      <b>Instance version:</b> <tal:block tal:replace="here/getInstanceVersion"/><br />
-      <b>File system version:</b> <tal:block tal:replace="here/getFileSystemVersion"/><br />
+    <p>
+      <b i18n:translate="cmfmember_version_instance">Instance version:</b> <tal:block tal:replace="here/getInstanceVersion"/><br />
+      <b i18n:translate="cmfmember_version_filesystem">File system version:</b> <tal:block tal:replace="here/getFileSystemVersion"/><br />
     </p>
 
     <div class="portalMessage"
@@ -51,7 +51,9 @@
     </div>
 
     <p i18n:translate="">
-       Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.<br/>
+       Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
+    </p>
+    <p i18n:translate="">
        Your CMFMember instance is out of date. Click "upgrade" to bring this CMFMember version up to date with your file system.
     </p>
     <form action="upgrade" method="post">
