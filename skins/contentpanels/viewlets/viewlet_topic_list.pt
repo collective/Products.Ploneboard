@@ -17,12 +17,13 @@ Topic title</a></h5>
 
          <div class="portletBody">
 
+             <metal:block metal:define-macro="content_listing">
              <tal:block tal:repeat="item results">
 
                 <div class="portletContent odd" 
                      tal:attributes="class python:test(repeat['item'].index % 2, 'portletContent even', 'portletContent odd')"
                      tal:condition="python:item != None and item.getTypeInfo()">
-                  <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
+                   <tal:block tal:define="action python:item.getTypeInfo().getActionById('view');
                         url python:item.absolute_url()+'/'+action;
                         ">
            &nbsp;
@@ -39,15 +40,19 @@ Topic title</a></h5>
                            </span>
                          </tal:block>
                         <span tal:replace="python:item.Title() or item.getId()">Title</span>
-                     </a>
+                      </a>
        
-                     <span tal:content="string: (${item/Creator})">creator</span>
-                     <span tal:content="python:here.toPortalTime(item.ModificationDate())">
+                      <span class="discreet"
+                            tal:content="string: (${item/Creator})">creator</span>
+                      <span class="discreet"
+                            tal:content="python:here.toPortalTime(item.ModificationDate())">
                              08/19/2001 03:01 AM
-                     </span>
-                </tal:block>
-             </div>
-          </tal:block>
+                      </span>
+                   </tal:block>
+                </div>
+
+              </tal:block>
+              </metal:block>
 
               <div class="portletContent odd">
 

@@ -14,7 +14,7 @@
          <div class="portletBody">
 
              <div class="portletContent"
-                  tal:content="structure python:here.render(here,request)" />
+                  tal:content="structure here/render" />
 
          </div>
 

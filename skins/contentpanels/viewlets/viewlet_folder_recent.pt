@@ -20,7 +20,7 @@
 
          <div class="portletBody">
 
-             <tal:block metal:use-macro="here/topic_panel_view/macros/content_listing"/>
+             <tal:block metal:use-macro="here/viewlet_topic_list/macros/content_listing"/>
 
              <div class="portletContent odd">
 
