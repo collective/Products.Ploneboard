@@ -29,6 +29,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     #    schema = BaseFolder.schema
     id = 'portal_memberdata'
     meta_type = PKG_NAME + ' Tool'
+    portal_type = 'Folder'
     _actions = []
 
     _defaultMember = None
@@ -56,7 +57,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         self.typeName = TYPE_NAME  # The name used for the factory in types_tool
         self.setTitle('Member profiles')
 
-
     def __call__(self):
         """Invokes the default view."""
         view = _getViewFor(self, 'view', 'folderlisting')
@@ -65,13 +65,11 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         else:
              return view()
 
-
     security.declarePrivate('getMemberFactory')
     def getMemberFactory(self):
         """Return a callable that is the registered object returning a
         contentish member object"""
         return getMemberFactory(self)
-
 
     security.declarePrivate('_deleteMember')
     def _deleteMember(self, id):
@@ -184,12 +182,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
            argument or None if no such property is found."""
         # Get the default value from the Member schema
         # Create a temporary member if needed.
-        #import pdb; pdb.set_trace()
         prop=_marker
         m = self._getMemberInstance()
         schema = self._getMemberInstance().schema
         field = schema.get(id, None)
-        import pdb; pdb.set_trace()
 
         if field:
             prop = getattr(field, 'default', _marker)
@@ -199,7 +195,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         # No default property 
         if default is not None:
             return default
-        import pdb; pdb.set_trace()
 
         raise AttributeError, id
        

@@ -1,7 +1,12 @@
 import types
-import Products.CMFMember
 import AccessControl.User
 import base64
+
+from Products.CMFMember import MemberPermissions
+from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION, EDIT_ID_PERMISSION, \
+    EDIT_REGISTRATION_PERMISSION, VIEW_OTHER_PERMISSION, EDIT_OTHER_PERMISSION, \
+    VIEW_SECURITY_PERMISSION, EDIT_PASSWORD_PERMISSION, EDIT_SECURITY_PERMISSION
+
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_parent, aq_base, aq_chain
 from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
@@ -13,9 +18,8 @@ from Products.Archetypes.ExtensibleMetadata import ExtensibleMetadata
 from Products.Archetypes.Field       import *
 from Products.Archetypes.Widget      import *
 from Products.Archetypes.debug import log
-# from Products.Archetypes.Storage import IStorage
 from DateTime import DateTime
-import Products.CMFMember as CMFMember
+
 from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
 
 
@@ -25,8 +29,8 @@ content_schema = FieldList((
                 accessor="getId",
                 mutator="setId",
                 mode='rw',
-                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
-                write_permission=CMFMember.EDIT_ID_PERMISSION,
+                read_permission=VIEW_PUBLIC_PERMISSION,
+                write_permission=EDIT_ID_PERMISSION,
                 default=None,
                 widget=IdWidget(label_msgid="label_name",
                                 description_msgid="help_name",
@@ -36,8 +40,8 @@ content_schema = FieldList((
     StringField('fullname',
                 default='',
                 mode='rw',
-                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
-                write_permission=CMFMember.EDIT_REGISTRATION_PERMISSION,
+                read_permission=VIEW_PUBLIC_PERMISSION,
+                write_permission=EDIT_REGISTRATION_PERMISSION,
                 searchable=1,
                 widget=StringWidget(label='Full name',
                                     description='Enter your full name here.',)
@@ -46,8 +50,8 @@ content_schema = FieldList((
     ObjectField('email',
                 required=1,
                 mode='rw',
-                read_permission=CMFMember.VIEW_PUBLIC_PERMISSION,
-                write_permission=CMFMember.EDIT_REGISTRATION_PERMISSION,
+                read_permission=VIEW_PUBLIC_PERMISSION,
+                write_permission=EDIT_REGISTRATION_PERMISSION,
                 searchable=1,
                 widget=StringWidget(label='E-mail',
                                     description='Enter your e-mail address here.',)
@@ -55,8 +59,8 @@ content_schema = FieldList((
     
     ObjectField('wysiwyg_editor',
                 mode='rw',
-                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                read_permission=VIEW_OTHER_PERMISSION,
+                write_permission=EDIT_OTHER_PERMISSION,
                 vocabulary='editors',
                 enforceVocabulary=1,
                 widget=SelectionWidget(format='pulldown',
@@ -69,8 +73,8 @@ content_schema = FieldList((
     ObjectField('formtooltips',
                  default=1,
                  mode='rw',
-                 read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                 write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                 read_permission=VIEW_OTHER_PERMISSION,
+                 write_permission=EDIT_OTHER_PERMISSION,
                  searchable=0,
                  widget=BooleanWidget(label='Form help',
                                       description='Indicate whether you want the form help pop-ups to be displayed.')
@@ -79,8 +83,8 @@ content_schema = FieldList((
     ObjectField('visible_ids',
                 default=1,
                 mode='rw',
-                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                read_permission=VIEW_OTHER_PERMISSION,
+                write_permission=EDIT_OTHER_PERMISSION,
                 widget=BooleanWidget(label='Display names',
                                      description='Indicate whether you want Names (also known as IDs) to be ' + \
                                                  'visible and editable when editing contents. If you choose not ' + \
@@ -89,8 +93,8 @@ content_schema = FieldList((
 
     ObjectField('portal_skin',
                 mode='rw',
-                read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                read_permission=VIEW_OTHER_PERMISSION,
+                write_permission=EDIT_OTHER_PERMISSION,
                 required=1,
                 searchable=0,
                 vocabulary='available_skins',
@@ -104,8 +108,8 @@ content_schema = FieldList((
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
-                read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
-                write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
+                read_permission=VIEW_SECURITY_PERMISSION,
+                write_permission=EDIT_PASSWORD_PERMISSION,
                 searchable=0,
                 widget=StringWidget(label='Password',
                                       description='Enter a new password (leave blank to keep your current password)')
@@ -115,8 +119,8 @@ content_schema = FieldList((
                 mutator='_setPassword',
                 accessor='_getPassword',
                 mode='w',
-                read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
-                write_permission=CMFMember.EDIT_PASSWORD_PERMISSION,
+                read_permission=VIEW_SECURITY_PERMISSION,
+                write_permission=EDIT_PASSWORD_PERMISSION,
                 searchable=0,
                 widget=StringWidget(label='Confirm password',
                                       description='Confirm your new password')
@@ -128,8 +132,8 @@ content_schema = FieldList((
                vocabulary='valid_roles',
                enforceVocabulary=1,
                mode='rw',
-               read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
-               write_permission=CMFMember.EDIT_SECURITY_PERMISSION,
+               read_permission=VIEW_SECURITY_PERMISSION,
+               write_permission=EDIT_SECURITY_PERMISSION,
                searchable=0,
                widget=MultiSelectionWidget(label='Roles',
                                            description='Select the security roles for this user')
@@ -139,8 +143,8 @@ content_schema = FieldList((
                mutator='setDomains',
                accessor='getDomains',
                mode='rw',
-               read_permission=CMFMember.VIEW_SECURITY_PERMISSION,
-               write_permission=CMFMember.EDIT_SECURITY_PERMISSION,
+               read_permission=VIEW_SECURITY_PERMISSION,
+               write_permission=EDIT_SECURITY_PERMISSION,
                searchable=0,
                widget=LinesWidget(label='Domains',
                                   description='If you would like to restrict this user to logging in only from certain domains, enter those domains here.')
@@ -156,8 +160,8 @@ content_schema = FieldList((
     DateTimeField('login_time',
                   default='2000/01/01',  # for Plone 1.0.1 compatibility
                   mode='r',
-                  read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                  write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                  read_permission=VIEW_OTHER_PERMISSION,
+                  write_permission=EDIT_OTHER_PERMISSION,
                   searchable=0,
                   widget=StringWidget(label="Login time",
                                       visible=-1,)),
@@ -165,8 +169,8 @@ content_schema = FieldList((
     DateTimeField('last_login_time',
                   default='2000/01/01',  # for Plone 1.0.1 compatibility
                   mode='r',
-                  read_permission=CMFMember.VIEW_OTHER_PERMISSION,
-                  write_permission=CMFMember.EDIT_OTHER_PERMISSION,
+                  read_permission=VIEW_OTHER_PERMISSION,
+                  write_permission=EDIT_OTHER_PERMISSION,
                   searchable=0,
                   widget=StringWidget(label="Last login time",
                                       visible=-1,)),
@@ -248,7 +252,7 @@ class Member(BaseContent):
 
     ## Contract with portal_membership
     
-    security.declareProtected(CMFMember.EDIT_OTHER_PERMISSION, 'setProperties')
+    security.declareProtected(MemberPermissions.EDIT_OTHER_PERMISSION, 'setProperties')
     def setProperties(self, mapping=None, **kwargs):
         """assign all the props to member attributes, we expect
         to be able to find a mutator for each of these props
@@ -343,7 +347,7 @@ class Member(BaseContent):
         pass
 
 
-    security.declareProtected(CMFMember.EDIT_ID_PERMISSION, 'setId')
+    security.declareProtected(MemberPermissions.EDIT_ID_PERMISSION, 'setId')
     def setId(self, id):
         if hasattr(self, '_v_user'):
             old_user_id = self._v_user.getUserName()

@@ -47,10 +47,10 @@ def replaceTools(self, out, convert=1):
     ap = portal.manage_addProduct[CMFMember.PKG_NAME]
     addTool = portal.manage_addProduct[CMFMember.PKG_NAME].manage_addTool
     addTool(CMFMember.PKG_NAME + ' Tool', None)
+    
     memberdata_tool = getToolByName(self, 'portal_memberdata')
 
     # move the old members into the new memberdata tool
-    #pdb.set_trace()
     for m in _v_tempFolder.objectValues():
         memberdata_tool.registerMemberData(m, m.id)
 
@@ -61,6 +61,20 @@ def replaceTools(self, out, convert=1):
     memberdata_tool = getToolByName(portal, 'portal_memberdata')
     memberdata_tool.manage_permission(CMFMember.ADD_PERMISSION, ('Manager',), acquire=1)
 
+    # For a object to be displayed in contentValues it must be registered with the
+    # portal_types tool.  So lets do this and make the MemberDataTool not addable.
+    memberdata_tool._setPortalTypeName('Folder')
+    typestool=getToolByName(self, 'portal_types')
+    from Products.CMFCore.TypesTool import FactoryTypeInformation
+    typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
+      typeinfo_name='CMFCore: Portal Folder')
+    memberarea=typestool.MemberArea
+    memberarea.content_meta_type='CMFMember Tool'
+    _actions=memberarea._cloneActions()
+    for action in _actions:
+        if action['id']=='view':
+            action['action']='folder_contents'
+    memberarea._actions=_actions
 
 def _getOldValue(old, new, id, out):
     old_schema = getattr(old, 'Schema', None)

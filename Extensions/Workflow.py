@@ -1,6 +1,7 @@
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
+from Products.CMFMember import MemberPermissions
 
 # Execute the 'trigger' transition -- this should trigger
 # any automatic transitions for which the guard conditions
@@ -34,16 +35,16 @@ def setupWorkflow(portal, out):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('register', 'Register a Member', 'CMFMember.Install', 'register')
 
     perms = {}
-    for p in (CMFMember.REGISTER_PERMISSION,
-              CMFMember.EDIT_ID_PERMISSION,
-              CMFMember.EDIT_REGISTRATION_PERMISSION,
-              CMFMember.EDIT_PASSWORD_PERMISSION,
-              CMFMember.EDIT_SECURITY_PERMISSION,
-              CMFMember.EDIT_OTHER_PERMISSION,
-              CMFMember.VIEW_SECURITY_PERMISSION,
-              CMFMember.VIEW_PUBLIC_PERMISSION,
-              CMFMember.VIEW_OTHER_PERMISSION,
-              CMFMember.VIEW_PERMISSION):
+    for p in (MemberPermissions.REGISTER_PERMISSION,
+              MemberPermissions.EDIT_ID_PERMISSION,
+              MemberPermissions.EDIT_REGISTRATION_PERMISSION,
+              MemberPermissions.EDIT_PASSWORD_PERMISSION,
+              MemberPermissions.EDIT_SECURITY_PERMISSION,
+              MemberPermissions.EDIT_OTHER_PERMISSION,
+              MemberPermissions.VIEW_SECURITY_PERMISSION,
+              MemberPermissions.VIEW_PUBLIC_PERMISSION,
+              MemberPermissions.VIEW_OTHER_PERMISSION,
+              MemberPermissions.VIEW_PERMISSION):
         if not perms.has_key(p):
             wf.addManagedPermission(p)
             perms[p] = 1
@@ -58,67 +59,67 @@ def setupWorkflow(portal, out):
     state.setProperties(
         title='Newly created member',
         transitions=('trigger', 'auto_pending',))
-    state.setPermission(CMFMember.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
-    state.setPermission(CMFMember.EDIT_ID_PERMISSION, 0, ('Anonymous',))
-    state.setPermission(CMFMember.EDIT_REGISTRATION_PERMISSION, 0, ('Anonymous',))
-    state.setPermission(CMFMember.EDIT_PASSWORD_PERMISSION, 0, ('Manager',)) # make anonymous to allow people to set their own initial passwords
-    state.setPermission(CMFMember.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Anonymous',))
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Anonymous',))
+    state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Manager',)) # make anonymous to allow people to set their own initial passwords
+    state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
 
     # Pending approval
     state = wf.states['pending']
     state.setProperties(
         title='Awaiting registration',
         transitions=('trigger', 'auto_register', 'register_public', 'register_private',))
-    state.setPermission(CMFMember.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
-    state.setPermission(CMFMember.EDIT_ID_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_PASSWORD_PERMISSION, 0, ('Manager',)) # make anonymous to allow people to set their own initial passwords
-    state.setPermission(CMFMember.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_OTHER_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ('Manager',))  # make anonymous to allow people to self-register
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Manager',)) # make anonymous to allow people to set their own initial passwords
+    state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Manager',))
 
     # Registered, private
     state = wf.states['private']
     state.setProperties(
         title='Registered user, private profile',
         transitions=('trigger', 'make_public',))
-    state.setPermission(CMFMember.REGISTER_PERMISSION, 0, ())
-    state.setPermission(CMFMember.EDIT_ID_PERMISSION, 0, ())
-    state.setPermission(CMFMember.EDIT_REGISTRATION_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PUBLIC_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.VIEW_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
+    state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
+    state.setPermission(MemberPermissions.EDIT_REGISTRATION_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
 
     # Registered, public
     state = wf.states['public']
     state.setProperties(
         title='Registered user, public profile',
         transitions=('trigger', 'make_private',))
-    state.setPermission(CMFMember.REGISTER_PERMISSION, 0, ())
-    state.setPermission(CMFMember.EDIT_ID_PERMISSION, 0, ())
-    state.setPermission(CMFMember.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.EDIT_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
-    state.setPermission(CMFMember.VIEW_PUBLIC_PERMISSION, 0, ('Authenticated', 'Owner', 'Manager')) # allow Anonymous to let everyone view member info
-    state.setPermission(CMFMember.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
-    state.setPermission(CMFMember.VIEW_PERMISSION, 0, ('Authenticated', 'Manager')) # allow Anonymous to let everyone search for public members
-    state.setPermission(CMFMember.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
+    state.setPermission(MemberPermissions.REGISTER_PERMISSION, 0, ())
+    state.setPermission(MemberPermissions.EDIT_ID_PERMISSION, 0, ())
+    state.setPermission(MemberPermissions.EDIT_PASSWORD_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, ('Manager',))
+    state.setPermission(MemberPermissions.VIEW_PUBLIC_PERMISSION, 0, ('Authenticated', 'Owner', 'Manager')) # allow Anonymous to let everyone view member info
+    state.setPermission(MemberPermissions.VIEW_OTHER_PERMISSION, 0, ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.VIEW_PERMISSION, 0, ('Authenticated', 'Manager')) # allow Anonymous to let everyone search for public members
+    state.setPermission(MemberPermissions.MAIL_PASSWORD_PERMISSION, 0, ('Anonymous', 'Authenticated'))
     
     # TRANSITIONS
 
