@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.43 2004/08/05 23:52:00 tiran Exp $
+$Id: schemata.py,v 1.44 2004/08/12 12:23:44 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -62,7 +62,7 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
                 write_permission=TEMPLATE_MIXIN_PERMISSION,
                 default_method="getDefaultLayout",
                 vocabulary="_voc_templates",
-                #enforceVocabulary=1,
+                #enforceVocabulary=True,
                 widget=SelectionWidget(
                     description="Choose a template that will be used for viewing this item.",
                     description_msgid = "help_template_mixin",
@@ -137,7 +137,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         i18n_domain = "plone")),
 
     StringField('eventUrl',
-                required=0,
+                required=False,
                 searchable = 1,
                 accessor='event_url',
                 write_permission = ChangeEvents,
@@ -179,7 +179,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         label_msgid = "label_event_end",
                         i18n_domain = "plone")),
     StringField('contactName',
-                required=0,
+                required=False,
                 searchable = 1,
                 accessor='contact_name',
                 write_permission = ChangeEvents,
@@ -190,7 +190,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         label_msgid = "label_contact_name",
                         i18n_domain = "plone")),
     StringField('contactEmail',
-                required=0,
+                required=False,
                 searchable = 1,
                 accessor='contact_email',
                 write_permission = ChangeEvents,
@@ -203,7 +203,7 @@ ATEventSchema = ATEventBaseSchema + Schema((
                         label_msgid = "label_contact_email",
                         i18n_domain = "plone")),
     StringField('contactPhone',
-                required=0,
+                required=False,
                 searchable = 1,
                 accessor='contact_phone',
                 write_permission = ChangeEvents,
@@ -225,7 +225,7 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
                 required = 1,
                 searchable = 1,
                 accessor='_getRemoteUrl',
-                primary=1,
+                primary=True,
                 validators = (),
                 widget = StringWidget(
                         description=("The address of the location. Prefix is "
@@ -242,8 +242,8 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
 
 ATFileSchema = ATContentTypeSchema + Schema((
     FileField('file',
-              required = 1,
-              primary=1,
+              required=False,
+              primary=True,
               languageIndependent=True,
               validators = MaxSizeValidator('checkFileMaxSize',
                                             maxsize=MAX_FILE_SIZE),
@@ -273,7 +273,7 @@ ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
 ATImageSchema = ATContentTypeSchema + Schema((
     ImageField('image',
                required = 1,
-               primary=1,
+               primary=True,
                languageIndependent=True,
                sizes= {'preview' : (400, 400),
                        'thumb'   : (128, 128),
@@ -301,7 +301,7 @@ ATLinkSchema = ATContentTypeSchema + Schema((
     StringField('remoteUrl',
                 required = 1,
                 searchable = 1,
-                primary=1,
+                primary=True,
                 validators = ('isURL',),
                 widget = StringWidget(
                         description=("The address of the location. Prefix is "
@@ -352,9 +352,9 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
 ###
 ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
     BooleanField('acquireCriteria',
-                required=0,
+                required=False,
                 mode="rw",
-                default=0,
+                default=False,
                 widget=BooleanWidget(
                         label="Inherit Criteria",
                         label_msgid="label_inherit_criteria",
@@ -366,9 +366,9 @@ ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
                         i18n_domain = "plone"),
                 ),
     BooleanField('limitNumber',
-                required=0,
+                required=False,
                 mode="rw",
-                default=0,
+                default=False,
                 widget=BooleanWidget(
                         label="Limit Number of Items",
                         label_msgid="label_limit_number",
@@ -379,7 +379,7 @@ ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
                         i18n_domain = "plone"),
                 ),
     IntegerField('itemCount',
-                required=0,
+                required=False,
                 mode="rw",
                 default=0,
                 widget=IntegerWidget(
