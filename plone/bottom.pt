@@ -6,16 +6,6 @@
 <div class="context-menu-item"
      onmouseup="plone_edit(pd_selected_item)"
      filter="pd_selected_item">Edit...</div>
-<div class="context-menu-item"
-     onmouseup="composite_change_template(pd_selected_items)"
-     filter="pd_selected_items">Change Template...</div>
-<div class="separator" filter="pd_selected_item"></div>
-<div class="context-menu-item"
-     onmouseup="composite_copycut(pd_selected_items, false)"
-     filter="pd_selected_items">Copy</div>
-<div class="context-menu-item"
-     onmouseup="composite_copycut(pd_selected_items, true)"
-     filter="pd_selected_items">Cut</div>
 <div class="separator"></div>
 <div class="context-menu-item" onmouseup="composite_delete(pd_selected_items)"
      filter="pd_selected_items">Delete</div>
@@ -26,9 +16,6 @@
      filter="composite_prepare_target_menu(pd_filter_object)"></div>
 <div class="context-menu-item" onmouseup="plone_add(pd_selected_item)"
      filter="pd_selected_item">Add...</div>
-<div class="context-menu-item" tal:condition="request/__cp|nothing"
-     onmouseup="composite_paste(pd_selected_item)"
-     filter="pd_selected_item">Paste</div>
 </div>
 
 

@@ -4,7 +4,7 @@
 
 function plone_edit(element) {
   var path = escape(element.getAttribute("source_path"));
-  alert(path);
+  window.document.location = path + "/edit_compo_element"; 
 }
 
 function plone_add(target) {
