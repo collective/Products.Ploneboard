@@ -2,11 +2,22 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       i18n:domain="plone"
       tal:define="cpPath request/cpPath | here/absolute_url;
+                  addPanel request/addPanel | string:edit;
                   pageIndex request/pageIndex; 
                   columnIndex request/columnIndex;
                   panelIndex request/panelIndex;
                   isQuery request/isQuery | python: 0;
-                  paramString string:cpPath=$cpPath&amp;pageIndex=$pageIndex&amp;panelIndex=$panelIndex&amp;columnIndex=$columnIndex">
+                  paramString string:cpPath=$cpPath&amp;addPanel=$addPanel&amp;pageIndex=$pageIndex&amp;panelIndex=$panelIndex&amp;columnIndex=$columnIndex;
+
+                  path python:here.portal_url.getRelativeContentURL(here);
+                  baseurl string:${cpPath}/contentpanels_config?addPanel=${addPanel}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex&amp;panelObjectPath=$path&amp;panelObjectViewlet=;
+                  typeId python: here.getTypeInfo().getId();
+                  viewlets python: here.portal_contentpanels.listFilteredActionsFor(here);
+                  pt_viewlets python:viewlets.get('PT:' + typeId, []);
+                  pt_viewlets python: [viewlet for viewlet in pt_viewlets if (viewlet['id']!='contentpanels_viewlet' or here.absolute_url() != cpPath)];
+                  gl_viewlets python:viewlets.get('GL:folder', []) + viewlets.get('GL:content', []) + viewlets.get('GL:all', []);
+                  gn_portal_viewlets python:viewlets.get('GN:portal', []);
+                  gn_personal_viewlets python:viewlets.get('GN:personal', []); ">
 
 <head tal:define="ztu modules/ZTUtils;">
 <title tal:content="string:new panel at ${pageIndex}-${columnIndex}-${panelIndex}">new panel at x/x/x</title>
@@ -51,18 +62,66 @@
 
           <div tal:define="breadcrumbs python:here.breadcrumbs(here)">
 
-             <a tal:attributes="href string:${here/portal_url}/${template/getId}?$paramString">Home /</a>
-             <a tal:repeat="crumb python:breadcrumbs[:-1]"
+             <a tal:repeat="crumb python:breadcrumbs[:-2]"
                 tal:content="python: crumb[0] + ' / '"
                 tal:attributes="href python: crumb[1] + template.getId() + '?' + paramString">Parent
              </a>
-             <span tal:content="python:breadcrumbs[-1][0]" tal:on-error="string:"/>
-
          </div>
 
-         <br/>
+          <h1 class="documentFirstHeading" tal:content="here/Title"></h1>
 
-       </div>
+          <div class="discreet" tal:content="here/Description"></div>
+
+<fieldset>
+   <legend> portlets </legend>
+<div tal:condition="pt_viewlets">
+   <div><b>types specific</b></div>
+   <div>
+       <a tal:repeat="viewlet pt_viewlets"
+          href="#"
+          i18n:translate=""
+          tal:attributes="
+ onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+<div tal:condition="gl_viewlets">
+   <div><b>global viewlets</b></div>
+   <div>
+       <a tal:repeat="viewlet gl_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name">viewlet </a>
+   </div>
+</div>
+
+
+<div tal:condition="gn_portal_viewlets">
+   <div><b>portal viewlets</b></div>
+   <div>
+       <a tal:repeat="viewlet gn_portal_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name ">viewlet </a>
+   </div>
+</div>
+
+
+<div tal:condition="gn_personal_viewlets">
+   <div><b>personal viewlets</b></div>
+   <div>
+       <a tal:repeat="viewlet gn_personal_viewlets"
+          href="#"
+          tal:attributes="onclick string:opener.location.href='${baseurl}${viewlet/id}';; window.close();;"
+          i18n:translate=""
+          tal:content="viewlet/name">viewlet</a>
+   </div>
+</div>
+</fieldset>
+     </div>
 
        <!-- search form -->
 
@@ -98,28 +157,25 @@
 
       <!-- the list -->
 
-      <div tal:define="checkPermission python: here.portal_membership.checkPermission;
+    <fieldset tal:define="checkPermission python: here.portal_membership.checkPermission;
                        results python:test(isQuery,[brain.getObject() for brain in here.queryCatalog()[:100]], 
                               [item for item in here.contentValues() if checkPermission('View',item)])"
+              tal:condition="results">
+    <legend>content list</legend>
+      <div 
           tal:repeat="item python:results[:100]"
           tal:attributes="class python:test(repeat['item'].odd(), 'even', 'odd')" >
 
-          <a tal:attributes="href string:${item/absolute_url}/cp_viewlet_form?${paramString}&amp;addPanel=1">[viewlets] </a>
-
           <img src="#" tal:attributes="src string:${here/portal_url}/${item/getIcon}" />
-          <a tal:condition="python: item.isPrincipiaFolderish and item != here"
-               tal:attributes="href string:${item/absolute_url}/${template/getId}?$paramString"
-               tal:content="python:item.Title() or item.getId()">Title</a>
-
-          <b tal:condition="python: not item.isPrincipiaFolderish or item==here"
-               tal:content="python:item.Title() or item.getId()">Title</b>
+          <a tal:attributes="href string:${item/absolute_url}/${template/getId}?$paramString"
+             tal:content="python:item.Title() or item.getId()">Title</a>
 
           <span class="discreet"
                 i18n:translate=""
                 tal:content="python:item.getTypeInfo() and item.getTypeInfo().Title()">Metatype</span>
 
       </div>
-
+    </fieldset>
     </div> 
 </div>
 </body>

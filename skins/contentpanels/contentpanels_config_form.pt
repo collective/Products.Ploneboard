@@ -114,7 +114,7 @@ columns
                            tal:attributes="value repeat/column/index" />
               </div>
 
-                <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=0', 'cal','dependent=yes,width=400,height=400,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                    <img title="new panel" alt="new panel"
                         i18n:attributes="title"
                          tal:attributes="src string:$portal_url/newPanel.gif"/>
@@ -187,7 +187,7 @@ columns
                              i18n:attributes="title"
                              tal:attributes="src string:$portal_url/right.gif"/>
                         </a>
-                        <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
+                        <a href="#" tal:attributes="onclick string:window.open('${here/absolute_url}/cp_new_panel_form?addPanel=1&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$nextPanel', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false">
                           <img title="new panel" alt="new panel"
                              i18n:attributes="title"
                              tal:attributes="src string:$portal_url/newPanel.gif"/>
@@ -214,7 +214,7 @@ columns
                         <input type="hidden" 
                                tal:attributes="value panel/panelObjectViewlet;
                                    name string:CPI$columnIndex.panelObjectViewlet:records;"/>
-                        <a href="#" tal:attributes="onclick string:window.open('${panelContent/absolute_url}/cp_viewlet_form?cpPath=${here/absolute_url}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false"
+                        <a href="#" tal:attributes="onclick string:window.open('${panelContent/absolute_url}/cp_new_panel_form?cpPath=${here/absolute_url}&amp;pageIndex=$pageIndex&amp;columnIndex=$columnIndex&amp;panelIndex=$panelIndex', 'cal','dependent=yes,width=600,height=350,scrollbars=yes,resizable=yes,screenX=200,screenY=300,titlebar=no');; return false"
                            tal:content="python: here.portal_contentpanels.getViewletName(panel['panelObjectViewlet'])"> viewlet name </a>
                         <input type="hidden" name="panelIndex" value="#"
                                tal:attributes="value repeat/panel/index;
