@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFile.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
+$Id: testATFile.py,v 1.8 2004/06/14 00:37:49 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -14,12 +14,18 @@ if __name__ == '__main__':
 
 from common import *
 
+file_text = """
+foooooo
+"""
+
 def editCMF(obj):
     dcEdit(obj)
+    obj.edit(file=file_text)
 
 def editATCT(obj):
     dcEdit(obj)
-
+    obj.edit(file=file_text)
+    #XXX obj.setFormat('text/plain')
 
 tests = []
 
@@ -36,10 +42,23 @@ class TestSiteATFile(ATCTSiteTestCase):
         new = self._ATCT
         editCMF(old)
         editATCT(new)
-        self.failUnless(old.Title() == new.Title(), 'Title mismatch: %s / %s' \
-                        % (old.Title(), new.Title()))
-        self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
-                        % (old.Description(), new.Description()))
+        self.compareDC(old, new)
+        self.failUnlessEqual(str(old), str(new.getFile()))
+
+    def testCompatibilityFileAccess(self):
+        new = self._ATCT
+        editATCT(new)
+        # test for crappy access ways of CMF :)
+        self.failUnlessEqual(str(new), file_text)
+        self.failUnlessEqual(new.data, file_text)
+        self.failUnlessEqual(str(new.getFile()), file_text)
+        self.failUnlessEqual(new.getFile().data, file_text)
+        self.failUnlessEqual(new.get_data(), file_text)
+        
+    def testCompatibilityContentTypeAccess(self):
+        new = self._ATCT
+        editATCT(new)
+        # XXX todo
 
     def test_migration(self):
         old = self._cmf
@@ -51,6 +70,7 @@ class TestSiteATFile(ATCTSiteTestCase):
         description = old.Description()
         mod         = old.ModificationDate()
         created     = old.CreationDate()
+        file        = str(old)
 
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
@@ -62,9 +82,10 @@ class TestSiteATFile(ATCTSiteTestCase):
         self.compareAfterMigration(migrated)
         self.compareDC(migrated, title=title, description=description, mod=mod,
                        created=created)
-                       
-        # XXX more      
-
+        self.failUnlessEqual(file, str(migrated.getFile()))
+        self.failIfEqual(migrated.data, None)
+        self.failIfEqual(migrated.data, '')
+        # XXX more
 
     def beforeTearDown(self):
         del self._ATCT

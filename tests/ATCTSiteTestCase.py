@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.7 2004/06/13 21:49:19 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.8 2004/06/14 00:37:49 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -69,10 +69,10 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
 
     def testTypeInfo(self):
         ti = self._ATCT.getTypeInfo()
-        self.failUnless(ti.getId() == self.portal_type, ti.getId())
-        self.failUnless(ti.Title() == self.title, ti.Title())
-        self.failUnless(ti.getIcon() == self.icon, ti.getIcon())
-        self.failUnless(ti.Metatype() == self.meta_type, ti.Metatype())
+        self.failUnlessEqual(ti.getId(), self.portal_type)
+        self.failUnlessEqual(ti.Title(), self.title)
+        self.failUnlessEqual(ti.getIcon(), self.icon)
+        self.failUnlessEqual(ti.Metatype(), self.meta_type)
 
     def testDoesImplemendDC(self):
         self.failUnless(IDublinCore.isImplementedBy(self._ATCT))
@@ -95,22 +95,17 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
             mod = kwargs.get('mod')
             created = kwargs.get('created')
             
-        time.sleep(1)
-        self.failUnless(first.Title() == title, 'Title mismatch: %s / %s' \
-                        % (first.Title(), title))
-        self.failUnless(first.Description() == description,
-                        'Description mismatch: %s / %s' % (first.Description(), description))
-        self.failUnless(first.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
-                        % (first.ModificationDate(), mod))
-        self.failUnless(first.CreationDate() == created, 'Creation date mismatch: %s / %s' \
-                        % (first.CreationDate(), created))
+        #XXX time.sleep(1.5)
+        self.failUnlessEqual(first.Title(), title)
+        self.failUnlessEqual(first.Description(), description)
+        self.failUnlessEqual(first.ModificationDate(), mod)
+        self.failUnlessEqual(first.CreationDate(), created)
         # XXX more
 
     def compareAfterMigration(self, migrated):
         self.failUnless(isinstance(migrated, self.klass),
                         migrated.__class__)
-        self.failUnless(migrated.getTypeInfo().getId() == self.portal_type,
-                        migrated.getTypeInfo().getId())
+        self.failUnlessEqual(migrated.getTypeInfo().getId(), self.portal_type)
 
     def beforeTearDown(self):
         # logout
