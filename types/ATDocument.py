@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATDocument.py,v 1.25 2004/07/04 22:34:10 tiran Exp $
-""" 
+$Id: ATDocument.py,v 1.26 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -32,7 +32,7 @@ if HAS_LINGUA_PLONE:
 else:
     from Products.Archetypes.public import registerType
 
-from ZPublisher.HTTPRequest import HTTPRequest    
+from ZPublisher.HTTPRequest import HTTPRequest
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
@@ -72,7 +72,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     actions = updateActions(ATCTContent,
                             HistoryAwareMixin.actions
                            )
-    
+
     # backward compat
     text_format = 'text/plain'
 
@@ -81,8 +81,9 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """CMF compatibility method
         """
         return self.getText()
-    
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'EditableBody')
+
+    security.declareProtected(CMFCorePermissions.ModifyPortalContent,
+                              'EditableBody')
     def EditableBody(self):
         """
         """
@@ -91,10 +92,11 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setText')
     def setText(self, value, **kwargs):
         """Body text mutator
-        
+
         * hook into mxTidy an replace the value with the tidied value
-        * set text_format for backward compatibility with std cmf types using setContentType
-        
+        * set text_format for backward compatibility with std cmf
+          types using setContentType
+
         """
         field = self.getField('text')
 
@@ -102,7 +104,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         tidyOutput = self.getTidyOutput(field)
         if tidyOutput:
             value = tidyOutput
-        
+
         field.set(self, value, **kwargs)
         self.setContentType(kwargs.get('mimetype', None), skipField=True)
 
@@ -112,10 +114,10 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """
         if not mimetype:
             return
-        
+
         # old name to mimetype mapping like plain to text/plain
         mimetype = translateMimetypeAlias(mimetype)
-        
+
         if not skipField:
             field = self.getField('text')
             # AT lacks a setContentType() method :(
@@ -124,7 +126,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             filename, encoding = bu.filename, bu.original_encoding
             field.set(self, raw, mimetype=mimetype, filename=filename,
                       encoding=encoding)
-        
+
         self.text_format = mimetype
 
     security.declarePrivate('guessMimetypeOfText')
@@ -135,7 +137,7 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         id   = self.getId()
         data = self.getRawText()
         ext  = id.split('.')[-1]
-        
+
         if ext != id:
             mimetype = mtr.classify(data, filename=ext)
         else:
@@ -145,14 +147,15 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         if not mimetype or (type(mimetype) is TupleType and not len(mimetype)):
             # nothing found
             return None
-        
+
         if type(mimetype) is TupleType and len(mimetype):
             mimetype = mimetype[0]
         return mimetype.normalized()
 
     security.declarePrivate('getTidyOutput')
     def getTidyOutput(self, field):
-        """get the tidied output for a specific field from the request if available
+        """Get the tidied output for a specific field from the request
+        if available
         """
         request = self.REQUEST
         tidyAttribute = '%s_tidier_data' % field.getName()
@@ -160,16 +163,15 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             return request.get(tidyAttribute, None)
 
     def _notifyOfCopyTo(self, container, op=0):
-        """Overide this to store a flag when we are copied, to be able
+        """Override this to store a flag when we are copied, to be able
         to discriminate the right thing to do in manage_afterAdd here
         below.
         """
-        self._v_renamed = 1 
+        self._v_renamed = 1
 
     security.declarePrivate('manage_afterAdd')
     def manage_afterAdd(self, item, container):
-        """
-        Fix text when created througt webdav
+        """Fix text when created througt webdav
         Guess the right mimetype from the id/data
         """
         ATCTContent.manage_afterAdd(self, item, container)

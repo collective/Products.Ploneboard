@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATImage.py,v 1.23 2004/06/20 18:45:55 tiran Exp $
-""" 
+$Id: ATImage.py,v 1.24 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -54,8 +54,8 @@ class ATImage(ATCTFileContent):
     default_view   = 'image_view'
     suppl_views    = ()
     newTypeFor     = ('Image', 'Portal Image')
-    typeDescription= 'Using this form, you can enter details about the image, and upload\n' \
-                     'an image if required.'
+    typeDescription= ("Using this form, you can enter details about the image, \n"
+                      "and upload an image if required.")
     typeDescMsgId  = 'description_edit_image'
     assocMimetypes = ('image/*', )
     assocFileExt   = ('jpg', 'jpeg', 'png', 'gif', )
@@ -75,7 +75,7 @@ class ATImage(ATCTFileContent):
         """Generate image tag using the api of the ImageField
         """
         return self.image.tag(*args, **kwargs)
-    
+
     def __str__(self):
         """cmf compatibility
         """
@@ -93,7 +93,9 @@ registerType(ATImage, PROJECTNAME)
 
 
 class ATExtImage(ATImage):
-    """An Archetypes derived version of CMFDefault's Image with external storage"""
+    """An Archetypes derived version of CMFDefault's Image with
+    external storage
+    """
 
     schema         =  ATExtImageSchema
 
@@ -108,19 +110,21 @@ class ATExtImage(ATImage):
 
     security.declareProtected(CMFCorePermissions.View, 'getImage')
     def getImage(self, **kwargs):
-        """return the image with proper content type"""
-        field  = self.getField('image') 
+        """Return the image with proper content type
+        """
+        field  = self.getField('image')
         image  = field.get(self, **kwargs)
         ct     = self.getContentType()
         parent = aq_parent(self)
         i      = Image(self.getId(), self.Title(), image, ct)
         return i.__of__(parent)
-   
+
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):
-        """make it directly viewable when entering the objects URL
+        """Make it directly viewable when entering the objects URL
         """
-        self.getImage(REQUEST=REQUEST, RESPONSE=RESPONSE).index_html(REQUEST, RESPONSE)
+        image = self.getImage(REQUEST=REQUEST, RESPONSE=RESPONSE)
+        return image.index_html(REQUEST, RESPONSE)
 
 if HAS_EXT_STORAGE:
     registerType(ATExtImage, PROJECTNAME)

@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATPortalTypeCriterion.py,v 1.2 2004/06/20 15:13:23 tiran Exp $
+$Id: ATPortalTypeCriterion.py,v 1.3 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Godefroid Chapelle'
@@ -58,8 +58,8 @@ class ATPortalTypeCriterion(ATBaseCriterion):
                         for portal_type in portal_types]
         self.schema['value'].vocabulary = DisplayList(list(portal_types))
         return self.getField('value').get(self)
-      
-    
+
+
     security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         result = []
@@ -67,6 +67,6 @@ class ATPortalTypeCriterion(ATBaseCriterion):
         if self.getValue() is not '':
             result.append((self.Field(), self.getValue()))
 
-        return tuple( result )
+        return tuple(result)
 
 registerCriterion(ATPortalTypeCriterion, STRING_INDICES)

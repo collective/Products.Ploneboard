@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATTopic.py,v 1.20 2004/06/17 23:22:30 tiran Exp $
-""" 
+$Id: ATTopic.py,v 1.21 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -56,12 +56,13 @@ class ATTopic(ATCTFolder):
     default_view   = 'atct_topic_view'
     suppl_views    = ()
     newTypeFor     = ('Topic', 'Portal Topic')
-    typeDescription= 'A topic is a pre-defined search, showing all items matching\n' \
-                     'criteria you specify. Topics may also contain sub-topics.'
+    typeDescription= ("A topic is a pre-defined search, showing all "
+                      "items matching\n criteria you specify. "
+                      "Topics may also contain sub-topics.")
     typeDescMsgId  = 'description_edit_topic'
     assocMimetypes = ()
     assocFileExt   = ()
-    
+
     filter_content_types  = 1
     allowed_content_types = 'ATTopic'
 
@@ -77,7 +78,7 @@ class ATTopic(ATCTFolder):
         'permissions' : (CMFCorePermissions.View,)
         },
         {
-        'id'          : 'criteria', 
+        'id'          : 'criteria',
         'name'        : 'Criteria',
         'action'      : 'string:${folder_url}/criterion_edit_form',
         'permissions' : (ChangeTopics,)
@@ -103,7 +104,7 @@ class ATTopic(ATCTFolder):
         indexObj = catalog_tool.Indexes[indexId]
         results = CriterionRegistry.criteriaByIndex(indexObj.meta_type)
         return results
-      
+
     security.declareProtected(ChangeTopics, 'listCriteriaTypes')
     def listCriteriaTypes(self):
         """List available criteria types as dict
@@ -194,7 +195,7 @@ class ATTopic(ATCTFolder):
         """Set the Sort criterion.
         """
         self.removeSortCriterion()
-        self.addCriterion(field, 'ATSortCriterion')    
+        self.addCriterion(field, 'ATSortCriterion')
         self.getSortCriterion().setReversed(reversed)
 
     security.declareProtected(ChangeTopics, 'listIndicesByCriterion')

@@ -14,11 +14,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: __init__.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
-""" 
+$Id: __init__.py,v 1.2 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'

@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.4 2004/06/20 15:13:17 tiran Exp $
-""" 
+$Id: HistoryAware.py,v 1.5 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
 
@@ -39,16 +39,16 @@ from Products.ATContentTypes.interfaces.IHistoryAware import IHistoryAware
 
 class HistoryAwareMixin:
     """History aware mixin class
-    
+
     Shows a unified diff history of the content
-    
+
     This mixin is using some low level functions of the ZODB to get the last
     transaction states (versions) of the current object. Older histories will
     disapear after packing the database so DO NOT rely on the history
     functionality. It's more a gimmick and nice helper to reviewers and site
     managers.
     """
-    
+
     __implements__ = IHistoryAware
 
     security       = ClassSecurityInfo()
@@ -60,11 +60,11 @@ class HistoryAwareMixin:
         'permissions' : (HISTORY_VIEW_PERMISSION, )
          },
     )
-    
+
     security.declarePrivate('getHistorySource')
     def getHistorySource(self):
         """get source for HistoryAwareMixin
-        
+
         Must return a (raw) string
         """
         primary = self.getPrimaryField()
@@ -76,16 +76,16 @@ class HistoryAwareMixin:
     security.declarePrivate('getHistories')
     def getHistories(self, max=10):
         """Get a list of historic revisions.
-        
-        Returns metadata as well    
+
+        Returns metadata as well
         (object, time, transaction_note, user)
         """
-    
+
         historyList = self._p_jar.db().history(self._p_oid, None, max)
-    
+
         if not historyList:
             return ()
-    
+
         # Build list of objects
         lst = []
         parent = aq_parent(self)
@@ -107,7 +107,7 @@ class HistoryAwareMixin:
         """Get history as unified diff
         """
         mTool = getToolByName(self, 'portal_membership')
-        
+
         histories = self.getHistories()
         if max > len(histories):
             max = len(histories)
@@ -115,7 +115,7 @@ class HistoryAwareMixin:
         lst = []
 
         for revisivon in range(1, max):
-    
+
             oldObj, oldTime, oldDesc, oldUser = histories[revisivon]
             newObj, newTime, newDesc, newUser = histories[revisivon-1]
 
@@ -129,7 +129,7 @@ class HistoryAwareMixin:
                      for line in difflib.unified_diff(oldText, newText)
                     ][3:]
 
-            description = newDesc            
+            description = newDesc
             if filterComment:
                 relativUrl = self.absolute_url(1)
                 description = '<br />\n'.join(
@@ -139,7 +139,7 @@ class HistoryAwareMixin:
                               )
             else:
                 description.replace('\n', '<br />\n')
-            
+
             if lines:
                 lst.append({
                             'lines'       : lines,

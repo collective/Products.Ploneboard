@@ -11,14 +11,14 @@ are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, 
-   this list of conditions and the following disclaimer in the documentation 
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
  * Neither the name of the author nor the names of its contributors may be used
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.10 2004/06/20 15:13:19 tiran Exp $
+$Id: ATCTMigrator.py,v 1.11 2004/07/13 13:12:55 dreamcatcher Exp $
 """
 
 from common import *
@@ -53,7 +53,7 @@ class DocumentMigrator(CMFItemMigrator):
     fromType = ATDocument.ATDocument.newTypeFor[0]
     toType   = ATDocument.ATDocument.__name__
     map = {'text' : 'setText'}
-    
+
     def custom(self):
         oldFormat = self.old.text_format
         # ATDocument does automagically conversion :]
@@ -72,19 +72,19 @@ class EventMigrator(CMFItemMigrator):
             'contact_email' : 'setContactEmail',
             'contact_phone' : 'setContactPhone',
           }
-          
+
     def custom(self):
         sdate = self.old.start_date
         edate = self.old.end_date
-        
+
         if sdate is None:
             sdate = self.old.created()
         if edate is None:
             edate = sdate
-        
+
         self.new.setStartDate(sdate)
         self.new.setEndDate(edate)
-        
+
 
 class FileMigrator(CMFItemMigrator):
     fromType = ATFile.ATFile.newTypeFor[0]
@@ -102,7 +102,7 @@ class ImageMigrator(CMFItemMigrator):
     toType   = ATImage.ATImage.__name__
     # mapped in custom()
     # map = {'image':'setImage'}
-    
+
     def custom(self):
         ctype = self.old.getContentType()
         # to retrieve the binary data

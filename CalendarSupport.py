@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.6 2004/06/20 15:13:17 tiran Exp $
-""" 
+$Id: CalendarSupport.py,v 1.7 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
 
@@ -107,7 +107,7 @@ END:VEVENT
 class CalendarSupportMixin:
     """Mixin class for iCal/vCal support
     """
-    
+
     #__implements__ = IHistoryAware
 
     security       = ClassSecurityInfo()
@@ -131,7 +131,7 @@ class CalendarSupportMixin:
         """get iCal data
         """
         out = StringIO()
-        map = { 
+        map = {
             'dtstamp'   : DateTime().strftime(DATE),
             'created'   : DateTime(self.CreationDate()).strftime(DATE),
             'uid'       : self.UID(),
@@ -156,7 +156,7 @@ class CalendarSupportMixin:
         out.write(ICS_EVENT_END)
         return out.getvalue()
 
-    
+
     security.declareProtected(CMFCorePermissions.View, 'ics_view')
     def ics_view(self, REQUEST, RESPONSE):
         """iCalendar output
@@ -174,7 +174,7 @@ class CalendarSupportMixin:
         """get vCal data
         """
         out = StringIO()
-        map = { 
+        map = {
             'dtstamp'   : DateTime().strftime(DATE),
             'created'   : DateTime(self.CreationDate()).strftime(DATE),
             'uid'       : self.UID(),
@@ -212,4 +212,3 @@ InitializeClass(CalendarSupportMixin)
 
 def n2rn(s):
     return s.replace('\n', '\r\n')
-

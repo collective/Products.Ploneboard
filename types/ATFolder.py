@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATFolder.py,v 1.15 2004/06/20 15:13:21 tiran Exp $
-""" 
+$Id: ATFolder.py,v 1.16 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -67,14 +67,14 @@ class ATFolder(ATCTOrderedFolder):
 ##         'action'      : 'string:${folder_url}/folder_contents',
 ##         'permissions' : (CMFCorePermissions.ListFolderContents,),
 ##         'condition'   : 'python:object.displayContentsTab()'
-##          },    
+##          },
 ##        )
 ##    )
 
 registerType(ATFolder, PROJECTNAME)
 
 from Products.Archetypes.public import BaseBTreeFolder
-    
+
 class ATBTreeFolder(ATCTBTreeFolder):
     """A simple btree folderish archetype"""
     schema         =  ATBTreeFolderSchema
@@ -96,4 +96,3 @@ class ATBTreeFolder(ATCTBTreeFolder):
     security       = ClassSecurityInfo()
 
 registerType(ATBTreeFolder, PROJECTNAME)
-

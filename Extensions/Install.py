@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: Install.py,v 1.16 2004/06/20 15:13:18 tiran Exp $
-""" 
+$Id: Install.py,v 1.17 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -58,42 +58,42 @@ def install(self):
         print >> out,  'type:',cl['klass'].portal_type
         if cl['klass'].isPrincipiaFolderish:
             use_folder_tabs.append(cl['klass'].portal_type)
-    
+
     print >> out, 'Successfully installed %s' % PROJECTNAME
-    
+
     # register switch methods to toggle old plonetypes on/off
     portal=getToolByName(self,'portal_url').getPortalObject()
-    manage_addExternalMethod(portal,'switchATCT2CMF',    
-        'Set reenable CMF type',    
-        PROJECTNAME+'.toolbox', 
-        'switchATCT2CMF')    
-    manage_addExternalMethod(portal,'switchCMF2ATCT',    
-        'Set ATCT as default content types',    
-        PROJECTNAME+'.toolbox', 
-        'switchCMF2ATCT')    
+    manage_addExternalMethod(portal,'switchATCT2CMF',
+        'Set reenable CMF type',
+        PROJECTNAME+'.toolbox',
+        'switchATCT2CMF')
+    manage_addExternalMethod(portal,'switchCMF2ATCT',
+        'Set ATCT as default content types',
+        PROJECTNAME+'.toolbox',
+        'switchCMF2ATCT')
 
     manage_addExternalMethod(portal,'migrateFromCMFtoATCT',
-        'Migrate from CMFDefault types to ATContentTypes',    
-        PROJECTNAME+'.migrateFromCMF', 
-        'migrate')    
+        'Migrate from CMFDefault types to ATContentTypes',
+        PROJECTNAME+'.migrateFromCMF',
+        'migrate')
 
     #manage_addExternalMethod(portal,'migrateFromCPTtoATCT',
-    #    'Migrate from CMFPloneTypes types to ATContentTypes',    
-    #    PROJECTNAME+'.migrateFromCPT', 
-    #    'migrate')    
+    #    'Migrate from CMFPloneTypes types to ATContentTypes',
+    #    PROJECTNAME+'.migrateFromCPT',
+    #    'migrate')
 
-    manage_addExternalMethod(portal,'recreateATImageScales',    
-        '',    
-        PROJECTNAME+'.toolbox', 
+    manage_addExternalMethod(portal,'recreateATImageScales',
+        '',
+        PROJECTNAME+'.toolbox',
         'recreateATImageScales')
 
     # changing workflow
     setupWorkflows(self, typeInfo, out)
-    
+
     # setup content type registry
     old = ('link', 'news', 'document', 'file', 'image')
     setupMimeTypes(self, typeInfo, old=old, moveDown=(IATFile,), out=out)
-    
+
     # bind templates for TemplateMixin
     registerTemplates(self, typeInfo, out)
 
@@ -104,7 +104,7 @@ def install(self):
 def uninstall(self):
     out = StringIO()
     classes=listTypes(PROJECTNAME)
-    
+
     # switch back before uninstalling
     if isSwitchedToATCT(self):
         switchATCT2CMF(self)
@@ -121,7 +121,7 @@ def uninstall(self):
                 use_folder_tabs.remove(cl['klass'].portal_type)
 
     props.use_folder_tabs=tuple(use_folder_tabs)
-    
+
     # remove external methods for toggling between old and new types
     portal=getToolByName(self,'portal_url').getPortalObject()
     for script in ('switch_old_plone_types_on', 'switch_old_plone_types_off',
@@ -129,7 +129,7 @@ def uninstall(self):
      'switchATCT2CMF', 'switchCMF2ATCT', ):
         if hasattr(aq_base(portal), script):
             portal.manage_delObjects(ids=[script,])
-    
+
     return out.getvalue()
 
 def setupWorkflows(self, typeInfo, out):

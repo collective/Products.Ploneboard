@@ -2,14 +2,14 @@
 #  Archetypes reimplementation of the CMF core types
 #  Copyright (c) 2003-2004 AT Content Types development team
 """\
-This module contains a mixin-class and a schema snippet to restrain types 
+This module contains a mixin-class and a schema snippet to restrain types
 in a folder-instance
 
-RCS-ID $Id: RestrainTypesMixin.py,v 1.2 2004/06/15 11:47:44 yenzenz Exp $
+RCS-ID $Id: RestrainTypesMixin.py,v 1.3 2004/07/13 13:12:55 dreamcatcher Exp $
 """
 #
 # GNU General Public Licence (GPL)
-# 
+#
 # This program is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 2 of the License, or (at your option) any later
@@ -38,7 +38,7 @@ schema = Schema((
         vocabulary='vocabularyPossibleTypes',
         enforceVocabulary=1,
         languageIndependent=1,
-        write_permissions=RESTRAIN_TYPES_MIXIN_PERMISSION,                
+        write_permissions=RESTRAIN_TYPES_MIXIN_PERMISSION,
         widget=MultiSelectionWidget(
             label='Set allowed types',
             visible = {'edit': 'visible', 'view': 'hidden'},
@@ -52,26 +52,26 @@ schema = Schema((
     ))
 
 class RestrainTypesMixin:
-    """ Gives the user with given rights the possibility to 
+    """ Gives the user with given rights the possibility to
         restrain the addable types on per folder basis.
     """
-    
+
     __implements__ = (IRestrainTypes)
 
     security = ClassSecurityInfo()
-    
+
     def vocabularyPossibleTypes(self):
-        """ returns a list of tuples in archetypes vocabulary style: 
+        """ returns a list of tuples in archetypes vocabulary style:
             [(key,value),(key2,value2),...,(keyN,valueN)]
         """
-        typetuples= [(fti.id, fti.title_or_id()) 
+        typetuples= [(fti.id, fti.title_or_id())
                      for fti in self._getPossibleTypes()]
         return DisplayList(typetuples)
 
     def _getPossibleTypes(self):
         """ returns a list of normally allowed objects as fti """
 
-        tt = getToolByName(self,'portal_types')  
+        tt = getToolByName(self,'portal_types')
         fti = tt.getTypeInfo(self)
         fti.allowed_content_types
         if fti.filter_content_types:
@@ -83,17 +83,17 @@ class RestrainTypesMixin:
                 return parent.allowedContentTypes()
             else:
                 return [fti for fti in tt.objectValues() if fti.globalAllow()]
-    
+
     # overrides CMFCore's PortalFolder allowedTypes
-    def allowedContentTypes(self):     
+    def allowedContentTypes(self):
         """ returns restrained allowed types as list of fti's """
         tt = getToolByName(self,'portal_types')
         possible_ftis= self._getPossibleTypes()
-        possible_mt  = [fti.id for fti in possible_ftis]        
+        possible_mt  = [fti.id for fti in possible_ftis]
         allowed      = list(self.getRestrainedAllowedTypes())
-        possible_and_allowed = [tt[mt] for mt in allowed if mt in possible_mt]       
+        possible_and_allowed = [tt[mt] for mt in allowed if mt in possible_mt]
         return possible_and_allowed or possible_ftis
-        
+
     # overrides CMFCore's PortalFolder invokeFactory
     security.declareProtected(AddPortalContent, 'invokeFactory')
     def invokeFactory( self, type_name, id, RESPONSE=None, *args, **kw):
@@ -106,4 +106,3 @@ class RestrainTypesMixin:
         apply( pt.constructContent,
                (type_name, self, id, RESPONSE) + args,
                kw )
-            

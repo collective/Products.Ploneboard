@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATListCriterion.py,v 1.8 2004/06/20 15:13:23 tiran Exp $
+$Id: ATListCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -46,7 +46,7 @@ class ATListCriterion(ATBaseCriterion):
     typeDescMsgId  = ''
 
     shortDesc      = 'logical AND or OR of list values'
-    
+
     security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         # filter out empty strings

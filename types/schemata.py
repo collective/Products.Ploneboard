@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: schemata.py,v 1.40 2004/07/04 17:25:48 tiran Exp $
-""" 
+$Id: schemata.py,v 1.41 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -56,15 +56,15 @@ ATContentTypeBaseSchema = BaseSchema + Schema((
               searchable=1,
               accessor="Description",
               storage=MetadataStorage(),
-              widget = TextAreaWidget(description = "Enter a brief description", 
+              widget = TextAreaWidget(description = "Enter a brief description",
                                       description_msgid = "help_description",
                                       label = "Description",
                                       label_msgid = "label_description",
                                       rows = 5,
                                       i18n_domain = "plone")),
     ))
-    
-ATContentTypeSchema = ATContentTypeBaseSchema + Schema((    
+
+ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
     # TemplateMixin
     StringField('layout',
                 accessor="getLayout",
@@ -73,16 +73,17 @@ ATContentTypeSchema = ATContentTypeBaseSchema + Schema((
                 default_method="getDefaultLayout",
                 vocabulary="_voc_templates",
                 #enforceVocabulary=1,
-                widget=SelectionWidget(description="Choose a template that will be used for viewing this item.",
-                                       description_msgid = "help_template_mixin",
-                                       label = "View template",
-                                       label_msgid = "label_template_mixin",
-                                       i18n_domain = "plone",
-                                       visible={'view' : 'hidden',
-                                                'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'hidden'},
-                                       )),
+                widget=SelectionWidget(
+    description="Choose a template that will be used for viewing this item.",
+    description_msgid = "help_template_mixin",
+    label = "View template",
+    label_msgid = "label_template_mixin",
+    i18n_domain = "plone",
+    visible={'view' : 'hidden',
+             'edit' : ENABLE_TEMPLATE_MIXIN and 'visible' or 'hidden'},
+    )),
     ))
-    
+
 
 ###
 # AT Content Type Document
@@ -102,12 +103,13 @@ ATDocumentSchema = ATContentTypeSchema + Schema((
                                          'text/plain',
                                          'text/plain-pre',
                                          'text/python-source',),
-              widget = RichWidget(description = "The body text of the document.",
-                                  description_msgid = "help_body_text",
-                                  label = "Body text",
-                                  label_msgid = "label_body_text",
-                                  rows = 25,
-                                  i18n_domain = "plone")),
+              widget = RichWidget(
+    description = "The body text of the document.",
+    description_msgid = "help_body_text",
+    label = "Body text",
+    label_msgid = "label_body_text",
+    rows = 25,
+    i18n_domain = "plone")),
     ), marshall=RFC822Marshaller()
     )
 
@@ -118,24 +120,26 @@ ATEventSchema = ATContentTypeSchema + Schema((
     StringField('location',
                 searchable = 1,
                 write_permission = ChangeEvents,
-                widget = StringWidget(description = "Enter the location where the event will take place.",
-                                      description_msgid = "help_event_location",
-                                      label = "Event Location",
-                                      label_msgid = "label_event_location",
-                                      i18n_domain = "plone")),
-    
+                widget = StringWidget(
+    description = "Enter the location where the event will take place.",
+    description_msgid = "help_event_location",
+    label = "Event Location",
+    label_msgid = "label_event_location",
+    i18n_domain = "plone")),
+
     LinesField('eventType',
                required = 1,
                searchable = 1,
                write_permission = ChangeEvents,
                vocabulary = 'getEventTypes',
                languageIndependent=True,
-               widget = MultiSelectionWidget(size = 6,
-                                             description = "Select the type of event. Multiple event types possible.",
-                                             description_msgid = "help_event_type",
-                                             label = "Event Type",
-                                             label_msgid = "label_event_type",
-                                             i18n_domain = "plone")),
+               widget = MultiSelectionWidget(
+    size = 6,
+    description = "Select the type of event. Multiple event types possible.",
+    description_msgid = "help_event_type",
+    label = "Event Type",
+    label_msgid = "label_event_type",
+    i18n_domain = "plone")),
 
     StringField('eventUrl',
                 required=0,
@@ -143,11 +147,13 @@ ATEventSchema = ATContentTypeSchema + Schema((
                 accessor='event_url',
                 write_permission = ChangeEvents,
                 validators = ('isURL',),
-                widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
-                                      description_msgid = "help_url",
-                                      label = "Event URL",
-                                      label_msgid = "label_url",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description = ("Enter the optional web address of a page "
+                   "containing more info about the event. "),
+    description_msgid = "help_url",
+    label = "Event URL",
+    label_msgid = "label_url",
+    i18n_domain = "plone")),
     DateTimeField('startDate',
                   required = 1,
                   searchable = 1,
@@ -155,11 +161,13 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   write_permission = ChangeEvents,
                   default_method=DateTime,
                   languageIndependent=True,
-                  widget = CalendarWidget(description="Enter the starting date and time, or click the calendar icon and select it. ",
-                                          description_msgid = "help_event_start",
-                                          label="Event Starts",
-                                          label_msgid = "label_event_start",
-                                          i18n_domain = "plone")),
+                  widget = CalendarWidget(
+    description=("Enter the starting date and time, or click "
+                 "the calendar icon and select it. "),
+    description_msgid = "help_event_start",
+    label="Event Starts",
+    label_msgid = "label_event_start",
+    i18n_domain = "plone")),
 
     DateTimeField('endDate',
                   required = 1,
@@ -168,43 +176,50 @@ ATEventSchema = ATContentTypeSchema + Schema((
                   write_permission = ChangeEvents,
                   default_method=DateTime,
                   languageIndependent=True,
-                  widget = CalendarWidget(description= "Enter the ending date and time, or click the calendar icon and select it. ",
-                                          description_msgid = "help_event_end",
-                                          label = "Event Ends",
-                                          label_msgid = "label_event_end",
-                                          i18n_domain = "plone")),
+                  widget = CalendarWidget(
+    description=("Enter the ending date and time, or click "
+                 "the calendar icon and select it. "),
+    description_msgid = "help_event_end",
+    label = "Event Ends",
+    label_msgid = "label_event_end",
+    i18n_domain = "plone")),
     StringField('contactName',
                 required=0,
                 searchable = 1,
                 accessor='contact_name',
                 write_permission = ChangeEvents,
-                widget = StringWidget(description = "Enter a contact person or organization for the event.",
-                                      description_msgid = "help_contact_name",
-                                      label = "Contact Name",
-                                      label_msgid = "label_contact_name",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description = "Enter a contact person or organization for the event.",
+    description_msgid = "help_contact_name",
+    label = "Contact Name",
+    label_msgid = "label_contact_name",
+    i18n_domain = "plone")),
     StringField('contactEmail',
                 required=0,
                 searchable = 1,
                 accessor='contact_email',
                 write_permission = ChangeEvents,
                 validators = ('isEmail',),
-                widget = StringWidget(description = "Enter an e-mail address to use for information regarding the event.",
-                                      description_msgid = "help_contact_email",
-                                      label = "Contact E-mail",
-                                      label_msgid = "label_contact_email",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description = ("Enter an e-mail address to use for "
+                   "information regarding the event."),
+    description_msgid = "help_contact_email",
+    label = "Contact E-mail",
+    label_msgid = "label_contact_email",
+    i18n_domain = "plone")),
     StringField('contactPhone',
                 required=0,
                 searchable = 1,
                 accessor='contact_phone',
                 write_permission = ChangeEvents,
                 validators = ('isInternationalPhoneNumber',),
-                widget = StringWidget(description = "Enter the phone number to call for information and/or booking.",
-                                      description_msgid = "help_contact_phone",
-                                      label = "Contact Phone",
-                                      label_msgid = "label_contact_phone",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description = ("Enter the phone number to call for "
+                   "information and/or booking."),
+    description_msgid = "help_contact_phone",
+    label = "Contact Phone",
+    label_msgid = "label_contact_phone",
+    i18n_domain = "plone")),
     ), marshall = RFC822Marshaller())
 
 ###
@@ -217,11 +232,13 @@ ATFavoriteSchema = ATContentTypeSchema + Schema((
                 accessor='_getRemoteUrl',
                 primary=1,
                 validators = (),
-                widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
-                                      description_msgid = "help_url",
-                                      label = "URL",
-                                      label_msgid = "label_url",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description=("The address of the location. Prefix is "
+                 "optional; if not provided, the link will be relative."),
+    description_msgid = "help_url",
+    label = "URL",
+    label_msgid = "label_url",
+    i18n_domain = "plone")),
     ))
 
 ###
@@ -233,12 +250,14 @@ ATFileSchema = ATContentTypeSchema + Schema((
               required = 1,
               primary=1,
               languageIndependent=True,
-              validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
-              widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
-                                  description_msgid = "help_file",
-                                  label= "File",
-                                  label_msgid = "label_file",
-                                  i18n_domain = "plone"))
+              validators = MaxSizeValidator('checkFileMaxSize',
+                                            maxsize=MAX_FILE_SIZE),
+              widget = FileWidget(
+    description = "Select the file to be added by clicking the 'Browse' button.",
+    description_msgid = "help_file",
+    label= "File",
+    label_msgid = "label_file",
+    i18n_domain = "plone"))
 
     ), marshall=PrimaryFieldMarshaller())
 
@@ -247,20 +266,22 @@ ATExtFileSchema = ATContentTypeSchema + Schema((
               required = 1,
               primary=1,
               languageIndependent=True,
-              validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_FILE_SIZE),
+              validators = MaxSizeValidator('checkFileMaxSize',
+                                            maxsize=MAX_FILE_SIZE),
               storage=ExternalStorage(prefix='atct', archive=False),
-              widget = FileWidget(description = "Select the file to be added by clicking the 'Browse' button.",
-                                  description_msgid = "help_file",
-                                  label= "File",
-                                  label_msgid = "label_file",
-                                  i18n_domain = "plone"))
+              widget = FileWidget(
+    description = "Select the file to be added by clicking the 'Browse' button.",
+    description_msgid = "help_file",
+    label= "File",
+    label_msgid = "label_file",
+    i18n_domain = "plone"))
     ), marshall=PrimaryFieldMarshaller())
 
 ###
 # AT Content Type Folder
 ###
-   
-ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema 
+
+ATFolderSchema      = OrderedBaseFolder.schema + ATContentTypeSchema
 ATBTreeFolderSchema = BaseBTreeFolder.schema   + ATContentTypeSchema
 
 ###
@@ -278,12 +299,14 @@ ATImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
-               widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
-                                    description_msgid = "help_image",
-                                    label= "Image",
-                                    label_msgid = "label_image",
-                                    i18n_domain = "plone"))
+               validators = MaxSizeValidator('checkFileMaxSize',
+                                             maxsize=MAX_IMAGE_SIZE),
+               widget = ImageWidget(
+    description = "Select the image to be added by clicking the 'Browse' button.",
+    description_msgid = "help_image",
+    label= "Image",
+    label_msgid = "label_image",
+    i18n_domain = "plone"))
     ), marshall=PrimaryFieldMarshaller())
 
 ATExtImageSchema = ATContentTypeSchema + Schema((
@@ -298,12 +321,14 @@ ATExtImageSchema = ATContentTypeSchema + Schema((
                        'icon'    :  (32, 32),
                        'listing' :  (16, 16),
                       },
-               validators = MaxSizeValidator('checkFileMaxSize', maxsize=MAX_IMAGE_SIZE),
-               widget = ImageWidget(description = "Select the image to be added by clicking the 'Browse' button.",
-                                    description_msgid = "help_image",
-                                    label= "Image",
-                                    label_msgid = "label_image",
-                                    i18n_domain = "plone"))
+               validators = MaxSizeValidator('checkFileMaxSize',
+                                             maxsize=MAX_IMAGE_SIZE),
+               widget = ImageWidget(
+    description = "Select the image to be added by clicking the 'Browse' button.",
+    description_msgid = "help_image",
+    label= "Image",
+    label_msgid = "label_image",
+    i18n_domain = "plone"))
     ), marshall=PrimaryFieldMarshaller())
 
 
@@ -316,11 +341,13 @@ ATLinkSchema = ATContentTypeSchema + Schema((
                 searchable = 1,
                 primary=1,
                 validators = ('isURL',),
-                widget = StringWidget(description="The address of the location. Prefix is optional; if not provided, the link will be relative.",
-                                      description_msgid = "help_url",
-                                      label = "URL",
-                                      label_msgid = "label_url",
-                                      i18n_domain = "plone")),
+                widget = StringWidget(
+    description=("The address of the location. Prefix is "
+                 "optional; if not provided, the link will be relative."),
+    description_msgid = "help_url",
+    label = "URL",
+    label_msgid = "label_url",
+    i18n_domain = "plone")),
     ))
 
 ###
@@ -340,12 +367,13 @@ ATNewsItemSchema = ATContentTypeSchema + Schema((
                                          'text/html',
                                          'text/plain',
                                          ),
-              widget = RichWidget(description = "The body text of the document.",
-                                  description_msgid = "help_body_text",
-                                  label = "Body text",
-                                  label_msgid = "label_body_text",
-                                  rows = 25,
-                                  i18n_domain = "plone")),
+              widget = RichWidget(
+    description = "The body text of the document.",
+    description_msgid = "help_body_text",
+    label = "Body text",
+    label_msgid = "label_body_text",
+    rows = 25,
+    i18n_domain = "plone")),
     #StringField('newstype',
     #            vocabulary=NEWS_TYPES,
     #           widget=SelectionWidget(label='Type of News',
@@ -366,40 +394,40 @@ ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
                 mode="rw",
                 default=0,
                 widget=BooleanWidget(
-                                label="Inherit Criteria",
-                                label_msgid="label_inherit_criteria",
-                                description="Toggles inheritance of criteria. For example, if you " \
-                                             "have specified that only items from the last three days " \
-                                             "should be shown in a Topic above the current one, this " \
-                                             "Topic will also have that criterion automatically.",
-                                description_msgid="help_inherit_criteria",
-                                i18n_domain = "plone"),
+    label="Inherit Criteria",
+    label_msgid="label_inherit_criteria",
+    description=("Toggles inheritance of criteria. For example, if you "
+                 "have specified that only items from the last three days "
+                 "should be shown in a Topic above the current one, this "
+                 "Topic will also have that criterion automatically."),
+    description_msgid="help_inherit_criteria",
+    i18n_domain = "plone"),
                 ),
     BooleanField('limitNumber',
                 required=0,
                 mode="rw",
                 default=0,
                 widget=BooleanWidget(
-                                label="Limit Number of Items",
-                                label_msgid="label_limit_number",
-                                description="Toggles limitation of number of items displayed. "
-                                            "If selected, only the first 'Number of Items' " 
-                                            "will be displayed.",
-                                description_msgid="help_limit_number",
-                                i18n_domain = "plone"),
+    label="Limit Number of Items",
+    label_msgid="label_limit_number",
+    description=("Toggles limitation of number of items displayed. "
+                 "If selected, only the first 'Number of Items' "
+                 "will be displayed."),
+    description_msgid="help_limit_number",
+    i18n_domain = "plone"),
                 ),
     IntegerField('itemCount',
                 required=0,
                 mode="rw",
                 default=0,
                 widget=IntegerWidget(
-                                label="Number of Items",
-                                label_msgid="label_item_count",
-                                description="If 'Limit Number of Items' is "
-                                            "selected, only the first "
-                                            "'Number of Items' will be "
-                                            "displayed ",
-                                description_msgid="help_item_count",
-                                i18n_domain = "plone"),
-                ),
+    label="Number of Items",
+    label_msgid="label_item_count",
+    description="If 'Limit Number of Items' is "
+    "selected, only the first "
+    "'Number of Items' will be "
+    "displayed ",
+    description_msgid="help_item_count",
+    i18n_domain = "plone"),
+                 ),
     ))

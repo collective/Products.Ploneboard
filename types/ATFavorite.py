@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATFavorite.py,v 1.13 2004/07/11 18:31:04 tiran Exp $
-""" 
+$Id: ATFavorite.py,v 1.14 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -78,9 +78,9 @@ class ATFavorite(ATCTContent):
             return '%s/%s' % (utool(), remote)
         else:
             return utool()
-        
+
     remote_url = ComputedAttribute(getRemoteUrl, 1)
-        
+
     security.declareProtected(CMFCorePermissions.View, 'getIcon')
     def getIcon(self, relative_to_portal=0):
         """Instead of a static icon, like for Link objects, we want

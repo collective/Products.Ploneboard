@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: __init__.py,v 1.5 2004/06/27 16:31:13 tiran Exp $
-""" 
+$Id: __init__.py,v 1.6 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -31,8 +31,8 @@ from Products.CMFCore import CMFCorePermissions
 from Products.Archetypes.public import *
 from Products.CMFCore.DirectoryView import registerDirectory
 
-# load customconfig and overwrite the configureable options of config with the
-# values from customconfig
+# load customconfig and overwrite the configureable options of config
+# with the values from customconfig
 try:
     from Products.ATContentTypes import customconfig
 except ImportError:
@@ -45,7 +45,7 @@ else:
             setattr(config, option, value)
     del config
 
-from Products.ATContentTypes.config import *    
+from Products.ATContentTypes.config import *
 import Products.ATContentTypes.migration
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
@@ -63,20 +63,21 @@ ATCT_TYPES = tuple(
 
 def initialize(context):
     # process our custom types
-    
+
     listOfTypes = listTypes(PROJECTNAME)
-    
+
     content_types, constructors, ftis = process_types(
         listOfTypes,
         PROJECTNAME)
 
     # A brief explanation for the following code:
     #
-    # We want to have another add permission for the topic and criteria because
-    # topics shouldn't be addable by non managers. The following code iterats
-    # over all content types and seperates the content_types using the
-    # interfaces. At last it initializes topic/criteria and the rest with two
-    # different permissions.
+    # We want to have another add permission for the topic and
+    # criteria because topics shouldn't be addable by non
+    # managers. The following code iterats over all content types and
+    # seperates the content_types using the interfaces. At last it
+    # initializes topic/criteria and the rest with two different
+    # permissions.
 
     topic_content_types = []
     topic_constructors  = []

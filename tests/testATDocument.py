@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.11 2004/06/24 19:47:12 tiran Exp $
+$Id: testATDocument.py,v 1.12 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -18,7 +18,7 @@ example_stx = """
 Header
 
  Text, Text, Text
- 
+
    * List
    * List
 """
@@ -46,13 +46,13 @@ def editATCT(obj):
 tests = []
 
 class TestSiteATDocument(ATCTSiteTestCase):
-    
+
     klass = ATDocument.ATDocument
     portal_type = 'ATDocument'
     title = 'AT Document'
     meta_type = 'ATDocument'
     icon = 'document_icon.gif'
-    
+
     def test_edit(self):
         old = self._cmf
         new = self._ATCT
@@ -64,7 +64,7 @@ class TestSiteATDocument(ATCTSiteTestCase):
     def test_migration(self):
         old = self._cmf
         id  = old.getId()
-        
+
         # edit
         editCMF(old)
         title       = old.Title()
@@ -74,7 +74,7 @@ class TestSiteATDocument(ATCTSiteTestCase):
         body        = old.CookedBody()
 
         time.sleep(1.5)
-        
+
         # migrated (needs subtransaction to work)
         get_transaction().commit(1)
         m = DocumentMigrator(old)
@@ -119,9 +119,9 @@ class TestATDocumentFields(ATCTFieldTestCase):
         self.failUnless(field.required == 1, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
         self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
-        self.failUnless(field.vocabulary == (), 
+        self.failUnless(field.vocabulary == (),
                         'Value is %s' % str(field.vocabulary))
-        self.failUnless(field.enforceVocabulary == 0, 
+        self.failUnless(field.enforceVocabulary == 0,
                         'Value is %s' % field.enforceVocabulary)
         self.failUnless(field.multiValued == 0,
                         'Value is %s' % field.multiValued)
@@ -152,14 +152,14 @@ class TestATDocumentFields(ATCTFieldTestCase):
         self.failUnless(isinstance(vocab, DisplayList),
                         'Value is %s' % type(vocab))
         self.failUnless(tuple(vocab) == (), 'Value is %s' % str(tuple(vocab)))
-        
+
         self.failUnless(field.primary == 1, 'Value is %s' % field.primary)
         self.failUnless(field.default_content_type == 'text/restructured',
                         'Value is %s' % field.default_content_type)
         self.failUnless(field.default_output_type == 'text/html',
                         'Value is %s' % field.default_output_type)
         self.failUnless(field.allowable_content_types == ('text/structured',
-                        'text/restructured', 'text/html', 'text/plain', 
+                        'text/restructured', 'text/html', 'text/plain',
                         'text/plain-pre', 'text/python-source'),
                         'Value is %s' % str(field.allowable_content_types))
 

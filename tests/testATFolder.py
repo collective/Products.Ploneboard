@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFolder.py,v 1.5 2004/06/24 19:47:12 tiran Exp $
+$Id: testATFolder.py,v 1.6 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -43,7 +43,7 @@ class TestSiteATFolder(ATCTSiteTestCase):
     def test_migration(self):
         old = self._cmf
         id  = old.getId()
-        
+
         # edit
         editCMF(old)
         title       = old.Title()
@@ -61,7 +61,7 @@ class TestSiteATFolder(ATCTSiteTestCase):
         self.compareAfterMigration(migrated, mod=mod, created=created)
         self.compareDC(migrated, title=title, description=description)
 
-                       
+
         # XXX more
 
 

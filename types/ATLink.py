@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATLink.py,v 1.13 2004/06/20 15:13:21 tiran Exp $
-""" 
+$Id: ATLink.py,v 1.14 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -50,8 +50,9 @@ class ATLink(ATCTContent):
     default_view   = 'link_view'
     suppl_views    = ()
     newTypeFor     = ('Link', 'Link')
-    typeDescription= "A link is a pointer to a location on the internet or intranet.\n" \
-                     "Enter the relevant details below, and press 'Save'."
+    typeDescription= ("A link is a pointer to a location on "
+                      "the internet or intranet.\n"
+                      "Enter the relevant details below, and press 'Save'.")
     typeDescMsgId  = 'description_edit_link_item'
     assocMimetypes = ()
     assocFileExt   = ('link', 'url', )

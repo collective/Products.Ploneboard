@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATSortCriterion.py,v 1.8 2004/06/20 15:13:23 tiran Exp $
+$Id: ATSortCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -46,7 +46,7 @@ class ATSortCriterion(ATBaseCriterion):
     typeDescMsgId  = ''
 
     shortDesc      = 'Sort'
-    
+
     def getCriteriaItems(self):
         result = [('sort_on', self.Field())]
 

@@ -14,16 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """AT Content Types general interface
 
-$Id: IATContentType.py,v 1.7 2004/04/26 06:30:14 tiran Exp $
-""" 
+$Id: IATContentType.py,v 1.8 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from interface import Interface, Attribute
+from Interface import Interface, Attribute
 
 class IATContentType(Interface):
     """Marker interface for AT Content Types

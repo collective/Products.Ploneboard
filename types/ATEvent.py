@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATEvent.py,v 1.20 2004/06/27 16:39:32 tiran Exp $
-""" 
+$Id: ATEvent.py,v 1.21 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -63,14 +63,14 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     __implements__ = ATCTContent.__implements__, IATEvent
 
     security       = ClassSecurityInfo()
-    
+
     actions = updateActions(ATCTContent, CalendarSupportMixin.actions)
 
     security.declareProtected(ChangeEvents, 'setEventType')
     def setEventType(self, value, alreadySet=False, **kw):
         """CMF compatibility method
-        
-        Changing the event type changes also the subject. 
+
+        Changing the event type changes also the subject.
         """
         if type(value) is StringType:
             value = (value,)
@@ -85,7 +85,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setSubject')
     def setSubject(self, value, alreadySet=False, **kw):
         """CMF compatibility method
-        
+
         Changing the subject changes also the event type.
         """
         f = self.getField('subject')
@@ -131,8 +131,8 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
             sdate = None
 
         if expirationDay and expirationMo and expirationYear and stop_time:
-            edate = '%s-%s-%s %s %s' % (expirationDay, expirationMo, expirationYear,
-                                         stop_time, stopAMPM)
+            edate = '%s-%s-%s %s %s' % (expirationDay, expirationMo,
+                                        expirationYear, stop_time, stopAMPM)
         elif end_date:
             if not stop_time:
                 stop_time = '00:00:00'
@@ -145,7 +145,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
                 edate = sdate
             self.setStartDate(sdate)
             self.setEndDate(edate)
-            
+
         self.update(title=title, description=description, eventType=eventType,
                     location=location, contactName=contact_name,
                     contactEmail=contact_email, contactPhone=contact_phone,
@@ -154,7 +154,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     security.declareProtected(CMFCorePermissions.View, 'post_validate')
     def post_validate(self, REQUEST=None, errors=None):
         """Validates start and end date
-        
+
         End date must be after start date
         """
         rstartDate = REQUEST.get('startDate', None)
@@ -168,7 +168,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
             start = DateTime(rstartDate)
         else:
             start = self.start()
-            
+
         if start > end:
             errors['endDate'] = "End date must be after start date"
 

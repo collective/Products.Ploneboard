@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATDateCriteria.py,v 1.9 2004/06/20 15:13:23 tiran Exp $
+$Id: ATDateCriteria.py,v 1.10 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -49,7 +49,7 @@ class ATDateCriteria(ATBaseCriterion):
     typeDescMsgId  = ''
 
     shortDesc      = 'exact date value'
-    
+
     security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):
         """Return a sequence of items to be used to build the catalog query.

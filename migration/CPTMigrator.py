@@ -1,6 +1,6 @@
 """Migration tools for ATContentTypes
 
-Migration system for the migration from CMFPloneTypes to ATContentTypes 
+Migration system for the migration from CMFPloneTypes to ATContentTypes
 
 Copyright (c) 2004, Christian Heimes and contributors
 All rights reserved.
@@ -10,14 +10,14 @@ are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, 
-   this list of conditions and the following disclaimer in the documentation 
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
  * Neither the name of the author nor the names of its contributors may be used
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.6 2004/06/20 15:13:19 tiran Exp $
+$Id: CPTMigrator.py,v 1.7 2004/07/13 13:12:55 dreamcatcher Exp $
 """
 
 from common import *
@@ -106,7 +106,7 @@ class FavoriteMigrator(LinkMigrator):
     map = {'getRawRemoteUrl' : 'setRemoteUrl'}
 
 class NewsItemMigrator(DocumentMigrator):
-    fromType = 'PloneNews Item' 
+    fromType = 'PloneNews Item'
     toType   = 'ATNewsItem'
     # see DocumentMigrator
     # map = {'getRawText' : 'setText'}

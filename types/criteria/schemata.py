@@ -16,8 +16,8 @@
 ##############################################################################
 """
 
-$Id: schemata.py,v 1.5 2004/07/11 18:30:36 tiran Exp $
-""" 
+$Id: schemata.py,v 1.6 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -74,13 +74,13 @@ ATBaseCriterionSchema = Schema((
                 default=None,
                 write_permission=ChangeTopics,
                 widget=IdWidget(
-                                label="Short Name",
-                                label_msgid="label_short_name",
-                                description="Should not contain spaces, underscores or mixed case. "\
-                                            "Short Name is part of the item's web address.",
-                                description_msgid="help_shortname",
-                                visible={'view' : 'invisible'},
-                                i18n_domain="plone"),
+    label="Short Name",
+    label_msgid="label_short_name",
+    description=("Should not contain spaces, underscores or mixed case. "
+                 "Short Name is part of the item's web address."),
+    description_msgid="help_shortname",
+    visible={'view' : 'invisible'},
+    i18n_domain="plone"),
                 ),
     StringField('field',
                 required=1,
@@ -89,12 +89,12 @@ ATBaseCriterionSchema = Schema((
                 write_permission=ChangeTopics,
                 default=None,
                 widget=StringWidget(
-                                label="Field name",
-                                label_msgid="label_criteria_field_name",
-                                description="Should not contain spaces, underscores or mixed case. "\
-                                            "Short Name is part of the item's web address.",
-                                description_msgid="help_criteria_field_name",
-                                i18n_domain="plone"),
+    label="Field name",
+    label_msgid="label_criteria_field_name",
+    description=("Should not contain spaces, underscores or mixed case. "
+                 "Short Name is part of the item's web address."),
+    description_msgid="help_criteria_field_name",
+    i18n_domain="plone"),
                 ),
 
     ))
@@ -113,11 +113,11 @@ ATDateCriteriaSchema = ATBaseCriterionSchema + Schema((
                 default=None,
                 vocabulary=DateOptions,
                 widget=SelectionWidget(
-                                label="Date",
-                                label_msgid="label_date_criteria_value",
-                                description="Reference date",
-                                description_msgid="help_date_criteria_value",
-                                i18n_domain="plone"),
+    label="Date",
+    label_msgid="label_date_criteria_value",
+    description="Reference date",
+    description_msgid="help_date_criteria_value",
+    i18n_domain="plone"),
                 ),
     StringField('operation',
                 required=1,
@@ -127,11 +127,11 @@ ATDateCriteriaSchema = ATBaseCriterionSchema + Schema((
                 vocabulary=CompareOperations,
                 enforceVocabulary=1,
                 widget=SelectionWidget(
-                                label="Operation name",
-                                label_msgid="label_date_criteria_operation",
-                                description="Operation applied to the values",
-                                description_msgid="help_date_criteria_operation",
-                                i18n_domain="plone"),
+    label="Operation name",
+    label_msgid="label_date_criteria_operation",
+    description="Operation applied to the values",
+    description_msgid="help_date_criteria_operation",
+    i18n_domain="plone"),
                 ),
     StringField('dateRange',
                 required=1,
@@ -141,12 +141,12 @@ ATDateCriteriaSchema = ATBaseCriterionSchema + Schema((
                 vocabulary=RangeOperations,
                 enforceVocabulary=1,
                 widget=SelectionWidget(
-                                label="date range",
-                                label_msgid="label_date_criteria_range",
-                                description="Specify if the range is ahead of "
-                                            "the reference date or not.",
-                                description_msgid="help_date_criteria_range",
-                                i18n_domain="plone"),
+    label="date range",
+    label_msgid="label_date_criteria_range",
+    description="Specify if the range is ahead of "
+    "the reference date or not.",
+    description_msgid="help_date_criteria_range",
+    i18n_domain="plone"),
                 ),
     ))
 
@@ -163,11 +163,11 @@ ATListCriterionSchema = ATBaseCriterionSchema + Schema((
                 mutator="setValue",
                 default=[],
                 widget=LinesWidget(
-                                label="Values",
-                                label_msgid="label_list_criteria_value",
-                                description="Values, each on its own line.",
-                                description_msgid="help_list_criteria_value",
-                                i18n_domain="plone"),
+    label="Values",
+    label_msgid="label_list_criteria_value",
+    description="Values, each on its own line.",
+    description_msgid="help_list_criteria_value",
+    i18n_domain="plone"),
                 ),
     StringField('operator',
                 required=1,
@@ -176,12 +176,12 @@ ATListCriterionSchema = ATBaseCriterionSchema + Schema((
                 default='or',
                 vocabulary=CompareOperators,
                 widget=SelectionWidget(
-                                label="operator name",
-                                label_msgid="label_list_criteria_operator",
-                                description="Operator used to join the tests "
-                                            "on each value.",
-                                description_msgid="help_list_criteria_operator",
-                                i18n_domain="plone"),
+    label="operator name",
+    label_msgid="label_list_criteria_operator",
+    description="Operator used to join the tests "
+    "on each value.",
+    description_msgid="help_list_criteria_operator",
+    i18n_domain="plone"),
                 ),
     ))
 
@@ -198,11 +198,11 @@ ATSimpleIntCriterionSchema = ATBaseCriterionSchema + Schema((
                 mutator="setValue",
                 default=None,
                 widget=IntegerWidget(
-                                label="Value",
-                                label_msgid="label_int_criteria_value",
-                                description="An integer number.",
-                                description_msgid="help_int_criteria_value",
-                                i18n_domain="plone"),
+    label="Value",
+    label_msgid="label_int_criteria_value",
+    description="An integer number.",
+    description_msgid="help_int_criteria_value",
+    i18n_domain="plone"),
                 ),
 
     ))
@@ -220,11 +220,11 @@ ATSimpleStringCriterionSchema = ATBaseCriterionSchema + Schema((
                 mutator="setValue",
                 default=None,
                 widget=StringWidget(
-                                label="Value",
-                                label_msgid="label_string_criteria_value",
-                                description="A string value.",
-                                description_msgid="help_string_criteria_value",
-                                i18n_domain="plone"),
+    label="Value",
+    label_msgid="label_string_criteria_value",
+    description="A string value.",
+    description_msgid="help_string_criteria_value",
+    i18n_domain="plone"),
                 ),
 
     ))
@@ -242,11 +242,11 @@ ATPortalTypeCriterionSchema = ATBaseCriterionSchema + Schema((
                 mutator="setValue",
                 default=None,
                 widget=MultiSelectionWidget(
-                                label="Value",
-                                label_msgid="label_portal_type_criteria_value",
-                                description="One of the registered portal types.",
-                                description_msgid="help_portal_type_criteria_value",
-                                i18n_domain="plone"),
+    label="Value",
+    label_msgid="label_portal_type_criteria_value",
+    description="One of the registered portal types.",
+    description_msgid="help_portal_type_criteria_value",
+    i18n_domain="plone"),
                 ),
 
     ))
@@ -263,12 +263,12 @@ ATSortCriterionSchema = ATBaseCriterionSchema + Schema((
                 write_permission=ChangeTopics,
                 default=0,
                 widget=BooleanWidget(
-                                label="Reverse",
-                                #label_msgid="label_criterion_field_name",
-                                #description="Should not contain spaces, underscores or mixed case. "\
-                                #            "Short Name is part of the item's web address.",
-                                #description_msgid="help_criterion_field_name",
-                                i18n_domain="plone"),
+    label="Reverse",
+    #label_msgid="label_criterion_field_name",
+    #description="Should not contain spaces, underscores or mixed case. "\
+    #            "Short Name is part of the item's web address.",
+    #description_msgid="help_criterion_field_name",
+    i18n_domain="plone"),
                 ),
 
     ))

@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATSimpleIntCriterion.py,v 1.8 2004/06/20 15:13:23 tiran Exp $
+$Id: ATSimpleIntCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -45,7 +45,7 @@ class ATSimpleIntCriterion(ATBaseCriterion):
     typeDescription= ''
     typeDescMsgId  = ''
 
-    shortDesc      = 'exact integer value' 
+    shortDesc      = 'exact integer value'
 
     security.declareProtected(CMFCorePermissions.View, 'getCriteriaItems')
     def getCriteriaItems(self):

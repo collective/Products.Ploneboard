@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: Validators.py,v 1.16 2004/07/11 18:28:18 tiran Exp $
-""" 
+$Id: Validators.py,v 1.17 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
@@ -58,7 +58,7 @@ validatorList = []
 
 class TALValidator:
     """Validates a text to be valid TAL code
-    
+
     """
 
     __implements__ = IValidator
@@ -82,7 +82,7 @@ validatorList.append(TALValidator('isTAL', title='', description=''))
 
 class TidyHtmlValidator:
     """use mxTidy to check HTML
-    
+
     Fail on errors and warnings
     Do not clean up the value
     """
@@ -119,7 +119,7 @@ validatorList.append(TidyHtmlValidator('isTidyHtml', title='', description=''))
 
 class TidyHtmlWithCleanupValidator:
     """use mxTidy to check HTML
-    
+
     Fail only on errors
     Clean up
     """
@@ -151,7 +151,7 @@ class TidyHtmlWithCleanupValidator:
         tidyAttribute = '%s_tidier_data' % field.getName()
         request[tidyAttribute] = outputdata
 
-        if nwarnings:        
+        if nwarnings:
             tidiedFields = list(request.get('tidiedFields', []))
             tidiedFields.append(field)
             request.set('tidiedFields', tidiedFields)
@@ -172,11 +172,11 @@ for validator in validatorList:
 
 def doTidy(value, field, request, cleanup=0):
     """Tidy the data in 'value' for the field in the current request
-    
+
     Optional cleanup:
-      * removes header/footer of the output data 
+      * removes header/footer of the output data
       * Removes warnings from the error data
-    
+
     Return None for 'nothing done'
     else return (nerrors, nwarnings, outputdata, errordata)
     """

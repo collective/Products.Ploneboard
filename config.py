@@ -15,7 +15,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """AT Content Types configuration file
 
@@ -24,8 +24,8 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.29 2004/06/24 21:56:47 tiran Exp $
-""" 
+$Id: config.py,v 1.30 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -66,7 +66,7 @@ MX_TIDY_OPTIONS= {
 ## enable external storage
 ## requires ExternalStorage from Christian Scholz
 EXT_STORAGE_ENABLE = False
-    
+
 ## use TemplateMixin?
 ## if enabled users can choose between different view templates for each object
 ENABLE_TEMPLATE_MIXIN = False

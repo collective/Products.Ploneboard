@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATFile.py,v 1.28 2004/06/20 18:45:55 tiran Exp $
-""" 
+$Id: ATFile.py,v 1.29 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -84,7 +84,7 @@ class ATFile(ATCTFileContent):
         """
         return self.get_data()
 
-    security.declarePublic('getIcon')   
+    security.declarePublic('getIcon')
     def getIcon(self, relative_to_portal=0):
         """Calculate the icon using the mime type of the file
         """
@@ -92,22 +92,22 @@ class ATFile(ATCTFileContent):
         if not field or not self.get_size():
             # field is empty
             return BaseContent.getIcon(self, relative_to_portal)
-        
+
         contenttype       = field.getContentType(self)
         contenttype_major = contenttype and contenttype.split('/')[0] or ''
 
         mtr   = getToolByName(self,'mimetypes_registry',None)
         utool = getToolByName( self, 'portal_url' )
-        
+
         if ICONMAP.has_key(contenttype):
             icon = quote(ICONMAP[contenttype])
         elif ICONMAP.has_key(contenttype_major):
             icon = quote(ICONMAP[contenttype_major])
         else:
-           	mimetypeitem = mtr.lookup(contenttype)                                             
-           	if not mimetypeitem:
-           	   return BaseContent.getIcon(self, relative_to_portal)
-        	icon = mimetypeitem[0].icon_path                        	            	
+            mimetypeitem = mtr.lookup(contenttype)
+            if not mimetypeitem:
+                return BaseContent.getIcon(self, relative_to_portal)
+            icon = mimetypeitem[0].icon_path
 
         if relative_to_portal:
             return icon
@@ -141,7 +141,7 @@ class ATFile(ATCTFileContent):
         stEnc = getattr(sp, 'default_charset', 'utf-8')
         st    = self.SearchableText()
         source+=unicode(st, stEnc).encode('utf-8')
-        
+
         # get the file and try to convert it to utf8 text
         ptTool = getToolByName(self, 'portal_transforms')
         f  = self.getFile()
@@ -187,13 +187,13 @@ class ATExtFile(ATFile):
         """return the file with proper content type"""
         #REQUEST=kwargs.get('REQUEST',self.REQUEST)
         #RESPONSE=kwargs.get('RESPONSE', REQUEST.RESPONSE)
-        field  = self.getField('file') 
+        field  = self.getField('file')
         file   = field.get(self, **kwargs)
         ct     = self.getContentType()
         parent = aq_parent(self)
         f      = File(self.getId(), self.Title(), file, ct)
         return f.__of__(parent)
-   
+
     # make it directly viewable when entering the objects URL
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self, REQUEST, RESPONSE):

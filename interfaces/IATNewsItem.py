@@ -14,18 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """AT News Item interface
 
-$Id: IATNewsItem.py,v 1.4 2004/06/20 15:13:19 tiran Exp $
-""" 
+$Id: IATNewsItem.py,v 1.5 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-#from interface import Interface, Attribute
-#from IATContentType import IATContentType
-from IATDocument import IATDocument
+from Products.ATContentTypes.interfaces.IATDocument import IATDocument
 
 class IATNewsItem(IATDocument):
     """AT News Item marker interface

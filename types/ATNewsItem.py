@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATNewsItem.py,v 1.12 2004/06/20 15:13:21 tiran Exp $
-""" 
+$Id: ATNewsItem.py,v 1.13 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -51,8 +51,9 @@ class ATNewsItem(ATDocument):
     default_view   = 'newsitem_view'
     suppl_views    = ()
     newTypeFor     = ('News Item', 'News Item')
-    typeDescription= "A news item is a small piece of news that is published on the front\n" \
-                     "page. Add the relevant details below, and press 'Save'."
+    typeDescription= ("A news item is a small piece of news that "
+                      "is published \non the front page. "
+                      "Add the relevant details below, and press 'Save'.")
     typeDescMsgId  = 'description_edit_news_item'
     assocMimetypes = ()
     assocFileExt   = ('news', )
@@ -67,5 +68,5 @@ class ATNewsItem(ATDocument):
             self.setDescription(description)
         self.setText(text, mimetype=translateMimetypeAlias(text_format))
         self.update(**kwargs)
-    
+
 registerType(ATNewsItem, PROJECTNAME)

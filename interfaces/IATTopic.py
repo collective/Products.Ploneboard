@@ -14,17 +14,17 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """Topic and criterion interface
 
-$Id: IATTopic.py,v 1.6 2004/05/14 12:04:07 godchap Exp $
-""" 
+$Id: IATTopic.py,v 1.7 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-from interface import Interface, Attribute
-from IATContentType import IATContentType
+from Interface import Interface, Attribute
+from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 
 class IATTopic(IATContentType):
     """AT Topic marker interface
@@ -45,7 +45,7 @@ class IATTopic(IATContentType):
     def listSearchCriteriaMetaTypes():
         """List available search criteria
         """
-    
+
     def listSortCriteriaTypes():
         """List available sort criteria types as dict
         """
@@ -53,7 +53,7 @@ class IATTopic(IATContentType):
     def listSortCriteriaMetaTypes():
         """List available sort criteria
         """
-    
+
     def listCriteria():
         """Return a list of our criteria objects.
         """

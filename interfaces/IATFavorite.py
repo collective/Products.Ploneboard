@@ -14,18 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """AT Favorite interface
 
-$Id: IATFavorite.py,v 1.3 2004/06/20 15:13:19 tiran Exp $
-""" 
+$Id: IATFavorite.py,v 1.4 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
-#from interface import Interface, Attribute
-#from IATContentType import IATContentType
-from IATLink import IATLink
+from Products.ATContentTypes.interfaces.IATLink import IATLink
 
 class IATFavorite(IATLink):
     """AT Favorite marker interface

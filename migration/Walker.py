@@ -12,7 +12,7 @@ class MigrationError(RuntimeError):
             self.id = obj.absolute_url(1)
         else:
             self.id = repr(obj)
-        
+
     def __str__(self):
         return "MigrationError for obj %s (%s -> %s):\n" \
                "%s" % (self.id, self.fromType, self.toType, self.tb)
@@ -20,7 +20,7 @@ class MigrationError(RuntimeError):
 class Walker:
     """Walks through the system and migrates every object it finds
     """
-    
+
     def __init__(self, migrator, portal):
         self.migrator = migrator
         self.portal = portal
@@ -28,10 +28,10 @@ class Walker:
         self.toType = self.migrator.toType
         self.subtransaction = self.migrator.subtransaction
         self.out = []
-        
+
     def go(self):
         """runner
-        
+
         Call it to start the migration
         :return: migration notes
         :rtype: list of strings
@@ -42,26 +42,26 @@ class Walker:
         finally:
             self.resetGlobalAddable()
         return self.getOutput()
-    
+
     __call__ = go
 
     def walk(self):
         """Walks around and returns all objects which needs migration
-        
+
         :return: objects (with acquisition wrapper) that needs migration
         :rtype: list of objects
         """
         raise NotImplementedError
-    
+
     def enableGlobalAddable(self):
         """Set implicitly addable to true
-        
+
         XXX This is a required hack :/
         """
         ttool = getToolByName(self.portal, 'portal_types')
         ftiTo = ttool.getTypeInfo(self.toType)
         ftiFrom = ttool.getTypeInfo(self.fromType)
-        self.toGlobalAllow = ftiTo.globalAllow() 
+        self.toGlobalAllow = ftiTo.globalAllow()
         self.fromGlobalAllow = ftiFrom.globalAllow()
         ftiTo.global_allow = 1
         ftiFrom.global_allow = 1
@@ -78,15 +78,15 @@ class Walker:
     def migrate(self, objs):
         """Migrates the objects in the ist objs
         """
-      
+
         for obj in objs:
-            msg=('Migrating %s from %s to %s ... ' % 
+            msg=('Migrating %s from %s to %s ... ' %
                             ('/'.join(obj.getPhysicalPath()),
                              self.fromType, self.toType, ))
             LOG(msg)
             self.out.append(msg)
             #print msg
-            
+
             migrator = self.migrator(obj)
             try:
                 # run the migration
@@ -119,34 +119,34 @@ class Walker:
                 # migrated objects to safe your butt
                 get_transaction().commit(1)
                 LOG('comitted...')
-                
+
     def getOutput(self):
         """Get migration notes
-        
+
         :return: objects (with acquisition wrapper) that needs migration
         :rtype: list of objects
         """
         return '\n'.join(self.out)
-    
+
 class CatalogWalker(Walker):
     """Walker using portal_catalog
     """
-    
+
     def __init__(self, migrator, catalog):
         portal = aq_parent(catalog)
         Walker.__init__(self, migrator, portal)
         self.catalog = catalog
-        
+
     def walk(self):
         """Walks around and returns all objects which needs migration
-        
+
         :return: objects (with acquisition wrapper) that needs migration
         :rtype: list of objects
         """
         ret = []
         LOG("fromType: " + str(self.fromType))
         catalog = self.catalog
-        
+
         if HAS_LINGUA_PLONE:
             # usage of Language is required for LinguaPlone
             brains = catalog(portal_type = self.fromType,

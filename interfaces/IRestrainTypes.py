@@ -14,16 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """RestrainTypes awareness marker interface
 
-$Id: IRestrainTypes.py,v 1.1 2004/06/09 22:31:39 yenzenz Exp $
-""" 
+$Id: IRestrainTypes.py,v 1.2 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Jens Klein'
 __docformat__ = 'restructuredtext'
 
-from interface import Interface
+from Interface import Interface
 
 class IRestrainTypes(Interface):
     """RestrainTypes awareness marker interface

@@ -14,11 +14,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: utils.py,v 1.5 2004/06/27 16:31:57 tiran Exp $
-""" 
+$Id: utils.py,v 1.6 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -28,7 +28,7 @@ from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 
 def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
     """Setup up and registers mimetype associations
-    
+
     self - portal object
     typeInfo - a list of type infos
     old - a list of old items that should be removed
@@ -37,7 +37,7 @@ def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
     out - StringIO instance
     """
     reg = getToolByName(self, 'content_type_registry')
-    
+
     moveBottom = []
     moveTop = []
 
@@ -45,7 +45,7 @@ def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
         # remove old
         if reg.getPredicate(o):
             reg.removePredicate(o)
-    
+
     for t in typeInfo:
         klass       = t['klass']
         portal_type = t['portal_type']
@@ -53,7 +53,7 @@ def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
         if not IATContentType.isImplementedByInstancesOf(klass):
             # not a AT ContentType (maybe criterion) - skip
             continue
-        
+
         # major minor
         for name, mm in getMajorMinorOf(klass):
             if reg.getPredicate(name):
@@ -82,7 +82,7 @@ def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
     last = len(reg.listPredicates())-1
     for name in moveBottom:
         reg.reorderPredicate(name, last)
-        
+
     # move extension based rules to the top
     for name in moveTop:
         reg.reorderPredicate(name, 0)
@@ -92,7 +92,7 @@ def fixMimeTypes(self, klass, portal_type):
     for mm_name, mm in getMajorMinorOf(klass):
         if reg.getPredicate(mm_name):
             reg.assignTypeName(mm_name, portal_type)
-    
+
     ext_name, ext = getFileExtOf(klass)
     if reg.getPredicate(ext_name):
         reg.assignTypeName(ext_name, portal_type)
@@ -140,4 +140,4 @@ def registerTemplatesForClass(self, klass, portal_type):
         atTool.registerTemplate(view)
         views.append(view)
 
-    atTool.bindTemplate(portal_type, views)    
+    atTool.bindTemplate(portal_type, views)

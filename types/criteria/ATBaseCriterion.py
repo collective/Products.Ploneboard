@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: ATBaseCriterion.py,v 1.8 2004/06/20 15:13:21 tiran Exp $
+$Id: ATBaseCriterion.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -40,25 +40,25 @@ class ATBaseCriterion(BaseContentMixin):
 
     __implements__ = BaseContentMixin.__implements__ + (IATTopicCriterion, )
     security = ClassSecurityInfo()
-    
+
     schema = ATBaseCriterionSchema
     meta_type = 'ATBaseCriterion'
     archetype_name = 'Base Criterion'
     typeDescription= ''
     typeDescMsgId  = ''
     global_allow = 0
-    
+
     def __init__(self, id, field=None):
         self.getField('id').set(self, id)
         self.getField('field').set(self, field)
 
     security.declareProtected(CMFCorePermissions.View, 'getId')
     def getId(self):
-        """get the objects id"""
+        """Get the object id"""
         return str(self.id)
 
     def setId(self, value, *kw):
-        """setting a new ID isn't allowed
+        """Setting a new ID isn't allowed
         """
         assert value == self.getId(), 'You are not allowed to change the id'
 
@@ -75,6 +75,6 @@ class ATBaseCriterion(BaseContentMixin):
     def getCriteriaItems(self):
         """Return a sequence of items to be used to build the catalog query.
         """
-        raise NotImplementedError        
+        raise NotImplementedError
 
 # registerCriterion(ATBaseCriterion, ())

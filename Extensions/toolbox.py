@@ -14,11 +14,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
-$Id: toolbox.py,v 1.11 2004/06/27 16:31:57 tiran Exp $
-""" 
+$Id: toolbox.py,v 1.12 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 
 __author__  = 'Jens Klein, Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -76,7 +76,7 @@ def _switchToATCT(portal, pt, cat, reg, klass, out):
 
     title = klass.archetype_name[3:]
     bakTitle = bakId
-    
+
     # move away the disabled type (CMF -> backup)
     pt.manage_renameObject(id, bakId)
     pt[bakId].manage_changeProperties(title=bakTitle, global_allow=0)
@@ -98,7 +98,7 @@ def _switchToATCT(portal, pt, cat, reg, klass, out):
     for predid, pred in preds:
         typ = pred[1]
         if typ == atId:
-            reg.assignTypeName(predid, id) 
+            reg.assignTypeName(predid, id)
 
 def _switchToCMF(portal, pt, cat, reg, klass, out):
     """
@@ -108,7 +108,7 @@ def _switchToCMF(portal, pt, cat, reg, klass, out):
     bakId = 'CMF %s' % id
 
     atTitle = klass.archetype_name
-    
+
     # move away the ATCT type (ATCT -> original ATCT)
     pt.manage_renameObject(id, atId)
     pt[atId].manage_changeProperties(title=atTitle)
@@ -150,7 +150,7 @@ def _changePortalType(cat, old, new):
 def _fixLargePloneFolder(self):
     # XXX why do I need this hack?
     # probably because of the hard coded and false portal type in Plone :|
-    # Members._getPortalTypeName() returns ATBTreeFolder instead of 
+    # Members._getPortalTypeName() returns ATBTreeFolder instead of
     # Large Plone Folder
     self.Members._setPortalTypeName(ATFolder.ATBTreeFolder.newTypeFor[0])
 
@@ -174,7 +174,7 @@ def switchATCT2CMF(self):
         return "Error: Not switched"
     pt = getToolByName(self,'portal_types')
     cat = getToolByName(self,'portal_catalog')
-    reg = getToolByName(self, 'content_type_registry') 
+    reg = getToolByName(self, 'content_type_registry')
     out = StringIO()
     for klass in atct_klasses:
         _switchToCMF(self, pt, cat, reg, klass, out)
@@ -186,7 +186,7 @@ def switchATCT2CMF(self):
 
 def isSwitchedToATCT(self):
     """Test wether the types are already switched to ATCT
-    
+
     This test isn't very good but sufficient for our purpose
     """
     pt = getToolByName(self, 'portal_types')

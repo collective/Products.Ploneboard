@@ -11,14 +11,14 @@ are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, 
-   this list of conditions and the following disclaimer in the documentation 
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
  * Neither the name of the author nor the names of its contributors may be used
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.15 2004/06/24 19:47:11 tiran Exp $
+$Id: Migrator.py,v 1.16 2004/07/13 13:12:55 dreamcatcher Exp $
 """
 
 from copy import copy
@@ -59,7 +59,7 @@ for accessor, mutator, field in fieldList:
         metadataList.append((accessor, mutator))
 
 
-    
+
 def copyPermMap(old):
     """bullet proof copy
     """
@@ -77,10 +77,10 @@ def getTypeOf(obj):
     tinfo = ttool.getTypeInfo(obj)
     if tinfo:
         return tinfo.getId()
-    
+
 class BaseMigrator:
     """Migrates an object to the new type
-    
+
     Base class
     """
     fromType = ''
@@ -94,16 +94,16 @@ class BaseMigrator:
         self.orig_id = self.old.getId()
 
         self.old_id = '%s_MIGRATION_' % self.orig_id
-        
+
         self.new = None
         self.new_id = self.orig_id
-        
+
         self.parent = aq_parent(self.old)
-        
+
         # safe id generation
         while hasattr(aq_base(self.parent), self.old_id):
             self.old_id+='X'
-        
+
         #print "Migrating %s from %s to %s" % (obj.absolute_url(1), self.fromType, self.toType)
 
     def getMigrationMethods(self):
@@ -125,10 +125,10 @@ class BaseMigrator:
                 method = getattr(self, name)
                 if callable(method):
                     lastmethods.append(method)
-        
+
         afterChange = methods+[self.custom]+lastmethods
         return (beforeChange, afterChange, )
-        
+
     def migrate(self, unittest=0):
         """Migrates the object
         """
@@ -160,7 +160,7 @@ class BaseMigrator:
 
     def createNew(self):
         """Create the new object
-        
+
         Must be implemented by the real Migrator
         """
         raise NotImplementedError
@@ -169,10 +169,10 @@ class BaseMigrator:
         """For custom migration
         """
         pass
-    
+
     def migrate_properties(self):
         """Migrates zope properties
-        
+
         Removes the old (if exists) and adds a new
         """
         if not hasattr(aq_base(self.old), 'propertyIds') or \
@@ -212,12 +212,12 @@ class BaseMigrator:
             # did not work, at least not with plone 1.x, at 1.0.1, zope 2.6.2
             LOG("changing owner via property _owner: %s" % str(self.old.getOwner(info = 1)))
             self.new._owner = self.old.getOwner(info = 1)
-    
+
     def migrate_withmap(self):
         """Migrates other attributes from obj.__dict__ using a map
-        
+
         The map can contain both attribute names and method names
-        
+
         'oldattr' : 'newattr'
             new.newattr = oldattr
         'oldattr' : ''
@@ -289,7 +289,7 @@ class BaseCMFMigrator(BaseMigrator):
 
     def last_migrate_date(self):
         """migrate creation / last modified date
-        
+
         Must be called as *last* migration
         """
         self.new.creation_date = DateTime(self.old_creation_date)
@@ -314,32 +314,32 @@ class ItemMigrationMixin:
         typeInfo.constructInstance(self.parent, self.new_id)
 
         self.new = getattr(self.parent, self.new_id)
-    
+
     def remove(self):
         """Removes the old item
         """
         if REMOVE_OLD:
             self.parent.manage_delObjects([self.old_id])
-    
+
 class FolderMigrationMixin(ItemMigrationMixin):
     """Migrates a folderish object
     """
 
     def XXX_migrate_children(self):
         """Copy childish objects from the old folder to the new one
-        
+
         XXX: Oh hell that's very inefficient and I'm very shure that it will
         blow up the zodb. See alternative
         """
         for obj in self.old.objectValues():
             self.new.manage_clone(obj, obj.getId())
-            
+
     def migrate_alternativeChildren(self):
         """Just an idea
-        
-        I don't know wether it works or fails due the ExtensionClass, ZODB and 
+
+        I don't know wether it works or fails due the ExtensionClass, ZODB and
         acquisition stuff of zope
-        
+
         It seems to work for me very well :)
         """
         for obj in self.old.objectValues():
@@ -349,7 +349,7 @@ class FolderMigrationMixin(ItemMigrationMixin):
 class CMFItemMigrator(ItemMigrationMixin, BaseCMFMigrator):
     """
     """
-    
+
 class CMFFolderMigrator(FolderMigrationMixin, BaseCMFMigrator):
     """
     """

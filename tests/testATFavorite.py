@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.9 2004/06/24 19:47:12 tiran Exp $
+$Id: testATFavorite.py,v 1.10 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -82,7 +82,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
     def test_migration(self):
         old = self._cmf
         id  = old.getId()
-        
+
         # edit
         editCMF(old)
         title       = old.Title()
@@ -101,7 +101,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
 
         self.compareAfterMigration(migrated, mod=mod, created=created)
         self.compareDC(migrated, title=title, description=description)
-                       
+
         # XXX more
 
         self.failUnless(migrated.getRemoteUrl() == url, 'URL mismatch: %s / %s' \
@@ -131,9 +131,9 @@ class TestATFavoriteFields(ATCTFieldTestCase):
         self.failUnless(field.required == 1, 'Value is %s' % field.required)
         self.failUnless(field.default == '', 'Value is %s' % str(field.default))
         self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
-        self.failUnless(field.vocabulary == (), 
+        self.failUnless(field.vocabulary == (),
                         'Value is %s' % str(field.vocabulary))
-        self.failUnless(field.enforceVocabulary == 0, 
+        self.failUnless(field.enforceVocabulary == 0,
                         'Value is %s' % field.enforceVocabulary)
         self.failUnless(field.multiValued == 0,
                         'Value is %s' % field.multiValued)

@@ -14,9 +14,9 @@
 # FOR A PARTICULAR PURPOSE
 #
 ##############################################################################
-""" Topic: 
+""" Topic:
 
-$Id: __init__.py,v 1.8 2004/07/12 10:15:47 godchap Exp $
+$Id: __init__.py,v 1.9 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -30,19 +30,19 @@ from types import StringType
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicSearchCriterion, IATTopicSortCriterion
 
 ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
-               'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex', 
+               'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex',
                'ZCTextIndex',)
-               
+
 DATE_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex')
 
 STRING_INDICES = ('FieldIndex', 'KeywordIndex', 'PathIndex', 'TextIndex',
                   'TextIndexNG2', 'ZCTextIndex', )
-                  
+
 LIST_INDICES = ('FieldIndex', 'KeywordIndex', )
 
 class _CriterionRegistry(UserDict):
     """Registry for criteria """
-    
+
     def __init__(self, *args, **kwargs):
         UserDict.__init__(self, *args, **kwargs)
         self.index2criterion = {}
@@ -58,12 +58,12 @@ class _CriterionRegistry(UserDict):
 
         id = criterion.meta_type
         self[id] = criterion
-        
+
         self.criterion2index[id] = indices
         for index in indices:
             value = self.index2criterion.get(index, ())
             self.index2criterion[index] = value + (id,)
-        
+
         registerType(criterion, PROJECTNAME)
 
     def unregister(self, criterion):
@@ -75,24 +75,24 @@ class _CriterionRegistry(UserDict):
                 valuelist = list(value)
                 del valuelist[valuelist.index(id)]
                 self.index2criterion[index] = tuple(valuelist)
-        
+
     def listTypes(self):
         return self.keys()
 
     def listSortTypes(self):
-        return [key for key in self.keys() 
+        return [key for key in self.keys()
                     if IATTopicSortCriterion.isImplementedByInstancesOf(self[key])]
 
     def listSearchTypes(self):
-        return [key for key in self.keys() 
+        return [key for key in self.keys()
                     if IATTopicSearchCriterion.isImplementedByInstancesOf(self[key])]
 
     def listCriteria(self):
         return self.values()
-    
+
     def indicesByCriterion(self, criterion):
         return self.criterion2index[criterion]
-    
+
     def criteriaByIndex(self, index):
         return self.index2criterion[index]
 

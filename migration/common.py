@@ -11,14 +11,14 @@ are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice, 
-   this list of conditions and the following disclaimer in the documentation 
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
    and/or other materials provided with the distribution.
  * Neither the name of the author nor the names of its contributors may be used
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: common.py,v 1.3 2004/06/24 20:59:54 tiran Exp $
+$Id: common.py,v 1.4 2004/07/13 13:12:55 dreamcatcher Exp $
 """
 
 from Products.Archetypes.debug import log as at_log
@@ -31,7 +31,7 @@ except:
 
 DEBUG      = False
 REMOVE_OLD = True
- 
+
 def LOG(logmessage):
     """ wrap archetypes log method
     """

@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: migrateFromCPT.py,v 1.2 2004/05/04 19:33:21 tiran Exp $
-""" 
+$Id: migrateFromCPT.py,v 1.3 2004/07/13 13:12:55 dreamcatcher Exp $
+"""
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
 
@@ -37,5 +37,4 @@ def migrate(self):
         return migrateAll(self)
     finally:
         if switched:
-          switchCMF2ATCT(self) 
-    
+            switchCMF2ATCT(self)

@@ -14,12 +14,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 """
 
-$Id: ATContentType.py,v 1.30 2004/06/26 22:46:12 yenzenz Exp $
-""" 
+$Id: ATContentType.py,v 1.31 2004/07/13 13:12:56 dreamcatcher Exp $
+"""
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
@@ -59,12 +59,12 @@ def updateActions(klass, actions):
     kactions = copy(klass.actions)
     aids  = [action.get('id') for action in actions ]
     actions = list(actions)
-   
+
     for kaction in kactions:
         kaid = kaction.get('id')
         if kaid not in aids:
             actions.append(kaction)
-    
+
     return tuple(actions)
 
 def cleanupFilename(filename):
@@ -105,7 +105,7 @@ class ATCTMixin(TemplateMixin):
 
     __implements__ = IATContentType
 
-    security       = ClassSecurityInfo()   
+    security       = ClassSecurityInfo()
 
     actions = ({
         'id'          : 'view',
@@ -125,7 +125,7 @@ class ATCTMixin(TemplateMixin):
                               'initializeArchetype')
     def initializeArchetype(self, **kwargs):
         """called by the generated addXXX factory in types tool
-        
+
         Overwritten to call edit() instead of update() to have the cmf
         compatibility method.
         """
@@ -154,9 +154,9 @@ class ATCTMixin(TemplateMixin):
             correct_pt = self.portal_type
         fti = pt.getTypeInfo(correct_pt)
         if fti is None:
-            # FTI is None which may happen in ATCT2CMF switching script
-            # in this case the self.portal_type aka self.__class__.__name__ 
-            # is right but test to be sure
+            # FTI is None which may happen in ATCT2CMF switching
+            # script in this case the self.portal_type aka
+            # self.__class__.__name__ is right but test to be sure
             assert(self.portal_type, self.__class__.__name__)
             return self.portal_type
         if fti.Metatype() == self.meta_type:
@@ -172,7 +172,7 @@ class ATCTMixin(TemplateMixin):
         if len(args) != 0:
             # use cmf edit method
             return self.cmf_edit(*args, **kwargs)
-        
+
         fieldNames = [field.getName() for field in self.Schema().fields()]
         for name in kwargs.keys():
             if name not in fieldNames:
@@ -192,8 +192,9 @@ InitializeClass(ATCTMixin)
 class ATCTContent(ATCTMixin, BaseContent):
     """Base class for non folderish AT Content Types"""
 
-    __implements__ = BaseContent.__implements__, IATContentType
-    
+    __implements__ = (BaseContent.__implements__,
+                      IATContentType)
+
     security       = ClassSecurityInfo()
     actions = updateActions(ATCTMixin,
         ({
@@ -216,7 +217,7 @@ InitializeClass(ATCTContent)
 
 class ATCTFileContent(ATCTContent):
     """Base class for content types containing a file like ATFile or ATImage
-    
+
     The file field *must* be only primary field
     """
 
@@ -278,8 +279,8 @@ class ATCTFileContent(ATCTContent):
             filename = field.getFilename(self)
             clean_filename = cleanupFilename(filename)
             if self.REQUEST.form.get('id'):
-                # requst contains an id - don't rename the obj according to it's
-                # file name
+                # request contains an id - don't rename the obj
+                # according to it's file name
                 return
             elif clean_filename == self.getId():
                 # destination id and old id are equal
@@ -300,9 +301,11 @@ class ATCTFileContent(ATCTContent):
         upload = REQUEST.form.get('%s_file' % f_name, None)
         filename = getattr(upload, 'filename', None)
         clean_filename = cleanupFilename(filename)
-        
+
         if upload:
-            upload.seek(0) # strange but required!
+            # the file may have already been read by a
+            # former method
+            upload.seek(0)
 
         if not id and clean_filename == self.getId():
             # already renamed - ok
@@ -328,10 +331,11 @@ InitializeClass(ATCTFileContent)
 class ATCTFolder(ATCTMixin, BaseFolder):
     """Base class for folderish AT Content Types (but not for folders)"""
 
-    __implements__ = BaseFolder.__implements__, ATCTMixin.__implements__ 
-    
+    __implements__ = (BaseFolder.__implements__,
+                      ATCTMixin.__implements__)
+
     security       = ClassSecurityInfo()
-    
+
     actions = updateActions(ATCTMixin,
         ({
         'id'          : 'local_roles',
@@ -354,9 +358,9 @@ InitializeClass(ATCTFolder)
 class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
     """Base class for orderable folderish AT Content Types"""
 
-    __implements__ = OrderedBaseFolder.__implements__, \
-                     ATCTMixin.__implements__
-    
+    __implements__ = (OrderedBaseFolder.__implements__,
+                      ATCTMixin.__implements__)
+
     security       = ClassSecurityInfo()
 
     actions = updateActions(ATCTMixin,
@@ -390,7 +394,7 @@ class ATCTOrderedFolder(ATCTMixin, OrderedBaseFolder):
         """ Set default so we can return whatever we want instead
         of index_html """
         if HAS_PLONE2:
-            return getToolByName(self, 'plone_utils').browserDefault(self)  
+            return getToolByName(self, 'plone_utils').browserDefault(self)
         else:
             return OrderedBaseFolder.__browser_default__(self, request)
 
@@ -402,7 +406,7 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
 
     __implements__ = BaseBTreeFolder.__implements__, \
                      ATCTMixin.__implements__
-    
+
     security       = ClassSecurityInfo()
 
     actions = updateActions(ATCTMixin,
@@ -424,10 +428,12 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
     security.declareProtected(CMFCorePermissions.View, 'index_html')
     def index_html(self):
         """
-        btree folders don't store objects as attributes, the implementation of index_html
-        method in plone folder assumes this and by virtue of its being invoked looked in
-        the parent container. we override here to check the btree data structs, and then
-        perform the same lookup as BasePloneFolder if we don't find it.
+        BTree folders don't store objects as attributes, the
+        implementation of index_html method in PloneFolder assumes
+        this and by virtue of being invoked looked in the parent
+        container. We override here to check the BTree data structs,
+        and then perform the same lookup as BasePloneFolder if we
+        don't find it.
         """
         _target = self.get('index_html')
         if _target is not None:
@@ -443,5 +449,5 @@ class ATCTBTreeFolder(ATCTMixin, BaseBTreeFolder):
 InitializeClass(ATCTBTreeFolder)
 
 
-__all__ = ('ATCTContent', 'ATCTFolder', 'ATCTOrderedFolder', 'ATCTBTreeFolder',
-           'updateActions' )
+__all__ = ('ATCTContent', 'ATCTFolder', 'ATCTOrderedFolder',
+           'ATCTBTreeFolder', 'updateActions' )

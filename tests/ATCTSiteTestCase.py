@@ -2,7 +2,7 @@
 
 For tests that needs a plone portal including archetypes and portal transforms
 
-$Id: ATCTSiteTestCase.py,v 1.10 2004/06/24 19:47:12 tiran Exp $
+$Id: ATCTSiteTestCase.py,v 1.11 2004/07/13 13:12:56 dreamcatcher Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -38,23 +38,23 @@ portal_owner = PloneTestCase.portal_owner
 
 class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     """ AT Content Types test case based on a plone site with archetypes"""
-    
+
     klass = None
     portal_type = ''
     title = ''
     meta_type = ''
     icon = ''
-    
+
     def afterSetUp(self):
         self._portal = self.app.portal
         # login as manager
         user = self.getManagerUser()
         newSecurityManager(None, user)
-        
+
         ttool = getToolByName(self._portal, 'portal_types')
         atctFTI = ttool.getTypeInfo(self.portal_type)
         cmfFTI = ttool.getTypeInfo(self.klass.newTypeFor[0])
-        
+
         atctFTI.constructInstance(self._portal, 'ATCT')
         self._ATCT = getattr(self._portal, 'ATCT')
 
@@ -80,7 +80,7 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
     def testDoesImplemendDC(self):
         self.failUnless(IDublinCore.isImplementedBy(self._ATCT))
         self.failUnless(IMutableDublinCore.isImplementedBy(self._ATCT))
-        
+
     def testDoesImplementATCT(self):
         self.failUnless(IATContentType.isImplementedBy(self._ATCT))
 
@@ -93,7 +93,7 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
         else:
             title = kwargs.get('title')
             description = kwargs.get('description')
-            
+
         self.failUnlessEqual(first.Title(), title)
         self.failUnlessEqual(first.Description(), description)
         # XXX more
@@ -113,7 +113,7 @@ class ATCTSiteTestCase(ArchetypesTestCase.ArcheSiteTestCase):
 
 class ATCTFieldTestCase(BaseSchemaTest):
     """ ATContentTypes test including AT schema tests """
-    
+
     def afterSetUp(self):
         # initalize the portal but not the base schema test
         # because we want to overwrite the dummy and don't need it
@@ -128,7 +128,7 @@ class ATCTFieldTestCase(BaseSchemaTest):
         portal.dummy = dummy
         dummy.initializeArchetype()
         return dummy
-    
+
     def test_description(self):
         dummy = self._dummy
         field = dummy.getField('description')
@@ -174,13 +174,13 @@ def setupATCT(app, quiet=0):
         ZopeTestCase._print('already installed ... ')
     else:
         installATCT(portal)
-    
+
     if isSwitchedToATCT(portal):
         # XXX right now ATCT unit tests don't run in ATCT mode.
         # Switching to native mode
         ZopeTestCase._print('switching to CMF mode ... ')
         portal.switchATCT2CMF()
-    
+
     # Log out
     noSecurityManager()
     get_transaction().commit()

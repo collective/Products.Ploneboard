@@ -20,5 +20,5 @@ for line in lines:
     first = len(line) and line[0] or ''
     mapping =map.get(first, '%s')
     print mapping % line
-    
+
 return printed
