@@ -11,7 +11,7 @@
 <h3>Form and Script Actions</h3>
 
 This tool lets you set or override the default actions that are 
-executed when a Controlled Page Template submitted or a Controlled Python Script 
+executed when a Controlled Page Template is submitted or a Controlled Python Script 
 returns.
 
 <ul>
@@ -244,12 +244,16 @@ returns.
 
 </div>
 
+
 <div tal:condition="python:not here.writableDefaults() and fixed_object">
+
 <h3 class="form-help">Default Actions</h3>
 
 <div tal:define="form_actions python:here.listFormActions(0, **filters);">
-<table border="0" tal:condition="form_actions">
-   <tr>
+
+<table width="100%" cellspacing="0" cellpadding="2" border="0" tal:condition="form_actions">
+
+   <tr class="list-header">
       <td class="form-label">Template/Script</td>
       <td class="form-label">Status</td>
       <td class="form-label">Context</td>
@@ -257,21 +261,27 @@ returns.
       <td class="form-label">Action</td>
       <td class="form-label">Argument</td>
    </tr>
-   <tr tal:repeat="action form_actions">
-       <td tal:content="action/getObjectId" />
-       <td tal:content="action/getStatus" />
-       <td tal:define="context_type action/getContextType">
+
+   <tal:block tal:repeat="action form_actions">
+   <tr tal:define="oddrow repeat/action/odd;"
+       tal:attributes="class python:test(oddrow, 'row-hilite', 'row-normal')">
+       <td class="list-item" tal:content="action/getObjectId" />
+       <td class="list-item" tal:content="action/getStatus" />
+       <td class="list-item" tal:define="context_type action/getContextType">
           <span tal:condition="context_type" tal:replace="context_type"/>
           <span tal:condition="not:context_type" tal:omit-tag="">Any</span>
        </td>
-       <td tal:define="button action/getButton">
+       <td class="list-item" tal:define="button action/getButton">
           <span tal:condition="button" tal:replace="button"/>
           <span tal:condition="not:button" tal:omit-tag="">Any</span>
        </td>
-       <td tal:content="action/getActionType" />
-       <td tal:content="action/getActionArg" />
+       <td class="list-item" tal:content="action/getActionType" />
+       <td class="list-item" tal:content="action/getActionArg" />
    </tr>
+   </tal:block>
+
 </table>
+
 <p tal:condition="not:form_actions"><i>No actions have been specified</i></p>
 </div>
 </div>

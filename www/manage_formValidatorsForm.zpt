@@ -198,26 +198,34 @@ executed when a Controlled Page Template is submitted.
 <h3 class="form-help">Default Validators</h3>
 
 <div tal:define="form_validators python:here.listFormValidators(0, **filters);">
-<table border="0" tal:condition="form_validators">
-   <tr>
+
+<table width="100%" cellspacing="0" cellpadding="2" border="0" tal:condition="form_validators">
+
+   <tr class="list-header">
       <td class="form-label">Template</td>
       <td class="form-label">Context</td>
       <td class="form-label">Button</td>
       <td class="form-label">Validators</td>
    </tr>
-   <tr tal:repeat="validator form_validators">
-       <td tal:content="validator/getObjectId" />
-       <td tal:define="context_type validator/getContextType">
+
+   <tal:block tal:repeat="validator form_validators">
+   <tr tal:define="oddrow repeat/validator/odd;"
+       tal:attributes="class python:test(oddrow, 'row-hilite', 'row-normal')">
+       <td class="list-item" tal:content="validator/getObjectId" />
+       <td class="list-item" tal:define="context_type validator/getContextType">
           <span tal:condition="context_type" tal:replace="context_type"/>
           <span tal:condition="not:context_type" tal:omit-tag="">Any</span>
        </td>
-       <td tal:define="button validator/getButton">
+       <td class="list-item" tal:define="button validator/getButton">
           <span tal:condition="button" tal:replace="button"/>
           <span tal:condition="not:button" tal:omit-tag="">Any</span>
        </td>
-       <td tal:content="python: ', '.join(validator.getValidators())" />
+       <td class="list-item" tal:content="python: ', '.join(validator.getValidators())" />
    </tr>
+   </tal:block>
+
 </table>
+
 <p tal:condition="not:form_validators"><i>No validators have been specified</i></p>
 </div>
 </div>

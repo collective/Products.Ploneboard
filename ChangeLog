@@ -1,3 +1,7 @@
+2003-07-30 Kevin Teague <kevin@bud.ca> (Wheat)
+
+   * Prettied up the ZMI tables for Default Actions and Default Validators
+
 2003-07-27  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Complete refactoring.  Default properties are now specified in .metadata
