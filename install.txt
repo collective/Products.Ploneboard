@@ -1,0 +1,9 @@
+Install 
+
+1. Note : you must install "Graphviz":http://www.graphviz.org/ in your system before you use it.
+
+2. unzip the DCWorkflowEditor to your zope Products directory.
+
+3. restart zope
+
+Go to ZMI portal_workflow/your_workflow, there is a new tab called 'graph', clikc it and you will see the workflow graph!
