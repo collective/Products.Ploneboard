@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.5 2003/03/05 14:58:21 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.6 2003/03/05 17:18:56 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -178,9 +178,9 @@ class InstalledProduct(SimpleItem):
             
         if 'slots' in cascade:
             if self.leftslots: 
-                portal.leftslots=[s for s in portal.left_slots if s not in self.leftslots]
+                portal.left_slots=[s for s in portal.left_slots if s not in self.leftslots]
             if self.rightslots:
-                portal.rightslots=[s for s in portal.right_slots if s not in self.rightslots]
+                portal.right_slots=[s for s in portal.right_slots if s not in self.rightslots]
             
         self.status='uninstalled'
         self.log('uninstalled\n'+res)
