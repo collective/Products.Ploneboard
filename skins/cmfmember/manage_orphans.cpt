@@ -5,7 +5,7 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="cmfmember">
 
   <body>
 
@@ -45,17 +45,22 @@
                  name="form.button.Cancel"
                  tabindex=""
                  i18n:attributes="value"
+                 i18n:domain="plone"
                  tal:attributes="tabindex tabindex/next;"
                  />
         </div>
 
-      <p i18n:translate="description_deleted_members_orphan_content">When members are deleted, the content they own may end up with an
-        invalid owner.  
-        <span i18n:translate="description_orphans_take_ownership" tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+      <p>
+        <span i18n:translate="description_deleted_members_orphan_content">
+          When members are deleted,the content they own may end up with an invalid owner.
+        </span>
+        <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'"
+              i18n:translate="descrition_orphan_take_ownership">
           Click the button below to take ownership of orphaned content.
         </span>
-        <span i18n:translate="description_orphans_delete_content" tal:condition="python:here.orphanedContentDestination == 'delete'">
-          Click the button below to delete ordelete_content.
+        <span tal:condition="python:here.orphanedContentDestination == 'delete'"
+              i18n:translate="descrition_delete_orphaned_content">
+          Click the button below to delete orphaned content.
         </span>
       </p>
 
@@ -75,6 +80,7 @@
                  name="form.button.Cancel"
                  tabindex=""
                  i18n:attributes="value"
+                 i18n:domain="plone"
                  tal:attributes="tabindex tabindex/next;"
                  />
         </div>

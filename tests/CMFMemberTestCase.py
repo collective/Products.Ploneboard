@@ -1,34 +1,21 @@
-
 from Testing import ZopeTestCase
 from Testing.ZopeTestCase.utils import setupCoreSessions
+from Products.CMFMember.config import PKG_NAME, DEPENDENCIES, Z_DEPENDENCIES
+from ptc import *
 
-# Add products/dependencies here as needed
-DEPS = ('Archetypes', 'PortalTransforms', 'MimetypesRegistry',
-        'ZCatalog', 'CMFMember')
-for product in DEPS:
-    ZopeTestCase.installProduct(product, 1)
-    
-from Products.CMFPlone.tests import PloneTestCase
+[ ZopeTestCase.installProduct(x) \
+  for x in Z_DEPENDENCIES + DEPENDENCIES + [PKG_NAME] ]
+
 from Products.Archetypes.Extensions.Install import install as install_archetypes
 from Products.CMFMember.Extensions.Install import install as install_cmfmember
+
 from AccessControl.SecurityManagement import newSecurityManager
 
-portal_name  = 'portal'
-portal_owner = 'portal_owner'
 default_user = 'unittest_admin'
-
-# # add a member corresponding to portal_user
-# portal.portal_membership.addMember(portal_user_info['id'], portal_user_info['password'],portal_user_info['roles'],portal_user_info['domains'])
-# m = portal.portal_membership.getMemberById(portal_user_info['id'])
-# m.setMemberProperties({'email': 'foo@bar.com'})
-
-# portal.acl_users._doAddUser(root_user_info['id'], root_user_info['password'],domains=root_user_info['domains'],roles=root_user_info['roles'])
-# m = portal.portal_membership.getMemberById(root_user_info['id'])
-# m.setMemberProperties({'email': 'foo@bar.com'})
 
 setupCoreSessions(ZopeTestCase.Zope.app())
 
-class CMFMemberTestCase(PloneTestCase.PloneTestCase):
+class CMFMemberTestCase(PloneTestCase):
 
     def afterSetUp(self):
         sdm = self.app.session_data_manager
@@ -36,20 +23,18 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
         install_archetypes(self.portal)
         self._refreshSkinData()
         self.setupUsers()
-        self.setupCMFMember()
         self.qi = self.portal.portal_quickinstaller
         self.membership = self.portal.portal_membership
         self.memberdata = self.portal.portal_memberdata
         self.setRoles(['Manager'])
 
-    def setupCMFMember( self ):
-        install_cmfmember( self.portal)
-        self.portal.cmfmember_control.upgrade(swallow_errors=0)        
-
     def setupUsers( self ):
         puf = self.portal.acl_users        
         # create a portal administrator
-        self.admin_user_info = {'id':default_user, 'password':'password', 'roles':('Manager','Member',), 'domains':()}
+        self.admin_user_info = {'id':default_user,
+                                'password':'password',
+                                'roles':('Manager','Member',),
+                                'domains':()}
         puf._doAddUser(self.admin_user_info['id'],
                        self.admin_user_info['password'],
                        self.admin_user_info['roles'],
@@ -60,7 +45,10 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
         #self.admin_user = self.admin_user.__of__(puf)
         
         # create a user in the portal's acl_users folder
-        self.portal_user_info = {'id':'unittest_user', 'password':'secret', 'roles':('Member',), 'domains':()}
+        self.portal_user_info = {'id':'unittest_user',
+                                 'password':'secret',
+                                 'roles':('Member',),
+                                 'domains':()}
         puf._doAddUser(self.portal_user_info['id'],
                        self.portal_user_info['password'],
                        self.portal_user_info['roles'],
@@ -83,14 +71,12 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
 
         newSecurityManager(None, self.admin_user)
 
-
     def compareTuples(self, t1, t2):
         t1 = list(t1)
         t1.sort()
         t2 = list(t2)
         t2.sort()
         return t1 == t2
-        
 
     def createUserContent(self):
         # create some content with interesting ownership structure
@@ -132,8 +118,6 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
         # recatalog to make sure catalog knows about new local roles and ownership
         catalog = self.portal.portal_catalog
         catalog.refreshCatalog(clear=1)
-        
-
 
     def getTheTag(self, pParser, tag, **kwargs):
         if not tag: return None
@@ -173,3 +157,9 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
         if not hasattr(portal_user, 'aq_base'):
             portal_user = portal_user.__of__(uf)
 
+# build site in demo storage, with dependencies pre installed
+optimize()
+
+app = ZopeTestCase.app()
+setupPloneSite(app, custom_policy="CMFMember Site")
+ZopeTestCase.close(app)

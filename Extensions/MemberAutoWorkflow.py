@@ -18,19 +18,18 @@
 """
 Programmatically creates a workflow type
 """
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
-
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 
 def setupMember_auto_workflow(wf):
     "..."
     wf.setProperties(title='Portal Member Workflow: Automatic Approval')
 
-    for s in ['disabled', 'new', 'public', 'private', 'registering']:
+    for s in ['disabled', 'new', 'new_private', 'public', 'private', 'registering']:
         wf.states.addState(s)
-    for t in ['auto_register', 'enable_public', 'migrate', 'disable', 'register_wrapped_user', 'make_private', 'trigger', 'make_public', 'enable_private', 'finish_register']:
+    for t in ['auto_register', 'enable_public', 'migrate', 'disable', 'register_wrapped_user', 'make_private', 'trigger', 'make_public', 'enable_private', 'finish_register', 'import_fail']:
         wf.transitions.addTransition(t)
     for v in ['action', 'review_history', 'actor', 'comments', 'time']:
         wf.variables.addVariable(v)
@@ -58,7 +57,7 @@ def setupMember_auto_workflow(wf):
 
     sdef = wf.states['new']
     sdef.setProperties(title="""Newly created member""",
-                       transitions=('auto_register', 'migrate', 'register_wrapped_user', 'trigger'))
+                       transitions=('auto_register', 'import_fail', 'migrate', 'register_wrapped_user', 'trigger'))
     sdef.setPermission('CMFMember: Register member', 0, ['Anonymous', 'Manager'])
     sdef.setPermission('CMFMember: Edit member id', 0, ['Anonymous', 'Manager'])
     sdef.setPermission('Set own properties', 0, ['Anonymous', 'Manager'])
@@ -66,6 +65,18 @@ def setupMember_auto_workflow(wf):
     sdef.setPermission('Manage users', 0, ['Manager'])
     sdef.setPermission('View', 0, ['Anonymous', 'Manager'])
     sdef.setPermission('Modify portal content', 0, ['Anonymous'])
+    sdef.setPermission('Mail forgotten password', 0, ['Manager'])
+
+    sdef = wf.states['new_private']
+    sdef.setProperties(title="""Newly created member""",
+                       transitions=('auto_register', 'migrate', 'register_wrapped_user', 'trigger'))
+    sdef.setPermission('CMFMember: Register member', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('CMFMember: Edit member id', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('Set own properties', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('Set own password', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('Manage users', 0, ['Manager'])
+    sdef.setPermission('View', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('Modify portal content', 0, ['Anonymous', 'Manager'])
     sdef.setPermission('Mail forgotten password', 0, ['Manager'])
 
     sdef = wf.states['public']
@@ -224,6 +235,18 @@ def setupMember_auto_workflow(wf):
                        actbox_url="""""",
                        actbox_category="""workflow""",
                        props={'guard_expr': 'here/isValid'},
+                       )
+
+    tdef = wf.transitions['import_fail']
+    tdef.setProperties(title="""failed import""",
+                       new_state_id="""import_fail""",
+                       trigger_type=2,
+                       script_name="""""",
+                       after_script_name="""""",
+                       actbox_name="""import_fail""",
+                       actbox_url="""""",
+                       actbox_category="""workflow""",
+                       props={},
                        )
 
     ## State Variable

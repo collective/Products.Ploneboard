@@ -1,0 +1,408 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2005-01-17 15:03+0000\n"
+"Last-Translator: David Convent <david.convent@zopeur.org>\n"
+"Language-Team: CMFMember Team nntp://news.gmane.org/gmane.comp.web.zope.plone.cmfmember\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: cmfmember\n"
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h2 i18n:translate="cmfmember_core_information">
+#.  Core information
+#. </h2>
+msgid "cmfmember_core_information"
+msgstr "Core information"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="portalMessage" i18n:translate="cmfmember_up_to_date" tal:condition="not: here/needUpgrading">
+#.  <tal:block replace="structure here/info.gif"/>
+#.         Your CMFMember instance is up to date.
+#. </div>
+msgid "cmfmember_up_to_date"
+msgstr "<tal:block replace=\"structure here/info.gif\"/> Your CMFMember instance is up to date."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <strong i18n:translate="cmfmember_versions_filesystem">
+#.  File system version:
+#. </strong>
+msgid "cmfmember_versions_filesystem"
+msgstr "File system version:"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <strong i18n:translate="cmfmember_versions_instance">
+#.  Instance version:
+#. </strong>
+msgid "cmfmember_versions_instance"
+msgstr "Instance version:"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <p i18n:translate="description_cmfmember_migration">
+#.         Migrations perform a catalog and security update, this may take a
+#.         long time on large sites. Please be patient.
+#.  <br/>
+#.         Your CMFMember instance is
+#.  <strong>
+#.   out of date
+#.  </strong>
+#.  . Click &quot;upgrade&quot; to bring this
+#.         CMFMember version up to date with your filesystem version.
+#. </p>
+msgid "description_cmfmember_migration"
+msgstr "Migrations perform a catalog and security update, this may take a long time on large sites. Please be patient. <br/> Your CMFMember instance is <strong>out of date</strong> . Click &quot;upgrade&quot; to bring this CMFMember version up to date with your filesystem version."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="documentDescription" i18n:translate="description_cmfmember_migration_overview">
+#.     Migration tool for CMFMember. You can migrate between versions of CMFMember and from Plone.
+#. </div>
+msgid "description_cmfmember_migration_overview"
+msgstr "Migration tool for CMFMember. You can migrate between versions of CMFMember and from Plone."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <span i18n:translate="description_deleted_members_orphan_content">
+#.           When members are deleted,the content they own may end up with an invalid owner.
+#. </span>
+msgid "description_deleted_members_orphan_content"
+msgstr "When members are deleted,the content they own may end up with an invalid owner."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="documentDescription" i18n:translate="description_import_view">
+#.     This view is intended for import with possibility to upload a csv file. For now we use a filesystem based one.
+#. </div>
+msgid "description_import_view"
+msgstr "This view is intended for import with possibility to upload a csv file. For now we use a filesystem based one."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <p i18n:translate="description_member_orphan_count" tal:define="mdcontents python:here.getMemberDataContents()[0];                        member_count mdcontents/member_count;                        orphan_count mdcontents/orphan_count;">
+#.           There are
+#.  ${member_count}
+#.   members and
+#.  ${orphan_count}
+#.   orphaned members (members with
+#.           missing User objects).
+#. </p>
+msgid "description_member_orphan_count"
+msgstr "There are ${member_count} members and ${orphan_count} orphaned members (members with missing User objects)."
+
+
+#: ../skins/cmfmember/pending.pt
+#. <p i18n:translate="description_pending_activation">
+#. As soon your registration is approved you will receive an email with instructions on how to activate your membership.
+#. </p>
+msgid "description_pending_activation"
+msgstr "As soon your registration is approved you will receive an email with instructions on how to activate your membership."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <span i18n:translate="descrition_delete_orphaned_content" tal:condition="python:here.orphanedContentDestination == 'delete'">
+#.           Click the button below to delete orphaned content.
+#. </span>
+msgid "descrition_delete_orphaned_content"
+msgstr "Click the button below to delete orphaned content."
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <span i18n:translate="descrition_orphan_take_ownership" tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+#.           Click the button below to take ownership of orphaned content.
+#. </span>
+msgid "descrition_orphan_take_ownership"
+msgstr "Click the button below to take ownership of orphaned content."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h2 i18n:translate="header_cmfmember_configlet_group_title" tal:content="group/title">
+#.  CMFMember Configlet Group Title
+#. </h2>
+msgid "header_cmfmember_configlet_group_title"
+msgstr "CMFMember Configlet Group Title"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h1 i18n:translate="heading_cmfmember_migration">
+#.  CMFMember migrations
+#. </h1>
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h1 i18n:translate="heading_cmfmember_migration">
+#.         CMFMember migration overview
+#. </h1>
+msgid "heading_cmfmember_migration"
+msgstr "CMFMember migrations"
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <h1 i18n:translate="heading_manage_orphans">
+#.  Manage orphans
+#. </h1>
+msgid "heading_manage_orphans"
+msgstr "Manage orphans"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_default_workflow">
+#.                 Choose the default Member Type and Workflow.
+#. </div>
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_default_workflow">
+#.                 Choose the default workflow for CMFMember.
+#. </div>
+msgid "help_default_workflow"
+msgstr "Choose the default Member Type and Workflow."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_dry_run">
+#.                 Print the result of the migration without actually writing anything to the database.
+#. </div>
+## 1 more: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+msgid "help_dry_run"
+msgstr "Print the result of the migration without actually writing anything to the database."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_import_from_csv">
+#.         Import from
+#.  <code>
+#.   /tmp/users.csv
+#.  </code>
+#.   and portraits from
+#.  <code>
+#.   /tmp/images/
+#.  </code>
+#.  . See source of CMFMember/setup/ImportSetup.py for more information.
+#. </div>
+msgid "help_import_from_csv"
+msgstr "Import from <code>/tmp/users.csv</code> and portraits from <code>/tmp/images/</code> . See source of CMFMember/setup/ImportSetup.py for more information."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_upgrade_from_cmfmember">
+#.         Please choose the CMFMember version you are upgrading from.
+#.         This will force the migration procedure from that version.
+#. </div>
+msgid "help_upgrade_from_cmfmember"
+msgstr "Please choose the CMFMember version you are upgrading from. This will force the migration procedure from that version."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <div class="formHelp" i18n:translate="help_upgrade_workflows">
+#.                 This will reinstall the CMFMember Workflows.
+#.  <strong>
+#.   Any changes
+#.                 that you have made to the CMFMember Workflows will be lost!
+#.  </strong>
+#.                 No changes will be made to any other Workflows that you may have created.
+#. </div>
+msgid "help_upgrade_workflows"
+msgstr "This will reinstall the CMFMember Workflows. <strong>Any changes that you have made to the CMFMember Workflows will be lost!</strong> No changes will be made to any other Workflows that you may have created."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_default_workflow">
+#.  Default Member and Workflow
+#. </label>
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_default_workflow">
+#.  Default Workflow
+#. </label>
+msgid "label_default_workflow"
+msgstr "Default Member and Workflow"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_dry_run">
+#.  Dry run
+#. </label>
+## 1 more: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+msgid "label_dry_run"
+msgstr "Dry run"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_import_from_csv">
+#.  Import from CSV
+#. </label>
+msgid "label_import_from_csv"
+msgstr "Import from CSV"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_upgrade_from">
+#.  Upgrade from
+#. </label>
+msgid "label_upgrade_from"
+msgstr "Upgrade from"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <label i18n:translate="label_upgrade_workflows">
+#.  Upgrade Workflows
+#. </label>
+msgid "label_upgrade_workflows"
+msgstr "Upgrade Workflows"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h2 i18n:translate="last_migration_log">
+#.  Last migration log
+#. </h2>
+msgid "last_migration_log"
+msgstr "Last migration log"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <legend i18n:translate="legen_normal_migration">
+#.  Normal migration
+#. </legend>
+msgid "legen_normal_migration"
+msgstr "Normal migration"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <legend i18n:translate="legend_filesystem_based_import">
+#.  Filesystem based import
+#. </legend>
+msgid "legend_filesystem_based_import"
+msgstr "Filesystem based import"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <legend i18n:translate="legend_forced_migration">
+#.  Forced migration
+#. </legend>
+msgid "legend_forced_migration"
+msgstr "Forced migration"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <h2 i18n:translate="member_type_versions">
+#.  Member type versions
+#. </h2>
+msgid "member_type_versions"
+msgstr "Member type versions"
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <strong i18n:translate="warning_cmfmember_migration">
+#.  Please ensure that
+#.         you have a backup of your site before performing migration.
+#. </strong>
+msgid "warning_cmfmember_migration"
+msgstr "Please ensure that you have a backup of your site before performing migration."
+
+
+
+
+#: Configlet Title
+msgid "CMFMember Import from CSV"
+msgstr ""
+
+
+
+
+#: Member.py
+#. LinesField/MultiSelectionWidget 'roles'
+msgid "help_select_member_role"
+msgstr "Select the security roles for this user."
+
+#: Member.py
+#. LinesField/MultiSelectionWidget 'groups'
+msgid "label_groups"
+msgstr "Indicate the groups to which this member belongs."
+
+#: Member.py
+#. LinesField/MultiSelectionWidget 'domains'
+msgid "label_member_domains"
+msgstr "Domains"
+msgid "help_member_domains"
+msgstr "If you would like to restrict this user to logging in only from certain domains, enter those domains here."
+
+#: MemberDataContainer.py
+#. DisplayList ORPHANED_VOCAB
+msgsid "Transfer ownership to the person who deletes the member."
+msgstr ""
+msgsid "Delete the content."
+msgstr ""
+
+#: MemberDataContainer.py
+#. StringField/ComputedWidget 'version'
+msgid "label_mdcontainer_version"
+msgstr "Version"
+msgid "help_mdcontainer_version"
+msgstr "Version of this instance."
+
+#: MemberDataContainer.py
+#. StringField/SelectionWidget 'typeName'
+msgid "label_default_member_type"
+msgstr "Default member type"
+msgid "help_default_member_type"
+msgstr "Choose default member type."
+
+#: MemberDataContainer.py
+#. LinesField/MultiSelectionWidget 'allowedMemberTypes'
+msgid "label_allowed_member_types"
+msgstr "Allowed member types"
+msgid "help_allowed_member_types"
+msgstr "Indicate the allowed member types."
+
+#: MemberDataContainer.py
+#. StringField/SelectionWidget 'orphanedContentDestination'
+msgid "label_mdcontainer_orphaned_content"
+msgstr "Orphaned content"
+msgid "help_mdcontainer_orphaned_content"
+msgstr "Indicate what should happen to a member's content when the member is deleted."
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <input i18n:attributes="value" name="widget" type="hidden" value="CMFMember Import Setup"/>
+msgid "CMFMember Import Setup"
+msgstr ""
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <input class="context" i18n:attributes="value" name="form.button.PruneOrphans" tabindex="" tal:attributes="tabindex tabindex/next;" type="submit" value="Delete orphans"/>
+msgid "Delete orphans"
+msgstr ""
+
+
+#: ../skins/cmfmember/manage_orphans.cpt
+#. <input class="context" i18n:attributes="value" name="form.button.HandleOrphanedContent" tabindex="" tal:attributes="tabindex tabindex/next;" type="submit" value="Fix content"/>
+msgid "Fix content"
+msgstr ""
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <input class="context" i18n:attributes="value" name="submit" type="submit" value="Force Upgrade"/>
+msgid "Force Upgrade"
+msgstr ""
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <input class="context" i18n:attributes="value" name="submit" type="submit" value="Import"/>
+msgid "Import"
+msgstr ""
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <input i18n:attributes="value" name="items:list" type="hidden" value="Import from CSV"/>
+msgid "Import from CSV"
+msgstr ""
+
+
+#: ../skins/cmfmember_ctrl/prefs_cmfmember_macros.pt
+#. <input class="context" i18n:attributes="value" name="submit" type="submit" value="Upgrade"/>
+msgid "Upgrade"
+msgstr ""

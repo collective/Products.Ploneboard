@@ -18,19 +18,18 @@
 """
 Programmatically creates a workflow type
 """
-__version__ = "$Revision: 1.7 $"[11:-2]
+__version__ = "$Revision: 1.8 $"[11:-2]
 
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
-
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 
 def setupMember_approval_workflow(wf):
     "..."
     wf.setProperties(title='Portal Member Workflow: Approval Required')
 
-    for s in ['disabled', 'new', 'private', 'pending', 'public']:
+    for s in ['disabled', 'new', 'new_private', 'private', 'pending', 'public']:
         wf.states.addState(s)
-    for t in ['enable_public', 'register_public', 'enable_pending', 'migrate', 'register_private', 'disable', 'register_wrapped_user', 'make_private', 'trigger', 'make_public', 'make_pending', 'enable_private']:
+    for t in ['enable_public', 'register_public', 'enable_pending', 'migrate', 'register_private', 'disable', 'register_wrapped_user', 'make_private', 'trigger', 'make_public', 'make_pending', 'enable_private', 'import_fail']:
         wf.transitions.addTransition(t)
     for v in ['action', 'time', 'comments', 'actor', 'review_history']:
         wf.variables.addVariable(v)
@@ -66,6 +65,18 @@ def setupMember_approval_workflow(wf):
     sdef.setPermission('Manage users', 0, ['Manager'])
     sdef.setPermission('View', 0, ['Anonymous', 'Manager'])
     sdef.setPermission('Modify portal content', 0, ['Anonymous', 'Manager'])
+    sdef.setPermission('Mail forgotten password', 0, ['Manager'])
+
+    sdef = wf.states['new_private']
+    sdef.setProperties(title="""Newly created member""",
+                       transitions=('auto_register', 'import_fail', 'migrate', 'register_wrapped_user', 'trigger'))
+    sdef.setPermission('CMFMember: Register member', 0, ['Manager'])
+    sdef.setPermission('CMFMember: Edit member id', 0, ['Manager'])
+    sdef.setPermission('Set own properties', 0, [ 'Manager'])
+    sdef.setPermission('Set own password', 0, [ 'Manager'])
+    sdef.setPermission('Manage users', 0, ['Manager'])
+    sdef.setPermission('View', 0, ['Manager'])
+    sdef.setPermission('Modify portal content', 0, ['Manager'])
     sdef.setPermission('Mail forgotten password', 0, ['Manager'])
 
     sdef = wf.states['private']
@@ -145,7 +156,7 @@ def setupMember_approval_workflow(wf):
     tdef = wf.transitions['migrate']
     tdef.setProperties(title="""Migrate from pre-1.0 CMF MemberData""",
                        new_state_id="""public""",
-                       trigger_type=2,
+                       trigger_type=1,
                        script_name="""""",
                        after_script_name="""makePublic""",
                        actbox_name="""Migrate from pre-1.0 CMF MemberData""",
@@ -248,6 +259,18 @@ def setupMember_approval_workflow(wf):
                        actbox_url="""""",
                        actbox_category="""workflow""",
                        props={'guard_expr': "python:getattr(here,'old_state',None) == 'private'", 'guard_permissions': 'Manage users'},
+                       )
+
+    tdef = wf.transitions['import_fail']
+    tdef.setProperties(title="""failed import""",
+                       new_state_id="""import_fail""",
+                       trigger_type=2,
+                       script_name="""""",
+                       after_script_name="""""",
+                       actbox_name="""import_fail""",
+                       actbox_url="""""",
+                       actbox_category="""workflow""",
+                       props={},
                        )
 
     ## State Variable

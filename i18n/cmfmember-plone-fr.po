@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CMFMember 1.0\n"
+"POT-Creation-Date: 2004-05-17 22:23+0000\n"
+"PO-Revision-Date: 2005-01-10 15:30+0002\n"
+"Last-Translator: David Convent <david.convent@zopeur.org>\n"
+"Language-Team: CMFMember Team nntp://news.gmane.org/gmane.comp.web.zope.plone.cmfmember\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
+
+
+
+# Action
+msgid "Manage orphans"
+msgstr "Gestion des orphelins"
+
+# Action
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+# Action
+msgid "Setups"
+msgstr "Configurations"
+
+# Action
+msgid "Migrations"
+msgstr ""
+
+# Configlet
+msgid "CMFMember control"
+msgstr "Panneau de contrôle de CMFMember"
+

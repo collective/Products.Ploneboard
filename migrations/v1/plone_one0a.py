@@ -172,19 +172,14 @@ def replaceTools(portal, custSchema, convert=1):
 
         mdct.global_allow = 0
 
-#        if hasattr(portal, 'portal_registration'):
-#            portal.manage_delObjects(['portal_registration'])
-#        addTool('CMFMember Registration Tool', None)
-#        out.append('Added CMFMember Registration tool')
-
         _migrateTool(portal, 'portal_registration',
                      'CMFMember Registration Tool',
                      ['_actions'])
         out.append('Migrated registration tool to CMFMember Registration tool')
-        _migrateTool(portal, 'portal_catalog',
-                     CatalogTool.meta_type,
-                     ['_actions', '_catalog'])
-        out.append('Migrated catalog to Member Catalog tool')
+        #_migrateTool(portal, 'portal_catalog',
+        #             CatalogTool.meta_type,
+        #             ['_actions', '_catalog'])
+        #out.append('Migrated catalog to Member Catalog tool')
 
         catalog = portal.portal_catalog
         catalog.addIndex('indexedUsersWithLocalRoles', 'KeywordIndex')

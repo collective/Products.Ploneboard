@@ -44,7 +44,27 @@ class MembershipTool( BaseTool ):
             member.setPortrait(portrait)
 
     def searchForMembers( self, REQUEST=None, **kw ):
-        """ """
+        """
+        here for backwards compatibility; member searching is better
+        accomplished using the member_catalog, which this ultimately
+        delegates to
+        """
+        if REQUEST:
+            param = REQUEST
+        else:
+            param = kw
+
+        # mapping from older lookup names to the indexes that exist
+        # in the member_catalog
+        key_map = {'name': 'getId',
+                   'email': 'getEmail',
+                   'roles': 'getFilteredRoles',
+                   'last_login_time': 'getLastLoginTime',
+                   }
+        for key in key_map:
+            if param.has_key(key):
+                param[key_map[key]] = param.pop(key)
+                
         memberdata_tool = getToolByName(self, 'portal_memberdata')
         return memberdata_tool.searchForMembers(REQUEST, **kw)
 

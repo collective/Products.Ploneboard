@@ -31,3 +31,11 @@ def registerMigrations():
     MigrationTool.registerUpgradePath('1.0 beta3',
                                       '1.0 beta4',
                                       null)
+
+    MigrationTool.registerUpgradePath('1.0 beta4',
+                                      '1.0 beta5',
+                                      null)
+
+    MigrationTool.registerUpgradePath('1.0beta5',
+                                      '1.1.0-CVS',
+                                      null)

@@ -3,16 +3,16 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from Testing import ZopeTestCase
-ZopeTestCase.installProduct('ZCatalog')
-ZopeTestCase.installProduct('CMFMember')
-ZopeTestCase.installProduct('PortalTransforms')
-ZopeTestCase.installProduct('Archetypes')
 
-from Products.CMFPlone.tests import PloneTestCase
-from Products.CMFPlone.tests.PloneTestCase import setupPloneSite as setupPloneSite
+from Products.CMFMember.config import PKG_NAME, DEPENDENCIES, Z_DEPENDENCIES
+
+[ ZopeTestCase.installProduct(x) for x in Z_DEPENDENCIES + DEPENDENCIES + [PKG_NAME] ]
+
+from ptc import *
+
 import Products.CMFPlone as CMFPlone
 import Products.CMFCore as CMFCore
-from Products.CMFMember.Extensions.Install import install as install_cmfmember
+
 from Products.CMFMember.MemberDataContainer import MemberDataContainer
 from Products.CMFMember.Member import Member
 from Products.CMFMember.Extensions.Install import install as install_cmfmember
@@ -25,7 +25,6 @@ usera = {'id':'a','password':'123', 'roles':('Member',),
          'domains':('127.0.0.1',), 'email':'A', 'fullname':'A Fuler'}
 userb = {'id':'b', 'password':'456', 'roles':('Member','Reviewer',),
          'domains':(), 'email':'B', 'fullname':'B Fuler'}
-
 
 from Products.CMFMember.utils import TYPESMAP
 
@@ -62,7 +61,22 @@ prop_data = tuple(\
     )
 
 propName = lambda proptype: '%s_prop' % string.join(proptype.split(), '_')
-class TestMigration( PloneTestCase.PloneTestCase ):
+
+optimize()
+
+portal_id="p2"
+app = ZopeTestCase.app()
+setupPloneSite(app, id="p2")
+ZopeTestCase.close(app)
+
+class TestMigration( PloneTestCase ):
+
+    def afterSetUp( self ):
+        self.loginPortalOwner()
+
+    def getPortal(self):
+        """ overides setup method to use our new portal """
+        return self.app[portal_id]
 
     def testMigrationPlone2CMFMemberCustomMData(self):
         # Tests migration from Plone to CMFMember w/ custom member data
@@ -248,8 +262,6 @@ class TestMigration( PloneTestCase.PloneTestCase ):
         self.assertEqual(a_props.keys(), a_props.values())
         self.assertEqual(b_props.keys(), b_props.values())        
 
-    def afterSetUp( self ):
-        self.loginPortalOwner()
 
     def makeMembers(self):
         membership_tool = self.portal.portal_membership

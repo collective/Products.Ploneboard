@@ -33,8 +33,8 @@ def addWorkflowScripts(wf):
         wf.scripts.manage_addProduct['ExternalMethod'].manage_addExternalMethod('enable', 'Make a Member profile private', 'CMFMember.Workflow', 'makePrivate')
     
 
-def setupWorkflow(portal, out, force_reinstall=None):
-    wf_tool=portal.portal_workflow
+def setupWorkflow(context, out, force_reinstall=None):
+    wf_tool=getToolByName(context, 'portal_workflow')
     
     workflows = { 'member_approval_workflow' : 'member_approval_workflow (Portal Member Workflow: Approval Required)',
                   'member_auto_workflow'     : 'member_auto_workflow (Portal Member Workflow: Automatic Approval)' }
@@ -48,8 +48,16 @@ def setupWorkflow(portal, out, force_reinstall=None):
             wf_tool.manage_addWorkflow( workflows[wf],
                                         wf)
             addWorkflowScripts(wf_tool[wf])
-
+    
+    wf_tool.setChainForPortalTypes(('ControlTool',), '')
     wf_tool.updateRoleMappings()
+    wf_tool.setChainForPortalTypes(('MemberDataContainer',), 'folder_workflow')
+
+    # NOTE: updateRoleMappings is called later, during SetupMember
+    # We need to do the updateRoleMappings only once after all workflows
+    # have been set because otherwise the empty one (i.e ControlTool) are
+    # reseted to (Default)
+
 
 # Transitions that need to be executed in order to move to a particular
 # workflow state

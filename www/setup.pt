@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <span tal:replace="structure here/manage_tabs" />
+
+    <div tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+                     groups python:controlPanel.getGroups('cmfmember');">
+
+      <span metal:use-macro="here/prefs_cmfmember_macros/macros/setup_content" />
+
+    </div>
+
+  </body>
+</html>

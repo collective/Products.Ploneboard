@@ -20,10 +20,14 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.PortalFolder import PortalFolder
-from Products.CMFMember import PKG_NAME
-from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
+
 from Products.CMFMember.Member import Member
+from Products.CMFMember.MemberPermissions import ADD_MEMBER_PERMISSION
 from Products.CMFMember.utils import logException, changeOwnership
+from Products.CMFMember.Extensions.Workflow import triggerAutomaticTransitions
+
+from config import DEFAULT_TYPE, PKG_NAME
+
 from DateTime import DateTime
 import string
 
@@ -36,6 +40,11 @@ expose_var_schema = 0
 
 _marker = []
 
+ORPHANED_VOCAB = DisplayList((
+    ('transfer_to_current', 'Transfer ownership to the person who deletes the member.'),
+    ('delete', 'Delete the content.')
+    ))
+
 schema = BaseFolderSchema + Schema((
          TextField('description',
               default_content_type = 'text/plain',
@@ -43,33 +52,60 @@ schema = BaseFolderSchema + Schema((
               widget = TextAreaWidget(rows = 5)),
 
          StringField('version',
-                     widget = ComputedWidget(description = "Version of this instance.",
-                                             label = "Version")),
+                     widget = ComputedWidget(
+                          label='Version',
+                          label_msgid='label_mdcontainer_version',
+                          description="Version of this instance.",
+                          description_msgid='help_mdcontainer_version',
+                          i18n_domain='cmfmember',
+                          ),
+                     ),
+
          StringField('typeName',
-                     default = 'Member',
+                     default = DEFAULT_TYPE,
                      vocabulary = '_vocabAllowedMemberTypes',
                      read_permission = CMFCorePermissions.View,
                      accessor = 'getTypeName',
                      mutator = 'setDefaultType',
-                     widget = SelectionWidget(description = "Choose default member type.",
-                                              label = "Default member type")),
+                     widget = SelectionWidget(
+                          label='Default member type',
+                          label_msgid='label_default_member_type',
+                          description="Choose default member type.",
+                          description_msgid='help_default_member_type',
+                          i18n_domain='cmfmember',
+                          ),
+                     ),
+
          LinesField('allowedMemberTypes',
-                    default = ('Member',),
+                    default = (DEFAULT_TYPE,), ###DWM unnecessary?
                     mode='rw',
                     searchable = 0,
                     vocabulary = 'all_type_names',
                     enforceVocabulary=1,
-                    widget = MultiSelectionWidget(label = 'Allowed member types',
-                                                  description = 'Indicate the allowed member types')),
+                    accessor='getAllowedMemberTypes',
+                    mutator='setAllowedMemberTypes',
+                    widget = MultiSelectionWidget(
+                          label='Allowed member types',
+                          label_msgid='label_allowed_member_types',
+                          description="Indicate the allowed member types.",
+                          description_msgid='help_allowed_member_types',
+                          i18n_domain='cmfmember',
+                          ),
+                    ),
+
          StringField('orphanedContentDestination',
-                    vocabulary=DisplayList([('transfer_to_current', 'Transfer ownership to the person who deletes the member.'), ('delete', 'Delete the content.')]),
+                    vocabulary=ORPHANED_VOCAB,
                     required=1,
                     default='transfer_to_current',
                     searchable=0,
                     enforceVocabulary=1,
                     widget=SelectionWidget(format='flex',
-                                           label='Orphaned content',
-                                           description='Indicate what should happen to a member\'s content when the member is deleted.',)
+                          label='Orphaned content',
+                          label_msgid='label_mdcontainer_orphaned_content',
+                          description="Indicate what should happen to a member's content when the member is deleted.",
+                          description_msgid='help_mdcontainer_orphaned_content',
+                          i18n_domain='cmfmember',
+                          ),
                     ),
          ))
 
@@ -88,7 +124,7 @@ class MemberDataContainer(BaseBTreeFolder):
 
     schema = schema
     filter_content_types = 1
-    allowed_content_types = ['Member']
+    allowed_content_types = [DEFAULT_TYPE]
 
     security=ClassSecurityInfo()
 
@@ -99,7 +135,6 @@ class MemberDataContainer(BaseBTreeFolder):
     global_allow = 0
 
     _defaultMember = None
-    defaultMemberSchema = Member.schema
     _instanceVersion = ''
 
     actions = (
@@ -126,6 +161,16 @@ class MemberDataContainer(BaseBTreeFolder):
         security.declareProtected(CMFCorePermissions.ManageProperties, 'schemaForm')
         schemaForm = DTMLFile('dtml/schemaForm',globals())
 
+
+    def manage_afterAdd(self, item, container):
+        """
+        have to set the default member type here instead of at the
+        class level b/c we need a context to access the tools to get
+        at all of the info we need
+        """
+        BaseBTreeFolder.manage_afterAdd(self, item, container)
+        self.setDefaultType(DEFAULT_TYPE)
+        
     # Methods: wrapUser, getMemberDataContents and pruneMemberDataContents
     # Implementation of CMFCore.interfaces.portal_memberdata.portal_memberdata
     security.declarePrivate('wrapUser')
@@ -169,7 +214,7 @@ class MemberDataContainer(BaseBTreeFolder):
         The result is designed to be iterated over in a dtml-in
         """
 
-        members = self.objectValues()
+        members = self.objectValues(spec=self.getAllowedMemberTypes())
         oc = 0
         member_ids = []
         for member in members:
@@ -190,8 +235,7 @@ class MemberDataContainer(BaseBTreeFolder):
         The impl can override the pruneOrphan(id) method to do things
         like manage its workflow state. The default impl will remove.
         """
-
-        members = self.objectValues()
+        members = self.objectValues(spec=self.getAllowedMemberTypes())
         for member in members:
             if member.isOrphan():
                 self.pruneOrphan(member.getUserName())
@@ -399,51 +443,43 @@ class MemberDataContainer(BaseBTreeFolder):
             self._defaultMember.unindexObject()
         return self._defaultMember
 
-
     ## Folderish Methods
-
-#     security.declareProtected(CMFCorePermissions.AddPortalContent, 'invokeFactory')
-#     def invokeFactory( self
-#                      , type_name
-#                      , id
-#                      , RESPONSE=None
-#                      , *args
-#                      , **kw
-#                      ):
-#         """
-#         Overriding invokeFactory to be able to have different Member types per
-#         instance base. We do a change in the portal_types.MemberDataContainer's
-#         allowed content types before we add a new member. After the creation we
-#         change to default value.
-#         """
-#         portal_types = getToolByName(self, 'portal_types')
-#         type_info = portal_types.getTypeInfo('MemberDataContainer')
-#         old_content_types = type_info.allowed_content_types
-#         type_info.allowed_content_types = self.getAllowedMemberTypes()
-#         new_id = BaseBTreeFolder.invokeFactory(self, type_name, id, RESPONSE, *args, **kw)
-#         type_info.allowed_content_types = old_content_types
-#         return new_id
-
+    security.declareProtected(ADD_MEMBER_PERMISSION, 'invokeFactory')
     def allowedContentTypes(self):
         """
-        Returns a list of TypeInfo objects for the specified types in
-        allowedMemberTypes. This method is used to get a list of addable
-        objects in i.e. Plone.
+        List type info objects for types which can be added in
+        this folder.  Override the default in PortalFolder to make
+        sure that all allowed member types are included in case the
+        allowed types and the allowed member types are not in sync.
         """
-        result = []
         portal_types = getToolByName(self, 'portal_types')
-        for contentType in self.getAllowedMemberTypes():
-            result.append(portal_types.getTypeInfo(contentType))
-        return result
+        myType = portal_types.getTypeInfo(self)
 
-    # Removed since we now can control allowed content types per instance
-    # It could and should be use when the in & out widget is available to
+        if myType is not None:
+            result = {}
+            for contentType in portal_types.listTypeInfo(self):
+                typeId = contentType.getId()
+                if myType.allowType( typeId ):
+                    result[typeId] = contentType
+                    
+            for contentType in self.getAllowedMemberTypes():
+                if not result.has_key(contentType):
+                    result[contentType] = portal_types.getTypeInfo(contentType)
+            result = result.values()
+        else:
+            result = portal_types.listTypeInfo()
+
+        return filter( lambda typ, container=self:
+                         typ and typ.isConstructionAllowed( container )
+                       , result )
+
+    # Removed since we now can control allowed content types per instance.
+    # It could and should be used when the in & out widget is available to
     # populate vocabulary for allowed content types.
     def all_type_names(self):
         """
         Get vocabulary for allowed member types
         """
-
         return getToolByName(self, 'cmfmember_control').getAvailableMemberTypes()
 
     def filtered_meta_types(self, user=None):
@@ -475,8 +511,10 @@ class MemberDataContainer(BaseBTreeFolder):
         BaseBTreeFolder._checkId(self, id, allow_dup)
 
 
-    # register type type of Member object that the MemberDataConatiner will store
-    def registerType(self, new_type_name, default=1):
+    # register type type of Member object
+    # that the MemberDataConatiner will store
+    def registerType(self, new_type_name, default=False):
+        ### DWM: add implementation check
         if default:
             self.setDefaultType(new_type_name)
         typestool=getToolByName(self, 'portal_types')
@@ -485,15 +523,6 @@ class MemberDataContainer(BaseBTreeFolder):
             act = act + (new_type_name,)
         typestool.MemberDataContainer.allowed_content_types = act
 
-
-    def setDefaultType(self, type_name):
-        self.typeName = type_name
-        t_tool = getToolByName(self, 'portal_types')
-        at_tool = getToolByName(self, 'archetype_tool')
-        type_info = t_tool.getTypeInfo(type_name)
-        pkg = type_info.product
-        self.defaultMemberSchema = at_tool.lookupType(pkg, type_name)['schema']
-        self._defaultMember = None # nuke the default member (which was of the old Member type)
 
     # Migrate members when changing member type
     # 1) rename old member to some temp name
@@ -535,6 +564,7 @@ class MemberDataContainer(BaseBTreeFolder):
                 workflow_tool.doActionFor(new_member, t)
 
             self.manage_delObjects(temp_id)
+            
         from Products.CMFMember.Extensions.Install import setupNavigation
         setupNavigation(self, out, new_type_name)
 
@@ -572,6 +602,7 @@ class MemberDataContainer(BaseBTreeFolder):
         """
         member_schema=member_schema.strip().replace('\r','')
         schema=eval(member_schema)
+        self._custom_schema = schema
         self.memberSchema=self.defaultMemberSchema + schema
         self.member_schema=member_schema
 
@@ -579,35 +610,70 @@ class MemberDataContainer(BaseBTreeFolder):
             REQUEST.RESPONSE.redirect(REQUEST['HTTP_REFERER'])
 
     security.declareProtected(CMFCorePermissions.View,
+                              'getCustomSchema')
+    def getCustomSchema(self):
+        """
+        Returns only the custom part of the schema that was passed
+        in to the setMemberSchema method, if any.
+        """
+        return getattr(self, '_custom_schema', None)
+
+    security.declareProtected(CMFCorePermissions.View,
                               'getMemberSchema')
     def getMemberSchema(self):
         """
         Returns acquisition wrapped member schema.
+
+        future: add args to return a particular types schema
         """
-        schema = getattr(self,'memberSchema',self.defaultMemberSchema )
+        schema = getattr(self, 'memberSchema', self.defaultMemberSchema )
         schema = ImplicitAcquisitionWrapper(schema, self)
         return schema
 
     # AT methods
+    def setDefaultType(self, type_name, **kw):
+        """ Overide so we can set appropriate schema info for new
+        type and blank default member """
+        self.schema['typeName'].set(self, type_name, **kw)
+        self.setAllowedMemberTypes( filter( lambda x: x != type_name, \
+                                           self.getAllowedMemberTypes()) + (type_name,))
+        
+        t_tool = getToolByName(self, 'portal_types')
+        at_tool = getToolByName(self, 'archetype_tool')
+        type_info = t_tool.getTypeInfo(type_name)
+        pkg = type_info.product
+        self.defaultMemberSchema = at_tool.lookupType(pkg, type_name)['schema']
+        self._defaultMember = None # nuke the default member (which was of the old Member type)
+        
     def setAllowedMemberTypes(self, memberTypes, **kwargs):
         """
         Overriding default mutator since TypesTool checks the
         variable allowed_content_types directly.  No checking
         for whether types are real, proper, etc.
         """
-
-
-        self.allowed_content_types = memberTypes
+        for item in memberTypes:
+            if not item:
+                memberTypes.remove(item)
+        
         field=self.Schema()['allowedMemberTypes']
         field.set(self, memberTypes, **kwargs)
 
         type_tool = getToolByName(self, 'portal_types')
-        
+
         mdc = type_tool.getTypeInfo(self)
-        mdc.manage_changeProperties(allowed_content_types=memberTypes)
+        allowedMemberTypes=self.all_type_names()
+        allowed_content_types=[]
+
+        for item in mdc.allowed_content_types:
+            if item not in allowedMemberTypes:
+                allowed_content_types.append(item)
+        allowed_content_types.extend(memberTypes)
+        mdc.allowed_content_types=tuple(allowed_content_types)
+        self.allowed_content_types = allowed_content_types
 
     def _vocabAllowedMemberTypes(self):
         return self.getAllowedMemberTypes()
+
 
 # Put this outside the MemberData tool so that it can be used for
 # conversion of old MemberData during installation

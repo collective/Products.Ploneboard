@@ -1,0 +1,254 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    i18n:domain="cmfmember">
+
+<div metal:define-macro="migration_forms">
+    <h1 i18n:translate="heading_cmfmember_migration">CMFMember migrations</h1>
+
+    <p>
+        <strong i18n:translate="cmfmember_versions_instance">Instance version:</strong>
+        <tal:block tal:replace="here/getInstanceVersion"/><br />
+        <strong i18n:translate="cmfmember_versions_filesystem">File system version:</strong>
+        <tal:block tal:replace="here/getFileSystemVersion"/><br />
+    </p>
+
+    <div class="portalMessage"
+        tal:condition="not: here/needUpgrading" i18n:translate="cmfmember_up_to_date">
+        <tal:block replace="structure here/info.gif"/>
+        Your CMFMember instance is up to date.
+    </div>
+
+    <tal:block tal:condition="here/needUpgrading">
+    <div class="portalMessage">
+        <strong i18n:translate="warning_cmfmember_migration">Please ensure that
+        you have a backup of your site before performing migration.</strong>
+    </div>
+
+    <p i18n:translate="description_cmfmember_migration">
+        Migrations perform a catalog and security update, this may take a 
+        long time on large sites. Please be patient.<br />
+        Your CMFMember instance is <strong>out of date</strong>. Click "upgrade" to bring this 
+        CMFMember version up to date with your filesystem version.
+    </p>
+    <form action="upgrade" method="post">
+    <fieldset>
+        <legend i18n:translate="legen_normal_migration">Normal migration</legend>
+
+        <div class="field">
+            <input name="dry_run" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+            <label i18n:translate="label_dry_run">Dry run</label>
+            
+            <div i18n:translate="help_dry_run"
+                class="formHelp">
+                Print the result of the migration without actually writing anything to the database.
+            </div>
+        </div>
+        
+        <div class="field">
+            <input name="upgrade_workflows" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+            <label i18n:translate="label_upgrade_workflows">Upgrade Workflows</label>
+            <div i18n:translate="help_upgrade_workflows"
+                class="formHelp">
+                This will reinstall the CMFMember Workflows. <strong>Any changes 
+                that you have made to the CMFMember Workflows will be lost!</strong>  
+                No changes will be made to any other Workflows that you may have created.
+            </div>
+            
+        </div>
+        
+        <div class="field" 
+            tal:condition="here/getAvailableMemberTypes">
+        <label i18n:translate="label_default_workflow">Default Member and Workflow</label>
+            <div i18n:translate="help_default_workflow"
+                class="formHelp">
+                Choose the default Member Type and Workflow.
+            </div>
+            <select name="default_member_type"
+                    tal:define="defaultMemberType here/getDefaultMemberType">
+            <tal:block tal:repeat="wf here/getAvailableMemberTypes">
+                <option tal:content="wf"
+                        tal:condition="python:test(not wf == defaultMemberType)">Member Type</option>
+                <option tal:content="wf" selected="selected"
+                        tal:condition="python:test(wf == defaultMemberType)">Selected Member Type</option>
+
+            </tal:block>
+            </select>
+            <select name="default_workflow"
+                    tal:define="currentMemberWorkflow here/getCurrentMemberWorkflow">
+            <tal:block tal:repeat="wf here/getAvailableMemberWorkflows">
+                <option tal:content="wf"
+                        tal:condition="python:test(not wf == currentMemberWorkflow)">Workflow</option>
+                <option tal:content="wf" selected="selected"
+                        tal:condition="python:test(wf == currentMemberWorkflow)">Selected Workflow</option>
+            </tal:block>
+            </select>
+        </div>
+        
+        <div class="field"
+            tal:condition="not: here/getAvailableMemberTypes|nothing">
+        <label i18n:translate="label_default_workflow">Default Workflow</label>
+            <div i18n:translate="help_default_workflow"
+                class="formHelp">
+                Choose the default workflow for CMFMember.
+            </div>
+            <select name="default_workflow">
+            <tal:block tal:repeat="wf here/avialableMemberWorkflows|nothing">
+                <option tal:content="wf">Workflow</option>
+            </tal:block>
+            </select>
+        </div>
+        
+        <div class="formControls">
+        <input class="context" 
+            type="submit" 
+            name="submit" 
+            i18n:attributes="value" 
+            value="Upgrade"/>
+        </div>
+    </fieldset>
+    </form>
+    
+    <form action="upgrade">
+    <fieldset>
+        <legend i18n:translate="legend_forced_migration">Forced migration</legend>
+        <div class="field">
+        <label i18n:translate="label_upgrade_from">Upgrade from</label>
+
+            <div i18n:translate="help_upgrade_from_cmfmember"
+                class="formHelp">
+        Please choose the CMFMember version you are upgrading from.
+        This will force the migration procedure from that version. 
+            </div>
+    <select name="force_instance_version">
+            <tal:block tal:repeat="ver here/knownVersions">
+            <option tal:content="ver">version</option>
+        </tal:block>
+    </select>
+        </div>
+
+        <div class="field">
+            <input name="dry_run" type="checkbox" value="1:int" checked="checked" class="noborder"/>
+            <label i18n:translate="label_dry_run">Dry run</label>
+
+            <div i18n:translate="help_dry_run"
+                class="formHelp">
+              Print the result of the migration without actually writing anything to the database.
+            </div>
+        </div>
+        <div class="formControls">
+    <input class="context" 
+                type="submit" 
+                name="submit"
+                i18n:attributes="value"
+                value="Force Upgrade"/>
+        </div>
+    </fieldset>
+    </form>
+    </tal:block>
+
+    <tal:block tal:condition="here/getLog|nothing">
+        <h2 i18n:translate="last_migration_log">Last migration log</h2>
+        <ul>
+            <tal:block tal:repeat="msg here/getLog">
+                <li tal:content="python:msg[0]">result message</li>
+            </tal:block>
+        </ul>
+    </tal:block>
+</div>
+
+
+
+<div metal:define-macro="migration_overview_content">
+    <h1 i18n:translate="heading_cmfmember_migration">
+        CMFMember migration overview
+    </h1>
+
+    <div class="documentDescription"
+        i18n:translate="description_cmfmember_migration_overview">
+    Migration tool for CMFMember. You can migrate between versions of CMFMember and from Plone.
+    </div>
+
+    <h2 i18n:translate="cmfmember_core_information">Core information</h2>
+    <ul tal:define="values here/coreVersionsList">
+    <tal:block tal:repeat="value values">
+        <li tal:define="key python:value[0];
+                    ver python:value[1]"
+        tal:content="string: ${key}: ${ver} ">core versions</li>
+    </tal:block>
+    </ul>
+
+    <h2 i18n:translate="member_type_versions">Member type versions</h2>
+    <ul tal:define="values here/getMemberTypesFileSystemVersion">
+    <tal:block tal:repeat="value values">
+        <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
+    </tal:block>
+    </ul>
+</div>
+
+
+
+
+<div metal:define-macro="import_form">
+    <div class="documentDescription" i18n:translate="description_import_view">
+    This view is intended for import with possibility to upload a csv file. For now we use a filesystem based one.
+    </div>
+    
+    <form action="installItems" method="post">
+            <input type="hidden" name="widget" value="CMFMember Import Setup" i18n:attributes="value"/>
+    <fieldset>
+        <legend i18n:translate="legend_filesystem_based_import">Filesystem based import</legend>
+        <div class="field">
+        <label i18n:translate="label_import_from_csv">Import from CSV</label>
+
+            <div i18n:translate="help_import_from_csv"
+                class="formHelp">
+        Import from <code>/tmp/users.csv</code> and portraits from <code>/tmp/images/</code>. See source of CMFMember/setup/ImportSetup.py for more information.
+            </div>
+            <input name="items:list" type="hidden" value="Import from CSV" i18n:attributes="value" />         
+        </div>
+
+        <div class="formControls">
+    <input class="context" 
+                type="submit" 
+                name="submit"
+                i18n:attributes="value"                 
+                value="Import"/>
+        </div>
+    </fieldset>
+    </form>
+</div>
+
+
+
+<div metal:define-macro="setup_content">
+    <tal:block tal:repeat="group groups">
+        <h2 tal:content="group/title"
+            i18n:translate="header_cmfmember_configlet_group_title">CMFMember Configlet Group Title</h2>
+
+        <ul class="configlets" tal:define="configlets python:controlPanel.enumConfiglets(group=group['id'])">
+
+            <li tal:repeat="configlet configlets">
+                <a href=""
+                tal:attributes="href configlet/url"
+                tal:condition="configlet/visible">
+                    <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);
+                                        alt configlet/description"
+                        i18n:attributes="alt"
+                        tal:on-error="string:" />
+                <tal:configletname tal:content="configlet/name"
+                                i18n:translate=""></tal:configletname>
+                </a>
+            </li>
+
+            <li tal:condition="not:configlets"
+                i18n:domain="plone"
+                i18n:translate="label_no_panels_available">
+                No Preference Panels available.
+            </li>
+
+        </ul>
+    </tal:block>
+</div>
+
+
+</html>

@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.12 2004/12/15 21:57:21 rafrombrc Exp $
+$Id: ControlTool.py,v 1.13 2005/01/29 10:51:56 rafrombrc Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -19,10 +19,13 @@ from Products.CMFCore.PortalContent import PortalContent
 from Products.CMFCore.utils import UniqueObject, getToolByName
 from Products.CMFCore.CMFCorePermissions import ManagePortal
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.interfaces.portal_memberdata import MemberData \
+     as IMemberData
 
 from Products.CMFMember.Extensions.Workflow import setupWorkflow
-from Products.CMFMember.MemberDataContainer import getMemberFactory
+from Products.CMFMember.MemberDataContainer import getMemberFactory, MemberDataContainer
 import Products.CMFMember as CMFMember
+from config import DEFAULT_TYPE
 
 import zLOG
 import traceback
@@ -95,18 +98,23 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     manage_options = (
         { 'label' : 'Overview', 'action' : 'manage_overview' },
         { 'label' : 'Migrate', 'action' : 'manage_migrate' },
+        { 'label' : 'Import', 'action' : 'manage_import' },
         { 'label' : 'Setup', 'action' : 'manage_setup' }, ) + ActionProviderBase.manage_options
 
 
     security = ClassSecurityInfo()
 
-    #security.declareProtected(ManagePortal, 'manage_overview')
-    #security.declareProtected(ManagePortal, 'manage_migrate')
-    #security.declareProtected(ManagePortal, 'manage_setup')
+    security.declareProtected(ManagePortal, 'manage_overview')
+    security.declareProtected(ManagePortal, 'manage_migrate')
+    security.declareProtected(ManagePortal, 'manage_import')
 
-    #manage_migrate = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration.pt', globals())
-    #manage_overview = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_migration_overview.pt', globals())
-    #manage_setup = PageTemplateFile('skins/cmfmember_ctrl/prefs_cmfmember_setup.pt', globals())
+    import os
+    _www = os.path.join(os.path.dirname(__file__), 'www')
+
+    manage_import = PageTemplateFile('import.pt', _www)
+    manage_migrate = PageTemplateFile('migration.pt',_www)
+    manage_overview = PageTemplateFile('migration_overview.pt', _www)
+    manage_setup = PageTemplateFile('setup.pt', _www)
 
     version = ''
     
@@ -122,7 +130,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     # Add a visual note
     def om_icons(self):
         icons = ({
-                    'path':'misc_/CMFPlone/tool.gif',
+                    'path':'misc_/CMFMember/cmfmember_control_icon.png',
                     'alt':self.meta_type,
                     'title':self.meta_type,
                  },)
@@ -168,43 +176,58 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
     security.declareProtected(ManagePortal, 'setInstanceVersion')
     def setInstanceVersion(self, version):
-        """ The version this instance of plone is on """
+        """ The version this instance of Plone is on """
         self.version = version
 
     security.declareProtected(ManagePortal, 'knownVersions')
     def knownVersions(self):
-        """ All known version ids, except current one """
+        """ All known version IDs, except current one """
         return _upgradePaths.keys()
 
     def knowMemberMigrations(self):
         """ All known member migrations """
         return _memberPaths
-        
     
     security.declareProtected(ManagePortal, 'getDefaultMemberType')
     def getDefaultMemberType(self):
         """ Return default member type set in the migration form or from the MemberDataContainer. """
-        return self.default_member_type
+        mdc = getToolByName(self, 'portal_memberdata')
+        if mdc.meta_type == MemberDataContainer.meta_type:
+            typename = mdc.getTypeName()
+        else:
+            typename = DEFAULT_TYPE
+        return typename
         
     security.declareProtected(ManagePortal, 'getAvailableMemberTypes')
     def getAvailableMemberTypes(self):
         """ Return available member types. Used in migration. """
-        return getToolByName(self, 'portal_types').listContentTypes()
+        at_tool = getToolByName(self, 'archetype_tool')
+        return [ klass.portal_type for klass in at_tool.listTypes()\
+                 if IMemberData.isImplementedByInstancesOf(klass) ]
+
+    security.declareProtected(ManagePortal, 'getCurrentMemberWorkflow')
+    def getCurrentMemberWorkflow(self):
+        """ Return the workflow associated with the current default member type."""
+        def_mem_type = self.getDefaultMemberType()
+        chain = getToolByName(self, 'portal_workflow').getChainFor(def_mem_type)
+        if chain:
+            return chain[0]
+        else:
+            return ''
 
     security.declareProtected(ManagePortal, 'getAvailableWorkflows')
     def getAvailableMemberWorkflows(self):
         """ Return available workflows. Used to define default workflow. """
         return getToolByName(self, 'portal_workflow').objectIds()
 
-
     security.declareProtected(ManagePortal, 'getFileSystemVersion')
     def getFileSystemVersion(self):
-        """ The version this instance of plone is on """
+        """ The version this instance of Plone is on """
         return self.Control_Panel.Products.CMFMember.version.lower()
 
     security.declareProtected(ManagePortal, 'getMemberTypesFileSystemVersion')
     def getMemberTypesFileSystemVersion(self):
-        """ The version this instance of plone is on """
+        """ The version this instance of Plone is on """
         portal = getToolByName(self, 'portal_url')
         memberdata_tool = portal.portal_memberdata
         vars = {}
@@ -334,7 +357,9 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
     ##############################################################
 
     security.declareProtected(ManagePortal, 'upgrade')
-    def upgrade(self, REQUEST=None, dry_run=None, swallow_errors=1, default_member_type='Member', default_workflow=None, upgrade_workflows=False):
+    def upgrade( self, REQUEST=None, dry_run=None, swallow_errors=1,
+                 default_member_type=DEFAULT_TYPE, default_workflow=None,
+                 upgrade_workflows=False):
         """ perform the upgrade """
         
         # keep it simple
@@ -345,8 +370,6 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
             setupWorkflow(getToolByName(self, 'portal_url'), out, force_reinstall=True)
             out.append(('Workflows reinstalled', zLOG.INFO))
 
-        self.default_member_type = default_member_type
-        
         # Set the default workflow for the selected default member type
         if default_workflow:
             wf_tool = getToolByName(self, 'portal_workflow')
@@ -366,6 +389,17 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
 
         out.append(("Starting the migration from "
                     "version: %s" % newv, zLOG.INFO))
+
+        # reinstall the CMFMember product, if necessary
+        qi_tool = getToolByName(self, 'portal_quickinstaller')
+        inst_vers = [prod['installedVersion'] \
+                     for prod in qi_tool.listInstalledProducts() \
+                     if prod['id'] == 'CMFMember']
+        fs_vers = qi_tool.getProductVersion('CMFMember')
+    
+        if len(inst_vers) and inst_vers[0] != fs_vers:
+            out.append(('Reinstalling CMFMember Product', zLOG.INFO))
+            qi_tool.reinstallProducts(['CMFMember'])
 
         while newv is not None:
             out.append(("Attempting to upgrade from: %s" % newv, zLOG.INFO))
@@ -416,6 +450,11 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
                         "current version"), zLOG.PROBLEM))
             out.append(("Migration has failed", zLOG.PROBLEM))
         else:
+            mdc = getToolByName(self, 'portal_memberdata')
+            if default_member_type != mdc.getTypeName():
+                mdc.setDefaultType(default_member_type)
+                out.append((('Set new default type for registration: %s' %default_member_type), zLOG.INFO))
+        
             out.append((("Your ZODB and Filesystem Plone "
                          "instances are now up-to-date."), zLOG.INFO))
 
@@ -471,7 +510,7 @@ class ControlTool( UniqueObject, BaseBTreeFolder):
             raise 'You must be in a Plone site to migrate.'
 
     def _upgrade(self, version):
-        version = version.lower()
+        version = version.lower().strip()
         if not _upgradePaths.has_key(version):
             return None, ("No upgrade path found from %s" % version,)
 

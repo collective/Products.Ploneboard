@@ -4,61 +4,34 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"      
-      i18n:domain="plone"
+      i18n:domain="cmfmember"
       metal:use-macro="here/prefs_main_template/macros/master">
-      
-<body>
+  
+  <body>
 
-   <div metal:fill-slot="prefs_configlet_main"
-      tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
-                  groups python:controlPanel.getGroups('cmfmember');
-                  getIconFor nocall:putils/getIconFor">
+    <div metal:fill-slot="prefs_configlet_main"
+         tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+                     groups python:controlPanel.getGroups('cmfmember');
+                     getIconFor nocall:putils/getIconFor">
 
- <div class="configlet">
- <div class="documentEditable">    
+      <div class="configlet">
+        <div class="documentEditable">    
+          <div metal:use-macro="here/global_contentviews/macros/content_views">
+            The content views (View, Edit, Properties, Workflow)
+          </div>
 
-    <div metal:use-macro="here/global_contentviews/macros/content_views">
-                      The content views (View, Edit, Properties, Workflow)
-    </div>
+          <div metal:use-macro="here/global_contentviews/macros/content_actions">
+            The content bar
+          </div>
 
-    <div metal:use-macro="here/global_contentviews/macros/content_actions">
-                      The content bar
-    </div>
+          <div class="documentContent">
 
-    <div class="documentContent">
+            <span metal:use-macro="here/prefs_cmfmember_macros/macros/setup_content" />
 
+          </div>
+        </div>
+      </div>
+    </div>   
 
-    <tal:block tal:repeat="group groups">
-
-        <h2 tal:content="group/title"
-            i18n:translate="header_cmfmember_configlet_group_title">CMFMember Configlet Group Title</h2>
-
-        <ul class="configlets" tal:define="configlets python:controlPanel.enumConfiglets(group=group['id'])">
-
-            <li tal:repeat="configlet configlets">
-                <a href=""
-                   tal:attributes="href configlet/url"
-                   tal:condition="configlet/visible">
-                    <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);
-                                         alt configlet/description"
-                         i18n:attributes="alt"
-                         tal:on-error="string:" />
-                <tal:configletname tal:content="configlet/name"
-                                   i18n:translate=""></tal:configletname>
-                </a>
-            </li>
-
-            <li tal:condition="not:configlets" i18n:translate="label_no_panels_available">
-                No Preference Panels available.
-            </li>
-
-        </ul>
-
-    </tal:block>
-    </div>
-   </div>
-  </div>
- </div>   
-
-</body>
+  </body>
 </html>

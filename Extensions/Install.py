@@ -12,7 +12,6 @@ from Products.CMFCore.Expression import Expression
 from Products.CMFCore.utils import getToolByName, manage_addTool
 from Products.CMFCore.DirectoryView import addDirectoryViews, \
      registerDirectory, manage_listAvailableDirectories
-from Products.CMFCore.utils import getToolByName
 from Products.CMFMember import ControlTool
 from StringIO import StringIO
 from os.path import isdir, join
@@ -21,15 +20,18 @@ import Products.CMFMember as CMFMember
 from Products.CMFMember.Extensions.Workflow \
     import setupWorkflow, workflow_transfer
 
+from Products.CMFMember.Extensions.toolbox import SetupMember
 from Products.CMFMember.MemberCatalogTool import MemberCatalogTool
 
 import sys, os, string
 
-TYPE_NAME = 'Member'
-
 def uninstallControlTool(portal, out):
     controltool = getToolByName(portal, 'portal_controlpanel')
-    cm = getToolByName(portal, 'cmfmember_control')
+    try:
+        cm = getToolByName(portal, 'cmfmember_control')
+    except AttributeError:
+        # it's already gone
+        return
     for configlet in cm.getConfiglets():
         controltool.unregisterConfiglet(configlet['id'])
 
@@ -108,15 +110,6 @@ def installMember(self, out):
                  types,
                  CMFMember.PKG_NAME)
 
-    # Register member_catalog with archetype_tool
-    at = getToolByName(self, 'archetype_tool')
-    at.setCatalogsByType('Member', ['member_catalog', 'portal_catalog'])
-
-    # register with portal factory
-    site_props = self.portal_properties.site_properties
-    if not hasattr(site_props,'portal_factory_types'):
-        site_props._setProperty('portal_factory_types',('Member',), 'lines')
-
     # add a form_controller action so that preference edit traverses back
     # to the preferences panel
     fc = getToolByName(self, 'portal_form_controller')
@@ -134,7 +127,7 @@ def installSkins(self, out):
     skins = ['cmfmember', 'cmfmember_ctrl']
     earlySkins = ['cmfmember_ctrl']
     for skin in skins:
-        if hasattr(skinsTool, skin):
+        if skin in skinsTool.objectIds():
             # delete old skin path i.e (If we use OldCMFMember in testcases)
             skinsTool.manage_delObjects([skin])
     product_skins_dir = 'skins'
@@ -150,7 +143,6 @@ def installSkins(self, out):
         pass  # directory view has already been added
 
     files = os.listdir(fullProductSkinsPath)
-    #import pdb; pdb.set_trace()
     for productSkinName in files:
         if (isdir(join(fullProductSkinsPath, productSkinName))
             and productSkinName != 'CVS'
@@ -168,8 +160,7 @@ def installSkins(self, out):
                 path = ','.join(path)
                 skinsTool.addSkinSelection(skinName, path)
 
-
-def installProperties(portal, out):
+def installProperties(self, out):
     ## Setup the default pattern for membership Id
     ## validation. The default is the same as CMFDefault
     ## but if you want email ids to be valid user ids
@@ -177,11 +168,25 @@ def installProperties(portal, out):
     ## "^[A-Za-z][A-Za-z0-9_@.]*$"
     ## or you can mess it up and break your site, don't change it if
     ## you don't know what your doing...
-    site_props = portal.portal_properties.site_properties
+    site_props = getToolByName(self, 'portal_properties').site_properties
     if not hasattr(site_props,'portal_member_validid_re'):
         site_props._setProperty('portal_member_validid_re',
                                 "^[A-Za-z][A-Za-z0-9_]*$" ,
                                 'string')
+
+    # This code will (hopefully) remove the MemberDataContainer
+    # from the site_properties list which gives it a Folder
+    # Contents tab, We don't need this (or, more accurately, it
+    # is redundant) in our product.  ~Spanky
+    fc_types = site_props.use_folder_tabs
+    new_types = []
+    
+    # XXX Make listComp
+    for type in fc_types:
+        if type != 'MemberDataContainer':
+            new_types.append(type)
+
+	site_props.use_folder_tabs = new_types
 
 
 def install(self):
@@ -193,15 +198,13 @@ def install(self):
     installSkins(self, out)
     installMember(self, out)
     installProperties(self, out)
-
-    # We need to do the updateRoleMappings only once after all workflows have been set
-    # because otherwise the empty one(i.e ControlTool) are reseted to (Default)
-    # clear the workflow for migration tool
-    wf_tool = getToolByName(self, 'portal_workflow')
-    wf_tool.setChainForPortalTypes((TYPE_NAME,), 'member_auto_workflow')
-    wf_tool.setChainForPortalTypes(('ControlTool',), '')
-    wf_tool.updateRoleMappings()
-
     setupWorkflow(self, out)
+
+    # SetupMember sets the workflow chains,
+    # updatesRoleMappings, set factory properties
+    # and sets the catalogs for the default member
+    # SetupMember may also be
+    # used to configure custom member types
+    print >> out, SetupMember(self, register=False).finish()
 
     return out.getvalue()

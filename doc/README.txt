@@ -7,9 +7,9 @@ more about the goals of the project, please see GOALS.txt.
 
 REQUIREMENTS:
 
-    - Archetypes-1.3.0-beta4
+    - Archetypes-1.3.0-final bundle
 
-    - Plone-2.0.3
+    - Plone-2.0.3 (or greater)
 
 WARNINGS:
 
@@ -41,7 +41,7 @@ WARNINGS:
     - If you upgrade Archetypes out from under CMFMember, all of the
       catalog associations disappear.  (To see these, go to the
       archetype_tool, click the Catalog Tab and you'll see all of the
-      catalog associations. The way to avoid this is to install
+      catalog associations. The way to avoid this is to reinstall
       CMFMember after getting Archetypes to where you want it.
       (See Requirements section)
 
@@ -142,6 +142,11 @@ EXTENDING MEMBERS:
 
 
     TTW Schema
+
+      NOTE: The following only works if you have changed the source
+            code in MemberDataContainer such that expose_var_schema=1.
+            This opens a huge security hole, however; see WARNINGS
+            section, above.
 
       There are plans underway to provide a full GUI TTW schema
       editor.  For now, you can (after migrating), use the
