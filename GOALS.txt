@@ -1,0 +1,85 @@
+CMFMember is a project that aims to improve the user experience of
+managing members and member properties in CMF and Plone.
+
+To achieve that, the goals of the project and their current status are
+described below:
+
+I Tighter Form Integration
+
+  Currently, a major problem with adding and removing member
+  properties is that the forms that collect these properties do not
+  automagically update themselves to capture the new fields. In other
+  words, a programmer is required to add and remove member
+  properties. This is not an acceptable requirement.
+
+  Solving this problem will mean:
+
+  1. Adding a new member property should update the forms that collect
+     member properties, but...
+  2. Which forms collect which properties should perhaps be configurable.
+  3. Who can see and/or edit each of the properties should be configurable.
+  4. All of this functionality should be provided TTP (probably
+     somewhere under Plone Setup.)
+
+  CURRENT STATUS: XXX
+
+
+II Workflowable Members
+
+  It should be possible to define an approval procedure by which new
+  members are added to the site. The Plone Way to do this, of course,
+  is to attach workflows to members.
+
+  CURRENT STATUS: XXX
+
+
+III Member Types
+
+  There should be one "base member properties" schema which is common
+  to all members. From there, one should also be able to:
+
+  1. Add new kinds of member schemas either TTP or via the FS.
+  2. Associate 0, 1 or many defined member schemas with a group.
+
+  The schemas would be cumulative. The form shown to a user to collect
+  member properties would be the product of:
+
+  1. A base schema, and all schemas associated to this member by way
+     of group membership.
+  2. The form the user is looking at.
+  3. The permissions the user has.
+
+  CURRENT STATUS: XXX
+
+
+IV Developer-Friendliness
+
+  We think AT is really cool. It makes life easier. Members should be
+  stored as AT content types.
+
+  CURRENT STATUS: XXX
+
+
+V Plone Integration
+
+  1. This functionality must work out-of-the-box in Plone. The
+     precendent for how this might be achieved would be similar to how
+     much of Plone uses chunks of the CMF* packages already. It's not
+     yet clear if these changes should actually go into CMFCore itself
+     or remain as a separate CMFMember package that CMF sites can
+     install to get a better member data tool.
+
+     It's like to remain separate from CMFCore if the common case is
+     that people don't care to have workflowable members, and don't
+     care to have different member types.
+
+     Digressing a bit, perhaps a more descriptive name than CMFMember
+     could be chosen for what the package actually does (CMFATMember?)
+
+  2. An upgrade path must be provided for legacy Plone/CMF sites.
+
+  CURRENT STATUS: XXX
+
+
+For a description of the tasks we're working on, or will be working on
+to achieve these goals, please see TODO.txt.
