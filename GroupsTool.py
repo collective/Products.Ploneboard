@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.13 2003/11/06 06:36:43 redcor Exp $
+$Id: GroupsTool.py,v 1.14 2003/11/13 14:32:54 yenzenz Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -287,10 +287,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         		# add GroupWorkspaces folder
 			#log("need to create GroupWorkspaces folder")
 
-			parent.invokeFactory("Folder", self.getGroupWorkspacesFolderId())
+			parent.invokeFactory(self.getGroupWorkspaceType(), self.getGroupWorkspacesFolderId())
                         workspaces = self.getGroupWorkspacesFolder()
-			workspaces.setTitle("Group Workspaces")
-                        workspaces.setDescription("Container for group workspaces")
+			workspaces.setTitle(self.getGroupWorkspacesFolderId())
+                        workspaces.setDescription("Container for "+self.getGroupWorkspacesFolderId())
                         # how about ownership?
 
                         # this stuff like MembershipTool...
