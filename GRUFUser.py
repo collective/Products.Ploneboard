@@ -269,40 +269,42 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """
         if not userid:
             userid=self.getId()
-        roles=self.getRoles()
-        group_roles = []
-        local={}
-        object=getattr(object, 'aq_inner', object)
+
+        roles = {}
+        for role in self.getRoles():
+            roles[role] = 1
+
+        user_groups = self.getGroups()
+
+        inner_obj = getattr(object, 'aq_inner', object)
         while 1:
-            # Get local roles for this user
-            local_roles = getattr(object, '__ac_local_roles__', None)
+            local_roles = getattr(inner_obj, '__ac_local_roles__', None)
             if local_roles:
                 if callable(local_roles):
-                    local_roles=local_roles()
-                local_roles = local_roles or {}
-                for r in local_roles.get(userid, []):
-                    local[r]=1
+                    local_roles = local_roles()
+                dict = local_roles or {}
+
+                for role in dict.get(userid, []):
+                    roles[role] = 1
 
                 # Get roles & local roles for groups
                 # This handles nested groups as well
-                for groupid in self.getGroups():
-                    for r in local_roles.get(groupid, []):
-                        group_roles.append(r)
+                for groupid in user_groups:
+                    for role in dict.get(groupid, []):
+                        roles[role] = 1
 
-            # Prepare next iteration
-            inner = getattr(object, 'aq_inner', object) 
+            inner = getattr(inner_obj, 'aq_inner', inner_obj)
             parent = getattr(inner, 'aq_parent', None)
             if parent is not None:
-                object = parent
+                inner_obj = parent
                 continue
-            if hasattr(object, 'im_self'):
-                object=object.im_self
-                object=getattr(object, 'aq_inner', object)
+            if hasattr(inner_obj, 'im_self'):
+                inner_obj=inner_obj.im_self
+                inner_obj=getattr(inner_obj, 'aq_inner', inner_obj)
                 continue
             break
         
-        roles=list(roles) + local.keys() + group_roles
-        return GroupUserFolder.unique(roles)
+        return tuple(roles.keys())
 
     security.declarePublic('getDomains')
     def getDomains(self):
@@ -396,7 +398,7 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
                 # Get roles & local roles for groups
                 # This handles nested groups as well
                 for groupid in user_groups:
-                    if [role for role in local_roles.get(groupid, []) if object_roles_dict.has_key(role)]:
+                    if [role for role in dict.get(groupid, []) if object_roles_dict.has_key(role)]:
                         if self._check_context(object):
                             return 1
                         return None
