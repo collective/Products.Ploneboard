@@ -160,24 +160,33 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         If possible, returns the Member object that corresponds
         to the given User object.
         '''
-        name = user.getUserName()
-        m = self.get(name, None)
-        if not m:
-            ## XXX Delegate to the factory and create a new site specific
-            ## member object for this user
-            self.getMemberFactory()(name)
-            m = self.get(name)
-            m.setUser(user)
-            import sys
-            from Acquisition import aq_chain
-            sys.stdout.write('wrapUser(%s)\n' % str(user))
-            sys.stdout.write(str(aq_chain(user)))
-            triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
-            sys.stdout.write('done with trigger\n')
+        try:
+            name = user.getUserName()
+            m = self.get(name, None)
+            if not m:
+                ## XXX Delegate to the factory and create a new site specific
+                ## member object for this user
+                self.getMemberFactory()(name)
+                m = self.get(name)
+                m.setUser(user)
+                import sys
+                from Acquisition import aq_chain
+                sys.stdout.write('wrapUser(%s)\n' % str(user))
+                sys.stdout.write(str(aq_chain(user)))
+                triggerAutomaticTransitions(m) # trigger any workflow transitions that need to occur
+                sys.stdout.write('done with trigger\n')
 
-        # Return a wrapper with self as containment and
-        # the user as context following CMFCore portal_memberdata
-        return m.__of__(self).__of__(user)
+            # Return a wrapper with self as containment and
+            # the user as context following CMFCore portal_memberdata
+            return m.__of__(self).__of__(user)
+        except:
+            import traceback
+            import sys
+            sys.stdout.write('\n'.join(traceback.format_exception(*sys.exc_info())))
+            import pdb
+            pdb.set_trace()
+            raise
+
 
     security.declarePrivate('registerMemberData')
     def registerMemberData(self, m, id):

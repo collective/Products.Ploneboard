@@ -16,24 +16,23 @@ class CMFMemberTest( SecurityRequestTest ):
 
     def setUp( self ):
         SecurityRequestTest.setUp(self)
-
         # create an admin user
-        Zope.app().acl_users.userFolderAddUser('admin', 'qwerty', ('Manager','Member',), ())
+        root.acl_users.userFolderAddUser('admin', 'qwerty', ('Manager','Member',), ())
         get_transaction().commit()
         # assume role of admin
-        newSecurityManager(None, Zope.app().acl_users.getUser('admin').__of__(Zope.app().acl_users))
+        newSecurityManager(None, root.acl_users.getUser('admin').__of__(root.acl_users))
 
 #        import pdb
 #        pdb.set_trace()
-        if hasattr(Zope.app(), site):
+        if hasattr(root, site):
             import sys
             sys.stdout.write('deleting site\n')
-            Zope.app().manage_delObjects([site])
+            root.manage_delObjects([site])
             get_transaction().commit()
             sys.stdout.write('done deleting site\n')
         import sys
         sys.stdout.write('trying to add site\n')
-        Zope.app().manage_addProduct[ 'CMFPlone' ].manage_addSite( site )
+        root.manage_addProduct[ 'CMFPlone' ].manage_addSite( site )
         sys.stdout.write('done adding site\n')
 #        try:
 #            import sys
@@ -48,7 +47,7 @@ class CMFMemberTest( SecurityRequestTest ):
         get_transaction().commit()
         sys.stdout.write('committed transaction\n')
 
-        self.testsite = getattr(Zope.app(), site)
+        self.testsite = getattr(root, site)
 
         import sys
         sys.stdout.write('installing archetypes\n')
@@ -62,11 +61,13 @@ class CMFMemberTest( SecurityRequestTest ):
         self.domains = ('127.0.0.1',)
 
         # add a new member
-        newSecurityManager(None, Zope.app().acl_users.getUser('admin').__of__(Zope.app().acl_users))
+        newSecurityManager(None, root.acl_users.getUser('admin').__of__(root.acl_users))
 
         self.testsite.portal_membership.addMember(self.id, self.password, self.roles, self.domains)
         self.user = self.testsite.acl_users.getUser(self.id)
         # force creation of user via wrapUser
+        import pdb
+        pdb.set_trace()
         self.member = self.testsite.portal_membership.getMemberById(self.id)
 
         self.root_id = 'root_member'
@@ -74,18 +75,18 @@ class CMFMemberTest( SecurityRequestTest ):
         self.root_roles = ('Manager','Reviewer','Member',)
         self.root_domains = ('127.0.0.1',)
 
-        Zope.app().acl_users.userFolderAddUser(self.root_id, self.root_password, self.root_roles, self.root_domains)
-        self.root_user = Zope.app().acl_users.getUser(self.root_id)
+        root.acl_users.userFolderAddUser(self.root_id, self.root_password, self.root_roles, self.root_domains)
+        self.root_user = root.acl_users.getUser(self.root_id)
 
-        newSecurityManager(None, self.root_user.__of__(Zope.app().acl_users))
+        newSecurityManager(None, self.root_user.__of__(root.acl_users))
         # force creation of user via wrapUser
         self.root_member = self.testsite.portal_membership.getAuthenticatedMember()
         
-        newSecurityManager(None, Zope.app().acl_users.getUser('admin').__of__(Zope.app().acl_users))
+        newSecurityManager(None, root.acl_users.getUser('admin').__of__(root.acl_users))
 
         # create some content
         user = self.user.__of__(self.testsite.acl_users)
-        root_user = self.root_user.__of__(Zope.app().acl_users)
+        root_user = self.root_user.__of__(root.acl_users)
         self.testsite.invokeFactory(id='folder1', type_name='Folder')
         folder1 = getattr(self.testsite, 'folder1')
         folder1.changeOwnership(user)
@@ -125,8 +126,8 @@ class CMFMemberTest( SecurityRequestTest ):
         self.root_member = None
         self.testsite = None
 
-        if hasattr(Zope.app(), site):
-            Zope.app().manage_delObjects([site])
+        if hasattr(root, site):
+            root.manage_delObjects([site])
             get_transaction().commit()
         SecurityRequestTest.tearDown(self)
 
@@ -200,7 +201,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(member, None)
 
         # make sure member has been moved
-        user = Zope.app().acl_users.getUser(self.root_id)
+        user = root.acl_users.getUser(self.root_id)
         self.failUnless(user != None)
         self.assertEqual(user, self.root_user)
 
@@ -271,7 +272,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user.domains, self.root_domains)
 
         # make sure old user is still there gone
-        user = Zope.app().acl_users.getUser(self.root_id)
+        user = root.acl_users.getUser(self.root_id)
         self.failUnless(user != None)
         self.assertEqual(user, self.root_user)
 
@@ -321,7 +322,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.root_domains)
 
-        user = Zope.app().acl_users.getUser(self.root_id)
+        user = root.acl_users.getUser(self.root_id)
         self.assertEqual(user, self.root_user)
 
         new_id = 'copy_of_' + self.root_id
@@ -340,7 +341,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user.getRoles(), self.root_roles + ('Authenticated',))
         self.assertEqual(user.domains, self.root_domains)
 
-        user = Zope.app().acl_users.getUser(new_id)
+        user = root.acl_users.getUser(new_id)
         self.assertEqual(user, None)
 
 def test_suite():
