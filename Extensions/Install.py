@@ -31,6 +31,7 @@ def install(self):
         path = map(string.strip, string.split(path,','))
         if 'photoalbum_content' not in path and skin.startswith('Plone'):
             path.append('photoalbum_content')
+            path.append('photoalbum_scripts')
 
             path = string.join(path, ', ')
             skinsTool.addSkinSelection(skin, path)
