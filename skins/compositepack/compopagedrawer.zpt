@@ -1,0 +1,55 @@
+<html i18n:domain="plone">
+<div metal:use-macro="here/global_defines/macros/defines" />
+    <head>
+
+
+    </head>
+    
+<body>
+    
+    
+<h2>Drawer Test</h2>
+<div metal:define-macro="compopagedrawer">
+        <link href="#" tal:attributes="href
+        string:${portal_url}/kupudrawerstyles.css"
+              rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/sarissa.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/kupuhelpers.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/kupubasetools.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/kupudrawertool.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/kupulibrarydrawer.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/compopagedrawer.js"> </script>
+        <script type="text/javascript"
+                tal:attributes="src string:${portal_url}/compopagedrawerinit.js"> </script>
+        <div id="kupu-librarydrawer" class="kupu-drawer">
+        </div>
+
+        <script type="text/javascript" 
+                tal:define="lib_prefix    string:${portal_url}/kupulibraries.xml?resource_type=;
+                            search_prefix string:${portal_url}/kupusearch.xml?resource_type=;
+                            link_libraries_uri  string:${lib_prefix}composable;
+                            search_links_uri    string:${search_prefix}composable;
+                            compopage nocall:options/composite;
+                            phypath_from_portal
+                            python:compopage.getPhysicalPath()[len(portal_object.getPhysicalPath()):];
+                            compo_page_path
+                            python:'/'.join(phypath_from_portal);"
+                tal:content="string:cp_initdrawer('$link_libraries_uri',
+                '$search_links_uri', '$compo_page_path');">
+        </script>    
+        <!--input type="submit" value="Open Drawer"
+        onclick="javascript:draweropen('target_path');" /-->
+</div>
+
+        
+        
+
+    </body>
+</html>

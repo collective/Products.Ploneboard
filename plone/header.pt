@@ -1,0 +1,5 @@
+<!-- plone/header.pt -->
+<tal:block tal:define="url options/ui/absolute_url">
+<script type="text/javascript"
+  tal:attributes="src string:${url}/plone_edit_js"></script>
+</tal:block>
