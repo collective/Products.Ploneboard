@@ -326,7 +326,19 @@ class FormController(UniqueObject, SimpleItemWithProperties):
         return controller_state
 
 
-    def validate(self, controller_state, REQUEST, validators):
+    def validate(self, controller_state, REQUEST, validators, argdict=None):
+        if argdict is None:
+            args = REQUEST.args
+            kwargs = REQUEST
+        else:
+            args = ()
+            if REQUEST is None:
+                kwargs = argdict
+            else:
+                kwargs = {}
+                for k, v in REQUEST.items():
+                    kwargs[k] = v
+                kwargs.update(argdict)
         context = controller_state.getContext()
         if validators is None:
             REQUEST.set('controller_state', controller_state)
@@ -342,7 +354,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
                 if not getattr(obj, 'is_validator', 0):
                     raise ValueError, '%s is not a CMFFormController validator' % str(v)
                 REQUEST = controller_state.getContext().REQUEST
-                controller_state = mapply(obj, REQUEST.args, REQUEST,
+                controller_state = mapply(obj, args, kwargs,
                                           call_object, 1, missing_name, dont_publish_class,
                                           REQUEST, bind=1)
                 controller_state._addValidator(v)

@@ -1,3 +1,11 @@
+2003-10-25  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Fixed validation for scripts so that it will work when scripts are called
+     programmatically and/or from unit tests (e.g. without a REQUEST)
+
+   * Added missing initial self.validators and self.actions to 
+     ControllerPythonScripts
+
 2003-10-24  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Modified the getError/setError methods in FormControllerState to be more

@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.6 $'[11:-2]
+__version__='$Revision: 1.7 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -129,6 +129,8 @@ class ControllerPythonScript(PythonScript, ControllerBase):
 
 
     def __init__(self, *args, **kwargs):
+        self.validators = FormValidatorContainer()
+        self.actions = FormActionContainer()
         return ControllerPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 
@@ -138,7 +140,19 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         controller_state = controller.getState(self, is_validator=0)
         controller_state = self.getButton(controller_state, REQUEST)
         validators = self.getValidators(controller_state, REQUEST).getValidators()
-        controller_state = controller.validate(controller_state, REQUEST, validators)
+
+        # put all arguments into a dict
+        c = self.func_code
+        param_names = c.co_varnames[:c.co_argcount]
+        argdict = {}
+        index = 0
+        # grab the names for positional arguments out of the function code
+        for a in args:
+            argdict[param_names[index]] = a
+            index += 1
+        argdict.update(kwargs)
+        
+        controller_state = controller.validate(controller_state, REQUEST, validators, argdict)
 
         if controller_state.getStatus() == 'success':
             result = ControllerPythonScript.inheritedAttribute('__call__')(self, *args, **kwargs)
