@@ -1,5 +1,6 @@
 import os
 from string import strip,split
+from Products.CMFCore.utils import expandpath
 
 class ActionParser:
     """With this object you can parse action informations from xml files
@@ -36,7 +37,8 @@ class ActionParser:
 
     def parse(self,product_name):
         """parse the actions to a list consisting dictionaries with the action data"""
-        os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
+        dirpath = expandpath(os.path.join(product_name,'Extensions'))
+        os.chdir(dirpath)
         try:
             self.lines=open('actions').readlines()
         except:
@@ -90,7 +92,8 @@ class PropertyParser:
 
     def parse(self,product_name):
         """parse the properties to a list consisting dictionaries with the property data"""
-        os.chdir(os.path.join(INSTANCE_HOME, 'Products',product_name,'Extensions'))
+        dirpath = expandpath(os.path.join(product_name,'Extensions'))
+        os.chdir(dirpath)
         try:
             self.lines=open('properties').readlines()
         except:
