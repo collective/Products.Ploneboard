@@ -63,6 +63,26 @@ GRUF AND PLONE
   See the dedicated README-Plone file.
 
 
+GRUF AND SimpleUserFolder
+
+  You might think there is a bug using GRUF with SimpleUserFolder (but there's not): if you create
+  a SimpleUserFolder within a GRUF a try to see it from the ZMI, you will get an InfiniteRecursionError.
+
+  That's because SimpleUserFolder tries to fetch a getUserNames() method and finds GRUF's one, which 
+  tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and finds GRUF's one, 
+  which tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and finds GRUF's one, 
+  which  tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and finds GRUF's 
+  one, which  tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and finds 
+  GRUF's one, which  tries to call SimpleUserFolder's one which tries to fetch a getUserNames() method and 
+  finds GRUF's one, which  tries to call SimpleUserFolder's one which tries (see what I mean ?)
+
+  To avoid this, just create a getUserNames() object (according to SimpleUserFolder specification) in the folder
+  where you put your SimpleUserFolder in (ie. one of 'Users' or 'Groups' folders).
+
+  GRUF also implies that the SimpleUserFolder methods you create are defined in the 'Users' or 'Groups' folder.
+  If you define them above in the ZODB hierarchy, they will never be acquired and GRUF ones will be catched
+  instead, causing infinite recursions.
+
 BUGS
 
   There is a bug using GRUF with Zope 2.5 and Plone 1.0Beta3 : when trying to join the plone site

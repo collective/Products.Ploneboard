@@ -141,7 +141,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
     def getUserNames(self):
         """
         Return a list of usernames (including groups).
-        Fetch the list from GRUFUsers.
+        Fetch the list from GRUFUsers and GRUFGroups.
         """
         if not "acl_users" in self.Users.objectIds() or not "acl_users" in self.Groups.objectIds():
             return ()
