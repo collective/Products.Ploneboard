@@ -1,11 +1,11 @@
 #-----------------------------------------------------------------------------
 # Name:        __init__.py
-# Purpose:     
+# Purpose:
 #
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: __init__.py,v 1.2 2003/07/15 03:09:31 runyaga Exp $
+# RCS-ID:      $Id: __init__.py,v 1.3 2004/05/04 21:29:10 dreamcatcher Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ this_module = sys.modules[ __name__ ]
 
 tools = ( QuickInstallerTool.QuickInstallerTool,
           )
-          
+
 z_tool_bases = utils.initializeBasesPhase1( tools, this_module )
 quickinstaller_globals = globals()
 
@@ -31,7 +31,7 @@ def initialize( context ):
     utils.ToolInit( 'CMF QuickInstaller Tool',
                     tools = tools,
                     product_name = 'QuickInstallerTool',
-                    icon='tool.gif' 
+                    icon='tool.gif'
                     ).initialize( context )
 
     context.registerClass(
@@ -39,7 +39,3 @@ def initialize( context ):
         meta_type="CMFQuickInstallerTool",
         constructors=(QuickInstallerTool.addQuickInstallerTool,),
         icon = 'tool.gif')         #Visibility was added recently, so may be a problem
-
-
-
-    

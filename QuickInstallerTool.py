@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.43 2004/04/07 20:13:39 bcsaller Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.44 2004/05/04 21:29:10 dreamcatcher Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -387,8 +387,8 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
     security.declareProtected(ManagePortal, 'reinstallProducts')
     def reinstallProducts(self, products, REQUEST=None):
-        ''' reinstalls a list of products, the main difference to 
-            ininstall/reinstall is that it does not remove portal objects 
+        ''' reinstalls a list of products, the main difference to
+            ininstall/reinstall is that it does not remove portal objects
             created  during install (e.g. tools, etc.)'''
         if type(products) in (type(''),type(u'')):
             products=[products]
