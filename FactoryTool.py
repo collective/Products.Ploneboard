@@ -44,11 +44,13 @@ class FactoryTool(UniqueObject, SimpleItem):
     meta_type= 'Plone Factory Tool'
     security = ClassSecurityInfo()
 
-    def doCreate(self, obj, **kw):
+    def doCreate(self, obj, id=None, **kw):
+        """Create a real object from a temporary object."""
         if not self.isTemporary(obj=obj):
             return obj
         else:
-            id = kw.get('id', None)
+            if id is not None:
+                id = id.strip()
             if hasattr(obj, 'getId') and callable(getattr(obj, 'getId')):
                 obj_id = obj.getId()
             else:
@@ -64,6 +66,7 @@ class FactoryTool(UniqueObject, SimpleItem):
 
 
     def isTemporary(self, obj):
+        """Check to see if an object is temporary"""
         return aq_parent(aq_inner(obj)).meta_type == TempFolder.meta_type
 
 
