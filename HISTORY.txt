@@ -1,5 +1,7 @@
 V1.6.1
 
+  - I found a way to make ContentPanels content as plone portlet without modifying any code. See FAQ.txt
+
   - remove 'background:' from two portletBody styles, use default. thanks Marc Lindahl
 
   - FolderRecentChanges and FolderListing viewlets shows only when there are contents in the folder
