@@ -113,7 +113,7 @@
                     </div>
                   </div>
                 </div>
-
+              </div>
             </tal:block>
           </tal:block>
           <p tal:condition="not: spaces" i18n:translate="">
