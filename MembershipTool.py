@@ -55,6 +55,11 @@ class MembershipTool( BaseTool ):
         """
         # if preCreateMemberArea returns false, 
         # no further creation of the member area takes place
+
+        # do not create member_area for groups
+        if member_id in self.portal_groups.listGroupIds():
+            return
+        
         pre = getattr(self, 'preCreateMemberArea', None)
         createarea = 1
         if pre:
@@ -75,6 +80,24 @@ class MembershipTool( BaseTool ):
         memberdata_tool.invokeFactory('Member',id)
         member=getattr(memberdata_tool.aq_explicit,id)
         member.edit(password=password,roles=roles,domains=domains,**(properties or {}))
+
+    def listMembers(self):
+         '''Gets the list of all members.
+         '''
+         members = BaseTool.listMembers(self)
+         groups = []
+         # can we allways asume that there is a groups_tool ??
+         try:
+             groups = self.portal_groups.listGroupIds()
+             result = []
+             for member in members:
+                 if member.getUser().getUserName() in groups:
+                     continue
+                 result.append(member)
+         except:
+             result = members
+         return result
+
 
 
 

@@ -17,6 +17,10 @@ def triggerAutomaticTransitions(ob):
 def setupWorkflow(portal, out):
     wf_tool=portal.portal_workflow
 
+    #kill default_workflow, if present
+    if 'default_workflow' in wf_tool.objectIds():
+        wf_tool.manage_delObjects(['default_workflow'])
+    
     if 'member_workflow' in wf_tool.objectIds():
         return
 
