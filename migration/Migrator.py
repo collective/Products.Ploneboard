@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.5 2004/03/10 12:12:44 tiran Exp $
+$Id: Migrator.py,v 1.6 2004/03/13 19:19:25 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -114,7 +114,7 @@ class BaseMigrator:
                     lastmethods.append(method)
         return methods+[self.custom]+lastmethods
         
-    def __call__(self, unittest=1):
+    def __call__(self, unittest=0):
         """Migrates the object
         """
         self.renameOld()
