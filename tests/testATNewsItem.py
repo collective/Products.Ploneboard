@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATNewsItem.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: testATNewsItem.py,v 1.2 2004/03/16 15:27:11 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -11,6 +11,12 @@ __docformat__ = 'restructuredtext'
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
+
+def editCMF(obj):
+    dcEdit(obj)
+
+def editATCT(obj):
+    dcEdit(obj)
 
 from common import *
 
@@ -38,13 +44,14 @@ class TestSiteATNewsItem(ATCTSiteTestCase):
     def afterSetUp(self):
         ATCTSiteTestCase.afterSetUp(self)
         self._portal = self.app.portal
-        ATCT = ATNewsItem.ATNewsItem(oid='ATCT')
-        ATCT.initializeArchetype()
-        self._portal._setObject('ATCT', ATCT)
+        # login as manager
+        user = self.getManagerUser()
+        newSecurityManager(None, user)
+
+        self._portal.invokeFactory(type_name='ATNewsItem', id='ATCT')
         self._ATCT = getattr(self._portal, 'ATCT')
 
-        cmf = NewsItem.NewsItem(id='cmf')
-        self._portal._setObject('cmf', cmf)
+        self._portal.invokeFactory(type_name='News Item', id='cmf')
         self._cmf = getattr(self._portal, 'cmf')
 
     def testTypeInfo(self):
@@ -53,6 +60,50 @@ class TestSiteATNewsItem(ATCTSiteTestCase):
         self.failUnless(ti.Title() == 'AT News Item', ti.Title())
         #self.failUnless(ti.getIcon() == 'newsitem_icon.gif', ti.getIcon())
         self.failUnless(ti.Metatype() == 'ATNewsItem', ti.Metatype())
+
+    def test_edit(self):
+        old = self._cmf
+        new = self._ATCT
+        editCMF(old)
+        editATCT(new)
+        self.failUnless(old.Title() == new.Title(), 'Title mismatch: %s / %s' \
+                        % (old.Title(), new.Title()))
+        self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
+                        % (old.Description(), new.Description()))
+
+    def test_migration(self):
+        old = self._cmf
+        id  = old.getId()
+        
+        # edit
+        editCMF(old)
+        title       = old.Title()
+        description = old.Description()
+        mod         = old.ModificationDate()
+        create      = old.CreationDate()
+
+        # migrated (needs subtransaction to work)
+        get_transaction().commit(1)
+        m = NewsItemMigrator(old)
+        m(unittest=1)
+
+        migrated = getattr(self._portal, id)
+
+        self.failUnless(isinstance(migrated, ATNewsItem.ATNewsItem),
+                        migrated.__class__)
+        self.failUnless(migrated.getTypeInfo().getId() == 'ATNewsItem',
+                        migrated.getTypeInfo().getId())
+
+        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
+                        % (migrated.Title(), title))
+        self.failUnless(migrated.Description() == description,
+                        'Description mismatch: %s / %s' % (migrated.Description(), description))
+        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
+                        % (migrated.ModificationDate(), mod))
+        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
+                        % (migrated.CreationDate(), create))
+
+
 
     def beforeTearDown(self):
         del self._ATCT

@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: ATCTMigrator.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
+$Id: ATCTMigrator.py,v 1.3 2004/03/16 15:27:10 tiran Exp $
 """
 
 from common import *
@@ -49,7 +49,7 @@ class EventMigrator(CMFItemMigrator):
     map = {
             'location'      : 'setLocation',
             'Subject'       : 'setEventType',
-            'event_url'     : 'setEventURL',
+            'event_url'     : 'setEventUrl',
             'start_date'    : 'setStartDate',
             'end_date'      : 'setEndDate',
             'contact_name'  : 'setContactName',
@@ -92,14 +92,14 @@ class FavoriteMigrator(LinkMigrator):
     # see LinkMigrator
     # map = {'remote_url' : 'setRemoteUrl'}
 
-class NewsMigrator(DocumentMigrator):
+class NewsItemMigrator(DocumentMigrator):
     fromType = 'News Item' 
     toType   = 'ATNewsItem'
     # see DocumentMigrator
     # map = {'text' : 'setText'}
 
 class FolderMigrator(CMFFolderMigrator):
-    fromType = 'Plone Folder'
+    fromType = 'Folder'
     toType   = 'ATFolder'
     # no other attributes to migrate
     map = {}
@@ -111,7 +111,7 @@ class LargeFolderMigrator(CMFFolderMigrator):
     map = {}
 
 migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
-             ImageMigrator, LinkMigrator, NewsMigrator, FolderMigrator,
+             ImageMigrator, LinkMigrator, NewsItemMigrator, FolderMigrator,
              LargeFolderMigrator,
             )
 

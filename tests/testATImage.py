@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATImage.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: testATImage.py,v 1.2 2004/03/16 15:27:11 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,6 +13,12 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from common import *
+
+def editCMF(obj):
+    dcEdit(obj)
+
+def editATCT(obj):
+    dcEdit(obj)
 
 tests = []
 
@@ -38,13 +44,14 @@ class TestSiteATImage(ATCTSiteTestCase):
     def afterSetUp(self):
         ATCTSiteTestCase.afterSetUp(self)
         self._portal = self.app.portal
-        ATCT = ATImage.ATImage(oid='ATCT')
-        ATCT.initializeArchetype()
-        self._portal._setObject('ATCT', ATCT)
+        # login as manager
+        user = self.getManagerUser()
+        newSecurityManager(None, user)
+
+        self._portal.invokeFactory(type_name='ATImage', id='ATCT')
         self._ATCT = getattr(self._portal, 'ATCT')
 
-        cmf = Image.Image(id='cmf')
-        self._portal._setObject('cmf', cmf)
+        self._portal.invokeFactory(type_name='Image', id='cmf')
         self._cmf = getattr(self._portal, 'cmf')
 
     def testTypeInfo(self):
@@ -53,6 +60,49 @@ class TestSiteATImage(ATCTSiteTestCase):
         self.failUnless(ti.Title() == 'AT Image', ti.Title())
         #self.failUnless(ti.getIcon() == 'image_icon.gif', ti.getIcon())
         self.failUnless(ti.Metatype() == 'ATImage', ti.Metatype())
+
+    def test_edit(self):
+        old = self._cmf
+        new = self._ATCT
+        editCMF(old)
+        editATCT(new)
+        self.failUnless(old.Title() == new.Title(), 'Title mismatch: %s / %s' \
+                        % (old.Title(), new.Title()))
+        self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
+                        % (old.Description(), new.Description()))
+
+    def test_migration(self):
+        old = self._cmf
+        id  = old.getId()
+        
+        # edit
+        editCMF(old)
+        title       = old.Title()
+        description = old.Description()
+        mod         = old.ModificationDate()
+        create      = old.CreationDate()
+
+        # migrated (needs subtransaction to work)
+        get_transaction().commit(1)
+        m = ImageMigrator(old)
+        m(unittest=1)
+
+        migrated = getattr(self._portal, id)
+
+        self.failUnless(isinstance(migrated, ATImage.ATImage),
+                        migrated.__class__)
+        self.failUnless(migrated.getTypeInfo().getId() == 'ATImage',
+                        migrated.getTypeInfo().getId())
+
+        self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
+                        % (migrated.Title(), title))
+        self.failUnless(migrated.Description() == description,
+                        'Description mismatch: %s / %s' % (migrated.Description(), description))
+        self.failUnless(migrated.ModificationDate() == mod, 'Modification date mismatch: %s / %s' \
+                        % (migrated.ModificationDate(), mod))
+        self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
+                        % (migrated.CreationDate(), create))
+
 
     def beforeTearDown(self):
         del self._ATCT

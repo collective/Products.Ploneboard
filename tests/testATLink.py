@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATLink.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: testATLink.py,v 1.2 2004/03/16 15:27:11 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -11,6 +11,12 @@ __docformat__ = 'restructuredtext'
 import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
+
+def editCMF(obj):
+    dcEdit(obj)
+
+def editATCT(obj):
+    dcEdit(obj)
 
 from common import *
 
@@ -112,6 +118,7 @@ class TestSiteATLink(ATCTSiteTestCase):
                         migrated.__class__)
         self.failUnless(migrated.getTypeInfo().getId() == 'ATLink',
                         migrated.getTypeInfo().getId())
+
         self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
                         % (migrated.Title(), title))
         self.failUnless(migrated.Description() == description,
@@ -120,6 +127,7 @@ class TestSiteATLink(ATCTSiteTestCase):
                         % (migrated.ModificationDate(), mod))
         self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
                         % (migrated.CreationDate(), create))
+
         self.failUnless(migrated.getRemoteUrl() == url, 'URL mismatch: %s / %s' \
                         % (migrated.CreationDate(), create))
 

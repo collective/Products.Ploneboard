@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.6 2004/03/13 19:19:25 tiran Exp $
+$Id: Migrator.py,v 1.7 2004/03/16 15:27:10 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -121,6 +121,7 @@ class BaseMigrator:
         self.createNew()
         try:
             for method in self.getMigrationMethods():
+                __traceback_info__ = (self, method, self.old, self.orig_id)
                 method()
         except Exception, err: # except all!
             if unittest:
@@ -218,8 +219,8 @@ class BaseMigrator:
             LOG("oldKey: " + str(oldKey) + ", newKey: " + str(newKey))
             if not newKey:
                 newKey = oldKey
-            oldVal = getattr(self.old, oldKey, None)
-            newVal = getattr(self.new, newKey, None)
+            oldVal = getattr(self.old, oldKey)
+            newVal = getattr(self.new, newKey)
             if callable(oldVal):
                 value = oldVal()
             else:

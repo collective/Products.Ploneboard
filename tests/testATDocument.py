@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATDocument.py,v 1.2 2004/03/08 17:54:00 tiran Exp $
+$Id: testATDocument.py,v 1.3 2004/03/16 15:27:10 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -25,14 +25,12 @@ Header
 
 def editCMF(obj):
     text_format='stx'
-    obj.setTitle('Test Title')
-    obj.setDescription('Test description')
+    dcEdit(obj)
     obj.edit(text_format = text_format, text = example_stx)
 
 def editATCT(obj):
     text_format='text/structured'
-    obj.setTitle('Test Title')
-    obj.setDescription('Test description')
+    dcEdit(obj)
     obj.setText(example_stx, mimetype = text_format)
 
 tests = []
@@ -76,16 +74,11 @@ class TestSiteATDocument(ATCTSiteTestCase):
         #self.failUnless(ti.getIcon() == 'document_icon.gif', ti.getIcon())
         self.failUnless(ti.Metatype() == 'ATDocument', ti.Metatype())
         
-    def test_editSTX(self):
+    def test_edit(self):
         old = self._cmf
         new = self._ATCT
         editCMF(old)
         editATCT(new)
-        self.failUnless(old.Title() == new.Title(), 'Title mismatch: %s / %s' \
-                        % (old.Title(), new.Title()))
-        self.failUnless(old.Description() == new.Description(), 'Description mismatch: %s / %s' \
-                        % (old.Description(), new.Description()))
-
         self.failUnless(old.CookedBody() == new.CookedBody(), 'Body mismatch: %s / %s' \
                         % (old.CookedBody(), new.CookedBody()))
 
@@ -113,6 +106,7 @@ class TestSiteATDocument(ATCTSiteTestCase):
                         migrated.__class__)
         self.failUnless(migrated.getTypeInfo().getId() == 'ATDocument',
                         migrated.getTypeInfo().getId())
+
         self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
                         % (migrated.Title(), title))
         self.failUnless(migrated.Description() == description,
@@ -121,6 +115,7 @@ class TestSiteATDocument(ATCTSiteTestCase):
                         % (migrated.ModificationDate(), mod))
         self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
                         % (migrated.CreationDate(), create))
+
         self.failUnless(migrated.CookedBody() == body, 'Body mismatch: %s / %s' \
                         % (migrated.CookedBody(), body))
 

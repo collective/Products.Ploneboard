@@ -3,7 +3,7 @@
 common includes a set of basic things that every test needs. Ripped of from my
 Archetypes test suit
 
-$Id: common.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: common.py,v 1.2 2004/03/16 15:27:10 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -23,6 +23,13 @@ def Xprint(s):
     ZopeTestCase._print or this function
     """
     ZopeTestCase._print(str(s)+'\n')
+
+def dcEdit(obj):
+    """dublin core edit (inplace)
+    """
+    obj.setTitle('Test Title')
+    obj.setDescription('Test description')
+    # XXX more
 
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
@@ -89,7 +96,7 @@ from Products.ATContentTypes.types import ATDocument, ATEvent, \
 
 from Products.ATContentTypes.migration.ATCTMigrator import DocumentMigrator,\
     EventMigrator, FavoriteMigrator, FileMigrator, ImageMigrator, LinkMigrator,\
-    NewsMigrator, FolderMigrator
+    NewsItemMigrator, FolderMigrator
 
 ###
 # CMF Default Types

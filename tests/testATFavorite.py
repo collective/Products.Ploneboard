@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATFavorite.py,v 1.2 2004/03/08 17:54:01 tiran Exp $
+$Id: testATFavorite.py,v 1.3 2004/03/16 15:27:11 tiran Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -13,6 +13,13 @@ if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
 from common import *
+
+def editCMF(obj):
+    dcEdit(obj)
+
+def editATCT(obj):
+    dcEdit(obj)
+
 
 from Products.Archetypes.ArchetypeTool import modify_fti, base_factory_type_information
 from copy import deepcopy
@@ -123,6 +130,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
                         migrated.__class__)
         self.failUnless(migrated.getTypeInfo().getId() == 'ATFavorite',
                         migrated.getTypeInfo().getId())
+
         self.failUnless(migrated.Title() == title, 'Title mismatch: %s / %s' \
                         % (migrated.Title(), title))
         self.failUnless(migrated.Description() == description,
@@ -131,6 +139,7 @@ class TestSiteATFavorite(ATCTSiteTestCase):
                         % (migrated.ModificationDate(), mod))
         self.failUnless(migrated.CreationDate() == create, 'Creation date mismatch: %s / %s' \
                         % (migrated.CreationDate(), create))
+
         self.failUnless(migrated.getRemoteUrl() == url, 'URL mismatch: %s / %s' \
                         % (migrated.CreationDate(), create))
 

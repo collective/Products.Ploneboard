@@ -17,7 +17,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: CPTMigrator.py,v 1.1 2004/03/10 12:12:44 tiran Exp $
+$Id: CPTMigrator.py,v 1.2 2004/03/16 15:27:10 tiran Exp $
 """
 
 from common import *
@@ -43,7 +43,7 @@ class EventMigrator(CMFItemMigrator):
     map = {
             'getRawLocation'   : 'setLocation',
             'getRawSubject'    : 'setEventType',
-            'getRawEventUrl'   : 'setEventURL',
+            'getRawEventUrl'   : 'setEventUrl',
             'getRawStartDate'  : 'setStartDate',
             'getRawEndDate'    : 'setEndDate',
             'getRawContactName'  : 'setContactName',
@@ -85,7 +85,7 @@ class FavoriteMigrator(LinkMigrator):
     toType   = 'ATFavorite'
     map = {'getRawRemoteUrl' : 'setRemoteUrl'}
 
-class NewsMigrator(DocumentMigrator):
+class NewsItemMigrator(DocumentMigrator):
     fromType = 'PloneNews Item' 
     toType   = 'ATNewsItem'
     # see DocumentMigrator
@@ -104,7 +104,7 @@ class LargeFolderMigrator(CMFFolderMigrator):
     map = {}
 
 migrators = (DocumentMigrator, EventMigrator, FavoriteMigrator, FileMigrator,
-             ImageMigrator, LinkMigrator, NewsMigrator, FolderMigrator,
+             ImageMigrator, LinkMigrator, NewsItemMigrator, FolderMigrator,
              LargeFolderMigrator,
             )
 

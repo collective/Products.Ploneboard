@@ -50,6 +50,9 @@ class Walker:
                 msg='ERROR: \n %s\n' % msg
                 LOG(msg)
                 self.out[-1]+=msg
+                # stop migration process after an error
+                # the transaction was already aborted by the migrator itself
+                return
             if self.subtransaction and \
               (len(self.out) % self.subtransaction) == 0:
                 # submit a subtransaction after every X (default 30)
