@@ -16,7 +16,7 @@
 
     <img tal:condition="here/size" 
          src="#" 
-         tal:attributes="src string:${here/absolute_url}?size=${size}" />
+         tal:replace="structure python:here.tag(size=size);" />
 
     <p style="margin-top: 2em;" tal:content="here/Description">
     Description
@@ -39,7 +39,7 @@
     </small>
     
     
-    <form name=show_photo tal:attributes="action string:${here/absolute_url}/view">
+    <form id="show_photo" tal:attributes="action string:${here/absolute_url}/view" style="margin-top: 0.5em;">
         <select name="size" onChange="javascript:document.getElementById('show_photo').submit()" >
             <tal:block tal:repeat="s here/getDisplays" >
                 <tal:block tal:define="selected python: test(s['name'] == size,'selected','');
