@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: ATBaseCriterion.py,v 1.6 2004/05/10 00:23:55 tiran Exp $
+$Id: ATBaseCriterion.py,v 1.7 2004/05/10 00:34:59 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -30,7 +30,8 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 from Products.ATContentTypes.config import *
-from Products.ATContentTypes.types.criteria import CriterionRegistry
+from Products.ATContentTypes.types.criteria import registerCriterion, \
+    ALL_INDICES, DATE_INDICES, STRING_INDICES, LIST_INDICES
 from Products.ATContentTypes.Permissions import ChangeTopics
 from Products.ATContentTypes.interfaces.IATTopic import IATTopicCriterion
 from Products.ATContentTypes.types.criteria.schemata import ATBaseCriterionSchema
@@ -78,4 +79,4 @@ class ATBaseCriterion(BaseContentMixin):
         """
         raise NotImplementedError        
 
-# CriterionRegistry.register(ATBaseCriterion, ())
+# registerCriterion(ATBaseCriterion, ())

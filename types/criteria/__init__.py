@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic: 
 
-$Id: __init__.py,v 1.2 2004/05/10 00:23:55 tiran Exp $
+$Id: __init__.py,v 1.3 2004/05/10 00:34:59 tiran Exp $
 """
 
 __author__  = 'Christian Heimes'
@@ -29,8 +29,14 @@ from types import StringType
 
 ALL_INDICES = ('DateIndex', 'DateRangeIndex', 'FieldIndex', 'KeywordIndex',
                'PathIndex', 'TextIndex', 'TextIndexNG2', 'TopicIndex', 
-               'ZCTextIndex',
-               )
+               'ZCTextIndex',)
+               
+DATE_INDICES = ('DateIndex', 'DateRangeIndex', )
+
+STRING_INDICES = ('FieldIndex', 'KeywordIndex', 'PathIndex', 'TextIndex',
+                  'TextIndexNG2', 'ZCTextIndex', )
+                  
+LIST_INDICES = ('FieldIndex', 'KeywordIndex', )
 
 class _CriterionRegistry(UserDict):
     """Registry for criteria """
@@ -69,6 +75,10 @@ class _CriterionRegistry(UserDict):
 
         
 CriterionRegistry = _CriterionRegistry()
+registerCriterion = CriterionRegistry.register
+
+__all__ = ('registerCriterion', 'ALL_INDICES', 'DATE_INDICES', 'STRING_INDICES',
+           'LIST_INDICES', )
 
 # criteria
 import ATDateCriteria
