@@ -164,12 +164,13 @@ class CatalogWalker(Walker):
 class CatalogWalkerWithLevel(Walker):
     """Walker using the catalog but only returning objects for a specific depth
     """
-
-    def __init__(self, migrator, catalog, depth=2):
+    
+    def __init__(self, migrator, catalog, depth=2, max_depth=50):
         portal = aq_parent(catalog)
         Walker.__init__(self, migrator, portal)
         self.catalog = catalog
         self.depth=depth
+        self.max_depth = max_depth
 
     def walk(self, **kwargs):
         """Walks around and returns all objects which needs migration
@@ -178,6 +179,10 @@ class CatalogWalkerWithLevel(Walker):
         :rtype: generator
         """
         depth = self.depth
+        if depth > self.max_depth:
+            LOG("CatalogWalkerWithLeve: depth limit of %s reached. STOPPING"
+                 % depth)
+            raise StopWalking
         
         LOG("fromType: %s, level %s" % (self.fromType, depth))
         catalog = self.catalog
@@ -206,6 +211,8 @@ class CatalogWalkerWithLevel(Walker):
             obj = brain.getObject()
             if obj:
                 yield obj
+            else:
+                LOG("Stale brain found at %s" % brain.getPath())
     
 
 ##class RecursiveWalker(Walker):

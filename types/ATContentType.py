@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.41 2004/09/13 15:46:18 tiran Exp $
+$Id: ATContentType.py,v 1.42 2004/10/05 23:38:45 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -376,25 +376,15 @@ class ATCTFileContent(ATCTContent):
 
 InitializeClass(ATCTFileContent)
 
-class ATCTConstrainedFolderMixin(ConstrainTypesMixin, ATCTMixin):
-    """ Constrained folderish type """
+
+class ATCTFolder(ATCTMixin, BaseFolder):
+    """Base class for folderish AT Content Types (but not for folders)
+    
+    DO NOT USE this base class for folders but only for folderish objects like
+    AT Topic. It doesn't support constrain types!
+    """
 
     __implements__ = (ATCTMixin.__implements__,
-                      ConstrainTypesMixin.__implements__)
-
-    security       = ClassSecurityInfo()
-
-if ENABLE_CONSTRAIN_TYPES_MIXIN:
-    ATCTFolderMixin = ATCTConstrainedFolderMixin
-else:
-    ATCTFolderMixin = ATCTMixin
-
-InitializeClass(ATCTFolderMixin)
-
-class ATCTFolder(ATCTFolderMixin, BaseFolder):
-    """Base class for folderish AT Content Types (but not for folders)"""
-
-    __implements__ = (ATCTFolderMixin.__implements__,
                       BaseFolder.__implements__)
 
     security       = ClassSecurityInfo()
@@ -416,6 +406,22 @@ class ATCTFolder(ATCTFolderMixin, BaseFolder):
     )
 
 InitializeClass(ATCTFolder)
+
+
+class ATCTConstrainedFolderMixin(ConstrainTypesMixin, ATCTMixin):
+    """ Constrained folderish type """
+
+    __implements__ = (ATCTMixin.__implements__,
+                      ConstrainTypesMixin.__implements__)
+
+    security       = ClassSecurityInfo()
+
+if ENABLE_CONSTRAIN_TYPES_MIXIN:
+    ATCTFolderMixin = ATCTConstrainedFolderMixin
+else:
+    ATCTFolderMixin = ATCTMixin
+
+InitializeClass(ATCTFolderMixin)
 
 
 class ATCTOrderedFolder(ATCTFolderMixin, OrderedBaseFolder):

@@ -2,7 +2,7 @@
 
 Test the ability to constrain types inside a folder
 
-$Id: testContrainTypes.py,v 1.2 2004/08/17 16:19:59 tiran Exp $
+$Id: testContrainTypes.py,v 1.3 2004/10/05 23:38:45 tiran Exp $
 """
 
 __author__ = 'Leonardo Almeida'
@@ -78,6 +78,7 @@ class TestConstrainTypes(PloneTestCase.PloneTestCase):
     def test_constrained(self):
         af = self.af
         at = self.at
+        af.setEnableConstrainMixin(True)
         at.manage_changeProperties(filter_content_types=False)
         self.failIf(at.filter_content_types,
                     "ContentTypes are still being filtered at factory")
@@ -93,6 +94,7 @@ class TestConstrainTypes(PloneTestCase.PloneTestCase):
         af = self.af
         at = self.at
         tt = self.tt
+        af.setEnableConstrainMixin(True)
         af_allowed_types = ['ATDocument', 'ATImage',
                             'ATFile', 'ATFolder',
                             'Folder']
@@ -133,7 +135,10 @@ class TestConstrainTypes(PloneTestCase.PloneTestCase):
         newSecurityManager(None, user)
         af = self.portal.af
         # should not raise ValueError
-        self.assertRaises(Unauthorized,
+        # XXX why? ValueError is right
+        #self.assertRaises(Unauthorized,
+        #                  af.invokeFactory, 'ATFolder', id='bf')
+        self.assertRaises(ValueError,
                           af.invokeFactory, 'ATFolder', id='bf')
 
 tests.append(TestConstrainTypes)
