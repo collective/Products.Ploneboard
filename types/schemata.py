@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.14 2004/04/12 01:38:54 tiran Exp $
+$Id: schemata.py,v 1.15 2004/04/14 15:56:42 ajung Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -303,9 +303,9 @@ ATTopicSchema = BaseFolder.schema + ATContentTypeSchema + Schema((
                 widget=BooleanWidget(
                                 label="Inherit Criteria",
                                 label_msgid="label_inherit_criteria",
-                                description="Toggles inheritance of criteria. For example, if you" \
-                                             "have specified that only items from the last three days" \
-                                             "should be shown in a Topic above the current one, this" \
+                                description="Toggles inheritance of criteria. For example, if you " \
+                                             "have specified that only items from the last three days " \
+                                             "should be shown in a Topic above the current one, this " \
                                              "Topic will also have that criterion automatically.",
                                 description_msgid="help_inherit_criteria",
                                 i18n_domain = "plone"),
