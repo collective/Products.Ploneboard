@@ -27,14 +27,14 @@ from Products.CMFBibliographyAT.config import REFERENCE_TYPES as search_types
 
 from config import LISTING_VALUES
 
-class BibrefListWidget(BibrefListWidget):
+class BibrefListWidget(TypesWidget):
     """ custom widget for TTW references input handling """
     _properties = TypesWidget._properties.copy()
     _properties.update({
         'macro' : "widget_bibreflist",
         })
 
-registerWidget(ReferencesWidget)
+registerWidget(BibrefListWidget)
 
 schema = BaseSchema + Schema((
     ReferenceField('references_list',
