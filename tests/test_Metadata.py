@@ -1,13 +1,20 @@
 """
 Tests for CMFMetadata
 
-$Id: test_Metadata.py,v 1.1 2004/02/08 16:30:37 k_vertigo Exp $
+$Id: test_Metadata.py,v 1.2 2004/02/09 12:56:03 k_vertigo Exp $
 """
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
+
+from Testing import ZopeTestCase
+from Products.CMFPlone.tests.PloneTestCase import PloneTestCase
+
+ZopeTestCase.installProduct('Formulator')
+
 import Zope
-Zope.startup()
 
 from unittest import TestCase, TestSuite, makeSuite, main
-
 from cStringIO import StringIO
 
 from AccessControl.SecurityManagement import newSecurityManager
@@ -41,6 +48,7 @@ def setupContentTypes(context):
                                         factory='manage_addPortalFolder',
                                         filter_content_types=0)
                              )
+
 
 def setupContentTree(container):
     ttool = getToolByName(container, 'portal_types')
@@ -362,5 +370,4 @@ def test_suite():
 
 
 if __name__ == '__main__':
-    main()
-
+     framework()
