@@ -1,6 +1,10 @@
 0.3-DEVEL - unreleased
 ======================
 
+ * Use a seperate schemata for ConstrainTypesMixin. We may have many mixins.
+   This way, we can avoid a long edit form when edit the content.
+   [panjunyong]
+
  * Removed default description text for upload fields for ATFile and ATImage. 
    They are superflouous and don't really add any help to the user. Quite obvious
    what the fields do/mean.
