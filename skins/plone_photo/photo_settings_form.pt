@@ -44,6 +44,7 @@
             <div class="field" tal:define="displays python:here.contentValues(spec='Portal Photo')[0].getDisplays()">
 
                 <select id="display" name="display" tabindex="2" onfocus="formtooltip('display_help', 1)" onblur="formtooltip('display_help', 0)">
+                    <option value="original">Original size</option>
                     <option tal:repeat="display displays" 
 			    tal:attributes="value display/name;
                                             selected python:test(request.cookies.get('display') == display['name'], 'selected', '');" 

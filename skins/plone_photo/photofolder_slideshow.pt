@@ -28,7 +28,7 @@
 <body style="margin:1em;">
 
     <div metal:define-macro="photos"
-                     tal:define="photos here/contentValues;
+                     tal:define="photos python:here.contentValues(spec='Portal Photo');
                      start request/start|python:0;
                      batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
                      previous python:batch.previous;
