@@ -55,6 +55,8 @@ v2_0Beta3 - 20040224
 
   * Fixed various Plone UI bugs (password & roles changing)
 
+  * Fixed "AttributeError: URL1" bug in ZMI
+
 v2_0Beta2 - 20031222
 
   * Added GroupSpace object for Plone websites (see website/GroupSpaceDesign_xx.stx)
