@@ -1,3 +1,9 @@
+zope-pts (1.0.3rc1-fork-1) unstable; urgency=low
+
+  * RC for plone 2.0final
+
+ -- Christian Heimes <heimes@faho.rwth-aachen.de>  Wed, 11 Feb 2004 02:35:56 +0100
+
 zope-pts (1.0.2beta5+fork) unstable; urgency=low
 
   * Bugfix release for python 2.1 and 2.2

@@ -17,13 +17,13 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.18 2004/02/11 11:56:46 ajung Exp $
+$Id: PlacelessTranslationService.py,v 1.19 2004/02/16 12:14:17 tiran Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import view, view_management_screens
-from Globals import InitializeClass
+from Globals import InitializeClass, get_request
 from OFS.Folder import Folder
 from types import DictType, StringType, UnicodeType
 from Negotiator import negotiator
@@ -192,7 +192,14 @@ class PlacelessTranslationService(Folder):
         self._unregister_inner(catalog, fbcatalogRegistry)
         self._p_changed = 1
 
-    def _load_dir(self, basepath):
+    def _load_i18n_dir(self, basepath):
+        """Loads an i18n directory (Zope3 PTS format)
+        
+        Format:
+            Products/MyProduct/i18n/*.po
+        
+        The language and domain are stored in the po file
+        """
         log('looking into ' + basepath, zLOG.BLATHER)
         if not os.path.isdir(basepath):
             log('it does not exist', zLOG.BLATHER)
@@ -236,6 +243,31 @@ class PlacelessTranslationService(Folder):
                  self.addCatalog(BrokenMessageCatalog(os.path.join(basepath, name), exc))
                  
         log('Initialized:', detail = repr(names) + (' from %s\n' % basepath))
+        
+    def _load_locales_dir(self, basepath):
+        """Loads an locales directory (Zope3 format)
+
+        Format:
+            Products/MyProduct/locales/${lang}/LC_MESSAGES/${domain}.po
+        
+        Where ${lang} and ${domain} are the language and the domain of the po
+        file (e.g. locales/de/LC_MESSAGES/plone.po)
+        """
+        return
+        # XXX not implemented
+        log('looking into ' + basepath, zLOG.BLATHER)
+        if not os.path.isdir(basepath):
+            log('it does not exist', zLOG.BLATHER)
+            return
+
+    def _getContext(self, context):
+        # ZPT passes the object as context.  That's wrong according to spec.
+        context = getattr(context, 'REQUEST', context)
+        if not hasattr(context, 'SESSION'):
+            # try to recover
+            # XXX add logging?
+            context = get_request()
+        return context
 
     security.declareProtected(view_management_screens, 'manage_renameObject')
     def manage_renameObject(self, id, new_id, REQUEST=None):
@@ -273,10 +305,7 @@ class PlacelessTranslationService(Folder):
     security.declarePrivate('getCatalogs')
     def getCatalogsForTranslation(self, context, domain, target_language=None):
         # ZPT passes the object as context.  That's wrong according to spec.
-        try:
-            context = context.REQUEST
-        except AttributeError:
-            pass
+        context = self._getContext(context)
 
         if target_language is None:
             target_language = self.negotiate_language(context, domain)
@@ -342,10 +371,7 @@ class PlacelessTranslationService(Folder):
             return default
 
         # ZPT passes the object as context.  That's wrong according to spec.
-        try:
-            context = context.REQUEST
-        except AttributeError:
-            pass
+        context = self._getContext(context)
 
         catalogs = self.getCatalogsForTranslation(context, domain, target_language)
         for catalog in catalogs:

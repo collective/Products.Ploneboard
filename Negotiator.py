@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """
 
-$Id: Negotiator.py,v 1.7 2004/02/03 22:14:42 tiran Exp $
+$Id: Negotiator.py,v 1.8 2004/02/16 12:14:17 tiran Exp $
 """
 
 import types
@@ -31,8 +31,8 @@ except NameError:
 _langPrefsRegistry = {}
 
 def getAcceptedHelper(self, request, kind='language'):
-    # this is patched on prefs classes which dont define the getAccepted classes
-    # but define the deprecated getPreferredLanguages method
+    """this is patched on prefs classes which don't define the getAccepted
+    classes but define the deprecated getPreferredLanguages method"""
     return self.getPreferredLanguages()
 
 def registerLangPrefsMethod(prefs, kind='language'):
@@ -48,7 +48,7 @@ def registerLangPrefsMethod(prefs, kind='language'):
     _langPrefsRegistry[kind].sort(lambda x, y: cmp(y['priority'], x['priority']))
 
 def getLangPrefs(env, kind='language'):
-    # get higest prio method for kind
+    """get higest prio method for kind"""
     for pref in  _langPrefsRegistry[kind]:
         handler = pref['klass'](env)
         accepted = handler.getAccepted(env, kind)
@@ -57,9 +57,11 @@ def getLangPrefs(env, kind='language'):
     return ()
 
 def lang_normalize(lang):
+    """filter"""
     return lang.replace('_', '-')
 
 def str_lower(aString):
+    """filter"""
     return aString.lower()
 
 def type_accepted(available, preferred):
@@ -281,4 +283,3 @@ negotiator = Negotiator()
 
 def negotiate(langs, request):
     return negotiator.negotiate(langs, request, 'language')
-

@@ -17,7 +17,7 @@ Message Id factor based on the i18n/messageid file of Zope 3.
 
 Adapted for the Placeless Translation Service by Christian Heimes
 
-$Id: MessageID.py,v 1.3 2004/02/11 00:15:24 pupq Exp $
+$Id: MessageID.py,v 1.4 2004/02/16 12:14:17 tiran Exp $
 """
 
 from Globals import InitializeClass, get_request
@@ -93,7 +93,7 @@ class MessageID(MessageIDBase):
                             default=self.default)
 
     def __str__(self):
-        return str(self.translate())
+        return self.translate()
 
 InitializeClass(MessageID)
 
@@ -130,7 +130,7 @@ class MessageIDUnicode(MessageIDBase):
                             default=self.default)
 
     def __str__(self):
-        return unicode(self.translate())
+        return self.translate()
 
 InitializeClass(MessageIDUnicode)
 

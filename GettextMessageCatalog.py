@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.8 2004/02/03 22:14:42 tiran Exp $
+$Id: GettextMessageCatalog.py,v 1.9 2004/02/16 12:14:17 tiran Exp $
 """
 
 from Acquisition import aq_parent
@@ -92,10 +92,9 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     """ broken message catalog """
     meta_type = title = 'Broken Gettext Message Catalog'
     icon='p_/broken'
-    __roles__=('Manager',)
-    title__roles__=__roles__
 
     security = ClassSecurityInfo()
+    security.declareObjectProtected(view_management_screens)
  
     def __init__(self, pofile, error):
         self._pofile = pofile
@@ -123,21 +122,17 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         """
         return self.id
 
-    getError__roles__ = __roles__
     def getError(self):
         """
         """
         return self.error
 
-    Title__roles__ = __roles__
     def Title(self):
         return self.title
-
 
     def get_size(self):
         """Get the size of the underlying file."""
         return os.path.getsize(self._pofile)
-
 
     def reload(self, REQUEST=None):
         """ Forcibly re-read the file """
@@ -157,7 +152,6 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
                 REQUEST.RESPONSE.redirect(self.absolute_url())
         
 
-    file_exists__roles__ = __roles__
     def file_exists(self):
         try:             
             file = open(self._pofile, 'rb')
@@ -176,7 +170,7 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
                                                             
     index_html = ptFile('index_html', globals(), 'www', 'catalog_broken')
 
-#XXX InitializeClass(BrokenMessageCatalog)
+InitializeClass(BrokenMessageCatalog)
 
 
 class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
@@ -186,16 +180,17 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     """
     meta_type = title = 'Gettext Message Catalog'
     icon = 'misc_/PlacelessTranslationService/GettextMessageCatalog.png'
-    __roles__=('Manager',)
-    title__roles__=__roles__
 
     security = ClassSecurityInfo()
+    security.declareObjectProtected(view_management_screens)
     
-    def __init__(self, pofile):
+    def __init__(self, pofile, language=None, domain=None):
         """Initialize the message catalog"""
-        self._pofile = pofile
-        self.id = os.path.split(self._pofile)[-1]
+        self._pofile   = pofile
+        self.id        = os.path.split(self._pofile)[-1]
         self._mod_time = self._getModTime()
+        self._language = language
+        self._domain   = domain
         self._prepareTranslations(0)
 
     def _prepareTranslations(self, catch=1):
@@ -219,9 +214,9 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         if tro is None:
             moFile = self._getMoFile()
             tro = GNUTranslations(moFile)
-            self._language = (tro._info.get('language-code', None) # new way
-                           or tro._info.get('language', None)) # old way
-            self._domain = tro._info.get('domain', None)
+            self._language = (tro._info.get('language-code', self._language) # new way
+                           or tro._info.get('language', self._language)) # old way
+            self._domain = tro._info.get('domain', self._domain)
             if self._language is None or self._domain is None:
                 raise ValueError, 'potfile has no metadata, PTS needs a language and a message domain!'
             self._language = self._language.lower().replace('_', '-')
@@ -285,7 +280,7 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
             raise
         return msg
 
-    queryMessage__roles__ = None # Public
+    security.declarePublic('queryMessage')
     def queryMessage(self, id, default=None):
         """Queries the catalog for a message
         
@@ -334,7 +329,6 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         self._prepareTranslations()
         return self._v_tro._info.get(name, None)
 
-    Title__roles__ = __roles__
     def Title(self):
         return self.title
         
@@ -409,7 +403,6 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
 
     zmi_test = ptFile('zmi_test', globals(), 'www', 'catalog_test')
 
-    file_exists__roles__ = __roles__
     def file_exists(self):
         try:
             file = open(self._pofile, 'rb')
@@ -417,7 +410,6 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
             return False
         return True
 
-    getEncoding__roles__ = __roles__
     def getEncoding(self):
         try:
             content_type = self.getHeader('content-type')
@@ -426,13 +418,11 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         except: enc='utf-8'
         return enc
 
-    getHeader__roles__ = __roles__
     def getHeader(self, header):
         self._prepareTranslations()
         info = self._v_tro._info
         return info.get(header)
 
-    displayInfo__roles__ = __roles__
     def displayInfo(self):
         self._prepareTranslations()
         try: info = self._v_tro._info
@@ -448,11 +438,12 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     #
     ############################################################
 
-#XXX InitializeClass(GettextMessageCatalog)
+InitializeClass(GettextMessageCatalog)
 
 class MissingIds(Persistent):
     
     security = ClassSecurityInfo()
+    security.declareObjectProtected(view_management_screens)
 
     def __init__(self, fileName, charset):
         self._fileName = fileName
@@ -482,4 +473,4 @@ class MissingIds(Persistent):
             self._v_file.flush()
             self._ids[msgid]=1
 
-#XXX InitializeClass(MissigIds)
+InitializeClass(MissingIds)

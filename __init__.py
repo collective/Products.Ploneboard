@@ -16,12 +16,13 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 __version__ = '''
-$Id: __init__.py,v 1.9 2004/02/03 22:14:42 tiran Exp $
+$Id: __init__.py,v 1.10 2004/02/16 12:14:17 tiran Exp $
 '''.strip()
 
 from OFS.Application import get_products
 from AccessControl import ModuleSecurityInfo, allow_module
 from AccessControl.Permissions import view
+import PatchStringIO # patch at first
 from PlacelessTranslationService import PlacelessTranslationService, PTSWrapper
 from utils import log
 import zLOG
@@ -34,11 +35,6 @@ if not hasattr(fnmatch, 'filter'):
     def fnfilter(names, pattern):
         return [name for name in names if fnmatch.fnmatch(name, pattern)]
     fnmatch.filter = fnfilter
-
-# patch flaky ZPT - this must be removed once someone fixes it
-# I'm leaving this enabled even for OpenPT, because it somehow manages
-# to make zope a bit faster...
-import PatchStringIO
 
 # this is for packages that need to initialize stuff after we're done
 notify_initialized = []
@@ -142,7 +138,8 @@ def initialize(context):
     for prod in get_products():
         # prod is a tuple in the form:
         #(priority, dir_name, index, base_dir) for each Product directory
-        cp_ts._load_dir(os.path.join(prod[3], prod[1], 'i18n'))
+        cp_ts._load_i18n_dir(os.path.join(prod[3], prod[1], 'i18n'))
+        cp_ts._load_locales_dir(os.path.join(prod[3], prod[1], 'locales'))
 
     # sweep the i18n directory for local catalogs
     instance_i18n = os.path.join(INSTANCE_HOME, 'i18n')
