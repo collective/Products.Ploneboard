@@ -1,3 +1,0 @@
-[actions]
-action.success=traverse_to:string:base_edit
-action.failure=traverse_to:string:base_edit
