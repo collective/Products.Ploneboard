@@ -189,10 +189,11 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             if not (user.listed or is_manager):
                 continue
             if name:
-                if (u.getUserName().lower().find(name) == -1) and (user.fullname.lower().find(name) == -1):
+                if (u.getUserName().lower().find(name) == -1) and \
+                  ((not user.fullname) or user.fullname.lower().find(name) == -1):
                     continue
             if email:
-                if user.email.lower().find(email) == -1:
+                if (not user.email) or user.email.lower().find(email) == -1:
                     continue
             if roles:
                 user_roles = user.getRoles()
