@@ -34,3 +34,6 @@ msgstr "Webbfrågan har skapats."
 
 msgid "Your changes have been saved."
 msgstr "Ändringarna har sparats."
+
+msgid "This poll is closed."
+msgstr "Den här webbfrågan är stängd."
