@@ -1,4 +1,6 @@
 
+  - Added Spanish and German translation, thanks to Philipp von Weitershausen
+    <philikon@philikon.de>
   - Added Dutch translation, thanks to Misja Hoebe <misja@efobia.nl>
 
 0.2:
