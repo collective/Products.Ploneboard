@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.8 2003/10/30 01:16:40 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.9 2003/11/12 23:11:37 plonista Exp $
 """
 
 import re
@@ -102,6 +102,7 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             self._read_action_metadata(self.getId(), self.filepath)
             self._read_validator_metadata(self.getId(), self.filepath)
         except:
+            log(summary='metadata error', text='file = %s' % self.filepath)
             logException()
             raise
 

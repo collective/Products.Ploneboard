@@ -1,3 +1,9 @@
+2003-11-12  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * FormController.py: Fixed bug in addFormValidators (thanks alienoid)
+
+   * Added code to report file in which metadata errors occur.
+
 2003-10-29  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Fixed code that tests for existence of validators and objects being 

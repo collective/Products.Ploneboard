@@ -12,7 +12,7 @@
 ##########################################################################
 """ Zope object encapsulating a controlled page templates that comes from the filesystem.
 
-$Id: ControllerPageTemplateFile.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
+$Id: ControllerPageTemplateFile.py,v 1.2 2003/11/12 23:11:37 plonista Exp $
 """
 
 import os
@@ -47,9 +47,13 @@ class ControllerPageTemplateFile(BaseClass, BaseControllerPageTemplate):
 
         self.id = os.path.splitext(os.path.basename(filename))[0]
         self.filepath = self.filename
-        self._read_action_metadata(self.getId(), self.filepath)
-        self._read_validator_metadata(self.getId(), self.filepath)
-        return retval
+        try:
+            self._read_action_metadata(self.getId(), self.filepath)
+            self._read_validator_metadata(self.getId(), self.filepath)
+            return retval
+        except ValueError, e:
+            log(summary='metadata error', text='file = %s' % self.filepath)
+            raise
 
 
     security.declarePrivate('manage_afterAdd')
@@ -62,6 +66,7 @@ class ControllerPageTemplateFile(BaseClass, BaseControllerPageTemplate):
             self._read_action_metadata(self.getId(), self.filepath)
             self._read_validator_metadata(self.getId(), self.filepath)
         except:
+            log(summary='metadata error', text='file = %s' % self.filepath)
             logException()
             raise
 

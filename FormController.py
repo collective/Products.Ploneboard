@@ -176,7 +176,7 @@ class FormController(UniqueObject, SimpleItemWithProperties):
     # Method for programmatically adding validators
     security.declareProtected(ManagePortal, 'addFormValidators')
     def addFormValidators(self, object_id, context_type, button, validators):
-        self.validators.set(FormAction(object_id, context_type, button, validators))
+        self.validators.set(FormValidator(object_id, context_type, button, validators, self))
 
 
     security.declareProtected(ManagePortal, 'manage_addFormValidators')
