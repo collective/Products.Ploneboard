@@ -5,9 +5,6 @@ Last revision : 20031220
   with Plone 2.x, and its Installation is fully automatic 
   (with Plone 2.x).
 
-  You will find GroupSpaces (for Plone 2.x) at the bottom
-  of this document.
-
   IMPORTANT NOTICE
 
     Before reading this document, please take time to read README.txt,
@@ -112,18 +109,3 @@ Last revision : 20031220
     PLONE 1 ONLY : YOU MUST CUSTOMIZE 'folder_localrole_form_plone1.pt' 
     and rename it 'folder_localrole_form.pt' in your custom folder, in 
     order to get group support in local roles screens. 
-
-
-  GROUPSPACES
-
-    We recently added GroupSpaces support for Plone. To gain benefit
-    from it, you just have to run the Install script (NOT USING
-    CMFQUICKINSTALLER) from a fresh (or used !) Plone2 website.
-    This will install:
-
-    * A content type called GroupSpace
-
-    * A few useful slots
-
-    * A groupspace-specific workflow.
-
