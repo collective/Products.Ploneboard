@@ -61,7 +61,6 @@ class CompositeTool(Folder, BaseTool):
         for t in ti:
             id = t.getId()
             title = t.Title()
-            #import pdb; pdb.set_trace()
             if title == id:
                 title = None
             if vbt is not None and vbt.has_key(id):
@@ -183,17 +182,17 @@ class CompositeTool(Folder, BaseTool):
     def getViewletsForType(self, portal_type=None):
         """ Get viewlets for a given type
 
-        Return a tuple where:
+        Return a dict where:
 
-          - The first element is the default viewlet struct
-          - The second element is a list of structs with
+          - 'default' value is the default viewlet struct
+          - 'viewlets' value is a list of structs with
             the other viewlets
 
         Each struct is composed of:
 
           - Viewlet id
           - Viewlet title
-          - Template object
+          - Viewlet object
 
         May return None.
         """

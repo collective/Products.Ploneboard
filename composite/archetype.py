@@ -31,7 +31,7 @@ class Element(BaseContentMixin):
         'viewlet',
         vocabulary='_get_viewlets',
         relationship=VIEWLET,
-        allowed_types=('CompositePack Viewlet',),
+        #allowed_types=('CompositePack Viewlet',),
         widget=ReferenceWidget(label='Viewlet',
                                description=('The viewlet to be used '
                                             'for rendering the '

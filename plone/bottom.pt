@@ -2,13 +2,16 @@
 
 <div id="slot-element-context-menu" class="context-menu">
 <div class="context-menu-header"
-     filter="composite_prepare_element_menu(pd_filter_object)"></div>
+     filter="composite_pack_prepare_element_menu(pd_filter_object)"></div>
 <div class="context-menu-item"
      onmouseup="plone_edit(pd_selected_item)"
      filter="pd_selected_item">Edit...</div>
 <div class="separator"></div>
 <div class="context-menu-item" onmouseup="composite_delete(pd_selected_items)"
      filter="pd_selected_items">Delete</div>
+<div class="separator"></div>
+<div class="context-menu-skin"
+     filter="composite_prepare_change_viewlet_menu(pd_filter_object)"></div>
 </div>
 
 <div id="slot-target-context-menu" class="context-menu">
