@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: CalendarSupport.py,v 1.1 2004/05/06 02:28:24 tiran Exp $
+$Id: CalendarSupport.py,v 1.2 2004/05/06 03:30:01 tiran Exp $
 """ 
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -37,24 +37,24 @@ from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.config import *
 #from Products.ATContentTypes.interfaces.IHistoryAware import IHistoryAware
 
-DATE  = "%Y%m%dT%H%M%S"
-DATEZ = "%Y%m%dT%H%M%SZ"
+DATE = "%Y%m%dT%H%M%SZ"
 
 PRODID = "-//AT Content Types//AT Event//EN"
 
 ICS_HEADER = """\
 BEGIN:VCALENDAR
-PRODID:%(prodid)
+PRODID:%(prodid)s
 VERSION:2.0
+
 BEGIN:VEVENT
-DTSTAMP:%(dtstamp)
-CREATED:%(created)
-UID:ATEvent-%(uid)
+DTSTAMP:%(dtstamp)s
+CREATED:%(created)s
+UID:ATEvent-%(uid)s
 SEQUENCE:0
-LAST-MODIFIED:%(modified)
-SUMMARY:%(summary)
-DTSTART:%(startdate)
-DTEND:%(enddate)
+LAST-MODIFIED:%(modified)s
+SUMMARY:%(summary)s
+DTSTART:%(startdate)s
+DTEND:%(enddate)s
 """
 
 ICS_FOOTER = """\
@@ -62,21 +62,30 @@ CLASS:PUBLIC
 PRIORITY:3
 TRANSP:OPAQUE
 END:VEVENT
+
 END:VCALENDAR
 """
 
 VCS_HEADER = """\
 BEGIN:VCALENDAR
-PRODID:%(prodid)
+PRODID:%(prodid)s
 VERSION:1.0
 
 BEGIN:VEVENT
+DTSTART:%(startdate)s
+DTEND:%(enddate)s
+DCREATED:%(created)s
+UID:ATEvent-%(uid)s
+SEQUENCE:0
+LAST-MODIFIED:%(modified)s
+SUMMARY:%(summary)s
 """
 
 VCS_FOOTER = """\
 PRIORITY:3
 TRANSP:0
 END:VEVENT
+
 END:VCALENDAR
 """
 
@@ -102,43 +111,70 @@ class CalendarSupportMixin:
          },
     )
     
-    security.declareProtected(CMFCorePermissions.View, 'getDocumentComparisons')
+    security.declareProtected(CMFCorePermissions.View, 'ics')
     def ics(self, REQUEST, RESPONSE):
         """iCalendar output
         """
         RESPONSE.setHeader('Content-Type', 'text/calendar')
         RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.ics"' % self.getId())
         out = StringIO()
-        out.write(ICS_HEADER % ({ 'prodid'    : PRODID,
-                                  'dtstamp'   : DateTime().strftime(DATEZ),
-                                  'created'   : DateTime(self.CreationDate()).strftime(DATEZ),
-                                  'uid'       : self.UID(),
-                                  'modified'  : DateTime(self.ModificationDate()).strftime(DATEZ),
-                                  'summary'   : self.Title(),
-                                  'startdate' : DateTime(self.start()).strftime(DATEZ),
-                                  'enddate'   : DateTime(self.end()).strftime(DATEZ),
-                               })
-                 )
+        map = { 
+            'prodid'    : PRODID,
+            'dtstamp'   : DateTime().strftime(DATE),
+            'created'   : DateTime(self.CreationDate()).strftime(DATE),
+            'uid'       : self.UID(),
+            'modified'  : DateTime(self.ModificationDate()).strftime(DATE),
+            'summary'   : self.Title(),
+            'startdate' : self.start().strftime(DATE),
+            'enddate'   : self.end().strftime(DATE),
+            }
+        out.write(ICS_HEADER % map)
+        description = self.Description()
+        if description:
+            out.write('DESCRIPTION:%s\n' % description)
+        location = self.getLocation()
+        if location:
+            out.write('LOCATION:%s\n' % location)
+        eventType = self.getEventType()
+        if eventType:
+            out.write('CATEGORIES:%s\n' % eventType)
         # XXX todo
         #ORGANIZER;CN=%(name):MAILTO=%(email)
         #ATTENDEE;CN=%(name);ROLE=REQ-PARTICIPANT:mailto:%(email)
-        #DESCRIPTION:
-        #LOCATION:
-        #CATEGORIES:
         out.write(ICS_FOOTER)
-        return out.getvalue()
+        return n2rn(out.getvalue())
 
+    security.declareProtected(CMFCorePermissions.View, 'vcs')
     def vcs(self, REQUEST, RESPONSE):
         """vCalendar output
         """
         RESPONSE.setHeader('Content-Type', 'text/x-vCalendar')
         RESPONSE.setHeader('Content-Disposition', 'attachment; filename="%s.vcs"' % self.getId())
         out = StringIO()
-        out.write(VCS_HEADER % ({ 'prodid'    : PRODID,
-                               })
-                 )
+        map = { 
+            'prodid'    : PRODID,
+            'dtstamp'   : DateTime().strftime(DATE),
+            'created'   : DateTime(self.CreationDate()).strftime(DATE),
+            'uid'       : self.UID(),
+            'modified'  : DateTime(self.ModificationDate()).strftime(DATE),
+            'summary'   : self.Title(),
+            'startdate' : self.start().strftime(DATE),
+            'enddate'   : self.end().strftime(DATE),
+            }
+        out.write(VCS_HEADER % map)
+        description = self.Description()
+        if description:
+            out.write('DESCRIPTION:%s\n' % description)
+        location = self.getLocation()
+        if location:
+            out.write('LOCATION:%s\n' % location)
         # XXX todo
         out.write(VCS_FOOTER)
-        return out.getvalue()
+        return n2rn(out.getvalue())
 
 InitializeClass(CalendarSupportMixin)
+
+
+def n2rn(s):
+    return s.replace('\n', '\r\n')
+
