@@ -88,7 +88,7 @@ def migrate_user_folder(obj, out, ):
         container.acl_users.Users._setOb('acl_users', aq_base(tmp_users))
 
         # clean up our temp folder, and then we are done
-        container.manage_delObjects( tempid )
+        #container.manage_delObjects( tempid )
         
     return out.getvalue()
     
