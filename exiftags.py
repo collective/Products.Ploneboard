@@ -1,3 +1,4 @@
+
 ## ===========================================================================
 ##  NAME:       exiftags (from exif original script)
 ##  TYPE:       python script
