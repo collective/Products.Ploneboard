@@ -1,0 +1,1 @@
+# GroupUserFolder tests package
