@@ -18,14 +18,14 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.5 2003/09/30 11:31:06 longsleep Exp $
+$Id: I18NContent.py,v 1.6 2003/10/02 09:11:33 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.5 $"
+__version__ = "$Revision: 1.6 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
-from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission
+from Products.CMFCore.utils import _verifyActionPermissions, _checkPermission, getToolByName
 from Products.CMFCore.CMFCorePermissions import View, ManageProperties, ListFolderContents, ModifyPortalContent
 from Products.CMFCore.CMFCorePermissions import AddPortalFolders, AddPortalContent
 from AccessControl import Permissions, getSecurityManager, ClassSecurityInfo, Unauthorized
