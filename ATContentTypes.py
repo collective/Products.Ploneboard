@@ -18,9 +18,9 @@
 #
 """
 
-$Id: ATContentTypes.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: ATContentTypes.py,v 1.2 2004/06/27 16:31:13 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
 
-from Products.ATContentTypes.types import *
+import Products.ATContentTypes.types

@@ -18,10 +18,12 @@
 #
 """
 
-$Id: __init__.py,v 1.4 2004/06/24 21:56:47 tiran Exp $
+$Id: __init__.py,v 1.5 2004/06/27 16:31:13 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
+
+import sys
 
 from Globals import package_home
 from Products.CMFCore import utils
@@ -44,18 +46,23 @@ else:
     del config
 
 from Products.ATContentTypes.config import *    
-
-print ENABLE_TEMPLATE_MIXIN
-
 import Products.ATContentTypes.migration
 import Products.ATContentTypes.Validators
 from Products.ATContentTypes.interfaces.IATTopic import IATTopic, IATTopicCriterion
+from Products.ATContentTypes import ATContentTypes
 
 registerDirectory(SKINS_DIR,GLOBALS)
 
+from Products.Archetypes import ArchetypeTool
+ATToolModule = sys.modules[ArchetypeTool.__module__]
+ATCT_TYPES = tuple(
+    [at_type['klass'] for at_type in  ATToolModule._types.values()
+     if (at_type['package'] == PROJECTNAME) and
+     not IATTopicCriterion.isImplementedByInstancesOf(at_type['klass'])]
+    )
+
 def initialize(context):
     # process our custom types
-    import ATContentTypes
     
     listOfTypes = listTypes(PROJECTNAME)
     
