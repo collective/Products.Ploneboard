@@ -24,7 +24,7 @@ DO NOT CHANGE THIS FILE!
 All changes will be overwritten by the next release. Use a customconfig instead.
 See customconfig.py.example
 
-$Id: config.py,v 1.27 2004/06/20 15:13:17 tiran Exp $
+$Id: config.py,v 1.28 2004/06/24 10:47:18 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -149,7 +149,7 @@ WORKFLOW_CRITERIA = ''
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}
 
-GOOD_CHARS = string.ascii_letters + string.digits + '._'
+GOOD_CHARS = string.ascii_letters + string.digits + '._-'
 CHAR_MAPPING = {
     ' ' : '_',
     'Å' : 'Aa',
