@@ -1,4 +1,4 @@
-# -*- coding: latin1 -*-
+# -*- coding: iso-8859-1 -*-
 # Copyright (C) 2000-2002  Juan David Ibáñez Palomar <j-david@noos.fr>
 # (this copyright notice is encoding in ISO-8859-1 (Latin1))
 
