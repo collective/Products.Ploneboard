@@ -17,7 +17,7 @@ composite_schema = Schema((
 
 
 edit_tag = '''<div class="slot_element" source_path="%s" icon="%s" title="%s"
-allowed_viewlets="%s">
+allowed_viewlets_ids="%s" allowed_viewlets_titles="%s">
 <div class="slot_element_body">%s</div>
 </div>'''
 
@@ -31,15 +31,19 @@ class PackSlot(Slot):
         path = escape('/'.join(obj.getPhysicalPath()))
         composite_tool = getToolByName(self, TOOL_ID)
         viewlets_info = composite_tool.getViewletsFor(o2)
-        allowed_viewlets = []
+        allowed_viewlets_ids = []
+        allowed_viewlets_titles = []
         if viewlets_info:
-            allowed_viewlets.append(viewlets_info['default']["id"])
+            allowed_viewlets_ids.append(viewlets_info['default']["id"])
+            allowed_viewlets_titles.append(viewlets_info['default']["viewlet"].title_or_id())
             for viewlet in viewlets_info['viewlets']:
-                allowed_viewlets.append(viewlet["id"])
+                allowed_viewlets_ids.append(viewlet["id"])
+                allowed_viewlets_titles.append(viewlet["viewlet"].title_or_id())
         return edit_tag % (path,
                            escape(icon),
                            escape(title),
-                           " ".join(allowed_viewlets),
+                           " ".join(allowed_viewlets_ids),
+                           "%".join(allowed_viewlets_titles),
                            text)
 
 class PackSlotGenerator(SlotGenerator):

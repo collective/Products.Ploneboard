@@ -22,12 +22,15 @@ function plone_change_viewlet(element, viewlet) {
 
 function composite_pack_prepare_element_menu(header) {
   if (!pd_selected_item) {
-    allowed_viewlets = null;
+    allowed_viewlets_ids = null;
+    allowed_viewlets_titles = null;
   }
   else {
-    allowed_viewlets = pd_selected_item.getAttribute('allowed_viewlets');
+    allowed_viewlets_ids = pd_selected_item.getAttribute('allowed_viewlets_ids');
+    allowed_viewlets_titles = pd_selected_item.getAttribute('allowed_viewlets_titles');
   }
-  header.parentNode.setAttribute("allowed_viewlets", allowed_viewlets);
+  header.parentNode.setAttribute("allowed_viewlets_ids", allowed_viewlets_ids);
+  header.parentNode.setAttribute("allowed_viewlets_titles", allowed_viewlets_titles);
   composite_prepare_element_menu(header);
   return true;
 }
@@ -45,14 +48,15 @@ function composite_prepare_change_viewlet_menu(header) {
   header.appendChild(menuItem);
   // loop on viewlets
   parent = header.parentNode;
-  if (parent.getAttribute("allowed_viewlets")) {
-    slots = parent.getAttribute("allowed_viewlets").split(" ");
-    for (i = 0; i < slots.length; i++) {
+  if (parent.getAttribute("allowed_viewlets_ids")) {
+    viewlets_ids = parent.getAttribute("allowed_viewlets_ids").split(" ");
+    viewlets_titles = parent.getAttribute("allowed_viewlets_titles").split("%");
+    for (i = 0; i < viewlets_ids.length; i++) {
       menuItem = document.createElement("div");
       menuItem.setAttribute("class", "context-menu-item");
-      onmouseup = "plone_change_viewlet(pd_selected_item, '" + slots[i] + "')";
+      onmouseup = "plone_change_viewlet(pd_selected_item, '" + viewlets_ids[i] + "')";
       menuItem.setAttribute("onmouseup", onmouseup);
-      node = document.createTextNode(slots[i]);
+      node = document.createTextNode(viewlets_titles[i]);
       pd_setupContextMenuItem(menuItem);
       menuItem.appendChild(node);
       header.appendChild(menuItem);

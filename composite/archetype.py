@@ -1,6 +1,6 @@
 from Products.Archetypes.public import *
 from Products.CompositePage.interfaces import ICompositeElement
-from Products.CompositePack.config import PROJECTNAME
+from Products.CompositePack.config import PROJECTNAME, TOOL_ID
 from Products.CMFCore.utils import getToolByName
 from DocumentTemplate.DT_Util import safe_callable
 from Acquisition import aq_base
@@ -29,9 +29,7 @@ class Element(BaseContentMixin):
         ),
         ReferenceField(
         'viewlet',
-        #vocabulary='_get_viewlets',
         relationship=VIEWLET,
-        #allowed_types=('CompositePack Viewlet',),
         widget=ReferenceWidget(label='Viewlet',
                                description=('The viewlet to be used '
                                             'for rendering the '
@@ -43,7 +41,7 @@ class Element(BaseContentMixin):
 
     def _get_viewlets(self):
         obj = self.dereference()
-        tool = getToolByName(self, 'composite_tool')
+        tool = getToolByName(self, TOOL_ID)
         v = tool.getViewletsFor(obj)
         if v is None:
             return DisplayList()
@@ -52,6 +50,11 @@ class Element(BaseContentMixin):
                    for i in viewlets])
         return DisplayList(options)
 
+    def getViewlet(self):
+        # refresh vocabulary
+        self.schema['viewlet'].vocabulary = self._get_viewlets()
+        return self.getField('viewlet').get(self)
+      
     def template(self):
         """ Returns the template referenced by this composite element.
         """
