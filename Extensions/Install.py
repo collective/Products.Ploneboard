@@ -1,4 +1,3 @@
-from Products.CMFCore.utils import getToolByName
 #  ATContentTypes http://sf.net/projects/collective/
 #  Archetypes reimplementation of the CMF core types
 #  Copyright (c) 2003-2004 AT Content Types development team
@@ -19,7 +18,7 @@ from Products.CMFCore.utils import getToolByName
 #
 """
 
-$Id: Install.py,v 1.1 2004/03/08 10:48:40 tiran Exp $
+$Id: Install.py,v 1.2 2004/03/13 23:25:32 yenzenz Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -28,6 +27,8 @@ from Products.Archetypes import listTypes
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from StringIO import StringIO
 from Products.ATContentTypes.config import *
+from Products.ExternalMethod.ExternalMethod import manage_addExternalMethod
+from Products.CMFCore.utils import getToolByName
 
 def install(self):
     out = StringIO()
@@ -50,6 +51,18 @@ def install(self):
             use_folder_tabs.append(cl['klass'].portal_type)
     
     print >> out, 'Successfully installed %s' % PROJECTNAME
+    
+    # register switch methods to toggle old plonetypes on/off
+    portal=getToolByName(self,'portal_url').getPortalObject()
+    manage_addExternalMethod(portal,'switch_old_plone_types_off',    
+        'switch_old_plone_types_off',    
+        PROJECTNAME+'.switchOldPloneTypes', 
+        'switch_old_plone_types_off')    
+    manage_addExternalMethod(portal,'switch_old_plone_types_on',    
+        'switch_old_plone_types_on',    
+        PROJECTNAME+'.switchOldPloneTypes', 
+        'switch_old_plone_types_on')    
+
     return out.getvalue()
 
 def uninstall(self):
@@ -68,5 +81,10 @@ def uninstall(self):
                 use_folder_tabs.remove(cl['klass'].portal_type)
 
     props.use_folder_tabs=tuple(use_folder_tabs)
-
+    
+    # remove external methods for toggling between old and new types
+    portal=getToolByName(self,'portal_url').getPortalObject()
+    portal.manage_delObjects(ids=['switch_old_plone_types_on',
+                                  'switch_old_plone_types_off'] )
+    
     return out.getvalue()
