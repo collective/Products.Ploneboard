@@ -9,17 +9,17 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: Install.py,v 1.3 2004/09/12 08:59:34 ajung Exp $
+$Id: Install.py,v 1.4 2004/09/16 17:36:01 ajung Exp $
 """
 
 from cStringIO import StringIO
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
-from Products.ATSchemaEditorNG.config import GLOBALS, PROJECTNAME
+from Products.ATSchemaEditorNG.config import GLOBALS, PROJECT_NAME
 
 def install(self):                                       
     out = StringIO()
 
     install_subskin(self, out, GLOBALS)
 
-    print >> out, "Successfully installed %s." % PROJECTNAME
+    print >> out, "Successfully installed %s." % PROJECT_NAME
     return out.getvalue()
