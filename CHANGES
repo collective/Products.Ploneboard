@@ -1,3 +1,7 @@
+v2_0Beta1 - 20031026
+
+  * Include support for multi-sources
+
 v1_32 - 20030923
 
   * Pass __getitem__ access onto user objects (XUF compatibility)
