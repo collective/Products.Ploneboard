@@ -11,7 +11,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.29 2005/01/07 16:58:23 spamsch Exp $
+$Id: SchemaEditor.py,v 1.30 2005/01/15 11:52:07 ajung Exp $
 """
 
 import re
@@ -418,6 +418,9 @@ class SchemaEditor:
 
         if not FD.has_key('visible_view'):
             widget.visible['view'] = 'invisible'
+
+        if not FD.has_key('help'):
+            widget.help = FD['help']
 
         # Validators
         if FD.has_key('validators'):

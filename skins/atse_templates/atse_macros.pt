@@ -315,7 +315,7 @@
           <div>
             <input type="text" value="" size="60" 
                    name="fielddata.help:record:string"
-                   tal:attributes="value python: field.widget.help"/>
+                   tal:attributes="value python: getattr(field.widget, 'help', '')"/>
           </div>
         </div>
       
