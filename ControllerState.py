@@ -6,7 +6,7 @@ from Products.CMFCore.utils import getToolByName
 from FormAction import FormAction
 from globalVars import ANY_CONTEXT, ANY_BUTTON, STRING_TYPES
 
-from types import ListType, TupleType
+from types import ListType, TupleType, DictType
 
 class ControllerState(AccessControl.Role.RoleManager):
     security = ClassSecurityInfo()
