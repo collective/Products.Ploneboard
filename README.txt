@@ -15,6 +15,8 @@ ABSTRACT
   Some users are "flagged" as GROUP and then normal users will be able to belong to one or
   serveral groups.
 
+  See http://ingeniweb.sourceforge.net/Products/GroupUserFolder for detailed information.
+
 STRUCTURE
 
   Group and "normal" User management is distinct. Here's a typical GroupUserFolder hierarchy::

@@ -50,11 +50,7 @@
             <div class="list-item">
               <dtml-in "_['sequence-item'].getRoles()">
                 <font color="<dtml-var role_color>">
-                  <dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"><i></dtml-if>
-                  <dtml-var sequence-item>
-                  <dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"></i></dtml-if>
-                </font>
-                <dtml-unless sequence-end>,</dtml-unless>
+                  <dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"><i></dtml-if><dtml-var sequence-item><dtml-if "_['sequence-item'] not in user_obj.getUserRoles()"></i></dtml-if></font><dtml-unless sequence-end>,</dtml-unless>
               </dtml-in>
             </div>
           </td>

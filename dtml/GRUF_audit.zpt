@@ -1,10 +1,11 @@
+<h1 tal:define="global print request/pp | nothing"></h1>
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
-<h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
+<h2 tal:condition="not: print" tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
   
   <div tal:condition="request/doIt | nothing">
-    <h3>Audit results</h3>
+    <h3 tal:condition="not: print">Audit results</h3>
 
   <table 
       border="1"
@@ -23,7 +24,7 @@
         >
           <span tal:define="color python:test(s[0] == 'user', here.user_color, test(s[0] == 'group', here.group_color, here.role_color))">
             <font color="" tal:attributes="color color">
-              <b tal:content="python:s[1]" /><br />
+              <b tal:content="python:s[2]" /><br />
             </font>
                 (<font color="" tal:attributes="color color"><span tal:replace="python:s[0]" /></font>)
           </span>
@@ -51,8 +52,8 @@
         >
           <tal:block
             tal:define="
-              R python:table_cache[folder[2]][s].get('R', None);
-              W python:table_cache[folder[2]][s].get('W', None)"
+              R python:table_cache[folder[2]][s[:2]].get('R', None);
+              W python:table_cache[folder[2]][s[:2]].get('W', None)"
           >
             <span tal:condition="R">R</span>
             <span tal:condition="W">W</span>
@@ -65,6 +66,7 @@
 
   </div>
 
+  <div tal:condition="not: print" tal:omit-tag="">
     <h3>Audit settings</h3>
     <ol>
       <p>
@@ -125,14 +127,24 @@
             </td>
           </tr>
           <tr>
+            <td><div class="list-item">Printable page</div></td>
+            <td>
+              <div class="list-item">
+                <input type="checkbox" name="pp">
+              </div>
+            </td>
+          </tr>
+          <tr>
             <td></td>
             <td><input type="submit" value="View"></td>
           </tr>
         </table>
       </form>
     </ol>
+  </div>
 
 
+  <div tal:condition="not: print" tal:omit-tag="">
   <div tal:condition="not:request/doIt | nothing">
 
     <h3>About the audit table</h3>
@@ -175,6 +187,7 @@
         </ul>
       </ol>
     </ol>
+  </div>
   </div>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

@@ -682,12 +682,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         usr_cache = {}
         for id, depth, path in folders:
             folder = self.unrestrictedTraverse(path)
-            for kind, actor in actors:
+            for kind, actor, display in actors:
                 if kind in ("user", "group"):
                     # Init structure
                     if not cache.has_key(path):
                         cache[path] = {(kind, actor): {}}
-                    elif not cache[path].has_key((kind, actor)):
+                    elif not cache[path].has_key((kind, actor, display)):
                         cache[path][(kind, actor)] = {}
                     else:
                         cache[path][(kind, actor)] = {}
@@ -781,7 +781,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Collect roles
         if display_roles:
             for r in self.aq_parent.valid_roles():
-                ret.append(('role', r))
+                ret.append(('role', r, r))
 
         # Collect users
         for u in self.getUserNames():
@@ -789,11 +789,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if hasattr(obj, 'isGroup'):
                 if obj.isGroup():
                     if display_groups:
-                        ret.append(('group', u))
+                        ret.append(('group', u, self.getUser(u).getUserNameWithoutGroupPrefix()))
                         continue
 
             if display_users:
-                ret.append(('user', u))
+                ret.append(('user', u, u))
 
         # Return list
         return ret
