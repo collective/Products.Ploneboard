@@ -225,6 +225,7 @@
                     <p>Releases are now hosted by SourceForge. The latest release can always be found <a href="http://sourceforge.net/project/showfiles.php?group_id=55262">here</a>.</p>
                     <ul>
                       <li><b>2.0Beta1</b> (2003-10-23): Supports multiple user sources, cosmetic ZMI improvements</li>
+                      <li><b>1.32</b> (2003-09): Non-official utility release (Plone-related tools improvements)</li>
                       <li><b>1.31</b> (2003-07-29): Major speed improvements, cosmetic ZMI improvements</li>
                       <li><b>1.3</b> (2003-07-23): Implemented nested groups feature, major ZMI improvements</li>
                       <li><b>1.21</b> (2003-07-10): Fix in LDAPUserFolder attributes retreiving and cosmetic fixes on ZMI</li>
@@ -253,37 +254,75 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
               <span class="boxtab">Screenshots</span>
               <div class="boxcontent">
                 <p>
-                  Here comes a few screenshots of GRUF administration interface.
+                  Here comes a few screenshots of GRUF administration interface. Click an image to enlarge.
                 </p>
-                <p align="center">
-                  <img src="folder_contents.png"><br />
-                  <i>The way GRUF shows-up in the ZMI</i>
-                </p>
-                <p align="center">
-                  <img src="menu.png"><br />
-                  <i>The way GRUF shows-up in the ZMI (continued)<br />
-                              You can now see users and groups defined within GRUF, and click them individually.</i>
-                </p>
-                <p align="center">
-                  <img src="tab_overview.png"><br />
-                  <i>A users, groups and roles overview</i>
-                </p>
-                <p align="center">
-                  <img src="tab_groups.png"><br />
-                  <i>The groups management interface</i>
-                </p>
-                <p align="center">
-                  <img src="tab_users.png"><br />
-                  <i>The users management interface</i>
-                </p>
-                <p align="center">
-                  <img src="user_edit.png"><br />
-                  <i>Individual group edition</i>
-                </p>
-                <p align="center">
-                  <img src="tab_audit.png"><br />
-                  <i>A security audit results page</i>
-                </p>
+                <table width="100%">
+                  <tr>
+                      <td width="50%" align="center">
+                        <a href="folder_contents.png">
+                          <img src="folder_contents.png" height="150">
+                        </a>
+                        <br />
+                        <i>The way GRUF shows-up in the ZMI</i>
+                      </td>
+                      <td align="center">
+                        <a href="menu.png">
+                          <img src="menu.png" height="150">
+                        </a>
+                        <br />
+                        <i>The way GRUF shows-up in the ZMI (continued)<br />
+                          You can now see users and groups defined within GRUF, and click them individually.</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center">
+                        <a href="tab_overview.png">
+                          <img height="150" src="tab_overview.png">
+                        </a>
+                        <br />
+                        <i>A quick overview page with many users</i>
+                      </td>
+                      <td align="center">
+                        <a href="tab_groups.png">
+                          <img height="150" src="tab_groups.png">
+                        </a>
+                        <br />
+                        <i>The groups management interface</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center">
+                        <a href="tab_users.png">
+                          <img height="150" src="tab_users.png">
+                        </a>
+                        <br />
+                        <i>The users management interface</i>
+                      </td>
+                      <td align="center">
+                        <a href="user_edit.png">
+                          <img height="150" src="user_edit.png">
+                        </a>
+                        <br />
+                        <i>Individual group edition</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center">
+                        <a href="tab_audit.png">
+                          <img height="150" src="tab_overview.png">
+                        </a>
+                        <br />
+                        <i>A security audit results page</i>
+                      </td>
+                      <td align="center">
+                        <a href="tab_sources.png">
+                          <img height="150" src="tab_sources.png">
+                        </a>
+                        <br />
+                        <i>The multiple sources view</i>
+                      </td>
+                    </tr>
+                </table>
               </div>
 
               <a name="faq"/>
@@ -306,16 +345,16 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                     Multiple user sources is a feature that would allow you to store users in several userfolders.
                     For example, you could have your regular admin users in a standard User Folder, your intranet
                     users in an LDAPUserFolder and your extranet users in an SQL-based user folder<br />
-                    GRUF doesn't support this yet but this feature is planned.
+                    GRUF supports this from version 2.0Beta1.
                   </li>
                   <li>
                     <strong>Can I use GRUF outside Plone ?</strong><br />
-                    Yes, yes, yes, yes and yes.
+                    Yes, yes, yes, yes and yes. This is a major design consideration for us.
                   </li>
                   <li>
                     <strong>Is GRUF stable ?</strong><br />
                     It's used in a production environment for several major websites. Furthermore, it's qualified to be included
-                    in Plone 1.1. It's considered reliable enough !
+                    in Plone 1.1. It's considered reliable enough - except for "Beta" versions, of course.
                   </li>
                 <li>
                     <strong>Is GRUF maintained ?</strong><br />
@@ -357,7 +396,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
             <span class="boxtab">Contact</span>
             <div class="boxcontent">
               <p>
-                  Here is some ways to have contact/support on GRUF.
+                  There are some ways to have contact/support on GRUF.
               </p>
                 <ul>
                   <li><a href="http://lists.sourceforge.net/lists/listinfo/ingeniweb-help">Ingeniweb help mailing list</a></li>
@@ -370,7 +409,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                 <font size="-3">
                   <!-- Created: Wed Jul  9 15:52:57 GMT 2003 -->
                   <!-- hhmts start -->
-Last modified: Thu Oct 23 16:53:32     2003
+Last modified: Tue Oct 28 09:55:19     2003
 <!-- hhmts end -->
                 </font>
               </p>
