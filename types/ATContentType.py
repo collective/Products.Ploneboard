@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.35 2004/08/12 12:22:01 tiran Exp $
+$Id: ATContentType.py,v 1.36 2004/08/13 13:15:46 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -167,7 +167,7 @@ class ATCTMixin(TemplateMixin):
             # FTI is None which may happen in ATCT2CMF switching
             # script in this case the self.portal_type aka
             # self.__class__.__name__ is right but test to be sure
-            assert(pt, self.__class__.__name__)
+            assert(portal_type, self.__class__.__name__)
             return portal_type
         if fti.Metatype() == self.meta_type:
             return correct_pt
