@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.31 2004/07/09 14:17:08 pjgrizel Exp $
+$Id: GroupsTool.py,v 1.32 2004/07/13 13:07:46 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -338,14 +338,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
                 workspaces._setProperty('right_slots', (), 'lines')
 
-            Log(LOG_DEBUG, )
             if workspaces is not None and not hasattr(workspaces, id):
                 # add workspace to GroupWorkspaces folder
-                Log(LOG_DEBUG, self.getGroupWorkspaceType(), id)
                 workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
-                Log(LOG_DEBUG, )
                 space = self.getGroupareaFolder(id)
-                Log(LOG_DEBUG, )
                 space.setTitle("%s workspace" % id)
                 space.setDescription("Container for objects shared by this group")
 

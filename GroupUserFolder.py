@@ -910,40 +910,6 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """ group prefix """
         return GROUP_PREFIX
 
-    # XXX This method has NOT to be public !!! It is because of a CMF inconsistancy.
-    # folder_localrole_form is accessible to users who have the manage_properties permissions
-    # (according to portal_types/Folder/Actions information). This is silly !
-    # folder_localrole_form should be, in CMF, accessible only to those who have the
-    # manage_users permissions instead of manage_properties permissions.
-    # This is yet another one CMF bug we have to care about.
-    security.declareProtected(Permissions.manage_users, "getLocalRolesForDisplay")
-    def getLocalRolesForDisplay(self, object):
-        ## This is used for plone's local roles display
-        ## This method returns a tuple (massagedUsername, roles, userType, actualUserName)
-        result = []
-        local_roles = object.get_local_roles()
-        prefix = self.getGroupPrefix()
-        #log('prefix is: "%s"' % (prefix,))
-        for one_user in local_roles:
-            massagedUsername = username = one_user[0]
-            roles = one_user[1]
-            userType = 'user'
-            if prefix:
-                #log('username is: "%s"' % (username,))
-                if self.getGroup(username) or \
-                   self.getGroup('%s%s' % (prefix, username)):
-                    #log('found group %s' % (username,))
-                    if username.startswith(prefix):
-                        massagedUsername = username[len(prefix):]
-                        #log('massagedUsername is: "%s"' % (massagedUsername,))
-                    userType = 'group'
-                #else:
-                #    log('DID NOT FIND group %s' % (username,))
-            else:
-                userType = 'unknown'
-            result.append((massagedUsername, roles, userType, username))
-        return tuple(result)    
-
     security.declarePrivate('getGRUFPhysicalRoot')
     def getGRUFPhysicalRoot(self,):
         # $$$ trick meant to be used within 
@@ -1316,7 +1282,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/07/12 16:07:31 $"[7:-2]
+        rev_date = "$Date: 2004/07/13 13:07:46 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -1531,13 +1497,67 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         return 1
 
 
-    # ----------------------
-    # Security audit methods
-    # ----------------------
+    #                                                                                   #
+    #                           Security audit and info methods                         #
+    #                                                                                   #
 
 
-    security.declareProtected(Permissions.manage_users, "getAllLocalRoles")
+    # This method normally has NOT to be public ! It is because of a CMF inconsistancy.
+    # folder_localrole_form is accessible to users who have the manage_properties permissions
+    # (according to portal_types/Folder/Actions information). This is silly !
+    # folder_localrole_form should be, in CMF, accessible only to those who have the
+    # manage_users permissions instead of manage_properties permissions.
+    # This is yet another one CMF bug we have to care about.
+    # To deal with that in Plone2.1, we check for a particular permission on the destination
+    # object _inside_ the method.
+    security.declarePublic("getLocalRolesForDisplay")
+    def getLocalRolesForDisplay(self, object):
+        """This is used for plone's local roles display
+        This method returns a tuple (massagedUsername, roles, userType, actualUserName).
+        This method is protected by the 'access content information' permission. We may
+        change that if it's too permissive..."""
+        # Perform security check on destination object
+        if not getSecurityManager().checkPermission(Permissions.access_contents_information, object):
+            raise Unauthorized(name = "getLocalRolesForDisplay")
+
+        return self._getLocalRolesForDisplay(object)
+
+    def _getLocalRolesForDisplay(self, object):
+        """This is used for plone's local roles display
+        This method returns a tuple (massagedUsername, roles, userType, actualUserName)"""
+        result = []
+        local_roles = object.get_local_roles()
+        prefix = self.getGroupPrefix()
+        for one_user in local_roles:
+            massagedUsername = username = one_user[0]
+            roles = one_user[1]
+            userType = 'user'
+            if prefix:
+                if self.getGroup(username) or \
+                   self.getGroup('%s%s' % (prefix, username)):
+                    if username.startswith(prefix):
+                        massagedUsername = username[len(prefix):]
+                    userType = 'group'
+            else:
+                userType = 'unknown'
+            result.append((massagedUsername, roles, userType, username))
+        return tuple(result)    
+
+
+    security.declarePublic("getAllLocalRoles")
     def getAllLocalRoles(self, object):
+        """getAllLocalRoles(self, object): return a dictionnary {useratom_id: roles} of local
+        roles defined AND herited at a certain point. This will handle lr-blocking
+        as well.
+        """
+        # Perform security check on destination object
+        if not getSecurityManager().checkPermission(Permissions.change_permissions, object):
+            raise Unauthorized(name = "getAllLocalRoles")
+        
+        return self._getAllLocalRoles(object)
+
+
+    def _getAllLocalRoles(self, object):
         """getAllLocalRoles(self, object): return a dictionnary {useratom_id: roles} of local
         roles defined AND herited at a certain point. This will handle lr-blocking
         as well.
