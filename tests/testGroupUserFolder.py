@@ -358,6 +358,22 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
     
 
 
+    def test08traversal(self,):
+        """
+        test traversal to ensure management screens are correctly accessible
+        """
+        # Check if we can traverse a GRUF to fetch a user (check a dummy method on it)
+        traversed = self.folder.acl_users.restrictedTraverse("u1")
+        Log(LOG_DEBUG, traversed)
+        self.failUnless(traversed.meta_type == "Group User Folder")
+
+        # Now, do the same but with a folder of the same name
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('u1')
+        traversed = self.folder.acl_users.restrictedTraverse("u1")
+        Log(LOG_DEBUG, traversed)
+        self.failUnless(traversed.meta_type == "Group User Folder")
+
+
     #                                                   #
     #               GRUF Interface testing              #
     #                                                   #

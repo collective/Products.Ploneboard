@@ -721,7 +721,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/02/27 14:50:43 $"[7:-2]
+        rev_date = "$Date: 2004/02/27 17:33:15 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1230,7 +1230,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         This applies only if users list is not huge.
         """
         # Check if it's an attribute
-        if hasattr(self, name, ):
+        if hasattr(self.aq_base, name, ):
             return getattr(self, name)
         
         # It's not an attribute, maybe it's a user/group
@@ -1257,7 +1257,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 self._v_no_tree = 0
                 return self
 
-        # This will raise
+        # This will raise if it's not possible to acquire 'name'
         return getattr(self, name, )
 
 
