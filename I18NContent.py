@@ -18,10 +18,10 @@
 """
 Multilingual content base classes and helpers.
 
-$Id: I18NContent.py,v 1.6 2003/10/02 09:11:33 longsleep Exp $
+$Id: I18NContent.py,v 1.7 2003/10/02 14:08:10 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.6 $"
+__version__ = "$Revision: 1.7 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -45,6 +45,7 @@ class I18NContentBase:
 
         available_languages=self.getFilteredLanguageMap(verifypermission=verifypermission).keys()
         self.languages=self.getLanguagesFromRequest() + list(available_languages)
+        #print "self.languages", self.languages
 
     def Layer(self):
         return self.layer
@@ -62,11 +63,12 @@ class I18NContentBase:
             # we support a property here to make it possible to pre select default languages
             # for certain folders
             language_once=getattr(self.Layer(), 'local_default_language', None)
-            self.REQUEST.set('cl', language_once)
+            if language_once: self.REQUEST.set('cl', language_once)
         accept=self.getLanguagesFromTranslationService()
         try: default_language=self.Layer().portal_properties.site_properties.default_language
         except: default_language=None
 
+        #print "accept", accept, language, language_once, default_language
         languages=accept
         #print "accept", accept
         #print "language", language

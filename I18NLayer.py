@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.9 2003/09/30 11:31:06 longsleep Exp $
+$Id: I18NLayer.py,v 1.10 2003/10/02 14:08:10 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.9 $"
+__version__ = "$Revision: 1.10 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -233,10 +233,13 @@ class I18NLayer( BaseFolder ):
         if ob:
             klass=ob.__class__
             language_tool = getToolByName(self, 'portal_languages', None)
-            force_redir = getattr(language_tool, 'force_language_urls', 1)
+            force_redir = getattr(language_tool, 'force_language_urls', 1)  
             if force_redir:
                 url = "%s" % (ob.absolute_url())
                 if REQUEST.get('QUERY_STRING', '').strip(): url="%s?%s" % (url, REQUEST.QUERY_STRING)
+                REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')
+                REQUEST.RESPONSE.setHeader('Expires', '-1')
+                REQUEST.RESPONSE.setHeader('Pragma', 'no-cache')                                        
                 REQUEST.RESPONSE.redirect(url)
                 return "redirect index"
             i=getattr(klass,'index_html', None)
