@@ -18,7 +18,7 @@
 #
 """
 
-$Id: config.py,v 1.2 2004/03/08 15:15:49 tiran Exp $
+$Id: config.py,v 1.3 2004/03/08 17:03:04 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -32,9 +32,10 @@ GLOBALS = globals()
 
 # Load the validation package from Products.validation (1) or from the
 # python site-packages (0)
-# Archetypes 1.2.x requires: 0
-# Archetypes 1.3.x requires: 1 
-VALIDATION_IN_PRODUCTS = 0
+# Archetypes 1.2.x requires:  0
+# Archetypes 1.2.5+ requires: 1
+# Archetypes 1.3.x requires:  1 
+VALIDATION_IN_PRODUCTS = 1
 
 ICONMAP = {'application/pdf' : 'pdf_icon.gif',
            'image'           : 'image_icon.gif'}
