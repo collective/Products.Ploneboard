@@ -380,11 +380,11 @@ class GRUFUserAtom(AccessControl.User.BasicUser, Implicit):
 
 
     security.declarePrivate("getProperty")
-    def getProperty(self, name, default = _marker):
+    def getProperty(self, name, default=_marker):
         """getProperty(self, name) => return property value or raise AttributeError
         """
         # Try to do an attribute lookup on the underlying user object
-        v = getattr(self.__underlying__, name, _marker)
+        v = getattr(self.__underlying__, name, default)
         if v is _marker:
             raise AttributeError, name
         return v
