@@ -35,7 +35,7 @@ HEAD PAGE TITLES!!
                  <img src="/misc_/CMFCore/tool.gif"/>
           </a>
           <a href="" tal:condition="python:here.portal_membership.checkPermission('List folder contents', here)"
-	            tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_contents'">
+	            tal:attributes="href python:here.aq_parent.absolute_url() + '/folder_listing'">
                  <img src="/folder_icon.gif"/>
           </a>
 
