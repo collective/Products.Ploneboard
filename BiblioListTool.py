@@ -74,12 +74,6 @@ class BiblioListTool(UniqueObject, Folder):
         """
         at_tool = getToolByName(self, 'archetype_tool')
         objs = [at_tool.lookupObject(uid) for uid in uids]
-        return self.formatRefs(objs, style)
-
-    security.declarePrivate('formatRefs')
-    def formatRefs(self, objs, style):
-        """ renders a formatted bibliography references list
-        """
         uflist = [self.getEntryDict(obj) for obj in objs]
         formatted_list = [self.formatDicoRef(obj, style)
                           for obj in self.sortList(uflist)]
@@ -216,7 +210,6 @@ class BiblioListTool(UniqueObject, Folder):
         values['source'] = unicode(entry.Source(),'utf-8')
         values['absolute_url'] = unicode(entry.absolute_url(),'utf-8')
         values['meta_type'] = unicode(entry.meta_type,'utf-8') 
-        
         return values
 
 InitializeClass(BiblioListTool)
