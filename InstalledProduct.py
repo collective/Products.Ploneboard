@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.23 2004/12/07 10:02:39 yenzenz Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.24 2004/12/11 09:32:58 alan_milligan Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ def updatelist(a,b):
 
 def delObjects(cont, ids):
     """ abbreviation to delete objects """
-    delids=[id for id in ids if hasattr(cont,id)]
+    delids=[id for id in ids if hasattr(aq_base(cont),id)]
     for delid in delids:
         try:
             cont.manage_delObjects(delid)
