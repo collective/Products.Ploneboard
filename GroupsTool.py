@@ -5,13 +5,13 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.9 2003/08/01 20:07:44 jccooper Exp $
+$Id: GroupsTool.py,v 1.10 2003/08/01 21:09:49 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
 from OFS.SimpleItem import SimpleItem
-from Globals import InitializeClass, DTMLFile
+from Globals import InitializeClass, DTMLFile, MessageDialog
 from Acquisition import aq_base
 from AccessControl.User import nobody
 from AccessControl import ClassSecurityInfo
@@ -45,17 +45,32 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     groupWorkspacesCreationFlag = 1
     groupWorkspaceType = "Folder"
 
-    manage_options=( ActionProviderBase.manage_options + 
-                   ( { 'label' : 'Overview'
+    manage_options=(
+    		( { 'label' : 'Configure'
+                     , 'action' : 'manage_config'
+                    },
+                ) + ActionProviderBase.manage_options +
+                ( { 'label' : 'Overview'
                      , 'action' : 'manage_overview'
                      },
-                   ) + SimpleItem.manage_options)
+                ) + SimpleItem.manage_options)
 
     #
     #   ZMI methods
     #
     security.declareProtected(ManagePortal, 'manage_overview')
     manage_overview = DTMLFile('dtml/explainGroupsTool', globals())
+    manage_config = DTMLFile('dtml/configureGroupsTool', globals())
+
+    def manage_setGroupWorkspacesFolder(self, id='GroupWorkspaces', REQUEST=None):
+    	"""ZMI method for workspace container name set."""
+	self.setGroupWorkspacesFolder(id)
+        return self.manage_config(manage_tabs_message="Workspaces folder name set to %s" % id)
+
+    def manage_setGroupWorkspaceType(self, type='Folder', REQUEST=None):
+    	"""ZMI method for workspace type set."""
+	self.setGroupWorkspaceType(type)
+        return self.manage_config(manage_tabs_message="Group Workspaces type set to %s" % type)
 
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
@@ -186,7 +201,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         folder = getattr(parent, self.getGroupWorkspacesFolderId(), None)
         return folder
 
-    def toggleGroupWorkspacesCreation(self):
+    def toggleGroupWorkspacesCreation(self, REQUEST=None):
     	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
         use of the group. """
         if not hasattr(self, 'groupWorkspacesCreationFlag'):
@@ -196,10 +211,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         m = self.groupWorkspacesCreationFlag and 'turned on' or 'turned off'
 
-        return MessageDialog(
-               title  ='Group Workspaces creation flag changed',
-               message='Group Workspaces creation flag has been %s' % m,
-               action ='manage_mapRoles')
+        return self.manage_config(manage_tabs_message="Workspaces creation %s" % m)
 
     def getGroupWorkspacesCreationFlag(self):
     	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
