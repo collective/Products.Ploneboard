@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.11 2004/02/17 07:11:58 dtremea Exp $
+$Id: GettextMessageCatalog.py,v 1.12 2004/03/01 10:32:27 tiran Exp $
 """
 
 from Acquisition import aq_parent
@@ -214,9 +214,11 @@ class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         if tro is None:
             moFile = self._getMoFile()
             tro = GNUTranslations(moFile)
-            self._language = (tro._info.get('language-code', self._language) # new way
-                           or tro._info.get('language', self._language)) # old way
-            self._domain = tro._info.get('domain', self._domain)
+            if not self._language:
+                self._language = (tro._info.get('language-code', None) # new way
+                               or tro._info.get('language', None)) # old way
+            if not self._domain:
+                self._domain = tro._info.get('domain', None)
             if self._language is None or self._domain is None:
                 raise ValueError, 'potfile has no metadata, PTS needs a language and a message domain!'
             self._language = self._language.lower().replace('_', '-')

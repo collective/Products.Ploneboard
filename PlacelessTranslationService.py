@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """Placeless Translation Service for providing I18n to file-based code.
 
-$Id: PlacelessTranslationService.py,v 1.19 2004/02/16 12:14:17 tiran Exp $
+$Id: PlacelessTranslationService.py,v 1.20 2004/03/01 10:32:27 tiran Exp $
 """
 
 import sys, re, zLOG, Globals, fnmatch
@@ -147,7 +147,7 @@ class PlacelessTranslationService(Folder):
     # -3 for alpha, -2 for beta, -1 for release candidate
     # for forked releases internal is always 99
     # use an internal of >99 to recreate the PTS at evry startup (development mode)
-    _class_version = (1, -1, 5, 99)
+    _class_version = (1, -1, 10, 99)
     all_meta_types = ()
 
     security = ClassSecurityInfo()
@@ -192,6 +192,34 @@ class PlacelessTranslationService(Folder):
         self._unregister_inner(catalog, fbcatalogRegistry)
         self._p_changed = 1
 
+    def _load_catalog_file(self, name, popath, language=None, domain=None):
+        """
+        """
+        ob = self._getOb(name, _marker)
+        try:
+            if isinstance(ob, BrokenMessageCatalog):
+                # remove broken catalog
+                self._delObject(name)
+                ob = _marker
+        except: pass
+        try:
+            if ob is _marker:
+                self.addCatalog(GettextMessageCatalog(os.path.join(popath, name), language, domain))
+            else:
+                self.reloadCatalog(ob)
+        except IOError:
+            # io error probably cause of missing or 
+            # not accessable 
+            try:
+                # remove false catalog from PTS instance
+                self._delObject(name)
+            except:
+                pass
+        except:
+             exc=sys.exc_info()
+             log('Message Catalog has errors', zLOG.PROBLEM, name, exc)
+             self.addCatalog(BrokenMessageCatalog(os.path.join(popath, name), exc))
+
     def _load_i18n_dir(self, basepath):
         """Loads an i18n directory (Zope3 PTS format)
         
@@ -217,30 +245,7 @@ class PlacelessTranslationService(Folder):
             log('nothing found', zLOG.BLATHER)
             return
         for name in names:
-            ob = self._getOb(name, _marker)
-            try:
-                if isinstance(ob, BrokenMessageCatalog):
-                    # remove broken catalog
-                    self._delObject(name)
-                    ob = _marker
-            except: pass
-            try:
-                if ob is _marker:
-                    self.addCatalog(GettextMessageCatalog(os.path.join(basepath, name)))
-                else:
-                    self.reloadCatalog(ob)
-            except IOError:
-                # io error probably cause of missing or 
-                # not accessable 
-                try:
-                    # remove false catalog from PTS instance
-                    self._delObject(name)
-                except:
-                    pass
-            except:
-                 exc=sys.exc_info()
-                 log('Message Catalog has errors', zLOG.PROBLEM, name, exc)
-                 self.addCatalog(BrokenMessageCatalog(os.path.join(basepath, name), exc))
+            self._load_catalog_file(name, basepath)
                  
         log('Initialized:', detail = repr(names) + (' from %s\n' % basepath))
         
@@ -253,12 +258,31 @@ class PlacelessTranslationService(Folder):
         Where ${lang} and ${domain} are the language and the domain of the po
         file (e.g. locales/de/LC_MESSAGES/plone.po)
         """
-        return
-        # XXX not implemented
+        found=[]
         log('looking into ' + basepath, zLOG.BLATHER)
         if not os.path.isdir(basepath):
             log('it does not exist', zLOG.BLATHER)
             return
+        
+        for lang in os.listdir(basepath):
+            langpath = os.path.join(basepath, lang)
+            if not os.path.isdir(langpath):
+                # it's not a directory
+                continue
+            msgpath = os.path.join(langpath, 'LC_MESSAGES')
+            if not os.path.isdir(msgpath):
+                # it doesn't contain a LC_MESSAGES directory
+                continue
+            names = fnmatch.filter(os.listdir(msgpath), '*.po')
+            for name in names:
+                domain = name[:-3]
+                found.append('%s:%s' % (lang, domain))
+                self._load_catalog_file(name, msgpath, lang, domain)
+
+        if not found:
+            log('nothing found', zLOG.BLATHER)
+            return
+        log('Initialized:', detail = repr(found) + (' from %s\n' % basepath))
 
     def _getContext(self, context):
         # ZPT passes the object as context.  That's wrong according to spec.
