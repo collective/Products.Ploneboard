@@ -7,7 +7,9 @@ TODO-LIST
   * [Core/ZMI] Implement something to list all members of a particular group
     and put this view in individual group management screen.
 
-[v1.41 => Not planned yet]
+[v1.4+ => Not planned yet]
+
+  * [Core] Implement join()/leave() methods (and logic!) on groups
 
   * [Core] Implement some feature to make LDAPUF roles/groups binding easier
 
