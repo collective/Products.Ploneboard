@@ -1,1 +1,8 @@
-1. Enzo Cesanelli enzo@noiza.com, italian translation
+AUTHOR
+
+  Pan Junyong, (id: panjunyong), panjy at zopechina dot com, www.zopechina.com
+
+I18N
+
+  - Enzo Cesanelli enzo@noiza.com, italian translation
+  - Christophe ZERR christophe.zerr@interieur.gouv.fr, French Translation
