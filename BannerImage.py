@@ -7,6 +7,7 @@ class BannerImage(BaseContent):
     meta_type = 'BannerImage'
     archetype_name = 'Banner Image'
     content_icon = 'bannerimage_icon.gif'
+    global_allow = 0
 
     schema = BaseSchema + Schema((
             ImageField('image',
