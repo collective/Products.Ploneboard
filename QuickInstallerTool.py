@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: QuickInstallerTool.py,v 1.6 2003/07/09 01:30:13 zworkb Exp $
+# RCS-ID:      $Id: QuickInstallerTool.py,v 1.7 2003/07/09 02:04:50 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         sys.stdout.flush()
         
         if skipInstalled:
-            installed=[p['id'] for p in self.listInstalledProducts()]
+            installed=[p['id'] for p in self.listInstalledProducts(showHidden=1)]
             pids=[r for r in pids if r not in installed]
             
         res=[]
@@ -111,9 +111,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     
 
     
-    def listInstalledProducts(self):
+    def listInstalledProducts(self, showHidden=0):
         ''' returns a list of products that are installed -> list of strings'''
-        pids = [o.id for o in self.objectValues() if o.isInstalled()]
+        pids = [o.id for o in self.objectValues() if o.isInstalled() and (o.isVisible() or showHidden )]
 
         res=[]
         
@@ -159,7 +159,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
     def isProductInstalled(self,productname):
         ''' checks wether a product is installed (by name) '''
         o=self._getOb(productname,None)
-        return o and o.isInstalled()
+        return o and o.isInstalled(showHidden=1)
 
 
     security.declareProtected(ManagePortal, 'notifyInstalled')
@@ -176,7 +176,7 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
 
             
     security.declareProtected(ManagePortal, 'installProduct')
-    def installProduct(self,p):
+    def installProduct(self,p,locked=0,hidden=0):
         ''' installs a product by name '''
         
         if self.isProductInstalled(p):
@@ -239,9 +239,9 @@ class QuickInstallerTool( UniqueObject,  ObjectManager, SimpleItem  ):
         #add the product
         if p in self.objectIds():
             p=getattr(self,p)
-            p.update(types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error)
+            p.update(types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error,locked,hidden)
         else:
-            ip=InstalledProduct(p,types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error)
+            ip=InstalledProduct(p,types,skins,actions,portalobjects,workflows,leftslots,rightslots,res,status,error,locked,hidden)
             self._setObject(p,ip)
             
         return res

@@ -10,6 +10,9 @@ class IQuickInstallerTool(Interface):
     def listInstallableProducts(skipInstalled=1):
         ''' returns a list of products that are installed -> list of strings'''
 
+    def listInstalledProducts(showHidden=0):
+        ''' returns a list of products that are installed -> list of strings'''
+
     def installProducts(products=[], stoponerror=0, REQUEST=None):
         ''' installs the products specified in the products list'''
 
@@ -19,10 +22,12 @@ class IQuickInstallerTool(Interface):
     def notifyInstalled(p,locked=1, hidden=0, **kw):
         ''' marks a product that has been installed without QuickInstaller
          as installed 
+         if locked is set -> the prod cannot be uninstalled
+         if hidden is set -> the prod is not listed in the UI
          the **kw param is passed to the constructor of InstalledProduct
          '''
 
-    def installProduct(p):
+    def installProduct(self,p,locked=0,hidden=0):
         ''' installs a product by name '''
 
     def uninstallProducts( products, REQUEST=None):

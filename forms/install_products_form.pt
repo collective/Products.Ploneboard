@@ -23,12 +23,10 @@
     
         <table>
             <tr tal:repeat="product here/listInstalledProducts">
-                <tal:block tal:condition="not:product/isHidden">
-                    <td><input tal:condition="not:product/isLocked" type=checkbox name=products:list tal:attributes="value product/id"></td>
-                    <td>
-                         <a tal:attributes="href product/id" tal:content="product/id" >product name</a>
-                    </td>
-                </tal:block>
+                <td><input tal:condition="not:product/isLocked" type=checkbox name=products:list tal:attributes="value product/id"></td>
+                <td>
+                     <a tal:attributes="href product/id" tal:content="product/id" >product name</a>
+                </td>
             </tr>
         </table>
         <input type=submit i18n:attributes="value" value="Uninstall">

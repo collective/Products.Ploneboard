@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.10 2003/07/09 01:30:13 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.11 2003/07/09 02:04:50 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -117,6 +117,9 @@ class InstalledProduct(SimpleItem):
         ''' is the product hidden'''
         return getattr(self,'hidden',0)
     
+    def isVisible(self):
+        return not self.isHidden()
+    
     def isInstalled(self):
         return self.status=='installed'
     
@@ -175,6 +178,9 @@ class InstalledProduct(SimpleItem):
     def uninstall(self,cascade=['types','skins','actions','portalobjects','workflows','slots'],REQUEST=None):
         '''uninstalls the prod and removes its deps'''
 
+        if self.isLocked():
+            raise ValueError, 'The product is locked and cannot be uninstalled!'
+        
         portal=getToolByName(self,'portal_url').getPortalObject()
         res=''
 
