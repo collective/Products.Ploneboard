@@ -10,7 +10,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.18 2004/09/27 14:57:39 ajung Exp $
+$Id: SchemaEditor.py,v 1.19 2004/09/27 15:45:28 ajung Exp $
 """
 
 import re
@@ -185,7 +185,7 @@ class SchemaEditor:
     security.declareProtected(View, 'atse_isSchemaRegistered')
     def atse_isSchemaRegistered(self, schema_id):
         """ returns True if schema exists """
-        return self._schemas.has_key(schema_id)
+        return self._schemas.has_key(schema_id) > 0
 
     security.declareProtected(View, 'atse_getDefaultSchema')
     def atse_getDefaultSchema(self):
