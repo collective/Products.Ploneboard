@@ -57,7 +57,14 @@ you can browse into the installed products and see what
 they created and see the logs of the install process.
 
 for Plone there will be an interface inside the portal so that
-it is not necessary to enter thr ZMI for priduct management
+it is not necessary to enter thr ZMI for product management
+
+API
+-------
+
+QuickInstaller is also intended to be called from other modules
+in order to automate installing of application.
+For API reference see interfaces/portal_quickinstaller.py
 
 Customized uninstall
 ------------
