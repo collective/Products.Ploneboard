@@ -7,15 +7,17 @@ more specific content type is found.
 
 signature for a handler is::
 
-  def access_handler(tool, content_type, content)
+  def access_handler( tool, content_type, content)
 
 and should return a metadata binding adapter or
 raise an exception.
 
 author: kapil thangavelu <k_vertigo@objectrealms.net>
 """
-from Binding import MetadataBindAdapter
+from __future__ import nested_scopes
+
 from Compatibility import getContentType
+from Binding import MetadataBindAdapter
 from Exceptions import BindingError
 
 _default_accessor = None
@@ -24,11 +26,11 @@ _typeAccessHandlers = {}
 def registerAccessHandler(content_type, handler):
     assert callable(handler)
     global _typeAccessHandlers, _default_accessor
-
+    
     if content_type is None:
         _default_accessor = handler
-    else:
-        _typeAccessHandlers[content_type]=handler
+    else: 
+        _typeAccessHandlers[content_type]=handler        
 
 def getAccessHandler(content_type):
     handler = _typeAccessHandlers.get(content_type)
@@ -40,17 +42,28 @@ def invokeAccessHandler(tool, content):
     ct = getContentType(content)
     handler = getAccessHandler(ct)
     if handler is None:
-        raise BindingError("no access handler found for %s" % ct)
+        raise BindingError("no access handler found for %s"%ct)
     return handler(tool, ct, content)
-
-def default_accessor(tool, content_type, content):
+    
+def default_accessor( tool, content_type, content):
     type_mapping = tool.getTypeMapping()
-    metadata_sets = type_mapping.getMetadataSetsFor(content_type)
+    metadata_sets = type_mapping.getMetadataSetsFor( content_type )
 
     if not metadata_sets:
-        raise BindingError("no metadata sets defined for %s" % content_type)
-
+        raise BindingError("no metadata sets defined for %s"%content_type)
+    
     return MetadataBindAdapter(content, metadata_sets).__of__(content)
 
+def cached_accessor(tool, content_type, content):
+    """
+    bindings that get cached for the course of a request
+    """
+    binding  = getattr(content, '_v_binding', None)
 
+    if binding is None:
+        binding = default_accessor( tool, content_type, content)
+        setattr(content, '_v_binding', binding)
+
+    return binding   
+    
 registerAccessHandler(None, default_accessor)
