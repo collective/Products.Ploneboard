@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.26 2004/10/16 21:24:32 tiran Exp $
+$Id: ATEvent.py,v 1.27 2005/01/07 17:04:11 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -206,7 +206,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
     def __cmp__(self, other):
         if not isinstance(other, self.__class__):
             # XXX Should fix this.
-            return cmp(self, False)
+            return cmp(None, False)
         return cmp((self.start_date, self.duration, self.title),
                    (other.start_date, other.duration, other.title))
 

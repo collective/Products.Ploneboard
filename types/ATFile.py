@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.30 2004/10/08 16:23:16 tiran Exp $
+$Id: ATFile.py,v 1.31 2005/01/07 17:04:11 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -97,7 +97,7 @@ class ATFile(ATCTFileContent):
         contenttype       = field.getContentType(self)
         contenttype_major = contenttype and contenttype.split('/')[0] or ''
 
-        mtr   = getToolByName(self,'mimetypes_registry',None)
+        mtr   = getToolByName(self, 'mimetypes_registry', None)
         utool = getToolByName( self, 'portal_url' )
 
         if ICONMAP.has_key(contenttype):
