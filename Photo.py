@@ -133,6 +133,7 @@ class Photo(Image):
                        subject, description, contributors, effective_date,
                        expiration_date, format, language, rights)
 
+        # Store resized photos here
         self._photos = OOBTree()
     
     security = ClassSecurityInfo()
@@ -196,7 +197,7 @@ class Photo(Image):
             imgout, imgin = popen2('convert -rotate %s - -'
                                % (degrees,))
 
-        imgin.write(str(self.data))
+        imgin.write(self.data.data)
         imgin.close()
         image.write(imgout.read())
         imgout.close()
@@ -221,14 +222,13 @@ class Photo(Image):
             imgout, imgin = popen2('convert -quality %s -geometry %sx%s - -'
                                    % (quality, width, height))
 
-        imgin.write(str(self.data))
+        imgin.write(self.data.data)
         imgin.close()
         image.write(imgout.read())
         imgout.close()
         image.seek(0)
         return image
     
-# added by the_krow
     security.declareProtected(CMFCorePermissions.View, 'get_exif')
     def get_exif(self):
         """
@@ -237,7 +237,7 @@ class Photo(Image):
 	"""
         import EXIF
 
-        data = EXIF.process_file(StringIO(str(self.data)))
+        data = EXIF.process_file(StringIO(self.data.data))
 
         keys = data.keys()
         keys.sort()
