@@ -35,7 +35,7 @@
                   <td><div class="list-item"><input type="checkbox" name="groups:list" value="" tal:attributes="value group"></td>
                   <td>
                     <div class="list-item">
-                      <img src="" tal:attributes="src here/Groups/icon">
+                      <img src="img_group">
                       <strong tal:content="structure group/asHTML">
                       </strong>
                     </td>

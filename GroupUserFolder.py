@@ -18,7 +18,9 @@ from Globals import MessageDialog, DTMLFile
 
 from AccessControl import ClassSecurityInfo
 from AccessControl import Permissions
+from AccessControl import getSecurityManager
 from Globals import InitializeClass
+from Acquisition import aq_base, aq_inner, aq_parent
 from Acquisition import Implicit
 from Globals import Persistent
 from AccessControl.Role import RoleManager
@@ -33,6 +35,7 @@ import AccessControl.Role, webdav.Collection
 import Products
 import os
 import string
+import sys
 import time
 import math
 import random
@@ -41,12 +44,21 @@ import AccessControl.User
 import GRUFFolder
 import GRUFUser
 from Products.PageTemplates import PageTemplateFile
+import class_utility
 
 DEBUG=1
 #import zLOG
 #
 #def log(message,summary='',severity=0):
 #    zLOG.LOG('GroupUserFolder: ',severity,summary,message)
+
+
+## Developers notes
+##
+## The REQUEST.GRUF_PROBLEM variable is defined whenever GRUF encounters
+## a problem than can be showed in the management screens. It's always
+## logged as LOG_WARNING level anyway.
+
 
 
 _group_prefix_len = len(GRUFFolder.GRUFGroups._group_prefix)
@@ -106,8 +118,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
     manage_options=( 
         (
-        {'label':'Sources', 'action':'manage_GRUFContents'},
         {'label':'Overview', 'action':'manage_overview'},
+        {'label':'Sources', 'action':'manage_GRUFSources'},
         {'label':'Groups', 'action':'manage_groups'},
         {'label':'Users', 'action':'manage_users'},
         {'label':'Audit', 'action':'manage_audit'},
@@ -123,7 +135,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     manage_groups = PageTemplateFile.PageTemplateFile('dtml/GRUF_groups', globals())
     manage_users = PageTemplateFile.PageTemplateFile('dtml/GRUF_users', globals())
     manage_newusers = PageTemplateFile.PageTemplateFile('dtml/GRUF_newusers', globals())
-    manage_GRUFContents = PageTemplateFile.PageTemplateFile('dtml/GRUF_contents', globals())
+    manage_GRUFSources = PageTemplateFile.PageTemplateFile('dtml/GRUF_contents', globals())
     manage_user = PageTemplateFile.PageTemplateFile('dtml/GRUF_user', globals())
 
     __ac_permissions__=(
@@ -230,15 +242,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         Return a list of usernames (including groups).
         Fetch the list from GRUFUsers and GRUFGroups.
         """
-        # Do not fetch usernames if users or groups are invalid
-        if not "acl_users" in self._getOb('Users').objectIds() or \
-           not "acl_users" in self._getOb('Groups').objectIds():
-            return []
-
-        # Aggregate user and group names
         names = []
-        names.extend(self._getOb('Users').acl_users.getUserNames())
-        names.extend(self.Groups.listGroups(prefixed = 1))
+
+        for src in self.listUserSources():
+            names.extend(src.getUserNames())
+
+        # Append groups if possible
+        if "acl_users" in self._getOb('Groups').objectIds():
+            names.extend(self.Groups.listGroups(prefixed = 1))
+
         return names
 
     security.declareProtected(Permissions.manage_users, "getUsers")
@@ -260,18 +272,17 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         XXX Have to improve perfs here
         """
+        # Fetch users first
+        for src in self.listUserSources():
+            u = src.getUser(name)
+            if u:
+                ret = GRUFUser.GRUFUser(u, self, source_id = src.getUserSourceId()).__of__(self)
+                return ret
+
         # Prevent infinite recursion when instanciating a GRUF 
         # without having sub-acl_users set
-        if not "acl_users" in self.Users.objectIds() or \
-           not "acl_users" in self.Groups.objectIds():
+        if not "acl_users" in self.Groups.objectIds():
             return None
-        
-        # Fetch users first
-        u = self.Users.acl_users.getUser(name)
-        if u:
-            ret = GRUFUser.GRUFUser(u, self,).__of__(self)
-            return ret
-            # $$$ Check security for this !
         
         # If not found, fetch groups (then the user must be 
         # prefixed by 'group_' prefix)
@@ -299,7 +310,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         the getUnwrappedUser() to get the matching user and call this
         method.
         """
-        return self.Users.acl_users.getUser(name)
+        src_id = self.getUser(name).getUserSourceId()
+        Log(LOG_DEBUG, src_id)
+        return self.getUserSource(src_id).getUser(name)
 
     security.declareProtected(Permissions.manage_users, "getUnwrappedGroup")
     def getUnwrappedGroup(self, name):
@@ -353,7 +366,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         # Fetch group
         u = self.Groups.acl_users.getUser(name)
         if u:
-            ret = GRUFUser.GRUFUser(u, self, isGroup = 1).__of__(self)
+            ret = GRUFUser.GRUFUser(u, self, isGroup = 1, source_id = "Groups").__of__(self)
             return ret
 
         # If still not found, well... we cannot do anything else.
@@ -370,9 +383,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         Fetch the list of actual users from GRUFUsers.
         """
-        if not "acl_users" in self.Users.objectIds():
-            return []
-        ret = self.Users.acl_users.getUserNames()
+        ret = []
+        for src in self.listUserSources():
+            ret.extend(src.getUserNames())
         return ret
 
     security.declareProtected(Permissions.manage_users, "getPureUsers")
@@ -399,15 +412,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         THIS METHOD RETURNS A USER OBJECT OR NONE, according to the code 
         in AccessControl/User.py
         """
-        if "acl_users" in self.Users.objectIds():
-            u = self.Users.acl_users.authenticate(name, password, request)
+        for src in self.listUserSources():
+            # XXX We can imagine putting a try/except here to "ignore"
+            # UF errors such as SQL or LDAP shutdown
+            u = src.authenticate(name, password, request)
             if u:
                 return GRUFUser.GRUFUser(u, self,).__of__(self)
-                # $$$ Check security for this !
-            return None                                                 
-            # The user cannot be authenticated => we return None
 
-        # No acl_users in the Users folder => we refuse authentication
+        # No acl_users in the Users folder or no user authenticated
+        # => we refuse authentication
         return None
     
 ##    ## I DON'T KNOW IF WE HAVE TO PASS VALIDATE
@@ -438,7 +451,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             roles.append(group)
 
         # Really add users
-        return self.Users.acl_users._doAddUser(
+        return self.getDefaultUserSource()._doAddUser(
             name,
             password, 
             roles,
@@ -468,8 +481,11 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 roles.append(group)
 
         # Change the user itself
-        return self.Users.acl_users._doChangeUser(name, password, 
-                                                  roles, domains, **kw)
+        src = self.getUser(name).getUserSourceId()
+        Log(LOG_DEBUG, "srcid", src)
+        Log(LOG_DEBUG, "user source", self.getUserSource(src))
+        return self.getUserSource(src)._doChangeUser(
+            name, password, roles, domains, **kw)
 
     security.declarePrivate("_updateUser")
     def _updateUser(self, name, password = None, roles = None, domains = None, groups = None):
@@ -500,7 +516,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     def _doDelUsers(self, names):
         """Delete one or more users. This should be implemented by subclasses
            to do the actual deleting of users."""
-        return self.Users.acl_users._doDelUsers(names)
+        # Collect information about user sources
+        sources = {}
+        for name in names:
+            src = self.getUser(name).getUserSourceId()
+            if not sources.has_key(src):
+                sources[src] = []
+            sources[src].append(name)
+        for src, names in sources.items():
+            self.getUserSource(src)._doDelUsers(names)
 
 
     #                                   #
@@ -639,7 +663,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/10/02 06:20:13 $"[7:-2]
+        rev_date = "$Date: 2003/10/22 16:36:03 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 
@@ -1045,9 +1069,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         noprefix = usr.getUserNameWithoutGroupPrefix()
         is_group = usr.isGroup()
         if usr.isGroup():
-            icon = self.Groups.icon
+            icon = self.absolute_url() + '/img_group'
         else:
-            icon = self.Users.icon
+            icon = self.absolute_url() + '/img_user'
 
         # Subobjects
         belongs_to = []
@@ -1126,7 +1150,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 return self.restrictedTraverse('manage_user')()
         
         # Default management screen
-        return self.restrictedTraverse('manage_GRUFContents')()
+        return self.restrictedTraverse('manage_overview')()
 
 
     # Tree caching information
@@ -1251,7 +1275,307 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         for id in ids:
             ret.append(self.getUser(id))
         return ret
+
+
+    #                                                                            #
+    #                         Multiple sources management                        #
+    #                                                                            #
+
+    # Arrows
+    img_up_arrow = ImageFile.ImageFile('www/up_arrow.gif', globals())
+    img_down_arrow = ImageFile.ImageFile('www/down_arrow.gif', globals())
+    img_up_arrow_grey = ImageFile.ImageFile('www/up_arrow_grey.gif', globals())
+    img_down_arrow_grey = ImageFile.ImageFile('www/down_arrow_grey.gif', globals())
+
+    security.declareProtected(Permissions.manage_users, "listUserSources")
+    def listUserSources(self, ):
+        """
+        listUserSources(self, ) => Return a list of userfolder objects
+        Only return VALID (ie containing an acl_users) user sources if all is None
+        XXX HAS TO BE VERY OPTIMIZED !
+        """
+        ret = []
+        for src in self.objectValues(['GRUFUsers']):
+            if 'acl_users' in src.objectIds():
+                ret.append(src.acl_users)                       # XXX possible security hole ?
+                                                                # we cannot use restrictedTraverse here because
+                                                                # of infinite recursion issues.
+        ret.sort(lambda x,y: cmp(x.aq_parent.id, y.aq_parent.id))    # XXX speed improvements to do there
+        return ret
+
+    security.declareProtected(Permissions.manage_users, "listUserSourceFolders")
+    def listUserSourceFolders(self, ):
+        """
+        listUserSources(self, ) => Return a list of GRUFUsers objects
+        """
+        ret = []
+        for src in self.objectValues(['GRUFUsers']):
+            ret.append(src)
+        ret.sort(lambda x,y: cmp(x.id, y.id))
+        return ret
+
+    security.declarePrivate("getUserSource")
+    def getUserSource(self, id):
+        """
+        getUserSource(self, id) => GRUFUsers.acl_users object.
+        Raises if no acl_users available
+        """
+        return getattr(self, id).acl_users
+
+    security.declarePrivate("getUserSourceFolder")
+    def getUserSourceFolder(self, id):
+        """
+        getUserSourceFolder(self, id) => GRUFUsers object
+        """
+        return getattr(self, id)
+    
+    security.declareProtected(Permissions.manage_users, "addUserSource")
+    def addUserSource(self, factory_uri, REQUEST = {}):
+        """
+        addUserSource(self, factory_uri, REQUEST = {}) => redirect
+        Adds the specified user folder
+        """
+        # Get the initial Users id
+        ids = self.objectIds('GRUFUsers')
+        if ids:
+            ids.sort()
+            if ids == ['Users',]:
+                last = 0
+            else:
+                last = int(ids[-1][-2:])
+            next_id = "Users%02d" % (last + 1, )
+        else:
+            next_id = "Users"
+        Log(LOG_DEBUG, "next_id", next_id)
+
+        # Add the GRUFFolder object
+        uf = GRUFFolder.GRUFUsers(id = next_id)
+        self._setObject(next_id, uf)
+
+        # Add its underlying UserFolder
+        # If we're called TTW, uses a redirect else tries to call the UF factory directly
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect("%s/%s/%s" % (self.absolute_url(), next_id, factory_uri))
+        return getattr(self, next_id).unrestrictedTraverse(factory_uri)() # XXX minor security pb ?
+
+    security.declareProtected(Permissions.manage_users, "deleteUserSource")
+    def deleteUserSource(self, id = None, REQUEST = {}):
+        """
+        deleteUserSource(self, id = None, REQUEST = {}) => Delete the specified user source
+        """
+        # Check the source id
+        if type(id) != type('s'):
+            raise ValueError, "You must choose a valid source to delete and confirm it."
         
+        # Delete it
+        self.manage_delObjects([id,])
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + '/manage_GRUFSources')
+    
+
+    security.declareProtected(Permissions.manage_users, "getDefaultUserSource")
+    def getDefaultUserSource(self,):
+        """
+        getDefaultUserSource(self,) => acl_users object
+        Return default user source for user writing.
+        XXX By now, the FIRST source is the default one. This may change in the future.
+        """
+        lst = self.listUserSources()
+        if not lst:
+            raise RuntimeError, "No valid User Source to add users in."
+        return lst[0]
+
+
+    security.declareProtected(Permissions.manage_users, "listAvailableUserSources")
+    def listAvailableUserSources(self, filter_permissions = 1, filter_classes = 1):
+        """
+        listAvailableUserSources(self, filter_permissions = 1, filter_classes = 1) => tuples (name, factory_uri)
+        List UserFolder replacement candidates.
+
+        - if filter_classes is true, return only ones which have a base UserFolder class
+        - if filter_permissions, return only types the user has rights to add
+        """
+        ret = []
+
+        # Fetch candidate types
+        user = getSecurityManager().getUser()
+        meta_types = []
+        if callable(self.all_meta_types):
+            all=self.all_meta_types()
+        else:
+            all=self.all_meta_types
+        for meta_type in all:
+            if filter_permissions and meta_type.has_key('permission'):
+                if user.has_permission(meta_type['permission'],self):
+                    meta_types.append(meta_type)
+            else:
+                meta_types.append(meta_type)
+
+        # Keep only, if needed, BasicUserFolder-derived classes
+        for t in meta_types:
+            if t['name'] == self.meta_type:
+                continue        # Do not keep GRUF ! ;-)
+            
+            if filter_classes:
+                try:
+                    if t.get('instance', None) and class_utility.isBaseClass(AccessControl.User.BasicUserFolder, t['instance']):
+                        ret.append((t['name'], t['action']))
+                except AttributeError:
+                    pass        # We ignore 'invalid' instances (ie. that wouldn't define a __base__ attribute)
+            else:
+                ret.append((t['name'], t['action']))
+
+        return tuple(ret)
+
+    security.declareProtected(Permissions.manage_users, "moveUserSourceUp")
+    def moveUserSourceUp(self, id, REQUEST = {}):
+        """
+        moveUserSourceUp(self, id, REQUEST = {}) => used in management screens
+        try to get ids as consistant as possible
+        """
+        # List and sort sources and preliminary checks
+        ids = self.objectIds('GRUFUsers')
+        ids.sort()
+        if not ids or not id in ids:
+            raise ValueError, "Invalid User Source: '%s'" % (id,)
+
+        # Find indexes to swap
+        src_index = ids.index(id)
+        if src_index == 0:
+            raise ValueError, "Cannot move '%s'  User Source up." % (id, )
+        dest_index = src_index - 1
+
+        # Find numbers to swap, fix them if they have more than 1 as offset
+        if ids[dest_index] == 'Users':
+            dest_num = 0
+        else:
+            dest_num = int(ids[dest_index][-2:])
+        src_num = dest_num + 1
+
+        # Get ids
+        src_id = id
+        if dest_num == 0:
+            dest_id = "Users"
+        else:
+            dest_id = "Users%02d" % (dest_num,)
+        tmp_id = "%s_" % (dest_id, )
+
+        # Perform the swap
+        self._renameUserSource(src_id, tmp_id)
+        self._renameUserSource(dest_id, src_id)
+        self._renameUserSource(tmp_id, dest_id)
+
+        # Return back to the forms
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + '/manage_GRUFSources')
+
+
+    security.declareProtected(Permissions.manage_users, "moveUserSourceDown")
+    def moveUserSourceDown(self, id, REQUEST = {}):
+        """
+        moveUserSourceDown(self, id, REQUEST = {}) => used in management screens
+        try to get ids as consistant as possible
+        """
+        # List and sort sources and preliminary checks
+        ids = self.objectIds('GRUFUsers')
+        ids.sort()
+        if not ids or not id in ids:
+            raise ValueError, "Invalid User Source: '%s'" % (id,)
+
+        # Find indexes to swap
+        src_index = ids.index(id)
+        if src_index == len(ids) - 1:
+            raise ValueError, "Cannot move '%s'  User Source up." % (id, )
+        dest_index = src_index + 1
+
+        # Find numbers to swap, fix them if they have more than 1 as offset
+        if id == 'Users':
+            dest_num = 1
+        else:
+            dest_num = int(ids[dest_index][-2:])
+        src_num = dest_num - 1
+
+        # Get ids
+        src_id = id
+        if dest_num == 0:
+            dest_id = "Users"
+        else:
+            dest_id = "Users%02d" % (dest_num,)
+        tmp_id = "%s_" % (dest_id, )
+
+        # Perform the swap
+        self._renameUserSource(src_id, tmp_id)
+        self._renameUserSource(dest_id, src_id)
+        self._renameUserSource(tmp_id, dest_id)
+
+        # Return back to the forms
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect(self.absolute_url() + '/manage_GRUFSources')
+
+    
+
+    security.declarePrivate('_renameUserSource')
+    def _renameUserSource(self, id, new_id, ):
+        """
+        Rename a particular sub-object.
+        Taken fro CopySupport.manage_renameObject() code, modified to disable verifications.
+        """
+        Log(LOG_DEBUG, "renaming", id, new_id)
+        try: self._checkId(new_id)
+        except: raise CopyError, MessageDialog(
+                      title='Invalid Id',
+                      message=sys.exc_info()[1],
+                      action ='manage_main')
+        ob=self._getOb(id)
+        if not ob.cb_isMoveable():
+            raise CopyError, eNotSupported % id
+##        self._verifyObjectPaste(ob)           # This is what we disable
+        try:    ob._notifyOfCopyTo(self, op=1)
+        except: raise CopyError, MessageDialog(
+                      title='Rename Error',
+                      message=sys.exc_info()[1],
+                      action ='manage_main')
+        self._delObject(id)
+        ob = aq_base(ob)
+        ob._setId(new_id)
+
+        # Note - because a rename always keeps the same context, we
+        # can just leave the ownership info unchanged.
+        self._setObject(new_id, ob, set_owner=0)
+
+
+    security.declareProtected(Permissions.manage_users, "replaceUserSources")
+    def replaceUserSource(self, id = None, new_factory = None, REQUEST = {}, **kw):
+        """
+        replaceUserSource(self, id = None, new_factory = None, REQUEST = {}, **kw) => perform user source replacement
+
+        If new_factory is None, find it inside REQUEST (useful for ZMI screens)
+        """
+        # Check the source id
+        if type(id) != type('s'):
+            raise ValueError, "You must choose a valid source to replace and confirm it."
+
+        # Retreive factory if not explicitly passed
+        if not new_factory:
+            for record in REQUEST.get("source_rec", []):
+                if record['id'] == id:
+                    new_factory = record['new_factory']
+                    break
+            if not new_factory:
+                raise ValueError, "You must select a new User Folder type."
+
+        # Delete the former one
+        us = getattr(self, id)
+        if "acl_users" in us.objectIds():
+            us.manage_delObjects(['acl_users'])
+
+        # Re-create the underlying UserFolder
+        # If we're called TTW, uses a redirect else tries to call the UF factory directly
+        if REQUEST.has_key('RESPONSE'):
+            return REQUEST.RESPONSE.redirect("%s/%s/%s" % (self.absolute_url(), id, new_factory))
+        return getattr(self, next_id).unrestrictedTraverse(new_factory)() # XXX minor security pb ?
+
+
 class treeWrapper:
     """
     treeWrapper: Wrapper around user/group objects for the tree

@@ -106,11 +106,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
     # functionality that we cant anticipate from the base scaffolding.
 
     security.declarePrivate('__init__')
-    def __init__(self, underlying_user, GRUF, isGroup = 0):
+    def __init__(self, underlying_user, GRUF, isGroup = 0, source_id = 'Users', ):
         # When calling, set isGroup it to TRUE if this user represents a group
         self._setUnderlying(underlying_user)
         self._isGroup = isGroup   
         self._GRUF = GRUF
+        self._source_id = source_id
         self.id = self._original_id
 
     security.declarePublic('isGroup')
@@ -118,6 +119,13 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         """Return 1 if this user is a group abstraction"""
         return self._isGroup
 
+    security.declarePublic('getUserSourceId')
+    def getUserSourceId(self,):
+        """
+        getUserSourceId(self,) => string
+        Return the GRUF's GRUFUsers folder used to fetch this user.
+        """
+        return self._source_id
 
     security.declarePrivate('getGroups')
     def getGroups(self, no_recurse = 0, already_done = [], prefix = GRUFFolder.GRUFGroups._group_prefix):

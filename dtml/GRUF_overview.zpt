@@ -6,6 +6,57 @@
 <!-- Help text -->
 <p class="form-help">Here is an overview of users, their groups and roles. See the legend below.</p>
 
+
+<!-- Wizards -->
+<h4>What do you want to do from here ?</h4>
+<ol>
+    <p class="form-help">
+      Here is the list of common actions you can do with GRUF. <br />
+      Just follow the links !
+    </p>
+
+
+    <table width="90%">
+        <tr>
+          <th class="list-header" valign="top" width="30%">
+            I want to set the place where
+            my users/groups are stored.
+          </th>
+          <td class="list-item" valign="top" bgcolor="#EEEEEE">
+            <p>
+              Within GRUF, users are stored in one or more <i>User Source</i>. A source can be any
+              valid Zope User Folder derived object (for example the standard Zope User Folder but also LDAPUserFolder,
+              SimpleUserFolder, ...).<br />
+              Use the <strong><a href="manage_GRUFSources">sources tab</a></strong> to manage your user sources.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <th class="list-header" valign="top">
+            I want to create some users or some groups.
+          </th>
+          <td class="list-item" valign="top" bgcolor="#EEEEEE">
+            <p>
+              To create groups, use the <strong><a href="manage_groups">groups tab</a></strong><br />
+              If you want to create users, you can use the <strong><a href="manage_users">users tab</a></strong>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <th class="list-header" valign="top">
+            I need to check my website's security.
+          </th>
+          <td class="list-item" valign="top" bgcolor="#EEEEEE">
+            <p>
+              The <strong><a href="manage_audit">audit tab</a></strong> is certainly what you are looking for.<br />
+              With this tool you can issue personalized reports about your website security rules.
+            </p>
+          </td>
+        </tr>
+    </table>
+</ol>
+
+
 <!-- Users / Roles / Groups tabular view -->
 <h4>Users overview</h4>
 <ol>

@@ -37,7 +37,7 @@
                   <td><div class="list-item"><input type="checkbox" name="users:list" value="" tal:attributes="value user"></td>
                   <td>
                     <div class="list-item">
-                      <img src="" tal:attributes="src here/Users/icon" />
+                      <img src="img_user" />
                         <strong tal:content="structure user/asHTML">
                         </strong>
                   </td>

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.6 2003/09/23 19:45:42 jccooper Exp $
+$Id: GroupDataTool.py,v 1.7 2003/10/22 16:36:03 tesdal Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -182,7 +182,7 @@ class GroupData (SimpleItem):
 
         groups = list(user.getGroups())
         groups.append(prefix + self.getGroupName())
-        self.acl_users.Users.acl_users.userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
+        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
 
 
     # FIXME: What permission should this be?
@@ -194,7 +194,7 @@ class GroupData (SimpleItem):
 
         groups = list(user.getGroups())
         groups.remove(prefix + self.getGroupName())
-        self.acl_users.Users.acl_users.userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
+        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
 
     security.declareProtected(SetOwnProperties, 'setProperties')
     def setProperties(self, properties=None, **kw):

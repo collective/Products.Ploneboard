@@ -26,7 +26,7 @@
               <tr tal:repeat="user request/USER_PASSWORDS" class="" tal:attributes="class python:test(path('repeat/user/odd'), 'row-hilite', 'row-normal')">
                 <td>
                   <div class="list-item">
-                    <img src="" tal:attributes="src here/Users/icon">
+                    <img src="img_user">
                       <font color="" tal:attributes="color here/user_color">
                         <span tal:content="user/name">User name</span>
                       </font>

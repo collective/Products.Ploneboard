@@ -4,7 +4,7 @@
   <tal:block tal:define="
     global user python:here.getUser(request.username); 
     kind python:test(user.isGroup(), 'Group', 'User'); 
-    icon python:test(user.isGroup(), here.acl_users.Groups.icon, here.acl_users.Users.icon);
+    icon python:test(user.isGroup(), 'img_group', 'img_user');
     color python:test(user.isGroup(), here.acl_users.group_color, here.acl_users.user_color);
     ">
     

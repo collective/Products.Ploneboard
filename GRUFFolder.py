@@ -39,29 +39,27 @@ import random
 
 
 
-def manage_addGRUFUsers(self,dtself=None,REQUEST=None,**ignored):
+def manage_addGRUFUsers(self, id="Users", dtself=None,REQUEST=None,**ignored):
     """ """
-    f=GRUFUsers()
+    f=GRUFUsers(id)
     self=self.this()
-    try:    self._setObject('Users', f)
+    try:    self._setObject(id, f)
     except: return MessageDialog(
                    title  ='Item Exists',
                    message='This object already contains a GRUFUsers Folder',
                    action ='%s/manage_main' % REQUEST['URL1'])
-    self.Users._post_init()
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
-def manage_addGRUFGroups(self,dtself=None,REQUEST=None,**ignored):
+def manage_addGRUFGroups(self, id="Groups", dtself=None,REQUEST=None,**ignored):
     """ """
-    f=GRUFGroups()
+    f=GRUFGroups(id)
     self=self.this()
-    try:    self._setObject('Groups', f)
+    try:    self._setObject(id, f)
     except: return MessageDialog(
                    title  ='Item Exists',
                    message='This object already contains a GRUFGroups Folder',
                    action ='%s/manage_main' % REQUEST['URL1'])
-    self.Groups._post_init()
     if REQUEST is not None:
         REQUEST['RESPONSE'].redirect(self.absolute_url()+'/manage_main')
 
@@ -73,6 +71,29 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
                      SimpleItem.Item.manage_options
 
     security = ClassSecurityInfo()
+
+    def __init__(self, id = None):
+        if id:
+            self.id = id
+        else:
+            self.id = self.default_id
+
+    def getId(self,):
+        if self.id:
+            return self.id
+        else:
+            return self.default_id      # Used for b/w compatibility
+    
+    def getUserSourceId(self,):
+        return self.getId()
+
+    def isValid(self,):
+        """
+        isValid(self,) => Return true if an acl_users is inside
+        """
+        if "acl_users" in self.objectIds():
+            return 1
+        return None
 
     security.declarePublic('header_text')
     def header_text(self,):
@@ -90,6 +111,21 @@ class GRUFFolder(ObjectManager.ObjectManager, SimpleItem.Item):
             raise "ValueError", "Please put an acl_users in %s " \
                                 "before using GRUF" % (self.getId(),)
         return self.restrictedTraverse('acl_users')
+
+    def getUserNames(self,):
+        """
+        getUserNames(self,) => None
+
+        We override this to prevent SimpleUserFolder to use GRUF's getUserNames() method.
+        It's, of course, still possible to override a getUserNames method with SimpleUserFolder:
+        just call it 'new_getUserNames'.
+        """
+        # Call the "new_getUserNames" method if available
+        if "new_getUserNames" in self.objectIds():
+            return self.new_getUserNames()
+
+        # Return () if nothing is there
+        return ()
         
 
 
@@ -98,7 +134,7 @@ class GRUFUsers(GRUFFolder):
     GRUFUsers : GRUFFolder that holds users
     """
     meta_type="GRUFUsers"
-    id = "Users"
+    default_id = "Users"
 
     manage_options = GRUFFolder.manage_options
 
@@ -126,10 +162,6 @@ class GRUFUsers(GRUFFolder):
 
     ac_roles = C__ac_roles__()
     __ac_roles__ = ac_roles
-
-
-    def _post_init(self,):
-        self.id = "Users"
 
 
     def header_text(self,):
@@ -165,7 +197,7 @@ class GRUFGroups(GRUFFolder):
     GRUFGroups : GRUFFolder that holds groups
     """
     meta_type="GRUFGroups"
-    id = "Groups"
+    default_id = "Groups"
 
     _group_prefix = "group_"
 
@@ -193,10 +225,6 @@ class GRUFGroups(GRUFFolder):
 
     ac_roles = C__ac_roles__()
     __ac_roles__ = ac_roles
-
-
-    def _post_init(self,):
-        self.id = "Groups"
 
 
     def header_text(self,):
