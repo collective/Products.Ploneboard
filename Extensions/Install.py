@@ -13,8 +13,16 @@ def changeVisibility(p, portal_type, action, value):
     tt=getToolByName(p, 'portal_types')
     actions=tt[portal_type]._cloneActions()
     for a in actions:
-        if a.get('id','') in (action, ): 
-            a['visible']=value
+        try:
+            #try the old CMF 1.3.x API where actions are dicts
+            if a.get('id','') in (action, ): 
+                a['visible']=value
+        except AttributeError:
+            # assume its the new CMF 1.4 API that
+            # has a seperate ActionInformation class
+            if a.id in (action, ): 
+                a.visible=value
+            
     tt[portal_type]._actions=actions
 
 def setupNavigation(p):
