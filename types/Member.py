@@ -113,7 +113,7 @@ plone_schema = FieldList((
                                                    'often have specific browser requirements.')
                 ),
     
-    ObjectField('formtooltips',
+    BooleanField('formtooltips',
                  default=1,
                  mode='rw',
                  read_permission=VIEW_OTHER_PERMISSION,
@@ -189,8 +189,10 @@ security_schema = FieldList((
 
     BooleanField('mail_me',
                 default=0,
-                searchable=1,
-                widget=BooleanWidget( label='Mail Password!', description="Mail the password to you after registration"),
+                searchable=0,
+                read_permission=EDIT_PASSWORD_PERMISSION,
+                write_permission=EDIT_PASSWORD_PERMISSION,
+                widget=BooleanWidget( label='Mail password', description="Have your password mailed to you after you change it"),
                 ),
                 
     LinesField('roles',
@@ -584,13 +586,16 @@ class Member(VariableSchemaSupport, BaseContent):
         # no change -- ignore
         if self.id and (not id or id == self.id):
             return None
+
+        memberdata_tool = getToolByName(self, 'portal_memberdata')
+        if memberdata_tool.get(id, None):
+            return 'This name is already in use.  Please choose another.'
         
         registration_tool = getToolByName(self, 'portal_registration')
         if registration_tool.isMemberIdAllowed(id):
             return None
         else:
-            return 'The login name you selected is already ' + \
-                   'in use or is not valid. Please choose another.'
+            return 'Names can only include letters and numbers.  Please choose another.'
 
     
     security.declarePrivate('validate_password')
@@ -964,7 +969,6 @@ class Member(VariableSchemaSupport, BaseContent):
 
     security.declarePrivate('manage_afterClone')
     def manage_afterClone(self, object):
-        print 'manage_afterClone:',object,self
         try:
             if self.hasUser():
                 # the copied member had a real user -- create a real user for the copy
@@ -1237,10 +1241,8 @@ class Member(VariableSchemaSupport, BaseContent):
             properties = old_member['properties']
             fields = self.Schema().fields() + ['listed', 'login_time', 'last_login_time']
             for new_field in fields:
-                if hasattr(new_field, 'name'):
-                    name = new_field.name
-                else:
-                    name = new_field
+                if type(new_field) != type(''):
+                    name = new_field.getName()
                 if name not in ['id', 'password', 'roles', 'domains'] and \
                    name not in excluded_fields: # fields managed by user object
                     try:
@@ -1257,10 +1259,8 @@ class Member(VariableSchemaSupport, BaseContent):
         else:
             fields = self.Schema().fields() + ['listed', 'login_time', 'last_login_time']
             for new_field in fields:
-                if hasattr(new_field, 'name'):
-                    name = new_field.name
-                else:
-                    name = new_field
+                if type(new_field) != type(''):
+                    name = new_field.getName()
                 if name not in ['password', 'roles', 'domains'] and \
                    name not in excluded_fields: # fields managed by user object
                     try:
@@ -1268,6 +1268,7 @@ class Member(VariableSchemaSupport, BaseContent):
                         self._migrateSetNewValue(name, value, out)
                         print >> out, '%s.%s = %s' % (str(old_member.getMemberId()), name, str(value))
                     except:
+                        print >> out, 'Unable to get field %s from member %s' % (name, old_member.getUserName())
                         pass
 
             # move the user over

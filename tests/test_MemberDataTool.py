@@ -1,7 +1,7 @@
 from unittest import TestCase, TestSuite, makeSuite, main
 
 import Zope
-root = Zope.app()
+Zope.startup()
 try:
     from Interface.Verify import verifyClass
 except ImportError:

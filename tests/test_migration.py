@@ -1,6 +1,6 @@
 import unittest
 import Zope     # product initialization
-root = Zope.app()
+Zope.startup()
 from Acquisition import aq_base
 from Products.CMFCore.tests.base.testcase import SecurityRequestTest
 from Products.Archetypes.Extensions.Install import install as install_archetypes
@@ -84,14 +84,14 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
         a = membership_tool.getMemberById('a')
         self.assertEqual(a.getMemberId(), self.a['id'])
         self.assertEqual(a.getPassword(), self.a['password'])
-        self.assertEqual(a.getRoles(), self.a['roles']+('Authenticated',))
+        self.assertEqual(a.getRoles(), self.a['roles'])
         self.assertEqual(a.getDomains(), self.a['domains'])
         self.assertEqual(a.email, self.a['email'])
         
         b = membership_tool.getMemberById('b')
         self.assertEqual(b.getMemberId(), self.b['id'])
         self.assertEqual(b.getPassword(), self.b['password'])
-        self.assertEqual(b.getRoles(), self.b['roles']+('Authenticated',))
+        self.assertEqual(b.getRoles(), self.b['roles'])
         self.assertEqual(b.getDomains(), self.b['domains'])
         self.assertEqual(b.email, self.b['email'])
 
@@ -104,8 +104,9 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(CMFMemberExample),
+        unittest.makeSuite(CMFMemberMigrationTest),
         ))
 
 if __name__ == '__main__':
+#    test_suite().debug()
     unittest.main()

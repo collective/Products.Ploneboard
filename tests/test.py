@@ -1,6 +1,6 @@
 import unittest
 import Zope     # product initialization
-root = Zope.app()
+Zope.startup()
 from Acquisition import aq_base
 from Products.CMFCore.tests.base.testcase import SecurityRequestTest
 from Products.Archetypes.Extensions.Install import install as install_archetypes
@@ -13,7 +13,7 @@ import sys
 site = 'testsite'
 
 class CMFMemberTest( SecurityRequestTest ):
-
+    
     def setUp( self ):
         SecurityRequestTest.setUp(self)
         # create an admin user
@@ -41,8 +41,10 @@ class CMFMemberTest( SecurityRequestTest ):
         # add a new member
         newSecurityManager(None, self.root.acl_users.getUser('test_admin').__of__(self.root.acl_users))
 
-        self.testsite.portal_membership.addMember(self.id, self.password, self.roles, self.domains)
+#        self.testsite.portal_membership.addMember(self.id, self.password, self.roles, self.domains)
+        self.testsite.acl_users.userFolderAddUser(self.id, self.password, self.roles, self.domains)
         self.user = self.testsite.acl_users.getUser(self.id)
+        assert(self.user != None)
         # force creation of user via wrapUser
         self.member = self.testsite.portal_membership.getMemberById(self.id)
 
@@ -120,11 +122,13 @@ class CMFMemberTest( SecurityRequestTest ):
 
 
     def test_user(self):
+        print 'test_user'
         # make sure all the member properties we set are correct
         self.failUnless(self.member != None)
         self.assertEqual(self.member.getMemberId(), self.id)
         self.assertEqual(self.member.getPassword(), self.password)
-        self.assertEqual(self.member.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(self.member.getRoles(), self.roles + ('Authenticated',))
+        self.assertEqual(self.member.getRoles(), self.roles)
         self.assertEqual(self.member.getDomains(), self.domains)
 
         # grab the user
@@ -134,18 +138,21 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(user.getId(), self.id)
         self.assertEqual(user._getPassword(), self.password)
         self.assertEqual(user.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(user.getRoles(), self.roles)
         self.assertEqual(user.getDomains(), self.domains)
 
         password2 = 'password2'
         self.member._setPassword(password2)
         self.assertEqual(self.member.getPassword(), password2)
         self.member.setRoles('Member,Manager')
-        self.assertEqual(self.member.getRoles(), ('Member','Manager','Authenticated'))
+#        self.assertEqual(self.member.getRoles(), ('Member','Manager','Authenticated'))
+        self.assertEqual(self.member.getRoles(), ('Member','Manager'))
         self.member.setDomains('127.0.0.1\r\n127.0.0.2\r\n  ')
         self.assertEqual(self.member.getDomains(), ('127.0.0.1','127.0.0.2'))
 
 
     def test_delete(self):
+        print 'test_delete'
         self.testsite.portal_memberdata.manage_delObjects([self.id])
 
         # make sure old member is gone
@@ -174,6 +181,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.assertEqual(roles, ())
 
     def test_deleteRoot(self):
+        print 'test_deleteRoot'
         # a more complicated case -- the authenticated user lives in self.root.acl_users, not portal.acl_users
 
         self.testsite.portal_memberdata.manage_delObjects([self.root_id])
@@ -202,6 +210,7 @@ class CMFMemberTest( SecurityRequestTest ):
 
 
     def test_rename(self):
+        print 'test_rename'
         new_id = 'id2'
         self.testsite.portal_memberdata.manage_renameObjects((self.id,),(new_id,))
 
@@ -210,7 +219,8 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
         self.assertEqual(member.getPassword(), self.password)
-        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.roles)
         self.assertEqual(member.getDomains(), self.domains)
 
         # make sure old member is gone
@@ -222,6 +232,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(user != None)
         self.assertEqual(user.__, self.password)
         self.assertEqual(user.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(user.getRoles(), self.roles)
         self.assertEqual(user.domains, self.domains)
 
         # make sure old user is gone
@@ -275,6 +286,7 @@ class CMFMemberTest( SecurityRequestTest ):
 
     # a more complicated case -- the authenticated user lives in self.root.acl_users, not portal.acl_users
     def test_renameRoot(self):
+        print 'test_renameRoot'
         new_id = 'id2'
         self.testsite.portal_memberdata.manage_renameObjects((self.root_id,),(new_id,))
 
@@ -283,7 +295,8 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
         self.assertEqual(member.getPassword(), self.root_password)
-        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.root_roles)
         self.assertEqual(member.getDomains(), self.root_domains)
 
         # make sure old member is gone
@@ -295,6 +308,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(user != None)
         self.assertEqual(user.__, self.root_password)
         self.assertEqual(user.getRoles(), self.root_roles + ('Authenticated',))
+#        self.assertEqual(user.getRoles(), self.root_roles)
         self.assertEqual(user.domains, self.root_domains)
 
         # make sure old user is still there gone
@@ -349,6 +363,7 @@ class CMFMemberTest( SecurityRequestTest ):
 
 
     def test_copy(self):
+        print 'test_copy'
         cb_copy_data = self.testsite.portal_memberdata.manage_copyObjects((self.id,))
         self.testsite.portal_memberdata.manage_pasteObjects(cb_copy_data)
 
@@ -357,7 +372,8 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), self.id)
         self.assertEqual(member.getPassword(), self.password)
-        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.roles)
         self.assertEqual(member.getDomains(), self.domains)
 
         user = self.testsite.acl_users.getUser(self.id)
@@ -370,17 +386,20 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
         self.assertEqual(member.getPassword(), self.password)
-        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.roles)
         self.assertEqual(member.getDomains(), self.domains)
 
         user = self.testsite.acl_users.getUser(new_id)
         self.failUnless(user != None)
         self.assertEqual(user.__, self.password)
         self.assertEqual(user.getRoles(), self.roles + ('Authenticated',))
+#        self.assertEqual(user.getRoles(), self.roles)
         self.assertEqual(user.domains, self.domains)
 
 
-    def test_copy_root(self):
+    def test_copyRoot(self):
+        print 'test_copyRoot'
         cb_copy_data = self.testsite.portal_memberdata.manage_copyObjects((self.root_id,))
         self.testsite.portal_memberdata.manage_pasteObjects(cb_copy_data)
 
@@ -390,7 +409,8 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), self.root_id)
         self.assertEqual(member.getPassword(), self.root_password)
-        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.root_roles)
         self.assertEqual(member.getDomains(), self.root_domains)
 
         user = self.root.acl_users.getUser(self.root_id)
@@ -403,13 +423,15 @@ class CMFMemberTest( SecurityRequestTest ):
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
         self.assertEqual(member.getPassword(), self.root_password)
-        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+#        self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
+        self.assertEqual(member.getRoles(), self.root_roles)
         self.assertEqual(member.getDomains(), self.root_domains)
 
         user = self.testsite.acl_users.getUser(new_id)
         self.failUnless(user != None)
         self.assertEqual(user.__, self.root_password)
         self.assertEqual(user.getRoles(), self.root_roles + ('Authenticated',))
+#        self.assertEqual(user.getRoles(), self.root_roles)
         self.assertEqual(user.domains, self.root_domains)
 
         user = self.root.acl_users.getUser(new_id)

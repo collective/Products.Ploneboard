@@ -40,8 +40,9 @@ def replaceTools(self, out, convert=1):
         typestool.manage_addTypeInformation(FactoryTypeInformation.meta_type, id='MemberArea', 
           typeinfo_name='CMFCore: Portal Folder')
         memberarea=typestool.MemberArea
+        folder = typestool.Folder
         memberarea.content_meta_type='CMFMember Tool'
-        memberarea.icon = 'folder_icon.gif'
+        memberarea.icon = folder.icon
         _actions=memberarea._cloneActions()
         for action in _actions:
             try:
@@ -205,9 +206,10 @@ def installPortalFactory(self, out):
     types_tool.manage_addTypeInformation(FactoryTypeInformation.meta_type,
                                          id='TempFolder', 
                                          typeinfo_name='CMFCore: Portal Folder')
+    folder = types_tool.Folder
     tempfolder = types_tool.TempFolder
     tempfolder.content_meta_type='TempFolder'
-    tempfolder.icon = 'folder_icon.gif'
+    tempfolder.icon = folder.icon
     tempfolder.global_allow = 0  # make TempFolder not implicitly addable
     tempfolder.allowed_content_types=(types_tool.listContentTypes())
 

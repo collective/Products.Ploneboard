@@ -1,0 +1,25 @@
+2003-06-10  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * MemberDataTool.py: removed a spurious declaration of registerType and 
+    cleaned up the remaining registerType
+
+    * VariableSchemaSupport.py: fixed declaration for getSchema
+
+    * Extensions/Install.py: fixed portal_types icons for MemberArea and 
+    TempFolder
+
+    * types/Member.py: 
+
+        - changed formtooltips from an ObjectField to a BooleanField
+
+        - made mail_me read only and require EDIT_PASSWORD_PERMISSION to write
+
+        - improved validate_id error messages
+
+        - updated migration code to reflect changes to Field.py in Archetypes
+
+    * tests/test.py, test_MemberDataTool.py, test_migration.py: 
+
+        - fixed initialization of Zope in unit tests, so all should run.
+        Something in archetypes is messing up test.py, and test_MemberDataTool 
+        only works with CMF 1.4, but test_migration now works

@@ -31,6 +31,7 @@ _marker = []
 
 class TempFolder(PortalFolder):
     portal_type = meta_type = 'MemberArea'
+    
 
 class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     if memberdata_interface:
@@ -366,13 +367,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     # register type type of Member object that the MemberDataTool will store
     def registerType(self, new_type_name):
-        self.typeName = new_type_name
-        BTreeFolder2Base._checkId(self, id, allow_dup)
-
-
-    # register type type of Member object that the MemberDataTool will store
-    def registerType(self, new_type_name):
-        self.typeName = new_type_name
         self.typeName = new_type_name
         self._defaultMember = None # nuke the default member (which was of the old Member type)
         typestool=getToolByName(self, 'portal_types')

@@ -120,6 +120,6 @@ class VariableSchemaSupport:
         return schema
     
     # supposed to be overloaded. here the object can return its own schema
-    def getSchema():
+    def getSchema(self):
         return self.schema
     
