@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.19 2004/06/27 16:38:58 tiran Exp $
+$Id: ATEvent.py,v 1.20 2004/06/27 16:39:32 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -153,7 +153,9 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
 
     security.declareProtected(CMFCorePermissions.View, 'post_validate')
     def post_validate(self, REQUEST=None, errors=None):
-        """Validates upload file and id
+        """Validates start and end date
+        
+        End date must be after start date
         """
         rstartDate = REQUEST.get('startDate', None)
         rendDate = REQUEST.get('endDate', None)
