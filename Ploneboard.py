@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.6 2004/03/24 16:19:42 tesdal Exp $
+$Id: Ploneboard.py,v 1.7 2004/03/30 12:52:01 limi Exp $
 """
 
 import Globals
@@ -33,19 +33,13 @@ factory_type_information = \
       , 'name'          : 'View'
       , 'action'        : 'string:${object_url}/board_view'
       , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'folder'
+      , 'category'      : 'object'
       }
     , { 'id'            : 'edit'
       , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/board_edit_form'
+      , 'action'        : 'string:${object_url}/base_edit'
       , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'folder'
-      }
-    , { 'id'            : 'add_forum'
-      , 'name'          : 'Add Forum'
-      , 'action'        : 'string:${object_url}/add_forum_form'
-      , 'permissions'   : (AddForum,)
-      , 'category'      : 'object_actions'
+      , 'category'      : 'object'
       }
     )
   },
@@ -69,7 +63,7 @@ class Ploneboard(BaseBTreeFolder):
     """
     __implements__ = (IPloneboard,) + tuple(BaseBTreeFolder.__implements__)
     
-    archetype_name = 'Ploneboard'
+    archetype_name = 'Message Board'
 
     schema = schema
     

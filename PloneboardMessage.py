@@ -41,7 +41,7 @@ factory_type_information = \
       }
     , { 'id'            : 'edit'
       , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/message_edit_form'
+      , 'action'        : 'string:${object_url}/base_edit'
       , 'permissions'   : (ManageBoard,)
       , 'category'      : 'folder'
       }
@@ -69,7 +69,7 @@ class PloneboardMessage(BaseBTreeFolder):
 
     __implements__ = (IMessage,) + tuple(BaseBTreeFolder.__implements__)
 
-    archetype_name = 'Ploneboard Message'
+    archetype_name = 'Message'
     
     schema = schema
     

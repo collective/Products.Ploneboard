@@ -12,11 +12,17 @@
       
 <body>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main"
+         tal:define="forums here/getForums">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <table class="listing">
+        <div class="discreet">
+        No Forums exist in this Board yet, use the add menu to add forums.
+        </div>
+        
+        <table class="listing"
+               tal:condition="forums">
         
 
             <thead>
@@ -27,8 +33,7 @@
             </thead>
 
             <tbody>
-                <tal:showforums tal:define="forums here/getForums"
-                                tal:repeat="forum forums">
+                <tal:showforums tal:repeat="forum forums">
     
                     <tr tal:define="oddrow repeat/forum/odd;"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">

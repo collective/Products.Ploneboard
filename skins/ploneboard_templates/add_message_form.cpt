@@ -3,10 +3,15 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
+<head>
     <metal:css fill-slot="css_slot">
     <style type="text/css" media="all"
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
+
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
 
 <body>
 

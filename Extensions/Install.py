@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.5 2004/03/25 09:00:45 tesdal Exp $
+$Id: Install.py,v 1.6 2004/03/30 12:52:01 limi Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the

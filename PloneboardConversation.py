@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.5 2004/03/24 16:19:42 tesdal Exp $
+$Id: PloneboardConversation.py,v 1.6 2004/03/30 12:52:01 limi Exp $
 """
 
 from random import randint
@@ -23,7 +23,7 @@ from interfaces import IConversation, IMessage
 factory_type_information = \
 ( { 'id'             : 'PloneboardConversation'
   , 'meta_type'      : 'PloneboardConversation'
-  , 'description'    : """Conversations hold messages."""
+  , 'description'    : """Conversations have comments."""
   , 'icon'           : 'ploneboard_conversation_icon.gif'
   , 'product'        : 'Ploneboard'
   , 'global_allow'   : 0 # To avoid it being visible in add contents menu
@@ -41,7 +41,7 @@ factory_type_information = \
       }
     , { 'id'            : 'edit'
       , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/conversation_edit_form'
+      , 'action'        : 'string:${object_url}/base_edit'
       , 'permissions'   : (ManageBoard,)
       , 'category'      : 'folder'
       }
@@ -80,7 +80,7 @@ class PloneboardConversation(BaseBTreeFolder):
 
     __implements__ = (IConversation,) + tuple(BaseBTreeFolder.__implements__)
 
-    archetype_name = 'Ploneboard Conversation'
+    archetype_name = 'Conversation'
 
     schema = schema
 

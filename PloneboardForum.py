@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.5 2004/03/24 16:19:42 tesdal Exp $
+$Id: PloneboardForum.py,v 1.6 2004/03/30 12:52:01 limi Exp $
 """
 
 from random import randint
@@ -31,6 +31,7 @@ factory_type_information = \
   , 'description'    : """Forums hold conversations."""
   , 'icon'           : 'ploneboard_forum_icon.gif'
   , 'product'        : 'Ploneboard'
+  , 'factory'        : 'addPloneboardForum'
   , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
   , 'allowed_content_types' : ('PloneboardConversation', ) 
@@ -42,13 +43,13 @@ factory_type_information = \
       , 'name'          : 'View'
       , 'action'        : 'string:${object_url}/forum_view'
       , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'folder'
+      , 'category'      : 'object'
       }
     , { 'id'            : 'edit'
       , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/forum_edit_form'
+      , 'action'        : 'string:${object_url}/base_edit'
       , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'folder'
+      , 'category'      : 'object'
       }
     )
   },
@@ -84,7 +85,7 @@ class PloneboardForum(BaseBTreeFolder):
     
     __implements__ = (IForum,) + tuple(BaseBTreeFolder.__implements__)
 
-    archetype_name = 'Ploneboard Forum'
+    archetype_name = 'Forum'
     
     schema = schema
     
