@@ -1,146 +1,97 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master">
-	
-<body>
-
-<div metal:fill-slot="main">
-
-    <script language="javascript">
+  
+  <body>
+    
+    <div metal:fill-slot="main">
+      
+      <script language="javascript">
         <!--
         var newWin;
-
+	
         function centeredWindow(url, winname, w, h) {
-            windowLeft = (screen.width - w)/2;
-            windowTop = (screen.height - h)/2;
-            settings = '"toolbar=no,directories=no,menubar=no,scrollbars=no,resizable=no,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
-            closeWindow();
-            newWin = window.open(url, winname, settings);
-            newWin.focus();
+	windowLeft = (screen.width - w)/2;
+	windowTop = (screen.height - h)/2;
+	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=no,resizable=no,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
+	closeWindow();
+	newWin = window.open(url, winname, settings);
+	newWin.focus();
         }
-
+	
         function closeWindow() {
-            if (newWin && !newWin.closed) {
-                newWin.close();
-            }
+	if (newWin && !newWin.closed) {
+	newWin.close();
+	}
         }
-    -->
-    </script>
-
-
-    <div metal:define-macro="photos"
-                     tal:define="photos python:here.contentValues(spec='Portal Photo');
-                     start request/start|python:0;
-                     batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
-                     previous python:batch.previous;
-                     next python:batch.next">
-
+	-->
+      </script>
+      
+      
+      <div metal:define-macro="photos"
+	   tal:define="photos python:here.contentValues(spec='Portal Photo');
+	               start request/start|python:0;
+	               batch python:modules['ZTUtils'].Batch(photos, size=1, start=start);
+	               previous python:batch.previous;
+	               next python:batch.next">
+	
         <p>Photo <span tal:replace="batch/start">10</span> of <span tal:replace="python:len(photos)">17</span>.<p>
-
-        <div tal:repeat="image batch">
-
-            <div class="contentHeader">
-            <h1 tal:content="image/title_or_id">Title or id</h1>
-            </div>
-   
-            <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}?display=original', 'Image', ${image/width}+50, ${image/height}+50);; return false;;"><img tal:condition="image/size"
-                 src="#" 
-                 tal:attributes="src python:image.absolute_url()+'?size='+request.get('display', 'original')"/></a>
-
-        
-            <span class="description" tal:content="structure image/Description">
-            Description
-            </span>
-
-            <small>
-
-            <a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new">Edit image</a><br/>&nbsp;<br/>
-
-            <span i18n:translate="">Size:</span>
-            <span tal:define="size python:image.getObjSize(image)"
-                  tal:content="size">                        
-            File size
-            </span>            
-        
-            <span tal:condition="python:test(image.size, 0, 1)"
-                  i18n:translate="">
-            (No file has been uploaded)
-            </span>
-        
-            -
-        
-            <span i18n:translate="">Content type:</span>
-            <span tal:content="image/content_type">
-            Content type
-            </span>
-
-            </small>
-
-    <form tal:condition="python:here.portal_membership.checkPermission('Modify portal content', image)" 
-          class="group"
-          name="edit_form"
-          method="post"
-          tal:attributes="action string:${image/absolute_url}/photofolder_rotate">
-
-        <input type="hidden" name="batch:int" tal:attributes="value python:request.get('start', 0)"/>
-
-        <span class="legend">Photo Details</span>
-
-        <div class="row">
-
-            <div class="label">
-                <span>Degrees</span>
-
-                <div id="degrees_help"
-                     class="help"
-                     style="visibility:hidden">
-                Select how many degrees you want to rotate the photo.
-                </div>
-            </div>
-
-            <div class="field" >
-
-                <select id="degrees" name="degrees" tabindex="1" onfocus="formtooltip('degrees_help', 1)" onblur="formtooltip('degrees_help', 0)">
-                    <option value="0">0&#176;</option>
-                    <option value="90">90&#176;</option>
-                    <option value="180">180&#176;</option>
-                    <option value="270">270&#176;</option>
-                </select>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="label">&nbsp;</div>
-            <div class="field">
-                <input class="context"
-                       tabindex="2"
-                       type="submit"
-                       name="Rotate"
-                       value="Rotate" />
-            </div>
-        </div>
-
-
-    </form>
-
-
-        </div>
-
-
-        <p tal:condition="python:previous or next">
-            <a tal:condition="previous"
-                tal:attributes="href string:${request/URL0}?start:int=${previous/first}"
-                href="previous_url"><img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?display=thumbnail'" /></a>
-            <a tal:condition="next"
-                tal:attributes="href string:${request/URL0}?start:int=${next/first}"
-                href="next_url"><img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?display=thumbnail'" /></a>
-        </p>
-
+	    
+	    <div tal:repeat="image batch">
+	      
+	      <div class="contentHeader">
+		<h1 tal:content="image/title_or_id">Title or id</h1>
+	      </div>
+	      
+	      <a href="#" tal:attributes="onclick string:javascript:centeredWindow('${image/absolute_url}?display=original', 'Image', ${image/width}+50, ${image/height}+50);; return false;;">
+		<img tal:condition="image/size" src="#" 
+		     tal:attributes="src python:image.absolute_url()+'?size='+request.get('display', 'original')"/>
+	      </a>
+	      
+	      
+	      <span class="description" tal:content="structure image/Description">
+		Description
+	      </span>
+	      
+	      <small>
+		
+		<a tal:attributes="href string:${image/absolute_url}/photo_view" target="_new">Edit image</a><br/>&nbsp;<br/>
+		    
+		    <span i18n:translate="">Size:</span>
+		    <span tal:define="size python:image.getObjSize(image)" tal:content="size">                        
+		      File size
+		    </span>            
+		    
+		    <span tal:condition="python:test(image.size, 0, 1)" i18n:translate="">
+		      (No file has been uploaded)
+		    </span>
+		    
+		    -
+		    
+		    <span i18n:translate="">Content type:</span>
+		    <span tal:content="image/content_type">Content type</span>
+		  
+	      </small>
+	      
+	    </div>
+	    
+	    
+	    <p tal:condition="python:previous or next">
+	      <a tal:condition="previous"
+                 tal:attributes="href string:${request/URL0}?start:int=${previous/first}"
+                 href="previous_url">
+		<img alt="Previous image" tal:attributes="src python:previous[0].absolute_url()+'?display=thumbnail'" />
+	      </a>
+	      <a tal:condition="next"
+                 tal:attributes="href string:${request/URL0}?start:int=${next/first}"
+                 href="next_url">
+		<img alt="Next image" tal:attributes="src python:next[0].absolute_url()+'?display=thumbnail'" />
+	      </a>
+	    </p>
+	    
+      </div>
     </div>
-</div>
-
-</body>
+    
+  </body>
 </html>

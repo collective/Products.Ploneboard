@@ -1,94 +1,93 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master">
 	
-<body>
-
-<div metal:fill-slot="main">
-
-    <script language="javascript">
+  <body>
+    
+    <div metal:fill-slot="main">
+      
+      <script language="javascript">
         <!--
         var newWin;
-
+	
         function centeredWindow(url, winname) {
-            w = screen.width - (screen.width * 0.25)
-            h = screen.height - (screen.height * 0.25)
-            windowLeft = (screen.width - w)/2;
-            windowTop = (screen.height - h)/2;
-            settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
-            closeWindow();
-            newWin = window.open(url, winname, settings);
-            newWin.focus();
+	w = screen.width - (screen.width * 0.25)
+	h = screen.height - (screen.height * 0.25)
+	windowLeft = (screen.width - w)/2;
+	windowTop = (screen.height - h)/2;
+	settings = '"toolbar=no,directories=no,menubar=no,scrollbars=yes,resizable=yes,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
+	closeWindow();
+	newWin = window.open(url, winname, settings);
+	newWin.focus();
         }
-
+	
         function closeWindow() {
-            if (newWin && !newWin.closed) {
-                newWin.close();
-            }
+	if (newWin && !newWin.closed) {
+	newWin.close();
+	}
         }
-    -->
-    </script>
-
-    <form tal:condition="python:here.contentValues(spec='Portal Photo')" 
-          class="group"
-          name="edit_form"
-          onSubmit="javascript:centeredWindow('photofolder_slideshow?delay='+document.getElementById('delay').value); return false;">
+	-->
+      </script>
+      
+      <form tal:condition="python:here.contentValues(spec='Portal Photo')" 
+	    class="group"
+	    name="edit_form"
+	    onSubmit="javascript:centeredWindow('photofolder_slideshow?delay='+document.getElementById('delay').value); return false;">
 
         <span class="legend">Slideshow Details</span>
-
+	
         <div class="row">
-
-            <div class="label">
-                <span>Delay</span>
-
-                <div id="delay_help"
-                     class="help"
-                     style="visibility:hidden">
-                Select the delay between each photo.
-                </div>
-            </div>
-
-            <div class="field" >
-
-                <select id="delay" name="delay" tabindex="1" onfocus="formtooltip('delay_help', 1)" onblur="formtooltip('delay_help', 0)">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10" selected="selected">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="45">45</option>
-                    <option value="60">60</option>
-                </select>
-            </div>
-
+	  
+	  <div class="label">
+	    <span>Delay</span>
+	    
+	    <div id="delay_help"
+		 class="help"
+		 style="visibility:hidden">
+	      Select the delay between each photo.
+	    </div>
+	  </div>
+	  
+	  <div class="field" >
+	    
+	    <select id="delay" name="delay" tabindex="1" onfocus="formtooltip('delay_help', 1)" onblur="formtooltip('delay_help', 0)">
+	      <option value="1">1</option>
+	      <option value="2">2</option>
+	      <option value="3">3</option>
+	      <option value="4">4</option>
+	      <option value="5">5</option>
+	      <option value="6">6</option>
+	      <option value="7">7</option>
+	      <option value="8">8</option>
+	      <option value="9">9</option>
+	      <option value="10" selected="selected">10</option>
+	      <option value="15">15</option>
+	      <option value="20">20</option>
+	      <option value="30">30</option>
+	      <option value="45">45</option>
+	      <option value="60">60</option>
+	    </select>
+	  </div>
+	  
         </div>
-
+	
         <div class="row">
-            <div class="label">&nbsp;</div>
-            <div class="field">
-                <input class="context"
-                       tabindex="2"
-                       type="submit"
-                       name="Start"
-                       value="Start" />
-            </div>
+	  <div class="label">&nbsp;</div>
+	  <div class="field">
+	    <input class="context"
+		   tabindex="2"
+		   type="submit"
+		   name="Start"
+		   value="Start" />
+	  </div>
         </div>
-
-    </form>
-
-    <p tal:condition="python:not here.contentValues(spec='Portal Photo')">No photos available.</p>
-
-</div>
-
-</body>
+	
+      </form>
+      
+      <p tal:condition="python:not here.contentValues(spec='Portal Photo')">No photos available.</p>
+      
+    </div>
+    
+  </body>
 </html>
