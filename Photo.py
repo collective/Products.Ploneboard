@@ -249,7 +249,12 @@ class Photo(Image):
 	"""
         import EXIF
 
-        data = EXIF.process_file(StringIO(self.data.data))
+	try:
+    	    data = EXIF.process_file(StringIO(self.data.data))
+	except:
+	    data = {}
+	if not data:
+	    data = {}
 
         keys = data.keys()
         keys.sort()
@@ -259,8 +264,10 @@ class Photo(Image):
         for key in keys:
             if key in ('JPEGThumbnail', 'TIFFThumbnail'):
                 continue
-            result[key] = str(data[key].printable)
-
+	    try:
+		result[key] = str(data[key].printable)
+	    except:
+		pass
         return result
                   
 
