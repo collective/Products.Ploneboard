@@ -9,10 +9,8 @@
 """Composite Titles :
    used to mix titles and composite elements in composite pages
 
-$Id: titles.py,v 1.3 2004/06/22 07:47:46 godchap Exp $
+$Id: titles.py,v 1.4 2004/07/29 13:25:53 godchap Exp $
 """
-import copy
-
 from Products.Archetypes.public import *
 from Products.CompositePack.config import PROJECTNAME
 from Products.CMFCore.utils import getToolByName
@@ -25,7 +23,7 @@ class Titles(BaseContentMixin):
     archetype_name = 'Navigation Titles'
     global_allow = 0
 
-    idfield = copy.deepcopy(MinimalSchema['id'])
+    idfield = MinimalSchema['id'].copy()
     idfield.widget.visible = {'edit':'hidden', 'view':'invisible'}
 
     schema = Schema((
