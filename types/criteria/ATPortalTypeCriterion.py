@@ -16,7 +16,7 @@
 ##############################################################################
 """ Topic:
 
-$Id: ATPortalTypeCriterion.py,v 1.4 2004/08/22 21:43:07 tiran Exp $
+$Id: ATPortalTypeCriterion.py,v 1.5 2004/08/24 17:29:59 runyaga Exp $
 """
 
 __author__  = 'Godefroid Chapelle'
@@ -26,6 +26,7 @@ from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
+from Products.Archetypes.public import DisplayList
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.types.criteria import registerCriterion, \
     STRING_INDICES
