@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.5 $'[11:-2]
+__version__='$Revision: 1.6 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -110,6 +110,8 @@ class ControllerPythonScript(PythonScript, ControllerBase):
         ) + Historical.manage_options + SimpleItem.manage_options + \
         Cacheable.manage_options
 
+    is_validator = 0
+    
     security = AccessControl.ClassSecurityInfo()
     security.declareObjectProtected('View')
 

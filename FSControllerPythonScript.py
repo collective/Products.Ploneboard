@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.4 2003/10/16 15:18:50 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.5 2003/10/21 04:41:23 plonista Exp $
 """
 
 import re
@@ -46,7 +46,8 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             {'label':'Actions','action':'manage_formActionsForm'},             
            ) + Cacheable.manage_options)
 
-
+    is_validator = 0
+    
     # Use declarative security
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)

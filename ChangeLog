@@ -1,3 +1,9 @@
+2003-10-21  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added better error handling for validation.  Make sure validators are
+     really CMFFormController validators (weird things happen if not), make sure
+     validators can be found.
+
 2003-10-20  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Added nicer methods for programmatically adding actions and validators

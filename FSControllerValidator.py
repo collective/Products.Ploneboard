@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.3 2003/09/27 22:51:07 plonista Exp $
+$Id: FSControllerValidator.py,v 1.4 2003/10/21 04:41:23 plonista Exp $
 """
 
 import copy
@@ -43,7 +43,8 @@ class FSControllerValidator (BaseClass, ControllerBase):
            ) + Cacheable.manage_options)
 #            {'label':'Actions','action':'manage_formActionsForm'},             
 
-
+    is_validator = 1
+    
     # Use declarative security
     security = ClassSecurityInfo()
     security.declareObjectProtected(View)
