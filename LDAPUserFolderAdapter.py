@@ -104,7 +104,6 @@ def _mangleRoles(self, name, roles):
     # See "HERE IT IS" comment below.
 
     # Scan roles we are asking for to manage groups correctly
-    Log(LOG_DEBUG, "Scanning roles for", name, roles, )
     for role in roles:
         if not role in all_roles:
             continue                        # Do not allow propagation of invalid roles
@@ -115,9 +114,9 @@ def _mangleRoles(self, name, roles):
         r = groups.get(role, None)
         if not r:
             Log(LOG_WARNING, "LDAP Server doesn't provide a '%s' group (required for user '%s')." % (role, name, ))
-        role_dns.append(r)
+        else:
+            role_dns.append(r)
 
-    Log(LOG_DEBUG, name, role_dns)
     return role_dns
 
 
