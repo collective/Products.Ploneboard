@@ -1,20 +1,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
-      metal:use-macro="here/main_template/macros/master">
+      metal:use-macro="here/prefs_main_template/macros/master">
 
 <body>
 
 
-<div metal:fill-slot="main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
+<div metal:fill-slot="prefs_configlet_main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
     
-    <h1 i18n:translate="heading_cmfmember_migration">CMFMember migration overview</h1>
+ <div class="configlet">
 
-    <a href=""
-       class="link-parent"
-       tal:attributes="href string: $portal_url/plone_control_panel"
-       i18n:translate="label_up_to_plone_setup">
-    Up to Plone Setup
-    </a>
+    <!-- simulating views on the groups/user pages until we have real objects. -->
+    <ul class="contentViews">
+        <li class="selected">
+        <a href=""
+        tal:attributes="href string:${template/id}"
+        i18n:translate="label_users">Migration</a>
+        </li>
+
+        <li class="">
+        <a href=""
+        tal:attributes="href string: prefs_cmfmember_import"
+        i18n:translate="label_groups">Import</a>
+        </li>
+
+        <li class="">
+        <a href=""
+        tal:attributes="href string: prefs_cmfmember_setup"
+        i18n:translate="label_groups">Setup</a>
+        </li>
+    </ul>
+ 
+    <h1 i18n:translate="heading_cmfmember_migration">
+        CMFMember migration overview
+    </h1>
 
     <div class="documentDescription"
          i18n:translate="description_cmfmember_migration">
@@ -37,6 +55,8 @@
          <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
     </tal:block>
     </ul>
+
+ </div>
 </div>
 
 </body>

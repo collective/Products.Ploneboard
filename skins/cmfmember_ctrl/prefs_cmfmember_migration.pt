@@ -1,20 +1,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
-      metal:use-macro="here/main_template/macros/master">
+      metal:use-macro="here/prefs_main_template/macros/master">
 
 <body>
 
 
-<div metal:fill-slot="main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
-    
+<div metal:fill-slot="prefs_configlet_main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
+
+ <div class="configlet">
+ <div class="documentEditable">    
+
+    <!-- simulating views on the groups/user pages until we have real objects. -->
+    <ul class="contentViews">
+        <li class="selected">
+        <a href=""
+        tal:attributes="href string:${template/id}"
+        i18n:translate="label_users">Migration</a>
+        </li>
+
+        <li class="">
+        <a href=""
+        tal:attributes="href string: prefs_cmfmember_import"
+        i18n:translate="label_groups">Import</a>
+        </li>
+ 
+    </ul>
+
+    <div class="documentContent">
+
     <h1 i18n:translate="heading_cmfmember_migration">CMFMember migrations</h1>
 
-    <a href=""
-       class="link-parent"
-       tal:attributes="href string: $portal_url/plone_control_panel"
-       i18n:translate="label_up_to_plone_setup">
-    Up to Plone Setup
-    </a>
 
     <p i18n:translate="cmfmember_versions">
       <b>Instance version:</b> <tal:block tal:replace="here/getInstanceVersion"/><br />
@@ -29,7 +44,9 @@
     <div class="documentDescription"
          i18n:translate="description_cmfmember_migration">
 	 <span style="background-color:red; color: white; font-weight: bold">
-	 Please ensure you have a backup of your site before performing migration.</span> 
+	 Please ensure you have a backup of your site before
+	 performing migration.</span> 
+         <br />
 	 Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
     </div>
 
@@ -107,6 +124,11 @@
     </ul>
 
     </tal:block>
+
+   </div>
+  </div>
+ </div>
+
 </div>
 
 

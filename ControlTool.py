@@ -1,5 +1,5 @@
 """
-$Id: ControlTool.py,v 1.4 2004/04/19 06:15:42 k_vertigo Exp $
+$Id: ControlTool.py,v 1.5 2004/04/19 09:57:24 k_vertigo Exp $
 """
 from Acquisition import aq_inner, aq_parent
 from AccessControl import ClassSecurityInfo
@@ -51,7 +51,7 @@ control_id = 'cmfmember_control'
 configlets = [ {'id':'cmfmember',
      'appId':'CMFMember',
      'name':'CMFMember control',
-     'action':'string:${portal_url}/' + control_id + '/prefs_cmfmember_migration_overview',
+     'action':'string:${portal_url}/' + control_id + '/prefs_cmfmember_migration',
      'category':'Products',
      'permission': ManagePortal,
      'imageUrl':'group.gif'},]

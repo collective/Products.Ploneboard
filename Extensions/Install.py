@@ -78,6 +78,15 @@ def installControlTool(self, out):
         cm.setTitle('CMFMember needs migration')
     else:
         cm.setTitle('CMFMember up to date')
+
+    nl_meta_types = self.portal_properties.navtree_properties.metaTypesNotToList
+    nl_meta_types = list(nl_meta_types)
+    try:
+        nl_meta_types.index('ControlTool')
+    except ValueError:
+        nl_meta_types.append('ControlTool')
+    self.portal_properties.navtree_properties.metaTypesNotToList = tuple( nl_meta_types )
+
     
 def installMember(self, out):
     types = listTypes(CMFMember.PKG_NAME)
