@@ -186,8 +186,8 @@ columns
                       </div>
 
                       <div style="margin-top: 5px">
-                        <span class="label" i18n:translate="label_skin">skin:</span>
                         <select title="panel skin" name="panelSkin"
+                                i18n:attributes="ttile label_skin"
                                 tal:attributes="name string:CPI$columnIndex.panelSkin:records">
                           <metal:block tal:repeat="skinInfo here/portal_contentpanels/getPanelSkins">
                             <option value="slotpath"
@@ -197,7 +197,6 @@ columns
                                     i18n:translate="">css wrapper name</option>
                           </metal:block>
                         </select>
-                        <span class="label" i18n:translate="label_viewlet">viewlet:</span>
                         <select name="panelObjectViewlet" title="content viewlet" width="6"
                                 tal:define="viewlets python: here.portal_actions.listFilteredActionsFor(panelContent).get('panel_viewlets', []);
                                             viewlets python: [viewlet for viewlet in viewlets if (viewlet['id']!='contentpanels_viewlet' or panelContent.absolute_url() != cpPath)];

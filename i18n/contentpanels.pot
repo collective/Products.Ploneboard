@@ -1,6 +1,5 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Getget file for contentpanels
+
 msgid ""
 msgstr ""
 "Project-Id-Version: CMFContentPanels 1.6\n"
