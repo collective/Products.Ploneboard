@@ -38,7 +38,7 @@ class CMFMemberTestCase(PloneTestCase.PloneTestCase):
 
     def setupCMFMember( self ):
         install_cmfmember( self.portal)
-        self.portal.cmfmember_control.upgrade()        
+        self.portal.cmfmember_control.upgrade(swallow_errors=0)        
 
     def setupUsers( self ):
         puf = self.portal.acl_users        

@@ -114,7 +114,7 @@ class TestMigration( PloneTestCase.PloneTestCase ):
 
         # Install CMFMember, migrate Plone member stuff to CMFMember
         install_cmfmember(self.portal)
-        self.portal.cmfmember_control.upgrade()
+        self.portal.cmfmember_control.upgrade(swallow_errors=0)
 
         mdtool = self.portal.portal_memberdata
         mstool = self.portal.portal_membership
