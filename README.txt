@@ -30,4 +30,4 @@ Contributions:
 
     Whit Morriss: examples and tests
 
-    Simon Spamies: code, code, code
+    Simon Spamies: fixes, code cleanup, schema update mechanism revisited

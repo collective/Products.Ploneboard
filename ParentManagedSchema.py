@@ -2,13 +2,14 @@
 ATSchemaEditorNG
 
 (C) 2003,2004, Andreas Jung, ZOPYX Software Development and Consulting
+and Contributors
 D-72070 Tübingen, Germany
 
 Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.7 2004/09/27 15:22:30 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.8 2004/09/27 15:52:21 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -24,6 +25,9 @@ class ParentManagedSchema:
 
     security = ClassSecurityInfo()  
 
+    def _wrap_schema(self, schema):
+        return ImplicitAcquisitionWrapper(ManagedSchema(schema.fields()), self)
+
     security.declareProtected(View, 'Schema')
     def Schema(self, schema_id=None):
         """ Retrieve schema from parent object. The client class should
@@ -35,12 +39,12 @@ class ParentManagedSchema:
         # not acquisition context. So we return the default schema itself.
 
         if not hasattr(self, 'aq_parent'): 
-            return ImplicitAcquisitionWrapper(ManagedSchema(self.schema.fields()), self)
+            return self._wrap_schema(self.schema)
 
         # If we're called by the generated methods we can not rely on
         # the id and need to check for portal_type
         if not self.aq_parent.atse_isSchemaRegistered(self.portal_type):
-            return ImplicitAcquisitionWrapper(ManagedSchema(self.schema.fields()), self)
+            return self._wrap_schema(self.schema)
 
         if not schema_id:
             schema_id = self.portal_type
@@ -86,6 +90,6 @@ class ParentManagedSchema:
                 except:
                     field.set(self, field.default)
 
-        return ImplicitAcquisitionWrapper(self._v_schema, self)
+        return self._wrap_schema(self._v_schema)
 
 InitializeClass(ParentManagedSchema)

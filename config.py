@@ -2,13 +2,14 @@
 ATSchemaEditorNG
 
 (C) 2003,2004, Andreas Jung, ZOPYX Software Development and Consulting
+and Contributors
 D-72070 Tübingen, Germany
 
 Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: config.py,v 1.2 2004/09/16 17:58:53 ajung Exp $
+$Id: config.py,v 1.3 2004/09/27 15:52:21 ajung Exp $
 """
 
 SKINS_DIR = 'skins'

@@ -4,13 +4,14 @@
 ATSchemaEditorNG
 
 (C) 2003,2004, Andreas Jung, ZOPYX Software Development and Consulting
+and Contributors
 D-72070 Tübingen, Germany
 
 Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: SchemaEditor.py,v 1.19 2004/09/27 15:45:28 ajung Exp $
+$Id: SchemaEditor.py,v 1.20 2004/09/27 15:52:21 ajung Exp $
 """
 
 import re
