@@ -17,7 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
 """A simple implementation of a Message Catalog.
 
-$Id: GettextMessageCatalog.py,v 1.10 2004/02/17 06:47:43 dtremea Exp $
+$Id: GettextMessageCatalog.py,v 1.11 2004/02/17 07:11:58 dtremea Exp $
 """
 
 from Acquisition import aq_parent
@@ -122,11 +122,13 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
         """
         return self.id
 
+    security.declareProtected(view_management_screens, 'getError')
     def getError(self):
         """
         """
         return self.error
 
+    security.declareProtected(view_management_screens, 'Title')
     def Title(self):
         return self.title
 
@@ -151,14 +153,13 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
             if not REQUEST.form.has_key('noredir'):
                 REQUEST.RESPONSE.redirect(self.absolute_url())
         
-
+    security.declareProtected(view_management_screens, 'file_exists')
     def file_exists(self):
         try:             
             file = open(self._pofile, 'rb')
         except:
             return False
         return True
-
 
     def manage_afterAdd(self, item, container): pass
     def manage_beforeDelete(self, item, container): pass
@@ -171,7 +172,6 @@ class BrokenMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     index_html = ptFile('index_html', globals(), 'www', 'catalog_broken')
 
 InitializeClass(BrokenMessageCatalog)
-
 
 class GettextMessageCatalog(Persistent, Implicit, Traversable, Tabs):
     """
