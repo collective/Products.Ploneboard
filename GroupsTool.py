@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.14 2003/11/13 14:32:54 yenzenz Exp $
+$Id: GroupsTool.py,v 1.15 2003/12/16 16:28:37 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -140,6 +140,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         name = dict.get('name', None)
         email = dict.get('email', None)
         roles = dict.get('roles', None)
+        title = dict.get('title', None)
         last_login_time = dict.get('last_login_time', None)
         #is_manager = self.checkPermission('Manage portal', self)
 
@@ -151,7 +152,11 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             email = email.strip().lower()
         if not email:
             email = None
-
+        if title:
+            title = title.strip().lower()
+        if not title:
+            title = None
+            
         res = []
         portal = self.portal_url.getPortalObject()
         for g in portal.portal_groups.listGroups():
@@ -171,6 +176,9 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                         found = 1
                         break
                 if not found:
+                    continue
+            if title:
+                if g.title.lower().find(title) == -1:
                     continue
             if last_login_time:
                 if g.last_login_time < last_login_time:
