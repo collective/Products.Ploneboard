@@ -13,7 +13,7 @@
 ##############################################################################
 """
 
-$Id: Negotiator.py,v 1.2 2003/01/03 17:38:34 dreamcatcher Exp $
+$Id: Negotiator.py,v 1.3 2003/01/09 16:32:37 lalo Exp $
 """
 
 _langPrefsRegistry = []
@@ -73,6 +73,15 @@ class Negotiator:
 
 
     def getLanguage(self, langs, env):
+        if not hasattr(env, '_pts_negotiator_cache'):
+            env._pts_negotiator_cache = {}
+        cache = env._pts_negotiator_cache
+        langs = tuple(langs)
+        if not cache.has_key(langs):
+            cache[langs] = self._getLanguage(langs, env)
+        return cache[langs]
+
+    def _getLanguage(self, langs, env):
         envprefs = getLangPrefsMethod(env)
         userlangs = envprefs.getPreferredLanguages()
         # Prioritize on the user preferred languages.  Return the first user
@@ -80,6 +89,9 @@ class Negotiator:
         for lang in userlangs:
             if lang in langs:
                 return lang
+            for l_avail in langs:
+                if l_avail.startswith(lang):
+                    return l_avail
         return None
 
     def getLanguages(self, env):
