@@ -51,35 +51,35 @@
     background-position: 5px 10px;
 }
 
-.boardMessage {
+.boardComment {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     margin-bottom: 1.5em;
     position: relative;
 }
 
 /* Fix for IE float bug */
-* html .boardMessage {
+* html .boardComment {
     float: left;
     clear: both;
     width: 99%;
 }
 
-.boardMessageDetails {
+.boardCommentDetails {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: none none &dtml-borderStyle; none;
     background-color: &dtml-globalBackgroundColor;;
     padding: 0.5em 1em;
 }
 
-.boardMessageBody {
+.boardCommentBody {
     padding: 0.5em 1em;
 }
 
-.boardMessageContent {
+.boardCommentContent {
     line-height: 1.5em;
 }
 
-.boardMessageActions {
+.boardCommentActions {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: &dtml-borderStyle; none none none;
     background-color: &dtml-globalBackgroundColor;;
@@ -87,11 +87,11 @@
     text-align: right;
 }
 
-.boardMessageActions {
+.boardCommentActions {
     right: 1em:
 }
 
-.boardMessagePortrait {
+.boardCommentPortrait {
     float: right; 
     margin-bottom: 1em;
 }
