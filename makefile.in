@@ -1,8 +1,8 @@
 NAME=CMFMember
 DOMAIN=plone
-MAJOR_VERSION=0.1
+MAJOR_VERSION=1.1
 MINOR_VERSION=0
-RELEASE_TAG=
+RELEASE_TAG=-CVS
 PACKAGE_NAME=${NAME}-${MAJOR_VERSION}.${MINOR_VERSION}${RELEASE_TAG}
 
 PYTHON="/usr/bin/python"
@@ -75,7 +75,7 @@ test :
 
 # sdist:       Create a source distribution file (implies clean).
 #
-sdist: reindent clean sdist_tgz
+sdist: clean sdist_tgz
 
 # sdist_tgz:   Create a tgz archive file as a source distribution.
 #
