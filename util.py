@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: util.py,v 1.3 2004/09/27 17:18:10 spamsch Exp $
+$Id: util.py,v 1.4 2004/09/27 17:31:12 spamsch Exp $
 """
 
 import urllib
@@ -38,8 +38,8 @@ def create_signature(schema):
     s = 'Schema: {'
     for f in schema.fields():
 
-        s += '%s.%s-%s.%s: {' % \
-             (inspect.getmodule(f.__class__).__name__, f.__class__.__name__,
+        s += '%s:%s.%s-%s.%s: {' % \
+             (f.__name__, inspect.getmodule(f.__class__).__name__, f.__class__.__name__,
               inspect.getmodule(f.widget.__class__).__name__, f.widget.__class__.__name__)
 
         sorted_keys = f._properties.keys()
