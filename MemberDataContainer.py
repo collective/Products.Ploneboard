@@ -123,7 +123,7 @@ class MemberDataContainer(BaseBTreeFolder):
             if not m:
                 ## XXX Delegate to the factory and create a new site specific
                 ## member object for this user
-                addMember=getMemberFactory(self, 'Member')
+                addMember=getMemberFactory(self, self.getTypeName())
                 addMember(name)
                 m = self.get(name)
                 m.setUser(user)

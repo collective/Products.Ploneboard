@@ -9,7 +9,7 @@ email = 'bobby@bobby.com'
 
 fullnames = ('Bob Barker', '3rd Base', 'ActionGrl', 'Rhonda', 'Tom', 'Dick', 'Harry', 'Melinda', 'Shanikqua', 'Jane', 'Crystal', 'Yolanda', 'Elvis', 'Alfred E. Neuman', 'Zamfir X')
 
-query = {'getId':'0member', 'getFullname':'Bob Barker', 'getEmail':email}
+query = {'getId':'0member', 'getFullName':'Bob Barker', 'getEmail':email}
 
 class TestMemberSearch(CMFMemberTestCase.CMFMemberTestCase):
     
@@ -29,8 +29,8 @@ class TestMemberSearch(CMFMemberTestCase.CMFMemberTestCase):
         self.assertEqual(cat_indexes, accessors)
 
     def testKWSearchForMembers(self):
-        results = self.memberdata.searchForMembers(getId='0member', getFullname='Bob Barker', getEmail=email, brains='yes_please')
-        self.assertEquals(results[0].getFullname, 'Bob Barker')
+        results = self.memberdata.searchForMembers(getId='0member', getFullName='Bob Barker', getEmail=email, brains='yes_please')
+        self.assertEquals(results[0].getFullName, 'Bob Barker')
 
     def testReturn(self):
         # with brains
@@ -39,12 +39,12 @@ class TestMemberSearch(CMFMemberTestCase.CMFMemberTestCase):
         request.form = query
         results = self.memberdata.searchForMembers(request)
         self.assertEquals([x.getId for x in results], ['0member'])
-        self.assertEquals([x.getFullname for x in results], ['Bob Barker'])
+        self.assertEquals([x.getFullName for x in results], ['Bob Barker'])
         
         # brainless(objects)
         request.set('brains', False)
         results = self.memberdata.searchForMembers(request)
-        self.assertEquals([x.getFullname() for x in results], ['Bob Barker'])
+        self.assertEquals([x.getFullName() for x in results], ['Bob Barker'])
 
     def testSearchForMembers(self):
         # can we search at all?
