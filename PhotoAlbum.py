@@ -52,24 +52,6 @@ class PhotoAlbum (BTreeFolder2Base, SkinnedFolder):
         SkinnedFolder._checkId(self, id, allow_dup)
         BTreeFolder2Base._checkId(self, id, allow_dup)
 
-    displays = {'thumbnail': (128,128),
-                'xsmall': (200,200),
-                'small': (320,320),
-                'medium': (480,480),
-                'large': (768,768),
-                'xlarge': (1024,1024)
-                }
-
-
-    security.declareProtected(CMFCorePermissions.View, 'getDisplays')
-    def getDisplays(self):
-        result = []
-
-        for name, size in self.displays.items():
-            result.append({'name':name, 'label':'%s (%dx%d)' % (name, size[0], size[1])})
-
-        return result
-
 
     security.declarePrivate('PUT_factory')
     def PUT_factory( self, name, typ, body ):
