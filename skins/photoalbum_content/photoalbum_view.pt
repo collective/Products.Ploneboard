@@ -26,20 +26,6 @@
       </h1>
 
       <table style="width: 100%;">
-	<tr>
-	  <td>
-	    <tal:block tal:condition="albums"
-	               tal:repeat="album albums">
-	      <span class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
-		                             number_of_images python:len(images_in_album)">
-		<a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
-		  <img tal:replace="structure python:images_in_album[0].tag(size='thumbnail')" />
-		</a>
-		<br/><span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
-	    </span>
-	    </tal:block>
-	  </td>
-	</tr>
 	<tr tal:condition="python:test(batch.previous or batch.next, 1, 0)">
 	  <td>
 	    <div class="listingBar">
@@ -69,6 +55,20 @@
 		  <img tal:replace="structure python:image.tag(size='thumbnail')" />
 		</a>
 	      </span>
+	    </tal:block>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    <tal:block tal:condition="albums"
+	               tal:repeat="album albums">
+	      <span class="card" tal:define="images_in_album python:album.contentValues(spec='Photo');
+		                             number_of_images python:len(images_in_album)">
+		<a tal:condition="images_in_album" tal:attributes="href string:${album/absolute_url}/view">
+		  <img tal:replace="structure python:images_in_album[0].tag(size='thumbnail')" />
+		</a>
+		<br/><span tal:content="structure string:<strong>${album/title_or_id}</strong><br/>$number_of_images photos in album"></span>
+	    </span>
 	    </tal:block>
 	  </td>
 	</tr>
