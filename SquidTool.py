@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-# $Id: SquidTool.py,v 1.5 2004/09/24 03:29:29 panjunyong Exp $ (Author: $Author: panjunyong $)
+# $Id: SquidTool.py,v 1.6 2004/09/24 03:33:21 panjunyong Exp $ (Author: $Author: panjunyong $)
 """
 
 # make sockets non blocking
@@ -82,7 +82,7 @@ class SquidTool(UniqueObject, SimpleItem):
                 # You can see code from squid's client.c
 
                 conn._http_vsn = 10
-                conn_http_vsn_str = 'HTTP/1.0'
+                conn.conn_http_vsn_str = 'HTTP/1.0'
                 conn.putrequest('PURGE', ob_url) 
                 conn.endheaders()
                 conn.sock.set_timeout(2)
