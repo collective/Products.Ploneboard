@@ -9,7 +9,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.10 2004/09/27 16:34:53 spamsch Exp $
+$Id: ParentManagedSchema.py,v 1.11 2004/09/27 17:11:12 spamsch Exp $
 """
 
 import types
@@ -20,6 +20,7 @@ from Acquisition import ImplicitAcquisitionWrapper
 from Products.CMFCore.CMFCorePermissions import View
 from Products.Archetypes.Schema import ManagedSchema
 from zLOG import LOG, INFO
+import inspect
 
 class ParentManagedSchema:
     """ mix-in class for AT content-types whose schema is managed by
@@ -121,8 +122,11 @@ class ParentManagedSchema:
         disallowed = [types.ClassType, types.MethodType, types.ModuleType, type(ExtensionClass)]
         s = 'Schema: {'
         for f in schema.fields():
-            
-            s += '%s: {' % f.__class__.__name__
+
+            s += '%s.%s-%s.%s: {' % \
+                 (inspect.getmodule(f.__class__).__name__, f.__class__.__name__,
+                  inspect.getmodule(f.widget.__class__).__name__, f.widget.__class__.__name__)
+
             sorted_keys = f._properties.keys()
             sorted_keys.sort()
             
@@ -134,7 +138,7 @@ class ParentManagedSchema:
             s = s + '}'
 
         s = s + '}'
-        
+
         from md5 import md5
         return md5(s).digest()
 
