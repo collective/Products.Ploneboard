@@ -28,9 +28,10 @@ Archetypes 1.3.0
 
 AT Content Types is tested with the following AT versions
 
- * AT 1.3.0-rc3+ (not yet released)
+ * AT 1.3.0-final newer releases of AT 1.3.x
 
- * AT SVN release-1_3-branch (aka 1.3.0-rc2+) after 2004-09-11
+ * AT SVN anon bundle after 2004-10-06
+   http://svn.plone.org/archetypes/bundles/anon-archetypes-1.3/
 
 AT Content Types doesn't work with other versions of Archetypes because some
 fixes are missing. Right now it's tested only with the newest cvs version of

@@ -1,10 +1,10 @@
 
 modname     = 'ATContentTypes'
-version     = '0.2.0-rc1'
+version     = '0.2.0-rc2'
 # (major, minor, patchlevel, release info) where release info is:
 # -99 for alpha, -49 for beta, -19 for rc and 0 for final
 # increment the release info number by one e.g. -98 for alpha2
-numversion  = (0, 2, 0, -19)
+numversion  = (0, 2, 0, -18)
 
 license     = 'GPL, ZPL'
 copyright   = '''(c) 2003-2004 AT Content Types development team'''
@@ -30,7 +30,7 @@ debian_maintainer_email = ''
 debian_add_descr  = ''''''
 debian_handler    = 'zope'
 debian_builddep   = ''
-debian_depends    = 'zope (>= 2.7), archetypes (>= 1.3.0-beta3), zope-cmfplone (>= 2.0.3)'
+debian_depends    = 'zope (>= 2.7), archetypes (>= 1.3.0-final), zope-cmfplone (>= 2.0.4)'
 debian_recommends = ''
 debian_suggests   = ''
 debian_conflicts  = ''
