@@ -511,8 +511,15 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
 
         # Change the user itself
         src = self.getUser(name).getUserSourceId()
-        return self.getUserSource(src)._doChangeUser(
+        ret = self.getUserSource(src)._doChangeUser(
             name, password, roles, domains, **kw)
+
+        # Invalidate user cache if necessary
+        authenticated = getSecurityManager().getUser()
+        if name == authenticated.getId() and hasattr(authenticated, 'clearCachedGroupsAndRoles'):
+            authenticated.clearCachedGroupsAndRoles(self.getUserSource(src).getUser(name))
+
+        return ret
 
     security.declarePrivate("_updateUser")
     def _updateUser(self, name, password = None, roles = None, domains = None, groups = None):
@@ -712,7 +719,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2004/02/27 19:05:51 $"[7:-2]
+        rev_date = "$Date: 2004/03/01 13:18:24 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 

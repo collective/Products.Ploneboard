@@ -112,12 +112,13 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         self.clearCachedGroupsAndRoles()
 
     security.declarePrivate('clearCachedGroupsAndRoles')
-    def clearCachedGroupsAndRoles(self):
+    def clearCachedGroupsAndRoles(self, underlying_user = None):
         self._groups = None
         self._user_roles = None
         self._group_roles = None
         self._all_roles = None
-        
+        if underlying_user:
+            self._setUnderlying(underlying_user)
 
     security.declarePublic('isGroup')
     def isGroup(self,):
