@@ -71,33 +71,33 @@
 
   <body>
     <div align="center">
-      <table width="640">
-          <tr>
-            <td>
-              <h1><img src="GRUFLogo.png" alt="" align="middle">&nbsp;GRUF - GroupUserFolder</h1>
-              <p align="center"><font size="+1">&#8250;&nbsp;A groups management tool for Zope&nbsp;&#8249;</font></p>
+    <table width="640">
+      <tr>
+          <td>
+            <h1><img src="GRUFLogo.png" alt="" align="middle">&nbsp;GRUF - GroupUserFolder</h1>
+            <p align="center"><font size="+1">&#8250;&nbsp;A groups management tool for Zope&nbsp;&#8249;</font></p>
 
-              <p align="center">
-                <font size="-2">
-                  <a href="#what">What's GRUF ?</a> 
-                  |
-                  <a href="#how">How does it work ?</a> 
-                  |
-                  <a href="#compat">Is it compatible with...</a> 
-                  |
-                  <a href="#download">Download</a> 
-                  |
-                  <a href="#screenshots">Screenshots</a> 
-                  |
-                  <a href="#faq">FAQ</a> 
-                  |
-                  <a href="#links">Links</a>
-                  |
-                  <a href="#contact">Contact</a>
-                </font>
-              </p>
+            <p align="center">
+              <font size="-2">
+                <a href="#what">What's GRUF ?</a> 
+                |
+                <a href="#how">How does it work ?</a> 
+                |
+                <a href="#compat">Is it compatible with...</a> 
+                |
+                <a href="#download">Download</a> 
+                |
+                <a href="#screenshots">Screenshots</a> 
+                |
+                <a href="#faq">FAQ</a> 
+                |
+                <a href="#links">Links</a>
+                |
+                <a href="#contact">Contact</a>
+              </font>
+            </p>
 
-              <a name="what"/>
+            <a name="what"/>
               <p>&nbsp;</p>
               <span class="boxtab">What's GRUF ?</span>
               <div class="boxcontent">
@@ -113,6 +113,7 @@
                   <li>It doesn't store users by itself but delegates that job to another User 
                     Folder. So, it <b>works with virtually ANY Zope UserFolder</b> in there ! (especially 
                     standard acl_users but also LDAPUserFolder, SimpleUserFolder, ...) ;</li>
+                  <li>It supports <b>groups nesting</b> (ie. groups can belong to other groups and 'inherit' their roles</li>
                   <li>It allows groups and users to be stored in a separated backend (eg. groups in ZODB and users in LDAP, ...);</li>
                   <li>It provides <b>clean management screens</b> (including user and groups editing interfaces) ;</li>
                   <li>It provides <b>security auditing tools</b> ;</li>
@@ -121,8 +122,8 @@
                     groups support. Thus, <b>you don't have to rewrite anything to gain benefit from 
                       GRUF's groups</b> !</li>
                 </ul>
-
-                <p>GRUF has been designed by the <a href="http://www.ingeniweb.com">Ingeniweb</a> team.</p>
+                
+              <p>GRUF has been designed by the <a href="http://www.ingeniweb.com">Ingeniweb</a> team.</p>
 
                 <p>And, of course, it's Open-Source (GPL licence). </p>
               </div>
@@ -242,8 +243,7 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                 <p align="center">
                   <img src="menu.png"><br />
                   <i>The way GRUF shows-up in the ZMI (continued)<br />
-                    You can see the two regular User Folder objects within GRUF's Groups and Users containers.<br />
-                    Those user folder can be replaced by any Zope security API-compying User Folder. Wow !</i>
+                              You can now see users and groups defined within GRUF, and click them individually.</i>
                 </p>
                 <p align="center">
                   <img src="tab_overview.png"><br />
@@ -258,6 +258,10 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
                   <i>The users management interface</i>
                 </p>
                 <p align="center">
+                  <img src="user_edit.png"><br />
+                  <i>Individual group edition</i>
+                </p>
+                <p align="center">
                   <img src="tab_audit.png"><br />
                   <i>A security audit results page</i>
                 </p>
@@ -269,69 +273,70 @@ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/collective co GroupUse
               <div class="boxcontent">
                 <p>
                 <ul>
-                  <li><strong>Can I nest some GRUFs?</strong></li><br />
-                Maybe... but what for ?
-                <li><strong>Can I use GRUF outside Plone?</strong><br />
-                  Yes, yes, yes, yes and yes.</li>
-                <li><strong>Is GRUF stable?</strong><br />
-                  It's used in a production environment for several major websites. Furthermore, it's qualified to be included
-                  in Plone 1.1. It's considered reliable enough !</li>
-                <li><strong>Is GRUF maintained?</strong><br />
-                  Yes, it is, actively. Features (especially regarding useablility) are often 
-                  added to GRUF. Official releases are considered very stable.</li>
-                <li><strong>Can I help?</strong><br />
-                  Yes, for sure !<br />
-                  GRUF is an Open-Source project and we, at Ingeniweb, are always happy to help people getting involved
-                  with our products. Just contact us to submit your ideas, patches or insults ! :-)<br />
-                </li>
-                <li><strong>I cannot change my password on Plone!</strong>
-                  You must install GRUF's skin to replace the buggy CMF change_password script. 
-                  See code for details. But all you have to do is to follow the install procedure.
-                </li>
-              </ul>
+                  <li>
+                    <strong>Can I nest some GRUFs ?</strong><br />
+                    Maybe... but what for ?
+                  </li>
+                  <li>
+                    <strong>Does GRUF support nested groups ?</strong><br />
+                    Nested groups in group-whithin-a-group feature. <br />
+                    And, yes, GRUF supports it since 1.3 version.
+                  </li>
+                  <li>
+                    <strong>Does GRUF support multiple user sources ?</strong><br />
+                    Multiple user sources is a feature that would allow you to store users in several userfolders.
+                    For example, you could have your regular admin users in a standard User Folder, your intranet
+                    users in an LDAPUserFolder and your extranet users in an SQL-based user folder<br />
+                    GRUF doesn't support this yet but this feature is planned.
+                  </li>
+                  <li>
+                    <strong>Can I use GRUF outside Plone ?</strong><br />
+                    Yes, yes, yes, yes and yes.
+                  </li>
+                  <li>
+                    <strong>Is GRUF stable ?</strong><br />
+                    It's used in a production environment for several major websites. Furthermore, it's qualified to be included
+                    in Plone 1.1. It's considered reliable enough !
+                  </li>
+                <li>
+                    <strong>Is GRUF maintained ?</strong><br />
+                    Yes, it is, actively. Features (especially regarding useablility) are often 
+                    added to GRUF. Official releases are considered very stable.
+                  </li>
+                <li>
+                    <strong>Can I help ?</strong><br />
+                    Yes, for sure !<br />
+                    GRUF is an Open-Source project and we, at Ingeniweb, are always happy to help people getting involved
+                    with our products. Just contact us to submit your ideas, patches or insults ! :-)<br />
+                  </li>
+                </ul>
               </p>
               </div>
-
+              
               <a name="links"/>
               <p>&nbsp;</p>
-              <span class="boxtab">Links</span>
-              <div class="boxcontent">
-                <p>
-                  Here are some links of interest regarding GRUF or other assorted tools.
-                </p>
-                <ul>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder">This document</a> on the web;</li>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.html">GRUF API Documentation</a> (using APIDoc);</li>
-                  <li><a href="http://sourceforge.net/project/showfiles.php?group_id=55262">The collective project download page</a> to keep up-to-date with latest GRUF releases;</li>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/README.txt">README.txt</a>: the GRUF README file</li>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/README-Plone.stx">README-Plone.stx</a>: the GRUF-Plone README file</li>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/CHANGES">CHANGES</a>: the top-level changes file</li>
-                  <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/ChangeLog">ChangeLog</a>: the ChangeLog file, auto-generated from cvs</li>
-                </ul>
-              </div>
-
-              <a name="contact"/>
-              <p>&nbsp;</p>
-              <span class="boxtab">Contact</span>
-              <div class="boxcontent">
-                <p>
-                  GRUF has been developped at <a href="http://www.ingeniweb.com">Ingeniweb</a>'s labs. </p>
-                <p>It's actively maintained by <a href="mailto:grizel@ingeniweb.com">Pierre-Julien Grizel</a>.</p>
-                <p>
-                  Some contributors then joined the project to add cool features for Plone. Thanks, especially,
-                  to J. Cameroun Cooper, Brent Hendricks and Alan Runyan for their help and support.
-                </p>
-                <p align="center">
-                  <a href="http://www.ingeniweb.com"><img border="0" src="IWLogo.jpg"></a>
-                </p>
-              </div>
+            <span class="boxtab">Links</span>
+            <div class="boxcontent">
+              <p>
+                Here are some links of interest regarding GRUF or other assorted tools.
+              </p>
+              <ul>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder">This document</a> on the web;</li>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/api/GroupUserFolder.html">GRUF API Documentation</a> (using APIDoc);</li>
+                <li><a href="http://sourceforge.net/project/showfiles.php?group_id=55262">The collective project download page</a> to keep up-to-date with latest GRUF releases;</li>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/README.txt">README.txt</a>: the GRUF README file</li>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/README-Plone.stx">README-Plone.stx</a>: the GRUF-Plone README file</li>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/CHANGES">CHANGES</a>: the top-level changes file</li>
+                <li><a href="http://ingeniweb.sourceforge.net/Products/GroupUserFolder/ChangeLog">ChangeLog</a>: the ChangeLog file, auto-generated from cvs</li>
+              </ul>
+            </div>
 
               <p>&nbsp;</p>
               <p align="right">
                 <font size="-3">
                   <!-- Created: Wed Jul  9 15:52:57 GMT 2003 -->
                   <!-- hhmts start -->
-Last modified: Sun Jul 20 16:14:08 GMT 2003
+Last modified: Wed Jul 23 15:05:52 GMT 2003
 <!-- hhmts end -->
                 </font>
               </p>
