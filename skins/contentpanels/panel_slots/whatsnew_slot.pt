@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone">
+
+<body>
+
+<!-- The news box -->
+
+<div metal:define-macro="whatsnewBox"
+     tal:define="mstring modules/string;
+                 results python:here.portal_catalog.searchResults( 
+                                  path=mstring.join(here.aq_parent.getPhysicalPath(), '/')
+                                   , sort_on='modified'
+                                   , sort_order='reverse')[:5]">
+
+    <div class="box">
+    
+        <h5 i18n:translate="what_is_new">what is new</h5>
+
+        <div class="body">
+
+            <tal:block tal:repeat="obj results">
+                    
+                <div tal:define="oddrow repeat/obj/odd;
+                                contentObject obj/getObject"
+                     tal:attributes="class python:test(oddrow, 'content even', 'content odd')">
+            
+                <span tal:define="action python:contentObject.getTypeInfo().getActionById('view');
+                        url python:test(contentObject.absolute_url()+'/'+action);">
+
+                  <a href="#" tal:attributes="href url" target="_blank">
+                    <img src="#" tal:attributes="src string:${here/portal_url}/${contentObject/getIcon}" />&nbsp;
+                    <span tal:condition="python:here.portal_discussion.isDiscussionAllowedFor(contentObject)" >
+                      <span tal:omit-tag=""
+                        tal:define="replyCount python:here.portal_discussion.getDiscussionFor(contentObject).replyCount(contentObject)"
+                        tal:condition="python: replyCount > 0"
+                        tal:replace="python: '[%d]'% replyCount"> 8
+                      </span>
+                    </span>&nbsp;
+
+                    <span tal:replace="contentObject/title_or_id">Title</span>
+                  </a>
+                </span>
+
+                   <span tal:content="python:' (' + contentObject.Creator() + ')'"> creator </span>
+
+            
+                    <div class="boxDetails"
+                         tal:content="python:here.toPortalTime(obj.modified)">July 7, 08:11</div>
+                </div>
+        
+            </tal:block>
+    
+    <div align="right">
+      <a href="#" tal:attributes="href string: ${here/aq_parent/absolute_url}/whatsnew_view" i18n:translate="read_more">More...</a>&nbsp;&nbsp;
+    </div>
+
+        </div>
+
+    </div>
+        
+</div>
+
+</body>
+
+</html>
+
+

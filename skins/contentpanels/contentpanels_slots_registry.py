@@ -16,6 +16,7 @@ return [
         , ('Blue Box', 'here/contentpanels_BlueBoxSkin/macros/skinslot')
         , ('Yellow Box', 'here/contentpanels_YellowBoxSkin/macros/skinslot')
 	, ('Red Box',  'here/contentpanels_RedBoxSkin/macros/skinslot')
+        , ('What is New', 'here/whatsnew_slot/macros/whatsnewBox')
         , ('About Box', 'here/about_slot/macros/aboutBox')
         , ('Related Box', 'here/related_slot/macros/relatedBox')
         , ('Calendar', 'here/calendar_slot/macros/calendarBox')

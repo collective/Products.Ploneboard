@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="container/main_template/macros/master"
+    i18n:domain="plone">
+
+    <metal:block fill-slot="base">
+            <base href=""
+                  tal:attributes="href python: here.absolute_url() + '/'">
+    </metal:block>
+
+<body>
+
+<div metal:fill-slot="main">
+
+
+    <h1 i18n:translate="what_is_new">what is new</h1>
+    
+    <div class="description"
+         tal:content="structure here/Description"> 
+    description
+    </div>
+
+    <metal:block tal:define="
+                 b_start string:0;b_start request/b_start | b_start;
+                 mstring modules/string;
+                 results python:here.portal_catalog.searchResults( 
+                                  path=mstring.join(here.getPhysicalPath(), '/')
+                                   , sort_on='modified'
+                                   , sort_order='reverse');
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 global batch python:Batch(results, 20, int(b_start), orphan=1)">
+
+
+    <!-- Navigation -->
+    <div metal:use-macro="here/batch_macros/macros/navigation" />
+                 
+    <table class="listing"
+           id="sortable"
+           tal:condition="batch">
+
+        <thead>
+            <tr>
+                <th>&nbsp;Title&nbsp;</th>
+                <th>&nbsp;Type&nbsp;</th>
+                <th>&nbsp;Last Modified&nbsp;</th>
+                <th>&nbsp;Description&nbsp;</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+        <metal:block tal:repeat="match batch">
+        <tr class="even" 
+            tal:define="oddrow repeat/match/odd" 
+            tal:attributes="class python:test(oddrow, 'even', 'odd')" >
+        <td>                
+        <a href="#" 
+           tal:attributes="href string:${match/getURL}/view" >
+           <img src="#" tal:attributes="src string:${here/portal_url}/${match/getIcon}" />
+           <span tal:replace="match/Title|match/id">Title or id</span>
+        </a>
+        </td>   
+        <td tal:content="match/Type">Type</td>
+        <td tal:content="match/ModificationDate">Modification Date</td>
+        <td tal:content="match/Description">Description</td>
+        </tr>
+        </metal:block>
+        </tbody>
+    </table>
+
+    <!-- Navigation -->
+    <div metal:use-macro="here/batch_macros/macros/navigation" />
+
+    <div tal:condition="not: results">
+        <p><strong i18n:translate="no_results_found"> No results match your criteria. </strong></p>
+    </div>
+
+    </metal:block>
+    
+</div>
+
+</body>
+</html>
+
