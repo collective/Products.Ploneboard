@@ -97,7 +97,7 @@ class FasterStringIO:
     def read(self):
         if self.closed:
             raise ValueError("I/O operation on closed file")
-        return '\n'.join(self.buf)
+        return ''.join(self.buf)
 
     def readline(self, length=None):
         if self.closed:
