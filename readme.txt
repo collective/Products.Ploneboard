@@ -6,7 +6,7 @@ DCWorkflowGraph
 
     DCWorkflowGraph is at "collective":http://sf.net/projects/collective.
 
-    Product home: http://www.zope.org/Members/panjunyong/
+    Product home: http://www.zope.org/Members/panjunyong/DCWorkflowGraph
 
 Require
 
