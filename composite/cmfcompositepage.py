@@ -23,7 +23,8 @@ allowed_viewlets_ids="%s" allowed_viewlets_titles="%s" full_path="%s">
 
 
 class PackSlot(Slot):
-   
+   __occams_gestalt__ = 1 
+
    def _render_editing(self, obj, text, icon_base_url):
         o2 = obj.dereference()
         icon = escape(getIconURL(o2, icon_base_url).encode('utf8'))
@@ -67,6 +68,8 @@ class CMFCompositePage(BaseFolder, PackComposite):
     meta_type = portal_type = 'CMF Composite Page'
     archetype_name = 'Navigation Page'
 
+    __occams_gestalt__ = 1
+
     schema = BaseSchema + composite_schema
 
     actions = ({'id': 'view',
@@ -100,7 +103,7 @@ class CMFCompositePage(BaseFolder, PackComposite):
         self.schema['layout'].vocabulary = DisplayList(layouts)
         return self.getField('layout').get(self)
       
-    def setLayout(self,viewlet_id):
+    def setLayout(self, viewlet_id):
         composite_tool = getToolByName(self, TOOL_ID)
         ## fix me for no / in template path
         path = composite_tool.layouts[viewlet_id].getTemplate_path()
@@ -110,5 +113,20 @@ class CMFCompositePage(BaseFolder, PackComposite):
         self.template_path = template_id
         
         self.getField('layout').set(self, viewlet_id)
-       
+
+    def getPathFromPortal(self):
+        portal_object = getToolByName(self, 'portal_url').getPortalObject()
+        phypath_from_portal = self.getPhysicalPath()[len(portal_object.getPhysicalPath()):];
+        return '/'.join(phypath_from_portal)
+
+    def incrementVersion(self, checkin_message=''):
+        if self._occams_installed():
+            self.getCurrentGateway().getStageMap().incrementVersion(self,
+                    checkin_message=checkin_message)            
+        else:
+            pass
+           
+    def _occams_installed(self):
+        return hasattr(self, 'getCurrentGateway')
+        
 registerType(CMFCompositePage, PROJECTNAME)

@@ -24,6 +24,6 @@ class PloneUI(CommonUI):
     top_templates = CommonUI.top_templates + (
         PageTemplateFile('top.pt', _plone),)
     bottom_templates = (PageTemplateFile('bottom.pt', _plone),
-                        ) + CommonUI.bottom_templates
+                        ) 
 
 Globals.InitializeClass(PloneUI)

@@ -7,23 +7,45 @@ from StringIO import StringIO
 
 KUPU_TOOL_ID = PloneKupuLibraryTool.id
 
+COMPO_TYPE = 'CMF Composite Page'
+
 def install_tool(self, out):
-      if hasattr(self, TOOL_ID):
-          uninstall(self, out)
-      self.manage_addProduct['CompositePack'].manage_addCompositeTool()
-      out.write("CompositePack Tool Installed")
+    if hasattr(self, TOOL_ID):
+      uninstall(self, out)
+    self.manage_addProduct['CompositePack'].manage_addCompositeTool()
+    out.write("CompositePack Tool Installed")
+
+def set_hidden_type_from_navtree(self, out):    
+    try:
+        self.portal_properties.navtree_properties.metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
+        self.portal_properties.navtree_properties.metaTypesNotToList.index(COMPO_TYPE)
+    except ValueError:
+        list(self.portal_properties.navtree_properties.metaTypesNotToList).append(COMPO_TYPE)
+    except:
+        raise
+    out.write("CMF Composite Page hidden in navigation tree")
         
 def install_kupu_resource(self, out):
-      if hasattr(self, KUPU_TOOL_ID):
-          kupu_tool = getattr(self, KUPU_TOOL_ID)
-          kupu_tool.addResourceType(COMPOSABLE, COMPOSABLE_TYPES)
-          out.write("Composable Resource created in Kupu Library Tool")
-      else:
-          out.write("Kupu Library Tool not available")
+    if hasattr(self, KUPU_TOOL_ID):
+        kupu_tool = getattr(self, KUPU_TOOL_ID)
+        kupu_tool.addResourceType(COMPOSABLE, COMPOSABLE_TYPES)
+        out.write("Composable Resource created in Kupu Library Tool")
+    else:
+        out.write("Kupu Library Tool not available")
         
 def uninstall_tool(self, out):
     self.manage_delObjects(ids=[TOOL_ID,])
     out.write("CompositePack Tool UnInstalled")
+
+def unset_hidden_type_from_navtree(self, out):    
+    try:
+        self.portal_properties.navtree_properties.metaTypesNotToList=list(self.portal_properties.navtree_properties.metaTypesNotToList)
+        self.portal_properties.navtree_properties.metaTypesNotToList.remove(COMPO_TYPE)
+    except ValueError:
+        pass
+    except:
+        raise
+    out.write("CMF Composite Page hidden in navigation tree")
 
 def uninstall_kupu_resource(self, out):
       if hasattr(self, KUPU_TOOL_ID):
@@ -40,6 +62,8 @@ def install(self):
     out = StringIO()
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
+
+    hide_type_from_navtree(self, out)
 
     install_subskin(self, out, GLOBALS)
     

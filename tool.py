@@ -47,6 +47,23 @@ class CompositeTool(Folder, BaseTool):
     def __repr__(self):
         return "CompositePack Tool"
 
+
+    security.declarePublic("moveAndDelete")
+    def moveAndDelete(self, move_source_paths="", move_target_path="",
+                      move_target_index="", delete_source_paths="", 
+                      composite_path="", REQUEST=None):
+        """Move and/or delete elements.
+        """
+        if move_source_paths:
+            checkin_message = 'Move element'
+        if delete_source_paths:
+            checkin_message = 'Delete element'
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        compo = portal.restrictedTraverse(composite_path)
+        compo.incrementVersion(checkin_message)
+        BaseTool.moveAndDelete(self, move_source_paths, move_target_path,
+                               move_target_index, delete_source_paths, REQUEST)
+        
     security.declareProtected( ManagePortal, 'manage_selectViewlets')
     def manage_selectViewlets(self, REQUEST, manage_tabs_message=None):
         '''Manage association between types and viewlets.

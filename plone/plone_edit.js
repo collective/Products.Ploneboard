@@ -15,9 +15,13 @@ function plone_add(target) {
 }
 
 function plone_change_viewlet(element, viewlet) {
-  // Note that target_index is also available.
-  var path = element.getAttribute("full_path");
-  window.document.location = path + "/change_viewlet?viewletId=" + viewlet;
+  var form, url, element_path, compopage_path;
+  form = document.forms.modify_composites;
+  compopage_path = form.elements.composite_path.value;
+  element_path = element.getAttribute("full_path");
+  url = element_path + "/change_viewlet?viewletId=" + viewlet;
+  url = url + "&compopage_path=" + compopage_path;
+  window.document.location = url;
 }
 
 

@@ -1,4 +1,4 @@
-// $Id: compopagedrawer.js,v 1.3 2004/05/07 09:54:58 godchap Exp $
+// $Id: compopagedrawer.js,v 1.4 2004/05/25 13:57:49 godchap Exp $
 
 //----------------------------------------------------------------------------
 
@@ -78,7 +78,6 @@ function fakeEditor() {
 function cp_initdrawer(link_xsl_uri, link_libraries_uri, search_links_uri, compopagepath) {
     
     var linktool = new LinkTool();
-    //var link_xsl_uri = 'compopagedrawers/selectdrawer.xsl';
 
     editor = new fakeEditor();
     drawertool.initialize(editor);

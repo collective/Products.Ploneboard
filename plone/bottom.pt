@@ -22,3 +22,25 @@
 </div>
 
 
+<div id="drag-feedback-box"></div>
+<img id="slot-element-grip" class="slot-element-grip"
+   width="16" height="16" tal:define="url
+   string:${options/ui/absolute_url}/element_image"
+   tal:attributes="src url" />
+
+<form action="moveAndDelete" name="modify_composites" method="POST"
+  tal:attributes="action
+  string:${options/tool/absolute_url}/moveAndDelete">
+<input type="hidden" name="move_source_paths" value="" />
+<input type="hidden" name="move_target_path" value="" />
+<input type="hidden" name="move_target_index" value="" />
+<input type="hidden" name="delete_source_paths" value="" />
+<input type="hidden" name="composite_path" 
+       tal:define="compopage nocall:options/composite;
+                   compo_page_path compopage/getPathFromPortal;"
+       tal:attributes="value compo_page_path" />
+</form>
+
+<script type="text/javascript"><!--
+pd_setupPage();
+// --></script>
