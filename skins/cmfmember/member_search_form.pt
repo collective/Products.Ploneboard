@@ -1,0 +1,112 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="plone"
+      metal:use-macro="here/main_template/macros/master">
+
+  <metal:block fill-slot="javascript_head_slot">
+    <script type="text/javascript">
+      typesSelected = true;
+
+      function selectAllTypes() {
+      checkboxes = document.getElementsByName('portal_type:list');
+      for (i = 0; i < checkboxes.length; i++)
+      checkboxes[i].checked = true ;
+      typesSelected = true;
+      return typesSelected;
+      }
+
+      function deselectAllTypes() {
+      checkboxes = document.getElementsByName('portal_type:list');
+      for (i = 0; i < checkboxes.length; i++)
+      checkboxes[i].checked = false ;
+      typesSelected = false;
+      return typesSelected;
+      }
+
+      function toggleSelectTypes(selectbutton) {
+      if (typesSelected == false) {
+      selectbutton.setAttribute('value','Unselect all types');
+      return selectAllTypes();
+      }
+      else {
+      selectbutton.setAttribute('value','Select all types');
+      return deselectAllTypes();
+      }
+      }
+    </script>
+  </metal:block>
+
+  <metal:block fill-slot="base">
+    <tal:block define="dummy python:request.set('disable_border', 1)"
+               replace="nothing">
+      Disable the tabs
+    </tal:block>
+  </metal:block>
+
+  <body>
+
+    <div metal:fill-slot="main"
+         i18n:domain="plone"
+         tal:omit-tag=""
+         >
+
+      <h1><a name="search_form">Advanced Member Search</a></h1>
+      <form action="search" method="POST" name="search_form"
+            tal:attributes="action string:$portal_url/member_search_contents"
+            tal:define="errors python: {};
+                        Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                        tabindex python:Iterator();">
+
+        <tal:fields repeat="widget python: here.archetype_tool.getSearchWidgets(package='CMFMember')">
+           <metal:searchMacro use-macro="widget"/>
+        </tal:fields>
+        <div class="row" tal:condition="python:0">
+          <div class="label">Type</div>
+
+          <div class="field">
+            <input class="standalone"
+                   type="button"
+                   style="float: right"
+                   name="selectButton"
+                   title="Toggle all items"
+                   onClick="toggleSelectTypes(this); return false;"
+                   value="Unselect all types"
+                   />
+            <tal:block replace="nothing"> FOLLOWING CODE SHOULD HANDLE MULTIPLE MEMBER TYPES  </tal:block>
+            <span tal:repeat="type here/getMemberTypes" tal:condition="python:0">
+              <metal:block tal:define="tabindex tabindex">
+                <input type="checkbox"
+                       name="portal_type:list"
+                       value="#"
+                       class="noborder"
+                       checked="checked"
+                       tabindex=""
+                       onfocus="formtooltip('item_type_search_help',1)"
+                       onblur="formtooltip('item_type_search_help',0)"
+                       tal:attributes="value type/getId;
+                                       tabindex tabindex;
+                                       id string:portal_type_${tabindex}"/>
+                <label for=""
+                       i18n:translate=""
+                       tal:attributes="for string:portal_type_${tabindex}"
+                       tal:content="type/Title"
+                       />
+                <br />
+              </metal:block>
+            </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <input type="submit" value="Search" i18n:attributes="value" class="context"
+                   tal:attributes="tabindex tabindex" />
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  </body>
+
+</html>

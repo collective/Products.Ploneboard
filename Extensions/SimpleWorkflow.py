@@ -1,9 +1,12 @@
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC, TRIGGER_WORKFLOW_METHOD
 from Products.DCWorkflow.Default import p_request, p_review
 from Products import CMFMember
 from Products.CMFMember import MemberPermissions
 from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.WorkflowTool import addWorkflowFactory
+
 
 wf_id='simple_member_workflow'
 
@@ -30,12 +33,12 @@ def setupWorkflow(portal, out):
     wf.states.addState('registered')
     wf.states.setInitialState('registered')
 
+    perms = {}
     for p in (MemberPermissions.REGISTER_PERMISSION,
               MemberPermissions.EDIT_ID_PERMISSION,
-              MemberPermissions.EDIT_REGISTRATION_PERMISSION,
+              MemberPermissions.EDIT_PROPERTIES_PERMISSION,
               MemberPermissions.EDIT_PASSWORD_PERMISSION,
               MemberPermissions.EDIT_SECURITY_PERMISSION,
-              MemberPermissions.EDIT_OTHER_PERMISSION,
               MemberPermissions.VIEW_SECURITY_PERMISSION,
               MemberPermissions.VIEW_PUBLIC_PERMISSION,
               MemberPermissions.VIEW_OTHER_PERMISSION,
@@ -57,8 +60,8 @@ def setupWorkflow(portal, out):
                         ('Owner', 'Manager'))
     state.setPermission(MemberPermissions.EDIT_SECURITY_PERMISSION, 0, 
                         ('Manager',))
-    state.setPermission(MemberPermissions.EDIT_OTHER_PERMISSION, 0, 
-                        ('Owner', 'Manager'))
+    state.setPermission(MemberPermissions.EDIT_PROPERTIES_PERMISSION, 0, 
+                        ('Owner', 'Manager',))
     state.setPermission(MemberPermissions.VIEW_SECURITY_PERMISSION, 0, 
                         ('Manager',))
     # allow Anonymous to let everyone view member info

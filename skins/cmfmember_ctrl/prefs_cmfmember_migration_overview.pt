@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+
+<body>
+
+
+<div metal:fill-slot="main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
+    
+    <h1 i18n:translate="heading_cmfmember_migration">CMFMember migration overview</h1>
+
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string: $portal_url/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Plone Setup
+    </a>
+
+    <div class="documentDescription"
+         i18n:translate="description_cmfmember_migration">
+    This is the Add-on Products install section, you can add and remove products 
+    in the lists below. migration tool form CMFMember. You can migrate between versions of CMFMember and from Plone.
+    </div>
+
+    <h2>Core information</h2>
+    <ul tal:define="values here/coreVersionsList">
+    <tal:block tal:repeat="value values">
+         <li tal:define="key python:value[0];
+	                 ver python:value[1]"
+	     tal:content="string: ${key}: ${ver} ">core versions</li>
+    </tal:block>
+    </ul>
+
+    <h2>Member type versions</h2>
+    <ul tal:define="values here/getMemberTypesFileSystemVersion">
+    <tal:block tal:repeat="value values">
+         <li tal:content="python: value[0] + ':' + value[1]">member type versions</li>
+    </tal:block>
+    </ul>
+</div>
+
+
+
+</body>
+</html>

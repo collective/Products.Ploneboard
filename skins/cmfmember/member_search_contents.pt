@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      i18n:domain="plone"
+      metal:use-macro="here/main_template/macros/master">
+
+<metal:block fill-slot="head_slot">
+  <span tal:replace="nothing"
+        tal:define="dummy python:request.set('enable_border', 1)" />
+</metal:block>
+
+<body>
+
+<div metal:fill-slot="main"
+     tal:define="results python:here.portal_memberdata.searchForMembers(REQUEST=context.REQUEST, brains='yes_please');
+                 Batch python:modules['Products.CMFPlone'].Batch;
+                 DateTime python:modules['DateTime'].DateTime;
+                 b_size python:30;b_start python:0;b_start request/b_start | b_start;
+                 desc_length site_properties/search_results_description_length;
+                 desc_ellipsis site_properties/ellipsis;
+                 searchterm request/SearchableText|nothing">
+
+  <h1 i18n:translate="heading_member_search_results">Member Search results</h1>
+
+  <div tal:condition="not: results">
+      <p><strong i18n:translate="description_no_results_found">No results were found.</strong></p>
+  </div>
+
+  <div tal:condition="results"
+       tal:define="batch python:Batch(results, b_size, int(b_start), orphan=1)">
+
+    <strong>
+      <span i18n:translate="batch_x_items_matching_your_criteria"><span i18n:name="number" tal:content="python:len(results)">234</span> items matching your criteria.</span>
+    </strong>
+    <a href="" tal:attributes="href string:$here_url/search_rss?${request/QUERY_STRING}">
+      <img i18n:attributes="title alt"
+           tal:attributes="src string:$portal_url/rss.gif"
+           src="rss.gif"
+           alt="RSS Feed"
+           title="RSS feed of these search results" />
+    </a>
+
+    <form name="folderContentsForm"
+          method="post"
+          action="folder_object"
+          tal:attributes="action here_url"
+          tal:define="locked portal/lock_icon.gif;
+                      pencil_icon portal/edit.gif;
+                      use_folder_contents site_properties/use_folder_contents;
+                      isExpired nocall:portal/isExpired;
+                      toPortalTime nocall:portal/toPortalTime;
+                      getObjSize nocall:portal/getObjSize;
+                      lock_tool portal/portal_lock|nothing;
+                      getInfoFor python:wtool.getInfoFor;
+                      iface_tool portal/portal_interface;
+                      orderable_iface string:Products.CMFPlone.interfaces.OrderedContainer.IOrderedContainer;
+                      canModifyFolderContent python:checkPermission('Modify portal content', here);
+                      isOrderable python:iface_tool.objectImplements(here, orderable_iface);                    
+                      nosortclass python:test(isOrderable, 'nosort', '')">  
+
+      <metal:block metal:use-macro="here/member_collection/macros/tabular">
+        Search result
+      </metal:block>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+</body>
+</html>

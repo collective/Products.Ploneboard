@@ -1,7 +1,9 @@
+from Products.CMFCore.CMFCorePermissions import SetOwnPassword, ManagePortal
 from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone.MembershipTool import MembershipTool as BaseTool
 from Products.CMFMember.MemberPermissions import VIEW_PUBLIC_PERMISSION
-
+from Products.Archetypes.utils import OrderedDict
+from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore import CMFCorePermissions
@@ -41,7 +43,6 @@ class MembershipTool( BaseTool ):
         if member:
             member.setPortrait(portrait)
 
-
     def searchForMembers( self, REQUEST=None, **kw ):
         """ """
         memberdata_tool = getToolByName(self, 'portal_memberdata')
@@ -77,33 +78,44 @@ class MembershipTool( BaseTool ):
         '''Adds a new member to the user folder.  Security checks will have
         already been performed.  Called by portal_registration.
         '''
-        
-        memberdata_tool = getToolByName(self, 'portal_memberdata')
-        memberdata_tool.invokeFactory('Member',id)
-        member=getattr(memberdata_tool.aq_explicit,id)
-        member.edit(password=password,roles=roles,domains=domains,**(properties or {}))
 
-    def listMembers(self):
-         '''Gets the list of all members.
-         '''
-         members = BaseTool.listMembers(self)
-         groups = []
-         # can we allways asume that there is a groups_tool ??
-         try:
-             if hasattr(self, 'portal_groups'):
-                 groups = self.portal_groups.listGroupIds()
-             else:
-                 groups = []
-             result = []
-             for member in members:
-                 if member.getUser().getUserName() in groups:
-                     continue
-                 result.append(member)
-         except:
-             result = members
-         return result
+        if hasattr(self, 'portal_memberdata'):
+            memberdata_container = self.portal_memberdata
+            memberdata_container.invokeFactory('Member',id)
+            member=getattr(memberdata_container.aq_explicit,id)
+            member.edit(password=password,roles=roles,domains=domains,**(properties or {}))
 
 
+    def getMemberById(self, id):
+        ''' overload of CMFCore.MembershipTool.getMemberById, returns None if member doesnt exist '''
+        if hasattr(self, 'portal_memberdata'):
+            memberdata_container = self.portal_memberdata
+            member=getattr(memberdata_container.aq_explicit,id,None)
+            
+        if member is not None:
+            return member
 
+        # if no member found, try to find the user
+        u = self.acl_users.getUserById(id, None)
+        if u is not None:
+            # wrap the user and return a new member
+            u = self.wrapUser(u)
+        return u
+
+
+    security.declareProtected(SetOwnPassword, 'setPassword')
+    def setPassword(self, password, domains=None):
+        '''Allows the authenticated member to set his/her own password.
+        '''
+        try:
+            BaseTool.setPassword(self, password, domains)
+            member = self.getAuthenticatedMember()
+            member._setPassword(password)
+        except (errorMsg, errorComment):
+            raise errorMsg, errorComment
+
+    security.declarePublic('areUsersAutomatic')
+    def areUsersAutomatic(self):
+        return false
 
 InitializeClass(MembershipTool)

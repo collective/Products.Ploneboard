@@ -1,0 +1,9 @@
+[default]
+title=Manage orphans
+
+[actions]
+action.success..PruneOrphans=traverse_to:string:prune_orphans
+action.success..HandleOrphanedContent=traverse_to:string:fix_orphaned_content
+action.success..Cancel=redirect_to_action:string:view
+action.failure=traverse_to:string:manage_orphans
+

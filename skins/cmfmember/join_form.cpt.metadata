@@ -1,0 +1,9 @@
+[default]
+title=Register
+
+[validators]
+validators = validate_base
+
+[actions]
+action.failure = traverse_to:string:join_form
+action.success = traverse_to:string:do_register

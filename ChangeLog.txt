@@ -1,3 +1,83 @@
+2004-03-31  Rob Miller <ra@burningman.com> (RaFromBRC)
+
+    * changed the valid_roles() and getRoles() implementation so that
+      they do not filter out the auto-added roles.  added a getFilteredRoles()
+      method that does
+
+2004-03-30  Rob Miller <ra@burningman.com> (RaFromBRC)
+
+    * added "cmfmember_ctrl" skin directory, moved all skin templates
+      related to the ControlTool into this directory
+
+    * modified the installer to install all skins, but to only add
+      "cmfmember_ctrl" to the skins path
+
+    * modified default plone -> CMFMember migration path to install
+      the additional cmfmember skins at migration time
+
+2004-03-29  Rob Miller <ra@burningman.com> (RaFromBRC)
+
+    * changed member_auto_workflow to have an auto_register transition
+      instead of register.  this transition checks the value of the "mail_me"
+      attribute when deciding whether or not to send the registration email
+      notifier
+
+2004-03-21  Bill Schindler <bill@bitranch.com>  (bitranch)
+
+    * Member.py: Changed FieldList to Schema to match current Archetypes
+      usage.
+
+2004-03-12  Bill Schindler <bill@bitranch.com>  (bitranch)
+
+    * MemberDataContainer.py: Use a real vocab method instead of a field
+      accessor -- an accessor gets bad params when called as a vocab method.
+
+2004-03-09  Rob Miller <ra@burningman.com> (RaFromBRC)
+
+    * Replaced single member_workflow with member_auto_workflow and
+      member_approval_workflow
+
+2004-02-24  Sasha Vincic <sasha@systemvaruhuset.com> sVincic
+ 
+    * Added Migration tool where all migrations are handled. After a install 
+      you need to manually do a migration. This is needed since you may 
+      have your own Member type to migrate too. The tool is ready for external
+      migrations and setup such us imports.
+
+    * Migrations for Plone->CMFMember and OldCMFMember->CMFMember are included. 
+      OldCMFMember is when MemberDataTool wasn't a container.
+
+    * Simple CSV import available under setup tab Plone controlpanel ->
+      cmfmember migration tool. See CMFMember/setup/ImportMembers.py for
+      file format and path. This link disappears after zope restart due
+      to PloneControlPanel behavior -- see  http://plone.org/collector/2749 .
+      You can restore it by reinstalling CMFMember.
+
+    * Installation of CMFMember handles installation of dependencies, you
+      only need to check CMFMember in Quickinstaller.
+
+    * Plone setup link is restored.
+
+2004-02-09  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * major overhaul to registration process, refactored
+      to use Archetypes UI framework
+
+    * refactored security setup
+
+2004-02-08  Rob Miller <ra@burningman.com> (rafrombrc)
+
+    * Removed unnecessary skins, minor cleanup re: bringing CMFMember current
+      to plone2
+
+2004-02-08  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+    * Applied patch from Volodymyr Cherepanyak to Member._getProperty
+
+    * Merged in fixes from HEAD
+
+... lots of fixes by Helge Tesdal, Rob Miller, Whit
+
 2003-12-16  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
     * Fixed getPersonalPortrait in MembershipTool.py

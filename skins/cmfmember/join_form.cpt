@@ -1,0 +1,124 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <metal:block
+     fill-slot="top_slot"
+     tal:define="dummy python:request.set('disable_border',1)" />
+
+  <metal:block fill-slot="javascript_head_slot">
+    <tal:block
+       define="macro here/archetypes_custom_js/macros/javascript_head | nothing"
+       condition="macro">
+      <metal:block use-macro="macro" />
+    </tal:block>
+  </metal:block>
+
+  <body>
+    <div metal:fill-slot="main">
+      <div
+          metal:define-macro="main"
+          tal:define="errors options/state/getErrors|nothing;
+                      Iterator python:modules['Products.Archetypes'].IndexIterator;
+                      tabindex python:Iterator();
+                      schematas here/Schemata;
+                      fieldsets python:[key for key in schematas.keys() if key != 'metadata'];
+                      default_fieldset python:(not schematas or schematas.has_key('default')) and 'default' or fieldsets[0];
+                      fieldset request/fieldset|options/fieldset|default_fieldset;
+                      portal_type python:here.getPortalTypeName().lower();
+                      edit_template python:'%s_edit' % portal_type;
+                      edit_macros python:path('here/%s/macros|here/edit_macros/macros' % edit_template);
+                      is_multipage python: len(fieldsets) &gt; 1;"
+          tal:omit-tag="">
+        <h1>Registration Form</h1>
+        <div class="documentDescription">Please enter your information below.</div>
+
+        <form name="edit_form"
+              method="post"
+              enctype="multipart/form-data"
+              tal:attributes="action python:here.absolute_url()+'/'+template.id">
+          <fieldset tal:omit-tag="not: is_multipage">
+            <legend
+                i18n:translate=""
+                tal:condition="is_multipage"
+                tal:content="python:(len(fieldsets) &gt; 1 and fieldset != 'default') and fieldset or here.archetype_name" />
+
+            <tal:fields repeat="field python: schematas[fieldset].fields()">
+              <tal:block tal:condition="field/regfield | nothing">
+                <metal:fieldMacro
+                   use-macro="python: here.widget(field.getName(), mode='edit')" />
+              </tal:block>
+            </tal:fields>
+
+            <input
+               type="hidden"
+               name="form.submitted"
+               value="1" />
+            <input
+               type="hidden"
+               name="fieldset"
+               value="default"
+               tal:attributes="value fieldset" />
+
+            <div class="field"
+                 tal:define="fieldset_index python:fieldsets.index(fieldset);
+                             n_fieldsets python:len(fieldsets);">
+              <tal:block condition="python:fieldset_index &gt; 0">
+              <input
+                 type="hidden"
+                 name="id"
+                 value=""
+                 tal:attributes="value request/username|request/id|nothing" />
+              <input
+                 type="hidden"
+                 name="password"
+                 value=""
+                 tal:attributes="value request/password | nothing" />
+              <input
+                 type="hidden"
+                 name="confirm_password"
+                 value=""
+                 tal:attributes="value request/password | nothing" />
+              </tal:block>
+
+              <label>&nbsp;</label>
+              <input
+                 tal:condition="python:fieldset_index &gt; 0"
+                 class="context"
+                 tabindex=""
+                 type="submit"
+                 name="form_previous"
+                 i18n:attributes="value"
+                 value="Previous"
+                 tal:attributes="tabindex tabindex/next;" />
+              <input
+                 tal:condition="python:fieldset_index &lt; n_fieldsets-1"
+                 class="context"
+                 tabindex=""
+                 type="submit"
+                 name="form_next"
+                 i18n:attributes="value"
+                 value="Next"
+                 tal:attributes="tabindex tabindex/next;" />
+              <input
+                 tal:condition="python:fieldset_index == n_fieldsets-1"
+                 class="context"
+                 tabindex=""
+                 type="submit"
+                 name="form_submit"
+                 i18n:attributes="value"
+                 value="Save"
+                 tal:attributes="tabindex tabindex/next;" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>

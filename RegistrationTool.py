@@ -126,5 +126,41 @@ class RegistrationTool( BaseTool ):
         self.setMemberProperties(member, mapping={'password':password})
         return 1
 
+    security.declarePublic( 'registeredNotify' )
+    def registeredNotify( self, new_member_id ):
+
+        """ Handle mailing the registration / welcome message.
+        """
+        ## Duplicated the entire method from CMFDefault.RegistrationTool
+        ## only to convert unicode of mail_text to a string... ugh!
+        membership = getToolByName( self, 'portal_membership' )
+        member = membership.getMemberById( new_member_id )
+
+        if member is None:
+            raise 'NotFound', 'The username you entered could not be found.'
+
+        password = member.getPassword()
+        email = member.getProperty( 'email' )
+
+        if email is None:
+            raise ValueError( 'Member %s has no e-mail address!'
+                            % new_member_id )
+    
+        # Rather than have the template try to use the mailhost, we will
+        # render the message ourselves and send it from here (where we
+        # don't need to worry about 'UseMailHost' permissions).
+        mail_text = str(self.registered_notify_template( self
+                                                         , self.REQUEST
+                                                         , member=member
+                                                         , password=password
+                                                         , email=email
+                                                         ))
+    
+        host = self.MailHost
+        host.send( mail_text )
+
+        return self.mail_password_response( self, self.REQUEST )
+
+
 InitializeClass(RegistrationTool)
 

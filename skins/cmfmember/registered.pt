@@ -7,11 +7,11 @@
 <body>
 <div metal:fill-slot="main">
 
-<div tal:define="pprops here/portal_properties/site_properties; ve pprops/validate_email">
+<div tal:define="ve portal/validate_email">
 
 <h1 i18n:translate="heading_welcome">Welcome!</h1>
 
-<p i18n:translate="description_you_are_registered"> You have been registered as a member. </p>
+<p i18n:translate="description_you_are_registered">You have been registered as a member.</p>
 
 <p tal:condition="ve" i18n:translate="description_you_will_get_password"> 
 You will receive an email shortly containing your password 
@@ -19,7 +19,7 @@ You will receive an email shortly containing your password
 </p>
 
 <tal:block condition="python:not(ve)"> 
-    <span i18n:translate="description_you_can_log_on_now">Click the button to log in immediately.</span>       
+    <span i18n:translate="description_you_can_log_on_now">Click the button to log in immediately.</span>
     <form action=""
           method="post"
           tal:define="username request/id; 

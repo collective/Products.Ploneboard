@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+   <div metal:fill-slot="main"
+      tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+                  groups python:controlPanel.getGroups('cmfmember');
+                  getIconFor nocall:putils/getIconFor">
+
+    <tal:block tal:repeat="group groups">
+
+        <h2 tal:content="group/title"
+            i18n:translate="">CMFMember Configlet Group Title</h2>
+
+        <ul class="configlets" tal:define="configlets python:controlPanel.enumConfiglets(group=group['id'])">
+
+            <li tal:repeat="configlet configlets">
+                <a href=""
+                   tal:attributes="href configlet/url"
+                   tal:condition="configlet/visible">
+                    <img src="" alt="" tal:attributes="src python:getIconFor('controlpanel',configlet['id']);
+                                         alt configlet/description"
+                         i18n:attributes="alt"
+                         tal:on-error="string:" />
+                <tal:configletname tal:content="configlet/name"
+                                   i18n:translate=""></tal:configletname>
+                </a>
+            </li>
+
+            <li tal:condition="not:configlets" i18n:translate="label_no_panels_available">
+                No Preference Panels available.
+            </li>
+
+        </ul>
+
+    </tal:block>
+    </div>
+
+</body>
+</html>

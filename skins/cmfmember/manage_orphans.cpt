@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+  <body>
+
+    <div metal:fill-slot="main">
+
+      <h1 i18n:translate="heading_manage_orphans">Manage orphans</h1>
+
+      <form name="manage_orphans"
+            action="manage_orphans"
+            method="post"
+            tal:define="errors options/state/getErrors;">
+
+        <input type="hidden" name="form.submitted" value="1" />
+
+        <p tal:define="mdcontents python:here.getMemberDataContents()[0];
+                       member_count mdcontents/member_count;
+                       orphan_count mdcontents/orphan_count;">
+          There are <span tal:content="member_count" /> members and 
+          <span tal:content="orphan_count" /> orphaned members (members with
+          missing User objects).
+        </p>
+
+        <div class="formControls">
+
+          <input class="context"
+                 type="submit"
+                 value="Delete orphans"
+                 name="form.button.PruneOrphans"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+          <input class="standalone"
+                 type="submit"
+                 value="Cancel"
+                 name="form.button.Cancel"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+
+      <p>When members are deleted, the content they own may end up with an
+        invalid owner.  
+        <span tal:condition="python:here.orphanedContentDestination == 'transfer_to_current'">
+          Click the button below to take ownership of orphaned content.
+        </span>
+        <span tal:condition="python:here.orphanedContentDestination == 'delete'">
+          Click the button below to delete orphaned content.
+        </span>
+      </p>
+
+        <div class="formControls">
+
+          <input class="context"
+                 type="submit"
+                 value="Fix content"
+                 name="form.button.HandleOrphanedContent"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+          <input class="standalone"
+                 type="submit"
+                 value="Cancel"
+                 name="form.button.Cancel"
+                 tabindex=""
+                 i18n:attributes="value"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+
+      </form>
+
+    </div>
+
+  </body>
+</html>

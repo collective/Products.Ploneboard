@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master">
+
+<body>
+
+
+<div metal:fill-slot="main" i18n:domain="plone" tal:define="memMigrate python:here.portal_url.getPortalObject().portal_migration">
+    
+    <h1 i18n:translate="heading_cmfmember_migration">CMFMember migrations</h1>
+
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string: $portal_url/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Plone Setup
+    </a>
+
+    <p>
+      <b>Instance version:</b> <tal:block tal:replace="here/getInstanceVersion"/><br />
+      <b>File system version:</b> <tal:block tal:replace="here/getFileSystemVersion"/><br />
+    </p>
+
+    <p tal:condition="not: here/needUpgrading">
+        Your CMFMember instance is up to date. 
+    </p>
+
+    <tal:block tal:condition="here/needUpgrading">
+    <div class="documentDescription"
+         i18n:translate="description_cmfmember_migration">
+	 <span style="background-color:red; color: white; font-weight: bold">
+	 Please ensure you have a backup of your site before performing migration.</span> 
+	 Migrations perform a catalog and security update, this may take a long time on large sites. Be patient.
+    </div>
+
+    <p>
+       Your CMFMember instance is out of date. Click "upgrade" to bring this CMFMember version up to date with your file system.
+    </p>
+    <form action="upgrade" method="post">
+       <fieldset>
+          <legend i18n:translate="">Normal migration</legend>
+
+          <div class="field">
+	    <label i18n:translate="">Dry run</label>
+
+            <div i18n:translate=""
+                 class="formHelp">
+		 Print the result of the migration without actually writing anything to the database.
+            </div>
+    	    <input name="dry_run" type="checkbox" checked value="1:int" />
+          </div>
+        <div class="formControls">
+	  <input class="context" 
+                 type="submit" 
+                 name="submit"
+                 i18n:attributes="value"                 
+                 value="Upgrade"/>
+        </div>
+       </fieldset>
+    </form>
+    
+    
+    <form action="upgrade">
+       <fieldset>
+          <legend i18n:translate="">Forced migration</legend>
+          <div class="field">
+	    <label i18n:translate="">Upgrade from</label>
+
+            <div i18n:translate=""
+                 class="formHelp">
+		 Please choose from which CMFMember version you are upgrading. This will force the migration procedure from that version. 
+            </div>
+	  <select name="force_instance_version">
+            <tal:block tal:repeat="ver here/knownVersions">
+	        <option tal:content="ver">version</option>
+	    </tal:block>
+	  </select>
+          </div>
+
+          <div class="field">
+	    <label i18n:translate="">Dry run</label>
+
+            <div i18n:translate=""
+                 class="formHelp">
+		 Print the result of the migration without actually writing anything to the database.
+            </div>
+    	    <input name="dry_run" type="checkbox" checked value="1:int" />
+          </div>
+        <div class="formControls">
+	  <input class="context" 
+                 type="submit" 
+                 name="submit"
+                 i18n:attributes="value"                 
+                 value="Force Upgrade"/>
+        </div>
+    </fieldset>
+    </form>
+    </tal:block>
+
+
+    <tal:block tal:condition="here/getLog|nothing">
+    <h2>Last migration log</h2>
+    <ul>
+    <tal:block tal:repeat="msg here/getLog">
+         <li tal:content="python:msg[0]">result message</li>
+    </tal:block>
+    </ul>
+
+    </tal:block>
+</div>
+
+
+
+</body>
+</html>
