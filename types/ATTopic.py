@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.21 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATTopic.py,v 1.22 2004/07/24 07:54:25 godchap Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -64,7 +64,9 @@ class ATTopic(ATCTFolder):
     assocFileExt   = ()
 
     filter_content_types  = 1
-    allowed_content_types = 'ATTopic'
+    allowed_content_types = ()
+
+    use_folder_tabs = 0
 
     __implements__ = ATCTFolder.__implements__, IATTopic
 

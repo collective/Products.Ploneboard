@@ -1,5 +1,7 @@
 0.2-beta9
- * Change criteria tab to table UI [gotcha]
+ * Removed 'contents' tab and 'add new item' menu from ATTopic [gotcha] 
+
+ * Changed criteria tab to table UI [gotcha]
 
  * Added message when clicking remove on criteria without selecting first
    [gotcha]
