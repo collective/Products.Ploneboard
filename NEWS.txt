@@ -1,12 +1,10 @@
-1.0fork-beta3 - 2003-12-26
+1.0fork-beta3 - 2004-01-??
 
     Added a builtin mo compiler based on the msgfmt tool from the python source
-    package. No need to compile the po files to mo files.
-
-    Do not load INSTANCE_HOME/i18n if CMFPlone/i18n is available to avoid double
-    loading of po files.
-
+    package. No need to compile the po files to mo files. Thanks to
     Christian 'Tiran' Heimes <ch@comlounge.net>
+
+    No longer load mo files on startup. Catalogs are automatically compiled.
 
 1.0fork-beta2 - 2003-11-24
 
