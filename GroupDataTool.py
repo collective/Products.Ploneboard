@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.9 2003/12/17 15:35:14 pjgrizel Exp $
+$Id: GroupDataTool.py,v 1.10 2004/02/23 12:48:10 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -203,7 +203,7 @@ class GroupData (SimpleItem):
 
         groups = list(user.getGroups())
         groups.remove(prefix + self.getGroupName())
-        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getRoles()+tuple(groups), user.getDomains())
+        self.acl_users.getDefaultUserSource().userFolderEditUser(id, None, user.getUserRoles()+groups, user.getDomains())
 
     security.declareProtected(SetOwnProperties, 'setProperties')
     def setProperties(self, properties=None, **kw):

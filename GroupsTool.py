@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.18 2003/12/23 10:24:48 shh42 Exp $
+$Id: GroupsTool.py,v 1.19 2004/02/23 12:48:10 pjgrizel Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -218,6 +218,12 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         Will by default remove this group's GroupWorkspace if it exists. You may
         turn this off by specifying keep_workspaces=true.
         Underlying user folder must support removing users via the usual Zope API."""
+        for gid in ids:
+            gdata = self.getGroupById(gid)
+            gusers = gdata.getGroupMembers()
+            for guser in gusers:
+                gdata.removeMember(guser.id)
+
         self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
         gwf = self.getGroupWorkspacesFolder()
         if not gwf: # _robert_
