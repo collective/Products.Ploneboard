@@ -94,11 +94,6 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         return search_form(REQUEST, RESPONSE)
 
 
-        """Return a callable that is the registered object returning a
-        contentish member object"""
-        return getMemberFactory(self, self.typeName)
-
-
     security.declarePrivate('_deleteMember')
     def _deleteMember(self, id):
         """Remove a member"""
@@ -187,7 +182,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
             if not m:
                 ## XXX Delegate to the factory and create a new site specific
                 ## member object for this user
-                addMember=getMemberFactory(self, 'Member')
+                addMember=getMemberFactory(self, self.typeName)
                 addMember(name)
                 m = self.get(name)
                 m.setUser(user)
@@ -323,7 +318,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     def migrateMembers(self, out, new_type_name, workflow_transfer={}):
         
         self.registerType(new_type_name)
-        factory = self.getMemberFactory()
+        factory = getMemberFactory(self, self.typeName)
 
         portal = getToolByName(self, 'portal_url').getPortalObject()
         workflow_tool = getToolByName(self, 'portal_workflow')
@@ -350,7 +345,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
                 workflow_tool.doActionFor(ob, t)
 
             self.manage_delObjects(temp_id)
-        from Products.CMFMember.Extensions.Install import installNavigation
+        from Products.CMFMember.Extensions.Install import setupNavigation
         setupNavigation(self, out, new_type_name)
 
 

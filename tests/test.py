@@ -17,10 +17,10 @@ class CMFMemberTest( SecurityRequestTest ):
     def setUp( self ):
         SecurityRequestTest.setUp(self)
         # create an admin user
-        self.root.acl_users.userFolderAddUser('admin', 'qwerty', ('Manager','Member',), ())
+        self.root.acl_users.userFolderAddUser('test_admin', 'qwerty', ('Manager','Member',), ())
         get_transaction().commit()
-        # assume role of admin
-        newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
+        # assume role of test_admin
+        newSecurityManager(None, self.root.acl_users.getUser('test_admin').__of__(self.root.acl_users))
 
         if hasattr(self.root, site):
             self.root.manage_delObjects([site])
@@ -39,7 +39,7 @@ class CMFMemberTest( SecurityRequestTest ):
         self.domains = ('127.0.0.1',)
 
         # add a new member
-        newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
+        newSecurityManager(None, self.root.acl_users.getUser('test_admin').__of__(self.root.acl_users))
 
         self.testsite.portal_membership.addMember(self.id, self.password, self.roles, self.domains)
         self.user = self.testsite.acl_users.getUser(self.id)
@@ -58,7 +58,7 @@ class CMFMemberTest( SecurityRequestTest ):
         # force creation of user via wrapUser
         self.root_member = self.testsite.portal_membership.getAuthenticatedMember()
         
-        newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
+        newSecurityManager(None, self.root.acl_users.getUser('test_admin').__of__(self.root.acl_users))
 
         # create some content
         user = self.user.__of__(self.testsite.acl_users)
@@ -101,9 +101,21 @@ class CMFMemberTest( SecurityRequestTest ):
         self.root_member = None
         self.testsite = None
 
+        # get rid of the test site we added
         if hasattr(self.root, site):
             self.root.manage_delObjects([site])
             get_transaction().commit()
+        # get rid of the users we added
+        if self.root.acl_users.getUser('test_admin'):
+            self.root.acl_users.userFolderDelUsers(['test_admin'])
+        if self.root.acl_users.getUser('root_member'):
+            self.root.acl_users.userFolderDelUsers(['root_member'])
+
+        # pack the zodb so that it doesn't get huge
+        get_transaction().commit()
+        self.root.Control_Panel.Database.manage_pack()
+        get_transaction().commit()
+
         SecurityRequestTest.tearDown(self)
 
 
@@ -111,7 +123,7 @@ class CMFMemberTest( SecurityRequestTest ):
         # make sure all the member properties we set are correct
         self.failUnless(self.member != None)
         self.assertEqual(self.member.getMemberId(), self.id)
-        self.assertEqual(self.member._getPassword(), self.password)
+        self.assertEqual(self.member.getPassword(), self.password)
         self.assertEqual(self.member.getRoles(), self.roles + ('Authenticated',))
         self.assertEqual(self.member.getDomains(), self.domains)
 
@@ -126,7 +138,7 @@ class CMFMemberTest( SecurityRequestTest ):
 
         password2 = 'password2'
         self.member._setPassword(password2)
-        self.assertEqual(self.member._getPassword(), password2)
+        self.assertEqual(self.member.getPassword(), password2)
         self.member.setRoles('Member,Manager')
         self.assertEqual(self.member.getRoles(), ('Member','Manager','Authenticated'))
         self.member.setDomains('127.0.0.1\r\n127.0.0.2\r\n  ')
@@ -197,7 +209,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_membership.getMemberById(new_id)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), self.password)
+        self.assertEqual(member.getPassword(), self.password)
         self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.domains)
 
@@ -270,7 +282,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_membership.getMemberById(new_id)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), self.root_password)
+        self.assertEqual(member.getPassword(), self.root_password)
         self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.root_domains)
 
@@ -344,7 +356,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_membership.getMemberById(self.id)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), self.id)
-        self.assertEqual(member._getPassword(), self.password)
+        self.assertEqual(member.getPassword(), self.password)
         self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.domains)
 
@@ -357,7 +369,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_memberdata.get(new_id, None)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), self.password)
+        self.assertEqual(member.getPassword(), self.password)
         self.assertEqual(member.getRoles(), self.roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.domains)
 
@@ -377,7 +389,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_memberdata.get(self.root_id, None)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), self.root_id)
-        self.assertEqual(member._getPassword(), self.root_password)
+        self.assertEqual(member.getPassword(), self.root_password)
         self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.root_domains)
 
@@ -390,7 +402,7 @@ class CMFMemberTest( SecurityRequestTest ):
         member = self.testsite.portal_memberdata.get(new_id, None)
         self.failUnless(member != None)
         self.assertEqual(member.getMemberId(), new_id)
-        self.assertEqual(member._getPassword(), self.root_password)
+        self.assertEqual(member.getPassword(), self.root_password)
         self.assertEqual(member.getRoles(), self.root_roles + ('Authenticated',))
         self.assertEqual(member.getDomains(), self.root_domains)
 

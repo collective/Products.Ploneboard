@@ -5,7 +5,7 @@ from Acquisition import aq_base
 from Products.CMFCore.tests.base.testcase import SecurityRequestTest
 from Products.Archetypes.Extensions.Install import install as install_archetypes
 from Products.CMFMember.Extensions.Install import install as install_cmfmember
-from Products.CMFMemberTest.Extensions.Install import install as install_cmfmembertest
+from Products.CMFMemberExample.Extensions.Install import install as install_cmfmemberexample
 
 from AccessControl.SecurityManagement import newSecurityManager
 
@@ -18,10 +18,10 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
     def setUp( self ):
         SecurityRequestTest.setUp(self)
         # create an admin user
-        self.root.acl_users.userFolderAddUser('admin', 'qwerty', ('Manager','Member',), ())
+        self.root.acl_users.userFolderAddUser('test_admin', 'qwerty', ('Manager','Member',), ())
         get_transaction().commit()
-        # assume role of admin
-        newSecurityManager(None, self.root.acl_users.getUser('admin').__of__(self.root.acl_users))
+        # assume role of test_admin
+        newSecurityManager(None, self.root.acl_users.getUser('test_admin').__of__(self.root.acl_users))
 
         if hasattr(self.root, site):
             self.root.manage_delObjects([site])
@@ -45,17 +45,26 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
         b = membership_tool.getMemberById('b')
         b.setMemberProperties({'email':self.b['email']})
 
-        # force creation of an admin member via wrapUser
+        # force creation of an test_admin member via wrapUser
 #        root_member = self.testsite.portal_membership.getAuthenticatedMember()
-#        admin = membership_tool.getMemberById('admin')
+#        test_admin = membership_tool.getMemberById('test_admin')
 
 
     def tearDown( self ):
+        # get rid of the site we created
         self.testsite = None
-
         if hasattr(self.root, site):
             self.root.manage_delObjects([site])
             get_transaction().commit()
+        # get rid of the users we added
+        if self.root.acl_users.getUser('test_admin'):
+            self.root.acl_users.userFolderDelUsers(['test_admin'])
+
+        # pack the zodb so that it doesn't get huge
+        get_transaction().commit()
+        self.root.Control_Panel.Database.manage_pack()
+        get_transaction().commit()
+            
         SecurityRequestTest.tearDown(self)
 
 
@@ -64,7 +73,7 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
         self._compare_members()
         get_transaction().commit()
 
-        install_cmfmembertest(self.testsite)
+        install_cmfmemberexample(self.testsite)
         self._compare_members()
         get_transaction().commit()
 
@@ -74,28 +83,28 @@ class CMFMemberMigrationTest( SecurityRequestTest ):
 
         a = membership_tool.getMemberById('a')
         self.assertEqual(a.getMemberId(), self.a['id'])
-        self.assertEqual(a._getPassword(), self.a['password'])
+        self.assertEqual(a.getPassword(), self.a['password'])
         self.assertEqual(a.getRoles(), self.a['roles']+('Authenticated',))
         self.assertEqual(a.getDomains(), self.a['domains'])
         self.assertEqual(a.email, self.a['email'])
         
         b = membership_tool.getMemberById('b')
         self.assertEqual(b.getMemberId(), self.b['id'])
-        self.assertEqual(b._getPassword(), self.b['password'])
+        self.assertEqual(b.getPassword(), self.b['password'])
         self.assertEqual(b.getRoles(), self.b['roles']+('Authenticated',))
         self.assertEqual(b.getDomains(), self.b['domains'])
         self.assertEqual(b.email, self.b['email'])
 
-#        admin = membership_tool.getMemberById('admin')
-#        self.assertEqual(admin.getMemberId(), 'admin')
-#        self.assertEqual(admin._getPassword(), 'qwerty')
-#        self.assertEqual(admin.getRoles(), ('Manager','Member','Authenticated',))
-#        self.assertEqual(admin.getDomains(), ())
+#        test_admin = membership_tool.getMemberById('test_admin')
+#        self.assertEqual(test_admin.getMemberId(), 'test_admin')
+#        self.assertEqual(test_admin.getPassword(), 'qwerty')
+#        self.assertEqual(test_admin.getRoles(), ('Manager','Member','Authenticated',))
+#        self.assertEqual(test_admin.getDomains(), ())
 
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(CMFMemberTest),
+        unittest.makeSuite(CMFMemberExample),
         ))
 
 if __name__ == '__main__':

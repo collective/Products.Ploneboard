@@ -12,7 +12,6 @@ from MemberPermissions import ADD_PERMISSION
 PKG_NAME = "CMFMember"
 SKIN_NAME = "member"
 
-global GLOBALS
 GLOBALS = globals()
 
 DirectoryView.registerDirectory('skins', GLOBALS)
