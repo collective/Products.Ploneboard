@@ -46,10 +46,9 @@
     background-position: 5px 10px;
 }
 
-/* The Message classes */
-
 .boardMessage {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    margin-top: 1.5em;
     position: relative;
 }
 
@@ -61,6 +60,7 @@
 }
 
 .boardMessageBody {
+    padding: 0.5em 1em;
 }
 
 .boardMessageContent {
@@ -68,14 +68,14 @@
 }
 
 .boardMessageActions {
-
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
 }
 
 .boardMessagePortrait {
-    float: right;
-    width: 100px;
-    border-right: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    margin: 0;
+    float: right; 
+    margin-bottom: 1em;
 }
 
 /* </dtml-with> */
