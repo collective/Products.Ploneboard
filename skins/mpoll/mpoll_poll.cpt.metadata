@@ -1,6 +1,0 @@
-[validators]
-validators = validate_vote
-
-[actions]
-action.success = traverse_to:string:mpoll_vote
-action.failure = traverse_to_action:string:view
