@@ -35,14 +35,17 @@ install: build
 	dh_installdirs
 	
 	find . -type f -not \( \
-			-path '*/debian/*' -or \
-			-path '*/build/*' -or \
+			-path './debian/*' -or \
+			-path './build/*' -or \
+			-path './doc/*' -or \
+			-path './docs/*' -or \
+			-path '*/CVS/*' -or \
 			-name 'build-stamp' -or \
-			-iname 'license*' -or \
-			-iname 'changelog*' -or \
 			-iname 'authors*' -or \
+			-iname 'license.txt' -or \
+			-name 'ChangeLog*' -or \
 			-name 'README*' -or \
-			-name 'INSTALL**' -or \
+			-name 'INSTALL*' -or \
 			-name 'TODO*' -or \
 			-name 'COPYING*' -or \
 			-name 'MANIFEST*' -or \
@@ -51,6 +54,7 @@ install: build
 			-name 'SUGGESTS' -or \
 			-name '.cvsignore' \
 		\) -exec install -D --mode=644 {} debian/zope-cmfquickinstallertool/usr/lib/zope/lib/python/Products/CMFQuickInstallerTool/{} \;
+	
 	
 	
 	
@@ -65,13 +69,12 @@ binary-indep: build install
 	
 	
 	
-	
-	
-	dh_installdocs -A README.txt 
+	gzip -9 -c ChangeLog > changelog.gz
+	dh_installdocs -A README.txt changelog.gz 
 	dh_installchangelogs
 	
 	dh_link
-	dh_compress
+	dh_compress -X.py
 	dh_fixperms
 	dh_installdeb
 	dh_gencontrol 
@@ -87,14 +90,13 @@ binary-arch: build install
 	
 	
 	
-	
-	
-	dh_installdocs -A README.txt 
+	gzip -9 -c ChangeLog > changelog.gz
+	dh_installdocs -A README.txt changelog.gz 
 	dh_installchangelogs
 	
 	dh_strip
 	dh_link
-	dh_compress 
+	dh_compress -X.py 
 	dh_fixperms
 	dh_installdeb
 	dh_shlibdeps
