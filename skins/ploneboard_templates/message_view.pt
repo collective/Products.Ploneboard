@@ -11,7 +11,8 @@
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main"
+         tal:define="pss modules/Products/PythonScripts/standard">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
@@ -53,7 +54,9 @@
                         </a>
                     </div>
                     
-                    <div class="boardMessageContent" tal:content="structure message/getBody">Jeg mener mye rart.</div>
+                    <div class="boardMessageContent" tal:content="structure message/getBody">
+                    Message text.
+                    </div>
                     
                 </div>
                 
@@ -61,10 +64,25 @@
 
                 <div class="boardMessageActions" >
                 
-                    <form tal:attributes="action string:${message/absolute_url}/add_message_form">
+                    <form tal:attributes="action string:${message/absolute_url}/add_message_form"
+                          tal:condition="not: isAnon">
                         <input class="standalone"
                                type="submit" 
-                               value="Reply to this" />
+                               value="Reply to this" 
+                               />
+
+                    </form>
+
+                    <form tal:condition="isAnon"
+                          tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                                        (here.portal_url(),
+                                                        pss.url_quote(request['URL']))">
+            
+                        <input class="standalone" 
+                               type="submit" 
+                               value="Log in to add comments"
+                               i18n:attributes="value"
+                               />
                     </form>
 
                 </div>
