@@ -1,3 +1,9 @@
+2004-03-31  Bill Schindler <bill@bitranch.com> (bitranch)
+
+    * join_form: Added confirm_password to hidden fields for fieldsets
+      so that the form validation doesn't get hung up on validating the
+      hidden password.
+
 2004-03-31  Rob Miller <ra@burningman.com> (RaFromBRC)
 
     * changed the valid_roles() and getRoles() implementation so that
