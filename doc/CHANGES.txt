@@ -1,5 +1,9 @@
 0.2.5 (unreleased)
 
+    - Beautyfied view a little bit
+
+    - Added a selection box where you can select registered objects
+      
     - Added methods to register objects not only schematas
 
     - Moved updateSchema method to SchemaEditor.py
