@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.5 2004/04/04 21:48:32 tiran Exp $
+$Id: ATEvent.py,v 1.6 2004/04/05 14:56:56 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -78,7 +78,7 @@ class ATEvent(ATCTContent):
         # set the event type to the first subject
         if type(value) is StringType:
             v = (value, )
-        elif v:
+        elif value:
             v = v[0]
         else:
             v = ()

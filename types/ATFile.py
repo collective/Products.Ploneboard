@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.8 2004/04/04 21:48:32 tiran Exp $
+$Id: ATFile.py,v 1.9 2004/04/05 14:56:56 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -84,11 +84,12 @@ class ATFile(ATCTContent):
         """Calculate the icon using the mime type of the file
         """
         field = self.getField('file')
-        if not field:
+        if not field or not self.get_size():
+            # field is empty
             return BaseContent.getIcon(self, relative_to_portal)
         
         contenttype       = field.getContentType(self)
-        contenttype_major = contenttype.split('/')[0]
+        contenttype_major = contenttype and contenttype.split('/')[0] or ''
 
         mtr   = getToolByName(self,'mimetypes_registry',None)
         utool = getToolByName( self, 'portal_url' )

@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.10 2004/04/04 21:46:02 tiran Exp $
+$Id: Migrator.py,v 1.11 2004/04/05 14:56:55 tiran Exp $
 """
 
 from copy import copy, deepcopy
@@ -83,7 +83,6 @@ class BaseMigrator:
     subtransaction = 30
 
     def __init__(self, obj):
-        # print "called for %s " % obj.absolute_url(1)
         self.old = obj
         self.orig_id = self.old.getId()
 
@@ -97,6 +96,8 @@ class BaseMigrator:
         # safe id generation
         while hasattr(aq_base(self.parent), self.old_id):
             self.old_id+='X'
+        
+        print "Migrating %s from %s to %s" % (obj.absolute_url(1), self.fromType, self.toType)
 
     def getMigrationMethods(self):
         """
@@ -297,7 +298,7 @@ class FolderMigrationMixin(ItemMigrationMixin):
     """Migrates a folderish object
     """
 
-    def migrate_children(self):
+    def XXX_migrate_children(self):
         """Copy childish objects from the old folder to the new one
         
         XXX: Oh hell that's very inefficient and I'm very shure that it will
@@ -306,11 +307,13 @@ class FolderMigrationMixin(ItemMigrationMixin):
         for obj in self.old.objectValues():
             self.new.manage_clone(obj, obj.getId())
             
-    def XXX_migrate_alternativeChildren(self):
+    def migrate_alternativeChildren(self):
         """Just an idea
         
         I don't know wether it works or fails due the ExtensionClass, ZODB and 
         acquisition stuff of zope
+        
+        It seems to work for me very well :)
         """
         for obj in self.old.objectValues():
             id = obj.getId()
