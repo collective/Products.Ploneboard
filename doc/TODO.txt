@@ -1,5 +1,4 @@
 - write interface file
-- multiple schema support
 - better integration of examples (automatic installation?)
    / actually, the examples were added mainly for 
      testing and people reading the code wm /
