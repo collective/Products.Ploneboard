@@ -1328,7 +1328,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2005/01/07 20:32:46 $"[7:-2]
+        rev_date = "$Date: 2005/02/15 14:23:19 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
 
 
@@ -2534,6 +2534,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                 return 1
         return None
 
+
     security.declareProtected(Permissions.manage_users, "updateLDAPUserFolderMapping")
     def updateLDAPUserFolderMapping(self, REQUEST = None):
         """
@@ -2571,8 +2572,8 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
                     continue
                 Log(LOG_DEBUG, "Map", grp, "to", grp_name)
                 src.manage_addGroupMapping(
+                    grp_name,
                     grp,
-                    grp_name
                     )
                 
         # Return
@@ -2598,9 +2599,12 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             if src._local_groups:
                 gruf_ids = self.getGroupIds()
             else:
-                gruf_ids = self.getGroupNames()
+                gruf_ids = self.getGroupIds()
             ldap_mapping = src.getGroupMappings()
             ldap_groups = src.getGroups(attr = "cn")
+            Log(LOG_DEBUG, "LDAP mapping:", ldap_mapping)
+            Log(LOG_DEBUG, "LDAP groups:", ldap_groups)
+            Log(LOG_DEBUG, "GRUF groups:", gruf_ids)
             for grp,role in ldap_mapping:
                 if role in gruf_ids:
                     ret.append((role, grp))
@@ -2614,7 +2618,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             for grp in gruf_ids:
                 if not grp in gruf_done:
                     ret.append((grp, None))
-
+            Log(LOG_DEBUG, "return", ret)
             return ret
 
 
