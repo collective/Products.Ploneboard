@@ -12,7 +12,7 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControlledPageTemplate.py,v 1.4 2003/09/12 22:49:03 tesdal Exp $
+$Id: FSControlledPageTemplate.py,v 1.5 2003/09/23 15:00:30 tesdal Exp $
 """
 
 import Globals, Acquisition
@@ -34,7 +34,7 @@ from utils import logException
 class FSControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
     """Wrapper for Controlled Page Template"""
      
-    meta_type = 'Filesystem Controlled Page Template'
+    meta_type = 'Filesystem Controller Page Template'
 
     manage_options=(
         ({'label':'Customize', 'action':'manage_main'},
@@ -92,4 +92,4 @@ d['source.xml'] = d['source.html'] = Src()
 Globals.InitializeClass(FSControlledPageTemplate)
 
 registerFileExtension('cpt', FSControlledPageTemplate)
-registerMetaType('Controlled Page Template', FSControlledPageTemplate)
+registerMetaType('Controller Page Template', FSControlledPageTemplate)

@@ -12,7 +12,7 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControlledPythonScript.py,v 1.7 2003/09/12 22:49:03 tesdal Exp $
+$Id: FSControlledPythonScript.py,v 1.8 2003/09/23 15:00:31 tesdal Exp $
 """
 
 import Globals, Acquisition
@@ -32,7 +32,7 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
     """FSControlledPythonScripts act like Controlled Python Scripts but are not 
     directly modifiable from the management interface."""
 
-    meta_type = 'Controlled Python Script'
+    meta_type = 'Filesystem Controller Python Script'
 
     manage_options=(
            (
@@ -87,4 +87,4 @@ class FSControlledPythonScript (BaseClass, ControlledBase):
 Globals.InitializeClass(FSControlledPythonScript)
 
 registerFileExtension('cpy', FSControlledPythonScript)
-registerMetaType('Controlled Python Script', FSControlledPythonScript)
+registerMetaType('Controller Python Script', FSControlledPythonScript)

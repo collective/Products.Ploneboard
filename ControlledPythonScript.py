@@ -11,13 +11,13 @@
 #
 ##############################################################################
 
-"""Controlled Python Scripts Product
+"""Controller Python Scripts Product
 
 This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.4 $'[11:-2]
+__version__='$Revision: 1.5 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -83,7 +83,7 @@ class ControlledPythonScript(PythonScript, ControlledBase):
     not attempt to use the "exec" statement or certain restricted builtins.
     """
 
-    meta_type='Controlled Python Script'
+    meta_type='Controller Python Script'
 
     manage_options = (
         {'label':'Edit',

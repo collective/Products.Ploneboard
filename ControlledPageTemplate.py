@@ -24,7 +24,7 @@ manage_addControlledPageTemplateForm.__name__='manage_addControlledPageTemplateF
 
 def manage_addControlledPageTemplate(self, id, title=None, text=None,
                                     REQUEST=None, submit=None):
-    """Add a Controlled Page Template with optional file content."""
+    """Add a Controller Page Template with optional file content."""
 
     id = str(id)
     if REQUEST is None:
@@ -61,12 +61,12 @@ class ControlledPageTemplate(BaseClass, BaseControlledPageTemplate):
     
     manage_options = (BaseClass.manage_options[:2] + \
         ({'label':'Validation',
-          'action':'manage_formValidatorsForm'}, \
+          'action':'manage_formValidatorsForm'},
          {'label':'Actions',
           'action':'manage_formActionsForm'},) +
         BaseClass.manage_options[2:])
 
-    meta_type = 'Controlled Page Template'
+    meta_type = 'Controller Page Template'
 
     _default_content_fn = os.path.join(Globals.package_home(globals()),
                                        'www', 'default.html')

@@ -10,7 +10,19 @@ class RedirectToAction(BaseFormAction):
 
     def __call__(self, controller_state):
         action = self.getArg(controller_state)
+        action_url = None
+        try:
         action_url = 'string:' + controller_state.getContext().getTypeInfo().getActionById(action)
+        except ValueError:
+            actions = controller_state.getContext().portal_actions.listFilteredActionsFor(controller_state.getContext())
+            # flatten the actions as we don't care where they are
+            actions = reduce(lambda x,y,a=actions:  x+a[y], actions.keys(), [])
+            for actiondict in actions:
+                if actiondict['id'] == action:
+                    action_url = 'string:' + actiondict['url'].strip()
+                    break
+        if not action_url:
+            raise ValueError, 'No %s action found for %s' % (action, controller_state.getContext().getId())
         return RedirectTo.RedirectTo(action_url)(controller_state)
 
 registerFormAction('redirect_to_action', 
