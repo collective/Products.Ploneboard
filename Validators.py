@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.12 2004/04/20 21:35:20 tiran Exp $
+$Id: Validators.py,v 1.13 2004/04/22 23:26:57 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -31,6 +31,11 @@ from Products.validation.validators.RegexValidator import RegexValidator
 
 import re
 from ZPublisher.HTTPRequest import FileUpload
+
+from TAL.TALParser import TALParser
+from TAL.HTMLTALParser import HTMLTALParser
+from TAL.TALGenerator import TALGenerator
+from Products.PageTemplates.Expressions import getEngine
 
 if HAS_MX_TIDY:
     from mx.Tidy import tidy as mx_tidy
@@ -52,6 +57,30 @@ RE_BODY = re.compile('<body[^>]*?>(.*)</body>', re.DOTALL )
 SUBTRACT_LINES = 11
 
 validatorList = []
+
+class TALValidator:
+    """Validates a text to be valid TAL code
+    
+    """
+
+    __implements__ = IValidator
+
+    def __init__(self, name, title='', description=''):
+        self.name = name
+        self.title = title or name
+        self.description = description
+
+    def __call__(self, value, *args, **kw):
+        gen = TALGenerator(getEngine(), xml=1, source_file=None)
+        parser = HTMLTALParser(gen)
+        try:
+            parser.parseString(value)
+        except Exception, err:
+            return ("Validation Failed(%s): \n %s" % (self.name, err))
+        return 1
+
+validatorList.append(TALValidator('isTAL', title='', description=''))
+
 
 class TidyHtmlValidator:
     """use mxTidy to check HTML

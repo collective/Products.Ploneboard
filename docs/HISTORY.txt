@@ -1,3 +1,7 @@
+0.2-beta4
+
+ * Added AT Dyn Document. It's a CMFDynamicDocument like type <XXX more>
+
 0.2-beta3 - 2004-04-20
 
  * Updated INSTALL.txt [tiran]
