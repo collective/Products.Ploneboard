@@ -171,6 +171,12 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # Return user and groups roles
         return GroupUserFolder.unique(tuple(user) + tuple(groups))
 
+    def getUserRoles(self):
+        """
+        returns the roles defined for the user without the group roles
+        """
+        prefix=GRUFFolder.GRUFGroups._group_prefix
+        return [r for r in self._original_roles if not r.startswith(prefix)]
 
     def getGroupRoles(self,):
         """
