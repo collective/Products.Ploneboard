@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: utils.py,v 1.2 2004/05/02 18:59:18 tiran Exp $
+$Id: utils.py,v 1.3 2004/05/04 18:26:23 tiran Exp $
 """ 
 
 __author__  = 'Christian Heimes'
@@ -27,6 +27,15 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
 
 def setupMimeTypes(self, typeInfo, old=(), moveDown=(), out=None):
+    """Setup up and registers mimetype associations
+    
+    self - portal object
+    typeInfo - a list of type infos
+    old - a list of old items that should be removed
+    moveDown - a list of interfaces. Types that are implementing this interface
+               are moved to the bottom of the list
+    out - StringIO instance
+    """
     reg = getToolByName(self, 'content_type_registry')
     
     moveBottom = []
@@ -99,7 +108,7 @@ def getFileExtOf(klass):
     return (name, klass.assocFileExt)
 
 def registerTemplates(self, typeInfo, out):
-    """
+    """Registers templates in the archetypes tool
     """
     atTool = getToolByName(self, 'archetype_tool')
     for t in typeInfo:

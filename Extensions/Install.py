@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.13 2004/05/01 16:55:09 tiran Exp $
+$Id: Install.py,v 1.14 2004/05/04 18:26:23 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -37,6 +37,7 @@ from Products.ATContentTypes.interfaces.IATFile import IATFile
 
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.Extensions.utils import setupMimeTypes, registerTemplates
+from Products.ATContentTypes.Extensions.toolbox import switchATCT2CMF, isSwitchedToATCT
 
 def install(self):
     out = StringIO()
@@ -104,11 +105,9 @@ def uninstall(self):
     out = StringIO()
     classes=listTypes(PROJECTNAME)
     
-    # switch back to
-    try:
-        self.switchATCT2CMF()
-    except: #XXX CopyError
-        pass
+    # switch back before uninstalling
+    if isSwitchedToATCT(self):
+        switchATCT2CMF(self)
 
     #unregister folderish classes in use_folder_contents
     props = getToolByName(self,'portal_properties').site_properties

@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 #
 """
-$Id: toolbox.py,v 1.3 2004/05/01 17:14:24 tiran Exp $
+$Id: toolbox.py,v 1.4 2004/05/04 18:26:23 tiran Exp $
 """ 
 
 __author__  = 'Jens Klein, Christian Heimes'
@@ -28,6 +28,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.types import ATDocument, ATEvent, ATFavorite, \
     ATFile, ATFolder, ATImage, ATLink, ATNewsItem, ATTopic
 from Products.ATContentTypes.interfaces.IATImage import IATImage
+from Products.ATContentTypes.interfaces.IATDocument import IATDocument
+from Acquisition import aq_base
 
 
 not_global_allow = ('Favorite', 'Large Plone Folder')
@@ -65,7 +67,7 @@ def recreateATImageScales(self):
 
     return out.getvalue()
 
-def _switchToATCT(pt, cat, reg, klass):
+def _switchToATCT(pt, cat, reg, klass, out):
     """
     """
     atId = klass.__name__
@@ -79,11 +81,13 @@ def _switchToATCT(pt, cat, reg, klass):
     pt.manage_renameObject(id, bakId)
     pt[bakId].manage_changeProperties(title=bakTitle, global_allow=0)
     _changePortalType(cat, id, bakId)
+    print >>out, '%s -> %s (%s)' % (id, bakId, bakTitle)
 
     # rename to the new
     pt.manage_renameObject(atId, id)
     pt[id].manage_changeProperties(title=title)
     _changePortalType(cat, atId, id)
+    print >>out, '%s -> %s (%s)' % (atId, id, title)
 
     # adjust the content type registry
     preds = reg.listPredicates()
@@ -92,7 +96,7 @@ def _switchToATCT(pt, cat, reg, klass):
         if typ == atId:
             reg.assignTypeName(predid, id) 
 
-def _switchToCMF(pt, cat, reg, klass):
+def _switchToCMF(pt, cat, reg, klass, out):
     """
     """
     atId = klass.__name__
@@ -103,8 +107,9 @@ def _switchToCMF(pt, cat, reg, klass):
     
     # move away the ATCT type
     pt.manage_renameObject(id, atId)
-    pt[bakId].manage_changeProperties(title=atTitle)
+    pt[atId].manage_changeProperties(title=atTitle)
     _changePortalType(cat, id, atId)
+    print >>out, '%s -> %s (%s)' % (id, atId, atTitle)
 
     # rename to the new type
     pt.manage_renameObject(bakId, id)
@@ -114,6 +119,7 @@ def _switchToCMF(pt, cat, reg, klass):
         global_allow = 0
     pt[id].manage_changeProperties(title='', global_allow=global_allow)
     _changePortalType(cat, bakId, id)
+    print >>out, '%s -> %s (%s): %i' % (bakId, id, '', global_allow)
 
     # adjust the content type registry
     preds = reg.listPredicates()
@@ -133,15 +139,31 @@ def _changePortalType(cat, old, new):
         obj._setPortalTypeName(new)
 
 def switchCMF2ATCT(self):
+    if isSwitchedToATCT(self):
+        return "Error: Already switched"
     pt = getToolByName(self,'portal_types')
     cat = getToolByName(self,'portal_catalog')
-    reg = getToolByName(self, 'content_type_registry') 
+    reg = getToolByName(self, 'content_type_registry')
+    out = StringIO()
     for klass in atct_klasses:
-        _switchToATCT(pt, cat, reg, klass)
+        _switchToATCT(pt, cat, reg, klass, out)
+    return out.getvalue()
 
 def switchATCT2CMF(self):
+    if not isSwitchedToATCT(self):
+        return "Error: Not switched"
     pt = getToolByName(self,'portal_types')
     cat = getToolByName(self,'portal_catalog')
     reg = getToolByName(self, 'content_type_registry') 
+    out = StringIO()
     for klass in atct_klasses:
-        _switchToCMF(pt, cat, reg, klass)
+        _switchToCMF(pt, cat, reg, klass, out)
+    return out.getvalue()
+
+def isSwitchedToATCT(self):
+    pt = getToolByName(self,'portal_types')
+    doc = pt.getTypeInfo('Document')
+    if doc and doc.meta_type == ATDocument.ATDocument.meta_type:
+        return 1
+    else:
+        return 0
