@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATTopic.py,v 1.2 2004/03/13 19:14:03 tiran Exp $
+$Id: ATTopic.py,v 1.3 2004/03/16 13:58:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -161,7 +161,6 @@ class ATTopic(BaseFolderMixin):
             # empty query - do not show anything
             return []
         kw.update( q )
-        print kw
         pcatalog = getToolByName( self, 'portal_catalog' )
         return pcatalog.searchResults(REQUEST, **kw)
 

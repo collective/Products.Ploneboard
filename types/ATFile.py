@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.2 2004/03/13 18:17:14 tiran Exp $
+$Id: ATFile.py,v 1.3 2004/03/16 13:58:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -113,7 +113,7 @@ class ATFile(BaseContent):
                 while res[:1] == '/':
                     res = res[1:]
                 return res
-        except: # XXX iiigh except all!
+        except Exception, msg: # XXX iiigh except all!
             return BaseContent.getIcon(self, relative_to_portal)
 
     security.declarePublic('icon')
@@ -142,6 +142,19 @@ class ATFile(BaseContent):
         return f and f.getContentType() or '' #'application/octet-stream'
 
     content_type = ComputedAttribute(get_content_type, 1)
+ 
+    security.declarePrivate('TXNG2_SearchableText')
+    def TXNG2_SearchableText(self):
+        """Special searchable text source for text index ng 2
+        
+        Returns (content, mimetype) or None
+        """
+        f = self.getFile()
+        if not f:
+            # empty file
+            return None
+        else:
+            return (f, f.getContentType())
  
 registerType(ATFile, PROJECTNAME)
 

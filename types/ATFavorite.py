@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFavorite.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATFavorite.py,v 1.2 2004/03/16 13:58:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -29,6 +29,7 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 from Products.ATContentTypes.config import *
 from Products.ATContentTypes.interfaces.IATContentType import IATContentType
+from ComputedAttribute import ComputedAttribute
 from schemata import ATFavoriteSchema
 
 class ATFavorite(BaseContent):
@@ -77,7 +78,7 @@ class ATFavorite(BaseContent):
         else:
             return portal_url()
         
-    remote_url = getRemoteUrl
+    remote_url = ComputedAttribute(getRemoteUrl, 1)
         
     security.declareProtected(CMFCorePermissions.View, 'getIcon')
     def getIcon(self, relative_to_portal=0):
@@ -86,8 +87,8 @@ class ATFavorite(BaseContent):
         """
         try:
             return self.getObject().getIcon(relative_to_portal)
-        except:
-            return 'p_/broken'
+        except Exception, msg: # XXX iiigh except all
+            return 'favorite_broken_icon.gif'
 
     security.declareProtected(CMFCorePermissions.View, 'getObject')
     def getObject(self):
@@ -95,6 +96,6 @@ class ATFavorite(BaseContent):
         linking to
         """
         portal_url = getToolByName(self, 'portal_url')
-        return portal_url.getPortalObject().restrictedTraverse(self.RemoteUrl())
+        return portal_url.getPortalObject().restrictedTraverse(self._getRemoteUrl())
 
 registerType(ATFavorite, PROJECTNAME)

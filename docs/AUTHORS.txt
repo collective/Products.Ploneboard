@@ -28,3 +28,8 @@ Bill Schindler:
 Sylvain Thenault:
 
 
+Contributors (in alphabetic order)
+----------------------------------
+
+Markus Koelle:
+ * bug reporting
