@@ -6,7 +6,8 @@ from os.path import basename, splitext, join
 from config import bin_search_path
 
 
-# flowing 2 method is copied form PortalTranforms 
+# following 2 method is copied form PortalTranforms 
+# Owners of PortalTransforms own the copyright of these 2 functions
 class MissingBinary(Exception): pass
 
 def bin_search(binary):
@@ -26,7 +27,8 @@ def bin_search(binary):
 
 def getPOT(self, wf_id=""):
     """ get the pot, copy from:
-"dcworkfow2dot.py":http://awkly.org/Members/sidnei/weblog_storage/blog_27014
+         "dcworkfow2dot.py":http://awkly.org/Members/sidnei/weblog_storage/blog_27014
+        and Sidnei da Silva owns the copyright of the this function
     """
     out = []
     transitions = {}
