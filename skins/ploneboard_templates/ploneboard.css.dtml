@@ -57,6 +57,7 @@
     position: relative;
 }
 
+/* Fix for IE float bug */
 * html .boardMessage {
     float: left;
     clear: both;

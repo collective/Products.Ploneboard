@@ -33,47 +33,7 @@
 
             <div class="boardMessage" tal:repeat="message messages">
 
-                <div class="boardMessageDetails">
-                <img src="" 
-                     tal:attributes="src string:${portal_url}/ploneboard_message_icon.gif"/>
-                     Posted by 
-                     <span tal:replace="message/Creator">author</span> 
-                     at
-                     <span tal:replace="python:here.toPloneboardTime(message.creation_date)">Thursday 13:21</span>
-                </div>
-            
-                <div class="boardMessageBody">
-            
-                    <div class="portrait" 
-                          tal:define="home python:container.portal_membership.getHomeUrl(message.Creator(), verifyPermission=1);
-                                      portrait python: here.portal_membership.getPersonalPortrait(message.Creator());"> 
-                        <a href="#" tal:attributes="href home">                    
-                            <img class="portraitPhoto"
-                                 src="defaultUser.gif" 
-                                 alt="" 
-                                 border="0" 
-                                 width="75" 
-                                 height="100" 
-                                 tal:attributes="src portrait/absolute_url" />
-                            <div tal:content="message/Creator">member id</div>
-                        </a>
-                    </div>
-                    
-                    <div class="boardMessageContent" tal:content="structure message/getBody">Jeg mener mye rart.</div>
-                    
-                </div>
-                
-                <div class="visualClear"></div>
-
-                <div class="boardMessageActions" tal:condition="not: python: noreply == 1">
-                
-                    <form tal:attributes="action string:${message/absolute_url}/portal_form/add_message_form">
-                        <input class="standalone"
-                               type="submit" 
-                               value="Reply to this" />
-                    </form>
-
-                </div>
+            <metal:message metal:use-macro="here/message_view/macros/message" />
 
             </div>
         </div>
