@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="cmfphoto">
 
 <body>
 
@@ -27,7 +27,7 @@
     
     <small>
 
-    <span i18n:translate="label_size">Original size:</span>
+    <span i18n:translate="">Original size:</span>
 
         <span tal:define="size python:here.getObjSize(here)"
               tal:content="size">                        
@@ -35,7 +35,7 @@
         </span>            
 
         <span tal:condition="python:test(here.size, 0, 1)"
-              i18n:translate="no_file_uploaded">
+              i18n:translate="">
           (No file has been uploaded)
         </span>
 

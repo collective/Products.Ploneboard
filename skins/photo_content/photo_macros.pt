@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="cmfphoto">
 
 <body>
 
@@ -12,11 +12,11 @@
   <div class="row" metal:define-macro="size">
 	
     <div style="width: 3em; text-align: left;" class="label">
-      <span>Size</span>
+      <span i18n:translate="">Size</span>
       
       <div id="display_help"
 	   class="help"
-	   style="visibility:hidden; left:-18em;">
+	   style="visibility:hidden; left:-18em;" i18n:translate="">
 	Select the size of the photos.
       </div>
     </div>
@@ -44,8 +44,9 @@
 		tal:attributes="tabindex tabindex/next" 
 	        onfocus="formtooltip('display_help', 1)" 
 	        onblur="formtooltip('display_help', 0)">
-	  <option value="original">Original size</option>
+	  <option value="original" i18n:translate="">Original size</option>
 	  <option tal:repeat="display displays" 
+                  i18n:translate=""
 	          tal:attributes="value display/name;
 	          selected python:test(photo_display == display['name'], 'selected', '');" 
 	          tal:content="display/label/title">1</option>
