@@ -29,10 +29,10 @@ msgid "You have already voted in this poll."
 msgstr "Usted ya ha votado en está encuesta."
 
 msgid "MPoll has been created."
-msgstr "Se ha creado la encuesta."
+msgstr "La encuesta ha sido creada."
 
 msgid "Your changes have been saved."
-msgstr "Se han guaradado sus cambios."
+msgstr "Se han guardados sus cambios."
 
 msgid "This poll is closed."
 msgstr "La encuesta está cerrada."

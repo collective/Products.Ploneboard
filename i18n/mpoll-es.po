@@ -26,7 +26,7 @@ msgid "label_view_results"
 msgstr "Ver resultados"
 
 msgid "label_poll_results"
-msgstr "Resultado actual de esta encuesta"
+msgstr "Resultados actuales de la encuesta"
 
 msgid "label_poll_is_closed"
 msgstr "La encuesta está cerrada"
@@ -41,7 +41,7 @@ msgid "label_question"
 msgstr "Pregunta"
 
 msgid "help_question"
-msgstr "La pregunta de esta encuesta."
+msgstr "La pregunta de la encuesta."
 
 msgid "label_answers"
 msgstr "Respuestas"
@@ -53,5 +53,5 @@ msgid "label_open"
 msgstr "Abierto"
 
 msgid "help_open"
-msgstr "Usa está opción para abrir la encuesta y aceptar votos de usuarios."
+msgstr "Marque está opción para abrir la encuesta y aceptar votos de usuarios."
 
