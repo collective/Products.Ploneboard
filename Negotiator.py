@@ -13,7 +13,7 @@
 ##############################################################################
 """
 
-$Id: Negotiator.py,v 1.1 2003/01/02 15:29:12 lalo Exp $
+$Id: Negotiator.py,v 1.2 2003/01/03 17:38:34 dreamcatcher Exp $
 """
 
 _langPrefsRegistry = []
@@ -41,12 +41,15 @@ class BrowserLanguages:
     
     def __init__(self, context):
         try:
-            get = context.get
-        except AttributeError:
-            # ZPT, contrary to the spec, doesn't pass the request as context arg
+            # ZPT, contrary to the spec, doesn't pass the request
+            # as context arg
             get = context.REQUEST.get
+        except AttributeError:
+            get = context.get
+            
         try:
-            req_langs = get('user_language', None) or get('HTTP_ACCEPT_LANGUAGE', '')
+            req_langs = get('user_language', None) or \
+                        get('HTTP_ACCEPT_LANGUAGE', '')
         except:
             from traceback import print_exc
             print_exc()
