@@ -5,7 +5,7 @@
 # Author:      Philipp Auersperg
 #
 # Created:     2003/10/01
-# RCS-ID:      $Id: InstalledProduct.py,v 1.7 2003/04/07 20:42:16 zworkb Exp $
+# RCS-ID:      $Id: InstalledProduct.py,v 1.8 2003/05/24 18:51:21 zworkb Exp $
 # Copyright:   (c) 2003 BlueDynamics
 # Licence:     GPL
 #-----------------------------------------------------------------------------
@@ -35,6 +35,9 @@ def updatelist(a,b):
         if not l in a:
             a.append(l)
             
+def delObjects(cont,ids):
+    delids=[id for id in ids if hasattr(cont,id)]
+    cont.manage_delObjects(delids)
 
 class InstalledProduct(SimpleItem):
     ''' class storing information about an installed product'''
@@ -164,24 +167,24 @@ class InstalledProduct(SimpleItem):
             
         if 'types' in cascade:
             portal_types=getToolByName(self,'portal_types')
-            portal_types.manage_delObjects(self.types)
+            delObjects(portal_types, self.types)
 
         if 'skins' in cascade:
             portal_skins=getToolByName(self,'portal_skins')
-            portal_skins.manage_delObjects(self.skins)
+            delObjects(portal_skins, self.skins)
             
         if 'actions' in cascade:
             portal_actions=getToolByName(self,'portal_actions')
             actids= [o.id.lower() for o in portal_actions._actions]
-            delactions=[actids.index(id) for id in self.actions]
+            delactions=[actids.index(id) for id in self.actions if id in actids]
             if delactions: portal_actions.deleteActions(delactions)
 
         if 'portalobjects' in cascade:
-            portal.manage_delObjects(self.portalobjects)
+            delObjects(portal, self.portalobjects)
 
         if 'workflows' in cascade:
             portal_workflow=getToolByName(self,'portal_workflow')
-            portal_workflow.manage_delObjects(self.workflows)
+            delObjects(portal_workflow, self.workflows)
             
         if 'slots' in cascade:
             if self.leftslots: 
