@@ -20,7 +20,7 @@
 """This module contains a mixin-class and a schema snippet to constrain
 which types can be added in a folder-instance
 
-$Id: ConstrainTypesMixin.py,v 1.3 2004/08/17 16:48:31 tiran Exp $
+$Id: ConstrainTypesMixin.py,v 1.4 2004/09/08 14:21:55 runyaga Exp $
 """
 __author__  = 'Jens Klein <jens.klein@jensquadrat.de>'
 __docformat__ = 'plaintext'
@@ -73,9 +73,11 @@ class ConstrainTypesMixin:
 
         [(key,value),(key2,value2),...,(keyN,valueN)]
         """
-        typetuples= [(fti.id, fti.title_or_id())
+        typetuples= [(fti.title_or_id(), fti.id)
                      for fti in self._getPossibleTypes()]
-        return DisplayList(typetuples)
+        typetuples.sort()
+        sorted = [(t[1],t[0]) for t in typetuples]
+        return DisplayList(sorted)
 
     security.declarePrivate('recursiveGetLocallyAllowedTypes')
     def recursiveGetLocallyAllowedTypes(self):
@@ -112,8 +114,9 @@ class ConstrainTypesMixin:
         # first we start with all available portal types.
         possible_ftis = tt.listTypeInfo()
         # then we only keep those that our fti allows
-        possible_ftis = [fti for fti in possible_ftis
-                         if myfti.allowType(fti.getId())]
+        if myfti.filter_content_types:
+            possible_ftis = [fti for fti in possible_ftis
+                             if myfti.allowType(fti.getId())]
         # then we try to find a types-constraint up the acquisition chain
         ancestors_allowed_types = self.ancestorsGetLocallyAllowedTypes()
         # if we find it, keep only the allowed types
@@ -140,6 +143,7 @@ class ConstrainTypesMixin:
     security.declareProtected(AddPortalContent, 'invokeFactory')
     def invokeFactory( self, type_name, id, RESPONSE=None, *args, **kw):
         """ Invokes the portal_types tool """
+        if id in ('workspaces','homepage'): import pdb; pdb.set_trace()
         if not type_name in [fti.id for fti in self.allowedContentTypes()]:
             raise ValueError, 'Disallowed subobject type: %s' % type_name
 
