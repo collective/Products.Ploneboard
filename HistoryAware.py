@@ -18,7 +18,7 @@
 #
 """History awareness
 
-$Id: HistoryAware.py,v 1.5 2004/07/13 13:12:55 dreamcatcher Exp $
+$Id: HistoryAware.py,v 1.6 2004/08/06 14:27:57 tiran Exp $
 """
 __author__  = 'Christian Heimes, Christian Theune'
 __docformat__ = 'restructuredtext'
@@ -54,8 +54,8 @@ class HistoryAwareMixin:
     security       = ClassSecurityInfo()
 
     actions = ({
-        'id'          : 'history',
-        'name'        : 'History',
+        'id'          : 'lastchanges',
+        'name'        : 'Last changes',
         'action'      : 'string:${object_url}/atct_history',
         'permissions' : (HISTORY_VIEW_PERMISSION, )
          },
