@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.1 $'[11:-2]
+__version__='$Revision: 1.2 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -93,7 +93,7 @@ class ControllerValidator(PythonScript, ControllerBase):
         {'label':'Test',
          'action':'ZScriptHTML_tryForm',
          'help': ('PythonScripts', 'PythonScript_test.stx')},
-        {'label':'Actions','action':'manage_formActionsForm'},             
+#        {'label':'Actions','action':'manage_formActionsForm'},             
         {'label':'Proxy',
          'action':'manage_proxyForm',
          'help': ('OFSP','DTML-DocumentOrMethod_Proxy.stx')},
@@ -117,14 +117,14 @@ class ControllerValidator(PythonScript, ControllerBase):
 
 
     def __init__(self, *args, **kwargs):
-        self.actions = FormActionContainer()
+#        self.actions = FormActionContainer()
         return ControllerValidator.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 
     def __call__(self, *args, **kwargs):
         result = ControllerValidator.inheritedAttribute('__call__')(self, *args, **kwargs)
-        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result, self.REQUEST)
+#        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+#            return self.getNext(result, self.REQUEST)
         return result
 
 

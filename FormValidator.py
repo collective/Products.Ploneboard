@@ -70,6 +70,9 @@ class FormValidator(SimpleItem):
                         raise ValueError, 'Illegal template id: %s' % s
         self.validators = validators
 
+    def __copy__(self):
+        return FormValidator(self.getObjectId(), self.getContextType(), self.getButton(), self.getValidators())
+
     def getObjectId(self):
         return self.key.getObjectId()
 
@@ -96,6 +99,12 @@ class FormValidatorContainer(SimpleItem):
     def __init__(self):
         self.validators = {}
     
+    def __copy__(self):
+        newobj = FormValidatorContainer()
+        for v in self.validators.values():
+            newobj.set(v.__copy__())
+        return newobj
+
     def set(self, validator):
         self.validators[validator.getKey()] = validator
         self._p_changed = 1

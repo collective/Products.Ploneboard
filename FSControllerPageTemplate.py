@@ -12,9 +12,10 @@
 ##########################################################################
 """ Customizable validated page templates that come from the filesystem.
 
-$Id: FSControllerPageTemplate.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
+$Id: FSControllerPageTemplate.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
 """
 
+import copy
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
 from OFS.Cache import Cacheable
@@ -25,9 +26,11 @@ from Products.CMFCore.CMFCorePermissions import View, ManagePortal
 from Products.CMFCore.utils import expandpath
 from Products.CMFCore.FSPageTemplate import FSPageTemplate
 from Products.CMFCore.FSPageTemplate import FSPageTemplate as BaseClass
+from BaseControllerPageTemplate import BaseControllerPageTemplate
 from ControllerPageTemplate import ControllerPageTemplate
 from ControllerBase import ControllerBase
-from BaseControllerPageTemplate import BaseControllerPageTemplate
+from FormAction import FormActionContainer
+from FormValidator import FormValidatorContainer
 from utils import logException
 
 
@@ -77,6 +80,8 @@ class FSControllerPageTemplate(BaseClass, BaseControllerPageTemplate):
         obj = ControllerPageTemplate(self.getId(), self._text, self.content_type)
         obj.expand = 0
         obj.write(self.read())
+        obj.validators = copy.copy(self.validators)
+        obj.actions = copy.copy(self.actions)
         return obj
 
 

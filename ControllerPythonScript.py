@@ -17,7 +17,7 @@ This product provides support for Script objects containing restricted
 Python code.
 """
 
-__version__='$Revision: 1.2 $'[11:-2]
+__version__='$Revision: 1.3 $'[11:-2]
 
 import sys, os, re
 from Globals import package_home
@@ -34,6 +34,7 @@ from Products.PythonScripts.PythonScript import PythonScript
 from ControllerBase import ControllerBase
 from ControllerState import ControllerState
 from FormAction import FormActionContainer
+from FormValidator import FormValidatorContainer
 
 # Track the Python bytecode version
 import imp
@@ -119,6 +120,7 @@ class ControllerPythonScript(PythonScript, ControllerBase):
 
     def __init__(self, *args, **kwargs):
         self.actions = FormActionContainer()
+        self.validators = FormValidatorContainer()
         return ControllerPythonScript.inheritedAttribute('__init__')(self, *args, **kwargs)
 
 

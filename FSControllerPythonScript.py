@@ -12,9 +12,10 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerPythonScript.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
+$Id: FSControllerPythonScript.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
 """
 
+import copy
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
 from OFS.Cache import Cacheable
@@ -50,6 +51,7 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
         BaseClass.__init__(self, id, filepath, fullname, properties)
         self.filepath = filepath
         self._read_action_metadata(self.getId(), filepath)
+        self._read_validator_metadata(self.getId(), self.filepath)
 
 
     def __call__(self, *args, **kwargs):
@@ -67,6 +69,7 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
             # using information in portal_form_controller.  Since manage_afterAdd
             # is not guaranteed to run, we also call these in __init__
             self._read_action_metadata(self.getId(), self.filepath)
+            self._read_validator_metadata(self.getId(), self.filepath)
         except:
             logException()
             raise
@@ -76,6 +79,8 @@ class FSControllerPythonScript (BaseClass, ControllerBase):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControllerPythonScript(self.getId())
         obj.write(self.read())
+        obj.validators = copy.copy(self.validators)  # XXX - don't forget to enable this
+        obj.actions = copy.copy(self.actions)
         return obj
 
 

@@ -12,9 +12,10 @@
 ##############################################################################
 """ Customizable controlled python scripts that come from the filesystem.
 
-$Id: FSControllerValidator.py,v 1.1 2003/09/23 17:57:56 plonista Exp $
+$Id: FSControllerValidator.py,v 1.2 2003/09/27 18:28:41 plonista Exp $
 """
 
+import copy
 import Globals, Acquisition
 from AccessControl import ClassSecurityInfo
 from OFS.Cache import Cacheable
@@ -38,8 +39,8 @@ class FSControllerValidator (BaseClass, ControllerBase):
            (
             {'label':'Customize', 'action':'manage_main'},
             {'label':'Test', 'action':'ZScriptHTML_tryForm'},
-            {'label':'Actions','action':'manage_formActionsForm'},             
            ) + Cacheable.manage_options)
+#            {'label':'Actions','action':'manage_formActionsForm'},             
 
 
     # Use declarative security
@@ -54,8 +55,8 @@ class FSControllerValidator (BaseClass, ControllerBase):
 
     def __call__(self, *args, **kwargs):
         result = FSControllerValidator.inheritedAttribute('__call__')(self, *args, **kwargs)
-        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
-            return self.getNext(result, self.REQUEST)
+#        if getattr(result, '__class__', None) == ControllerState and not result._isValidating():
+#            return self.getNext(result, self.REQUEST)
         return result
 
 
@@ -66,7 +67,7 @@ class FSControllerValidator (BaseClass, ControllerBase):
             # Re-read .metadata after adding so that we can do validation checks
             # using information in portal_form_controller.  Since manage_afterAdd
             # is not guaranteed to run, we also call these in __init__
-            self._read_action_metadata(self.getId(), self.filepath)
+#            self._read_action_metadata(self.getId(), self.filepath)
         except:
             logException()
             raise
@@ -76,6 +77,7 @@ class FSControllerValidator (BaseClass, ControllerBase):
         """Create a ZODB (editable) equivalent of this object."""
         obj = ControllerValidator(self.getId())
         obj.write(self.read())
+#        obj.actions = copy.copy(self.actions)
         return obj
 
 

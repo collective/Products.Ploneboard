@@ -1,3 +1,13 @@
+2003-09-27  Geoff Davis <geoff@geoffdavis.net> (plonista)
+
+   * Added a forgotten import statement in ControllerPythonScript
+
+   * ControllerValidators don't use actions or validators so the actions tab has
+     been removed
+
+   * Fixed the customize function so that it copies actions and validators when
+     you customize an FSControllerPageTemplate or an FSControllerPythonScript
+
 2003-09-23  Geoff Davis <geoff@geoffdavis.net> (plonista)
 
    * Renamed classes (ControlledX to ControllerX)

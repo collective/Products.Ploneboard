@@ -98,6 +98,10 @@ class FormAction(SimpleItem):
             action_arg = action_arg.strip()
         self.action = form_action_types[action_type].getFactory()(action_arg)
 
+    def __copy__(self):
+        return FormAction(self.getObjectId(), self.getStatus(), self.getContextType(), 
+            self.getButton(), self.getActionType(), self.getActionArg())
+
     def getKey(self):
         return self.key
     
@@ -132,7 +136,13 @@ class FormActionContainer(SimpleItem):
 
     def __init__(self):
         self.actions = {}
-    
+
+    def __copy__(self):
+        newobj = FormActionContainer()
+        for a in self.actions.values():
+            newobj.set(a.__copy__())
+        return newobj
+
     def set(self, action):
         self.actions[action.getKey()] = action
         self._p_changed = 1
