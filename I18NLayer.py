@@ -18,10 +18,10 @@
 """
 I18NLayer. Overlay to provide multilanguage support for all types objects.
 
-$Id: I18NLayer.py,v 1.13 2004/01/09 10:19:53 longsleep Exp $
+$Id: I18NLayer.py,v 1.14 2004/02/25 16:43:05 longsleep Exp $
 """
 
-__version__ = "$Revision: 1.13 $"
+__version__ = "$Revision: 1.14 $"
 
 from Globals import get_request
 from Acquisition import aq_acquire, aq_base, aq_inner, aq_chain, aq_parent, ImplicitAcquisitionWrapper
@@ -92,7 +92,7 @@ class I18NLayer( TitleLessBaseFolder ):
         'permissions': (CMFCorePermissions.View,),
         },{
         'id': 'languagelisting',
-        'name'          : 'Language Listing',
+        'name'          : 'Translate',
         'action'        : 'i18nlayer_languages_form',
         'permissions'   : (CMFCorePermissions.AddPortalContent, CMFCorePermissions.ModifyPortalContent,),
         'visible'       : 1

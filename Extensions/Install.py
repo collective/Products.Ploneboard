@@ -34,7 +34,7 @@ def install(self):
             for tc in typestool.objectValues():
                 t=tc.getId()
                 print >> out, "found type %s" % t
-                if t in ('I18NLayer', 'Discussion Item', 'Favorite',): continue
+                if t in ('I18NLayer', 'Discussion Item', 'Favorite', 'Workspace', ): continue
                 if t.lower().find('folder') > -1: continue
  
                 if t in ti.allowed_content_types:
@@ -72,6 +72,18 @@ def install(self):
             left_slots=list(left_slots)+[slot,]
             self.left_slots=left_slots
             print >> out, 'Added i18nContent slot to left_slots property.\n'
+
+    # add local translate tab
+    tool = getToolByName(self, 'portal_actions')
+    tool.addAction( 'content_translate',
+                    'Translate',
+                    'string: ${object_url}/translate_sheet',
+                    'python: portal.i18nlayer_check4tab(object)',
+                    'View',
+                    'local_tabs')
+
+    print >>out, 'Added translate action.\n'
+
 
     return out.getvalue()
 
