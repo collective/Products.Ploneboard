@@ -8,7 +8,7 @@ Contact: andreas@andreas-jung.com
 
 License: see LICENSE.txt
 
-$Id: ParentManagedSchema.py,v 1.1 2004/09/12 07:27:21 ajung Exp $
+$Id: ParentManagedSchema.py,v 1.2 2004/09/23 15:37:17 ajung Exp $
 """
 
 from Globals import InitializeClass
@@ -24,7 +24,7 @@ class ParentManagedSchema:
     security = ClassSecurityInfo()    
 
     security.declareProtected(View, 'Schema')
-    def Schema(self):
+    def Schema(self, schema_id):
         """ retrieve schema from parent object """
 
         # Schema() seems to be called during the construction phase when there is
@@ -38,7 +38,7 @@ class ParentManagedSchema:
 
         schema = getattr(self, '_v_schema', None)
         if schema is None:
-            schema = self._v_schema = self.aq_parent.atse_getSchema()
+            schema = self._v_schema = self.aq_parent.atse_getSchemaById(schema_id)
 
         return ImplicitAcquisitionWrapper(self._v_schema, self)
 

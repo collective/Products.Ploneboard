@@ -136,19 +136,20 @@
       <div tal:repeat="set fieldsets">
         <div class="left">
            <a tal:content="string: ${set}" 
-              tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${set};
+              tal:attributes="href string:${here/absolute_url}/atse_editor?schema_id=$SCHEMA_ID&schemata=${set};
                              id python: test(set==fieldset, 'atse_selected', '')"/>
         </div>
         <div class="right">
-            <a tal:attributes="href string:atse_schemataMoveLeft?name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
-            <a tal:attributes="href string:atse_schemataMoveRight?name=${set}"><img src="arrowDown.gif" title="Move down"></a> 
-            <a tal:attributes="href string:atse_delSchemata?name=${set}"><img src="delete.gif" title="Delete"></a> 
+            <a tal:attributes="href string:atse_schemataMoveLeft?schema_id=$SCHEMA_ID&name=${set}"><img src="arrowUp.gif" title="Move up"></a> 
+            <a tal:attributes="href string:atse_schemataMoveRight?schema_id=$SCHEMA_ID&name=${set}"><img src="arrowDown.gif" title="Move down"></a> 
+            <a tal:attributes="href string:atse_delSchemata?schema_id=$SCHEMA_ID&name=${set}"><img src="delete.gif" title="Delete"></a> 
         </div>
         <div class="clear"> </div>
       </div>
 
       <div>
         <form action="atse_addSchemata" method="post">
+         <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" />
          <input type="text" name="name" value="" >
          <input type="image" src="add_icon.gif">
         </form>
@@ -162,22 +163,23 @@
   <div class="portlet" tal:condition="fieldsets">    <!-- Fields -->
     <h5 i18n:translate="fields">Fields</h5>
     <div class="portletBody" id="atse_fields">  
-      <div  tal:repeat="field python: here.atse_getSchemata(fieldset).fields()">
+      <div  tal:repeat="field python: here.atse_getSchemata(SCHEMA_ID, fieldset).fields()">
         <div class="left">
-          <a tal:attributes="href string:${here/absolute_url}/atse_editor?schemata=${fieldset}&field=${field/getName};
+          <a tal:attributes="href string:${here/absolute_url}/atse_editor?schema_id=$SCHEMA_ID&schemata=${fieldset}&field=${field/getName};
                              id python: test(field.getName() == request.get('field'), 'atse_selected', '')"
               tal:content="string: ${field/getName}" />
         </div>
         <div class="right">
-          <a tal:attributes="href string:atse_fieldMoveLeft?name=${field/getName}"><img src="arrowUp.gif" title="Move up"></a> 
-          <a tal:attributes="href string:atse_fieldMoveRight?name=${field/getName}"><img src="arrowDown.gif" title="Move down"></a> 
-          <a tal:attributes="href string:atse_delField?name=${field/getName}"><img src="delete.gif" title="Delete"></a> 
+          <a tal:attributes="href string:atse_fieldMoveLeft?schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowUp.gif" title="Move up"></a> 
+          <a tal:attributes="href string:atse_fieldMoveRight?schema_id=$SCHEMA_ID&name=${field/getName}"><img src="arrowDown.gif" title="Move down"></a> 
+          <a tal:attributes="href string:atse_delField?schema_id=$SCHEMA_ID&name=${field/getName}"><img src="delete.gif" title="Delete"></a> 
         </div>
         <div class="clear"> </div>
       </div>
 
       <div>
         <form action="atse_update" method="post">
+          <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" />
           <input type="hidden" name="fielddata.schemata:record:string"    
                tal:attributes="value fieldset" />
             <input type="hidden" name="add_field" value="dummy"> 
@@ -198,9 +200,11 @@
     <div class="portletBody" id="atse_fieldeditor">
 
       <form action="atse_update" method="post"
-            tal:define="field python: here.atse_getField(request['field']);
+            tal:define="field python: here.atse_getField(SCHEMA_ID, request['field']);
                         widget python: field.widget;
                         widget_name python:field.getWidgetName()">
+        <input type="hidden" name="schema_id" tal:attributes="value SCHEMA_ID" >
+
         <input type="hidden" name="fielddata.name:record:string" 
                tal:attributes="value request/field|nothing" />
         <input type="hidden" name="fielddata.schemata:record:string"    

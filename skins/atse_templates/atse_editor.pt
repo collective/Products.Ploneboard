@@ -9,7 +9,7 @@
       <link rel="Stylesheet" type="text/css" tal:attributes="href string:$portal_url/atse_styles.css" />
     </metal:block>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main" tal:define="SCHEMA_ID request/schema_id">
       <div metal:use-macro="here/atse_main_macro/macros/schema_editor" />
     </div>
   </body>

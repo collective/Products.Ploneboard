@@ -2,7 +2,7 @@
 
   <!-- portlets left side -->
   <div class="left" style="width: 25%"
-       tal:define="fieldsets context/atse_getSchemataNames;
+       tal:define="fieldsets python: context.atse_getSchemataNames(SCHEMA_ID);
                    default_fieldset python: fieldsets[0];
                    global fieldset request/schemata|default_fieldset">
 
