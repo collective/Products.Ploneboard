@@ -468,7 +468,7 @@ class ReferencePresentation(BaseContent):
                 initials = new_initials
             stringvar = ''.join(initials)
 
-        if 'roman' in format and stringvar.isdigit():
+        if 'roman' in format and stringvar.isdigit() and HAVEDOCUTILS:
            stringvar = roman.toRoman(int(stringvar))
 
         if 'upper' in format:
