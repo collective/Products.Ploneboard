@@ -1,14 +1,3 @@
-##########################################################################
-#                                                                        #
-#    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
-#                       and contributors                                 #
-#                                                                        #
-##########################################################################
-
-""" MinimalBibrefStyle class
-    Default bibliography style
-"""
-
 # Zope stuff
 from Globals import InitializeClass
 from App.Dialogs import MessageDialog
@@ -24,15 +13,15 @@ from Products.ATBiblioList.BibrefStyle \
      import IBibrefStyle, BibrefStyle
 
 
-class MinimalBibrefStyle(BibrefStyle):
-    """ specific formatter to process input in minimal format
+class BibrefStyleExample(BibrefStyle):
+    """ specific formatter to process input in example format
     """
     __implements__ = (IBibrefStyle,)
 
-    meta_type = "Minimal Bibref Style"
+    meta_type = "Example Bibref Style"
 
-    def __init__(self, id = 'Minimal',
-                 title = "Minimal bibliography reference style"):
+    def __init__(self, id = 'Example',
+                 title = "Example bibliography reference style"):
         """ initializes only id and title
         """
         self.id = id
@@ -89,13 +78,13 @@ class MinimalBibrefStyle(BibrefStyle):
         return result
     
 # Class instanciation
-InitializeClass(MinimalBibrefStyle)
+InitializeClass(BibrefStyleExample)
 
    
-def manage_addMinimalBibrefStyle(self, REQUEST=None):
+def manage_addBibrefStyleExample(self, REQUEST=None):
     """ """
     try:
-        self._setObject('Minimal', MinimalBibrefStyle())
+        self._setObject('Example', BibrefStyleExample())
     except:
         return MessageDialog(
             title='BiblioList tool warning message',

@@ -107,13 +107,13 @@
           </table>
           <input type="submit" name="form.button.reference_delete" value="Remove"
                  i18n:attributes="value" />
+<!--
+Does not work anymore due to recent changes in AT
           <input type="submit" name="form.button.reference_up" value="Up"
                  i18n:attributes="value"/>
           <input type="submit" name="form.button.reference_down" value="Down"
                  i18n:attributes="value"/>
         
-<!--
-Does not work anymore due to recent changes in AT
 
         <table> <tr> <th colspan=2> sort: </th> </tr>
         <tr> <th> by: </th> <td><select name="sortlist:list">
@@ -195,7 +195,7 @@ Does not work anymore due to recent changes in AT
     </div>
       </div>
     </div>
-
+        
     <div metal:define-macro="search">
       <div metal:use-macro="here/authors_widget/macros/edit"></div>
     </div>

@@ -1,7 +1,8 @@
 Description
 
   This product is an add-on to Raphael Ritz's CMFBibliographyAT.
-  It lets portal users organize existing bibliography references in lists.
+  It lets portal users organize existing bibliography references
+  into lists.
   Bibliography lists can be displayed using one of the standard
   (file system based) bibliography styles shiped with the product,
   or using custom bibliography styles designed by protal users.
@@ -40,20 +41,35 @@ Requirements
   
   * CMFBibliographyAT (cvs.sourceforge.net:/cvsroot/collective)
 
+  * Epoz 0.8.x
+
 
 Installation
 
-  * Recommanded: Copy ATBiblioList into your Products directory and install it with the 'QuickInstaller' Tool.
+  - First, add the product to Zope:
 
-  * Or: create an external method at the root of your cmf portal and run it by clicking its 'test' tab.
+    * extract the product from its archive and move it to the Products directory of your Zope Instance.
 
-    - Id            : InstallATBiblioList
+  - Then, install the product in Plone:
 
-    - Title         : Install ATBiblioList (optional)
+    * Recommended (Plone way): use the 'QuickInstaller' Tool from the ZMI, or go to 'Plone Setup > Add/Remove Products' in the Plone User Interface. Check the corresponding checkbox and click the 'install' button.
 
-    - Module Name   : InstallATBiblioList.Install
+    * Alternate (CMF Manual way): create an external method at the root of your cmf portal and run it by clicking its 'test' tab.
 
-    - Function Name : install
+    External Method parameters:
+
+    - Id: InstallATBiblioList
+
+    - Title: Install ATBiblioList (optional)
+
+    - Module Name: InstallATBiblioList.Install
+
+    - Function Name: install
+
+
+Documentation
+
+  More documentation can be found in the 'doc' folder of this product.
 
 
 Licence
@@ -68,13 +84,21 @@ Contact
   Louis Wannijn - louis.wannijn(at)naturalsciences(dot)be
 
 
+Changes
+
+  Version 0.3
+
+  * Sort lists by 1st Author name and publication year.
+
+  * complete translation (i18n) support.
+
+  * Better Documentation.
+
 To Do
 
   * Batch view for references widget.
 
-  * complete translation (i18n) support (Done).
-
-  * Better Documentation.
+  * Reference Browser support (ATReferenceBrowserWidget might be useful here)
 
   * Unit testing !!
 
@@ -89,3 +113,5 @@ Very possible future:
     I think the best way to implement such a functionnality would be to make the BiblioList behave like cmf topics do.
 
   * For now, the search mechanism queries the portal catalog based on the SearchableText attribute. It was asked (by sarah and others) to let the user perform a search based on other criteria (like metadata). I believe that this will naturally be possible if the product behaves like a topic. If not, the search widget will be modified to extend the search possibilities.
+
+

@@ -1,10 +1,10 @@
 ##########################################################################
 #                                                                        #
-#            copyright (c) 2004 Belgian Science Policy                   #
-#                               and contributors                         #
+#              copyright (c) 2004 Belgian Science Policy                 #
+#                                 and contributors                       #
 #                                                                        #
-#    project leader: David Convent, david.convent@naturalsciences.be     #
-#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
+#     maintainers: David Convent, david.convent@naturalsciences.be       #
+#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 
@@ -114,3 +114,47 @@ FORMAT_AUTHORS_LIST_ORDER = DisplayList((
                                         ))
 
 DEFAULT_REFS_DISPLAY = '%A (%y): "%T" - %Y'
+
+CUSTOM_DISPLAY_CONVENTIONS = (
+('A', 'Author'),
+('T', 'Title'),
+('m', 'Publication_month'),
+('y', 'Publication_year'),
+('J', 'Journal'),
+('I', 'Institution'),
+('O', 'Organization'),
+('B', 'Booktitle'),
+('p', 'Pages'),
+('v', 'Volume'),
+('n', 'Number'),
+('E', 'Editor(s)'),
+('P', 'Publisher'),
+('a', 'Address'),
+('i', 'Pmid'),
+('e', 'Edition'),
+('h', 'Howpublished'),
+('c', 'Chapter'),
+('S', 'School'),
+('r', 'Preprint sever'),
+('s', 'Series'),
+('%', '"%" sign'),
+)
+
+OLD_CUSTOM_DISPLAY_CONVENTIONS_ROWS = (
+('%A', '%p', '%h'),
+('%T', '%v', '%c'),
+('%m', '%n', '%s'),
+('%y', '%E', '%r'),
+('%J', '%p', '%s'),
+('%I', '%a', '%%'),
+('%O', '%i', ''),
+('%B', '%e', ''),)
+
+CUSTOM_DISPLAY_CONVENTIONS_ROWS = (
+('%A', '%O', '%p', '%s'),
+('%T', '%B', '%a', '%r'),
+('%m', '%p', '%i', '%s'),
+('%y', '%v', '%e', '%%'),
+('%J', '%n', '%h', ''),
+('%I', '%E', '%c', ''),
+)

@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+  <head><title></title></head>
+  <body>
+
+    <!-- Bibref Format Widget -->
+    <div metal:define-macro="view">
+      <div metal:use-macro="here/widgets/epoz/macros/view" />
+    </div>
+
+    <metal:define define-macro="edit">
+      <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+        <metal:fill metal:fill-slot="widget_body">
+            <div class="formHelp">
+            Place a field using the following conventions:
+            <table tal:define="display_conventions here/displayConventions">
+              <tr tal:repeat="row here/displayConventionsRows">
+                <td tal:repeat="sign row">
+                  <span tal:condition="python:sign">
+                  <span tal:replace="sign"/>:
+                  <span tal:replace="python:test(here.translate(display_conventions.getMsgId(sign)))"/>
+                  </span>
+                </td>
+              </tr>
+            </table>
+            </div>
+          <metal:widget use-macro="here/widgets/epoz/macros/edit_area">
+            The Widget
+          </metal:widget>
+        </metal:fill>
+      </metal:use>
+    </metal:define>
+
+    <div metal:define-macro="search">
+      <div metal:use-macro="here/widgets/string/macros/edit" />
+    </div>
+        
+</body>
+</html>

@@ -1,10 +1,10 @@
 ##########################################################################
 #                                                                        #
-#            copyright (c) 2004 Belgian Science Policy                   #
-#                               and contributors                         #
+#              copyright (c) 2004 Belgian Science Policy                 #
+#                                 and contributors                       #
 #                                                                        #
-#    project leader: David Convent, david.convent@naturalsciences.be     #
-#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
+#     maintainers: David Convent, david.convent@naturalsciences.be       #
+#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 

@@ -1,10 +1,10 @@
 ##########################################################################
 #                                                                        #
-#            copyright (c) 2004 Belgian Science Policy                   #
-#                               and contributors                         #
+#              copyright (c) 2004 Belgian Science Policy                 #
+#                                 and contributors                       #
 #                                                                        #
-#    project leader: David Convent, david.convent@naturalsciences.be     #
-#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
+#     maintainers: David Convent, david.convent@naturalsciences.be       #
+#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 
@@ -19,8 +19,11 @@ from Products.Archetypes.public import registerType
 from Products.Archetypes.public import BaseContent
 from Products.Archetypes.public import BaseSchema, Schema
 from Products.Archetypes.public import StringField, TextField
+from Products.Archetypes.public import DisplayList
 from Products.Archetypes.public import StringWidget, SelectionWidget, EpozWidget
 from Products.Archetypes.public import BooleanField, BooleanWidget
+from Products.Archetypes.Widget import TypesWidget
+from Products.Archetypes.Registry import registerWidget
 
 from BibrefStyle import IBibrefStyle
 
@@ -32,6 +35,16 @@ try:
     HASDOCUTILS = 1
 except ImportError:
     HASDOCUTILS = None
+    
+class BibrefLayoutWidget(EpozWidget):
+    """ custom widget for TTW reference layout input handling """
+    _properties = EpozWidget._properties.copy()
+    _properties.update({
+        'macro' : "widget_bibreflayout",
+        'helper_css': ('BibrefLayoutCSS.css',),
+        })
+
+registerWidget(BibrefLayoutWidget)
 
 schema = BaseSchema + Schema((
     TextField('refDisplay',
@@ -43,11 +56,11 @@ schema = BaseSchema + Schema((
               default_output_type = 'text/html',
               default = DEFAULT_REFS_DISPLAY,
               allowable_content_types = ( 'text/html',),
-              widget=EpozWidget(label='Format',
-                          label_msgid="label_refpresentation_formatandorder",
-                          description_msgid="help_refpresentation_formatandorder",
-                          description=' Give the desired format of the bibliographic reference. Place a field using the following way: &#013; Author: %A &#013; Title: %T &#013; Publication_month: %m &#013; Publication_year: %y &#013; Journal: %J &#013; Institution: %I &#013; Organisation: %O &#013; Booktitle: %B &#013; Pages: %p &#013; Volume: %v &#013; Number: %n &#013; Editor(s): %E &#013; EditorFlag: %F &#013; Publisher: %P &#013; Adress: %a &#013; Pmid: %i &#013; Edition: %e &#013; Howpublished: %h &#013; Chapter: %c &#013; School: %S &#013; Preprint sever: %r &#013; Series: %s &#013; "%" sign: %%',
-                          i18n_domain="plone")
+              widget=BibrefLayoutWidget(label='Format',
+                                label_msgid="label_refpresentation_formatandorder",
+                                description_msgid="help_refpresentation_formatandorder",
+                                description=' Give the desired format of the bibliographic reference.',
+                                i18n_domain="plone")
               ),
     StringField('nameOrder',
                 searchable=0, 
@@ -279,7 +292,7 @@ class BibrefCustomStyle(BaseContent):
             {'avatar': '%y', 'field': 'publication_year'},
             {'avatar': '%J', 'field': 'journal', 'format': self.journalFormat},
             {'avatar': '%I', 'field': 'institution'},
-            {'avatar': '%o', 'field': 'organization'},
+            {'avatar': '%O', 'field': 'organization'},
             {'avatar': '%B', 'field': 'booktitle', 'format': self.bookTitleFormat},
             {'avatar': '%p', 'field': 'pages', 'format': self.pagesFormat},
             {'avatar': '%v', 'field': 'volume', 'format': self.volumeFormat},
@@ -310,6 +323,7 @@ class BibrefCustomStyle(BaseContent):
                     url = refValues.absolute_url()
                     replacement = '<a href="%s">%s</a>' %(url, replacement)
                 formatstring = formatstring.replace(avatar,replacement)
+            formatstring = formatstring.replace(avatar,'')
 
         formatstring = formatstring.replace('EsCaPe', '%')
         return formatstring
@@ -381,5 +395,18 @@ class BibrefCustomStyle(BaseContent):
             formatted_list.append({'type':ref.get('ref_type')+' Reference', 'result':result})
         return formatted_list
 
+    def getCustomDisplayConvensions(self):
+        return CUSTOM_DISPLAY_CONVENSIONS
+
+    def displayConventions(self):
+        """ return a display list
+        """
+        display_conventions = [('%'+sign[0], sign[1])
+                               for sign in CUSTOM_DISPLAY_CONVENTIONS]
+        return DisplayList(display_conventions)
+
+    def displayConventionsRows(self):
+        """ XXX to be rewritten !!! """
+        return CUSTOM_DISPLAY_CONVENTIONS_ROWS
 
 registerType(BibrefCustomStyle)

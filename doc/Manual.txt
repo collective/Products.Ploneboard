@@ -1,0 +1,148 @@
+ATBiblioList Manual
+
+Product description
+
+  ATBiblioList is an add-on module to Raphael Ritz's CMFBibliographyAT.
+
+  The code is currently hosted at sourceforge, in the collective CVS
+  repository.
+  It will be migrated to the new collective subversion repository very
+  soon.
+  We don't plan to release the product before the first official release
+  of CMFBibliographyAT.
+
+  The main purpose of ATBiblioList is to let Plone portal users organize
+  existing Bibliography References into lists that can be displayed
+  (using standard or custom bibliographical styles) and exported.
+
+  see README.txt for dependencies, installation instructions, and other
+  basic informations.
+
+Create a Bibliography List
+
+  Bibliography Lists are implicitely addable by default.
+  It means that they can be created from anywhere in the portal unless
+  a portal administrator has changed that behavior.
+  Preferably, those lists will be created by users in their own 'Home
+  Directory' or 'Work Space'.
+  To Add a Bibliography List to the portal, do as for any other Plone
+  content Type: Use the 'Add content' menu or choose 'Bibliography List'
+  and click 'Add' from the content page of the folder you want to add the
+  list in.
+
+Add Bibliography References to the list
+
+  Once you created a Bibliography List and gave it a title (required),
+  you can start adding Bibliography References to it.
+  Note that in the 'edit' page of the list, there is a list called
+  'Listed References' that should be empty at this time.
+  Just below that empty list, there is a small search form from which you
+  can search for Bibliography References that are stored in the portal.
+  Simply fill the search field with search terms and click the 'search'
+  button.
+  If the search result is not empty, a new list will appear on the page
+  displaying the matching Bibliography References. You can select from
+  that list the ones that you want to add to your Bibliography List, and
+  click the 'add to list' button.
+  Note that this action actually saves the added references.
+  It means that the 'cancel' button does not work for that action.
+  This behavior is planned to be changed as soon as we have time for that.
+
+Remove Bibliography References from the list
+
+  Once you've added some Bibliography References to your Bibliography
+  List, you can see them in the 'Listed References' list on the 'edit'
+  page.
+  If you need to remove one or more references, just select them and click
+  the 'Remove' button.
+  Note that as for adding references, this action actually saves the list.
+  It means that the 'cancel' button does not work for that action.
+  This behavior is planned to be changed as soon as we have time for that.
+
+Display the Bibliography References
+
+  Once you've created and populated your Bibliography List, you may want
+  to have it rendered in a way that suits some publishing requirements.
+  You can choose the way the list has to be rendered from its edit page.
+  First, you can choose what Bibliographycal Style must be respected while
+  displaying the list. The styles that are registered with the
+  BibliographyList Tool are displayed First, then the ones that were
+  defined Through The Web (see further in this manual to learn how to
+  create new bibliography styles).
+  After choosing the Bibliographycal Style, you can set the list type
+  (bulleted, ordered, etc..).
+
+Export Bibliography Lists
+
+  CMFBibliographyAT lets you export/download an entire Bibliography
+  Folder or any individual Bibliography Reference contained in such
+  folder.
+  If you want to export only a portion of the Bibliography References
+  contained in one folder, or if you want to export a selection of
+  Bibliography References that are not contained in the same folder, you
+  can use ATBiblioList.
+  You just have to create a list, select the Bibliography References that
+  you want to export, click on the 'download' content tab and choose the
+  format in which you want them to be exported.
+
+Create new Bibliographycal Styles
+
+  If you are not happy with the Bibliographycal Styles that are shipped
+  with the product, you can create new ones. There are two ways of
+  creating new Bibliographycal Styles. The easyest is Through The Web,
+  creating Custom Bibliographycal Styles just as Plone content.
+  The most powerful way is to write them as file sytem based python
+  products that have to be registered with the BibliographyList Tool.
+
+Create Custom (Through The Web) Bibliographycal Styles
+
+  TTW Bibliographycal Styles are added to the portal the same way as for
+  any portal content. Just notice that as the product is designed 'out of
+  the box', you can add TTW Biblio Styles only in 'Bibref Custom Style
+  Folders'. So first create a 'Bibref Custom Style Folder' in your Personal
+  Folder, and navigate into it. Now you see that you can add to that
+  folder two different content types: 'Bibref Custom Styles' and
+  'Bibref Custom Style Sets'. First, lets add a 'Bibref Custom Style'.
+  Once the Custom Style added, we see on its edit page the fields that can
+  be edited. The first important field to edit is the 'Format' field.
+  It is the field that determines what values will be displayed, how they
+  will be diplayed (using which text format) and in which order.
+  If Epoz is installed that field can be edited with wysiwyg support,
+  else its content has to be valid (X)HTML.
+  The following fields determine how different values have to be rendered 
+  (do they have to be capitalized, etc).
+
+  After clicking the 'Save' button, you are redirected to the 'view' page
+  of your Biblio Style. On that page you can verify the result with an
+  example of each Bibliography Reference Type handled by
+  CMFBibliographyAT.
+
+  You are now able to select your new Bibliographycal Style from the
+  'edit' page of your Biblio List. If you do so, all your references will
+  be displayed using that style. Now if you need to have Articles
+  displayed using that style, and all other references displayed using
+  another style, you can create in your 'Bibref Custom Style Folder' a
+  'Bibref Custom Style Set'. That content type lets you define what style
+  should be used for what bibliography reference type.
+
+  Now you may ask yourself who will be able to use your Bibliographycal
+  Styles or Style Sets. This is handled by the Workflow Tool.
+  If someone has the 'View' perission on a Style or Styles Set,
+  he/she'll be able to select it for displaying his/her bibliographycal 
+  references list.
+
+Write File System based Bibliographycal Styles
+
+  The most powerful way to create a Bibliographycal Style is to write it
+  as a Python product and integrate it to the BiblioList Tool. This
+  requires that you know at least the Python basics.
+  You can inspire yourself from the well called example
+  'BibrefStyleExample' in the 'doc' directory.
+  Once you have written your own Bibliographycal Style, move it to the
+  Products folder of your Zope instance, restart Zope and browse to the
+  'portal_bibliolist' tool at the root of your Plone instance. There you
+  should be able to add your new Bibliographycal Style from the pulldown
+  menu. If your Style respects the requirements for a quasi standard way
+  of representing a bibliographycal reference, feel free to send it to us
+  and we'll add it to the ones that are already shipped with
+  ATBiblioList.

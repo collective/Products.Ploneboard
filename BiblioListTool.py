@@ -1,10 +1,10 @@
 ##########################################################################
 #                                                                        #
-#            copyright (c) 2004 Belgian Science Policy                   #
-#                               and contributors                         #
+#              copyright (c) 2004 Belgian Science Policy                 #
+#                                 and contributors                       #
 #                                                                        #
-#    project leader: David Convent, david.convent@naturalsciences.be     #
-#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
+#     maintainers: David Convent, david.convent@naturalsciences.be       #
+#                  Louis Wannijn, louis.wannijn@naturalsciences.be       #
 #                                                                        #
 ##########################################################################
 
@@ -79,11 +79,37 @@ class BiblioListTool(UniqueObject, Folder):
     def formatRefs(self, objs, style):
         """ renders a formatted bibliography references list
         """
-        formatted_list = []
+        unformatted_list = []
         for obj in objs:
             refValues = self.getEntryDict(obj)
-            formatted_list.append(self.formatDicoRef(refValues, style))
+            unformatted_list.append(refValues)
+        objs=self.sortList(unformatted_list)
+        formatted_list = []
+        for obj in objs:
+            formatted_list.append(self.formatDicoRef(obj, style))
         return tuple(formatted_list)
+
+    def sortList(self, objs):
+        """ sorts a list on lastname and publicationyear.
+        """
+        objs.sort(self.cmpYear)
+        objs.sort(self.cmpLName)
+        return objs
+
+    def cmpLName(self,obj_a,obj_b):
+        """ compares 2 objects on their publication_year
+        """
+        authora=obj_a.get('authors')
+        authorb=obj_b.get('authors')
+        if authora != [] and authorb != []:
+            return cmp(authora[0].get('lastname'),authorb[0].get('lastname'))
+        else: 
+            return -1
+
+    def cmpYear(self,obj_a,obj_b):
+        """ compares 2 objects on their publication_year
+        """
+        return (obj_a.get('publication_year') > obj_a.get('publication_year'))
 
     def formatDicoRef(self, refValues, style):
         """ renders a Bibliography reference dictionnary
@@ -136,7 +162,7 @@ class BiblioListTool(UniqueObject, Folder):
                           'note',
                           'publisher',
                           'editor',
-                          'organization',
+                          'organization', 
                           'institution',
                           'school',
                           'address',
@@ -155,10 +181,18 @@ class BiblioListTool(UniqueObject, Folder):
                           'isbn',)
 
         values = {}
-        tmp_title = entry.Title()
+        tmp_title = unicode(entry.Title(),'utf-8')
         if tmp_title[-1] == '.': tmp_title = tmp_title[:-1]
         values['title'] = tmp_title
-        values['authors'] = entry.getAuthorList()
+        uniauthors=[]
+        for author in entry.getAuthorList():
+            uniauthor={}
+            for field in author.keys():
+                uniauthor[field] = unicode(author.get(field),'utf-8')
+            uniauthors.append(uniauthor)
+        values['authors'] = uniauthors
+        uniauthors=[]
+        uniauthor={}
         for attr in ref_attributes:
             field = entry.getField(attr)
             if field:
@@ -169,11 +203,16 @@ class BiblioListTool(UniqueObject, Folder):
                     except TypeError:
                         # AT1.3 compliant
                         value = field.getDefault(entry)
-                values[attr] = value
-        values['source'] = entry.Source()
-        values['absolute_url'] = entry.absolute_url()
-        values['meta_type'] = entry.meta_type
+                try:
+                    for x in range(value.len()):
+                        value[x] = unicode(value[x],'utf-8')
+                    values[attr] = value
+                except:
+                    values[attr] = unicode(value,'utf-8')
+        values['source'] = unicode(entry.Source(),'utf-8')
+        values['absolute_url'] = unicode(entry.absolute_url(),'utf-8')
+        values['meta_type'] = unicode(entry.meta_type,'utf-8') 
+        
         return values
-
 
 InitializeClass(BiblioListTool)

@@ -2,10 +2,7 @@
 #                                                                        #
 #    copyright (c) 2004 Royal Belgian Institute for Natural Sciences     #
 #                       and contributors                                 #
-#                                                                        #
-#    project leader: David Convent, david.convent@naturalsciences.be     #
-#       assisted by: Louis Wannijn, louis.wannijn@naturalsciences.be     #
-#                                                                        #
+#                                                                        #                                                                        #
 ##########################################################################
 
 """ ChicagoBibrefStyle Class
