@@ -447,11 +447,14 @@ class Member(BaseContent):
 
     security.declarePublic('getPortalSkin')
     def getPortalSkin(self):
-        if self.portal_skin is not None:
+        try:
+            skins_tool = getToolByName(self, 'portal_skins')
+            if self.portal_skin in skins_tool.getSkinSelections():
+                return self.portal_skin
+            else:
+                return skins_tool.getDefaultSkin()
+        except AttributeError:
             return self.portal_skin
-        if hasattr(self, 'portal_skins'):
-            return self.portal_skins.getDefaultSkin()
-        return None
 
 
     # ########################################################################
@@ -521,19 +524,22 @@ class Member(BaseContent):
     def valid_roles(self):
         roles = list(self.getUser().valid_roles())
         # remove automatically added roles
-        if 'Authenticated' in roles:
+        while 'Authenticated' in roles:
             roles.remove('Authenticated')
-        if 'Anonymous' in roles:
+        while 'Anonymous' in roles:
             roles.remove('Anonymous')
         return tuple(roles)
 
 
+    # FIXME -- need to figure out a permission that will allow a manager
+    # of some sort access to all skins, even if portal_skins.allowAny is false
     def available_skins(self):
         skins_tool = getToolByName(self, 'portal_skins')
         if skins_tool.getAllowAny():
             return getToolByName(self, 'portal_skins').getSkinSelections()
         else:
-            return self.getPortalSkin()
+            log(str([self.getPortalSkin()]))
+            return [self.getPortalSkin()]
 
 
     def getDefaultSkin(self):
