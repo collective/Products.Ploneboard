@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.11 2004/04/12 01:38:54 tiran Exp $
+$Id: Validators.py,v 1.12 2004/04/20 21:35:20 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -51,60 +51,7 @@ RE_BODY = re.compile('<body[^>]*?>(.*)</body>', re.DOTALL )
 # subtract 11 line numbers from the warning/error
 SUBTRACT_LINES = 11
 
-
-class EmptyEmailValidator:
-    """
-    """
-
-    __implements__ = IValidator
-
-    def __init__(self, name):
-        self.name = name
-
-    def __call__(self, value, *args, **kwargs):
-        if str(value) == '':
-            return 1
-        else:
-            return validation.validate('isEmail', value)
-
-validation.register(EmptyEmailValidator('isEmptyEmail'))
-
-
-class EmptyURLValidator:
-    """
-    """
-
-    __implements__ = IValidator
-
-    def __init__(self, name):
-        self.name = name
-
-    def __call__(self, value, *args, **kwargs):
-        if str(value) == '':
-            return 1
-        else:
-            return validation.validate('isUrl', value)
-
-validation.register(EmptyURLValidator('isEmptyURL'))
-
-
-class EmptyInternationalPhoneNumberValidator:
-    """
-    """
-    
-    __implements__ = IValidator
-
-    def __init__(self, name):
-        self.name = name
-
-    def __call__(self, value, *args, **kwargs):
-        if str(value) == '':
-            return 1
-        else:
-            return validation.validate('isInternationalPhoneNumber', value)
-
-validation.register(EmptyInternationalPhoneNumberValidator('isEmptyInternationalPhoneNumber'))
-
+validatorList = []
 
 class TidyHtmlValidator:
     """use mxTidy to check HTML
@@ -115,8 +62,10 @@ class TidyHtmlValidator:
 
     __implements__ = IValidator
 
-    def __init__(self, name):
+    def __init__(self, name, title='', description=''):
         self.name = name
+        self.title = title or name
+        self.description = description
 
     def __call__(self, value, *args, **kw):
         if not (HAS_MX_TIDY and MX_TIDY_ENABLED):
@@ -138,7 +87,7 @@ class TidyHtmlValidator:
         else:
             return 1
 
-validation.register(TidyHtmlValidator('isTidyHtml'))
+validatorList.append(TidyHtmlValidator('isTidyHtml', title='', description=''))
 
 
 class TidyHtmlWithCleanupValidator:
@@ -150,8 +99,11 @@ class TidyHtmlWithCleanupValidator:
 
     __implements__ = IValidator
 
-    def __init__(self, name):
+    def __init__(self, name, title='', description=''):
         self.name = name
+        self.title = title or name
+        self.description = description
+
 
     def __call__(self, value, *args, **kw):
         if not (HAS_MX_TIDY and MX_TIDY_ENABLED):
@@ -182,7 +134,13 @@ class TidyHtmlWithCleanupValidator:
         else:
             return 1
 
-validation.register(TidyHtmlWithCleanupValidator('isTidyHtmlWithCleanup'))
+
+validatorList.append(TidyHtmlWithCleanupValidator('isTidyHtmlWithCleanup', title='', description=''))
+
+
+for validator in validatorList:
+    # register the validators
+    validation.register(validator)
 
 
 def doTidy(value, field, request, cleanup=0):
