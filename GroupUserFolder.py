@@ -249,8 +249,9 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager, AccessControl.User.BasicU
 
     def authenticate(self, name, password, request):
         # Pass the request along to the underlying user-related UserFolder object
-        return self.Users.acl_users.authenticate(name, password, request)
-
+        if "acl_users" in self.Users.objectIds():
+            return self.Users.acl_users.authenticate(name, password, request)
+    
 ##    ## I DON'T KNOW IF WE HAVE TO PASS VALIDATE
 ##    def validate(self, request, auth='', roles=_noroles):
 ##        return self.Users.validate(request, auth, roles)
