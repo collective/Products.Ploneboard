@@ -20,6 +20,27 @@
 
 <div metal:fill-slot="main">
 
+    <script language="javascript">
+        <!--
+        var newWin;
+
+        function centeredWindow(url, winname, w, h) {
+            windowLeft = (screen.width - w)/2;
+            windowTop = (screen.height - h)/2;
+            settings = '"toolbar=no,directories=no,menubar=no,scrollbars=no,resizable=no,status=no,width='+w+',height='+h+',left='+windowLeft+',top='+windowTop+'"';
+            closeWindow();
+            newWin = window.open(url, winname, settings);
+            newWin.focus();
+        }
+
+        function closeWindow() {
+            if (newWin && !newWin.closed) {
+                newWin.close();
+            }
+        }
+    -->
+    </script>
+
     <div class="contentHeader">
     <h1 tal:content="here/title_or_id">Title or id</h1>
     </div>
@@ -34,6 +55,10 @@
     </span>
 
     <small>
+
+    <div tal:condition="python:request.get('display') != 'original'"><a href="#" tal:attributes="onclick string:javascript:centeredWindow('${here/absolute_url}?display=original', 'Image', ${here/width}+50, ${here/height}+50);; return false;;">View full size</a><br/>&nbsp;<br/></div>
+
+
     <span i18n:translate="">Size:</span>
         <span tal:define="size python:here.getObjSize(here)"
               tal:content="size">                        

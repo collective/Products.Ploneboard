@@ -48,7 +48,7 @@
                     <option tal:repeat="display displays" 
 			    tal:attributes="value display/name;
                                             selected python:test(request.cookies.get('display') == display['name'], 'selected', '');" 
-                            tal:content="display/label">1</option>
+                            tal:content="display/label/title">1</option>
                 </select>
             </div>
 
