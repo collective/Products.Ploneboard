@@ -21,7 +21,6 @@ from Products.CMFCore.MemberDataTool import MemberDataTool as DefaultMemberDataT
 _marker = []
 
 class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
-#class MemberDataTool(UniqueObject, BTreeFolder2Base, PortalFolder, ActionProviderBase):
     __implements__ = (portal_memberdata, ActionProviderBase.__implements__)
 
     security=ClassSecurityInfo()
@@ -44,12 +43,7 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
 
     manage_options=( BTreeFolder2Base.manage_options +
                      ActionProviderBase.manage_options
-    #                     + ({ 'label' : 'Overview'
-    #                        , 'action' : 'manage_overview'
-    #                        },
-    #                       )
                    )
-
 
     ##IMPL DETAILS
     def __init__(self):
@@ -92,16 +86,15 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
         member_ids = [m.getUserName() for m in self.objectValues()]
         user_ids = self.acl_users.getUserNames()
         oc = 0
-        
-        for id in member_ids:
-            if id not in user_ids: oc += 1
+        [oc+=1 for id in member_ids if id not in user_ids]
                 
         return [{
             'member_count' : len(member_ids),
             'orphan_count' : oc
             }]
 
-    # This is a brain dead implementation as it does not use the catalog.  Fix!
+    #XXX FIXME
+    #This is a brain dead implementation as it does not use the catalog.  Fix!
     security.declarePrivate( 'searchMemberDataContents' )
     def searchMemberDataContents( self, search_param, search_term ):
         """ Search members """
@@ -234,18 +227,10 @@ class MemberDataTool(BTreeFolder2Base, PortalFolder, DefaultMemberDataTool):
     def _getUserFromUserFolder(self, name):
         return self.acl_users.getUser(name).__of__(self.acl_users)
        
-   
-    #    def __getattr__(self, id):
-    #        if self._members.has_key(id):
-    #            return self._members[id].__of__(self)
-    #        
-    #        return getattr(aq_parent(self), id)
-
     def _checkId(self, id, allow_dup=0):
         PortalFolder._checkId(self, id, allow_dup)
         BTreeFolder2Base._checkId(self, id, allow_dup)
 
-        
     ##SUBCLASS HOOKS
     security.declarePrivate('pruneOrphan')
     def pruneOrphan(self, id):
