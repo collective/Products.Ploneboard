@@ -18,7 +18,7 @@
 #
 """
 
-$Id: schemata.py,v 1.51 2004/09/13 16:21:19 tiran Exp $
+$Id: schemata.py,v 1.52 2004/09/17 13:59:28 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -120,6 +120,17 @@ ATEventSchema = ATContentTypeSchema.copy() + Schema((
     label_msgid = "label_event_location",
     i18n_domain = "plone")),
 
+    LinesField('attendees',
+               languageIndependent=True,
+               searchable=True,
+               write_permission=ChangeEvents,
+               widget=LinesWidget(label="Attendees",
+                                  label_msgid="label_event_attendees",
+                                  description=("People which should attend "
+                                               "to the event."),
+                                  description_msgid="help_event_attendees",
+                                  i18n_domain="plone")),
+
     LinesField('eventType',
                required=True,
                searchable=True,
@@ -128,7 +139,8 @@ ATEventSchema = ATContentTypeSchema.copy() + Schema((
                languageIndependent=True,
                widget = MultiSelectionWidget(
                         size = 6,
-                        description = "Select the type of event. Multiple event types possible.",
+                        description=("Select the type of event. "
+                                     "Multiple event types possible."),
                         description_msgid = "help_event_type",
                         label = "Event Type",
                         label_msgid = "label_event_type",
@@ -147,6 +159,7 @@ ATEventSchema = ATContentTypeSchema.copy() + Schema((
                         label = "Event URL",
                         label_msgid = "label_url",
                         i18n_domain = "plone")),
+
     DateTimeField('startDate',
                   required=True,
                   searchable=True,
@@ -176,17 +189,20 @@ ATEventSchema = ATContentTypeSchema.copy() + Schema((
                         label = "Event Ends",
                         label_msgid = "label_event_end",
                         i18n_domain = "plone")),
+
     StringField('contactName',
                 required=False,
                 searchable=True,
                 accessor='contact_name',
                 write_permission = ChangeEvents,
                 widget = StringWidget(
-                        description = "Enter a contact person or organization for the event.",
+                        description=("Enter a contact person or "
+                                     "organization for the event."),
                         description_msgid = "help_contact_name",
                         label = "Contact Name",
                         label_msgid = "label_contact_name",
                         i18n_domain = "plone")),
+
     StringField('contactEmail',
                 required=False,
                 searchable=True,

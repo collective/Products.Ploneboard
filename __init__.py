@@ -18,7 +18,7 @@
 #
 """
 
-$Id: __init__.py,v 1.7 2004/07/25 07:45:19 tiran Exp $
+$Id: __init__.py,v 1.8 2004/09/17 13:59:27 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -26,7 +26,7 @@ __docformat__ = 'restructuredtext'
 import sys
 
 from Globals import package_home
-from Products.CMFCore import utils
+from Products.CMFCore.utils import ContentInit
 from Products.CMFCore import CMFCorePermissions
 from Products.Archetypes.public import *
 from Products.CMFCore.DirectoryView import registerDirectory
@@ -95,7 +95,7 @@ def initialize(context):
             other_constructors.append(constructors[i])
 
     # other
-    utils.ContentInit(
+    ContentInit(
         PROJECTNAME + ' Content',
         content_types = tuple(other_content_types),
         permission = ADD_CONTENT_PERMISSION,
@@ -104,7 +104,7 @@ def initialize(context):
         ).initialize(context)
 
     # topics
-    utils.ContentInit(
+    ContentInit(
         PROJECTNAME + ' Topic',
         content_types = tuple(topic_content_types),
         permission = ADD_TOPIC_PERMISSION,

@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.23 2004/09/10 15:09:22 tiran Exp $
+$Id: ATEvent.py,v 1.24 2004/09/17 13:59:28 dreamcatcher Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -27,16 +27,18 @@ from Products.ATContentTypes.config import *
 
 from types import StringType
 from DateTime import DateTime
+from ComputedAttribute import ComputedAttribute
 
 if HAS_LINGUA_PLONE:
     from Products.LinguaPlone.public import registerType
 else:
     from Products.Archetypes.public import registerType
 
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.CMFCorePermissions import ModifyPortalContent, View
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
+from Products.ATContentTypes.utils import DT2dt
 from Products.ATContentTypes.types.ATContentType import ATCTContent, updateActions
 from Products.ATContentTypes.interfaces.IATEvent import IATEvent
 from Products.ATContentTypes.types.schemata import ATEventSchema
@@ -82,7 +84,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         if not alreadySet:
             self.setSubject(value, alreadySet=True, **kw)
 
-    security.declareProtected(CMFCorePermissions.ModifyPortalContent, 'setSubject')
+    security.declareProtected(ModifyPortalContent, 'setSubject')
     def setSubject(self, value, alreadySet=False, **kw):
         """CMF compatibility method
 
@@ -102,7 +104,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
         if not alreadySet:
             self.setEventType(v, alreadySet=True, **kw)
 
-    security.declareProtected(CMFCorePermissions.View, 'getEventTypes')
+    security.declareProtected(View, 'getEventTypes')
     def getEventTypes(self):
         """fetch a list of the available event types from the vocabulary
         """
@@ -151,7 +153,7 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
                     contactEmail=contact_email, contactPhone=contact_phone,
                     eventUrl=event_url)
 
-    security.declareProtected(CMFCorePermissions.View, 'post_validate')
+    security.declareProtected(View, 'post_validate')
     def post_validate(self, REQUEST=None, errors=None):
         """Validates start and end date
 
@@ -171,5 +173,52 @@ class ATEvent(ATCTContent, CalendarSupportMixin):
 
         if start > end:
             errors['endDate'] = "End date must be after start date"
+
+    def _start_date(self):
+        value = self['startDate']
+        if value is None:
+            value = self['creation_date']
+        return DT2dt(value)
+
+    security.declareProtected(View, 'start_date')
+    start_date = ComputedAttribute(_start_date)
+
+    def _end_date(self):
+        value = self['endDate']
+        if value is None:
+            return self.start_date
+        return DT2dt(value)
+
+    security.declareProtected(View, 'end_date')
+    end_date = ComputedAttribute(_end_date)
+
+    def _duration(self):
+        return self.end_date - self.start_date
+
+    security.declareProtected(View, 'duration')
+    duration = ComputedAttribute(_duration)
+
+    def __cmp__(self, other):
+        if not isinstance(other, self.__class__):
+            # XXX Should fix this.
+            return cmp(self, False)
+        return cmp((self.start_date, self.duration, self.title),
+                   (other.start_date, other.duration, other.title))
+
+    def __hash__(self):
+        return hash((self.start_date, self.duration, self.title))
+
+    security.declareProtected(ModifyPortalContent, 'update')
+    def update(self, event=None, **kwargs):
+        # Clashes with BaseObject.update, so
+        # we handle gracefully
+        info = {}
+        if event is not None:
+            for field in event.Schema().fields():
+                info[field.getName()] = event[field.getName()]
+        elif kwargs:
+            info = kwargs
+        ATCTContent.update(self, **info)
+
 
 registerType(ATEvent, PROJECTNAME)

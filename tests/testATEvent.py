@@ -2,7 +2,7 @@
 
 Use this file as a skeleton for your own tests
 
-$Id: testATEvent.py,v 1.11 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: testATEvent.py,v 1.12 2004/09/17 13:59:28 dreamcatcher Exp $
 """
 
 __author__ = 'Christian Heimes'
@@ -14,6 +14,7 @@ if __name__ == '__main__':
 
 from common import *
 from Products.ATContentTypes.Permissions import ChangeEvents
+from Products.ATContentTypes.utils import DT2dt
 
 LOCATION = 'my location'
 EV_TYPE  = 'Meeting'
@@ -23,6 +24,9 @@ E_DATE   = DateTime()+1
 C_NAME   = 'John Doe'
 C_PHONE  = '+1212356789'
 C_EMAIL  = 'john@example.org'
+EV_ATTENDEES = ('john@doe.com',
+                'john@doe.org',
+                'john@example.org')
 
 def editCMF(obj):
     dcEdit(obj)
@@ -45,6 +49,7 @@ def editATCT(obj):
     obj.setContactName(C_NAME)
     obj.setContactPhone(C_PHONE)
     obj.setContactEmail(C_EMAIL)
+    obj.setAttendees(EV_ATTENDEES)
 
 
 tests = []
@@ -85,6 +90,11 @@ class TestSiteATEvent(ATCTSiteTestCase):
                         % (old.contact_email, new.contact_email()))
         #self.failUnless(old.getXXX() == new.getXXX(), 'XXX mismatch: %s / %s' \
         #                % (old.getXXX(), new.getXXX()))
+        self.assertEquals(new.start_date, DT2dt(new.start()))
+        self.assertEquals(new.end_date, DT2dt(new.end()))
+        self.assertEquals(new.start_date, DT2dt(S_DATE))
+        self.assertEquals(new.end_date, DT2dt(E_DATE))
+        self.assertEquals(new.duration, new.end_date - new.start_date)
 
     def test_migration(self):
         old = self._cmf
@@ -116,22 +126,32 @@ class TestSiteATEvent(ATCTSiteTestCase):
         self.compareAfterMigration(migrated, mod=mod, created=created)
         self.compareDC(migrated, title=title, description=description)
 
-        self.failUnless(migrated.location == location, 'Location mismatch: %s / %s' \
-                        % (migrated.location, location))
-        self.failUnless(migrated.Subject() == ev_type, 'EventType mismatch: %s / %s' \
-                        % (migrated.Subject(), ev_type))
-        self.failUnless(migrated.event_url() == ev_url, 'EventUrl mismatch: %s / %s' \
-                        % (migrated.event_url(), ev_url))
-        self.failUnless(migrated.start() == start, 'Start mismatch: %s / %s' \
-                        % (migrated.start(), start))
-        self.failUnless(migrated.end() == end, 'End mismatch: %s / %s' \
-                        % (migrated.end(), end))
-        self.failUnless(migrated.contact_name() == c_name, 'contact_name mismatch: %s / %s' \
-                        % (migrated.contact_name(), c_name))
-        self.failUnless(migrated.contact_phone() == c_phone, 'contact_phone mismatch: %s / %s' \
-                        % (migrated.contact_phone(), c_phone))
-        self.failUnless(migrated.contact_email() == c_email, 'contact_email mismatch: %s / %s' \
-                        % (migrated.contact_email(), c_email))
+        self.failUnless(migrated.location == location,
+                        'Location mismatch: %s / %s' %
+                        (migrated.location, location))
+        self.failUnless(migrated.Subject() == ev_type,
+                        'EventType mismatch: %s / %s' %
+                        (migrated.Subject(), ev_type))
+        self.failUnless(migrated.event_url() == ev_url,
+                        'EventUrl mismatch: %s / %s' %
+                        (migrated.event_url(), ev_url))
+        self.failUnless(migrated.start() == start,
+                        'Start mismatch: %s / %s' %
+                        (migrated.start(), start))
+        self.failUnless(migrated.end() == end,
+                        'End mismatch: %s / %s' % (migrated.end(), end))
+        self.failUnless(migrated.contact_name() == c_name,
+                        'contact_name mismatch: %s / %s' %
+                        (migrated.contact_name(), c_name))
+        self.failUnless(migrated.contact_phone() == c_phone,
+                        'contact_phone mismatch: %s / %s' %
+                        (migrated.contact_phone(), c_phone))
+        self.failUnless(migrated.contact_email() == c_email,
+                        'contact_email mismatch: %s / %s' %
+                        (migrated.contact_email(), c_email))
+        self.failUnless(migrated.getAttendees() == (),
+                        'attendees mismatch: %s / %s' %
+                        (migrated.getAttendees(), ()))
 
     def beforeTearDown(self):
         del self._ATCT
@@ -480,6 +500,46 @@ class TestATEventFields(ATCTFieldTestCase):
         self.failUnless(field.validators == PhoneValidator,
                         'Value is %s' % str(field.validators))
         self.failUnless(isinstance(field.widget, StringWidget),
+                        'Value is %s' % id(field.widget))
+        vocab = field.Vocabulary(dummy)
+        self.failUnless(isinstance(vocab, DisplayList),
+                        'Value is %s' % type(vocab))
+        self.failUnless(tuple(vocab) == (), 'Value is %s' % str(tuple(vocab)))
+
+    def test_attendeesField(self):
+        dummy = self._dummy
+        field = dummy.getField('attendees')
+
+        self.failUnless(ILayerContainer.isImplementedBy(field))
+        self.failUnless(field.required == 0, 'Value is %s' % field.required)
+        self.failUnless(field.default == (), 'Value is %s' % str(field.default))
+        self.failUnless(field.searchable == 1, 'Value is %s' % field.searchable)
+        self.failUnless(field.vocabulary == (),
+                        'Value is %s' % str(field.vocabulary))
+        self.failUnless(field.enforceVocabulary == 0,
+                        'Value is %s' % field.enforceVocabulary)
+        self.failUnless(field.multiValued == 0,
+                        'Value is %s' % field.multiValued)
+        self.failUnless(field.isMetadata == 0, 'Value is %s' % field.isMetadata)
+        self.failUnless(field.accessor == 'getAttendees',
+                        'Value is %s' % field.accessor)
+        self.failUnless(field.mutator == 'setAttendees',
+                        'Value is %s' % field.mutator)
+        self.failUnless(field.read_permission == CMFCorePermissions.View,
+                        'Value is %s' % field.read_permission)
+        self.failUnless(field.write_permission ==
+                        ChangeEvents,
+                        'Value is %s' % field.write_permission)
+        self.failUnless(field.generateMode == 'veVc',
+                        'Value is %s' % field.generateMode)
+        self.failUnless(field.force == '', 'Value is %s' % field.force)
+        self.failUnless(field.type == 'lines', 'Value is %s' % field.type)
+        self.failUnless(isinstance(field.storage, AttributeStorage),
+                        'Value is %s' % type(field.storage))
+        self.failUnless(field.getLayerImpl('storage') == AttributeStorage(),
+                        'Value is %s' % field.getLayerImpl('storage'))
+        self.failUnless(ILayerContainer.isImplementedBy(field))
+        self.failUnless(isinstance(field.widget, LinesWidget),
                         'Value is %s' % id(field.widget))
         vocab = field.Vocabulary(dummy)
         self.failUnless(isinstance(vocab, DisplayList),
