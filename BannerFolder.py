@@ -41,6 +41,9 @@ class BannerFolder(BaseFolder):
         """List the contents of this BannerFolder"""
         return self.bannerfolder_contents(**kw)
 
+    index_html = folder_contents
+
+
 registerType(BannerFolder, PROJECTNAME)
 
 def modify_fti(fti):
