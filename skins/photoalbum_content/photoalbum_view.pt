@@ -50,11 +50,11 @@
       
       <div metal:use-macro="here/batch_macros/macros/navigation"></div>
 
-      <p style="margin-top: 2em;" tal:content="here/Description">
+      <div style="margin-top: 2em;" tal:content="here/Description" tal:condition="here/Description">
 	Description
-      </p>
+      </div>
 	
-      <table style="width: 100%;">
+      <table style="width: 100%;" tal:condition="python:albums or images">
 	<tr>
 	  <td>
 	    <tal:block tal:condition="batch"
@@ -88,6 +88,8 @@
           </td>
         </tr>
       </table>
+
+      <p tal:condition="python:not (albums or images)">This album is empty.</p>
     
     </div>
 
