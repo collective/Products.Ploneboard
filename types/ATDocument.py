@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATDocument.py,v 1.30 2004/09/10 15:09:22 tiran Exp $
+$Id: ATDocument.py,v 1.31 2004/09/13 15:59:22 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -36,6 +36,7 @@ from ZPublisher.HTTPRequest import HTTPRequest
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
+from ComputedAttribute import ComputedAttribute
 
 from Products.ATContentTypes.types.ATContentType import ATCTContent, \
     updateActions, translateMimetypeAlias
@@ -94,9 +95,6 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
         """Body text mutator
 
         * hook into mxTidy an replace the value with the tidied value
-        * set text_format for backward compatibility with std cmf
-          types using setContentType
-
         """
         field = self.getField('text')
 
@@ -106,28 +104,9 @@ class ATDocument(ATCTContent, HistoryAwareMixin):
             value = tidyOutput
 
         field.set(self, value, **kwargs) # set is ok
-        self.setContentType(kwargs.get('mimetype', None), skipField=True)
 
-    security.declarePrivate('setContentType')
-    def setContentType(self, mimetype, skipField=False):
-        """Set the mime type of the text field and the text_format
-        """
-        if not mimetype:
-            return
-
-        # old name to mimetype mapping like plain to text/plain
-        mimetype = translateMimetypeAlias(mimetype)
-
-        if not skipField:
-            field = self.getField('text')
-            # AT lacks a setContentType() method :(
-            bu = field.getRaw(self, raw=1)
-            raw = bu.getRaw()
-            filename, encoding = bu.filename, bu.original_encoding
-            field.set(self, raw, mimetype=mimetype, filename=filename,
-                      encoding=encoding) # set is ok
-
-        self.text_format = mimetype
+    # XXX test me
+    text_format = ComputedAttribute(ATCTContent.getContentType, 1)
 
     security.declarePrivate('guessMimetypeOfText')
     def guessMimetypeOfText(self):

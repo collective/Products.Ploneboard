@@ -65,9 +65,15 @@
 
  * Fixed [ 1027093 ] Edit permission topics. The edit action of ATTopic now
    requires ChangeTopic permission.
+   [tiran]
 
- * [ 1027094 ] folderlisting action for ATTopic. Removed folderlisting action
-   using a module level modify_fti function in ATTopic.py.
+ * Fixed [ 1027094 ] folderlisting action for ATTopic. Removed folderlisting
+   action using a module level modify_fti function in ATTopic.py.
+   [tiran]
+
+ * Fixed [ 1026379 ] ATDocument: skipField in setContentType throws error by
+   removing the custom setContentType method. It's not required any more.
+   [tiran]
    
 0.2.0-rc1 - 2004-07-28
 
