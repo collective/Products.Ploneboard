@@ -45,4 +45,25 @@ class MembershipTool( BaseTool ):
         memberdata_tool = getToolByName(self, 'portal_memberdata')
         return memberdata_tool.searchForMembers(REQUEST, **kw)
 
+    def createMemberarea(self, member_id):
+        """ created hook for 'preCreateMemberArea' and 'postCreateMemberArea'
+            if you provide methods of PythonScripts with these names, they will 
+            be called at the begin and end of createMemberData
+            
+            if preCreateMemberArea returns 1 the normal createMemberArea will be
+            called. otherwise it is skipped.
+        """
+        # if preCreateMemberArea returns false, 
+        # no further creation of the member area takes place
+        pre = getattr(self, 'preCreateMemberArea', None)
+        createarea = 1
+        if pre:
+            createarea = pre(member_id=member_id)
+        if createarea:
+            BaseTool.createMemberarea(self, member_id)
+        post = getattr(self, 'postCreateMemberArea', None)
+        if post:
+            post(member_id=member_id)
+
+
 InitializeClass(MembershipTool)
