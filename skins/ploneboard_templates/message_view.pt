@@ -61,7 +61,7 @@
 
                 <div class="boardMessageActions" >
                 
-                    <form tal:attributes="action string:${message/absolute_url}/portal_form/add_message_form">
+                    <form tal:attributes="action string:${message/absolute_url}/add_message_form">
                         <input class="standalone"
                                type="submit" 
                                value="Reply to this" />

@@ -90,11 +90,6 @@ class PloneboardMessage(BaseBTreeFolder):
         self.setText(kwargs.get('text', ''))
         self._attachments_ids = []
 
-    security.declareProtected(ViewBoard, 'getConversation')
-    def getConversation(self):
-        """Returns the containing conversation."""
-        return self.aq_inner.aq_parent
-    
     security.declareProtected(AddMessageReply, 'addReply')
     def addReply(self,
                  message_subject,

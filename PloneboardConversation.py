@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.3 2004/03/20 06:17:51 limi Exp $
+$Id: PloneboardConversation.py,v 1.4 2004/03/24 15:50:15 tesdal Exp $
 """
 
 from random import randint
@@ -97,11 +97,11 @@ class PloneboardConversation(BaseBTreeFolder):
         self._creator = kwargs.get('creator', '')
        
 
-    security.declareProtected(ViewBoard, 'getForum')
-    def getForum(self):
-        """Returns the containing forum."""
-        return self.aq_inner.aq_parent
-
+    security.declareProtected(ViewBoard, 'getConversation')
+    def getConversation(self):
+        """Returns self."""
+        return self
+    
     security.declareProtected(ViewBoard, 'getConversationTitle')
     def getConversationTitle(self):
         """Gets the title, useful to avoid manual acquisition from messages."""

@@ -12,10 +12,13 @@ if not creator:
     creator = context.portal_membership.getAuthenticatedMember().getUserName()
 
 if context.getTypeInfo().getId() == 'PloneboardMessage':
-    context.addReply(title, text, creator)
+    m = context.addReply(message_subject=title, message_body=text, creator=creator)
 elif context.getTypeInfo().getId() == 'PloneboardConversation':
-    context.addMessage(title, text, creator)
+    m = context.addMessage(message_subject=title, message_body=text, creator=creator)
 else:
     return state.set(status='failure', portal_status_message='You can only add messages to conversations or messages.')
+
+if m:
+    state.set(context=context.getConversation(), portal_status_message='Added message')
 
 return state

@@ -29,7 +29,7 @@
         No conversations in this forum yet.     
         </p>
 
-        <form tal:attributes="action string:${here/absolute_url}/portal_form/add_conversation_form">
+        <form tal:attributes="action string:${here/absolute_url}/add_conversation_form">
            <input class="standalone"
                   type="submit" 
                   value="Start a new Conversation" />

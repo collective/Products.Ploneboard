@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.3 2004/03/19 17:01:04 tesdal Exp $
+$Id: PloneboardForum.py,v 1.4 2004/03/24 15:50:15 tesdal Exp $
 """
 
 from random import randint
@@ -104,15 +104,20 @@ class PloneboardForum(BaseBTreeFolder):
         self._message_count = Length()
         self._moderated = 0
 
-    security.declareProtected(ViewBoard, 'getBoard')
-    def getBoard(self):
-        """Gets the containing board."""
-        return self.aq_inner.aq_parent
+    security.declareProtected(ViewBoard, 'getForum')
+    def getForum(self):
+        """Returns self."""
+        return self
 
     security.declareProtected(ViewBoard, 'getForumTitle')
     def getForumTitle(self):
         """Gets the title, useful to avoid manual acquisition from messages."""
         return self.Title()
+
+    security.declareProtected(ViewBoard, 'getForumDescription')
+    def getForumDescription(self):
+        """Gets the description, useful to avoid manual acquisition from messages."""
+        return self.Description()
 
     security.declareProtected(AddMessage, 'addConversation')
     def addConversation(self, subject, messagesubject=None, body=None, creator=None, script=1):

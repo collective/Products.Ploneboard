@@ -11,6 +11,8 @@
 if not creator:
     creator = context.portal_membership.getAuthenticatedMember().getUserName()
 
-context.addConversation(title, text, creator)
+m = context.addConversation(subject=title, body=text, creator=creator)
+if m:
+    state.set(context=m.getForum(), portal_status_message='Added message')
 
 return state

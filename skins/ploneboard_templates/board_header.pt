@@ -5,7 +5,8 @@
 <body>
 <div metal:define-macro="header" tal:omit-tag="">	
 
-    <h1 class="documentFirstHeading" 
+    <h1 class="documentFirstHeading"
+        tal:content="here/getBoardTitle" 
         id="boardHeading">
     Board Title
     </h1>
@@ -19,7 +20,8 @@
     Up one level
     </a>
 
-    <div class="documentDescription">
+    <div class="documentDescription"
+         tal:content="here/getBoardDescription">
     Board Description
     </div>
 
