@@ -18,7 +18,7 @@ are permitted provided that the following conditions are met:
    to endorse or promote products derived from this software without specific
    prior written permission.
 
-$Id: Migrator.py,v 1.2 2004/03/08 17:24:05 tiran Exp $
+$Id: Migrator.py,v 1.3 2004/03/08 17:28:49 tiran Exp $
 """
 
 import sys, traceback, StringIO
@@ -171,11 +171,8 @@ class BaseMigrator:
             type = self.old.getPropertyType(id)
             LOG("value: " + str(value) + "; type: " + str(type))
             if self.new.hasProperty(id):
-                LOG("return value of delProperty: " + str(self.new._delProperty(id)))
-                else:
-                    self.new._delProperty(id)
-            else:
-                LOG("property: " + str(self.new.getProperty(id)))
+                self.new._delProperty(id)
+            LOG("property: " + str(self.new.getProperty(id)))
             self.new.manage_addProperty(id, value, type)
 
     def migrate_owner(self):
@@ -278,7 +275,7 @@ class ItemMigrationMixin:
         """Renames the old object
         """
         LOG("renameOld | orig_id: " + str(self.orig_id) + "; old_id: " + str(self.old_id))
-            LOG(str(self.old.absolute_url()))
+        LOG(str(self.old.absolute_url()))
         self.parent.manage_renameObject(self.orig_id, self.old_id)
 
     def createNew(self):
