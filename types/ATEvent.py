@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATEvent.py,v 1.1 2004/03/08 10:48:41 tiran Exp $
+$Id: ATEvent.py,v 1.2 2004/03/16 17:34:50 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -61,6 +61,10 @@ class ATEvent(BaseContent):
         },
        )
 
+    # XXX event type is alias for Subject!
+
+    # XXX contact_* are string and not methods in the original API
+
     # fetch a list of the available event types
     # from the vocabulary
     security.declareProtected(CMFCorePermissions.View, 'getEventTypes')
@@ -68,5 +72,5 @@ class ATEvent(BaseContent):
         metadata = getToolByName(self, "portal_metadata")
         events = metadata.listAllowedSubjects(content_type = "Event")
         return events
-    
+
 registerType(ATEvent, PROJECTNAME)

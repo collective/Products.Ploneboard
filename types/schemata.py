@@ -19,7 +19,7 @@
 #
 """
 
-$Id: schemata.py,v 1.2 2004/03/13 18:18:23 tiran Exp $
+$Id: schemata.py,v 1.3 2004/03/16 17:34:51 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -93,6 +93,7 @@ ATEventSchema = ATContentTypeSchema + Schema((
 
     StringField('eventUrl',
                 required=0,
+                accessor='event_url',
                 validators = ('isEmptyUrl',),
                 widget = StringWidget(description = "Enter the optional web address of a page containing more info about the event. ",
                                       description_msgid = "help_url",
