@@ -51,7 +51,7 @@
                         </a>
                     </span>
                     
-                    <span tal:content="here/getBody">Jeg mener mye rart.</span>
+                    <span tal:content="structure here/getBody">Jeg mener mye rart.</span>
                     
                 </div>
                 

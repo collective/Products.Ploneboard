@@ -1,12 +1,10 @@
 """
-$Id: __init__.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
+$Id: __init__.py,v 1.3 2003/12/12 01:35:47 alienoid Exp $
 """
 
 from Globals import package_home
-from Products.CMFCore import utils
 from Products.Archetypes.public import process_types, listTypes
 from Products.Archetypes.ArchetypeTool import getType
-from Products.CMFCore import utils
 from Products.CMFCore.DirectoryView import registerDirectory
 from PloneboardTool import PloneboardTool
 import os, os.path
@@ -25,7 +23,7 @@ def initialize(context):
     import PloneboardForum
     import PloneboardConversation
     import PloneboardMessage
-
+    
     ploneboard_content_type, ploneboard_constructor, ploneboard_fti = process_types(
         (getType('Ploneboard', PROJECTNAME), ),
         PROJECTNAME)
@@ -38,7 +36,10 @@ def initialize(context):
     message_content_type, message_constructor, message_fti = process_types(
         (getType('PloneboardMessage', PROJECTNAME), ),
         PROJECTNAME)
-    
+
+    # If we put this import line to the top of module then
+    # utils will magically point to Ploneboard.utils
+    from Products.CMFCore import utils
     utils.ToolInit('Ploneboard Tool', 
             tools=(PloneboardTool, ), 
             product_name='Ploneboard',

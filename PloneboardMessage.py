@@ -1,7 +1,3 @@
-"""
-$Id: PloneboardMessage.py,v 1.1 2003/11/26 17:43:17 tesdal Exp $
-"""
-
 import random
 import Globals
 from AccessControl import ClassSecurityInfo
@@ -9,6 +5,7 @@ from Acquisition import aq_base
 from DateTime import DateTime
 from OFS import Image
 
+from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
@@ -59,6 +56,7 @@ schema = BaseBTreeFolderSchema + Schema((
               default_output_type = 'text/html',
               allowable_content_types=('text/html',
                                        'text/plain'),
+              accessor='getText',  
               widget = TextAreaWidget(description = "Enter message body.",
                                       description_msgid = "help_text",
                                       label = "Text",
@@ -345,11 +343,36 @@ class PloneboardMessage(BaseBTreeFolder):
     security.declareProtected(AddAttachment, 'listAttachments')
     def getAttachments(self):
         """ """
-        return map(lambda id, this=self: getattr(this, id), this._attachments_ids)
+        return map(lambda id, this=self: getattr(this, id), self._attachments_ids)
     
     def getNumberOfAttachments(self):
         return len(self._attachments_ids)
+    
 
+    ############################################
+    def getText(self, mimetype=None, **kwargs):
+        """  """
+        # Maybe we need to set cashing for transform?
+        
+        orig = self.text.getRaw()
+        
+        pb_tool = getToolByName(self, 'portal_ploneboard')
+        transform_tool = getToolByName(self, 'portal_transforms')
+        
+        # This one is very important, because transform object has no 
+        # acquisition context inside it, so we need to pass it our one
+        kwargs.update({ 'context' : self })
+        
+        data = transform_tool._wrap('text/plain')
+        
+        for transform in map(lambda x: x[1], pb_tool.getEnabledTransforms()):
+            data = transform.convert(orig, data, **kwargs)
+            orig = data.getData()
+            transform_tool._setMetaData(data, transform)
+        
+        orig = orig.replace('\n', '<br/>')
+        return orig
+        
 registerType(PloneboardMessage, PROJECTNAME)
 Globals.InitializeClass(PloneboardMessage)
 

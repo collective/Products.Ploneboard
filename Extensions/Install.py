@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.2 2003/11/26 17:43:17 tesdal Exp $
+$Id: Install.py,v 1.3 2003/12/12 01:35:47 alienoid Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the
@@ -44,6 +44,12 @@ configlets = \
 ,
 )
 
+def addPloneboardTool(self, out):
+    if not hasattr(self, 'portal_ploneboard'):
+        addTool = self.manage_addProduct['Ploneboard'].manage_addTool
+        addTool('Ploneboard Tool')
+        out.write('Added Ploneboard Tool\n')
+        
 def setupAdditionalTypes(self, out):
     from Products.Ploneboard.PloneboardForum import factory_type_information as pf_fti
     from Products.Ploneboard.PloneboardConversation import factory_type_information as pc_fti
@@ -117,23 +123,18 @@ def addMemberProperties(self, out):
     pass
 
 def addTransforms(self, out):
-    tr_tool = getToolByName(self, 'portal_transforms')
-    tr_tool.manage_addTransform(EMOTICON_TRANSFORM_ID, EMOTICON_TRANSFORM_MODULE)
-    #tr_tool.manage_addTransformsChain(PLONEBOARD_TRANSFORMSCHAIN_ID, 'Ploneboard chain')
-    #chain = tr_tool._getOb(PLONEBOARD_TRANSFORMSCHAIN_ID)
-    #chain.manage_addObject(EMOTICON_TRANSFORM_ID)
-    #chain.manage_addObject('text_to_html')
-    #tr_tool.manage_addObject(EMOTICON_TRANSFORM_ID)
-    tr_tool.manage_addPolicy('text/html', ('text_to_emoticons', 'html_to_text'))
+    pb_tool = getToolByName(self, 'portal_ploneboard')
+    pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE)
+    pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE)
     
 def removeTransforms(self, out):
-    tr_tool = getToolByName(self, 'portal_transforms')
-    #tr_tool._delObject(PLONEBOARD_TRANSFORMSCHAIN_ID)
-    tr_tool._delObject(EMOTICON_TRANSFORM_ID)
-    tr_tool.manage_delPolicies(('text/html', ))
-
+    pb_tool = getToolByName(self, 'portal_ploneboard')
+    pb_tool.unregisterAllTransforms()
+    
 def install(self):
     out = StringIO()
+    
+    addPloneboardTool(self, out)
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
     

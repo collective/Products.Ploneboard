@@ -1,22 +1,30 @@
 from Products.PortalTransforms.interfaces import itransform
 from ZODB.PersistentMapping import PersistentMapping
+from Products.Ploneboard.config import PLONEBOARD_TOOL
+from Products.CMFCore.utils import getToolByName
+from Products.Ploneboard.utils import TransformDataProvider
 import re
+import copy
 
-class EmoticonService:
+class EmoticonDataProvider(TransformDataProvider):
     def __init__(self):
-        self.emap = PersistentMapping()
-        self.emap.update({':)' : "<img src='smile.png'>", ':(' : "<img src='sad.png'>"})
+        """ We need to redefine config and config_metadata
+        in base class.
+        """
+        self.config = PersistentMapping()
+        self.config_metadata = PersistentMapping()
         
-    def getEmoticon(self, text):
-        """Returns url"""
-        return self.emap.get(text)
-    
-    def getEmoticonsMapping(self):
-        """Returns mapping of text to url """
-        return self.emap
-        
-    def setEmoticonMapping(self, text, url):
-        self.emap.update({text : url})
+        self.config.update({ 'inputs' : {':)' : "smile.png", ':(' : "sad.png"} })
+        self.config_metadata.update({
+            'inputs' : {
+                'key_label' : 'emoticon code', 
+                'value_label' : 'image name', 
+                'description' : 'Emoticons to images mapping'}
+            })
+            
+def registerDataProvider():
+    return EmoticonDataProvider()
+
 
 class TextToEmoticons:
     """transform which replaces text emoticons into urls to emoticons images"""
@@ -24,16 +32,16 @@ class TextToEmoticons:
     __implements__ = itransform
 
     __name__ = "text_to_emoticons"
-    output = "text/html"
+    output = "text/plain"
 
-    def __init__(self, name=None, inputs=('text/html',)):
+    def __init__(self, name=None, inputs=('text/plain',)):
         self.config = { 'inputs' : inputs, }
         self.config_metadata = {
             'inputs' : ('list', 'Inputs', 'Input(s) MIME type. Change with care.'),
             }
         if name:
             self.__name__ = name
-
+            
     def name(self):
         return self.__name__
 
@@ -45,10 +53,34 @@ class TextToEmoticons:
         raise AttributeError(attr)
 
     def convert(self, orig, data, **kwargs):
-        """ Replace in 'text' all occurences of any key in the given
+        """ Replace in 'orig' all occurences of any key in the given
           dictionary by its corresponding value.  Returns the new string.
         """
-        dictionary = EmoticonService().getEmoticonsMapping()
+        # Get acquisition context
+        context = kwargs.get('context')
+        
+        pb_tool = getToolByName(context, PLONEBOARD_TOOL)
+        url_tool = getToolByName(context, 'portal_url')
+        dict = pb_tool.getDataProvider('text_to_emoticons').getElements()
+        
+        # Here we need to find relative images path to the root of site
+        # This is done for image cashing.
+        dictionary = copy.deepcopy(dict)
+        
+        rev_dict = {}
+        for k, v in dict.items():
+            rev_dict[v] = k
+        obj_ids = tuple(dict.values())
+        # To speed up search we are narrowing search path
+        start_path = url_tool.getPortalPath() + '/portal_skins'
+        start_obj = context.restrictedTraverse(start_path + '/custom')
+        results = context.PrincipiaFind(start_obj, obj_ids=obj_ids, obj_metatypes=('Image', ), search_sub=1)
+        start_obj = context.restrictedTraverse(start_path + '/ploneboard_templates')
+        results.extend(context.PrincipiaFind(start_obj, obj_ids=obj_ids, obj_metatypes=('Image', ), search_sub=1))
+        for rec in results:
+            obj = rec[1]
+            dictionary[rev_dict[obj.getId()]] = '<img src="%s" />' % url_tool.getRelativeContentURL(obj)
+        
         #based on ASPN recipe - http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/81330
         # Create a regular expression  from the dictionary keys
         regex = re.compile("(%s)" % "|".join(map(re.escape, dictionary.keys())))

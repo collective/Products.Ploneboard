@@ -19,7 +19,9 @@
         <div class="description"> 
         Here you can configure site settings for Ploneboard.
         </div>
-        
+        <div>
+            <a href="prefs_manage_transforms">Manage transforms</a>
+        </div>
     </div>
                      
 </body>

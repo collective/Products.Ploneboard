@@ -14,6 +14,7 @@
 from Products.PortalTransforms.libtransforms.utils import MissingBinary
 modules = [
     'text_to_emoticons',
+    'url_to_hyperlink',
     ]
 
 g = globals()

@@ -54,7 +54,7 @@
                         </a>
                     </span>
                     
-                    <span tal:content="message/getBody">Jeg mener mye rart.</span>
+                    <span tal:content="structure message/getBody">Jeg mener mye rart.</span>
                     
                 </div>
                 
