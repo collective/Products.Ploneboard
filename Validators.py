@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Validators.py,v 1.7 2004/03/20 16:08:53 tiran Exp $
+$Id: Validators.py,v 1.8 2004/03/20 18:41:41 tiran Exp $
 """ 
 __author__  = 'Christian Heimes'
 __docformat__ = 'restructuredtext'
@@ -47,6 +47,11 @@ WARNING_LINE = 'line %d column %d - Warning: %s'
 # matches something like 'line 15 column 1 - Error: missing ...'
 RE_MATCH_ERROR = re.compile('^line (\d+) column (\d+) - Error: (.*)$')
 ERROR_LINE = 'line %d column %d - Error: %s'
+
+# the following regex is safe because *? matches the minimal text in the body tag
+# and .* matches the maximum text between two body tags including other body tags
+# if they exists
+RE_BODY = re.compile('<body[^>]*?>(.*)</body>', re.DOTALL )
 
 # subtract 11 line numbers from the warning/error
 SUBTRACT_LINES = 11
@@ -169,9 +174,8 @@ class TidyHtmlWithCleanupValidator:
         errors = nerrors
 
         # save the changed output in the request
-        if nwarnings:
-            tidyAttribute = '%s_tidier_data' % field.getName()
-            request[tidyAttribute] = outputdata
+        tidyAttribute = '%s_tidier_data' % field.getName()
+        request[tidyAttribute] = outputdata
 
         if nwarnings:        
             tidiedFields = list(request.get('tidiedFields', []))
@@ -213,17 +217,14 @@ def doTidy(value, field, request, cleanup=0):
         # the layout, too. Maybe we are doomed?
         return 1
 
-    result    = mx_tidy(wrapValueInHTML(value), **MX_TIDY_OPTIONS)
+    result = mx_tidy(wrapValueInHTML(value), **MX_TIDY_OPTIONS)
     nerrors, nwarnings, outputdata, errordata = result
-
-    #print nerrors, nwarnings
-    #print errordata
 
     # parse and change the error data
     errordata = parseErrorData(errordata, removeWarnings=cleanup)
     if cleanup:
         # unwrap tidied output data
-        outputdata = unwrappedValueFromHTML(outputdata)
+        outputdata = unwrapValueFromHTML(outputdata)
 
     return nerrors, nwarnings, outputdata, errordata
 
@@ -243,16 +244,26 @@ def wrapValueInHTML(value):
 </html>
 """ % value
 
-def unwrappedValueFromHTML(value):
+def unwrapValueFromHTML(value):
     """Remove the html stuff around the body
-    
-    Good: This method is easy
-    Bad:  This methods is using hard coded values
     """
-    lines = value.split('\n')
-    lines = lines[7:]   # remove <!DOCTYPE ... <body>
-    lines = lines[:-4] # remove </body></html>\n\n
-    return '\n'.join(lines)
+    # get the body text
+    result = RE_BODY.search(value)
+    if result:
+        body = result.group(1)
+    else:
+        raise ValueError('%s is not a html string' % value)
+
+    # remove 2 spaces from the beginning of each line
+    nlines = []
+    for line in body.split('\n'):
+        print line
+        if line[:2] == '  ':
+            nlines.append(line[2:])
+        else:
+            nlines.append(line)
+
+    return '\n'.join(nlines)
 
 def parseErrorData(data, removeWarnings=0):
     """Parse the error data to change some stuff
@@ -272,7 +283,6 @@ def parseErrorData(data, removeWarnings=0):
             warning = RE_MATCH_WARNING.search(line)
             if warning and not removeWarnings:
                 # a warning line and add warnings to output
-                #print warning.groups()
                 lnum, cnum, text = warning.groups()
                 lnum  = int(lnum) - SUBTRACT_LINES
                 cnum  = int(cnum)

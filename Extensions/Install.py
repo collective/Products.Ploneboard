@@ -18,7 +18,7 @@
 #
 """
 
-$Id: Install.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
+$Id: Install.py,v 1.6 2004/03/20 18:41:42 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -115,22 +115,26 @@ def setupWorkflows(self, typeInfo, out):
         portal_type = t['portal_type']
         if IBaseFolder.isImplementedByInstancesOf(klass) and not \
           IATTopic.isImplementedByInstancesOf(klass):
-            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_FOLDER or 'NONE', portal_type )
-            wftool.setChainForPortalTypes(portal_type, WORKFLOW_FOLDER)
+            setChainFor(portal_type, WORKFLOW_FOLDER, wftool, out)
         elif IATTopic.isImplementedByInstancesOf(klass):
-            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_TOPIC or 'NONE', portal_type )
-            wftool.setChainForPortalTypes(portal_type, WORKFLOW_TOPIC)
+            setChainFor(portal_type, WORKFLOW_TOPIC, wftool, out)
         elif IATTopicCriterion.isImplementedByInstancesOf(klass):
-            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_CRITERIA or 'NONE', portal_type )
-            wftool.setChainForPortalTypes(portal_type, WORKFLOW_CRITERIA)
+            setChainFor(portal_type, WORKFLOW_CRITERIA, wftool, out)
         elif IATContentType.isImplementedByInstancesOf(klass):
-            print >>out, 'Assigning workflow %s with portal type %s' % (WORKFLOW_DEFAULT or 'NONE', portal_type )
-            wftool.setChainForPortalTypes(portal_type, WORKFLOW_DEFAULT)
+            setChainFor(portal_type, WORKFLOW_DEFAULT, wftool, out)
         else:
             print >>out, 'NOT assigning %s' % portal_type
 
     # update workflow settings
     count = wftool.updateRoleMappings()
+
+def setChainFor(portal_type, chain, wftool, out):
+    """helper method for setupWorkflows
+    """
+    print >>out, 'Assigning portal type %s with workflow %s' % (portal_type, chain or 'NONE')
+    if chain != '(Default)':
+        # default is default :)
+        wftool.setChainForPortalTypes(portal_type, chain)
 
 def setupMimeTypes(self, typeInfo, out):
     reg = getToolByName(self, 'content_type_registry')
@@ -172,10 +176,13 @@ def setupMimeTypes(self, typeInfo, out):
                 moveDown.append(name)
 
     # move ATFile to the bottom because ATFile is a fallback
+    last = len(reg.listPredicates())-1
     for name in moveDown:
-        reg.reorderPredicate(name, len(reg.listPredicates())-1)
+        reg.reorderPredicate(name, last)
 
 def getMajorMinorOf(klass):
+    """helper method for setupMimeTypes
+    """
     retval = []
     for mt in klass.assocMimetypes:
         ma, mi = mt.split('/')
@@ -188,5 +195,7 @@ def getMajorMinorOf(klass):
     return retval
 
 def getFileExtOf(klass):
+    """helper method for setupMimeTypes
+    """
     name = '%s_ext' % klass.meta_type
     return (name, klass.assocFileExt)
