@@ -27,7 +27,7 @@
              </metal:block>
 
             </div>
-
+           
             <div class="content even" tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here.retrieveI18NContentLayerOb()) or here.portal_membership.checkPermission('Add portal content', here.retrieveI18NContentLayerOb())">
               <a href="#" tal:attributes="href string:${here/retrieveI18NContentLayerURL}/i18nlayer_languages_form" i18n:translate="label_manage_languages">Manage languages</a>
             </div>

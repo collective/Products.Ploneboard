@@ -37,7 +37,7 @@ if here_url[:len(layer_url)] == layer_url:
     try: rest=here_url[len(layer_url):]
     except: rest=None
     #print "r1", rest
-    if rest and rest not in ('/','/index_html','/view') and not currentServed:
+    if rest and rest not in ('/','/index_html','/view'):
         rest=rest.split('/')
         #print "rest", rest
         #print "langs", available_languages
@@ -49,7 +49,7 @@ if here_url[:len(layer_url)] == layer_url:
         else:
             #print "none was served"
             fallback=0
-            currentServed=None
+            #currentServed=None
         #print "currentServed", currentServed
     elif currentOnce:
         if not currentServed: currentServed=currentOnce
