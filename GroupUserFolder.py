@@ -373,12 +373,24 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
     # Private User Folder interface
     # -----------------------------
 
-    def _doAddUser(self, name, password, roles, domains, **kw):
+    def _doAddUser(self, name, password, roles, domains, groups = (), **kw):
         """Create a new user. This should be implemented by subclasses to
            do the actual adding of a user. The 'password' will be the
            original input password, unencrypted. The implementation of this
            method is responsible for performing any needed encryption."""
 
+        # Prepare groups
+        prefix = GRUFFolder.GRUFGroups._group_prefix
+        roles = list(roles)
+        gruf_groups = self.getGroupNames()
+        for group in groups:
+            if not group.startswith(prefix):
+                group = "%s%s" % (prefix, group, )
+            if not group in gruf_groups:
+                raise ValueError, "Invalid group: '%s'" % (group, )
+            roles.append(group)
+
+        # Really add users
         return self.Users.acl_users._doAddUser(
             name,
             password, 

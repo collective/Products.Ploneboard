@@ -132,6 +132,12 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.folder.acl_users._doAddUser('testuser_g1', 'secret1', ('Manager',), (), )
         self.folder.acl_users._doAddUser('testuser_g2', 'secret2', ('Manager',), (), )
 
+        # Create a few folders to play with
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('a')
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('b')
+        self.folder.b.manage_addLocalRoles('
+        self.folder.manage_addProduct['OFSP'].manage_addFolder('c')
+
         # Create a few documents to play with
         self.folder.addDTMLMethod('index_html', file='index_html: <dtml-var objectIds>')
         self.folder.addDTMLMethod('secret_html', file='secret_html: <dtml-var objectIds>')
@@ -165,7 +171,9 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
 
         # Add the group & the user
         self.folder.acl_users._doAddGroup('gtest', ['grouprole'])
-        self.folder.acl_users._doAddUser('utest', 'secret', ('userrole', 'group_gtest', ), (), )
+        self.folder.acl_users._doAddUser('utest', 'secret', ('userrole', ), (), ('gtest', ), )
+
+        Log(LOG_DEBUG, self.folder.acl_users.getGroups())
 
         # Check if the user has the right roles
         usr = self.folder.acl_users.getUser('utest')
@@ -173,6 +181,15 @@ class TestGroupUserFolder(ZopeTestCase.ZopeTestCase):
         self.failUnless('Authenticated' in roles)
         self.failUnless('userrole' in roles)
         self.failUnless('grouprole' in roles)
+
+
+    def test02securityMatrix(self,):
+        """
+        test02securityMatrix(self,) => Test the whole security matrix !
+
+        We just check that people has the right roles
+        """
+        pass
 
 
     #                                                   #

@@ -1,12 +1,21 @@
 TODO-LIST
 
-* [2003-06-12] Wrap the original User and acl_users objects
+[DONE]
 
-* Better documentation
+  * Wrap the original User and acl_users objects
+    (rejected wraping of acl_users objects, only did it for User object)
 
-* Management interface cleaning and improving
+[v1.0 => Planned 2003-06-26]
 
-* Improve install procedure with CMF/Plone
+  * When released, update http://plone.org/development/current/projects/HowToBuildFromCvs
 
-* Improve performance
+  * Better documentation
+
+[v1.1 => Planned 2003-07-31]
+
+  * Management interface cleaning and improving
+
+  * Improve install procedure with CMF/Plone
+
+  * Improve performance
 
