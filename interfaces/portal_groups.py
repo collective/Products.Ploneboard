@@ -49,14 +49,50 @@ class portal_groups(Interface):
 
 	Underlying user folder must support removing users via the usual Zope API."""
 
-    def createGrouparea(id):
+    def setGroupWorkspacesFolder(self, id=""):
+    	""" Set the location of the Group Workspaces folder by id.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders.
+
+     	If anyone really cares, we can probably make the id work as a path as well,
+     	but for the moment it's only an id for a folder in the portal root, just like the
+     	corresponding MembershipTool functionality. """
+
+    def getGroupWorkspacesFolderId(self):
+	""" Get the Group Workspaces folder object's id.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders. """
+
+    def getGroupWorkspacesFolder(self):
+	""" Get the Group Workspaces folder object.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders. """
+
+    def toggleGroupWorkspacesCreation(self):
+    	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
+        use of the group. """
+
+    def getGroupWorkspacesCreationFlag(self):
+    	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
+        upon the next use of the group (if one doesn't exist). """
+
+    def getGroupWorkspaceType(self):
+	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
+
+    def setGroupWorkspaceType(self, type):
+	"""Set the Type (as in TypesTool) to make the GroupWorkspace. Expects the name of a Type."""
+
+    def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
 
-    def getGroupareaFolder(id):
+    def getGroupareaFolder(self, id):
         """Returns the object of the group's work area."""
 
-    def getGroupareaURL(id):
+    def getGroupareaURL(self, id):
         """Returns the full URL to the group's work area."""
 
     # and various roles things...

@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.6 2003/07/20 02:47:10 bmh Exp $
+$Id: GroupsTool.py,v 1.7 2003/07/31 01:06:20 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -41,6 +41,10 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
     security = ClassSecurityInfo()
 
+    groupworkspaces_id = "GroupWorkspaces"
+    groupWorkspacesCreationFlag = 1
+    groupWorkspaceType = "Folder"
+
     manage_options=( ActionProviderBase.manage_options + 
                    ( { 'label' : 'Overview'
                      , 'action' : 'manage_overview'
@@ -56,11 +60,13 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
+        print "getGroupById: " + id
 	if id==None:
 		return None
         prefix = self.acl_users.getGroupPrefix()
         g = self.acl_users.getGroup(id, prefixed=id.startswith(prefix))
         if g is not None:
+	    print "getGroupById: wrapping"
             g = self.wrapGroup(g)
         return g
 
@@ -142,55 +148,118 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 	Underlying user folder must support removing users via the usual Zope API."""
 	self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
 
-##
-## Group workspace stuff not yet implemented!
-##
+    def setGroupWorkspacesFolder(self, id=""):
+    	""" Set the location of the Group Workspaces folder by id.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders.
+
+     	If anyone really cares, we can probably make the id work as a path as well,
+     	but for the moment it's only an id for a folder in the portal root, just like the
+     	corresponding MembershipTool functionality. """
+    	self.groupworkspaces_id = id.strip()
+
+    def getGroupWorkspacesFolderId(self):
+	""" Get the Group Workspaces folder object's id.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders. """
+        return self.groupworkspaces_id
+
+    def getGroupWorkspacesFolder(self):
+	""" Get the Group Workspaces folder object.
+
+    	The Group Workspaces Folder contains all the group workspaces, just like the
+    	Members folder contains all the member folders. """
+    	parent = self.aq_inner.aq_parent
+        folder = getattr(parent, self.getGroupWorkspacesFolderId(), None)
+        return folder
+
+    def toggleGroupWorkspacesCreation(self):
+    	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
+        use of the group. """
+        if not hasattr(self, 'groupWorkspacesCreationFlag'):
+            self.groupWorkspacesCreationFlag = 0
+
+        self.groupWorkspacesCreationFlag = not self.groupWorkspacesCreationFlag
+
+        m = self.groupWorkspacesCreationFlag and 'turned on' or 'turned off'
+
+        return MessageDialog(
+               title  ='Group Workspaces creation flag changed',
+               message='Group Workspaces creation flag has been %s' % m,
+               action ='manage_mapRoles')
+
+    def getGroupWorkspacesCreationFlag(self):
+    	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
+        upon the next use of the group (if one doesn't exist). """
+        return self.groupWorkspacesCreationFlag
 
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
-##         parent = self.aq_inner.aq_parent
-##         members =  getattr(parent, 'Members', None)
+        print "createGrouparea: making grouparea"
+	parent = self.aq_inner.aq_parent
+        workspaces = self.getGroupWorkspacesFolder()
+        pt = getToolByName( self, 'portal_types' )
 
-##         user = self.acl_users.getUserById( member_id, None )
-##         if user is None:
-##             raise ValueError, 'Member %s does not exist' % member_id
+        if id and self.getGroupWorkspacesCreationFlag():
+        	print "createGrouparea: okay to make"
+	        if workspaces is None:
+        		# add GroupWorkspaces folder
+                        print "createGrouparea: add GroupWorkspaces folder"
+			parent.invokeFactory("Folder", self.getGroupWorkspacesFolderId())
 
-##         if user is not None:
-##             user = user.__of__( self.acl_users )
+        	if workspaces is not None and not hasattr(workspaces, id):
+                	# add workspace to GroupWorkspaces folder
+                        print "createGrouparea: add workspace to GroupWorkspaces folder"
+                        workspace =self.getGroupWorkspacesFolder()
+                        workspace.invokeFactory(self.getGroupWorkspaceType(), id)
+	print "createGrouparea: done"
 
-##         if members is not None and user is not None:
-##             f_title = "%s's Home" % member_id
-##             members.manage_addPortalFolder( id=member_id, title=f_title )
-##             f=getattr(members, member_id)
+    def getGroupWorkspaceType(self):
+	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
+        return self.groupWorkspaceType
 
-##             f.manage_permission(View,
-##                                 ['Owner','Manager','Reviewer'], 0)
-##             f.manage_permission(AccessContentsInformation,
-##                                 ['Owner','Manager','Reviewer'], 0)
+    def setGroupWorkspaceType(self, type):
+	"""Set the Type (as in TypesTool) to make the GroupWorkspace."""
+	self.groupWorkspaceType = type
 
-##             # Grant ownership to Member
-##             try: f.changeOwnership(user)
-##             except AttributeError: pass  # Zope 2.1.x compatibility
-##             f.manage_setLocalRoles(member_id, ['Owner'])
+    def getGroupareaFolder(self, id=None, verifyPermission=0):
+        """Returns the object of the group's work area."""
+        if id is None:
+            group = self.getAuthenticatedMember()
+            if not hasattr(member, 'getGroupId'):
+                return None
+            id = group.getGroupId()
+        workspaces = self.getGroupWorkspacesFolder()
+        if workspaces:
+            try:
+                folder = workspaces[id]
+                if verifyPermission and not _checkPermission('View', folder):
+                    # Don't return the folder if the user can't get to it.
+                    return None
+                return folder
+            except KeyError: pass
+        return None
 
-
-
-    def getGroupareaFolder(self, id):
-            """Returns the object of the group's work area."""
-
-    def getGroupareaURL(self, id):
+    def getGroupareaURL(self, id=None, verifyPermission=0):
             """Returns the full URL to the group's work area."""
+	    ga = self.getGroupareaFolder(id, verifyPermission)
+	    if ga is not None:
+	        return ga.absolute_url()
+	    else:
+	        return None
+
 
     security.declarePrivate('wrapUser')
     def wrapGroup(self, g, wrap_anon=0):
-        '''
-        Sets up the correct acquisition wrappers for a user
+        ''' Sets up the correct acquisition wrappers for a user
         object and provides an opportunity for a portal_memberdata
         tool to retrieve and store member data independently of
         the user object.
         '''
-        
+        print "wrapGroup: start"
         b = getattr(g, 'aq_base', None)
         if b is None:
             # u isn't wrapped at all.  Wrap it in self.acl_users.
@@ -205,7 +274,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         parent = self.aq_inner.aq_parent
         base = getattr(parent, 'aq_base', None)
         if hasattr(base, 'portal_groupdata'):
-            ## # Apply any role mapping if we have it
+##             # Apply any role mapping if we have it
 ##             if hasattr(self, 'role_map'):
 ##                 for portal_role in self.role_map.keys():
 ##                     if (self.role_map.get(portal_role) in u.roles and
@@ -215,13 +284,14 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             # Get portal_groupdata to do the wrapping.
             gd = getToolByName(parent, 'portal_groupdata')
             try:
+            	print "wrapGroup: wrapping group"
                 portal_group = gd.wrapGroup(g)
 
-##                 # Check for the member area creation flag and
-##                 # take appropriate (non-) action
-##                 if getattr(self, 'groupareaCreationFlag', 0) != 0:
-##                     if self.getHomeUrl(portal_group.getId()) is None:
-##                         self.createGrouparea(portal_group.getId())
+                # Check for the member area creation flag and
+                # take appropriate (non-) action
+                if self.getGroupWorkspacesCreationFlag():
+			print "wrapGroup: creating grouparea"
+                	self.createGrouparea(portal_group.getGroupName())
 
                 return portal_group
 
