@@ -417,7 +417,11 @@ class GRUFUser(AccessControl.User.BasicUser, Implicit):
         # if they are not found in this user object.
         return getattr(self.__dict__['__underlying__'], name, self.inheritedAttribute(GRUFUser, name))
 
-
+    def __getitem__(self, name):
+        # This will call the underlying object's methods
+        # if they are not found in this user object.
+        return self.__underlying__[name]
+ 
     #                                                           #
     #                   Password changing                       #
     #                                                           #

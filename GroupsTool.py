@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.10 2003/08/01 21:09:49 jccooper Exp $
+$Id: GroupsTool.py,v 1.11 2003/09/23 19:45:42 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -18,11 +18,17 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFCore.CMFCorePermissions import View
 from Products.CMFCore.CMFCorePermissions import AccessContentsInformation
 from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.CMFCorePermissions import SetOwnPassword
+from Products.CMFCore.CMFCorePermissions import ViewManagementScreens
+from GroupsToolPermissions import ManageGroups
+from GroupsToolPermissions import ViewGroups
+from GroupsToolPermissions import SetGroupOwnership
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
-
 from interfaces.portal_groups import portal_groups as IGroupsTool
-     
+
+#import zLOG
+
+#def log(message,summary='',severity=0):
+#    zLOG.LOG('GroupUserFolder: ',severity,summary,message)
 
 class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     """ This tool accesses group data through a GRUF acl_users object.
@@ -58,23 +64,28 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     #
     #   ZMI methods
     #
-    security.declareProtected(ManagePortal, 'manage_overview')
-    manage_overview = DTMLFile('dtml/explainGroupsTool', globals())
+    security.declareProtected(ViewManagementScreens, 'manage_overview')
+    manage_overview = DTMLFile('dtml/explainGroupsTool', globals())     # unlike MembershipTool
+    security.declareProtected(ViewManagementScreens, 'manage_config')
     manage_config = DTMLFile('dtml/configureGroupsTool', globals())
 
+    security.declareProtected(ManagePortal, 'manage_setGroupWorkspacesFolder')
     def manage_setGroupWorkspacesFolder(self, id='GroupWorkspaces', REQUEST=None):
     	"""ZMI method for workspace container name set."""
 	self.setGroupWorkspacesFolder(id)
         return self.manage_config(manage_tabs_message="Workspaces folder name set to %s" % id)
 
+    security.declareProtected(ManagePortal, 'manage_setGroupWorkspaceType')
     def manage_setGroupWorkspaceType(self, type='Folder', REQUEST=None):
     	"""ZMI method for workspace type set."""
 	self.setGroupWorkspaceType(type)
         return self.manage_config(manage_tabs_message="Group Workspaces type set to %s" % type)
 
+    security.declareProtected(ViewGroups, 'getGroupById')
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
+	#log("getting group with id %s" % id)
 	if id==None:
 		return None
         prefix = self.acl_users.getGroupPrefix()
@@ -83,14 +94,39 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             g = self.wrapGroup(g)
         return g
 
+    security.declareProtected(ViewGroups, 'getGroupsByUserId')
+    def getGroupsByUserId(self, userid):
+        """Returns a list of the groups the user corresponding to 'userid' belongs to."""
+        #log("getGroupsByUserId(%s)" % userid)
+        user = self.acl_users.getUser(userid)
+        #log("user '%s' is in groups %s" % (userid, user.getGroups()))
+        if user:
+            groups = user.getGroups() or []
+        else:
+            groups = []
+        return [self.getGroupById(elt) for elt in groups]
+
+    security.declareProtected(ViewGroups, 'listGroups')
     def listGroups(self):
         """Returns a list of the available portal_groupdata-ish objects."""
 	return [self.wrapGroup(elt) for elt in self.acl_users.getGroups()]
 
+    security.declareProtected(ViewGroups, 'listGroupIds')
     def listGroupIds(self):
         """Returns a list of the available groups' ids as entered (without group prefixes)."""
         return self.acl_users.getGroupNames(prefixed=0)
 
+    security.declarePrivate('getPureUserNames')
+    def getPureUserNames(self):
+        """Get the usernames (ids) of only users. """
+        return self.acl_users.getPureUserNames()
+
+    security.declarePrivate('getPureUsers')
+    def getPureUsers(self):
+        """Get the actual (unwrapped) user objects of only users. """
+        return self.acl_users.getPureUsers()
+
+    security.declareProtected(View, 'searchForGroups')
     def searchForGroups(self, REQUEST, **kw):
 	"""Return a list of groups meeting certain conditions. """
 	# arguments need to be better refined?
@@ -141,28 +177,40 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         return res
 
+    security.declareProtected(ManageGroups, 'addGroup')
     def addGroup(self, id, password, roles, domains):
-        """Create a group with the supplied id, roles, and domains.
+        """Create a group, and a group workspace if the toggle is on, with the supplied id, roles, and domains.
 
-	Underlying user folder must support adding users via the usual Zope API.
-	Passwords for groups seem to be currently irrelevant in GRUF."""
-	self.acl_users.Groups.acl_users.userFolderAddUser(id, password, roles, domains)
+        Underlying user folder must support adding users via the usual Zope API.
+        Passwords for groups seem to be currently irrelevant in GRUF."""
+        self.acl_users.Groups.acl_users.userFolderAddUser(id, password, roles, domains)
+        self.createGrouparea(id)
 
+    security.declareProtected(ManageGroups, 'editGroup')
     def editGroup(self, id, password, roles, permissions):
         """Edit the given group with the supplied password, roles, and domains.
 
-	Underlying user folder must support editing users via the usual Zope API.
-	Passwords for groups seem to be currently irrelevant in GRUF."""
-	self.acl_users.Groups.acl_users.userFolderEditUser(id, password, roles, permissions)
+        Underlying user folder must support editing users via the usual Zope API.
+        Passwords for groups seem to be currently irrelevant in GRUF."""
+        self.acl_users.Groups.acl_users.userFolderEditUser(id, password, roles, permissions)
 
-    def removeGroups(self, ids):
+    security.declareProtected(ManageGroups, 'removeGroups')
+    def removeGroups(self, ids, keep_workspaces=0):
         """Remove the group in the provided list (if possible).
 
-	Underlying user folder must support removing users via the usual Zope API."""
-	self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
-
+        Will by default remove this group's GroupWorkspace if it exists. You may
+        turn this off by specifying keep_workspaces=true.
+        Underlying user folder must support removing users via the usual Zope API."""
+        self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
+        gwf = self.getGroupWorkspacesFolder()
+        try:
+            gwf.manage_delObjects(ids)
+        except 'BadRequest':
+            pass
+        
+    security.declareProtected(SetGroupOwnership, 'setGroupOwnership')
     def setGroupOwnership(self, group, object):
-    	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object).
+        """Make the object 'object' owned by group 'group' (a portal_groupdata-ish object).
 
         For GRUF this is easy. Others may have to re-implement."""
         user = group.getGroup()
@@ -173,7 +221,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         	pass
                 # should we have an error here?
 
-
+    security.declareProtected(ManagePortal, 'setGroupWorkspacesFolder')
     def setGroupWorkspacesFolder(self, id=""):
     	""" Set the location of the Group Workspaces folder by id.
 
@@ -185,6 +233,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
      	corresponding MembershipTool functionality. """
     	self.groupworkspaces_id = id.strip()
 
+    security.declareProtected(ManagePortal, 'getGroupWorkspacesFolderId')
     def getGroupWorkspacesFolderId(self):
 	""" Get the Group Workspaces folder object's id.
 
@@ -192,6 +241,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
     	Members folder contains all the member folders. """
         return self.groupworkspaces_id
 
+    security.declarePublic('getGroupWorkspacesFolder')
     def getGroupWorkspacesFolder(self):
 	""" Get the Group Workspaces folder object.
 
@@ -201,9 +251,9 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         folder = getattr(parent, self.getGroupWorkspacesFolderId(), None)
         return folder
 
+    security.declareProtected(ManagePortal, 'toggleGroupWorkspacesCreation')
     def toggleGroupWorkspacesCreation(self, REQUEST=None):
-    	""" Toggles the flag for creation of a GroupWorkspaces folder upon first
-        use of the group. """
+        """ Toggles the flag for creation of a GroupWorkspaces folder upon creation of the group. """
         if not hasattr(self, 'groupWorkspacesCreationFlag'):
             self.groupWorkspacesCreationFlag = 0
 
@@ -213,14 +263,17 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 
         return self.manage_config(manage_tabs_message="Workspaces creation %s" % m)
 
+    security.declareProtected(ManagePortal, 'getGroupWorkspacesCreationFlag')
     def getGroupWorkspacesCreationFlag(self):
     	"""Return the (boolean) flag indicating whether the Groups Tool will create a group workspace
-        upon the next use of the group (if one doesn't exist). """
+        upon the creation of the group (if one doesn't exist already). """
         return self.groupWorkspacesCreationFlag
 
+    security.declareProtected(ManageGroups, 'createGrouparea')
     def createGrouparea(self, id):
         """Create a space in the portal for the given group, much like member home
         folders."""
+	#log("creating workspace for group %s" % id)
 	parent = self.aq_inner.aq_parent
         workspaces = self.getGroupWorkspacesFolder()
         pt = getToolByName( self, 'portal_types' )
@@ -228,19 +281,22 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         if id and self.getGroupWorkspacesCreationFlag():
 	        if workspaces is None:
         		# add GroupWorkspaces folder
+			#log("need to create GroupWorkspaces folder")
+
 			parent.invokeFactory("Folder", self.getGroupWorkspacesFolderId())
-                        workspaces =self.getGroupWorkspacesFolder()
+                        workspaces = self.getGroupWorkspacesFolder()
 			workspaces.setTitle("Group Workspaces")
                         workspaces.setDescription("Container for group workspaces")
                         # how about ownership?
 
                         # this stuff like MembershipTool...
                         portal_catalog = getToolByName( self, 'portal_catalog' )
-                        portal_catalog.unindexObject(members)     # unindex Members folder
+                        portal_catalog.unindexObject(workspaces)     # unindex GroupWorkspaces folder
 			workspaces._setProperty('right_slots', (), 'lines')
 
         	if workspaces is not None and not hasattr(workspaces, id):
                 	# add workspace to GroupWorkspaces folder
+			#log("creating workspace for group %s" % id)
                         workspaces.invokeFactory(self.getGroupWorkspaceType(), id)
                         space = self.getGroupareaFolder(id)
                         space.setTitle("%s workspace" % id)
@@ -248,14 +304,17 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                         space.manage_delLocalRoles(space.users_with_local_role('Owner'))
 			self.setGroupOwnership(self.getGroupById(id), space)
 
+    security.declareProtected(ManagePortal, 'getGroupWorkspaceType')
     def getGroupWorkspaceType(self):
 	"""Return the Type (as in TypesTool) to make the GroupWorkspace."""
         return self.groupWorkspaceType
 
+    security.declareProtected(ManagePortal, 'setGroupWorkspaceType')
     def setGroupWorkspaceType(self, type):
 	"""Set the Type (as in TypesTool) to make the GroupWorkspace."""
 	self.groupWorkspaceType = type
 
+    security.declarePublic('getGroupareaFolder')
     def getGroupareaFolder(self, id=None, verifyPermission=0):
         """Returns the object of the group's work area."""
         if id is None:
@@ -274,6 +333,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             except KeyError: pass
         return None
 
+    security.declarePublic('getGroupareaURL')
     def getGroupareaURL(self, id=None, verifyPermission=0):
             """Returns the full URL to the group's work area."""
 	    ga = self.getGroupareaFolder(id, verifyPermission)
@@ -282,8 +342,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
 	    else:
 	        return None
 
-
-    security.declarePrivate('wrapUser')
+    security.declarePrivate('wrapGroup')
     def wrapGroup(self, g, wrap_anon=0):
         ''' Sets up the correct acquisition wrappers for a user
         object and provides an opportunity for a portal_memberdata
@@ -314,12 +373,15 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
             # Get portal_groupdata to do the wrapping.
             gd = getToolByName(parent, 'portal_groupdata')
             try:
+            	#log("wrapping group %s" % g)
                 portal_group = gd.wrapGroup(g)
 
                 # Check for the member area creation flag and
                 # take appropriate (non-) action
-                if self.getGroupWorkspacesCreationFlag():
-                	self.createGrouparea(portal_group.getGroupName())
+
+                # DISABLED: do it upon group creation
+                #if self.getGroupWorkspacesCreationFlag():
+                #	self.createGrouparea(portal_group.getGroupName())
 
                 return portal_group
 
@@ -328,7 +390,7 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
                 import sys
                 type,value,tb = sys.exc_info()
                 try:
-                    LOG('GroupsTool', ERROR, 'Error during wrapUser:', "\nType:%s\nValue:%s\n" % (type,value))
+                    LOG('GroupsTool', ERROR, 'Error during wrapGroup:', "\nType:%s\nValue:%s\n" % (type,value))
                 finally:
                     tb = None       # Avoid leaking frame
                 pass

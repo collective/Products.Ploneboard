@@ -236,8 +236,10 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
             return []
 
         # Aggregate user and group names
-        return self._getOb('Users').acl_users.getUserNames() + \
-               self.Groups.listGroups(prefixed = 1)
+        names = []
+        names.extend(self._getOb('Users').acl_users.getUserNames())
+        names.extend(self.Groups.listGroups(prefixed = 1))
+        return names
 
     security.declareProtected(Permissions.manage_users, "getUsers")
     def getUsers(self):
@@ -637,7 +639,7 @@ class GroupUserFolder(OFS.ObjectManager.ObjectManager,
         """
         getGRUFVersion(self,) => Return human-readable GRUF version as a string.
         """
-        rev_date = "$Date: 2003/07/31 08:55:27 $"[7:-2]
+        rev_date = "$Date: 2003/09/23 19:45:42 $"[7:-2]
         return "%s / Revised %s" % (version__, rev_date)
     
 

@@ -3,8 +3,8 @@
 
 <h2>Control Creation of Group Workspaces</h2>
 <p>
-  If "workspace creation" is on, workspaces will be automatically created for groups upon
-  their next use.
+  If "workspace creation" is on, workspaces will be automatically created (if they do not exist)
+  for groups upon creation.
 </p>
 <form action="toggleGroupWorkspacesCreation" method="post">
   <p>Workspaces creation is <strong><dtml-var "getGroupWorkspacesCreationFlag() and 'on' or 'off'"></strong></p>

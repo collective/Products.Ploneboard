@@ -16,17 +16,26 @@ except ImportError:
 class portal_groups(Interface):
     """Defines an interface for working with groups in an abstract manner.
     Parallels the portal_membership interface of CMFCore"""
-    id = Attribute('id','Must be set to "portal_groups')
+    id = Attribute('id','Must be set to "portal_groups"')
 
     def getGroupById(self, id):
         """Returns the portal_groupdata-ish object for a group corresponding
         to this id."""
+
+    def getGroupsByUserId(self, userid):
+        """Returns a list of the groups the user corresponding to 'userid' belongs to."""
 
     def listGroups(self):
         """Returns a list of the available portal_groupdata-ish objects."""
 
     def listGroupIds(self):
         """Returns a list of the available groups' ids."""
+
+    def getPureUserNames(self):
+        """Get the usernames (ids) of only users. """
+
+    def getPureUsers(self):
+        """Get the actual (unwrapped) user objects of only users. """
 
     def searchForGroups(self, REQUEST, **kw):    # maybe searchGroups()?
         """Return a list of groups meeting certain conditions. """
@@ -35,19 +44,21 @@ class portal_groups(Interface):
     def addGroup(self, id, password, roles, domains):
         """Create a group with the supplied id, roles, and domains.
 
-	Underlying user folder must support adding users via the usual Zope API.
-	Passwords for groups seem to be currently irrelevant in GRUF."""
+        Underlying user folder must support adding users via the usual Zope API.
+        Passwords for groups seem to be currently irrelevant in GRUF."""
 
     def editGroup(self, id, password, roles, permissions):
         """Edit the given group with the supplied password, roles, and domains.
 
-	Underlying user folder must support editing users via the usual Zope API.
-	Passwords for groups seem to be currently irrelevant in GRUF."""
+        Underlying user folder must support editing users via the usual Zope API.
+        Passwords for groups seem to be currently irrelevant in GRUF."""
 
-    def removeGroups(self, ids):
+    def removeGroups(self, ids, keep_workspaces=0):
         """Remove the group in the provided list (if possible).
 
-	Underlying user folder must support removing users via the usual Zope API."""
+        Will by default remove this group's GroupWorkspace if it exists. You may
+        turn this off by specifying keep_workspaces=true.
+        Underlying user folder must support removing users via the usual Zope API."""
 
     def setGroupOwnership(self, group, object):
     	"""Make the object 'object' owned by group 'group' (a portal_groupdata-ish object)"""

@@ -15,6 +15,7 @@
 
 import GroupUserFolder
 import GRUFFolder
+import GroupsToolPermissions
 from global_symbols import *
 try:
     from Products.CMFCore.DirectoryView import registerDirectory

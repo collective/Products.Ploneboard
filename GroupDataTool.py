@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic group data tool.
 
-$Id: GroupDataTool.py,v 1.5 2003/08/01 20:07:44 jccooper Exp $
+$Id: GroupDataTool.py,v 1.6 2003/09/23 19:45:42 jccooper Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject, getToolByName
@@ -49,7 +49,7 @@ class GroupDataTool (UniqueObject, SimpleItem, PropertyManager, ActionProviderBa
     _actions = ()
 
     _v_temps = None
-    _properties = ()
+    _properties=({'id':'title', 'type': 'string', 'mode': 'wd'},)
 
     security = ClassSecurityInfo()
 
