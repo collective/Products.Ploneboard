@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATContentType.py,v 1.31 2004/07/13 13:12:56 dreamcatcher Exp $
+$Id: ATContentType.py,v 1.32 2004/07/23 18:53:03 tiran Exp $
 """
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -218,7 +218,7 @@ InitializeClass(ATCTContent)
 class ATCTFileContent(ATCTContent):
     """Base class for content types containing a file like ATFile or ATImage
 
-    The file field *must* be only primary field
+    The file field *must* be the exclusive primary field
     """
 
     security       = ClassSecurityInfo()
