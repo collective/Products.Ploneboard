@@ -11,12 +11,13 @@
      style="text-align:right">
     <tal:pages repeat="pageTitle page_titles">
 
-    <a style="border-bottom: 1px solid;"
+    <a style="text-decoration: underline; padding: 0.2em"
        tal:condition="python:pageIndex != repeat['pageTitle'].index"
        tal:attributes="href string:${here/absolute_url}/${template/id}?pageIndex=${repeat/pageTitle/index}"
        tal:content="pageTitle"> page title </a>
 
     <span tal:condition="python:pageIndex == repeat['pageTitle'].index"
+          style="padding: 0.2em"
             tal:content="pageTitle"> page title </span>
     </tal:pages>
 </div>
