@@ -5,7 +5,7 @@
 ##############################################################################
 """ Basic usergroup tool.
 
-$Id: GroupsTool.py,v 1.12 2003/10/03 20:23:40 bmh Exp $
+$Id: GroupsTool.py,v 1.13 2003/11/06 06:36:43 redcor Exp $
 """
 
 from Products.CMFCore.utils import UniqueObject
@@ -205,6 +205,8 @@ class GroupsTool (UniqueObject, SimpleItem, ActionProviderBase):
         Underlying user folder must support removing users via the usual Zope API."""
         self.acl_users.Groups.acl_users.userFolderDelUsers(ids)
         gwf = self.getGroupWorkspacesFolder()
+        if not gwf: # _robert_
+            return
         try:
             gwf.manage_delObjects(ids)
         except 'BadRequest':
