@@ -59,7 +59,7 @@ def initialize(context):
         from GroupDataTool import GroupDataTool
         ToolInit( meta_type='CMF Groups Tool'
                   , tools=( GroupsTool, GroupDataTool, )
-                  , product_name='CMFGroups'
+                  , product_name='GroupUserFolder'
                   , icon="tool.gif"
                   ).initialize( context )
     except ImportError:
