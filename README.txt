@@ -1,6 +1,14 @@
 Description
 
   This product is an add-on to Raphael Ritz's CMFBibliographyAT.
+  It lets portal users organize existing bibliography references in lists.
+  Bibliography lists can be displayed using one of the standard
+  (file system based) bibliography styles shiped with the product,
+  or using custom bibliography styles designed by protal users.
+
+  It should not be too difficult for a python programmer to write its own
+  file system based bibliography styles. If you do so, please share your
+  interesting bibliography styles with the community.
 
 
 What It Does
@@ -15,7 +23,7 @@ What It Does
 
   * Installs the 'portal_bibliolist' tool.
 
-  * Installs default Bibref Styles in the 'portal_bibliolist' tool:
+  * Installs FS based Bibref Styles in the 'portal_bibliolist' tool:
 
     - Minimal: Default minimal bibliography style.
 
@@ -30,7 +38,7 @@ Requirements
 
   * Plone 2+ / Archetypes 1.2.5+
   
-  * CMFBibliographyAT
+  * CMFBibliographyAT (cvs.sourceforge.net:/cvsroot/collective)
 
 
 Installation
@@ -66,7 +74,7 @@ To Do
 
   * complete translation (i18n) support (Done).
 
-  * Better Documentation must be written.
+  * Better Documentation.
 
   * Unit testing !!
 
