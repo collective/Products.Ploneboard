@@ -13,6 +13,7 @@ add_button = context.REQUEST.get('form.button.reference_add',None)
 del_button = context.REQUEST.get('form.button.reference_delete',None)
 up_button = context.REQUEST.get('form.button.reference_up',None)
 down_button = context.REQUEST.get('form.button.reference_down',None)
+sort_button = context.REQUEST.get('form.button.reference_sort',None)
 
 if add_button:
     if references is not None:
@@ -30,9 +31,7 @@ if del_button:
     archetype_tool = context.archetype_tool
 
     if delReferences is not None:
-        uids = context.getReferences_list() or []
-        obs = [archetype_tool.getObject(x) for x in uids]
-
+        obs = context.getReferences_list() or []
         obs = [x.UID() for x in obs if x.getId() not in delReferences]
 
         context.setReferences_list(obs)
@@ -45,9 +44,7 @@ if up_button:
     archetype_tool = context.archetype_tool
 
     if delReferences is not None:
-        uids = context.getReferences_list() or []
-        obs = [archetype_tool.getObject(x) for x in uids]
-
+        obs = context.getReferences_list() or []
         first = 1
 	for x in range(len(obs)):
 	    if not first and obs[x].getId() in delReferences:
@@ -66,9 +63,37 @@ if down_button:
     archetype_tool = context.archetype_tool
 
     if delReferences is not None:
+        obs = context.getReferences_list() or []
+
+        first = 1
+        for x in range(len(obs)):
+            if not first and obs[-1-x].getId() in delReferences:
+                obs[-1-x], obs[-x] = obs[-x], obs[-1-x]
+            elif first and obs[-1-x].getId() not in delReferences:
+                first = 0
+
+        obs = [x.UID() for x in obs]
+        context.setReferences_list(obs)
+
+        return state.set(portal_status_message='Selected references moved down.')
+    else:
+        return state.set(portal_status_message='No reference selected.')
+
+if sort_button:
+    archetype_tool = context.archetype_tool
+
+    if delReferences is not None:
         uids = context.getReferences_list() or []
         obs = [archetype_tool.getObject(x) for x in uids]
-
+        sort_on=()
+        # sort key3_sort
+	for key in sortlist:
+	    if key== 'publication_year': sort_on.append(('publication_year', 'cmp', 'desc'))
+	    if key== 'Authors': sort_on.append(('Authors', 'nocase', 'asc'))
+	    if key== 'Source': sort_on.append(('Source', 'nocase', 'asc'))
+       
+        obs = sequence.sort(obs, sort_on);
+        
         first = 1
         for x in range(len(obs)):
             if not first and obs[-1-x].getId() in delReferences:

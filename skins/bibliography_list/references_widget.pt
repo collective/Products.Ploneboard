@@ -52,7 +52,7 @@
 	     tal:define="searchterm python: request.get('searchterm','');
 	         references python: request.get('references',None);
 			 accessor python:getattr(here, field.accessor);
-			 old python:[here.archetype_tool.lookupObject(uid=uid) for uid in (accessor() or [])];">
+			 old python:[ref.getTargetObject() for ref in here.getReferenceImpl(field.relationship)];">
 	  <p tal:condition="not:old">Nothing in the bibliography list yet</p>
 
 	  <div tal:condition="old"> <!-- Edit existing references -->
@@ -73,13 +73,35 @@
 	    <input type="submit" name="form.button.reference_down" value="Down"/>
 	    <br />
 	    
+	    <table> <tr> <th colspan=2> sort: </th> </tr>
+	    <tr> <th> by: </th> <td><select name="sortlist:list">
+		<option value="('publication_year', 'cmp', 'desc')"> publication_year </option>
+		<option value="('Authors', 'nocase', 'asc'))"> Authors </option>
+		<option value="('Source', 'nocase', 'asc'))"> Source </option>
+	    </select> </td>
+	    <tr> <th> and: </th> <td><select name="sortlist:list">
+		<option value=""> -------none-------</option>
+		<option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+		<option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
+		<option value=",('Source', 'nocase', 'asc'))"> Source </option>
+	    </select></td>
+	    <tr> <th> and: </th> <td><select name="sortlist:list">
+		<option value=""> -------none-------</option>
+		<option value=",('publication_year', 'cmp', 'desc')"> publication_year </option>
+		<option value=",('Authors', 'nocase', 'asc'))"> Authors </option>
+		<option value=",('Source', 'nocase', 'asc'))"> Source </option>
+	    </select></td>
+	    </table>
+	    <input type="submit" name="form.button.reference_sort" value="Sort"/>
+	    
 	  </div> <!-- end editing existing references -->
 
 	  <div> <!-- Search, add new references -->
 	    <h4>Select new references</h4>
 	    <input name="searchterm" tal:attributes="value searchterm|nothing"/>
 	    <input type="submit" name="form.button.reference_search" value="Search"/>
-	    <tal:block tal:condition="searchterm">
+
+        <tal:block tal:condition="searchterm">
 	      <tal:block tal:define="results python:here.searchMatchingReferences(searchterm)">
 
         	<div tal:condition="results">

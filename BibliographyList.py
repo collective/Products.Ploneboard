@@ -8,7 +8,6 @@
 ##########################################################################
 
 """ BibliographyList: personal list of bibliographic references
-    Add-on to the CMFBibliographyAT Product
 """
 
 from Products.CMFCore import CMFCorePermissions
@@ -16,33 +15,18 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import DisplayList
 from Products.Archetypes.public import BaseSchema, Schema
-from Products.Archetypes.public import ReferenceField, ReferenceField, StringField
+from Products.Archetypes.public import LinesField, StringField, ReferenceField
 from Products.Archetypes.public import BaseContent, registerType
 from Products.Archetypes.Widget import TypesWidget, SelectionWidget, ReferenceWidget
-
+from Products.Archetypes.Registry import registerWidget
 from roman import *
 
-# possible types of bibliographic references by module 'CMFBibliography'
-search_types = (
-               'ArticleReference',
-               'BookReference',
-               'BookletReference',
-               'InbookReference',
-               'IncollectionReference',
-               'InproceedingsReference',
-               'MastersthesisReference',
-               'ManualReference',
-               'MiscReference',
-               'PhdthesisReference',
-               'PreprintReference',
-               'ProceedingsReference',
-               'TechreportReference',
-               'UnpublishedReference',
-               'WebpublishedReference',
-               )
+from Products.CMFBibliographyAT.config import REFERENCE_TYPES
+#REFERENCE_TYPES = [entry.replace('Reference',' Reference') for entry in REFERENCE_TYPES]
 
 class ReferencesWidget(TypesWidget):
     """ custom widget for TTW references input handling """
+#    __allow_access_to_unprotected_subobjects__ = 1
     _properties = TypesWidget._properties.copy()
     _properties.update({
         'macro' : "references_widget",
@@ -56,26 +40,22 @@ except ImportError:
 schema = BaseSchema + Schema((
     ReferenceField('references_list',
                    multiValued=1,
-                   relationship='lists reference',
                    widget=ReferencesWidget(label="References",
                                            label_msgid="label_references_list",
                                            description_msgid="help_references_list",
                                            i18n_domain="plone",
-                                           description="Select refenferces to put in your list",
+                                           description="Select references to put in your list",
                                            ),
                    ),
-    ReferenceField('PresentationFormat',
-                   multiValued=0,
-                   vocabulary="vocabPresFormat",
-                   relationship='has PresFormat',
-                   enforce_vocabulary=1,
-                   widget=SelectionWidget(label="Presentation Format",
-                              label_msgid="label_presentation",
-                              description_msgid="help_presentation",
-                              description="Select the format how you want to present your list",           
-                              i18n_domain="plone",
-                              format="select",
-					                   ),
+    StringField('PresentationFormat',
+                multiValued=0,
+                vocabulary="vocabPresFormat",
+                widget=SelectionWidget(label="Presentation Format",
+                           label_msgid="label_presentation",
+                           description_msgid="help_presentation",
+                           description="Select the format how you want to present your list",           
+                           i18n_domain="plone",
+                           format="select",),
                    ),
     ))
 
@@ -103,8 +83,8 @@ class BibliographyList(BaseContent):
 
         catalog = getToolByName(self, 'portal_catalog')
         refList = [r for r
-                   in catalog(SearchableText=searchterm, portal_type=search_types)
-                   if r.getObject().UID() not in self.getReferences_list()]
+                   in catalog(SearchableText=searchterm, portal_type=REFERENCE_TYPES)
+                   if r.getObject() not in self.getReferences_list()]
                 
         return refList
     
@@ -112,19 +92,19 @@ class BibliographyList(BaseContent):
         """ build a display list with available reference formats """
 
         formatList = []
-        for refFormat in self.findRefFormats():
-            obj = refFormat.getObject()
-            formatList.append((obj.UID(),obj.title_or_id()))
+        catalog = getToolByName(self, 'portal_catalog')
+        try:  #AT 1.2
+            formList = catalog(portal_type=('ReferencePresentation','ReferencePresentationSet'))
+            for refFormat in formList:
+                obj = refFormat.getObject()
+                formatList.append((obj.UID(),obj.title_or_id()))
+        except AttributeError:  #AT 1.3
+            formList = catalog(portal_type=('Reference Presentation','Reference Presentation Set'))
+            for refFormat in formList:
+                obj = refFormat.getObject()
+                formatList.append((obj.UID(),obj.title_or_id()))
 
         return DisplayList(tuple(formatList))
-
-    def findRefFormats(self):
-        """ lists existing formats to select from """
-
-        catalog = getToolByName(self, 'portal_catalog')
-        formList = catalog(portal_type=('ReferencePresentation','ReferencePresentationSet'))
-                
-        return formList  
 
     def reformatReference(self, item):
     
@@ -354,10 +334,9 @@ class BibliographyList(BaseContent):
         if format == 'digital: 12': #keeps the number in digital format
            return stringvar
         if format == 'Roman: XII': #transforms the number in a Roman numeric format (uppercase)
-           return self.DecimalToRomanNumerals(stringvar)
+           return roman.toRoman(int(stringvar))
         if format == 'Roman: xii': #transforms the number in a Roman numeric format (lowercase)
-           stringvar = self.DecimalToRomanNumerals(stringvar)
-           return stringvar.lower()
+           return roman.toRoman(int(stringvar)).lower()
         
     def DecimalToRomanNumerals(self, base10_integer):
         """ this method converts an integer number in its Roman Numeral equivalent 

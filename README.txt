@@ -10,7 +10,7 @@ What It Does
 
 Requirements
 
-  * Plone 2.x / CMF 1.4 / Archetypes 1.2.5
+  * Plone 2.x / CMF 1.4.4 / Archetypes 1.3 (cvs release-1_3-branch, beta2 is not enough)
   
   * CMFBibliographyAT (available from the collective's cvs, "http://cvs.sourceforge.net/viewcvs.py/collective/":http://cvs.sourceforge.net/viewcvs.py/collective/)
 
