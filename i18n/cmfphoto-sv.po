@@ -8,12 +8,12 @@ msgstr ""
 "Last-Translator: Magnus Heino <magnus.heino@pleon.sigma.se>\n"
 "Language-Team: Swedish <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-code: sv\n"
 "Language-name: Swedish\n"
-"Preferred-encodings: utf-8 latin1\n"
+"Preferred-encodings: latin1\n"
 "Domain: cmfphoto\n"
 "X-Generator: KBabel 0.9.6\n"
 
@@ -36,7 +36,7 @@ msgstr "Ursprunglig storlek"
 #.   	Select the size of the photos.
 #.         </div>
 msgid "Select the size of the photos."
-msgstr "Väl storlek på bilderna"
+msgstr "Välj storlek på bilderna"
 
 #: from ../skins/photo_content/photo_macros.pt
 #.   <span>Size</span>
