@@ -1,0 +1,13 @@
+Source: zope-pts
+Section: web
+Priority: optional
+Maintainer: Christian Heimes <heimes@faho.rwth-aachen.de>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.0
+
+Package: zope-pts
+Architecture: any
+Depends: zope (>= 2.6)
+Description: Placeless Translation Service
+ TODO
+
