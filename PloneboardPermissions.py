@@ -1,5 +1,5 @@
 """
-$Id: PloneboardPermissions.py,v 1.1 2003/10/24 13:03:05 tesdal Exp $
+$Id: PloneboardPermissions.py,v 1.2 2004/04/02 08:06:13 tesdal Exp $
 """
 
 from Products.CMFCore import CMFCorePermissions
@@ -12,13 +12,13 @@ AddBoard = 'Ploneboard: Add Ploneboard'
 ManageBoard = 'Ploneboard: Add Ploneboard'
 AddForum = 'Ploneboard: Add Forum'
 ManageForum = 'Ploneboard: Add Forum'
-AddMessage = 'Ploneboard: Add Message'
-AddMessageReply = 'Ploneboard: Add Message Reply'
-EditMessage = 'Ploneboard: Edit Message'
-AddAttachment = 'Ploneboard: Add Message Attachment'
+AddConversation = 'Ploneboard: Add Conversation'
+AddComment = 'Ploneboard: Add Comment'
+EditComment = 'Ploneboard: Edit Comment'
+AddAttachment = 'Ploneboard: Add Comment Attachment'
 ManageConversation = 'Ploneboard: Manage Conversation'
-ManageMessage = 'Ploneboard: Manage Message'
-ApproveMessage = 'Ploneboard: Approve Message'
+ManageComment = 'Ploneboard: Manage Comment'
+ApproveComment = 'Ploneboard: Approve Comment'
 
 # Set up default roles for permissions
 setDefaultRoles(ViewBoard,
@@ -33,13 +33,13 @@ setDefaultRoles(AddBoard,
 setDefaultRoles(ManageBoard,
                 ('Manager', 'Owner'))
 
-setDefaultRoles(AddMessage,
+setDefaultRoles(AddConversation,
                 ('Anonymous', 'Member', 'Manager'))
 
-setDefaultRoles(AddMessageReply,
+setDefaultRoles(AddComment,
                 ('Anonymous', 'Member', 'Manager'))
 
-setDefaultRoles(EditMessage,
+setDefaultRoles(EditComment,
                 ('Manager',))
 
 setDefaultRoles(AddAttachment,
@@ -48,9 +48,9 @@ setDefaultRoles(AddAttachment,
 setDefaultRoles(ManageConversation,
                 ('Manager', 'Reviewer'))
 
-setDefaultRoles(ManageMessage,
+setDefaultRoles(ManageComment,
                 ('Manager', 'Reviewer'))
 
-setDefaultRoles(ApproveMessage,
+setDefaultRoles(ApproveComment,
                 ('Manager', 'Reviewer'))
 

@@ -32,12 +32,12 @@
         </div>
 
         <div class="boardConversation"
-             metal:define-macro="view_messages"
-             tal:define="messages here/getMessages">	
+             metal:define-macro="view_comments"
+             tal:define="comments here/getComments">	
 
-            <div class="boardMessage" tal:repeat="message messages">
+            <div class="boardComment" tal:repeat="comment comments">
 
-            <metal:message metal:use-macro="here/message_view/macros/message" />
+            <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
             </div>
         </div>

@@ -28,9 +28,9 @@ class IPloneboard(Interface):
         this board.
         """
 
-    def searchMessages(query):
+    def searchComments(query):
         """
-        This method searches through all forums, conversations and messages.
+        This method searches through all forums, conversations and comments.
         """
 
 class IForum(Interface):
@@ -71,16 +71,16 @@ class IForum(Interface):
         Returns the number of conversations in this forum.
         """
         
-    def getNumberOfMessages():
+    def getNumberOfComments():
         """
-        Returns the number of messages to this forum.
+        Returns the number of comments to this forum.
         """
 
 class IConversation(Interface):
     """
-    Conversation contains messages. The number of messages contained in 
+    Conversation contains comments. The number of comments contained in 
     Conversation is high and increases. It is recommended to use BTree for
-    indexing and to autogenerate ids for contained messages.
+    indexing and to autogenerate ids for contained comments.
     """
     
     def getForum():
@@ -88,36 +88,36 @@ class IConversation(Interface):
         Returns the containing forum.
         """
         
-    def addMessage(message_subject, message_body):
+    def addComment(comment_subject, comment_body):
         """
-        Adds a new message with subject and body.
-        """
-    
-    def getMessage(message_id):
-        """
-        Returns the message with the specified id.
+        Adds a new comment with subject and body.
         """
     
-    def getMessages(limit=30, offset=0, **kw):
+    def getComment(comment_id):
         """
-        Retrieves the specified number of messages with offset 'offset'.
+        Returns the comment with the specified id.
+        """
+    
+    def getComments(limit=30, offset=0, **kw):
+        """
+        Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
         
-    def getNumberOfmessages():
+    def getNumberOfComments():
         """
-        Returns the number of messages to this conversation.
+        Returns the number of comments to this conversation.
         """
 
-    def getLastMessageDate():
+    def getLastCommentDate():
         """
-        Returns a DateTime corresponding to the timestamp of the last message 
+        Returns a DateTime corresponding to the timestamp of the last comment 
         for the conversation.
         """
 
-class IMessage(Interface):
+class IComment(Interface):
     """
-    A message contains regular text body and metadata. It is folderish so it 
+    A comment contains regular text body and metadata. It is folderish so it 
     can contain attachments.
     """
     
@@ -126,9 +126,9 @@ class IMessage(Interface):
         Returns the containing conversation.
         """
     
-    def addReply(message_subject, message_body):
+    def addReply(comment_subject, comment_body):
         """
-        Add a response to this message.
+        Add a response to this comment.
         """
         
     def addAttachment(file):
@@ -138,26 +138,26 @@ class IMessage(Interface):
         
     def hasAttachment():
         """
-        Return 0 or 1 if this message has attachments.
+        Return 0 or 1 if this comment has attachments.
         """
 
     def inReplyTo():
         """
-        Returns the message object this message is a reply to. If it is the 
-        topmost message (ie: first message in a conversation), it returns None.
+        Returns the comment object this comment is a reply to. If it is the 
+        topmost comment (ie: first comment in a conversation), it returns None.
         """
 
     def getReplies():
         """
-        Returns the messages that were replies to this one.
+        Returns the comments that were replies to this one.
         """
     
     def getSubject():
         """
-        Returns the subject of the message.
+        Returns the subject of the comment.
         """
     
     def getBody():
         """
-        Returns the body of the message.
+        Returns the body of the comment.
         """

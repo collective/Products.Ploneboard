@@ -1,5 +1,5 @@
 """
-$Id: __init__.py,v 1.3 2003/12/12 01:35:47 alienoid Exp $
+$Id: __init__.py,v 1.4 2004/04/02 08:06:13 tesdal Exp $
 """
 
 from Globals import package_home
@@ -10,7 +10,7 @@ from PloneboardTool import PloneboardTool
 import os, os.path
 
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
-from config import ADD_BOARD_PERMISSION, ADD_FORUM_PERMISSION, ADD_MESSAGE_PERMISSION
+from config import ADD_BOARD_PERMISSION, ADD_FORUM_PERMISSION, ADD_COMMENT_PERMISSION, ADD_CONVERSATION_PERMISSION
 
 # PloneboardWorkflow requires GLOBALS
 import PloneboardWorkflow
@@ -19,10 +19,7 @@ registerDirectory(SKINS_DIR, GLOBALS)
 
 def initialize(context):
     ##Import Types here to register them
-    import Ploneboard
-    import PloneboardForum
-    import PloneboardConversation
-    import PloneboardMessage
+    from types import Ploneboard, PloneboardForum, PloneboardConversation, PloneboardComment
     
     ploneboard_content_type, ploneboard_constructor, ploneboard_fti = process_types(
         (getType('Ploneboard', PROJECTNAME), ),
@@ -33,8 +30,8 @@ def initialize(context):
     conversation_content_type, conversation_constructor, conversation_fti = process_types(
         (getType('PloneboardConversation', PROJECTNAME), ),
         PROJECTNAME)
-    message_content_type, message_constructor, message_fti = process_types(
-        (getType('PloneboardMessage', PROJECTNAME), ),
+    comment_content_type, comment_constructor, comment_fti = process_types(
+        (getType('PloneboardComment', PROJECTNAME), ),
         PROJECTNAME)
 
     # If we put this import line to the top of module then
@@ -73,8 +70,8 @@ def initialize(context):
 
     context.registerClass(PloneboardConversation.PloneboardConversation,
                           constructors = conversation_constructor,
-                          permission = ADD_MESSAGE_PERMISSION)
+                          permission = ADD_CONVERSATION_PERMISSION)
 
-    context.registerClass(PloneboardMessage.PloneboardMessage,
-                          constructors = message_constructor,
-                          permission = ADD_MESSAGE_PERMISSION)
+    context.registerClass(PloneboardComment.PloneboardComment,
+                          constructors = comment_constructor,
+                          permission = ADD_COMMENT_PERMISSION)

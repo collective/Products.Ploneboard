@@ -6,9 +6,9 @@ from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Default import setupDefaultWorkflowRev2
 from PloneboardPermissions import ViewBoard, SearchBoard, \
-     ManageBoard, AddForum, ManageForum, AddMessage, AddMessageReply, \
-     EditMessage, AddAttachment, ManageConversation, ManageMessage, \
-     ApproveMessage
+     ManageBoard, AddForum, ManageForum, AddConversation, AddComment, \
+     EditComment, AddAttachment, ManageConversation, ManageComment, \
+     ApproveComment
 from AccessControl.Permissions import view, access_contents_information
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.PythonScripts.PythonScript import manage_addPythonScript
@@ -23,11 +23,11 @@ script_ids = [x[:-3] for x in filter(lambda y: y.endswith('.py'), os.listdir(pat
 
 p_access = access_contents_information
 p_manage = ManageForum
-p_modify = EditMessage
+p_modify = EditComment
 p_view = ViewBoard
-p_review = ApproveMessage
-p_request = AddMessage
-p_reply = AddMessageReply
+p_review = ApproveComment
+p_request = AddConversation
+p_reply = AddComment
 
 r_anon = 'Anonymous'
 r_manager = 'Manager'
@@ -35,9 +35,9 @@ r_reviewer = 'Reviewer'
 r_owner = 'Owner'
 r_member = 'Member'
 
-def setupPloneboardMessageWorkflow(wf):
-    """ Sets up a workflow for Ploneboard Messages """
-    wf.setProperties(title='Ploneboard Message Workflow [Ploneboard]')
+def setupPloneboardCommentWorkflow(wf):
+    """ Sets up a workflow for Ploneboard Comments """
+    wf.setProperties(title='Ploneboard Comment Workflow [Ploneboard]')
 
     for s in ('initial', 'pending', 'published', 'rejected', 'locked'):
         wf.states.addState(s)
@@ -163,7 +163,7 @@ def setupPloneboardMessageWorkflow(wf):
 
     tdef = wf.transitions['lock']
     tdef.setProperties(
-        title='Lock message',
+        title='Lock comment',
         new_state_id='locked',
         # The lock_script is added to scripts folder by the Install script
         after_script_name='lock_script',
@@ -204,27 +204,27 @@ def setupPloneboardMessageWorkflow(wf):
     # ***** Setting up worklists *****
     ldef = wf.worklists['reviewer_queue']
     ldef.setProperties(description='Reviewer tasks',
-                       actbox_name='Pending messages',
+                       actbox_name='Pending comments',
                        actbox_url='%(portal_url)s/search?review_state=pending',
                        props={'var_match_review_state':'pending',
                               'guard_permissions':p_review})
 
     ldef = wf.worklists['submitter_queue']
     ldef.setProperties(description='Submitter tasks',
-                       actbox_name='Rejected messages',
+                       actbox_name='Rejected comments',
                        actbox_url='%(portal_url)s/search?review_state=rejected',
                        props={'var_match_review_state':'rejected',
                               'guard_permissions':p_modify,
                               'guard_roles':r_owner})
 
-def createPloneboardMessageWorkflow(id):
+def createPloneboardCommentWorkflow(id):
     ob=DCWorkflowDefinition(id)
-    setupPloneboardMessageWorkflow(ob)
-    ob.setProperties(title='Message Workflow [Ploneboard]')
+    setupPloneboardCommentWorkflow(ob)
+    ob.setProperties(title='Comment Workflow [Ploneboard]')
     return ob
 
-addWorkflowFactory( createPloneboardMessageWorkflow, id='ploneboard_message_workflow'
-                  , title='Message Workflow [Ploneboard]')	
+addWorkflowFactory( createPloneboardCommentWorkflow, id='ploneboard_comment_workflow'
+                  , title='Comment Workflow [Ploneboard]')	
 
 
 
@@ -374,8 +374,8 @@ def setupPloneboardWorkflow(wf):
     wf.setProperties(title='Ploneboard Workflow [Ploneboard]')
 
     for p in (ViewBoard, SearchBoard, ManageBoard, ManageForum, 
-              AddMessage, AddMessageReply, EditMessage, AddAttachment, 
-              ManageConversation, ManageMessage, ApproveMessage):
+              AddConversation, AddComment, EditComment, AddAttachment, 
+              ManageConversation, ManageComment, ApproveComment):
         wf.addManagedPermission(p)
 
     sdef = wf.states['private']
@@ -383,52 +383,52 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(SearchBoard,        0, (r_manager, r_owner))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_owner))
     sdef.setPermission(ManageForum,        0, (r_manager, r_owner))
-    sdef.setPermission(AddMessage,         0, (r_manager, r_owner))
-    sdef.setPermission(AddMessageReply,    0, (r_manager, r_owner))
-    sdef.setPermission(EditMessage,        0, (r_manager, r_owner))
+    sdef.setPermission(AddConversation,    0, (r_manager, r_owner))
+    sdef.setPermission(AddComment,         0, (r_manager, r_owner))
+    sdef.setPermission(EditComment,        0, (r_manager, r_owner))
     sdef.setPermission(AddAttachment,      0, (r_manager, r_owner))
     sdef.setPermission(ManageConversation, 0, (r_manager, r_owner))
-    sdef.setPermission(ManageMessage,      0, (r_manager, r_owner))
-    sdef.setPermission(ApproveMessage,     0, (r_manager, r_owner))
+    sdef.setPermission(ManageComment,      0, (r_manager, r_owner))
+    sdef.setPermission(ApproveComment,     0, (r_manager, r_owner))
 
     sdef = wf.states['pending']
     sdef.setPermission(ViewBoard,          1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(SearchBoard,        1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_reviewer))
     sdef.setPermission(ManageForum,        0, (r_manager, r_reviewer))
-    sdef.setPermission(AddMessage,         0, (r_manager, r_reviewer))
-    sdef.setPermission(AddMessageReply,    0, (r_manager, r_reviewer))
-    sdef.setPermission(EditMessage,        0, (r_manager, r_reviewer))
+    sdef.setPermission(AddConversation,    0, (r_manager, r_reviewer))
+    sdef.setPermission(AddComment,         0, (r_manager, r_reviewer))
+    sdef.setPermission(EditComment,        0, (r_manager, r_reviewer))
     sdef.setPermission(AddAttachment,      0, (r_manager, r_reviewer))
     sdef.setPermission(ManageConversation, 0, (r_manager, r_reviewer))
-    sdef.setPermission(ManageMessage,      0, (r_manager, r_reviewer))
-    sdef.setPermission(ApproveMessage,     0, (r_manager, r_reviewer))
+    sdef.setPermission(ManageComment,      0, (r_manager, r_reviewer))
+    sdef.setPermission(ApproveComment,     0, (r_manager, r_reviewer))
 
     sdef = wf.states['published']
     sdef.setPermission(ViewBoard,          1, (r_anon, r_manager))
     sdef.setPermission(SearchBoard,        1, (r_anon, r_manager))
     sdef.setPermission(ManageBoard,        0, (r_manager,))
     sdef.setPermission(ManageForum,        0, (r_manager,))
-    sdef.setPermission(AddMessage,         0, (r_manager,))
-    sdef.setPermission(AddMessageReply,    0, (r_manager,))
-    sdef.setPermission(EditMessage,        0, (r_manager,))
+    sdef.setPermission(AddConversation,    0, (r_manager,))
+    sdef.setPermission(AddComment,         0, (r_manager,))
+    sdef.setPermission(EditComment,        0, (r_manager,))
     sdef.setPermission(AddAttachment,      0, (r_manager,))
     sdef.setPermission(ManageConversation, 0, (r_manager,))
-    sdef.setPermission(ManageMessage,      0, (r_manager,))
-    sdef.setPermission(ApproveMessage,     0, (r_manager,))
+    sdef.setPermission(ManageComment,      0, (r_manager,))
+    sdef.setPermission(ApproveComment,     0, (r_manager,))
 
     sdef = wf.states['visible']
     sdef.setPermission(ViewBoard,          1, (r_anon, r_manager, r_reviewer))
     sdef.setPermission(SearchBoard,        1, (r_anon, r_manager, r_reviewer))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_owner))
     sdef.setPermission(ManageForum,        0, (r_manager, r_owner))
-    sdef.setPermission(AddMessage,         0, (r_manager, r_owner))
-    sdef.setPermission(AddMessageReply,    0, (r_manager, r_owner))
-    sdef.setPermission(EditMessage,        0, (r_manager, r_owner))
+    sdef.setPermission(AddConversation,    0, (r_manager, r_owner))
+    sdef.setPermission(AddComment,         0, (r_manager, r_owner))
+    sdef.setPermission(EditComment,        0, (r_manager, r_owner))
     sdef.setPermission(AddAttachment,      0, (r_manager, r_owner))
     sdef.setPermission(ManageConversation, 0, (r_manager, r_owner))
-    sdef.setPermission(ManageMessage,      0, (r_manager, r_owner))
-    sdef.setPermission(ApproveMessage,     0, (r_manager, r_owner))
+    sdef.setPermission(ManageComment,      0, (r_manager, r_owner))
+    sdef.setPermission(ApproveComment,     0, (r_manager, r_owner))
 
 def createPloneboardWorkflow(id):
     ob=DCWorkflowDefinition(id)

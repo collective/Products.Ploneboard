@@ -1,5 +1,5 @@
 """
-$Id: Ploneboard.py,v 1.7 2004/03/30 12:52:01 limi Exp $
+$Id: Ploneboard.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
 """
 
 import Globals
@@ -7,13 +7,13 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
-from config import PROJECTNAME
+from Products.Ploneboard.config import PROJECTNAME
 
-import PloneboardCatalog
-from PloneboardPermissions import ViewBoard, SearchBoard, \
+from Products.Ploneboard import PloneboardCatalog
+from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, \
     AddBoard, AddForum, ManageBoard, AddAttachment  
 from PloneboardForum import PloneboardForum
-from interfaces import IPloneboard
+from Products.Ploneboard.interfaces import IPloneboard
 
 
 factory_type_information = \
@@ -83,12 +83,12 @@ class Ploneboard(BaseBTreeFolder):
 
     security.declareProtected(ViewBoard, 'getBoardTitle')
     def getBoardTitle(self):
-        """Gets the title, useful to avoid manual acquisition from messages."""
+        """Gets the title, useful to avoid manual acquisition from comments."""
         return self.Title()
 
     security.declareProtected(ViewBoard, 'getBoardDescription')
     def getBoardDescription(self):
-        """Gets the description, useful to avoid manual acquisition from messages."""
+        """Gets the description, useful to avoid manual acquisition from comments."""
         return self.Description()
 
     def _setupInternalCatalog(self):
@@ -125,9 +125,9 @@ class Ploneboard(BaseBTreeFolder):
         """Remove a forum from this board."""
         self._delObject(forum_id)
 
-    security.declareProtected(SearchBoard, 'searchMessages')
-    def searchMessages(self, query):
-        """This method searches through all forums, conversations and messages."""
+    security.declareProtected(SearchBoard, 'searchComments')
+    def searchComments(self, query):
+        """This method searches through all forums, conversations and comments."""
         # maybe we need return objects and not brains?
         return self.getInternalCatalog().searchResults(query)
     

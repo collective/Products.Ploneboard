@@ -1,5 +1,5 @@
 """\
-$Id: Install.py,v 1.6 2004/03/30 12:52:01 limi Exp $
+$Id: Install.py,v 1.7 2004/04/02 08:06:12 tesdal Exp $
 
 This file is an installation script for Ploneboard.  It's meant to be
 used as an External Method.  To use, add an external method to the
@@ -51,9 +51,9 @@ def addPloneboardTool(self, out):
         out.write('Added Ploneboard Tool\n')
         
 def setupAdditionalTypes(self, out):
-    from Products.Ploneboard.PloneboardForum import factory_type_information as pf_fti
-    from Products.Ploneboard.PloneboardConversation import factory_type_information as pc_fti
-    from Products.Ploneboard.PloneboardMessage import factory_type_information as pm_fti
+    from Products.Ploneboard.types.PloneboardForum import factory_type_information as pf_fti
+    from Products.Ploneboard.types.PloneboardConversation import factory_type_information as pc_fti
+    from Products.Ploneboard.types.PloneboardComment import factory_type_information as pm_fti
     
     fti_list = pf_fti + pc_fti + pm_fti
 
@@ -73,7 +73,7 @@ def setupAdditionalTypes(self, out):
         out.write('Type "%s" registered with the types tool\n' % (f['id']))
 
 def registerNavigationTreeSettings(self, out):
-    data = ['PloneboardConversation','PloneboardMessage']
+    data = ['PloneboardConversation','PloneboardComment']
     pp=getToolByName(self,'portal_properties')
     p = getattr(pp , 'navtree_properties', None)
     mdntl = list(p.getProperty('metaTypesNotToList', []))
@@ -87,14 +87,14 @@ def registerNavigationTreeSettings(self, out):
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
-    if 'ploneboard_message_workflow' in wf_tool.objectIds():
-        out.write('Removing existing Message Workflow\n')
-        wf_tool._delObject('ploneboard_message_workflow')
-    wf_tool.manage_addWorkflow( id='ploneboard_message_workflow'
-                              , workflow_type='ploneboard_message_workflow '+\
-                                '(Message Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('PloneboardConversation','PloneboardMessage'), 'ploneboard_message_workflow')
-    out.write('Added Message Workflow\n')
+    if 'ploneboard_comment_workflow' in wf_tool.objectIds():
+        out.write('Removing existing Comment Workflow\n')
+        wf_tool._delObject('ploneboard_comment_workflow')
+    wf_tool.manage_addWorkflow( id='ploneboard_comment_workflow'
+                              , workflow_type='ploneboard_comment_workflow '+\
+                                '(Comment Workflow [Ploneboard])')
+    wf_tool.setChainForPortalTypes( ('PloneboardConversation','PloneboardComment'), 'ploneboard_comment_workflow')
+    out.write('Added Comment Workflow\n')
 
     if 'ploneboard_forum_workflow' in wf_tool.objectIds():
         out.write('Removing existing Forum Workflow\n')

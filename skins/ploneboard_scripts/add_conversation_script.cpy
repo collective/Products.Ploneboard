@@ -13,6 +13,6 @@ if not creator:
 
 m = context.addConversation(subject=title, body=text, creator=creator)
 if m:
-    state.set(context=m.getForum(), portal_status_message='Added message')
+    state.set(context=m.getForum(), portal_status_message='Added comment')
 
 return state

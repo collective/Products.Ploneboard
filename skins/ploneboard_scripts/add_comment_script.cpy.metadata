@@ -2,5 +2,5 @@
 validators=validate_posting
 
 [actions]
-action.failure=redirect_to:string:add_message_form
+action.failure=redirect_to:string:add_comment_form
 action.success=redirect_to_action:string:view

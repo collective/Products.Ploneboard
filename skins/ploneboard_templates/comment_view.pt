@@ -23,25 +23,25 @@
         description
         </div>
 
-        <div class="boardMessage"
-             tal:define="message python:context">
+        <div class="boardComment"
+             tal:define="comment python:context">
              
-            <metal:message metal:define-macro="message">
+            <metal:comment metal:define-macro="comment">
 
-                <div class="boardMessageDetails">
+                <div class="boardCommentDetails">
                 <img src="" 
-                     tal:attributes="src string:${portal_url}/ploneboard_message_icon.gif"/>
+                     tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                      Posted by 
-                     <span tal:replace="message/Creator">author</span> 
+                     <span tal:replace="comment/Creator">author</span> 
                      at
-                     <span tal:replace="python:here.toPloneboardTime(message.creation_date)">Thursday 13:21</span>
+                     <span tal:replace="python:here.toPloneboardTime(comment.creation_date)">Thursday 13:21</span>
                 </div>
             
-                <div class="boardMessageBody">
+                <div class="boardCommentBody">
             
                     <div class="portrait" 
-                          tal:define="home python:container.portal_membership.getHomeUrl(message.Creator(), verifyPermission=1);
-                                      portrait python: here.portal_membership.getPersonalPortrait(message.Creator());"> 
+                          tal:define="home python:container.portal_membership.getHomeUrl(comment.Creator(), verifyPermission=1);
+                                      portrait python: here.portal_membership.getPersonalPortrait(comment.Creator());"> 
                         <a href="#" tal:attributes="href home">                    
                             <img class="portraitPhoto"
                                  src="defaultUser.gif" 
@@ -50,21 +50,21 @@
                                  width="75" 
                                  height="100" 
                                  tal:attributes="src portrait/absolute_url" />
-                            <div tal:content="message/Creator">member id</div>
+                            <div tal:content="comment/Creator">member id</div>
                         </a>
                     </div>
                     
-                    <div class="boardMessageContent" tal:content="structure message/getBody">
-                    Message text.
+                    <div class="boardCommentContent" tal:content="structure comment/getBody">
+                    Comment text.
                     </div>
                     
                 </div>
                 
                 <div class="visualClear"></div>
 
-                <div class="boardMessageActions" >
+                <div class="boardCommentActions" >
                 
-                    <form tal:attributes="action string:${message/absolute_url}/add_message_form"
+                    <form tal:attributes="action string:${comment/absolute_url}/add_comment_form"
                           tal:condition="not: isAnon">
                         <input class="standalone"
                                type="submit" 
@@ -87,7 +87,7 @@
 
                 </div>
 
-            </metal:message>
+            </metal:comment>
         </div>
     </div>
 

@@ -4,7 +4,7 @@
 
 <body>
 
-    <div metal:define-macro="message_body_start" tal:omit-tag="">
+    <div metal:define-macro="comment_body_start" tal:omit-tag="">
 
         <legend i18n:translate="legend_add_conversation">Details</legend>
 
@@ -12,7 +12,7 @@
 
     </div>
 
-    <div metal:define-macro="message_body_title" tal:omit-tag="">
+    <div metal:define-macro="comment_body_title" tal:omit-tag="">
 
         <div class="field"
              tal:define="error_title errors/title|nothing;
@@ -44,7 +44,7 @@
 
     </div>
 
-    <div metal:define-macro="message_body_text" tal:omit-tag="">
+    <div metal:define-macro="comment_body_text" tal:omit-tag="">
       
         <div class="field"
              tal:define="error_text errors/text|nothing;
@@ -58,7 +58,7 @@
                 The body text of the document. 
             </div>
 
-            <div tal:replace="error_text">Validation Error Message</div>
+            <div tal:replace="error_text">Validation Error Comment</div>
 
             <textarea name="text"
                       id="text"
@@ -72,7 +72,7 @@
 
     </div>
 
-    <div metal:define-macro="message_body_buttons" tal:omit-tag="">
+    <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
 
         <div class="row">
             <div class="label">&nbsp;</div>
@@ -100,7 +100,7 @@
 
 
     <!-- Preview macros -->
-    <div metal:define-macro="message_preview_hidden_vars" tal:omit-tag="">
+    <div metal:define-macro="comment_preview_hidden_vars" tal:omit-tag="">
         <input type="hidden"
                name="title"
                tal:condition="request/title | nothing"
@@ -113,7 +113,7 @@
     </div>
 
 
-    <div metal:define-macro="message_preview" tal:omit-tag="">
+    <div metal:define-macro="comment_preview" tal:omit-tag="">
 
         <h2 tal:condition="request/title | nothing"
             tal:content="request/title">
@@ -128,7 +128,7 @@
     </div>
 
 
-    <div metal:define-macro="message_preview_buttons" tal:omit-tag="">
+    <div metal:define-macro="comment_preview_buttons" tal:omit-tag="">
 
         <div class="row">
             <div class="label">&nbsp;</div>

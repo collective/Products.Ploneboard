@@ -7,7 +7,7 @@ validators..Save=validate_posting
 validators..Cancel=
 
 [actions]
-action.success..Preview=traverse_to:string:add_message_preview
-action.success..Save=traverse_to:string:add_message_script
+action.success..Preview=traverse_to:string:add_comment_preview
+action.success..Save=traverse_to:string:add_comment_script
 action.success..Cancel=redirect_to_action:string:view
-action.failure=traverse_to:string:add_message_form
+action.failure=traverse_to:string:add_comment_form

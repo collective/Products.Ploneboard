@@ -5,23 +5,23 @@
 ##bind script=script
 ##bind subpath=traverse_subpath
 ##parameters=
-##title=Searches for pending messages in moderated boards
+##title=Searches for pending comments in moderated boards
 ##
 # Search the catalog, and depending on where the script is called from, filter
 # and massage results until it is suitable for displaying. The main concern is
 # too large number of search results.
 # Massaging the results means getting the objects, which might not be that bad
 # as we are going to write to them anyway (moderate) soon.
-# Returned results might be forum objects, conversation objects or message objects
-# if returned number of pending messages is less than 100: display everything
+# Returned results might be forum objects, conversation objects or comment objects
+# if returned number of pending comments is less than 100: display everything
 # if context is conversation, display everything
-# if context is board, only display link to forums with more than 50 pending messages
-# if context is forum, only display link to conversations with more than 10 pending messages
+# if context is board, only display link to forums with more than 50 pending comments
+# if context is forum, only display link to conversations with more than 10 pending comments
  
 query = {}
 query['sort_on'] = 'created'
 query['review_state'] = 'pending'
-query['portal_type'] = 'PloneboardMessage'
+query['portal_type'] = 'PloneboardComment'
 query['path'] = '/'+ '/'.join(context.getPhysicalPath()[1:])
 
 reqget = context.REQUEST.get
@@ -52,7 +52,7 @@ if context.portal_type == 'PloneboardForum':
     # We need a dynamic programming solution here as search for each 
     # conversation is prohibitively expensive
     forumid = context.getId()
-    conversations = {} # {id, [messagebrains, ]}
+    conversations = {} # {id, [commentbrains, ]}
     for item in catalogresult:
         pathlist = item.getPath().split('/')
         conversationid = pathlist[pathlist.index(forumid)+1]
@@ -62,7 +62,7 @@ if context.portal_type == 'PloneboardForum':
             conversations[conversationid] = [item]
     for key in conversations.keys():
         if len(conversations[key]) > 10:
-            # Could use a wrapper to store the conversation + length of pending message
+            # Could use a wrapper to store the conversation + length of pending comment
             # queue to avoid catalog calls in the moderation_form template
             result.append(context.getConversation(key))
         else:

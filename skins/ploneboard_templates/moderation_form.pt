@@ -33,7 +33,7 @@
             
             <p>
                 <a href="#"
-                   tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardMessage')"
+                   tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardComment')"
                    tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
                    tal:content="here/aq_inner/aq_parent/Title">Up</a>
             </p>
@@ -62,7 +62,7 @@
                        tal:attributes="href resulturl"
                        tal:content="result/Title" />
                     - <tal:count replace="python: here.moderation_count_search(result)" /> 
-                    messages in queue.
+                    comments in queue.
                 </div>
 
                 <div tal:condition="python: result.portal_type == 'PloneboardConversation'">
@@ -79,10 +79,10 @@
                        tal:attributes="href resulturl"
                        tal:content="result/Title" />
                     - <tal:count replace="python: here.moderation_count_search(result)" /> 
-                    messages in queue.
+                    comments in queue.
                 </div>
 
-                <div tal:condition="python: result.portal_type == 'PloneboardMessage'">
+                <div tal:condition="python: result.portal_type == 'PloneboardComment'">
                     <a href="#" 
                        tal:attributes="href resulturl">
                         <img src="#" 
@@ -122,7 +122,7 @@
 
         <div tal:condition="not:results">
             <p>
-                There are no messages in the moderation queue.
+                There are no comments in the moderation queue.
             </p>
             <p>
                 <a href="#"

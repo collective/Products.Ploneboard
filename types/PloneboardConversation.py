@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.6 2004/03/30 12:52:01 limi Exp $
+$Id: PloneboardConversation.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
 """
 
 from random import randint
@@ -13,12 +13,12 @@ from Products.ZCatalog.Lazy import LazyMap
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
-from config import PROJECTNAME
+from Products.Ploneboard.config import PROJECTNAME
 
-from PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, ManageBoard, AddMessage, AddMessageReply, ManageConversation
-from PloneboardMessage import PloneboardMessage
+from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, ManageBoard, AddConversation, AddComment, ManageConversation
+from PloneboardComment import PloneboardComment
 from PloneboardIndex import PloneboardIndex
-from interfaces import IConversation, IMessage
+from Products.Ploneboard.interfaces import IConversation, IComment
 
 factory_type_information = \
 ( { 'id'             : 'PloneboardConversation'
@@ -28,7 +28,7 @@ factory_type_information = \
   , 'product'        : 'Ploneboard'
   , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('PloneboardMessage', ) 
+  , 'allowed_content_types' : ('PloneboardComment', ) 
   , 'immediate_view' : 'conversation_edit_form'
   , 'aliases'        : {'(Default)':'conversation_view',
                         'view':'conversation_view'}
@@ -75,7 +75,7 @@ MAX_UNIQUEID_ATTEMPTS = 1000
 
 class PloneboardConversation(BaseBTreeFolder):
     """
-    Conversation contains messages.
+    Conversation contains comments.
     """
 
     __implements__ = (IConversation,) + tuple(BaseBTreeFolder.__implements__)
@@ -104,36 +104,36 @@ class PloneboardConversation(BaseBTreeFolder):
     
     security.declareProtected(ViewBoard, 'getConversationTitle')
     def getConversationTitle(self):
-        """Gets the title, useful to avoid manual acquisition from messages."""
+        """Gets the title, useful to avoid manual acquisition from comments."""
         return self.Title()
 
-    security.declareProtected(AddMessage, 'addMessage')
-    def addMessage( self, message_subject, message_body, creator=None ):
-        """Adds a new message with subject and body."""
-        id = self.generateId(message=1)
-        if not message_subject:
-            message_subject = self.Title()
-        kwargs = {'title' : message_subject, 
+    security.declareProtected(AddComment, 'addComment')
+    def addComment( self, comment_subject, comment_body, creator=None ):
+        """Adds a new comment with subject and body."""
+        id = self.generateId(comment=1)
+        if not comment_subject:
+            comment_subject = self.Title()
+        kwargs = {'title' : comment_subject, 
                   'creator' : creator,
-                  'text' : message_body
+                  'text' : comment_body
                   }
-        #message = PloneboardMessage(id, message_subject, message_body, creator)
-        message = PloneboardMessage(id, **kwargs)
-        self._setObject(id, message)
+        #comment = PloneboardComment(id, comment_subject, comment_body, creator)
+        comment = PloneboardComment(id, **kwargs)
+        self._setObject(id, comment)
         m = getattr(self, id)
-        m._setPortalTypeName('PloneboardMessage')
+        m._setPortalTypeName('PloneboardComment')
         m.notifyWorkflowCreated()
         return m
     
-    security.declareProtected(ViewBoard, 'getMessage')
-    def getMessage(self, message_id, default=None):
-        """Returns the message with the specified id."""
-        return self._getOb(message_id, default)
+    security.declareProtected(ViewBoard, 'getComment')
+    def getComment(self, comment_id, default=None):
+        """Returns the comment with the specified id."""
+        return self._getOb(comment_id, default)
     
-    security.declareProtected(ViewBoard, 'getMessages')
-    def getMessages(self, limit=30, offset=0, **kw):
+    security.declareProtected(ViewBoard, 'getComments')
+    def getComments(self, limit=30, offset=0, **kw):
         """
-        Retrieves the specified number of messages with offset 'offset'.
+        Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
         keys = self._index.keys()
@@ -141,12 +141,12 @@ class PloneboardConversation(BaseBTreeFolder):
             keys = keys[-limit:]
         else:
             keys = keys[-(limit + offset):-offset]
-        return map(self.getMessage, [str(self._index.get(x)) for x in keys])
+        return map(self.getComment, [str(self._index.get(x)) for x in keys])
         
-    security.declareProtected(ViewBoard, 'getNumberOfMessages')
-    def getNumberOfMessages(self):
+    security.declareProtected(ViewBoard, 'getNumberOfComments')
+    def getNumberOfComments(self):
         """
-        Returns the number of messages in this conversation.
+        Returns the number of comments in this conversation.
         """
         return len(self._index)
 
@@ -157,24 +157,24 @@ class PloneboardConversation(BaseBTreeFolder):
         """
         return len(self._index)-1
 
-    security.declareProtected(ViewBoard, 'getLastMessageDate')
-    def getLastMessageDate(self):
+    security.declareProtected(ViewBoard, 'getLastCommentDate')
+    def getLastCommentDate(self):
         """
-        Returns a DateTime corresponding to the timestamp of the last message 
+        Returns a DateTime corresponding to the timestamp of the last comment 
         for the conversation.
         """
         if len(self._index) > 0:
-            return self.getMessage(str(self._index.get(self._index.maxKey()))).creation_date
+            return self.getComment(str(self._index.get(self._index.maxKey()))).creation_date
         else:
             return None
 
-    security.declareProtected(ViewBoard, 'getLastMessageAuthor')
-    def getLastMessageAuthor(self):
+    security.declareProtected(ViewBoard, 'getLastCommentAuthor')
+    def getLastCommentAuthor(self):
         """
-        Returns the name of the author of the last message.
+        Returns the name of the author of the last comment.
         """
         if len(self._index) > 0:
-            return self.getMessage(str(self._index.get(self._index.maxKey()))).Creator()
+            return self.getComment(str(self._index.get(self._index.maxKey()))).Creator()
         else:
             return None
 
@@ -200,11 +200,11 @@ class PloneboardConversation(BaseBTreeFolder):
     ############################################################################
     # Folder methods, indexes and such
 
-    security.declareProtected(AddMessage, 'generateId')
-    def generateId(self, prefix='item', suffix='', rand_ceiling=999999999, message=0, min_id=1):
+    security.declareProtected(AddComment, 'generateId')
+    def generateId(self, prefix='item', suffix='', rand_ceiling=999999999, comment=0, min_id=1):
         """Returns an ID not used yet by this folder.
         """
-        if not message:
+        if not comment:
             return BaseBTreeFolder.generateId(self, prefix, suffix, rand_ceiling)
         else:
             tree = self._tree
@@ -239,18 +239,18 @@ class PloneboardConversation(BaseBTreeFolder):
     def setDateKey(self, id, date=DateTime()):
         """Update the _index."""
         result = self._index.setDateKey(id,date)
-        # Update messagecount on forum aswell
+        # Update commentcount on forum aswell
         if result > 0:
-            self.getForum().changeNumberOfMessages(result)
+            self.getForum().changeNumberOfComments(result)
         return result
         
     security.declareProtected(ManageConversation, 'delDateKey')
     def delDateKey(self, id):
         """Delete key from indexes. """
         result = self._index.delDateKey(id)
-        # Update messagecount on forum aswell
+        # Update commentcount on forum aswell
         if result > 0:
-            self.getForum().changeNumberOfMessages(-result)
+            self.getForum().changeNumberOfComments(-result)
         return result
 
     def _checkId(self, id, allow_dup=0):
@@ -259,31 +259,31 @@ class PloneboardConversation(BaseBTreeFolder):
     def _delOb(self, id):
         """Remove the named object from the folder.
         """
-        object = self.getMessage(id)
+        object = self.getComment(id)
         BaseBTreeFolder._delOb(self, id)
         # Update Ploneboard specific indexes
-        if IMessage.isImplementedBy(object):
+        if IComment.isImplementedBy(object):
             self.delDateKey(id)
             
     def _delObject(self, id, dp=1, recursive=0):
         """Deletes object and if recursive is true - its descendants"""
-        # We need to delete all descendants of message if recursive is true
+        # We need to delete all descendants of comment if recursive is true
         if recursive:
-            object = self.getMessage(id)
+            object = self.getComment(id)
             for msg_id in object.childIds():
                 BaseBTreeFolder._delObject(self, msg_id)
         BaseBTreeFolder._delObject(self, id)
-        # we delete ourselves if we don't have any messages
-        if self.getNumberOfMessages() == 0:
+        # we delete ourselves if we don't have any comments
+        if self.getNumberOfComments() == 0:
             self.getForum()._delObject(self.getId())
 
     # Workflow related methods - called by workflow scripts to control what to display
-    security.declareProtected(AddMessage, 'notifyPublished')
+    security.declareProtected(AddComment, 'notifyPublished')
     def notifyPublished(self):
         """ Notify about publishing, so object can be added to index """
-        self.aq_inner.aq_parent.setDateKey(self.id, self.getLastMessageDate() or DateTime())
+        self.aq_inner.aq_parent.setDateKey(self.id, self.getLastCommentDate() or DateTime())
 
-    security.declareProtected(AddMessage, 'notifyRetracted')
+    security.declareProtected(AddComment, 'notifyRetracted')
     def notifyRetracted(self):
         """ Notify about retracting, so object can be removed from index """
         self.aq_inner.aq_parent.delDateKey(self.id)

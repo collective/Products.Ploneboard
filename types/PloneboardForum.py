@@ -1,5 +1,5 @@
 """
-$Id: PloneboardForum.py,v 1.6 2004/03/30 12:52:01 limi Exp $
+$Id: PloneboardForum.py,v 1.1 2004/04/02 08:06:15 tesdal Exp $
 """
 
 from random import randint
@@ -17,13 +17,13 @@ from Products.ZCatalog.Lazy import LazyMap
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
-from config import PROJECTNAME
+from Products.Ploneboard.config import PROJECTNAME
 
-from PloneboardPermissions import ViewBoard, SearchBoard, \
-     AddForum, ManageForum, ManageBoard, AddMessage
+from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, \
+     AddForum, ManageForum, ManageBoard, AddConversation
 from PloneboardConversation import PloneboardConversation
 from PloneboardIndex import PloneboardIndex
-from interfaces import IForum, IConversation
+from Products.Ploneboard.interfaces import IForum, IConversation
 
 factory_type_information = \
 ( { 'id'             : 'PloneboardForum'
@@ -90,7 +90,7 @@ class PloneboardForum(BaseBTreeFolder):
     schema = schema
     
     _index = None
-    _message_count = None
+    _comment_count = None
 
     _moderated = 0 # 1 if moderated
 
@@ -102,7 +102,7 @@ class PloneboardForum(BaseBTreeFolder):
         self.setTitle(kwargs.get('title', ''))
         self.setDescription(kwargs.get('description', ''))
         self._index = ForumIndex()
-        self._message_count = Length()
+        self._comment_count = Length()
         self._moderated = 0
 
     security.declareProtected(ViewBoard, 'getForum')
@@ -112,19 +112,19 @@ class PloneboardForum(BaseBTreeFolder):
 
     security.declareProtected(ViewBoard, 'getForumTitle')
     def getForumTitle(self):
-        """Gets the title, useful to avoid manual acquisition from messages."""
+        """Gets the title, useful to avoid manual acquisition from comments."""
         return self.Title()
 
     security.declareProtected(ViewBoard, 'getForumDescription')
     def getForumDescription(self):
-        """Gets the description, useful to avoid manual acquisition from messages."""
+        """Gets the description, useful to avoid manual acquisition from comments."""
         return self.Description()
 
-    security.declareProtected(AddMessage, 'addConversation')
-    def addConversation(self, subject, messagesubject=None, body=None, creator=None, script=1):
+    security.declareProtected(AddConversation, 'addConversation')
+    def addConversation(self, subject, body=None, creator=None, commentsubject=None, script=1):
         """Adds a new conversation to the forum."""
-        # Add a new conversation and a message inside it.
-        # Only create message if body is not None
+        # Add a new conversation and a comment inside it.
+        # Only create comment if body is not None
         id = self.generateId(conversation=1)
         kwargs = {'title' : subject, 'creator' : creator}
         conversation = PloneboardConversation(id, **kwargs)
@@ -133,12 +133,12 @@ class PloneboardForum(BaseBTreeFolder):
         conversation._setPortalTypeName('PloneboardConversation')
         conversation.notifyWorkflowCreated()
         if body:
-            if not messagesubject:
-                messagesubject = subject
+            if not commentsubject:
+                commentsubject = subject
             if script:
-                conversation.add_message_script(messagesubject, body, creator)
+                conversation.add_comment_script(commentsubject, body, creator)
             else:
-                conversation.addMessage(messagesubject, body, creator)
+                conversation.addComment(commentsubject, body, creator)
         return conversation
 
     security.declareProtected(ViewBoard, 'getConversation')
@@ -163,14 +163,14 @@ class PloneboardForum(BaseBTreeFolder):
         """Returns the number of conversations in this forum."""
         return len(self._index)
 
-    security.declareProtected(ViewBoard, 'changeNumberOfMessages')
-    def changeNumberOfMessages(self, change):
-        self._message_count.change(change)
+    security.declareProtected(ViewBoard, 'changeNumberOfComments')
+    def changeNumberOfComments(self, change):
+        self._comment_count.change(change)
     
-    security.declareProtected(ViewBoard, 'getNumberOfMessages')
-    def getNumberOfMessages(self):
-        """Returns the number of messages to this forum."""
-        return self._message_count()
+    security.declareProtected(ViewBoard, 'getNumberOfComments')
+    def getNumberOfComments(self):
+        """Returns the number of comments to this forum."""
+        return self._comment_count()
 
     security.declareProtected(ViewBoard, 'getLastConversation')
     def getLastConversation(self):
@@ -182,20 +182,20 @@ class PloneboardForum(BaseBTreeFolder):
         else:
             return None
 
-    security.declareProtected(ViewBoard, 'getLastMessageDate')
-    def getLastMessageDate(self):
+    security.declareProtected(ViewBoard, 'getLastCommentDate')
+    def getLastCommentDate(self):
         """
-        Returns a DateTime corresponding to the timestamp of the last message 
+        Returns a DateTime corresponding to the timestamp of the last comment 
         for the forum.
         """
-        return len(self._index) and self.getLastConversation().getLastMessageDate() or None
+        return len(self._index) and self.getLastConversation().getLastCommentDate() or None
 
-    security.declareProtected(ViewBoard, 'getLastMessageAuthor')
-    def getLastMessageAuthor(self):
+    security.declareProtected(ViewBoard, 'getLastCommentAuthor')
+    def getLastCommentAuthor(self):
         """
-        Returns the name of the author of the last message.
+        Returns the name of the author of the last comment.
         """
-        return self.getLastConversation() and self.getLastConversation().getLastMessageAuthor() or None
+        return self.getLastConversation() and self.getLastConversation().getLastCommentAuthor() or None
 
 
     def isModerated(self):
@@ -210,7 +210,7 @@ class PloneboardForum(BaseBTreeFolder):
     ############################################################################
     # Folder methods, indexes and such
 
-    security.declareProtected(AddMessage, 'generateId')
+    security.declareProtected(AddConversation, 'generateId')
     def generateId(self, prefix='item', suffix='', rand_ceiling=999999999, conversation=0, min_id=1):
         """Returns an ID not used yet by this folder.
         """

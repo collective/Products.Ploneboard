@@ -9,33 +9,33 @@ from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
-from config import PROJECTNAME
+from Products.Ploneboard.config import PROJECTNAME
 
 from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
 from Products.ZCatalog.Lazy import LazyMap
 
-from PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, \
-     ManageBoard, AddMessage, AddMessageReply, EditMessage, AddAttachment, ManageMessage
+from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, \
+     ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment
 
-from interfaces import IMessage
+from Products.Ploneboard.interfaces import IComment
 
 factory_type_information = \
-( { 'id'             : 'PloneboardMessage'
-  , 'meta_type'      : 'PloneboardMessage'
-  , 'description'    : """Message holds the message data and can contain attachments."""
-  , 'icon'           : 'ploneboard_message_icon.gif'
+( { 'id'             : 'PloneboardComment'
+  , 'meta_type'      : 'PloneboardComment'
+  , 'description'    : """Comments holds the comment data and can contain attachments."""
+  , 'icon'           : 'ploneboard_comment_icon.gif'
   , 'product'        : 'Ploneboard'
   , 'global_allow'   : 0 # To avoid it being visible in add contents menu
   , 'filter_content_types' : 1
   , 'allowed_content_types' : () 
-  , 'immediate_view' : 'message_edit_form'
-  , 'aliases'        : {'(Default)':'message_view',
-                        'view':'message_view'}
+  , 'immediate_view' : 'comment_edit_form'
+  , 'aliases'        : {'(Default)':'comment_view',
+                        'view':'comment_view'}
   , 'actions'        :
     ( { 'id'            : 'view'
       , 'name'          : 'View'
-      , 'action'        : 'string:${object_url}/message_view'
+      , 'action'        : 'string:${object_url}/comment_view'
       , 'permissions'   : (ViewBoard,)
       , 'category'      : 'folder'
       }
@@ -57,25 +57,25 @@ schema = BaseBTreeFolderSchema + Schema((
               allowable_content_types=('text/html',
                                        'text/plain'),
               accessor='getText',  
-              widget = TextAreaWidget(description = "Enter message body.",
+              widget = TextAreaWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
                                       label = "Text",
                                       label_msgid = "label_text",
                                       rows = 5)),
     ))
 
-class PloneboardMessage(BaseBTreeFolder):
-    """A message contains regular text body and metadata."""
+class PloneboardComment(BaseBTreeFolder):
+    """A comment contains regular text body and metadata."""
 
-    __implements__ = (IMessage,) + tuple(BaseBTreeFolder.__implements__)
+    __implements__ = (IComment,) + tuple(BaseBTreeFolder.__implements__)
 
-    archetype_name = 'Message'
+    archetype_name = 'Comment'
     
     schema = schema
     
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
-    _in_reply_to = None   # Id to message this is a reply to
+    _in_reply_to = None   # Id to comment this is a reply to
 
     security = ClassSecurityInfo()
     
@@ -90,29 +90,29 @@ class PloneboardMessage(BaseBTreeFolder):
         self.setText(kwargs.get('text', ''))
         self._attachments_ids = []
 
-    security.declareProtected(AddMessageReply, 'addReply')
+    security.declareProtected(AddComment, 'addReply')
     def addReply(self,
-                 message_subject,
-                 message_body,
+                 comment_subject,
+                 comment_body,
                  creator=None ):
-        """Add a reply to this message."""
+        """Add a reply to this comment."""
         if not self._replies or not self._reply_count:
             self._replies = OIBTree()
             self._reply_count = Length()
 
         min_id = int(self.id) + 1
-        id = self.aq_inner.aq_parent.generateId(message=1, min_id=min_id)
-        if not message_subject:
-            message_subject = self.aq_inner.aq_parent.Title()
-        kwargs = {'title' : message_subject, 
+        id = self.aq_inner.aq_parent.generateId(comment=1, min_id=min_id)
+        if not comment_subject:
+            commen_subject = self.aq_inner.aq_parent.Title()
+        kwargs = {'title' : comment_subject, 
                   'creator' : creator,
-                  'text' : message_body
+                  'text' : comment_body
                   }
-        #message = PloneboardMessage(id, message_subject, message_body, creator)
-        message = PloneboardMessage(id, **kwargs)
-        self.aq_inner.aq_parent._setObject(id, message)
+        #comment = PloneboardComment(id, comment_subject, comment_body, creator)
+        comment = PloneboardComment(id, **kwargs)
+        self.aq_inner.aq_parent._setObject(id, comment)
         m = getattr(self.aq_inner.aq_parent, id)
-        m._setPortalTypeName('PloneboardMessage')
+        m._setPortalTypeName('PloneboardComment')
         m.notifyWorkflowCreated()
         m.setInReplyTo(self)
         # Add to replies index
@@ -122,61 +122,61 @@ class PloneboardMessage(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'inReplyTo')
     def inReplyTo(self):
         """
-        Returns message object this message is a reply to.
+        Returns comment object this comment is a reply to.
         """
         if not hasattr(self, '_in_reply_to'):
             self._in_reply_to = None
         if self._in_reply_to:
-            return self.aq_inner.aq_parent.getMessage(self._in_reply_to)
+            return self.aq_inner.aq_parent.getComment(self._in_reply_to)
         return self._in_reply_to # None
-        #return self._in_reply_to and self.aq_inner.aq_parent.getMessage(self._in_reply_to) or None
+        #return self._in_reply_to and self.aq_inner.aq_parent.getComment(self._in_reply_to) or None
 
     
-    security.declareProtected(AddMessageReply, 'setReply')
-    def setReply(self, message_id):
+    security.declareProtected(AddComment, 'setReply')
+    def setReply(self, comment_id):
         """ Updates the replies index """
         if not self._replies or not self._reply_count:
             self._replies = OIBTree()
             self._reply_count = Length()
-        if not self._replies.has_key(message_id):
-            self._replies[message_id] = 1
+        if not self._replies.has_key(comment_id):
+            self._replies[comment_id] = 1
             self._reply_count.change(1)
 
-    security.declareProtected(AddMessageReply, 'deleteReply')
-    def deleteReply(self, message_id):
-        """ Removes message from the replies index """
-        if self._replies and self._replies.has_key(message_id):
-            del self._replies[message_id]
+    security.declareProtected(AddComment, 'deleteReply')
+    def deleteReply(self, comment_id):
+        """ Removes comment from the replies index """
+        if self._replies and self._replies.has_key(comment_id):
+            del self._replies[comment_id]
             self._reply_count.change(-1)
 
-    security.declareProtected(AddMessageReply, 'setInReplyTo')
-    def setInReplyTo(self, message_or_id):
-        if type(message_or_id) == type(''):
-            self._in_reply_to = message_or_id
+    security.declareProtected(AddComment, 'setInReplyTo')
+    def setInReplyTo(self, comment_or_id):
+        if type(comment_or_id) == type(''):
+            self._in_reply_to = comment_or_id
         else:
-            self._in_reply_to = message_or_id.getId()
+            self._in_reply_to = comment_or_id.getId()
 
     security.declareProtected(ViewBoard, 'getReplies')
     def getReplies(self):
-        """Returns the messages that were replies to this one."""
+        """Returns the comments that were replies to this one."""
         if not self._replies or not self._reply_count:
             return []
         else:
-            return LazyMap(self.aq_inner.aq_parent.getMessage, self._replies.keys(), self._reply_count())
+            return LazyMap(self.aq_inner.aq_parent.getComment, self._replies.keys(), self._reply_count())
     
     security.declareProtected(ViewBoard, 'getSubject')
     def getSubject(self):
-        """Returns the subject of the message."""
+        """Returns the subject of the comment."""
         return self.Title()
     
     security.declareProtected(ViewBoard, 'getBody')
     def getBody(self):
-        """Returns the body of the message."""
+        """Returns the body of the comment."""
         return self.getText()
     
     def childIds(self, level=0):
         """
-        Returns list of ids of all child messages, excluding this message.
+        Returns list of ids of all child comments, excluding this comment.
         """
         if level == 0:
             result = []
@@ -189,7 +189,7 @@ class PloneboardMessage(BaseBTreeFolder):
         return result
    
     
-    security.declareProtected(ManageMessage, 'makeBranch')
+    security.declareProtected(ManageComment, 'makeBranch')
     def makeBranch(self):
         """"""
         # Contains mappings - old_msg_id -> new_msg_id
@@ -198,14 +198,14 @@ class PloneboardMessage(BaseBTreeFolder):
         forum = self.getConversation().getForum()
         parent = self.getConversation()
         conv = forum.addConversation(self.getSubject(), self.getBody(), script=0)
-        # here we get id of the first Message in newly created Conversation
+        # here we get id of the first Comment in newly created Conversation
         first_msg_id = conv.objectIds()[0]
 
         ids.update({self.getId() : first_msg_id})
         
-        objects = map(parent.getMessage, self.childIds())
+        objects = map(parent.getComment, self.childIds())
         for obj in objects:
-            msg = conv.getMessage(ids.get(obj.inReplyTo().getId())).addReply(obj.getSubject(), obj.getBody())
+            msg = conv.getComment(ids.get(obj.inReplyTo().getId())).addReply(obj.getSubject(), obj.getBody())
             ids.update({obj.getId() : msg.getId()})
             # Here we need to set some fields from old objects
             # What else should we update?
@@ -216,7 +216,7 @@ class PloneboardMessage(BaseBTreeFolder):
         
         parent._delObject(self.getId(), recursive=1) # delete ourselves and all our descendants
         # if conversation after branching is empty, remove it
-        if parent.getNumberOfMessages() == 0:
+        if parent.getNumberOfComments() == 0:
             forum._delObject(parent.getId())
         # we need to reindex stuff in newly created Conversation
         #for o in conv.objectValues():
@@ -228,11 +228,11 @@ class PloneboardMessage(BaseBTreeFolder):
         self.aq_inner.aq_parent.setDateKey(self.id, self.creation_date or DateTime())
         self.aq_inner.aq_parent.notifyPublished()
 
-    security.declareProtected(AddMessage, 'notifyRetracted')
+    security.declareProtected(AddComment, 'notifyRetracted')
     def notifyRetracted(self):
         """ Notify about retracting, so object can be removed from index """
         self.aq_inner.aq_parent.delDateKey(self.id)
-        if self.aq_inner.aq_parent.getNumberOfMessages() == 0:
+        if self.aq_inner.aq_parent.getNumberOfComments() == 0:
             self.aq_inner.aq_parent.notifyRetracted()
 
     security.declareProtected(ViewBoard, 'Creator')
@@ -286,7 +286,7 @@ class PloneboardMessage(BaseBTreeFolder):
     ###########################
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
-        """Return 0 or 1 if this message has attachments."""
+        """Return 0 or 1 if this comment has attachments."""
         if self._attachment_ids:
             return 1
         else:
@@ -371,6 +371,6 @@ class PloneboardMessage(BaseBTreeFolder):
     def __nonzero__(self):
         return 1
 
-registerType(PloneboardMessage, PROJECTNAME)
-Globals.InitializeClass(PloneboardMessage)
+registerType(PloneboardComment, PROJECTNAME)
+Globals.InitializeClass(PloneboardComment)
 

@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind subpath=traverse_subpath
 ##parameters=obj=None
-##title=Searches for pending messages in moderated boards
+##title=Searches for pending comments in moderated boards
 ##
 
 if obj is None:
@@ -13,7 +13,7 @@ if obj is None:
 
 query = {}
 query['review_state'] = 'pending'
-query['portal_type'] = 'Ploneboard Message'
+query['portal_type'] = 'Ploneboard Comment'
 query['path'] = '/'+ '/'.join(obj.getPhysicalPath()[1:])
 
 reqget = context.REQUEST.get

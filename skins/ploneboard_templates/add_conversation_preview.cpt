@@ -19,13 +19,13 @@
               enctype="multipart/form-data"
               tal:attributes="action template/getId" >
 
-            <div metal:use-macro="here/posting_macros/macros/message_body_start" />
+            <div metal:use-macro="here/posting_macros/macros/comment_body_start" />
     
-            <div metal:use-macro="here/posting_macros/macros/message_preview_hidden_vars" />
+            <div metal:use-macro="here/posting_macros/macros/comment_preview_hidden_vars" />
 
-            <div metal:use-macro="here/posting_macros/macros/message_preview" />
+            <div metal:use-macro="here/posting_macros/macros/comment_preview" />
 
-            <div metal:use-macro="here/posting_macros/macros/message_preview_buttons" />
+            <div metal:use-macro="here/posting_macros/macros/comment_preview_buttons" />
 
         </form>
 

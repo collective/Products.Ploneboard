@@ -20,13 +20,13 @@
 
             <fieldset>
 
-                <div metal:use-macro="here/posting_macros/macros/message_body_title" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_title" tal:omit-tag="" />
 
-                <div metal:use-macro="here/posting_macros/macros/message_body_start" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_start" tal:omit-tag="" />
     
-                <div metal:use-macro="here/posting_macros/macros/message_body_text" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_text" tal:omit-tag="" />
     
-                <div metal:use-macro="here/posting_macros/macros/message_body_buttons" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_buttons" tal:omit-tag="" />
 
             </fieldset>
 

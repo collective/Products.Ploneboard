@@ -23,11 +23,11 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h2>Add message</h2>
+        <h2>Add comment</h2>
 
         <div class="documentDescription"></div>
 
-        <div metal:use-macro="here/conversation_view/macros/view_messages" />
+        <div metal:use-macro="here/conversation_view/macros/view_comments" />
 
         <form name="edit_form"
               action=""
@@ -37,11 +37,11 @@
 
             <fieldset>
    
-                <div metal:use-macro="here/posting_macros/macros/message_body_start" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_start" tal:omit-tag="" />
 
-                <div metal:use-macro="here/posting_macros/macros/message_body_text" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_text" tal:omit-tag="" />
 
-                <div metal:use-macro="here/posting_macros/macros/message_body_buttons" tal:omit-tag="" />
+                <div metal:use-macro="here/posting_macros/macros/comment_body_buttons" tal:omit-tag="" />
 
             </fieldset>
 

@@ -1,5 +1,5 @@
 #
-# Message tests
+# Comment tests
 #
 
 import os, sys
@@ -8,13 +8,13 @@ if __name__ == '__main__':
 
 import PloneboardTestCase
 
-class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
+class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
     def testSetInReplyTo(self):
         self.loginPortalOwner()
         forum = self.portal.board.forum
         conv = forum.addConversation('subject', 'body')
-        msg = conv.addMessage('msg_subject', 'msg_body')
-        msg1 = conv.addMessage('msg_subject1', 'msg_body1')
+        msg = conv.addComment('msg_subject', 'msg_body')
+        msg1 = conv.addComment('msg_subject1', 'msg_body1')
         msg1.setInReplyTo(msg)
         self.assertEqual(msg.getId(), msg1.inReplyTo().getId())
        
@@ -23,10 +23,10 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
      
         m = conv.objectValues()[0]
-        self.assertEqual(conv.getNumberOfMessages(), 1)
+        self.assertEqual(conv.getNumberOfComments(), 1)
         r = m.addReply('reply1', 'body1')
-        self.assertEqual(conv.getNumberOfMessages(), 2)
-        # check that inReplyTo of added reply is equal to Message.id, it is in reply to
+        self.assertEqual(conv.getNumberOfComments(), 2)
+        # check that inReplyTo of added reply is equal to Comment.id, it is in reply to
         self.assertEqual(m.getId(), r.inReplyTo().getId())
         
         self.assertEqual(len(m.getReplies()), 1)
@@ -38,9 +38,9 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
      
         m = conv.objectValues()[0]
-        self.assertEqual(conv.getNumberOfMessages(), 1)
+        self.assertEqual(conv.getNumberOfComments(), 1)
         r = m.addReply('reply1', 'body1')
-        self.assertEqual(conv.getNumberOfMessages(), 2)
+        self.assertEqual(conv.getNumberOfComments(), 2)
         
         m.deleteReply(r.getId())
         self.assertEqual(len(m.getReplies()), 0)
@@ -54,16 +54,16 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         m = conv.objectValues()[0]
         r = m.addReply('reply1', 'body1')
         r1 = r.addReply('reply2', 'body2')
-        self.assertEqual(conv.getNumberOfMessages(), 3)
+        self.assertEqual(conv.getNumberOfComments(), 3)
         self.assertEqual(forum.getNumberOfConversations(), 1)
         
         r.makeBranch()
         
-        self.assertEqual(conv.getNumberOfMessages(), 1)
+        self.assertEqual(conv.getNumberOfComments(), 1)
         self.assertEqual(forum.getNumberOfConversations(), 2)
         conv2 = forum.getConversation('2')
         self.failIfEqual(conv2.getId(), conv.getId())
-        self.assertEqual(conv2.getNumberOfMessages(), 2)
+        self.assertEqual(conv2.getNumberOfComments(), 2)
         
     def testAddAttachment(self):
         self.loginPortalOwner()
@@ -71,16 +71,16 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         msg = conv.objectValues()[0]
         
         self.assertEqual(msg.getNumberOfAttachments(), 0)
-        msg.addAttachment(title='message', file='./PloneboardMessage.py')
+        msg.addAttachment(title='comment', file='./PloneboardComment.py')
         self.assertEqual(msg.getNumberOfAttachments(), 1)
-        self.assertEqual(msg.getAttachment(0).title, 'message')
+        self.assertEqual(msg.getAttachment(0).title, 'comment')
         
     def testRemoveAttachment(self):
         self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
       
-        msg.addAttachment(title='message', file='./PloneboardMessage.py')
+        msg.addAttachment(title='comment', file='./PloneboardComment.py')
         self.assertEqual(msg.getNumberOfAttachments(), 1)
         msg.removeAttachment(index=0)
         self.assertEqual(msg.getNumberOfAttachments(), 0)
@@ -90,8 +90,8 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
         msg = conv.objectValues()[0]
       
-        msg.addAttachment(title='message', file='./PloneboardMessage.py')
-        self.assertEqual(msg.getAttachment(index=0).title, 'message')
+        msg.addAttachment(title='comment', file='./PloneboardComment.py')
+        self.assertEqual(msg.getAttachment(index=0).title, 'comment')
         old_data = str(msg.getAttachment(index=0))
         msg.changeAttachment(index=0, title='conv', file='./PloneboardConversation.py')
         self.assertEqual(msg.getAttachment(index=0).title, 'conv')
@@ -102,11 +102,11 @@ class TestPloneboardMessage(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
         msg = conv.objectValues()[0]
       
-        msg.addAttachment(title='message', file='./PloneboardMessage.py')
-        msg.addAttachment(title='message1', file='./PloneboardConversation.py')
+        msg.addAttachment(title='comment', file='./PloneboardComment.py')
+        msg.addAttachment(title='comment1', file='./PloneboardConversation.py')
         self.assertEqual(len(msg.getAttachments()), 2)
-        self.failUnless('message' in [v.title for v in msg.getAttachments()])
-        self.failUnless('message1' in [v.title for v in msg.getAttachments()])
+        self.failUnless('comment' in [v.title for v in msg.getAttachments()])
+        self.failUnless('comment1' in [v.title for v in msg.getAttachments()])
     
     def testChildIds(self):
         self.loginPortalOwner()
@@ -134,5 +134,5 @@ else:
     import unittest
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestPloneboardMessage))
+        suite.addTest(unittest.makeSuite(TestPloneboardComment))
         return suite

@@ -2,8 +2,8 @@ from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
 from Products.Ploneboard.Extensions.Install import install as installPloneboard
-from Products.Ploneboard.Ploneboard import Ploneboard
-from Products.Ploneboard.PloneboardForum import PloneboardForum
+from Products.Ploneboard.types.Ploneboard import Ploneboard
+from Products.Ploneboard.types.PloneboardForum import PloneboardForum
 from Products.CMFPlone.tests import PloneTestCase
 import time
 import utils
@@ -27,7 +27,7 @@ class PloneboardTestCase(PloneTestCase.PloneTestCase):
             self.portal._setObject('board', Ploneboard('board'))
             self.portal.board._setObject('forum', PloneboardForum('forum'))
             self.catalog = self.portal.board.getInternalCatalog()
-        elif className == 'TestPloneboardMessage':
+        elif className == 'TestPloneboardComment':
             self.portal._setObject('board', Ploneboard('board'))
             self.portal.board._setObject('forum', PloneboardForum('forum'))
             self.conv = self.portal.board.forum.addConversation('conv1', 'conv1 body')
