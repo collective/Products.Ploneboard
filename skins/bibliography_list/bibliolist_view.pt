@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+            define="bl_tool here/portal_bibliolist;
+                    style here/getPresentationStyle;
+                    field python:here.getField('references_list');
+                    uids python:getattr(here, field.edit_accessor)();
+                    list_layout here/getListingLayout|nothing;
+                    formatted_list python:bl_tool.formatList(uids, style)" >
+
+        <h1 tal:content="here/title_or_id" class="documentFirstHeading">
+          Title or id
+        </h1>
+    
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+    
+        <div class="documentDescription"
+             tal:content="here/Description">
+            description
+        </div>
+    
+        <ul tal:condition="python:list_layout=='bulleted'">
+          <tal:block repeat="ref formatted_list">
+          <li tal:content="structure ref" />
+          </tal:block>
+        </ul>
+  
+        <ol tal:condition="python:list_layout=='ordered'">
+          <tal:block repeat="ref formatted_list">
+          <li tal:content="structure ref" />
+          </tal:block>
+        </ol>
+  
+        <div tal:repeat="ref formatted_list"
+             tal:condition="python:list_layout=='lines'">
+          <span tal:replace="structure ref" />
+        </div>
+  
+        <table class="listing" tal:condition="python:list_layout=='table'">
+          <thead>
+            <tr>
+              <th class="nosort" i18n:translate="header_bibrefs_listing">
+                Bibliography References
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tal:block repeat="ref formatted_list">
+            <tr tal:define="oddrow repeat/ref/odd;"
+                tal:attributes="class python:test(oddrow, 'even', 'odd')">
+              <td tal:content="structure ref" />
+            </tr>
+            </tal:block>
+          </tbody>
+        </table>
+
+        <div metal:use-macro="here/document_byline/macros/byline">
+          Get the byline - contains details about author and modification date.
+        </div>
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
+

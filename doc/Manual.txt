@@ -115,7 +115,10 @@ Create Custom (Through The Web) Bibliographycal Styles
   After clicking the 'Save' button, you are redirected to the 'view' page
   of your Biblio Style. On that page you can verify the result with an
   example of each Bibliography Reference Type handled by
-  CMFBibliographyAT.
+  CMFBibliographyAT. If you want to customize the examples list, you only
+  need to customize the Python script called 'dummy_refs.py'. You can do
+  it Through The Web from the portal_skins Tool in the ZMI, or on the File
+  System (like any FSPythonScript).
 
   You are now able to select your new Bibliographycal Style from the
   'edit' page of your Biblio List. If you do so, all your references will

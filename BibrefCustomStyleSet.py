@@ -12,6 +12,8 @@
     each type of reference to have its own presentation format.
 """
 
+from AccessControl import ClassSecurityInfo
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
@@ -77,19 +79,24 @@ class BibrefCustomStyleSet(BaseContent):
     actions = (
         {'id'          : 'view',
          'name'        : 'View',
-         'action'      : 'string:${object_url}/bibrefcustomstyle_view',
+         'action'      : 'string:${object_url}/bibrefstyle_view',
          'permissions' : (CMFCorePermissions.View,)
          },
                )
 
+    security = ClassSecurityInfo()
+
+    security.declareProtected(CMFCorePermissions.View, 'vocabCustomStyleSel')
     def vocabCustomStyleSel(self):
         """ values for the default bibref style """
         return self.buildVocab()
 
+    security.declareProtected(CMFCorePermissions.View, 'vocabCustomStyleDef')
     def vocabCustomStyleDef(self):
         """ values for each specific bibtex type's style """
         return self.buildVocab(('Default','Default'))
 
+    security.declarePrivate('buildVocab')
     def buildVocab(self, default_value=None):
         """ build a DisplayList based on existing styles """
         if default_value:
@@ -102,32 +109,33 @@ class BibrefCustomStyleSet(BaseContent):
             vocab.append(style)
         return DisplayList(tuple(vocab))
 
-    def formatList(self, objs):
-        """ render a formatted bibliography references list
+    security.declarePrivate('formatDictionnary')
+    def formatDictionnary(self, refValues):
+        """ formats a bibref dictionnary
         """
-        formatted_list = []
+        field = self.getField('%s Style' %refValues['meta_type'].replace('Reference', ' Reference'))
+        style = getattr(self, field.accessor)()
+        if style.lower() == 'default':
+            style = self.getDefaultStyle()
         bltool = getToolByName(self, 'portal_bibliolist')
-        for obj in objs:
-            uid = (obj.UID(),)
-            format = getattr(self, obj.meta_type.replace('Reference', ' Reference') + ' Style')
-            formatted_list.append(bltool.formatList(uid, format)[0])
-        return formatted_list
+        return bltool.formatDicoRef(refValues, style)
 
+    security.declareProtected(CMFCorePermissions.View, 'formatDummyList')
     def formatDummyList(self):
         """ renders a formatted bibref dummy list
             only used for display in custom style view
         """
         bltool = getToolByName(self, 'portal_bibliolist')
-        default_style = self.getDefaultStyle()
         formatted_list = []
         for ref in self.dummy_refs():
-            ref_type = ref['ref_type']
-            field = self.getField(ref_type+' Reference Style')
+            field = self.getField('%s Reference Style' %ref['ref_type'])
             style = getattr(self, field.accessor)()
             if style.lower() == 'default':
-                style = default_style
+                style = self.getDefaultStyle()
             result = bltool.formatDicoRef(ref, style)
-            formatted_list.append({'type':ref_type+' Reference', 'result':result})
+            formatted_list.append(
+                {'type':ref['ref_type']+' Reference', 'result':result}
+                                  )
         return formatted_list
 
 registerType(BibrefCustomStyleSet)

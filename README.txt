@@ -66,6 +66,10 @@ Installation
 
     - Function Name: install
 
+Upgrade
+
+  - If you upgrade from version 0.2, you may have to reinstall the product with the portal_quickinstaller.
+
 
 Documentation
 
@@ -92,17 +96,19 @@ Changes
 
   * complete translation (i18n) support.
 
+  * Added security declarations where needed.
+
   * Better Documentation.
 
 To Do
 
   * Batch view for references widget.
 
-  * Reference Browser support (ATReferenceBrowserWidget might be useful here)
+  * Reference Browser support (ATReferenceBrowserWidget might be useful here).
 
   * Unit testing !!
 
-  * Security: some functions still have no security declaration, hunting is open.
+  * Export formatted lists in rtf.
 
   * More BibrefStyles to come: We'll have to write more specific styles in order to meet the needs of our scientific staff.
 

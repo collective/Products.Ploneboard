@@ -11,6 +11,8 @@
 """ BibliographyList: personal list of bibliographic references
 """
 
+from AccessControl import ClassSecurityInfo
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
@@ -88,6 +90,11 @@ class BibliographyList(BaseContent):
     schema = schema
 
     actions = (
+        {'id'          : 'view',
+         'name'        : 'View',
+         'action'      : 'string:${object_url}/bibliolist_view',
+         'permissions' : (CMFCorePermissions.View,)
+         },
         {'id'          : 'listdownload',
          'name'        : 'Download',
          'action'      : 'listDownloadForm',
@@ -95,7 +102,9 @@ class BibliographyList(BaseContent):
          'category'    : 'object',
          },
                )
+    security = ClassSecurityInfo()
 
+    security.declareProtected(CMFCorePermissions.View, 'searchMatchingReferences')
     def searchMatchingReferences(self, searchterm):
         """ list existing references but rejects those already referenced
         """
@@ -107,6 +116,7 @@ class BibliographyList(BaseContent):
                    if r.getObject().UID() not in value]
         return refList
     
+    security.declareProtected(CMFCorePermissions.View, 'vocabCustomStyle')
     def vocabCustomStyle(self):
         """ build a DisplayList based on existing styles
         """

@@ -14,9 +14,7 @@
 from Interface import Interface
 from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
-from OFS.Folder import Folder
 from OFS.SimpleItem import SimpleItem
-import Products
 
 
 class IBibrefStyle(Interface):

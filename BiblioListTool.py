@@ -16,7 +16,7 @@ from AccessControl import ClassSecurityInfo
 from OFS.Folder import Folder
 
 # CMF stuff
-from Products.CMFCore.CMFCorePermissions import View, ManagePortal
+from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 
@@ -39,7 +39,6 @@ class BiblioListTool(UniqueObject, Folder):
     meta_type = 'BiblioList Tool'
 
     security = ClassSecurityInfo()
-    security.declareObjectProtected(View)
 
     manage_options = (
         (Folder.manage_options[0],)
@@ -60,7 +59,7 @@ class BiblioListTool(UniqueObject, Folder):
                       in x.get('interfaces', []),
                       Products.meta_types)
 
-    security.declarePublic('getBibrefStyleNames')
+    security.declarePrivate('getBibrefStyleNames')
     def getBibrefStyleNames(self):
         """ returns a list with the names of the 
             available bibref styles
@@ -68,6 +67,7 @@ class BiblioListTool(UniqueObject, Folder):
         return [bibrefStyle.getFormatName()
                 for bibrefStyle in self.objectValues()]
 
+    security.declareProtected(CMFCorePermissions.View, 'formatList')
     def formatList(self, uids, style):
         """ renders BibliographyList referenced objects
             in the specified style
@@ -76,19 +76,16 @@ class BiblioListTool(UniqueObject, Folder):
         objs = [at_tool.lookupObject(uid) for uid in uids]
         return self.formatRefs(objs, style)
 
+    security.declarePrivate('formatRefs')
     def formatRefs(self, objs, style):
         """ renders a formatted bibliography references list
         """
-        unformatted_list = []
-        for obj in objs:
-            refValues = self.getEntryDict(obj)
-            unformatted_list.append(refValues)
-        objs=self.sortList(unformatted_list)
-        formatted_list = []
-        for obj in objs:
-            formatted_list.append(self.formatDicoRef(obj, style))
+        uflist = [self.getEntryDict(obj) for obj in objs]
+        formatted_list = [self.formatDicoRef(obj, style)
+                          for obj in self.sortList(uflist)]
         return tuple(formatted_list)
 
+    security.declarePrivate('sortList')
     def sortList(self, objs):
         """ sorts a list on lastname and publicationyear.
         """
@@ -96,6 +93,7 @@ class BiblioListTool(UniqueObject, Folder):
         objs.sort(self.cmpLName)
         return objs
 
+    security.declarePrivate('cmpLName')
     def cmpLName(self,obj_a,obj_b):
         """ compares 2 objects on their publication_year
         """
@@ -106,20 +104,24 @@ class BiblioListTool(UniqueObject, Folder):
         else: 
             return -1
 
+    security.declarePrivate('cmpYear')
     def cmpYear(self,obj_a,obj_b):
         """ compares 2 objects on their publication_year
         """
         return (obj_a.get('publication_year') > obj_a.get('publication_year'))
 
+    security.declarePrivate('formatDicoRef')
     def formatDicoRef(self, refValues, style):
-        """ renders a Bibliography reference dictionnary
-            in the specified style
+        """ returns a Bibliography Reference
+            rendered in the specified style
+            refValues must be a python dictionnary
         """
         bibrefStyle = self.getBibrefStyle(style)
         if bibrefStyle:
             return bibrefStyle.formatDictionnary(refValues)
         return 'The Selected Bibref Style could not be found.'
 
+    security.declarePrivate('getBibrefStyle')
     def getBibrefStyle(self, style):
         """ returns the formatter for the specified style
         """
@@ -134,6 +136,7 @@ class BiblioListTool(UniqueObject, Folder):
                 return bibrefStyle
             except: return None
 
+    security.declarePrivate('findBibrefStyles')
     def findBibrefStyles(self):
         """ used for building style selection vocabularies
         """
@@ -152,6 +155,7 @@ class BiblioListTool(UniqueObject, Folder):
                 styles.append((obj.UID(),obj.title_or_id()+' (Custom Style Set)'))
         return tuple(styles)
 
+    security.declarePrivate('getEntryDict')
     def getEntryDict(self, entry):
         """ 
         """

@@ -12,6 +12,8 @@
     Presentation format to convert a bibliographic references list
     in a html format ready for publishing
 """
+from AccessControl import ClassSecurityInfo
+
 from Products.CMFCore import CMFCorePermissions
 from Products.CMFCore.utils import getToolByName
 
@@ -260,11 +262,14 @@ class BibrefCustomStyle(BaseContent):
     actions = (
         {'id'          : 'view',
          'name'        : 'View',
-         'action'      : 'string:${object_url}/bibrefcustomstyle_view',
+         'action'      : 'string:${object_url}/bibrefstyle_view',
          'permissions' : (CMFCorePermissions.View,)
          },
                )
 
+    security = ClassSecurityInfo()
+
+    security.declarePrivate('formatDictionnary')
     def formatDictionnary(self, refValues):
         """ formats a bibref dictionnary
         """
@@ -329,6 +334,7 @@ class BibrefCustomStyle(BaseContent):
         formatstring = formatstring.replace('EsCaPe', '%')
         return formatstring
 
+    security.declarePrivate('formatDictionnary')
     def formatAuthor(self, author):
         """ format single author """
         format=self.nameOrder
@@ -344,6 +350,7 @@ class BibrefCustomStyle(BaseContent):
                 format = '<a href="%s">%s</a>' %(url, format)
         return format.replace('  ', ' ')
 
+    security.declarePrivate('formatDictionnary')
     def formatAttribute(self, stringvar=None, format=None):
         """ Transforms a string into a reformatted string """
         if not stringvar:
@@ -384,6 +391,7 @@ class BibrefCustomStyle(BaseContent):
 
         return stringvar.strip()
 
+    security.declareProtected(CMFCorePermissions.View, 'formatDummyList')
     def formatDummyList(self):
         """ renders a formatted bibref dummy list
             only used for display in custom style view
@@ -396,9 +404,7 @@ class BibrefCustomStyle(BaseContent):
             formatted_list.append({'type':ref.get('ref_type')+' Reference', 'result':result})
         return formatted_list
 
-    def getCustomDisplayConvensions(self):
-        return CUSTOM_DISPLAY_CONVENSIONS
-
+    security.declareProtected(CMFCorePermissions.View, 'displayConventions')
     def displayConventions(self):
         """ return a display list
         """
@@ -406,8 +412,9 @@ class BibrefCustomStyle(BaseContent):
                                for sign in CUSTOM_DISPLAY_CONVENTIONS]
         return DisplayList(display_conventions)
 
+    security.declareProtected(CMFCorePermissions.View, 'displayConventionsRows')
     def displayConventionsRows(self):
-        """ XXX to be rewritten !!! """
+        """ XXX to be rewritten in a more dynamical way!!! """
         return CUSTOM_DISPLAY_CONVENTIONS_ROWS
 
 registerType(BibrefCustomStyle)
