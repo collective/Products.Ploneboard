@@ -59,12 +59,12 @@ class IInstalledProduct(Interface):
     rightslots = Attribute('types','default: []')
 
     def __init__(id,types=[],skins=[],actions=[],portalobjects=[],
-        workflows=[],leftslots=[],rightslots=[],logmsg='',status='installed',
+        workflows=[],leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',
         error=0,locked=0, hidden=0):
         ''' constructor '''
         
     def update(types=[],skins=[],actions=[],portalobjects=[],workflows=[],
-        leftslots=[],rightslots=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
+        leftslots=[],rightslots=[],registrypredicates=[],logmsg='',status='installed',error=0,locked=0,hidden=0):
         ''' updates the product attributes '''
         
     def log(logmsg):
@@ -85,7 +85,7 @@ class IInstalledProduct(Interface):
     def getTranscriptAsText():
         ''' return the product's install log as plain text '''
         
-    def uninstall(cascade=['types','skins','actions','portalobjects','workflows','slots'],REQUEST=None):
+    def uninstall(cascade=['types','skins','actions','portalobjects','workflows','slots','registrypredicates'],REQUEST=None):
         '''uninstalls the prod and removes its deps
            the parameter 'cascade' specifies what should be deleted while uninstalling the product
            
