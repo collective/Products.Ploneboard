@@ -18,7 +18,7 @@
 #
 """
 
-$Id: ATFile.py,v 1.5 2004/03/20 16:08:53 tiran Exp $
+$Id: ATFile.py,v 1.6 2004/03/27 22:21:36 tiran Exp $
 """ 
 __author__  = ''
 __docformat__ = 'restructuredtext'
@@ -164,18 +164,18 @@ class ATFile(BaseContent):
         stEnc = getattr(sp, 'default_charset', 'utf-8')
         st    = self.SearchableText()
         source+=unicode(st, stEnc).encode('utf-8')
-
+        
         # get the file and try to convert it to utf8 text
         ptTool = getToolByName(self, 'portal_transforms')
         f  = self.getFile()
-        mt = f.getContentType()
         if f:
+            mt = f.getContentType()
             try:
-                result = ptTool.convertTo('text/plain', str(f), mimetype=mt)
+                result = ptTool.convertTo('text/plain', str(f), mimetype=mt).getData()
             except TransformException:
                 result = ''
             source+=result
 
-        return source, mimetype, encoding
+        return (source, mimetype, encoding)
  
 registerType(ATFile, PROJECTNAME)
