@@ -293,7 +293,7 @@ def setupPloneboardForumWorkflow(wf):
         new_state_id='freeforall',
         # The publish_script is added to scripts folder by the Install script
         after_script_name='make_unmoderated_script',
-        actbox_name='Anarchy',
+        actbox_name='Freeforall',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':p_manage})
 

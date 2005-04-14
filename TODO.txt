@@ -46,9 +46,6 @@ Workflows and Security
     - Can't edit posted comment (actually a feature, make sure it works if you 
         change permissions)
     
-    - A forum starts in 'freeforall' but if it's moderated or memberposting and 
-        you want to send it back, the action says 'anarchy'.
-
 ================
 Template changes
 ================
