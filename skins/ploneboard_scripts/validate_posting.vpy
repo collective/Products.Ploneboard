@@ -9,16 +9,13 @@
 ##title=Validates a posting
 ##
 
-validator = context.portal_form.createForm()
-validator.addField('text', 'String', required=1)
-errors = validator.validate(context.REQUEST)
 
-for fieldid, error in errors.items():
-    state.setError(fieldid, error)
+text = context.REQUEST.get('text', '');
 
+if len(text) <= 0:
+	state.setError("text", "No content entered", new_status="failure")
+	
 if state.getErrors():
-    return state.set(status='failure', portal_status_message='Please correct the indicated errors.')
-if context.REQUEST.get('edit',[]):
-    return state.set(status='failure')
-else:
-    return state
+    return state.set(portal_status_message='Please correct the indicated errors.')
+
+return state
