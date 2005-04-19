@@ -57,13 +57,6 @@
     position: relative;
 }
 
-/* Fix for IE float bug */
-* html .boardComment {
-    float: left;
-    clear: both;
-    width: 99%;
-}
-
 .boardCommentDetails {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: none none &dtml-borderStyle; none;

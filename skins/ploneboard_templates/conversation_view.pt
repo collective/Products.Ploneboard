@@ -35,7 +35,7 @@
              metal:define-macro="view_comments"
              tal:define="comments here/getComments">	
 
-            <div class="boardComment" tal:repeat="comment comments">
+            <div class="boardComment visualIEFloatFix" tal:repeat="comment comments">
 
             <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 

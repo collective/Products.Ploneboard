@@ -23,7 +23,7 @@
         description
         </div>
 
-        <div class="boardComment"
+        <div class="boardComment visualIEFloatFix"
              tal:define="comment python:context">
              
             <metal:comment metal:define-macro="comment">
