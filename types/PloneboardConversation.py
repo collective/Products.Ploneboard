@@ -1,5 +1,5 @@
 """
-$Id: PloneboardConversation.py,v 1.3 2004/09/27 10:32:54 tesdal Exp $
+$Id$
 """
 
 from random import randint
@@ -49,9 +49,16 @@ factory_type_information = \
   },
 )
 
-schema = BaseBTreeFolderSchema + Schema((
+PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
+PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
+PBConversationBaseBTreeFolderSchema['title'].write_permission = AddConversation
+
+
+schema = PBConversationBaseBTreeFolderSchema + Schema((
     TextField('description',
               searchable = 1,
+              read_permission = ViewBoard,
+              write_permission = AddConversation,
               default_content_type = 'text/plain',
               default_output_type = 'text/html',
               widget = TextAreaWidget(description = "Enter a brief description of the conversation.",

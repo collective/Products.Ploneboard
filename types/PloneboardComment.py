@@ -49,14 +49,21 @@ factory_type_information = \
   },
 )
 
-schema = BaseBTreeFolderSchema + Schema((
+PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
+PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
+PBCommentBaseBTreeFolderSchema['title'].write_permission = AddComment
+
+
+schema = PBCommentBaseBTreeFolderSchema + Schema((
     TextField('text',
               searchable = 1,
               default_content_type = 'text/html',
               default_output_type = 'text/html',
               allowable_content_types=('text/html',
                                        'text/plain'),
-              accessor='getText',  
+              accessor='getText',
+              read_permission = ViewBoard,
+              write_permission = AddComment,
               widget = TextAreaWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
                                       label = "Text",
