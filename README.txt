@@ -19,3 +19,4 @@ Overview
     **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with permission
 
     **Kapil Thangavelu** -- Initial architecture
+
