@@ -113,7 +113,7 @@ class PloneboardComment(BaseBTreeFolder):
         min_id = int(self.id) + 1
         id = self.aq_inner.aq_parent.generateId(comment=1, min_id=min_id)
         if not comment_subject:
-            commen_subject = self.aq_inner.aq_parent.Title()
+            comment_subject = self.aq_inner.aq_parent.Title()
         kwargs = {'title' : comment_subject, 
                   'creator' : creator,
                   'text' : comment_body
@@ -346,7 +346,7 @@ class PloneboardComment(BaseBTreeFolder):
         """ """
         return getattr(self, self._attachments_ids[index])
     
-    security.declareProtected(AddAttachment, 'listAttachments')
+    security.declareProtected(AddAttachment, 'getAttachments')
     def getAttachments(self):
         """ """
         return map(lambda id, this=self: getattr(this, id), self._attachments_ids)

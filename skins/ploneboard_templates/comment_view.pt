@@ -62,16 +62,19 @@
                 
                 <div class="visualClear"></div>
 
-                <div class="boardCommentActions" >
+                <div class="boardCommentActions"
+                     tal:define="canComment python:checkPermission('Ploneboard: Add Comment', comment)" >
                 
                     <form tal:attributes="action string:${comment/absolute_url}/add_comment_form"
-                          tal:condition="not: isAnon">
+                          tal:condition="canComment">
                         <input class="standalone"
                                type="submit" 
                                value="Reply to this" 
                                />
 
                     </form>
+
+                    <tal:choice condition="not:canComment">
 
                     <form tal:condition="isAnon"
                           tal:attributes="action python:'%s/login_form?came_from=%s' %
@@ -84,6 +87,14 @@
                                i18n:attributes="value"
                                />
                     </form>
+
+                    <p class="discreet"
+                       tal:condition="not: isAnon">
+                       Sorry, you do not have permission to add comments.
+                    </p>
+
+
+                    </tal:choice>
 
                 </div>
 

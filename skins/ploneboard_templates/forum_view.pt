@@ -33,13 +33,16 @@
         No conversations in this forum yet.     
         </p>
 
+       <tal:block define="canStartConverstation python:checkPermission('Ploneboard: Add Comment', here)">
+
         <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
-              tal:condition="not: isAnon">
+              tal:condition="canStartConverstation">
            <input class="standalone"
                   type="submit" 
                   value="Start a new Conversation" />
         </form>
 
+        <tal:choice condition="not: canStartConverstation">
         <form tal:condition="isAnon"
               tal:attributes="action python:'%s/login_form?came_from=%s' %
                                             (here.portal_url(),
@@ -51,6 +54,14 @@
                    i18n:attributes="value"
                    />
         </form>
+
+        <p class="discreet"
+           tal:condition="not: isAnon">
+        Sorry, you do not have permission to start a new Conversation
+        </p>
+
+        </tal:choice>
+        </tal:block>
 
         <table class="listing"
                tal:condition="conversations">
