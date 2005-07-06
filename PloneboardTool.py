@@ -8,6 +8,7 @@ from PloneboardPermissions import AddAttachment
 from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
 from Products.Ploneboard.utils import importModuleFromName
+from Acquisition import aq_base
 
 class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     id = 'portal_ploneboard'
@@ -29,7 +30,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         if hasattr(m, 'registerDataProvider'):
             dprovider = m.registerDataProvider()
         
-        self.transforms_config[name] = {'transform' : transform, 
+        self.transforms_config[name] = {'transform' : aq_base(transform),
                                         'dataprovider' : dprovider,
                                         'transform_status' : 1}
 
