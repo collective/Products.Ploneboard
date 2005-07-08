@@ -73,22 +73,17 @@ def setupAdditionalTypes(self, out):
         out.write('Type "%s" registered with the types tool\n' % (f['id']))
 
 def registerNavigationTreeSettings(self, out):
-    mtool = getToolByName(self, 'portal_migration')
-    plone_version = mtool.getInstanceVersion()
-    # plone_version is now something like '2.1-beta1 (svn/unreleased)'
-    version_num = float(plone_version[:3])
-    if version_num < 2.1:
-        data = ['PloneboardConversation','PloneboardComment']
-        pp=getToolByName(self,'portal_properties')
-        p = getattr(pp , 'navtree_properties', None)
-        mdntl = list(p.getProperty('metaTypesNotToList', []))
-        if not mdntl:
-            p._setProperty('metaTypesNotToList', data)
-        else:
-            for t in data:
-                if t not in mdntl:
-                    mdntl.append(t)
-            p._updateProperty('metaTypesNotToList', mdntl)
+    data = ['PloneboardConversation','PloneboardComment']
+    pp=getToolByName(self,'portal_properties')
+    p = getattr(pp , 'navtree_properties', None)
+    mdntl = list(p.getProperty('metaTypesNotToList', []))
+    if not mdntl:
+        p._setProperty('metaTypesNotToList', data)
+    else:
+        for t in data:
+            if t not in mdntl:
+                mdntl.append(t)
+        p._updateProperty('metaTypesNotToList', mdntl)
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
