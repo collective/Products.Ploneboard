@@ -1,8 +1,5 @@
-try:
-    from Interface import Interface
-except ImportError:
-    # for Zope versions before 2.6.0
-    from Interface import Base as Interface
+# Dependency on Zope 2.8.x (or greater) or Five
+from zope.interface import Interface
 
 class IPloneboard(Interface):
     """
@@ -15,6 +12,11 @@ class IPloneboard(Interface):
         """
         The method add_forum takes id, title and description and creates a
         forum inside the board.
+        """
+
+    def getForum(forum_id):
+        """
+        Return the forum for forum_id, or None.
         """
 
     def getForums():
@@ -114,6 +116,21 @@ class IConversation(Interface):
         Returns a DateTime corresponding to the timestamp of the last comment 
         for the conversation.
         """
+
+    def getThreadedComments():
+        """
+        Returns a sequence of dictionaries like:
+
+            [ { 'comment' : obj, 'depth' : int }, ]
+
+        The sequence is such that children come before siblings.
+        """
+
+    def getFirstComment():
+        """
+        Returns the first (aka root) comment in this IConversation.
+        """
+
 
 class IComment(Interface):
     """

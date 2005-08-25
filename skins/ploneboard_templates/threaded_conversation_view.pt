@@ -41,13 +41,18 @@
 
         <div class="boardConversation"
              metal:define-macro="view_comments"
-             tal:define="comments here/getComments">	
+             tal:define="comments here/getThreadedComments">	
 
-            <div class="boardComment visualIEFloatFix" tal:repeat="comment comments">
+            <tal:block repeat="each comments">
+            <div class="boardComment visualIEFloatFix"
+                 tal:define="comment nocall:each/object;
+                             indent python:each['depth']*2;"
+                 tal:attributes="style string:margin-left:${indent}em">
 
             <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
             </div>
+            </tal:block>
         </div>
 
         <div class="documentByLine">

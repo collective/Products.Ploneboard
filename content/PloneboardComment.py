@@ -1,3 +1,6 @@
+# zope3, zope 2.8, or Five dependency
+from zope.interface import implements
+
 import random
 import Globals
 from AccessControl import ClassSecurityInfo
@@ -15,39 +18,10 @@ from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
 from Products.ZCatalog.Lazy import LazyMap
 
-from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, \
+from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum, \
      ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment
 
 from Products.Ploneboard.interfaces import IComment
-
-factory_type_information = \
-( { 'id'             : 'PloneboardComment'
-  , 'meta_type'      : 'PloneboardComment'
-  , 'description'    : """Comments holds the comment data and can contain attachments."""
-  , 'icon'           : 'ploneboard_comment_icon.gif'
-  , 'product'        : 'Ploneboard'
-  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
-  , 'filter_content_types' : 1
-  , 'allowed_content_types' : () 
-  , 'immediate_view' : 'comment_edit_form'
-  , 'aliases'        : {'(Default)':'comment_view',
-                        'view':'comment_view'}
-  , 'actions'        :
-    ( { 'id'            : 'view'
-      , 'name'          : 'View'
-      , 'action'        : 'string:${object_url}/comment_view'
-      , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'folder'
-      }
-    , { 'id'            : 'edit'
-      , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/base_edit'
-      , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'folder'
-      }
-    )
-  },
-)
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -74,11 +48,33 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
 class PloneboardComment(BaseBTreeFolder):
     """A comment contains regular text body and metadata."""
 
-    __implements__ = (IComment,) + tuple(BaseBTreeFolder.__implements__)
+    implements(IComment) # XXX IBaseBTreeFolder
 
+    meta_type = 'PloneboardComment'
     archetype_name = 'Comment'
     
     schema = schema
+
+    content_icon = 'ploneboard_comment_icon.gif'
+    filter_content_types = 1
+    allowed_content_types = ()
+    global_allow = 0 # To avoid being visible in the add menu
+
+    actions = (
+            { 'id'          : 'view'
+            , 'name'        : 'View'
+            , 'action'      : 'string:$object_url'
+            , 'permissions' : (ViewBoard,)
+            },
+        )
+
+    aliases = \
+        {
+              '(Default)'             : '(dynamic view)'
+            , 'view'                  : '(dynamic view)'
+            , 'discussion_reply_form' : 'add_comment_form'
+            , 'deleteDiscussion'      : 'retractComment'
+        }
     
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
@@ -106,22 +102,23 @@ class PloneboardComment(BaseBTreeFolder):
                  comment_body,
                  creator=None ):
         """Add a reply to this comment."""
+        conv = self._getConversation()
         if not self._replies or not self._reply_count:
             self._replies = OIBTree()
             self._reply_count = Length()
 
         min_id = int(self.id) + 1
-        id = self.aq_inner.aq_parent.generateId(comment=1, min_id=min_id)
+        id = conv.generateId(comment=1, min_id=min_id)
         if not comment_subject:
-            comment_subject = self.aq_inner.aq_parent.Title()
+            comment_subject = conv.Title()
         kwargs = {'title' : comment_subject, 
                   'creator' : creator,
                   'text' : comment_body
                   }
         #comment = PloneboardComment(id, comment_subject, comment_body, creator)
         comment = PloneboardComment(id)
-        self.aq_inner.aq_parent._setObject(id, comment)
-        m = getattr(self.aq_inner.aq_parent, id)
+        conv._setObject(id, comment)
+        m = getattr(conv, id)
         m.initializeArchetype(**kwargs)
         m._setPortalTypeName('PloneboardComment')
         m.notifyWorkflowCreated()
@@ -135,10 +132,11 @@ class PloneboardComment(BaseBTreeFolder):
         """
         Returns comment object this comment is a reply to.
         """
+        conv = self._getConversation()
         if not hasattr(self, '_in_reply_to'):
             self._in_reply_to = None
         if self._in_reply_to:
-            return self.aq_inner.aq_parent.getComment(self._in_reply_to)
+            return conv.getComment(self._in_reply_to)
         return self._in_reply_to # None
         #return self._in_reply_to and self.aq_inner.aq_parent.getComment(self._in_reply_to) or None
 
@@ -170,10 +168,11 @@ class PloneboardComment(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getReplies')
     def getReplies(self):
         """Returns the comments that were replies to this one."""
+        conv = self._getConversation()
         if not self._replies or not self._reply_count:
             return []
         else:
-            return LazyMap(self.aq_inner.aq_parent.getComment, self._replies.keys(), self._reply_count())
+            return LazyMap(conv.getComment, self._replies.keys(), self._reply_count())
     
     security.declareProtected(ViewBoard, 'getSubject')
     def getSubject(self):
@@ -236,15 +235,18 @@ class PloneboardComment(BaseBTreeFolder):
     # Workflow related methods - called by workflow scripts to control what to display
     def notifyPublished(self):
         """ Notify about publishing, so object can be added to index """
-        self.aq_inner.aq_parent.setDateKey(self.id, self.creation_date or DateTime())
-        self.aq_inner.aq_parent.notifyPublished()
+        conv = self._getConversation()
+        conv.setDateKey(self.id, self.creation_date or DateTime())
+        conv.notifyPublished()
 
     security.declareProtected(AddComment, 'notifyRetracted')
     def notifyRetracted(self):
         """ Notify about retracting, so object can be removed from index """
-        self.aq_inner.aq_parent.delDateKey(self.id)
-        if self.aq_inner.aq_parent.getNumberOfComments() == 0:
-            self.aq_inner.aq_parent.notifyRetracted()
+        conv = self._getConversation()
+        conv.delDateKey(self.id)
+        # Retract the whole conversation if there's nothing left once this comment has gone.
+        if conv.getNumberOfComments() == 0:
+            conv.notifyRetracted()
 
     security.declareProtected(ViewBoard, 'Creator')
     def Creator(self):
@@ -291,6 +293,12 @@ class PloneboardComment(BaseBTreeFolder):
     
     def _getBoardCatalog(self):
         return self.getConversation().getForum().getBoard().getInternalCatalog()
+
+    def _getConversation(self):
+        """Return the containing conversation. For when we don't want acquisition
+        wierdness as a result of doing self.getConversation().
+        """
+        return self.aq_inner.aq_parent
 
     ###########################
     # Attachment support      #
@@ -361,7 +369,7 @@ class PloneboardComment(BaseBTreeFolder):
         """  """
         # Maybe we need to set caching for transform?
         
-        orig = self.text.getRaw()
+        orig = self.getRawText()
         
         pb_tool = getToolByName(self, 'portal_ploneboard')
         return pb_tool.performCommentTransform(orig, context=self)

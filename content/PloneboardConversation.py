@@ -2,6 +2,9 @@
 $Id$
 """
 
+# zope3, zope 2.8, or Five dependency
+from zope.interface import implements
+
 from random import randint
 import Globals
 from AccessControl import ClassSecurityInfo
@@ -15,39 +18,12 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
 from Products.Ploneboard.config import PROJECTNAME
 
-from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, ManageForum, ManageBoard, AddConversation, AddComment, ManageConversation
+from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,\
+     ManageBoard, AddConversation, AddComment, ManageConversation
 from PloneboardComment import PloneboardComment
 from PloneboardIndex import PloneboardIndex
 from Products.Ploneboard.interfaces import IConversation, IComment
-
-factory_type_information = \
-( { 'id'             : 'PloneboardConversation'
-  , 'meta_type'      : 'PloneboardConversation'
-  , 'description'    : """Conversations have comments."""
-  , 'icon'           : 'ploneboard_conversation_icon.gif'
-  , 'product'        : 'Ploneboard'
-  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
-  , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('PloneboardComment', ) 
-  , 'immediate_view' : 'conversation_edit_form'
-  , 'aliases'        : {'(Default)':'conversation_view',
-                        'view':'conversation_view'}
-  , 'actions'        :
-    ( { 'id'            : 'view'
-      , 'name'          : 'View'
-      , 'action'        : 'string:${object_url}/conversation_view'
-      , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'folder'
-      }
-    , { 'id'            : 'edit'
-      , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/base_edit'
-      , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'folder'
-      }
-    )
-  },
-)
+from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
 
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -85,11 +61,31 @@ class PloneboardConversation(BaseBTreeFolder):
     Conversation contains comments.
     """
 
-    __implements__ = (IConversation,) + tuple(BaseBTreeFolder.__implements__)
+    implements(IConversation) # XXX IBaseBTreeFolder
+    __implements__ = (INonStructuralFolder,) + BaseBTreeFolder.__implements__
 
+    meta_type = 'PloneboardConversation'
     archetype_name = 'Conversation'
 
     schema = schema
+
+    content_icon = 'ploneboard_conversation_icon.gif'
+    allowed_content_types = ('PloneboardComment',)
+    global_allow = 0 # To avoid it being visible in the add contents menu
+
+    actions = (
+            { 'id'          : 'view'
+            , 'name'        : 'View'
+            , 'action'      : 'string:$object_url'
+            , 'permissions' : (ViewBoard,)
+            },
+        )
+
+    aliases = \
+        {
+              '(Default)' : 'threaded_conversation_view'
+            , 'view'      : 'threaded_conversation_view'
+        }
 
     _index = None
 
@@ -188,6 +184,35 @@ class PloneboardConversation(BaseBTreeFolder):
         else:
             return None
 
+    security.declareProtected(ViewBoard, 'getThreadedComments')
+    def getThreadedComments(self):
+        """
+        See IConversation.getThreadedComments.__doc__
+        """
+        # Shamelessly taken from portal_skins/plone_scripts/getReplyReplies
+        def getRs(comment, replies, counter):
+            rs = comment.getReplies()
+            #rs = container.sort_modified_ascending(rs)
+            for r in rs:
+                comment_id = r.getId()
+                if self._isIdIndexed(comment_id):
+                    replies.append({'depth':counter, 'object':r})
+                    getRs(r, replies, counter=counter + 1)
+        comment1 = self.getFirstComment()
+        replies = [{'depth':0, 'object':comment1},]
+        getRs(comment1, replies, 1)
+        return replies
+
+    security.declareProtected(ViewBoard, 'getFirstComment')
+    def getFirstComment(self):
+        """
+        See IConversation.getFirstComment.__doc__
+        """
+        if len(self._index) > 0:
+            return self.getComment( str( self._index.get( self._index.minKey() ) ) )
+        else:
+            return None
+
     security.declareProtected(ManageConversation, 'moveToForum')
     def moveToForum(self, forum_id):
         """Moves conversation to another forum"""
@@ -206,6 +231,12 @@ class PloneboardConversation(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'Creator')
     def Creator(self):
         return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
+
+    def _isIdIndexed(self, id):
+        """Check to see if the comment id is in the reverse index.
+        """
+        id = int(id)
+        return self._index._reverse_dates.has_key(id)
 
     ############################################################################
     # Folder methods, indexes and such
@@ -291,12 +322,14 @@ class PloneboardConversation(BaseBTreeFolder):
     security.declareProtected(AddComment, 'notifyPublished')
     def notifyPublished(self):
         """ Notify about publishing, so object can be added to index """
-        self.aq_inner.aq_parent.setDateKey(self.id, self.getLastCommentDate() or DateTime())
+        # This notifies the containing forum
+        self.getForum().setDateKey(self.id, self.getLastCommentDate() or DateTime())
 
     security.declareProtected(AddComment, 'notifyRetracted')
     def notifyRetracted(self):
         """ Notify about retracting, so object can be removed from index """
-        self.aq_inner.aq_parent.delDateKey(self.id)
+        # This notifies the containing forum
+        self.getForum().delDateKey(self.id)
 
     # Catalog related issues
     security.declareProtected(ViewBoard, 'indexObject')

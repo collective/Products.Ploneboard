@@ -1,24 +1,26 @@
-"""
-$Id: PloneboardPermissions.py,v 1.2 2004/04/02 08:06:13 tesdal Exp $
-"""
-
 from Products.CMFCore import CMFCorePermissions
-from Products.CMFCore.CMFCorePermissions import setDefaultRoles
+from Products.CMFCore.permissions import setDefaultRoles
+
 
 # Gathering Ploneboard Permissions into one place
+
+# Add permissions differ for each type, and are imported by __init__.initialize
+# so don't change their names!
 ViewBoard = 'Ploneboard: View'
 SearchBoard = 'Ploneboard: Search'
-AddBoard = 'Ploneboard: Add Ploneboard'
+AddBoard = AddPloneboard = 'Ploneboard: Add Ploneboard'
 ManageBoard = 'Ploneboard: Add Ploneboard'
-AddForum = 'Ploneboard: Add Forum'
+AddForum = AddPloneboardForum = 'Ploneboard: Add Forum'
 ManageForum = 'Ploneboard: Add Forum'
-AddConversation = 'Ploneboard: Add Conversation'
-AddComment = 'Ploneboard: Add Comment'
+AddConversation = AddPloneboardConversation = 'Ploneboard: Add Conversation'
+AddComment = AddPloneboardComment = 'Ploneboard: Add Comment'
 EditComment = 'Ploneboard: Edit Comment'
-AddAttachment = 'Ploneboard: Add Comment Attachment'
+AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
 ManageConversation = 'Ploneboard: Manage Conversation'
 ManageComment = 'Ploneboard: Manage Comment'
 ApproveComment = 'Ploneboard: Approve Comment'
+# XXX This next permission can probably be removed.
+NotifyRetracted = 'Ploneboard: Notify Retracted'
 
 # Set up default roles for permissions
 setDefaultRoles(ViewBoard,
@@ -53,4 +55,6 @@ setDefaultRoles(ManageComment,
 
 setDefaultRoles(ApproveComment,
                 ('Manager', 'Reviewer'))
+setDefaultRoles(NotifyRetracted,
+                ('Manager', 'Reviewer', 'Owner'))
 

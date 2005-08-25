@@ -19,6 +19,7 @@
          tal:define="errors options/state/getErrors;
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();
+                     pss modules/Products/PythonScripts/standard;
                      global noreply python: 1;">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
@@ -27,25 +28,41 @@
 
         <div class="documentDescription"></div>
 
-        <div metal:use-macro="here/conversation_view/macros/view_comments" />
+        <div class="boardConversation"
+             metal:define-macro="view_comments"
+             tal:define="comments here/getThreadedComments">	
 
-        <form name="edit_form"
-              action=""
-              method="post" 
-              enctype="multipart/form-data"
-              tal:attributes="action template/getId">
+            <tal:block repeat="each comments">
+            <div class="boardComment visualIEFloatFix"
+                 tal:define="comment nocall:each/object;
+                             indent python:each['depth']*2;"
+                 tal:attributes="style string:margin-left:${indent}em">
 
-            <fieldset>
-   
-                <div metal:use-macro="here/posting_macros/macros/comment_body_start" tal:omit-tag="" />
+            <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
-                <div metal:use-macro="here/posting_macros/macros/comment_body_text" tal:omit-tag="" />
+            <form name="edit_form"
+                  action=""
+                  method="post" 
+                  enctype="multipart/form-data"
+                  tal:attributes="action template/getId"
+                  tal:condition="python: comment == here">
 
-                <div metal:use-macro="here/posting_macros/macros/comment_body_buttons" tal:omit-tag="" />
+                <fieldset>
+       
+                    <div metal:use-macro="here/posting_macros/macros/comment_body_start" tal:omit-tag="" />
 
-            </fieldset>
+                    <div metal:use-macro="here/posting_macros/macros/comment_body_text" tal:omit-tag="" />
 
-        </form>
+                    <div metal:use-macro="here/posting_macros/macros/comment_body_buttons" tal:omit-tag="" />
+
+                </fieldset>
+
+            </form>
+
+            </div>
+
+            </tal:block>
+        </div>
 
     </div>
 

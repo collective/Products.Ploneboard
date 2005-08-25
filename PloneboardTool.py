@@ -4,7 +4,7 @@ from OFS.Folder import Folder
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore import CMFCorePermissions
-from PloneboardPermissions import AddAttachment
+#from permissions import AddAttachment
 from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
 from Products.Ploneboard.utils import importModuleFromName
@@ -49,7 +49,11 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     def unregisterAllTransforms(self):
         tr_tool = getToolByName(self, 'portal_transforms')
         for transform_name, transform_object, transform_status in self.getTransforms():
-            tr_tool._delObject(transform_name)
+            try:
+                tr_tool._delObject(transform_name)
+            except AttributeError, e:
+                # _delObject couldn't find the transform_name. Must be gone already.
+                pass
         self.transforms_config.clear()
 
     def getTransforms(self):

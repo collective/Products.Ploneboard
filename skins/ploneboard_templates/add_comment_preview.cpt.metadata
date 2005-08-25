@@ -4,11 +4,13 @@ title=Preview post
 [validators]
 validators..Preview=validate_posting
 validators..Save=validate_posting
+validators=validate_posting
 validators..Cancel=
 
 [actions]
 action.success..Edit=traverse_to:string:add_comment_form
 action.success..Save=traverse_to:string:add_comment_script
 action.success..Cancel=redirect_to_action:string:view
+action.success=traverse_to:string:add_comment_script
 action.failure=traverse_to:string:add_comment_form
 

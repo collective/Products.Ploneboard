@@ -2,8 +2,8 @@ from Testing import ZopeTestCase
 from AccessControl.SecurityManagement import newSecurityManager
 from AccessControl.SecurityManagement import noSecurityManager
 from Products.Ploneboard.Extensions.Install import install as installPloneboard
-from Products.Ploneboard.types.Ploneboard import Ploneboard
-from Products.Ploneboard.types.PloneboardForum import PloneboardForum
+from Products.Ploneboard.content.Ploneboard import Ploneboard
+from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.CMFPlone.tests import PloneTestCase
 import time
 import utils

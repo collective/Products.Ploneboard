@@ -5,14 +5,13 @@ from Products.Ploneboard.config import GLOBALS
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from Products.DCWorkflow.Default import setupDefaultWorkflowRev2
-from PloneboardPermissions import ViewBoard, SearchBoard, \
-     ManageBoard, AddForum, ManageForum, AddConversation, AddComment, \
-     EditComment, AddAttachment, ManageConversation, ManageComment, \
-     ApproveComment
+from permissions import ViewBoard, SearchBoard, ManageBoard, AddForum, ManageForum,\
+     AddConversation, AddComment, EditComment, AddAttachment, ManageConversation,\
+     ManageComment, ApproveComment
 from AccessControl.Permissions import view, access_contents_information
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.PythonScripts.PythonScript import manage_addPythonScript
-
+from Products.CMFCore.permissions import AddPortalContent
 
 # path_prefix is used for finding workflow scripts
 path_prefix = os.path.join( package_home(GLOBALS)
@@ -26,8 +25,13 @@ p_manage = ManageForum
 p_modify = EditComment
 p_view = ViewBoard
 p_review = ApproveComment
-p_request = AddConversation
-p_reply = AddComment
+p_addconv = AddConversation
+p_addcomm = AddComment
+p_manageconv = ManageConversation
+# Unfortunately, the method of registering our archetype-derived objects with different
+# add permissions also means that the AddPortalContent permission is needed by users
+# who want to add as well.
+p_addpc = AddPortalContent
 
 r_anon = 'Anonymous'
 r_manager = 'Manager'
@@ -39,9 +43,9 @@ def setupPloneboardCommentWorkflow(wf):
     """ Sets up a workflow for Ploneboard Comments """
     wf.setProperties(title='Ploneboard Comment Workflow [Ploneboard]')
 
-    for s in ('initial', 'pending', 'published', 'rejected', 'locked'):
+    for s in ('initial', 'pending', 'published', 'rejected', 'retracted'):
         wf.states.addState(s)
-    for t in ('publish', 'reject', 'submit', 'autosubmit', 'autopublish', 'lock'):
+    for t in ('publish', 'reject', 'submit', 'autosubmit', 'autopublish', 'retract'):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
@@ -51,7 +55,7 @@ def setupPloneboardCommentWorkflow(wf):
         scr.write(open(os.path.join(path_prefix, '%s.py' % script_id)).read())
     for l in ('reviewer_queue', 'submitter_queue'):
         wf.worklists.addWorklist(l)
-    for p in (p_access, p_view, p_modify, p_request, p_reply):
+    for p in (p_access, p_view, p_modify, p_addcomm, p_addpc):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('initial')
@@ -61,33 +65,38 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setProperties(
         title='Initial state',
         transitions=('autosubmit', 'autopublish',))
-    sdef.setPermission(p_access,  0, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(p_view,    0, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(p_modify,  0, (r_manager, r_reviewer))
-    sdef.setPermission(p_request, 0, (r_manager, r_owner))
-    sdef.setPermission(p_reply,   0, (r_manager,))
+    # Inherit from forum
+    sdef.setPermission(p_access,  1, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(p_view,    1, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(p_modify,  1, (r_manager, r_reviewer))
+    sdef.setPermission(p_addcomm, 1, (r_manager,))
+    sdef.setPermission(p_addpc,   1, (r_manager,))
 
     sdef = wf.states['pending']
     sdef.setProperties(
         title='Waiting for reviewer',
-        transitions=('publish', 'reject', 'lock',))
-    sdef.setPermission(p_access,  0, (r_manager, r_owner, r_reviewer))
+        transitions=('publish', 'reject'))
+    # Nobody can reply when a comment is pending in case the comment is 'rejected'
+    sdef.setPermission(p_access,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(p_view,    0, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(p_modify,  0, (r_manager, r_reviewer))
-    sdef.setPermission(p_request, 0, (r_manager, r_owner))
-    sdef.setPermission(p_reply,   0, (r_manager,))
+    sdef.setPermission(p_modify,  1, (r_manager, r_reviewer))
+    # Acquire p_addcomm so that comment.notifyRetracted can be called. (It is protected
+    # by p_addcomm.)
+    sdef.setPermission(p_addcomm, 1, ())
+    # But do not acquire p_addpc in order to stop anyone actually replying.
+    sdef.setPermission(p_addpc,   0, ())
 
     sdef = wf.states['published']
     sdef.setProperties(
         title='Public',
-        transitions=('reject', 'lock', ))
+        transitions=('retract',))
     # Inherit from forum, enables private forums
     sdef.setPermission(p_access,  1, (r_manager,))
     sdef.setPermission(p_view,    1, (r_manager,))
     sdef.setPermission(p_modify,  0, (r_manager,))
-    sdef.setPermission(p_request, 1, (r_manager,))
-    sdef.setPermission(p_reply,   1, (r_manager,))
-    
+    sdef.setPermission(p_addcomm, 1, (r_manager,))
+    sdef.setPermission(p_addpc,   1, (r_manager,))
+
     sdef = wf.states['rejected']
     sdef.setProperties(
         title='Non-visible and editable only by owner',
@@ -95,19 +104,19 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(p_access,  0, (r_manager, r_owner))
     sdef.setPermission(p_view,    0, (r_manager, r_owner))
     sdef.setPermission(p_modify,  0, (r_manager, r_owner))
-    sdef.setPermission(p_request, 0, (r_manager,))
-    sdef.setPermission(p_reply,   0, (r_manager,))
+    sdef.setPermission(p_addcomm, 0, (r_manager,))
+    sdef.setPermission(p_addpc,   0, (r_manager,))
 
-    sdef = wf.states['locked']
+    sdef = wf.states['retracted']
     sdef.setProperties(
-        title='Locked',
-        transitions=('publish', 'reject',))
+        title='Retracted',
+        transitions=('publish', 'submit',))
     # Inherit from forum, enables private forums
     sdef.setPermission(p_access,  1, (r_manager,))
-    sdef.setPermission(p_view,    1, (r_manager,))
+    sdef.setPermission(p_view,    0, (r_manager, r_reviewer))
     sdef.setPermission(p_modify,  0, (r_manager,))
-    sdef.setPermission(p_request, 0, (r_manager,))
-    sdef.setPermission(p_reply,   0, (r_manager,))
+    sdef.setPermission(p_addcomm, 0, (r_manager,))
+    sdef.setPermission(p_addpc,   0, (r_manager,))
 
 
     # ***** Set up transitions *****
@@ -128,7 +137,7 @@ def setupPloneboardCommentWorkflow(wf):
         trigger_type=TRIGGER_AUTOMATIC,
         # The autopublish_script is added to scripts folder by the Install script
         after_script_name='autopublish_script',
-        props={ 'guard_permissions':p_request
+        props={ 'guard_permissions':p_addconv
               , 'guard_expr':'not: here/isModerated'})
 
     tdef = wf.transitions['autosubmit']
@@ -138,7 +147,7 @@ def setupPloneboardCommentWorkflow(wf):
         trigger_type=TRIGGER_AUTOMATIC,
         # The autosubmit_script is added to scripts folder by the Install script
         after_script_name='autosubmit_script',
-        props={ 'guard_permissions':p_request
+        props={ 'guard_permissions':p_addconv
               , 'guard_expr':'here/isModerated'})
 
     tdef = wf.transitions['reject']
@@ -159,16 +168,14 @@ def setupPloneboardCommentWorkflow(wf):
         after_script_name='submit_script',
         actbox_name='Submit',
         actbox_url='%(content_url)s/content_submit_form',
-        props={'guard_permissions':p_request})
+        props={'guard_permissions':p_addconv})
 
-    tdef = wf.transitions['lock']
+    tdef = wf.transitions['retract']
     tdef.setProperties(
-        title='Lock comment',
-        new_state_id='locked',
-        # The lock_script is added to scripts folder by the Install script
-        after_script_name='lock_script',
-        actbox_name='Lock',
-        actbox_url='%(content_url)s/content_submit_form',
+        title='Retract a published comment',
+        new_state_id='retracted',
+        actbox_name='Retract',
+        #actbox_url='%(content_url)s/content_submit_form',
         props={'guard_permissions':p_review})
 
     wf.variables.setStateVar('review_state')
@@ -194,7 +201,7 @@ def setupPloneboardCommentWorkflow(wf):
     vdef.setProperties(description='Provides access to workflow history',
                        default_expr="state_change/getHistory",
                        props={'guard_permissions':
-                              p_request + ';' + p_review})
+                              p_addconv + ';' + p_review})
 
     vdef = wf.variables['time']
     vdef.setProperties(description='Time of the last transition',
@@ -224,9 +231,152 @@ def createPloneboardCommentWorkflow(id):
     return ob
 
 addWorkflowFactory( createPloneboardCommentWorkflow, id='ploneboard_comment_workflow'
-                  , title='Comment Workflow [Ploneboard]')	
+                  , title='Comment Workflow [Ploneboard]')
 
 
+
+def setupPloneboardConversationWorkflow(wf):
+    """ Sets up a workflow for Ploneboard Conversations """
+    wf.setProperties(title='Ploneboard Conversation Workflow [Ploneboard]')
+
+    for s in ('normal', 'locked', 'sticky', 'locked_and_sticky'):
+        wf.states.addState(s)
+    for t in ('lock', 'make_sticky', 'make_locked_and_sticky', 'make_normal'):
+        wf.transitions.addTransition(t)
+    for v in ('action', 'actor', 'comments', 'review_history', 'time'):
+        wf.variables.addVariable(v)
+    #for script_id in script_ids:
+    #    manage_addPythonScript(wf.scripts, script_id)
+    #    scr = getattr(wf.scripts, script_id)
+    #    scr.write(open(os.path.join(path_prefix, '%s.py' % script_id)).read())
+    #for l in ('reviewer_queue', 'submitter_queue'):
+    #    wf.worklists.addWorklist(l)
+    for p in (p_access, p_view, p_modify, p_addconv, p_addcomm, p_addpc):
+        wf.addManagedPermission(p)
+
+    wf.states.setInitialState('normal')
+
+    #******* Set up workflow states *******
+    sdef = wf.states['normal']
+    sdef.setProperties(
+        title='Normal state',
+        transitions=('lock', 'make_sticky', 'make_locked_and_sticky',))
+    # This state just inherits everything from the forum workflow
+    sdef.setPermission(p_access,  1, ())
+    sdef.setPermission(p_view,    1, ())
+    sdef.setPermission(p_modify,  1, ())
+    sdef.setPermission(p_addconv, 1, ())
+    sdef.setPermission(p_addcomm, 1, ())
+    sdef.setPermission(p_addpc,   1, ())
+
+    sdef = wf.states['locked']
+    sdef.setProperties(
+        title='Locked',
+        transitions=('make_normal', 'make_locked_and_sticky'))
+    # Acquire view permissions, as we want the forum state to apply here.
+    # Only let the 'special people' make any changes
+    # N.B. If any changes are made to this state, they should also be made to 'locked_and_sticky'.
+    sdef.setPermission(p_access,  1, ())
+    sdef.setPermission(p_view,    1, ())
+    sdef.setPermission(p_modify,  0, (r_manager,))
+    sdef.setPermission(p_addconv, 1, (r_manager, r_owner))
+    sdef.setPermission(p_addcomm, 0, ())
+
+    sdef = wf.states['sticky']
+    sdef.setProperties(
+        title='Sticky',
+        transitions=('make_normal', 'make_locked_and_sticky', ))
+    # Inherit everything. 'Sticky' is really just a marker state to help with the UI.
+    sdef.setPermission(p_access,  1, (r_manager,))
+    sdef.setPermission(p_view,    1, (r_manager,))
+    sdef.setPermission(p_modify,  1, (r_manager,))
+    sdef.setPermission(p_addconv, 1, (r_manager,))
+    sdef.setPermission(p_addcomm, 1, (r_manager,))
+    sdef.setPermission(p_addpc,   1, (r_manager,))
+
+    sdef = wf.states['locked_and_sticky']
+    sdef.setProperties(
+        title='Locked and Sticky',
+        transitions=('make_normal', 'lock', 'make_sticky'))
+    # Same as 'locked'
+    sdef.setPermission(p_access,  1, ())
+    sdef.setPermission(p_view,    1, ())
+    sdef.setPermission(p_modify,  0, (r_manager,))
+    sdef.setPermission(p_addconv, 1, (r_manager, r_owner))
+    sdef.setPermission(p_addcomm, 0, ())
+
+    # ***** Set up transitions *****
+    tdef = wf.transitions['lock']
+    tdef.setProperties(
+        title='Reviewer locks conversation',
+        new_state_id='locked',
+        actbox_name='Lock',
+        #actbox_url='%(content_url)s/content_publish_form',
+        props={'guard_permissions':p_manageconv})
+
+    tdef = wf.transitions['make_sticky']
+    tdef.setProperties(
+        title='Reviewer makes conversation sticky',
+        new_state_id='sticky',
+        actbox_name='Make Sticky',
+        #actbox_url='%(content_url)s/content_publish_form',
+        props={ 'guard_permissions':p_manageconv})
+
+    tdef = wf.transitions['make_locked_and_sticky']
+    tdef.setProperties(
+        title='Reviewer makes conversation locked and sticky',
+        new_state_id='locked_and_sticky',
+        actbox_name='Make Locked and Sticky',
+        #actbox_url='%(content_url)s/content_publish_form',
+        props={ 'guard_permissions':p_manageconv})
+
+    tdef = wf.transitions['make_normal']
+    tdef.setProperties(
+        title='Reviewer returns conversation to normal',
+        new_state_id='normal',
+        actbox_name='Make Normal',
+        #actbox_url='%(content_url)s/content_reject_form',
+        props={'guard_permissions':p_manageconv})
+
+    wf.variables.setStateVar('review_state')
+
+    # **** Setting up variables ****
+    vdef = wf.variables['action']
+    vdef.setProperties(description='The last transition',
+                       default_expr='transition/getId|nothing',
+                       for_status=1, update_always=1)
+
+    vdef = wf.variables['actor']
+    vdef.setProperties(description='The ID of the user who performed '
+                       'the last transition',
+                       default_expr='user/getId',
+                       for_status=1, update_always=1)
+
+    vdef = wf.variables['comments']
+    vdef.setProperties(description='Comments about the last transition',
+                       default_expr="python:state_change.kwargs.get('comment', '')",
+                       for_status=1, update_always=1)
+
+    vdef = wf.variables['review_history']
+    vdef.setProperties(description='Provides access to workflow history',
+                       default_expr="state_change/getHistory",
+                       props={'guard_permissions':
+                              p_addconv + ';' + p_review})
+
+    vdef = wf.variables['time']
+    vdef.setProperties(description='Time of the last transition',
+                       default_expr="state_change/getDateTime",
+                       for_status=1, update_always=1)
+
+
+def createPloneboardConversationWorkflow(id):
+    ob=DCWorkflowDefinition(id)
+    setupPloneboardConversationWorkflow(ob)
+    ob.setProperties(title='Conversation Workflow [Ploneboard]')
+    return ob
+
+addWorkflowFactory( createPloneboardConversationWorkflow, id='ploneboard_conversation_workflow'
+                  , title='Conversation Workflow [Ploneboard]')
 
 
 
@@ -244,7 +394,7 @@ def setupPloneboardForumWorkflow(wf):
         manage_addPythonScript(wf.scripts, script_id)
         scr = getattr(wf.scripts, script_id)
         scr.write(open(os.path.join(path_prefix, '%s.py' % script_id)).read())
-    for p in (p_access, p_view, p_request, p_reply):
+    for p in (p_access, p_view, p_addconv, p_addcomm, p_addpc):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('freeforall')
@@ -256,17 +406,19 @@ def setupPloneboardForumWorkflow(wf):
         transitions=('make_memberposting', 'make_moderated', 'make_private'))
     sdef.setPermission(p_access,  1, (r_manager, r_anon, r_member))
     sdef.setPermission(p_view,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(p_request, 1, (r_manager, r_anon, r_member))
-    sdef.setPermission(p_reply,   1, (r_manager, r_anon, r_member))
-    
+    sdef.setPermission(p_addconv, 1, (r_manager, r_anon, r_member))
+    sdef.setPermission(p_addcomm, 1, (r_manager, r_anon, r_member))
+    sdef.setPermission(p_addpc,   1, (r_manager, r_anon, r_member))
+
     sdef = wf.states['memberposting']
     sdef.setProperties(
         title='Require membership to post',
         transitions=('make_freeforall', 'make_moderated', 'make_private'))
     sdef.setPermission(p_access,  1, (r_manager, r_anon, r_member))
     sdef.setPermission(p_view,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(p_request, 0, (r_manager, r_member))
-    sdef.setPermission(p_reply,   0, (r_manager, r_member))
+    sdef.setPermission(p_addconv, 0, (r_manager, r_member))
+    sdef.setPermission(p_addcomm, 0, (r_manager, r_member))
+    sdef.setPermission(p_addpc,   1, (r_manager, r_member))
 
     sdef = wf.states['moderated']
     sdef.setProperties(
@@ -274,8 +426,10 @@ def setupPloneboardForumWorkflow(wf):
         transitions=('make_freeforall', 'make_memberposting', 'make_private'))
     sdef.setPermission(p_access,  1, (r_manager, r_anon, r_member))
     sdef.setPermission(p_view,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(p_request, 1, (r_manager, r_anon, r_member))
-    sdef.setPermission(p_reply,   1, (r_manager, r_anon, r_member))
+    sdef.setPermission(p_addconv, 1, (r_manager, r_anon, r_member))
+    sdef.setPermission(p_addcomm, 1, (r_manager, r_anon, r_member))
+    # Give anon p_addpc, but know that they can only add comments here, and they will be moderated anyway
+    sdef.setPermission(p_addpc,   1, (r_manager, r_member, r_anon))
 
     sdef = wf.states['private']
     sdef.setProperties(
@@ -283,8 +437,9 @@ def setupPloneboardForumWorkflow(wf):
         transitions=('make_freeforall', 'make_memberposting', 'make_moderated'))
     sdef.setPermission(p_access,  0, (r_manager, r_member))
     sdef.setPermission(p_view,    0, (r_manager, r_member))
-    sdef.setPermission(p_request, 0, (r_manager, r_member))
-    sdef.setPermission(p_reply,   0, (r_manager, r_member))
+    sdef.setPermission(p_addconv, 0, (r_manager, r_member))
+    sdef.setPermission(p_addcomm, 0, (r_manager, r_member))
+    sdef.setPermission(p_addpc,   0, (r_manager, r_member))
 
     # ***** Set up transitions *****
     tdef = wf.transitions['make_freeforall']
@@ -293,7 +448,7 @@ def setupPloneboardForumWorkflow(wf):
         new_state_id='freeforall',
         # The publish_script is added to scripts folder by the Install script
         after_script_name='make_unmoderated_script',
-        actbox_name='Freeforall',
+        actbox_name='Make free-for-all',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':p_manage})
 
@@ -303,7 +458,7 @@ def setupPloneboardForumWorkflow(wf):
         new_state_id='memberposting',
         # The make_unmoderated_script is added to scripts folder by the Install script
         after_script_name='make_unmoderated_script',
-        actbox_name='Memberposting',
+        actbox_name='Make member-posting',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':p_manage})
 
@@ -313,7 +468,7 @@ def setupPloneboardForumWorkflow(wf):
         new_state_id='moderated',
         # The make_moderated_script is added to scripts folder by the Install script
         after_script_name='make_moderated_script',
-        actbox_name='Moderated',
+        actbox_name='Make moderated',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':p_manage})
 
@@ -323,7 +478,7 @@ def setupPloneboardForumWorkflow(wf):
         new_state_id='private',
         # The make_unmoderated_script is added to scripts folder by the Install script
         after_script_name='make_unmoderated_script',
-        actbox_name='Private',
+        actbox_name='Make private',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':p_manage})
 
@@ -350,7 +505,7 @@ def setupPloneboardForumWorkflow(wf):
     vdef.setProperties(description='Provides access to workflow history',
                        default_expr="state_change/getHistory",
                        props={'guard_permissions':
-                              p_request + ';' + p_review})
+                              p_addconv + ';' + p_review})
 
     vdef = wf.variables['time']
     vdef.setProperties(description='Time of the last transition',

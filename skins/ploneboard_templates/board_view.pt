@@ -30,6 +30,7 @@
                 <tr>
                     <th>Forum name</th>
                     <th>Most recent post</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 
@@ -50,7 +51,8 @@
                                     </span>
                             </a>
                         </td>
-    
+
+                        <tal:choice1 condition="python:checkPermission('Ploneboard: View', forum)">    
                         <!-- 
                             This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
                             if older than this week. (limi)
@@ -58,6 +60,7 @@
                         <td tal:condition="not: forum/getLastCommentAuthor">
                             <span class="discreet">No conversations started</span>
                         </td>
+
                         <td tal:condition="forum/getLastCommentAuthor">
                             <span>
                                 by <span tal:replace="forum/getLastCommentAuthor">last author</span>
@@ -68,7 +71,20 @@
                                 Thursday 13:21
                             </span>
                         </td>
+                        </tal:choice1>
+
+                        <tal:choice2 condition="not: python:checkPermission('Ploneboard: View', forum)">    
+                        <td>
+                            <span class="discreet" style="text-align:center;">Private</span>
+                        </td>
+                        </tal:choice2>
     
+                        <td tal:define="revstate python:wtool.getInfoFor(forum, 'review_state')"
+                            tal:content="string:$revstate"
+                            style="text-align:center;">
+                            _review_state_
+                        </td>
+
                     </tr>
     
                 </tal:showforums>

@@ -57,6 +57,14 @@
     position: relative;
 }
 
+.boardCommentVisible {
+    background: white;
+}
+
+.boardCommentHidden {
+    background: #c0c0c0;
+}
+
 .boardCommentDetails {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     border-style: none none &dtml-borderStyle; none;

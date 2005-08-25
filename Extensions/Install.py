@@ -24,7 +24,8 @@ from Products.CMFCore.TypesTool import ContentFactoryMetadata
 from cStringIO import StringIO
 import string
 
-from Products.Archetypes.public import listTypes
+from Products.Archetypes.public import listTypes, process_types
+from Products.Archetypes.ArchetypeTool import getType
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from Products.Ploneboard.config import *
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
@@ -49,28 +50,6 @@ def addPloneboardTool(self, out):
         addTool = self.manage_addProduct['Ploneboard'].manage_addTool
         addTool('Ploneboard Tool')
         out.write('Added Ploneboard Tool\n')
-        
-def setupAdditionalTypes(self, out):
-    from Products.Ploneboard.types.PloneboardForum import factory_type_information as pf_fti
-    from Products.Ploneboard.types.PloneboardConversation import factory_type_information as pc_fti
-    from Products.Ploneboard.types.PloneboardComment import factory_type_information as pm_fti
-    
-    fti_list = pf_fti + pc_fti + pm_fti
-
-    typesTool = getToolByName(self, 'portal_types')
-    
-    # Former types deletion (added by PJG)
-    for f in fti_list:
-        if f['id'] in typesTool.objectIds():
-            out.write('*** Object "%s" already existed in the types tool => deleting\n' % (f['id']))
-
-            typesTool._delObject(f['id'])
-
-    # Type re-creation
-    for f in fti_list:
-        cfm = apply(ContentFactoryMetadata, (), f)
-        typesTool._setObject(f['id'], cfm)
-        out.write('Type "%s" registered with the types tool\n' % (f['id']))
 
 def registerNavigationTreeSettings(self, out):
     data = ['PloneboardConversation','PloneboardComment']
@@ -93,8 +72,17 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_comment_workflow'
                               , workflow_type='ploneboard_comment_workflow '+\
                                 '(Comment Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('PloneboardConversation','PloneboardComment'), 'ploneboard_comment_workflow')
+    wf_tool.setChainForPortalTypes( ('PloneboardComment',), 'ploneboard_comment_workflow')
     out.write('Added Comment Workflow\n')
+
+    if 'ploneboard_conversation_workflow' in wf_tool.objectIds():
+        out.write('Removing existing Conversation Workflow\n')
+        wf_tool._delObject('ploneboard_conversation_workflow')
+    wf_tool.manage_addWorkflow( id='ploneboard_conversation_workflow'
+                              , workflow_type='ploneboard_conversation_workflow '+\
+                                '(Conversation Workflow [Ploneboard])')
+    wf_tool.setChainForPortalTypes( ('PloneboardConversation',), 'ploneboard_conversation_workflow')
+    out.write('Added Conversation Workflow\n')
 
     if 'ploneboard_forum_workflow' in wf_tool.objectIds():
         out.write('Removing existing Forum Workflow\n')
@@ -150,8 +138,6 @@ def install(self):
     addPloneboardTool(self, out)
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
-    
-    setupAdditionalTypes(self, out)
     
     registerNavigationTreeSettings(self, out)
     

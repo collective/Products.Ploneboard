@@ -2,6 +2,9 @@
 $Id$
 """
 
+# zope3, zope 2.8, or Five dependency
+from zope.interface import implements
+
 import Globals
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
@@ -10,40 +13,11 @@ from Products.Archetypes.public import TextAreaWidget
 from Products.Ploneboard.config import PROJECTNAME
 
 from Products.Ploneboard import PloneboardCatalog
-from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, \
+from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
     AddBoard, AddForum, ManageBoard, AddAttachment  
 from PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
 
-
-factory_type_information = \
-( { 'id'             : 'Ploneboard'
-  , 'meta_type'      : 'Ploneboard'
-  , 'description'    : """Boards hold discussions."""
-  , 'icon'           : 'ploneboard_icon.gif'
-  , 'product'        : 'Ploneboard'
-  , 'factory'        : 'addPloneboard'
-  , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('PloneboardForum', ) 
-  , 'immediate_view' : 'board_edit_form'
-  , 'aliases'        : {'(Default)':'board_view',
-                        'view':'board_view'}
-  , 'actions'        :
-    ( { 'id'            : 'view'
-      , 'name'          : 'View'
-      , 'action'        : 'string:${object_url}/board_view'
-      , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'object'
-      }
-    , { 'id'            : 'edit'
-      , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/base_edit'
-      , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'object'
-      }
-    )
-  },
-)
 
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
@@ -61,12 +35,37 @@ class Ploneboard(BaseBTreeFolder):
     """
     Ploneboard is the outmost board object, what shows up in your site.
     """
-    __implements__ = (IPloneboard,) + tuple(BaseBTreeFolder.__implements__)
-    
+    implements(IPloneboard) # XXX IBaseBTreeFolder
+
+    meta_type = 'Ploneboard'
     archetype_name = 'Message Board'
 
     schema = schema
-    
+
+    content_icon = 'ploneboard_icon.gif'
+    allowed_content_types = ('PloneboardForum',)
+
+    _at_rename_after_creation = True
+
+    actions = (
+            { 'id'          : 'view'
+            , 'name'        : 'View'
+            , 'action'      : 'string:$object_url'
+            , 'permissions' : (ViewBoard,)
+            },
+            { 'id'          : 'moderate'
+            , 'name'        : 'Moderate'
+            , 'action'      : 'string:$object_url/moderation_form'
+            , 'permissions' : (ManageBoard,)
+            }
+        )
+
+    aliases = \
+        {
+              '(Default)' : 'board_view'
+            , 'view'      : 'board_view'
+        }
+
     # CONFIG variables
     _number_of_attachments = 5
 
@@ -106,7 +105,7 @@ class Ploneboard(BaseBTreeFolder):
         """ """
         return self._getOb(PloneboardCatalog.PLONEBOARD_CATALOG_ID)
 
-    security.declareProtected(AddBoard, 'addForum')    
+    security.declareProtected(AddForum, 'addForum')
     def addForum( self
                 , id
                 , title
@@ -124,6 +123,7 @@ class Ploneboard(BaseBTreeFolder):
 
     security.declarePublic('getForums')
     def getForums(self):
+        """Return all the forums in this board."""
         return self.contentValues()
 
     security.declareProtected(ManageBoard, 'removeForum')

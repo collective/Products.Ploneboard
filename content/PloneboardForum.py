@@ -2,6 +2,9 @@
 $Id$
 """
 
+# zope3, zope 2.8, or Five dependency
+from zope.interface import implements
+
 from random import randint
 
 import sys
@@ -14,46 +17,19 @@ from BTrees.Length import Length
 
 from Products.ZCatalog.Lazy import LazyMap
 
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
+from Products.Archetypes.public import TextField, BooleanField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget
+from Products.Archetypes.public import TextAreaWidget, BooleanWidget
 from Products.Ploneboard.config import PROJECTNAME
 
-from Products.Ploneboard.PloneboardPermissions import ViewBoard, SearchBoard, \
+from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
      AddForum, ManageForum, ManageBoard, AddConversation
 from PloneboardConversation import PloneboardConversation
 from PloneboardIndex import PloneboardIndex
 from Products.Ploneboard.interfaces import IForum, IConversation
+from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
 
-factory_type_information = \
-( { 'id'             : 'PloneboardForum'
-  , 'meta_type'      : 'PloneboardForum'
-  , 'description'    : """Forums hold conversations."""
-  , 'icon'           : 'ploneboard_forum_icon.gif'
-  , 'product'        : 'Ploneboard'
-  , 'factory'        : 'addPloneboardForum'
-  , 'global_allow'   : 0 # To avoid it being visible in add contents menu
-  , 'filter_content_types' : 1
-  , 'allowed_content_types' : ('PloneboardConversation', ) 
-  , 'immediate_view' : 'forum_edit_form'
-  , 'aliases'        : {'(Default)':'forum_view',
-                        'view':'forum_view'}
-  , 'actions'        :
-    ( { 'id'            : 'view'
-      , 'name'          : 'View'
-      , 'action'        : 'string:${object_url}/forum_view'
-      , 'permissions'   : (ViewBoard,)
-      , 'category'      : 'object'
-      }
-    , { 'id'            : 'edit'
-      , 'name'          : 'Edit'
-      , 'action'        : 'string:${object_url}/base_edit'
-      , 'permissions'   : (ManageBoard,)
-      , 'category'      : 'object'
-      }
-    )
-  },
-)
 
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
@@ -65,6 +41,17 @@ schema = BaseBTreeFolderSchema + Schema((
                                       label = "Description",
                                       label_msgid = "label_description",
                                       rows = 5)),
+    BooleanField('displayMemberPortraits',
+                 required = False,
+                 mode = "rw",
+                 default = False,
+                 searchable = 0,
+                 accessor = 'displayPortraits',
+                 write_permission = ManageForum,
+                 widget = BooleanWidget(description = "Toggle the display of member portraits.",
+                                        description_msgid = "help_display_portraits",
+                                        label = "Display Portraits",
+                                        label_msgid = "label_display_portraits",)),
     ))
 
 class ForumIndex(PloneboardIndex):
@@ -78,17 +65,46 @@ class ForumIndex(PloneboardIndex):
 
 MAX_UNIQUEID_ATTEMPTS = 1000
 
+
 class PloneboardForum(BaseBTreeFolder):
     """
     A Forum contains conversations.
     """
     
-    __implements__ = (IForum,) + tuple(BaseBTreeFolder.__implements__)
+    implements(IForum) # XXX IBaseBTreeFolder
+    __implements__ = (INonStructuralFolder,) + BaseBTreeFolder.__implements__
 
+    meta_type = 'PloneboardForum'
     archetype_name = 'Forum'
     
     schema = schema
-    
+
+    content_icon = 'ploneboard_forum_icon.gif'
+    allowed_content_types = ('PloneboardConversation',)
+    global_allow = 0 # To avoid it showing in the add content menu
+    default_view = ''
+
+    _at_rename_after_creation = True
+
+    actions = (
+            { 'id'          : 'view'
+            , 'name'        : 'View'
+            , 'action'      : 'string:$object_url'
+            , 'permissions' : (ViewBoard,)
+            },
+            { 'id'          : 'moderate'
+            , 'name'        : 'Moderate'
+            , 'action'      : 'string:$object_url/moderation_form'
+            , 'permissions' : (ManageBoard,)
+            }
+        )
+
+    aliases = \
+        {
+              '(Default)' : 'forum_view'
+            , 'view'      : 'forum_view'
+        }
+
     _index = None
     _comment_count = None
 

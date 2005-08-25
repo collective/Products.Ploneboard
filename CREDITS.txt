@@ -1,11 +1,21 @@
-**Helge Tesdal** -- *Code, idea, architecture*
+Ploneboard contributors:
 
-**Ruslan Spivak** -- *Code*
+    **Helge Tesdal**, "Plone Solutions":http://www.plonesolutions.com -- Code,
+idea, architecture
 
-**Alexander Limi** -- *User interface, concepts*
+    **Ruslan Spivak** -- Code
 
-**Vidar Andersen** -- *Application icons*
+    **Alexander Limi**, "Plone Solutions":http://www.plonesolutions.com -- User 
+interface, concepts
+    
+    **Vidar Andersen** -- Application icons
 
-**Johan H. Borg** -- *Smiley icons, Copyright 2003, used in Ploneboard with permission*
+    **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with 
+permission
 
-**Kapil Thangavelu** -- *initial architecture*
+    **Kapil Thangavelu** -- Initial architecture
+    
+    **Tim Hicks** -- Numerous fixes and cleanups, bringing Ploneboard into the
+modern ages.
+
+    **Martin Aspeli** -- Small fixes
