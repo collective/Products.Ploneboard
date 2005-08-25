@@ -3,19 +3,20 @@ Ploneboard contributors:
     **Helge Tesdal**, "Plone Solutions":http://www.plonesolutions.com -- Code,
 idea, architecture
 
+    **Tim Hicks** -- Numerous fixes and cleanups, bringing Ploneboard into the
+modern ages.
+
     **Ruslan Spivak** -- Code
 
     **Alexander Limi**, "Plone Solutions":http://www.plonesolutions.com -- User 
 interface, concepts
     
+    **Kapil Thangavelu** -- Initial architecture
+    
+    **Martin Aspeli** -- Small fixes
+
     **Vidar Andersen** -- Application icons
 
     **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with 
 permission
 
-    **Kapil Thangavelu** -- Initial architecture
-    
-    **Tim Hicks** -- Numerous fixes and cleanups, bringing Ploneboard into the
-modern ages.
-
-    **Martin Aspeli** -- Small fixes
