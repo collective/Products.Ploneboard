@@ -7,7 +7,7 @@ from Products.Archetypes.public import process_types, listTypes
 from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from PloneboardTool import PloneboardTool
-import os, os.path
+import sys, os, os.path
 
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
 
@@ -48,3 +48,7 @@ def initialize(context):
             extra_constructors = (constructor,),
             fti                = ftis,
             ).initialize(context)
+
+# Backward compatibility:
+import content
+sys.modules['Products.Ploneboard.types'] = content
