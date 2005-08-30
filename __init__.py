@@ -49,6 +49,7 @@ def initialize(context):
             fti                = ftis,
             ).initialize(context)
 
-# Backward compatibility:
+# Avoid breaking old Ploneboard instances when moving content types modules
+# from Ploneboard/types/ to Ploneboard/content/
 import content
 sys.modules['Products.Ploneboard.types'] = content
