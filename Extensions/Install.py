@@ -127,20 +127,20 @@ def addTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
     pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE)
     pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE)
-    
+
 def removeTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
     pb_tool.unregisterAllTransforms()
-    
+
 def install(self):
     out = StringIO()
-    
+
     addPloneboardTool(self, out)
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
-    
+
     registerNavigationTreeSettings(self, out)
-    
+
     # Here we exclude our types to be cataloged in portal_catalog by archetypes
     # we need only UID_CATALOG from archetypes
     at = getToolByName(self, TOOL_NAME)
@@ -149,12 +149,12 @@ def install(self):
             at.setCatalogsByType(type['name'], [UID_CATALOG])
 
     install_subskin(self, out, GLOBALS)
-    
+
     setupPloneboardWorkflow(self, out)
     addPortalProperties(self, out)
     addConfiglets(self, out)
     addMemberProperties(self, out)
-    
+
     addTransforms(self, out)
 
     print >> out, "Successfully installed %s." % PROJECTNAME
