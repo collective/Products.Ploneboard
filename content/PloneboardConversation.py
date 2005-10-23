@@ -18,6 +18,7 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
 from Products.Ploneboard.config import PROJECTNAME
 
+from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,\
      ManageBoard, AddConversation, AddComment, ManageConversation
 from PloneboardComment import PloneboardComment
@@ -56,7 +57,7 @@ class ConversationIndex(PloneboardIndex):
 
 MAX_UNIQUEID_ATTEMPTS = 1000
 
-class PloneboardConversation(BaseBTreeFolder):
+class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """
     Conversation contains comments.
     """
@@ -73,6 +74,11 @@ class PloneboardConversation(BaseBTreeFolder):
     allowed_content_types = ('PloneboardComment',)
     global_allow = 0 # To avoid it being visible in the add contents menu
 
+    # Set up our views - these are available from the 'display' menu
+    default_view = 'threaded_conversation_view'
+    immediate_view = 'threaded_conversation_view'
+    suppl_views = ('conversation_view', 'threaded_conversation_view')
+
     actions = (
             { 'id'          : 'view'
             , 'name'        : 'View'
@@ -81,10 +87,15 @@ class PloneboardConversation(BaseBTreeFolder):
             },
         )
 
-    aliases = \
-        {
-              '(Default)' : 'threaded_conversation_view'
-            , 'view'      : 'threaded_conversation_view'
+    aliases = {
+            '(Default)'  : '(dynamic view)',
+            'view'       : '(selected layout)',
+            'index.html' : '(dynamic view)',
+            'edit'       : 'base_edit',
+            'properties' : 'base_metadata',
+            'sharing'    : 'folder_localrole_form',
+            'gethtml'    : '',
+            'mkdir'      : '',
         }
 
     _index = None
