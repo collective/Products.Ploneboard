@@ -1,0 +1,79 @@
+# Gettext File for Ploneboard
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"Last-Translator: Fabio Rizzo <fabio@simplesconsultoria.com.br>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: pt-br\n"
+"Language-Name: Português do Brasil\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: ploneboard\n"
+
+# Example
+msgid "A line was too long."
+msgstr "" 
+
+msgid "add_comment"
+msgstr "Adicionar Comentários"
+
+msgid "not_foruns"
+msgstr "Não Existem Fóruns Criados ainda. Use o menu para adicionar novos fóruns"
+
+msgid "forum_name"
+msgstr "Nome do Fórum"
+
+msgid "most_recent_post"
+msgstr "Post mais recente"
+
+msgid "no_conversations_started"
+msgstr "Nenhuma Conversa Iniciada"
+
+msgid "label_by_author"
+msgstr "por ${author}"
+
+msgid "go_to_parent_url"
+msgstr "Um level acima"
+
+msgid "not_conversations"
+msgstr "Nenhum Conversação no fórum ainda"
+
+msgid "conversation"
+msgstr "Conversação"
+
+msgid "replies"
+msgstr "Respostas"
+
+msgid "most_recent"
+msgstr "Mais Recente"
+
+msgid "not_permission_start_conversation"
+msgstr "Você não tem permissão para iniciar uma conversação"
+
+msgid "log_to_start_conversation"
+msgstr "Logue para Iniciar uma nova conversação"
+
+msgid "start_new_conversation"
+msgstr "Inicie uma nova conversação"
+
+msgid "preview_comment"
+msgstr "Previsão do Comentário"
+
+msgid "label_powered_by"
+msgstr "Feito usando  ${powered}"
+
+msgid "None"
+msgstr "Nenhuma"
+
+msgid "status"
+msgstr "Status"
+
+msgid "add_message"
+msgstr "Adicionar Mensagem" 
+
+

@@ -24,7 +24,7 @@
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h2>Add comment</h2>
+        <h2 i18n:translate="add_comment">Add comment</h2>
 
         <div class="documentDescription"></div>
 

@@ -1,0 +1,63 @@
+# Gettext File for Ploneboard
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"Last-Translator: Lukas Zdych <lukas.zdych@surecase.org>\n"
+"Language-Team: SureCase.org <info@surecase.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: Czech\n"
+"Preferred-Encodings: utf-8 latin2\n"
+"Domain: ploneboard\n"
+
+# Example
+msgid "A line was too long."
+msgstr "Řádek byl příliš dlouhý." 
+
+msgid "add_comment"
+msgstr "Přidat komentář"
+
+msgid "not_foruns"
+msgstr "V této diskusi zatím nejsou žádná fóra, použijte menu \"přidat\" pro založení nových fór."
+
+msgid "forum_name"
+msgstr "Název fóra"
+
+msgid "most_recent_post"
+msgstr "Nejnovější příspěvek"
+
+msgid "no_conversations_started"
+msgstr "Nebyli začaty žádné konverzace."
+
+msgid "label_by_author"
+msgstr "od ${author}"
+
+msgid "go_to_parent_url"
+msgstr "Nahoru o jednu úroveň"
+
+msgid "not_conversations"
+msgstr "V tomto fóru zatím nejsou žádné konverzace."
+
+msgid "conversation"
+msgstr "Konverzace"
+
+msgid "replies"
+msgstr "Reakce"
+
+msgid "most_recent"
+msgstr "Nejnovější komentář"
+
+msgid "not_permission_start_conversation"
+msgstr "Omlouváme se, nejste oprávněni začínat nové konverzace."
+
+msgid "start_new_conversation"
+msgstr "Začít novou konverzaci"
+
+
+
+
