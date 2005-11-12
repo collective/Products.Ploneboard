@@ -65,7 +65,7 @@ msgid "preview_comment"
 msgstr "Previsão do Comentário"
 
 msgid "label_powered_by"
-msgstr "Feito usando  ${powered}"
+msgstr "Feito usando"
 
 msgid "None"
 msgstr "Nenhuma"

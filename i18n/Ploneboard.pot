@@ -85,3 +85,5 @@ msgstr ""
 msgid "label_display_portraits"
 msgstr ""
 
+msgid "label_powered_by"
+msgstr ""

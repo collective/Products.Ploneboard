@@ -1,0 +1,18 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="ploneboard">
+
+<body>
+    <div metal:define-macro="footer" tal:omit-tag="">
+
+    <div class="documentByLine">
+        <div i18n:translate="label_powered_by" tal:omit-tag="">Powered by</div> <a class="link-plain" href="http://plone.org/products/ploneboard">Ploneboard</a>
+    </div>
+                
+
+    </div>
+</body>
+</html>
+
+    
+

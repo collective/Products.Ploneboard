@@ -49,10 +49,8 @@
 
             </div>
         </div>
-
-        <div class="documentByLine">
-        Powered by <a class="link-plain" href="http://plone.org/products/ploneboard">Ploneboard</a>
-        </div>
+        
+        <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
     </div>
                      
