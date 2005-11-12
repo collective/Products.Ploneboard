@@ -67,4 +67,21 @@ msgstr ""
 msgid "add_message"
 msgstr ""
 
+msgid "label_description"
+msgstr ""
+
+msgid "help_description"
+msgstr ""
+
+msgid "help_description_forum"
+msgstr ""
+
+msgid "label_description_forum"
+msgstr ""
+
+msgid "help_display_portraits"
+msgstr ""
+
+msgid "label_display_portraits"
+msgstr ""
 

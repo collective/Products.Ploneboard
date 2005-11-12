@@ -37,9 +37,10 @@ schema = BaseBTreeFolderSchema + Schema((
               default_content_type = 'text/html',
               default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the forum.",
-                                      description_msgid = "help_description",
+                                      description_msgid = "help_description_forum",
                                       label = "Description",
-                                      label_msgid = "label_description",
+                                      label_msgid = "label_description_forum",
+                                      i18n_domain = "ploneboard",
                                       rows = 5)),
     BooleanField('displayMemberPortraits',
                  required = False,
@@ -51,7 +52,9 @@ schema = BaseBTreeFolderSchema + Schema((
                  widget = BooleanWidget(description = "Toggle the display of member portraits.",
                                         description_msgid = "help_display_portraits",
                                         label = "Display Portraits",
-                                        label_msgid = "label_display_portraits",)),
+                                        label_msgid = "label_display_portraits",
+                                        i18n_domain = "ploneboard",
+                                        )),
     ))
 
 class ForumIndex(PloneboardIndex):

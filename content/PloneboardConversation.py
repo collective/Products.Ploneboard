@@ -39,9 +39,10 @@ schema = PBConversationBaseBTreeFolderSchema + Schema((
               default_content_type = 'text/plain',
               default_output_type = 'text/html',
               widget = TextAreaWidget(description = "Enter a brief description of the conversation.",
-                                      description_msgid = "help_description",
+                                      description_msgid = "help_description_conversation",
                                       label = "Description",
-                                      label_msgid = "label_description",
+                                      label_msgid = "label_description_conversation",
+                                      i18n_domain = "ploneboard",
                                       rows = 5)),
     ))
 

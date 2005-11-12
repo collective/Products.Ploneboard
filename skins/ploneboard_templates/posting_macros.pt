@@ -19,11 +19,11 @@
                          Title request/title | nothing"
              tal:attributes="class python:test(error_title, 'field error', 'field')"> 
 
-            <label for="title" i18n:translate="label_title">Title</label>
+            <label for="title" i18n:translate="label_title_posting">Title</label>
 
             <span class="fieldRequired" title="Required">(Required)</span>
 
-            <div i18n:translate="help_title"
+            <div i18n:translate="help_title_posting"
                  class="formHelp">
                 Enter the title of the document.
             </div>
@@ -51,9 +51,9 @@
                          text python:request.get('text', '')"
              tal:attributes="class python:test(error_text, 'field error', 'field')"> 
 
-            <label for="text" i18n:translate="label_body_text">Body text</label> 
+            <label for="text" i18n:translate="label_body_text_posting">Body text</label> 
 
-            <div i18n:translate="help_body_text"
+            <div i18n:translate="help_body_text_posting"
                  class="formHelp">
                 The body text of the document. 
             </div>
@@ -82,7 +82,7 @@
                        type="submit" 
                        name="form.button.Preview" 
                        value="Preview" 
-                       i18n:attributes="value"
+                       i18n:attributes="value preview_posting"
                        tal:attributes="tabindex tabindex/next;" 
                        /> 
                 <input class="destructive"
@@ -90,7 +90,7 @@
                        type="submit"
                        name="form.button.Cancel"
                        value="Cancel"
-                       i18n:attributes="value"
+                       i18n:attributes="value cancel_posting"
                        tal:attributes="tabindex tabindex/next"
                        />
             </div>

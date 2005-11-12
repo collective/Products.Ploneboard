@@ -26,6 +26,7 @@ schema = BaseBTreeFolderSchema + Schema((
               default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the board.",
                                       description_msgid = "help_description",
+                                      i18n_domain = "ploneboard",
                                       label = "Description",
                                       label_msgid = "label_description",
                                       rows = 5)),

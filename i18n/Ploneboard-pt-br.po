@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Fabio Rizzo <fabio@simplesconsultoria.com.br>\n"
+"Last-Translator: Fabio Rizzo <fabiorizzo@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -75,5 +75,52 @@ msgstr "Status"
 
 msgid "add_message"
 msgstr "Adicionar Mensagem" 
+
+msgid "label_description"
+msgstr "Descrição"
+
+msgid "help_description"
+msgstr "Entre com uma breve descrição da board"
+
+msgid "help_description_forum"
+msgstr "Entre com uma breve descrição do fórum"
+
+msgid "label_description_forum"
+msgstr "Descrição do Fórum"
+
+msgid "help_display_portraits"
+msgstr "Selecionar Retratos dos Membros"
+
+msgid "label_display_portraits"
+msgstr "Mostrar Retratos"
+
+
+msgid "help_description_conversation"
+msgstr "Entre uma breve descrição da Conversação"
+
+
+msgid "label_description_conversation"
+msgstr "Descrição da Conversação"
+
+msgid "legend_add_conversation"
+msgstr "Detalhes"
+
+msgid "label_title_posting"
+msgstr "Titulo"
+
+msgid "help_title_posting"
+msgstr "Insira o título da mensagem"
+
+msgid "label_body_text_posting"
+msgstr "Corpo da Mensagem"
+
+msgid "help_body_text_posting"
+msgstr "Entre com o corpo da mensagem"
+
+msgid "preview_posting"
+msgstr "Prever"
+
+msgid "cancel_posting"
+msgstr "Cancelar"
 
 
