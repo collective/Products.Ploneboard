@@ -20,3 +20,5 @@ interface, concepts
     **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with 
 permission
 
+    **Fabio Rizzo** -- i18n implementation
+

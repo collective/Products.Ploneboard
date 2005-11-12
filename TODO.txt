@@ -39,10 +39,6 @@ PloneBoard to-do list
     
     - Need indication in UI when threads are locked or sticky
 
-    i18n support
-    ------------
-
-    - Ensure i18n keys are used everywhere
 
     Discussion tool integration
     ----------------------------

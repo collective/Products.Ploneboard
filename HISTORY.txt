@@ -1,3 +1,5 @@
+    - i18n implementation [fabiorizzo]
+    
     - Made PloneboardConversation use CMFDynamicViewFTI so admins can set the
       default view in portal_types. This doesn't add a display menu.
       [fschulze]
