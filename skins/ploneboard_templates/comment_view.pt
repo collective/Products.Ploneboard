@@ -37,11 +37,11 @@
                          tal:attributes="id comment/getId">
                     <img src="" 
                          tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
-                         Posted by 
+                         <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
                          <span tal:replace="comment/Creator"
                                tal:condition="canView">author</span> 
                          <span tal:condition="not:canView">[Hidden]</span> 
-                         at
+                         <span i18n:translate="text_at" tal:omit-tag="">at</span>
                          <span tal:replace="python:here.toPloneboardTime(comment.creation_date)"
                                tal:condition="canView">Thursday 13:21</span>
                          <span tal:condition="not:canView">[Hidden]</span>
@@ -86,7 +86,7 @@
                             <tal:transition repeat="transition python:wtool.getTransitionsFor(comment, here)">
                                 <input class="context"
                                        type="submit"
-                                       value="#"
+                                       value="Retract"
                                        name="#"
                                        tabindex=""
                                        onclick="#"
@@ -104,6 +104,7 @@
                             <input class="standalone"
                                    type="submit" 
                                    value="Reply to this" 
+                                   i18n:attributes="value"
                                    />
 
                         </form>

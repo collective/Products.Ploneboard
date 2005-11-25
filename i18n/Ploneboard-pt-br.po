@@ -1,13 +1,15 @@
+# translation of Ploneboard-pt-br.po to Brazilian Portuguese
 # Gettext File for Ploneboard
+# Fabio Rizzo <fabiorizzo@gmail.com>, 2005
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
-"PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Fabio Rizzo <fabiorizzo@gmail.com>\n"
-"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2005-11-25 11:50-0300\n"
+"Last-Translator: Rafahela Garcia Bazzanella <rafabazzanella@yahoo.com.br>\n"
+"Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: pt-br\n"
@@ -20,28 +22,28 @@ msgid "A line was too long."
 msgstr "" 
 
 msgid "add_comment"
-msgstr "Adicionar Comentários"
+msgstr "Adicionar comentários"
 
 msgid "not_foruns"
-msgstr "Não Existem Fóruns Criados ainda. Use o menu para adicionar novos fóruns"
+msgstr "Não existem fóruns nesta pasta. Utilize o menu para adicioná-los."
 
 msgid "forum_name"
-msgstr "Nome do Fórum"
+msgstr "Nome do fórum"
 
 msgid "most_recent_post"
-msgstr "Post mais recente"
+msgstr "Postagem mais recente"
 
 msgid "no_conversations_started"
-msgstr "Nenhuma Conversa Iniciada"
+msgstr "Nenhuma conversação foi iniciada"
 
 msgid "label_by_author"
 msgstr "por ${author}"
 
 msgid "go_to_parent_url"
-msgstr "Um level acima"
+msgstr "Um nível acima"
 
 msgid "not_conversations"
-msgstr "Nenhum Conversação no fórum ainda"
+msgstr "Nenhum conversação foi iniciada"
 
 msgid "conversation"
 msgstr "Conversação"
@@ -53,16 +55,16 @@ msgid "most_recent"
 msgstr "Mais Recente"
 
 msgid "not_permission_start_conversation"
-msgstr "Você não tem permissão para iniciar uma conversação"
+msgstr "Desculpe, você não tem permissão para iniciar uma conversação."
 
 msgid "log_to_start_conversation"
-msgstr "Logue para Iniciar uma nova conversação"
+msgstr "Logue-se para iniciar uma conversação"
 
 msgid "start_new_conversation"
-msgstr "Inicie uma nova conversação"
+msgstr "Iniciar uma nova conversação"
 
 msgid "preview_comment"
-msgstr "Previsão do Comentário"
+msgstr "Visualização do Comentário"
 
 msgid "label_powered_by"
 msgstr "Feito usando"
@@ -71,7 +73,7 @@ msgid "None"
 msgstr "Nenhuma"
 
 msgid "status"
-msgstr "Status"
+msgstr "Estado"
 
 msgid "add_message"
 msgstr "Adicionar Mensagem" 
@@ -80,47 +82,91 @@ msgid "label_description"
 msgstr "Descrição"
 
 msgid "help_description"
-msgstr "Entre com uma breve descrição da board"
+msgstr "Entre com uma breve descrição sobre o fórum"
 
 msgid "help_description_forum"
-msgstr "Entre com uma breve descrição do fórum"
+msgstr "Entre com uma breve descrição sobre o fórum"
+
+msgid "help_text"
+msgstr "Entre com o texto de comentário"
 
 msgid "label_description_forum"
 msgstr "Descrição do Fórum"
 
+msgid "label_text"
+msgstr "Texto"
+
 msgid "help_display_portraits"
-msgstr "Selecionar Retratos dos Membros"
+msgstr "Selecionar retratos dos membros"
 
 msgid "label_display_portraits"
-msgstr "Mostrar Retratos"
-
+msgstr "Mostrar retratos"
 
 msgid "help_description_conversation"
-msgstr "Entre uma breve descrição da Conversação"
-
+msgstr "Entre com uma breve descrição sobre a conversação"
 
 msgid "label_description_conversation"
-msgstr "Descrição da Conversação"
+msgstr "Descrição da conversação"
 
 msgid "legend_add_conversation"
 msgstr "Detalhes"
 
 msgid "label_title_posting"
-msgstr "Titulo"
+msgstr "Título"
 
 msgid "help_title_posting"
 msgstr "Insira o título da mensagem"
 
 msgid "label_body_text_posting"
-msgstr "Corpo da Mensagem"
+msgstr "Corpo da mensagem"
 
 msgid "help_body_text_posting"
 msgstr "Entre com o corpo da mensagem"
 
 msgid "preview_posting"
-msgstr "Prever"
+msgstr "Visualizar"
 
-msgid "cancel_posting"
+msgid "preview_message"
+msgstr "Visualização da Mensagem"
+
+msgid "value preview_posting"
+msgstr "Visualizar"
+
+msgid "value cancel_posting"
 msgstr "Cancelar"
 
+msgid "Post"
+msgstr "Postar"
 
+msgid "Change"
+msgstr "Alterar"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Reply to this"
+msgstr "Responder"
+
+msgid "Retract"
+msgstr "Retirar"
+
+msgid "Hide"
+msgstr "Esconder"
+
+msgid "Publish"
+msgstr "Publicar"
+
+msgid "Reject"
+msgstr "Rejeitar"
+
+msgid "Show"
+msgstr "Exibir"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "posted_by"
+msgstr "Postado por"
+
+msgid "text_at"
+msgstr "em"

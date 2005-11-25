@@ -90,7 +90,7 @@
                        type="submit"
                        name="form.button.Cancel"
                        value="Cancel"
-                       i18n:attributes="value cancel_posting"
+                       i18n:attributes="value"
                        tal:attributes="tabindex tabindex/next"
                        />
             </div>

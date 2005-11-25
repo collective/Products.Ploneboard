@@ -1,3 +1,5 @@
+    - i18n improvements [rafabazzanella]
+
     - Added footer macro [fabiorizzo]
     
     - i18n implementation [fabiorizzo]

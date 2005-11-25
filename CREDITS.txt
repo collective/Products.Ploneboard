@@ -22,3 +22,4 @@ permission
 
     **Fabio Rizzo** -- i18n implementation
 
+    **Rafahela Garcia Bazzanella** -- i18n improvements

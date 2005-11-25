@@ -1,13 +1,14 @@
 # Gettext File for Ploneboard
+# Your Name <your@mail>, year
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Fabio Rizzo <fabio@simplesconsultoria.com.br>\n"
-"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"Last-Translator: Your Name <your@mail>\n"
+"Language-Team: Your Team <team@mail>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: en\n"
@@ -55,11 +56,20 @@ msgstr ""
 msgid "not_permission_start_conversation"
 msgstr ""
 
+msgid "log_to_start_conversation"
+msgstr ""
+
 msgid "start_new_conversation"
 msgstr ""
 
+msgid "preview_comment"
+msgstr ""
 
-####
+msgid "label_powered_by"
+msgstr ""
+
+msgid "None"
+msgstr ""
 
 msgid "status"
 msgstr ""
@@ -79,11 +89,68 @@ msgstr ""
 msgid "label_description_forum"
 msgstr ""
 
+msgid "help_text"
+msgstr ""
+
+msgid "label_text"
+msgstr ""
+
 msgid "help_display_portraits"
 msgstr ""
 
 msgid "label_display_portraits"
 msgstr ""
 
-msgid "label_powered_by"
+msgid "help_description_conversation"
+msgstr ""
+
+msgid "label_description_conversation"
+msgstr ""
+
+msgid "legend_add_conversation"
+msgstr ""
+
+msgid "label_title_posting"
+msgstr ""
+
+msgid "help_title_posting"
+msgstr ""
+
+msgid "label_body_text_posting"
+msgstr ""
+
+msgid "help_body_text_posting"
+msgstr ""
+
+msgid "preview_posting"
+msgstr ""
+
+msgid "preview_message"
+msgstr ""
+
+msgid "value preview_posting"
+msgstr ""
+
+msgid "value cancel_posting"
+msgstr ""
+
+msgid "Post"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Reply to this"
+msgstr ""
+
+msgid "Retract"
+msgstr ""
+
+msgid "posted_by"
+msgstr ""
+
+msgid "text_at"
 msgstr ""
