@@ -115,3 +115,11 @@ class PloneboardIndex(Persistent):
     __setitem__ = setDateKey
     __delitem__ = delDateKey
 
+
+class ForumIndex(PloneboardIndex):
+    """
+    A class for containing the date indexes and handling length (map to __len__)
+    """
+    def _calculateInternalDateKey(self, date):
+        # Date key - use max int minus seconds since epoch as key in date index
+        return sys.maxint - int(date)

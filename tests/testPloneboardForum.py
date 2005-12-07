@@ -6,15 +6,25 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-import PloneboardTestCase
+import PloneboardTestCase, utils
+
+from Products.CMFPlone.utils import _createObjectByType
+
 
 class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
+
+    def afterSetUp(self):
+        self._refreshSkinData()
+        utils.disableScriptValidators(self.portal)
+
+        self.board = _createObjectByType('Ploneboard', self.folder, 'board')
+        self.catalog = self.board.getInternalCatalog()
+
     def testAddForum(self):
         """
         Create new folder in home directory & check its basic properties and behaviour
         """
-        self.loginPortalOwner()
-        board = self.portal.board
+        board = self.board
 
         self.assertEqual(len(board.contentValues('PloneboardForum')), 0)
         board.addForum('forum', 'title', 'description')
@@ -31,8 +41,7 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         """
         Create new folder in home directory & check its basic properties and behaviour
         """
-        self.loginPortalOwner()
-        board = self.portal.board
+        board = self.board
 
         self.assertEqual(len(board.contentValues('PloneboardForum')), 0)
         board.addForum('forum', 'title', 'description')
@@ -44,14 +53,16 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(len(board.contentValues('PloneboardForum')), 0)
         
     def test_delOb(self):
-        self.loginPortalOwner()
-        forum = self.portal.board.addForum('forum', 'title', 'description')
-        conv = forum.addConversation('subject', 'body')
-        conv1 = forum.addConversation('subject1', 'body1')
-        self.assertEqual(forum.getNumberOfConversations(), 2)
+        forum = self.board.addForum('forum', 'title', 'description')
+        self.assertEqual(forum.getNumberOfConversations(), 0)
+        conv = forum.addConversation('subject', 'body', script=0)
+        self.failUnless(conv.getId() in list(forum.objectIds()))
+        conv1 = forum.addConversation('subject1', 'body1', script=0)
+        self.failUnless(conv1.getId() in list(forum.objectIds()))
         conv_id = conv1.getId()
         forum._delOb(conv_id)
-        self.assertEqual(forum.getNumberOfConversations(), 1)
+        self.failIf(conv1.getId() in list(forum.objectIds()))
+
         
 if __name__ == '__main__':
     framework()

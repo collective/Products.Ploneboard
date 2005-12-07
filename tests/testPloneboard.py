@@ -8,19 +8,19 @@ if __name__ == '__main__':
 
 import PloneboardTestCase
 
+from Products.CMFPlone.utils import _createObjectByType
+
+
 class TestPloneboard(PloneboardTestCase.PloneboardTestCase):
+
     def testAddPloneboard(self):
         """
         Create new folder in home directory & check its basic properties and behaviour
         """
-        self.loginPortalOwner()
         self.assertEqual(len(self.portal.contentValues('Ploneboard')), 0)
         # Content creation
         content_id = "board"
-        self.portal.invokeFactory(
-            type_name = 'Ploneboard',
-            id = content_id
-            )
+        _createObjectByType('Ploneboard', self.portal, content_id)
         self.assertEqual(len(self.portal.contentValues('Ploneboard')), 1)
         self.failUnless(content_id in self.portal.objectIds(), "Ploneboard has not been created or not with the right id")
         content = getattr(self.portal, content_id)
@@ -33,17 +33,14 @@ class TestPloneboard(PloneboardTestCase.PloneboardTestCase):
         """
         Create new folder in home directory & check its basic properties and behaviour
         """
-        self.loginPortalOwner()
         self.assertEqual(len(self.portal.contentValues('Ploneboard')), 0)
         # Content creation
         content_id = "board"
-        self.portal.invokeFactory(
-            type_name = 'Ploneboard',
-            id = content_id
-            )
+        _createObjectByType('Ploneboard', self.portal, content_id)
         self.assertEqual(len(self.portal.contentValues('Ploneboard')), 1)
         self.portal._delObject(content_id)
         self.assertEqual(len(self.portal.contentValues('Ploneboard')), 0)
+
 
 if __name__ == '__main__':
     framework()

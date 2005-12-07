@@ -6,20 +6,31 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
-import PloneboardTestCase
+import PloneboardTestCase, utils
+
+from Products.CMFPlone.utils import _createObjectByType
+
 
 class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
+
+    def afterSetUp(self):
+        self._refreshSkinData()
+        utils.disableScriptValidators(self.portal)
+                
+        _createObjectByType('Ploneboard', self.portal, 'board')
+        _createObjectByType('PloneboardForum', self.portal.board, 'forum')
+        self.conv = self.portal.board.forum.addConversation('conv1', 'conv1 body', script=0)
+        self.catalog = self.portal.board.getInternalCatalog()
+
     def testSetInReplyTo(self):
-        self.loginPortalOwner()
         forum = self.portal.board.forum
-        conv = forum.addConversation('subject', 'body')
+        conv = forum.addConversation('subject', 'body', script=0)
         msg = conv.addComment('msg_subject', 'msg_body')
         msg1 = conv.addComment('msg_subject1', 'msg_body1')
         msg1.setInReplyTo(msg)
         self.assertEqual(msg.getId(), msg1.inReplyTo().getId())
        
     def testAddReply(self):
-        self.loginPortalOwner()
         conv = self.conv
      
         m = conv.objectValues()[0]
@@ -34,7 +45,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(m.getReplies()[0].getId(), r.getId())
     
     def testDeleteReply(self):
-        self.loginPortalOwner()
         conv = self.conv
      
         m = conv.objectValues()[0]
@@ -47,7 +57,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         
 
     def testMakeBranch(self):
-        self.loginPortalOwner()
         forum = self.portal.board.forum
         conv = self.conv
         
@@ -66,7 +75,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(conv2.getNumberOfComments(), 2)
         
     def testAddAttachment(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
         
@@ -76,7 +84,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(msg.getAttachment(0).title, 'comment')
         
     def testRemoveAttachment(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
       
@@ -86,7 +93,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(msg.getNumberOfAttachments(), 0)
         
     def testChangeAttachment(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
       
@@ -98,7 +104,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertNotEqual(str(msg.getAttachment(index=0)), old_data)
         
     def testGetAttachments(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
       
@@ -109,7 +114,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless('comment1' in [v.title for v in msg.getAttachments()])
     
     def testChildIds(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
         r = msg.addReply('reply_subject', 'reply_body')
@@ -119,7 +123,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(len(msg.childIds()), 6)
         
     def testGetReplies(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
         r = msg.addReply('r1', 'b1')
@@ -129,7 +132,6 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(r2.getId() in map(lambda x: x.getId(), msg.getReplies()))
 
     def testTransforms(self):
-        self.loginPortalOwner()
         conv = self.conv
         msg = conv.objectValues()[0]
         text = 'Smiley :)'

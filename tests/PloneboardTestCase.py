@@ -1,62 +1,37 @@
 from Testing import ZopeTestCase
-from AccessControl.SecurityManagement import newSecurityManager
-from AccessControl.SecurityManagement import noSecurityManager
-from Products.Ploneboard.Extensions.Install import install as installPloneboard
-from Products.Ploneboard.content.Ploneboard import Ploneboard
-from Products.Ploneboard.content.PloneboardForum import PloneboardForum
-from Products.CMFPlone.tests import PloneTestCase
-import time
-import utils
 
+# Make the boring stuff load quietly
+ZopeTestCase.installProduct('CMFCore', quiet=1)
+ZopeTestCase.installProduct('CMFDefault', quiet=1)
+ZopeTestCase.installProduct('CMFCalendar', quiet=1)
+ZopeTestCase.installProduct('CMFTopic', quiet=1)
+ZopeTestCase.installProduct('DCWorkflow', quiet=1)
+ZopeTestCase.installProduct('CMFActionIcons', quiet=1)
+ZopeTestCase.installProduct('CMFQuickInstallerTool', quiet=1)
+ZopeTestCase.installProduct('CMFFormController', quiet=1)
+ZopeTestCase.installProduct('GroupUserFolder', quiet=1)
+ZopeTestCase.installProduct('ZCTextIndex', quiet=1)
+ZopeTestCase.installProduct('ExtendedPathIndex', quiet=1)
+ZopeTestCase.installProduct('SecureMailHost', quiet=1)
+ZopeTestCase.installProduct('CMFPlone')
 ZopeTestCase.installProduct('Archetypes')
 ZopeTestCase.installProduct('PortalTransforms', quiet=1)
-ZopeTestCase.installProduct('MimetypesRegistry')
+ZopeTestCase.installProduct('MimetypesRegistry', quiet=1)
 ZopeTestCase.installProduct('Ploneboard')
+
+from Products.PloneTestCase import PloneTestCase
+
+PRODUCTS = ['Archetypes', 'Ploneboard']
+
+PloneTestCase.setupPloneSite(products=PRODUCTS)
 
 
 class PloneboardTestCase(PloneTestCase.PloneTestCase):
-    def afterSetUp(self):
-        self._refreshSkinData()
-        self.loginPortalOwner()
-        utils.disableScriptValidators(self.portal)
-                
-        className = self.__class__.__name__
-        if className == 'TestPloneboardForum':
-            self.portal._setObject('board', Ploneboard('board'))
-            self.catalog = self.portal.board.getInternalCatalog()
-        elif className == 'TestPloneboardConversation':
-            self.portal._setObject('board', Ploneboard('board'))
-            self.portal.board._setObject('forum', PloneboardForum('forum'))
-            self.catalog = self.portal.board.getInternalCatalog()
-        elif className == 'TestPloneboardComment':
-            self.portal._setObject('board', Ploneboard('board'))
-            self.portal.board._setObject('forum', PloneboardForum('forum'))
-            self.conv = self.portal.board.forum.addConversation('conv1', 'conv1 body')
-            self.catalog = self.portal.board.getInternalCatalog()
-        
-        self.logout()
-        
-def setupPloneboard(app, quiet=0):
-    get_transaction().begin()
-    _start = time.time()
-    if not quiet: ZopeTestCase._print('Adding Ploneboard ... ')
 
-    uf = app.portal.acl_users
-    # setup
-    uf._doAddUser('PloneMember', '', ['Members'], [])
-    uf._doAddUser('PloneManager', '', ['Manager'], [])
-    # login as manager
-    user = uf.getUserById('PloneManager').__of__(uf)
-    newSecurityManager(None, user)
-    
-    # add Ploneboard
-    installPloneboard(app.portal)
-    
-    # Log out
-    noSecurityManager()
-    get_transaction().commit()
-    if not quiet: ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
+    class Session(dict):
+        def set(self, key, value):
+            self[key] = value
 
-app = ZopeTestCase.app()
-setupPloneboard(app)
-ZopeTestCase.close(app)
+    def _setup(self):
+        PloneTestCase.PloneTestCase._setup(self)
+        self.app.REQUEST['SESSION'] = self.Session()
