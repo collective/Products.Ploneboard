@@ -51,7 +51,9 @@
                          text python:request.get('text', '')"
              tal:attributes="class python:test(error_text, 'field error', 'field')"> 
 
-            <label for="text" i18n:translate="label_body_text_posting">Body text</label> 
+            <label for="text" i18n:translate="label_body_text_posting">Body text</label>
+
+            <span class="fieldRequired" title="Required">(Required)</span>
 
             <div i18n:translate="help_body_text_posting"
                  class="formHelp">
