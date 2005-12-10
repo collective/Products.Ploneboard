@@ -6,7 +6,9 @@
 
     <div metal:define-macro="comment_body_start" tal:omit-tag="">
 
-        <legend i18n:translate="legend_add_conversation">Details</legend>
+        <legend>
+            <span i18n:translate="legend_add_conversation">Details</span>
+        </legend>
 
         <input type="hidden" name="form.submitted" value="1" />
 

@@ -1,156 +1,170 @@
 # Gettext File for Ploneboard
-# Your Name <your@mail>, year
+# Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
-"PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Your Name <your@mail>\n"
-"Language-Team: Your Team <team@mail>\n"
+"PO-Revision-Date: 2005-12-10 11:50+0000\n"
+"Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
+"Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 
 # Example
 msgid "A line was too long."
-msgstr "" 
+msgstr "Een regel was te lang." 
 
 msgid "add_comment"
-msgstr ""
+msgstr "Reageren"
 
 msgid "not_foruns"
-msgstr ""
+msgstr "Geen forums"
 
 msgid "forum_name"
-msgstr ""
+msgstr "Naam"
 
 msgid "most_recent_post"
-msgstr ""
+msgstr "Laatste reactie"
 
 msgid "no_conversations_started"
-msgstr ""
+msgstr "Nog geen conversaties."
 
 msgid "label_by_author"
-msgstr "by ${author}"
+msgstr "door ${author}"
 
 msgid "go_to_parent_url"
-msgstr ""
+msgstr "Terug naar ${title} ${type}"
 
 msgid "not_conversations"
-msgstr ""
+msgstr "Er zijn nog geen conversaties gestart in dit forum."
 
 msgid "conversation"
-msgstr ""
+msgstr "Onderwerp"
 
 msgid "replies"
-msgstr ""
+msgstr "Reacties"
 
 msgid "most_recent"
-msgstr ""
+msgstr "Laatste reactie"
 
 msgid "not_permission_start_conversation"
-msgstr ""
+msgstr "U heeft onvoldoende rechten om een conversatie te starten."
 
 msgid "log_to_start_conversation"
-msgstr ""
+msgstr "U dient in te loggen om een conversatie te starten"
 
 msgid "start_new_conversation"
-msgstr ""
+msgstr "Een nieuwe conversatie starten"
 
 msgid "preview_comment"
-msgstr ""
+msgstr "Voorbeeldweergave"
 
 msgid "label_powered_by"
-msgstr ""
+msgstr "Op basis van: "
 
 msgid "None"
-msgstr ""
+msgstr " - "
 
 msgid "status"
-msgstr ""
+msgstr "Status"
 
 msgid "add_message"
-msgstr ""
+msgstr "Reactie toevoegen"
 
 msgid "label_description"
-msgstr ""
+msgstr "Omschrijving"
 
 msgid "help_description"
 msgstr ""
 
 msgid "help_description_forum"
-msgstr ""
+msgstr "Vul hier de omschrijving in waar dit forum over gaat."
 
 msgid "label_description_forum"
-msgstr ""
+msgstr "Omschrijving"
 
 msgid "help_text"
 msgstr ""
 
 msgid "label_text"
-msgstr ""
+msgstr "Reactie"
 
 msgid "help_display_portraits"
-msgstr ""
+msgstr "Indien deze optie is ingeschakeld, dan wordt naast de reacties in deze conversatie de pasfoto van de betreffende auteur getoond."
 
 msgid "label_display_portraits"
-msgstr ""
+msgstr "Pasfoto's tonen"
 
 msgid "help_description_conversation"
-msgstr ""
+msgstr "Vul hier de omschrijving in van uw conversatie."
 
 msgid "label_description_conversation"
-msgstr ""
+msgstr "Omschrijving"
 
 msgid "legend_add_conversation"
-msgstr ""
+msgstr "Reactie toevoegen"
 
 msgid "label_title_posting"
-msgstr ""
+msgstr "Titel"
 
 msgid "help_title_posting"
-msgstr ""
+msgstr "Vul hier de titel van uw bericht in."
 
 msgid "label_body_text_posting"
-msgstr ""
+msgstr "Reactie"
 
 msgid "help_body_text_posting"
-msgstr ""
+msgstr "Typ hier uw reactie"
 
 msgid "preview_posting"
-msgstr ""
+msgstr "Voorbeeldweergave"
 
 msgid "preview_message"
-msgstr ""
+msgstr "Voorbeeldweergave"
 
 msgid "value preview_posting"
-msgstr ""
+msgstr "Voorbeeldweergave"
 
 msgid "value cancel_posting"
-msgstr ""
+msgstr "Annuleren"
 
 msgid "Post"
-msgstr ""
+msgstr "Toevoegen"
 
 msgid "Change"
-msgstr ""
+msgstr "Bewerken"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 msgid "Reply to this"
-msgstr ""
+msgstr "Reageren"
 
 msgid "Retract"
-msgstr ""
+msgstr "Terugtrekken"
 
 msgid "posted_by"
-msgstr ""
+msgstr "Geplaatst door"
 
 msgid "text_at"
-msgstr ""
+msgstr "op"
+
+#### Manual entries.
+
+msgid "Message Board"
+msgstr "Forum"
+
+msgid "Forum"
+msgstr "Onderwerp"
+
+msgid "Conversation"
+msgstr "Conversatie"
+
+msgid "Comment"
+msgstr "Reactie"

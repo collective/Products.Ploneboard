@@ -10,7 +10,7 @@
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();">
 
-        <h1>Preview comment</h1>
+        <h1 i18n:translate="heading_preview_comment">Preview comment</h1>
    
         <form class="group"
               name="edit_form"
