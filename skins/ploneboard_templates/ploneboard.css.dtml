@@ -70,6 +70,7 @@
     border-style: none none &dtml-borderStyle; none;
     background-color: &dtml-globalBackgroundColor;;
     padding: 0.5em 1em;
+    font-size: 90%;
 }
 
 .boardCommentBody {

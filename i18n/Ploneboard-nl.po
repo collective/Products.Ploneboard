@@ -33,7 +33,7 @@ msgid "most_recent_post"
 msgstr "Laatste reactie"
 
 msgid "no_conversations_started"
-msgstr "Nog geen conversaties."
+msgstr "Nog geen onderwerpen."
 
 msgid "label_by_author"
 msgstr "door ${author}"
@@ -42,7 +42,7 @@ msgid "go_to_parent_url"
 msgstr "Terug naar ${title} ${type}"
 
 msgid "not_conversations"
-msgstr "Er zijn nog geen conversaties gestart in dit forum."
+msgstr "Er zijn nog geen onderwerpen in dit forum."
 
 msgid "conversation"
 msgstr "Onderwerp"
@@ -54,13 +54,13 @@ msgid "most_recent"
 msgstr "Laatste reactie"
 
 msgid "not_permission_start_conversation"
-msgstr "U heeft onvoldoende rechten om een conversatie te starten."
+msgstr "U heeft onvoldoende rechten om een onderwerp toe te voegen."
 
 msgid "log_to_start_conversation"
-msgstr "U dient in te loggen om een conversatie te starten"
+msgstr "U dient in te loggen om een onderwerp toe te voegen."
 
 msgid "start_new_conversation"
-msgstr "Een nieuwe conversatie starten"
+msgstr "Nieuw Onderwerp"
 
 msgid "preview_comment"
 msgstr "Voorbeeldweergave"

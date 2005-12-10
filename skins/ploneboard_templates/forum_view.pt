@@ -89,6 +89,8 @@
                         <a href=""
                            class="listingConversation"
                            tal:attributes="href conversation/absolute_url">
+                          <img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
+                                      tal:replace="structure here/lock_icon.gif" />
                             <span tal:replace="conversation/Title">This is a title</span>
                               
 
@@ -102,24 +104,22 @@
                     
                     <td class="listingCheckbox"
                         tal:condition="conversation/getNumberOfReplies">
-                        <span tal:content="conversation/getNumberOfReplies">
+                        <span class="discreet"
+                              tal:content="conversation/getNumberOfReplies">
                             12 comments
                         </span>
-                        <img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
-                                    tal:replace="structure here/lock_icon.gif" />
                     </td>
-    
+
                     <td class="listingCheckbox"
                         tal:condition="not: conversation/getNumberOfReplies">
                         <span i18n:translate="None" class="discreet">None</span>
-                        <img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
-                                    tal:replace="structure here/lock_icon.gif" />
+
                     </td>
 
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
                     <td>
 
-                         <div i18n:translate="label_by_author">
+                         <div class="discreet" i18n:translate="label_by_author">
                              by <tal:author i18n:name="author"
                           tal:content="conversation/getLastCommentAuthor" />
                           </div>
