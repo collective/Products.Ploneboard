@@ -1,0 +1,21 @@
+# translation of Ploneboard-de to German (Germany)
+# Gettext File for Ploneboard
+# Thomas Zeleny, tomcom GmbH <tz@tomcom.de>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"PO-Revision-Date: 2006-02-16 11:30+0100\n"
+"Last-Translator: Thomas Zeleny <tz@tomcom.de>\n"
+"Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=latin1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: de\n"
+"Language-Name: German (Germany)\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+msgid "Message Board"
+msgstr "Forum"

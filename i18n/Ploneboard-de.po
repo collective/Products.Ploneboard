@@ -40,7 +40,7 @@ msgid "label_by_author"
 msgstr "von ${author}"
 
 msgid "go_to_parent_url"
-msgstr "Zurück zu"
+msgstr "Eine Ebene höher"
 
 msgid "not_conversations"
 msgstr "In diesem Forum existieren noch keine Beiträge"
