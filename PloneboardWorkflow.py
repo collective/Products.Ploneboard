@@ -534,6 +534,7 @@ def setupPloneboardWorkflow(wf):
         wf.addManagedPermission(p)
 
     sdef = wf.states['private']
+    sdef.title = 'Private'
     sdef.setPermission(ViewBoard,          0, (r_manager, r_owner))
     sdef.setPermission(SearchBoard,        0, (r_manager, r_owner))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_owner))
@@ -547,6 +548,7 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(ApproveComment,     0, (r_manager, r_owner))
 
     sdef = wf.states['pending']
+    sdef.title = 'Pending'
     sdef.setPermission(ViewBoard,          1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(SearchBoard,        1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_reviewer))
@@ -560,6 +562,7 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(ApproveComment,     0, (r_manager, r_reviewer))
 
     sdef = wf.states['published']
+    sdef.title = 'Published'
     sdef.setPermission(ViewBoard,          1, (r_anon, r_manager))
     sdef.setPermission(SearchBoard,        1, (r_anon, r_manager))
     sdef.setPermission(ManageBoard,        0, (r_manager,))
@@ -573,6 +576,7 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(ApproveComment,     0, (r_manager,))
 
     sdef = wf.states['visible']
+    sdef.title = 'Public Draft'
     sdef.setPermission(ViewBoard,          1, (r_anon, r_manager, r_reviewer))
     sdef.setPermission(SearchBoard,        1, (r_anon, r_manager, r_reviewer))
     sdef.setPermission(ManageBoard,        0, (r_manager, r_owner))
