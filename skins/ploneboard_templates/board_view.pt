@@ -82,8 +82,10 @@
                         </td>
                         </tal:choice2>
     
-                        <td tal:define="revstate python:wtool.getInfoFor(forum, 'review_state')"
+                        <td tal:define="revstate python:putils.getReviewStateTitleFor(forum)"
                             tal:content="string:$revstate"
+                            i18n:translate=""
+                            i18n:domain="plone"
                             style="text-align:center;">
                             _review_state_
                         </td>
