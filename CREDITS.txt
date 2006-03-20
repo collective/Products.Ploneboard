@@ -23,3 +23,8 @@ permission
     **Fabio Rizzo** -- i18n implementation
 
     **Rafahela Garcia Bazzanella** -- i18n improvements
+
+    **Gabriel Medina** -- i18n pt-br implementation for Plone domain
+
+    **Jean Rodrigo Ferri** -- i18n fixes
+

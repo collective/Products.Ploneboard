@@ -1,0 +1,105 @@
+# Gettext File for Plone
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2006-03-20 12:06+0000\n"
+"PO-Revision-Date: 2006-03-20 12:06-0300\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Team Name <team@email>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+## Translations for forum workflow states
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+## Translations for forum workflow transitions
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Private"
+msgstr ""
+
+## Translations for conversation workflow states
+
+msgid "Normal state"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Sticky"
+msgstr ""
+
+msgid "Locked and Sticky"
+msgstr ""
+
+## Translations for conversation workflow transitions
+
+msgid "Lock"
+msgstr ""
+
+msgid "Make Sticky"
+msgstr ""
+
+msgid "Make Locked and Sticky"
+msgstr ""
+
+msgid "Make Normal"
+msgstr ""
+
+## End for workflow
+
+msgid "Public"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Forum"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Added comment"
+msgstr ""
+
+msgid "You can only add comments to conversations or comments."
+msgstr ""
+
+msgid "Message Board has been created."
+msgstr ""
+
+msgid "Forum has been created."
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+

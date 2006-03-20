@@ -121,9 +121,7 @@
         </div>
 
         <div tal:condition="not:results">
-            <p>
-                There are no comments in the moderation queue.
-            </p>
+            <p i18n:translate="">There are no comments in the moderation queue.</p>                          
             <p>
                 <a href="#"
                    tal:attributes="href python:here.getBoard().absolute_url()"
