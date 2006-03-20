@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
-"PO-Revision-Date: 2005-11-25 11:50-0300\n"
+"PO-Revision-Date: 2006-03-20 16:35-0300\n"
 "Last-Translator: Rafahela Garcia Bazzanella <rafabazzanella@yahoo.com.br>\n"
 "Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,10 @@ msgstr ""
 
 # Example
 msgid "A line was too long."
-msgstr "" 
+msgstr "Uma linha estava muito longa."
+
+msgid "heading_preview_comment"
+msgstr "Visualização do comentário"
 
 msgid "add_comment"
 msgstr "Adicionar comentários"
@@ -170,3 +173,7 @@ msgstr "Postado por"
 
 msgid "text_at"
 msgstr "em"
+
+msgid "There are no comments in the moderation queue."
+msgstr "Não existem entradas para moderação."
+
