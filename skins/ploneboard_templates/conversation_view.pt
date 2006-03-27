@@ -7,7 +7,11 @@
     <metal:css fill-slot="css_slot">
         <style type="text/css" media="all"
                tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+        <style type="text/css" media="all">
+            iframe.kupu-editor-iframe { height: 200px !important; }
+        </style>
     </metal:css>
+
 
     <metal:js fill-slot="javascript_head_slot">
 
@@ -22,22 +26,14 @@
 
 <body>
 
-    <div metal:fill-slot="main" tal:define="noreply python: 0;
-                                            pss modules/Products/PythonScripts/standard;">
+    <div metal:fill-slot="main">
+
+        <h1 class="documentFirstHeading">
+        <img src="" tal:replace="structure here/ploneboard_conversation_icon.gif" />
+        <span tal:replace="here/Title">Conversation title</span>
+        </h1>
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
-
-        <h2>
-        <img src="" tal:replace="structure here/ploneboard_conversation_icon.gif" />
-        <img src="" tal:condition="python:wf_state in ['locked', 'locked_and_sticky']"
-                    tal:replace="structure here/lock_icon.gif" />
-        <span tal:replace="here/Title">Conversation title</span>
-        </h2>
-
-        <div class="documentDescription"
-             tal:content="here/Description"> 
-        description
-        </div>
 
         <div class="boardConversation"
              metal:define-macro="view_comments"
@@ -49,7 +45,30 @@
 
             </div>
         </div>
-        
+
+        <form tal:attributes="action string:${here/absolute_url}/add_comment_form">
+            <label>Quick reply</label>
+            <p class="formHelp">
+                If you want to add a reply at the end of this discussion, you
+                can do so with this form.
+            </p>
+            <tal:editor define="inputname  string:text;
+                                formname   string:add_comment_form;
+                                inputvalue nothing;
+                                cooked_inputvalue string:;
+                                rows string:10;
+                                tabindex tabindex/next;">
+              <div metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox">
+                The WYSIWYG code
+              </div>
+            </tal:editor>
+            <input type="hidden" name="form.submitted" value="1" />
+            <div class="formControls">
+                <input class="context"
+                       name="form.button.Post" 
+                       type="submit" value="Post reply" />
+            </div>
+        </form>
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
     </div>

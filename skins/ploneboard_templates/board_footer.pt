@@ -5,8 +5,11 @@
 <body>
     <div metal:define-macro="footer" tal:omit-tag="">
 
-    <div class="documentByLine">
-        <div i18n:translate="label_powered_by" tal:omit-tag="">Powered by</div> <a class="link-plain" href="http://plone.org/products/ploneboard">Ploneboard</a>
+    <div class="poweredBy"
+         i18n:translate="label_powered_by">
+        Powered by 
+        <a class="link-plain" 
+           href="http://plone.org/products/ploneboard">Ploneboard</a>
     </div>
                 
 

@@ -19,13 +19,13 @@
               enctype="multipart/form-data"
               tal:attributes="action template/getId" >
 
-            <div metal:use-macro="here/posting_macros/macros/comment_body_start" />
+            <input type="hidden" name="form.submitted" value="1" />
     
-            <div metal:use-macro="here/posting_macros/macros/comment_preview_hidden_vars" />
+            <div metal:use-macro="here/add_comment_preview/macros/comment_preview_hidden_vars" />
 
-            <div metal:use-macro="here/posting_macros/macros/comment_preview" />
+            <div metal:use-macro="here/add_comment_preview/macros/comment_preview" />
 
-            <div metal:use-macro="here/posting_macros/macros/comment_preview_buttons" />
+            <div metal:use-macro="here/add_comment_preview/macros/comment_preview_buttons" />
 
         </form>
 

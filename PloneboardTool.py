@@ -1,6 +1,8 @@
 from AccessControl import ClassSecurityInfo
 import Globals
 from OFS.Folder import Folder
+from ZPublisher.HTTPRequest import FileUpload
+from OFS.Image import File
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore import CMFCorePermissions
@@ -9,11 +11,13 @@ from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
 from Products.Ploneboard.utils import importModuleFromName
 from Acquisition import aq_base
+from Products.Ploneboard.config import PLONEBOARD_TOOL
+
 
 class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
-    id = 'portal_ploneboard'
+    id = PLONEBOARD_TOOL
     meta_type = 'Ploneboard Tool'
-    
+
     security = ClassSecurityInfo()
     def __init__(self):
         # {'name' : {'transform' : '', 'dataprovider' : '', 'transform_status' : '' }}
@@ -96,6 +100,60 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         
         orig = orig.replace('\n', '<br/>')
         return orig
+
+    # File upload - should be in a View once we get formcontroller support in Views
+    security.declareProtected(CMFCorePermissions.View, 'getUploadedFiles')
+    def getUploadedFiles(self):
+
+        request = self.REQUEST
+
+        result = []
+        files = request.get('files', [])
+        
+        if not files:
+            return []
+
+        sdm = getToolByName(self, 'session_data_manager', None)
+        hassession = sdm.hasSessionData()
+
+        for file in files:
+            if isinstance(file, basestring) and hassession:
+                # Look it up from session
+                oldfile = request.SESSION.get(file, None)
+                if oldfile is not None:
+                    result.append(oldfile)
+            if isinstance(file, FileUpload):
+                if file:
+                    newfile = File(file.filename, file.filename, file)
+                    request.SESSION[file.filename] = newfile
+                    result.append(newfile)
+
+        # delete files form session if not referenced
+        new_filelist = [x.getId() for x in result]
+        old_filelist = hassession and request.SESSION.get('ploneboard_uploads', []) or []
+        for removed in [f for f in old_filelist if f not in new_filelist]:
+            del request.SESSION[f]
+        if hassession or new_filelist:
+            request.SESSION['ploneboard_uploads'] = new_filelist
+            
+        return result
+
+    security.declareProtected(CMFCorePermissions.View, 'clearUploadedFiles')
+    def clearUploadedFiles(self):
+        # Get previously uploaded files with a reference in request
+        # + files uploaded in this request
+        # XXX ADD VARIABLE THAT KEEPS TRACK OF FILE NAMES
+        request = self.REQUEST
+
+        sdm = getToolByName(self, 'session_data_manager', None)
+        hassession = sdm.hasSessionData()
+
+        if hassession:
+            old_filelist = request.SESSION.get('ploneboard_uploads', [])
+            for file in old_filelist:
+                if request.SESSION.has_key(file):
+                    del request.SESSION[file]
+            del request.SESSION['ploneboard_uploads']
 
 
 Globals.InitializeClass(PloneboardTool)

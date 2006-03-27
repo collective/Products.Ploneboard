@@ -11,8 +11,7 @@
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
-    <div metal:fill-slot="main"
-         tal:define="pss modules/Products/PythonScripts/standard">
+    <div metal:fill-slot="main">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
@@ -26,34 +25,26 @@
         <div class="boardComment visualIEFloatFix"
              tal:define="comment python:context">
              
-            <metal:comment metal:define-macro="comment">
-
-                <div tal:define="canView  python:checkPermission('Ploneboard: View', comment);
-                                 revstate python:wtool.getInfoFor(comment, 'review_state')"
-                     tal:attributes="id string:comment-${comment/getId};
-                                     class python:test(revstate == 'retracted', 'boardCommentHidden', 'boardCommentVisible');">
+            <metal:comment metal:define-macro="comment"
+                           tal:define="creator comment/Creator;
+                                       creation_date comment/creation_date;
+                                       pss modules/Products/PythonScripts/standard">
 
                     <div class="boardCommentDetails" id=""
                          tal:attributes="id comment/getId">
                     <img src="" 
                          tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                          <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
-                         <span tal:replace="comment/Creator"
-                               tal:condition="canView">author</span> 
-                         <span tal:condition="not:canView">[Hidden]</span> 
+                         <span tal:replace="creator">author</span> 
                          <span i18n:translate="text_at" tal:omit-tag="">at</span>
-                         <span tal:replace="python:here.toPloneboardTime(comment.creation_date)"
-                               tal:condition="canView">Thursday 13:21</span>
-                         <span tal:condition="not:canView">[Hidden]</span>
+                         <span tal:replace="python:here.toPloneboardTime(creation_date)"
+                               >Thursday 13:21</span>
                     </div>
                 
                     <div class="boardCommentBody">
                 
-                        <div class="portrait"
-                             tal:condition="python:here.displayPortraits() and canView">
-                          <tal:block define="home python:container.portal_membership.getHomeUrl(comment.Creator(), verifyPermission=1);
-                                             portrait python: here.portal_membership.getPersonalPortrait(comment.Creator());"> 
-                            <a href="#" tal:attributes="href home">                    
+                        <div class="portrait">
+                          <tal:block define="portrait python: here.portal_membership.getPersonalPortrait(creator);"> 
                                 <img class="portraitPhoto"
                                      src="defaultUser.gif" 
                                      alt="" 
@@ -62,60 +53,35 @@
                                      height="100" 
                                      tal:attributes="src portrait/absolute_url" />
                                 <div tal:content="comment/Creator">member id</div>
-                            </a>
                           </tal:block>
                         </div>
                         
-                        <div class="boardCommentContent">
-                            <span tal:replace="structure comment/getBody"
-                                  tal:condition="canView">Comment text.</span>
-                            <span tal:condition="not:canView">This comment has been withrawn.</span>
+                        <div class="boardCommentContent" 
+                             tal:content="structure comment/getText">
+                             Comment text.
                         </div>
                         
                     </div>
-                    
+
+
                     <div class="visualClear"></div>
 
-                    <div class="boardCommentActions"
-                         tal:define="canComment python:checkPermission('Ploneboard: Add Comment', comment) and checkPermission('Add portal content', comment);
-                                     canReview  python:checkPermission('Ploneboard: Approve Comment', comment)" >
+                    <div class="boardCommentActions">
 
-                        <form class="group" onsubmit="return false;"
-                              tal:condition="canReview">
-                          <div>
-                            <tal:transition repeat="transition python:wtool.getTransitionsFor(comment, here)">
-                                <input class="context"
-                                       type="submit"
-                                       value="Retract"
-                                       name="#"
-                                       tabindex=""
-                                       onclick="#"
-                                       i18n:attributes="value"
-                                       tal:define="hId here/getId"
-                                       tal:attributes="onclick python:here.genCommentModerateOnClick(comment, transition);
-                                                       value transition/name;
-                                                       tabindex tabindex/next;" />
-                            </tal:transition>
-                          </div>
-                        </form>
-
-                        <form tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}"
-                              tal:condition="canComment">
+                        <form tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
                             <input class="standalone"
                                    type="submit" 
-                                   value="Reply to this" 
+                                   value="Reply with quote" 
                                    i18n:attributes="value"
                                    />
 
                         </form>
 
-                        <tal:choice condition="not:canComment">
-
                         <form tal:condition="isAnon"
                               tal:attributes="action python:'%s/login_form?came_from=%s' %
                                                             (here.portal_url(),
                                                             pss.url_quote(request['URL']))">
-                
+
                             <input class="standalone" 
                                    type="submit" 
                                    value="Log in to add comments"
@@ -123,17 +89,26 @@
                                    />
                         </form>
 
-                        <p class="discreet"
-                           tal:condition="not: isAnon">
-                           Sorry, you do not have permission to add comments.
-                        </p>
-
-
-                        </tal:choice>
+                        <fieldset tal:define="attachments comment/getAttachments"
+                                  tal:condition="attachments"
+                                  style="text-align: left;">
+                            <legend>Attachments</legend>
+                            <ul class="visualNoMarker">
+                                <li tal:repeat="attachment attachments">
+                                    <a tal:attributes="href attachment/absolute_url">
+                                        <span tal:define="pt attachment/portal_type"
+                                              tal:attributes="class python:'contenttype-'+normalizeString(pt)">
+                                            <span class="visualIconPadding"
+                                                  tal:content="attachment/getId">
+                                            Attachment title
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </fieldset>
 
                     </div>
-
-                </div>
 
             </metal:comment>
         </div>

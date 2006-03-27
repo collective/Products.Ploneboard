@@ -3,6 +3,13 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
+<head>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+</head>
+
 <body>
 
     <div metal:fill-slot="main" 
@@ -10,7 +17,7 @@
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();">
 
-        <h1 i18n:translate="add_message">Add message</h1>
+        <h1 i18n:translate="add_message">Add conversation</h1>
    
         <form name="edit_form"
               action=""
@@ -18,17 +25,15 @@
               enctype="multipart/form-data"
               tal:attributes="action template/getId">
 
-            <fieldset>
+            <input type="hidden" name="form.submitted" value="1" />
 
-                <div metal:use-macro="here/posting_macros/macros/comment_body_title" tal:omit-tag="" />
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_title" tal:omit-tag="" />
 
-                <div metal:use-macro="here/posting_macros/macros/comment_body_start" tal:omit-tag="" />
-    
-                <div metal:use-macro="here/posting_macros/macros/comment_body_text" tal:omit-tag="" />
-    
-                <div metal:use-macro="here/posting_macros/macros/comment_body_buttons" tal:omit-tag="" />
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
 
-            </fieldset>
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_buttons" tal:omit-tag="" />
 
         </form>
 

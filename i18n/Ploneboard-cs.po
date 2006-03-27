@@ -2,31 +2,113 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
-"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"PO-Revision-Date: 2006-01-17 20:28+0100\n"
 "Last-Translator: Lukas Zdych <lukas.zdych@surecase.org>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0;"
 "Language-Code: cs\n"
 "Language-Name: Czech\n"
-"Preferred-Encodings: utf-8 latin2\n"
+"Preferred-Encodings: utf-8\n"
 "Domain: ploneboard\n"
 
 # Example
 msgid "A line was too long."
-msgstr "Řádek byl příliš dlouhý." 
+msgstr "Řádek byl příliš dlouhý."
+
+msgid "Cancel"
+msgstr "Storno"
+
+msgid "Change"
+msgstr "Změnit"
+
+msgid "None"
+msgstr "Nic"
+
+msgid "Post"
+msgstr "Příspěvek"
+
+msgid "Reply to this"
+msgstr "Reagovat na tento příspěvek"
+
+msgid "Retract"
+msgstr "Stáhnout"
 
 msgid "add_comment"
 msgstr "Přidat komentář"
 
-msgid "not_foruns"
-msgstr "V této diskusi zatím nejsou žádná fóra, použijte menu \"přidat\" pro založení nových fór."
+msgid "add_message"
+msgstr "Přidat příspěvek"
+
+msgid "conversation"
+msgstr "Konverzace"
 
 msgid "forum_name"
 msgstr "Název fóra"
+
+msgid "go_to_parent_url"
+msgstr "Nahoru o jednu úroveň"
+
+msgid "help_body_text_posting"
+msgstr "Text příspěvku"
+
+msgid "help_description"
+msgstr "Zadejte popis"
+
+msgid "help_description_conversation"
+msgstr "Popis příspěvku"
+
+msgid "help_description_forum"
+msgstr "Popis fóra"
+
+msgid "help_display_portraits"
+msgstr "Zobrazit podobizny uživatelů"
+
+msgid "help_text"
+msgstr "Zadejte text"
+
+msgid "help_title_posting"
+msgstr "Zadejte nadpis příspěvku"
+
+msgid "label_body_text_posting"
+msgstr "Text příspěvku"
+
+msgid "label_by_author"
+msgstr "od ${author}"
+
+msgid "label_description"
+msgstr "Popis"
+
+msgid "label_description_conversation"
+msgstr "Popis konverzace"
+
+msgid "label_description_forum"
+msgstr "Popis fóra"
+
+msgid "label_display_portraits"
+msgstr "Zobrazit podobizny"
+
+msgid "label_powered_by"
+msgstr "Powered by"
+
+msgid "label_text"
+msgstr "Text"
+
+msgid "label_title_posting"
+msgstr "Nadpis příspěvku"
+
+msgid "legend_add_conversation"
+msgstr "Přidat příspěvek"
+
+msgid "log_to_start_conversation"
+msgstr "Abyste mohli přispívat, musíte se nejprve přihlásit"
+
+msgid "most_recent"
+msgstr "Nejnovější komentář"
 
 msgid "most_recent_post"
 msgstr "Nejnovější příspěvek"
@@ -34,30 +116,42 @@ msgstr "Nejnovější příspěvek"
 msgid "no_conversations_started"
 msgstr "Nebyli začaty žádné konverzace."
 
-msgid "label_by_author"
-msgstr "od ${author}"
-
-msgid "go_to_parent_url"
-msgstr "Nahoru o jednu úroveň"
-
 msgid "not_conversations"
 msgstr "V tomto fóru zatím nejsou žádné konverzace."
 
-msgid "conversation"
-msgstr "Konverzace"
-
-msgid "replies"
-msgstr "Reakce"
-
-msgid "most_recent"
-msgstr "Nejnovější komentář"
+msgid "not_foruns"
+msgstr "V této diskusi zatím nejsou žádná fóra, použijte menu \"přidat\" pro založení nových fór."
 
 msgid "not_permission_start_conversation"
 msgstr "Omlouváme se, nejste oprávněni začínat nové konverzace."
 
+msgid "posted_by"
+msgstr "Autor"
+
+msgid "preview_comment"
+msgstr "Náhled"
+
+msgid "preview_message"
+msgstr "Náhled zprávy"
+
+msgid "preview_posting"
+msgstr "Náhled příspěvku"
+
+msgid "replies"
+msgstr "Reakce"
+
 msgid "start_new_conversation"
 msgstr "Začít novou konverzaci"
 
+msgid "status"
+msgstr "Stav"
 
+msgid "text_at"
+msgstr "v"
 
+msgid "value cancel_posting"
+msgstr ""
+
+msgid "value preview_posting"
+msgstr ""
 

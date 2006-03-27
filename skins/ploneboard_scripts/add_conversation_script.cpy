@@ -5,14 +5,24 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=title, text='', creator=None, file=''
+##parameters=title, text='', files=None
 ##title=Add a conversation
 
-if not creator:
-    creator = context.portal_membership.getAuthenticatedMember().getUserName()
+from Products.CMFCore.utils import getToolByName
 
-m = context.addConversation(subject=title, body=text, creator=creator)
+pm = getToolByName(context, 'portal_membership')
+
+if pm.isAnonymousUser():	
+    creator = 'Anonymous'
+else:
+    creator = pm.getAuthenticatedMember().getUserName()
+
+# Get files from session etc instead of just request
+files = context.portal_ploneboard.getUploadedFiles()
+
+m = context.addConversation(title=title, text=text, creator=creator, files=files)
 if m:
+    context.portal_ploneboard.clearUploadedFiles()
     state.set(context=m.getForum(), portal_status_message='Added comment')
 
 return state

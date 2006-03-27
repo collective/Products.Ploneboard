@@ -2,7 +2,8 @@
 ##parameters=sci
 # Dispatch to more easily customizable methods
 object = sci.object
-object.notifyPublished()
+# We don't have notifyPublished method anymore
+#object.notifyPublished()
 
 wftool = sci.getPortal().portal_workflow
 

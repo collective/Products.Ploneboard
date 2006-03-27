@@ -14,78 +14,82 @@ from Products.CMFPlone.utils import _createObjectByType
 class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):
-        self._refreshSkinData()
-        utils.disableScriptValidators(self.portal)
+        self.board = _createObjectByType('Ploneboard', self.folder, 'board')
+        self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
+        self.conv = self.forum.addConversation('subject', 'body')
 
-        _createObjectByType('Ploneboard', self.portal, 'board')
-        _createObjectByType('PloneboardForum', self.portal.board, 'forum')
-        self.catalog = self.portal.board.getInternalCatalog()
+    def testGetForum(self):
+        self.failUnlessEqual(self.forum, self.conv.getForum())
 
-    def testAddConversation(self):
-        """
-        Create new folder in home directory & check its basic properties and behaviour
-        """
-        forum = self.portal.board.forum
-
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 0)
-        conv = forum.addConversation('subject', 'body', script=0)
-        conv_id = conv.getId()
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 1)
-
-        self.failUnless(conv_id in forum.objectIds())
-
-        self.assertEqual(conv.Title(), 'subject')
-        self.failUnless(conv_id in [v.getId for v in self.catalog(meta_type='PloneboardConversation', id=conv_id)])
-     
-    def testRemoveConversation(self):
-        """
-        Create new folder in home directory & check its basic properties and behaviour
-        """
-        forum = self.portal.board.forum
-
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 0)
-        conv = forum.addConversation('subject', 'body', script=0)
-        conv_id = conv.getId()
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 1)
-
-        self.failUnless(conv_id in forum.objectIds())
-
-        forum.removeConversation(conv_id)
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 0)
-        self.failIf(conv_id in [v.id for v in self.catalog(meta_type='PloneboardConversation', id=conv_id)])
-     
     def testAddComment(self):
-        forum = self.portal.board.forum
-        conv = forum.addConversation('subject', 'body', script=0)
-        conv_id = conv.getId()
-        
-        msg = conv.addComment('msg_subject', 'msg_body')
-        msg_id = msg.getId()
-        self.assertEqual(msg.getSubject(), 'msg_subject')
-        self.assertEqual(msg.getBody(), 'msg_body')
-        # check if Comment was cataloged
-        self.failUnless(msg_id in [v.getId for v in self.catalog(meta_type='PloneboardComment', id=msg_id)])
-        
-    def test_delOb(self):
-        forum = self.portal.board.forum
-        conv = forum.addConversation('subject', 'body', script=0)
-        self.assertEqual(len(conv.objectIds()), 1) # Fails, wtf?
-        msg = conv.addComment('msg_subject', 'msg_body')
-        msg_id = msg.getId()
-        self.failUnless(msg_id in list(conv.objectIds()))
-        conv._delOb(msg_id)
-        self.failIf(msg_id in list(conv.objectIds()))
+        msg = self.conv.addComment('msg_title', 'msg_text')
+        self.assertEqual(msg.getTitle(), 'msg_title')
+        self.assertEqual(msg.getText(), 'msg_text')
 
-    def test_delObject(self):
-        forum = self.portal.board.forum
-        conv = forum.addConversation('subject', 'body', script=1)
-        msg = conv.addComment('msg_subject', 'msg_body')
+    def testGetComment(self):
+        conv = self.conv
+        comment = conv.addComment('subject', 'body')
+        self.failUnlessEqual(comment, conv.getComment(comment.getId()))
+
+    def testGetComments(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        comment2 = conv.addComment('subject2', 'body2')
+        self.failUnlessEqual(conv.getComments(), [comment, comment2]) 
+
+    def testGetCommentsSlicing(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        comment2 = conv.addComment('subject2', 'body2')
+        self.failUnlessEqual(conv.getComments(limit=1, offset=0), [comment]) 
+        self.failUnlessEqual(conv.getComments(limit=1, offset=1), [comment2]) 
+
+    def testGetNumberOfComments(self):
+        conv = self.conv
+        self.failUnlessEqual(conv.getNumberOfComments(), 1)
+        conv.addComment('followup', 'text')
+        self.failUnlessEqual(conv.getNumberOfComments(), 2)
+        # Check to make sure it doesn't count comments elsewhere
+        conv2 = self.forum.addConversation('subject', 'body')
+        self.failUnlessEqual(conv.getNumberOfComments(), 2)
+
+    def testGetLastCommentDate(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        self.failUnlessEqual(comment.created(), conv.getLastCommentDate())
+        comment = conv.addComment('followup', 'text')
+        self.failUnlessEqual(comment.created(), conv.getLastCommentDate())
+
+    def testGetThreadedComments(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        threaded = conv.getThreadedComments()
+        self.failUnlessEqual(len(threaded['children']), 1) # conv is root
+        comment = conv.addComment('followup', 'text')
+        threaded = conv.getThreadedComments()
+        self.failUnlessEqual(len(threaded['children']), 2)
+        reply = comment.addReply('anotherfollowup', 'moretext')
+        threaded = conv.getThreadedComments()
+        self.failUnlessEqual(len(threaded['children']), 2)
+        self.failUnlessEqual(len(threaded['children'][-1]['children']), 1)
+
+
+    def testGetFirstComment(self):
+        conv = self.conv
+        first = conv.getFirstComment()
+        self.failUnless(first)
+        conv.addComment('followup', 'text')
+        self.failUnlessEqual(first, conv.getFirstComment())
+        
+    def XXXtest_delObject(self):
+        forum = self.forum
+        conv = forum.addConversation('subject', 'body')
+        msg = conv.addComment('msg_title', 'msg_text')
         #msg = conv.objectValues()[0]
         r = msg.addReply('reply_subject', 'reply_body')
         r1 = msg.addReply('reply_subject1', 'reply_body1')
         r2 = msg.addReply('reply_subject2', 'reply_body2')
         r2.addReply('rs', 'rb').addReply('rs1', 'rb1').addReply('rs2', 'rb2')
-        self.failUnless(r.getId() in [v.getId for v in self.catalog(meta_type='PloneboardComment', id=r.getId())])
         self.assertEqual(conv.getNumberOfComments(), 7)
         conv._delObject(r2.getId(), recursive=1)
         self.assertEqual(conv.getNumberOfComments(), 3)
@@ -98,7 +102,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.failIf(msg.getId() in [v.id for v in self.catalog(meta_type='PloneboardComment', id=msg.getId())])
         
         # Checking non recursive delete
-        conv = forum.addConversation('subject', 'body', script=0)
+        conv = forum.addConversation('subject', 'body')
         msg = conv.objectValues()[0]
         r = msg.addReply('reply_subject', 'reply_body')
         self.assertEqual(conv.getNumberOfComments(), 2)

@@ -14,15 +14,15 @@
 
     <div metal:fill-slot="main"
          tal:define="conversations here/getConversations;
-                     conversations python:here.getSortedConversations(conversations);
                      pss modules/Products/PythonScripts/standard;">
 
-        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h2>
+        <h1 class="documentFirstHeading">
         <img src="" tal:replace="structure here/ploneboard_forum_icon.gif" />
         <span tal:replace="here/Title">Forum title</span>
-        </h2>
+        </h1>
+
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
         <div class="documentDescription"
              tal:content="here/Description"> 
@@ -60,7 +60,7 @@
         </form>
 
         <p class="discreet"
-           i18n:translate="not_permission_start_conversation">
+           i18n:translate="not_permission_start_conversation"
            tal:condition="not: isAnon">
         Sorry, you do not have permission to start a new Conversation
         </p>
@@ -104,29 +104,29 @@
                     
                     <td class="listingCheckbox"
                         tal:condition="conversation/getNumberOfReplies">
-                        <span class="discreet"
-                              tal:content="conversation/getNumberOfReplies">
+                        <span tal:content="conversation/getNumberOfReplies">
                             12 comments
                         </span>
                     </td>
 
                     <td class="listingCheckbox"
                         tal:condition="not: conversation/getNumberOfReplies">
-                        <span i18n:translate="None" class="discreet">None</span>
+                        <span i18n:translate="no_replies_yet">
+                        No replies yet
+                        </span>
 
                     </td>
 
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
                     <td>
 
-                         <div class="discreet" i18n:translate="label_by_author">
+                         <div i18n:translate="label_by_author">
                              by <tal:author i18n:name="author"
                           tal:content="conversation/getLastCommentAuthor" />
                           </div>
                                                                                                                        
 
-                        <span class="discreet"
-                             tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                        <span tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
                             Thursday 13:21
                         </span>
                     </td>

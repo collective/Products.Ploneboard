@@ -5,34 +5,19 @@
 <body>
 <div metal:define-macro="header" tal:omit-tag="">	
 
-    <h1 class="documentFirstHeading"
-        id="boardHeading">
-        <img src="" tal:replace="structure here/ploneboard_icon.gif" />
-        <span tal:replace="here/getBoardTitle">Conversation title</span>
-    </h1>
-
     <a href=""
        class="link-parent"
        tal:define="parent_url python:here.navigationParent(here, template.getId())"
        tal:condition="parent_url"
        tal:attributes="href parent_url"
        i18n:translate="go_to_parent_url">
-    Up to the <em tal:content="here/aq_parent/Title"
-                  i18n:name="title">
-                  _parent_title_
-              </em> <span tal:content="here/aq_parent/Type"
-                          i18n:translate=""
-                          i18n:name="type">
+    Up to <span tal:content="here/aq_parent/Type"
+                i18n:translate=""
+                i18n:name="type">
                           _parent_portal_type
-                     </span>
+          </span>
     </a>
 
-    <div class="documentDescription"
-         tal:content="here/getBoardDescription">
-    Board Description
-    </div>
-
-    
 </div>
 </body>
 </html>

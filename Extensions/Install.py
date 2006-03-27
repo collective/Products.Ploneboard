@@ -27,7 +27,8 @@ import string
 from Products.Archetypes.public import listTypes, process_types
 from Products.Archetypes.ArchetypeTool import getType
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
-from Products.Ploneboard.config import *
+from Products.Ploneboard.config import PLONEBOARD_TOOL, PLONEBOARD_CATALOG, PROJECTNAME, GLOBALS
+from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, URL_TRANSFORM_MODULE
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
 from StringIO import StringIO
@@ -46,9 +47,15 @@ configlets = \
 )
 
 def addPloneboardTool(self, out):
-    if not hasattr(self, 'portal_ploneboard'):
+    if not hasattr(self, PLONEBOARD_TOOL):
         addTool = self.manage_addProduct['Ploneboard'].manage_addTool
         addTool('Ploneboard Tool')
+        out.write('Added Ploneboard Tool\n')
+
+def addPloneboardCatalog(self, out):
+    if not hasattr(self, PLONEBOARD_CATALOG):
+        addTool = self.manage_addProduct['Ploneboard'].manage_addTool
+        addTool('Ploneboard Catalog')
         out.write('Added Ploneboard Tool\n')
 
 def registerNavigationTreeSettings(self, out):
@@ -63,6 +70,16 @@ def registerNavigationTreeSettings(self, out):
             if t not in mdntl:
                 mdntl.append(t)
         p._updateProperty('metaTypesNotToList', mdntl)
+
+def registerWithPloneboardCatalog(self, out):
+    from Products.Ploneboard.config import PLONEBOARD_CATALOG
+    attool = getToolByName(self, 'archetype_tool')
+    typeslist = listTypes(PROJECTNAME)
+    for portal_type in [ti['portal_type'] for ti in typeslist]:
+        catalogs = [x.getId() for x in attool.getCatalogsByType(portal_type)]
+        if PLONEBOARD_CATALOG not in catalogs:
+            catalogs.append(PLONEBOARD_CATALOG)
+            attool.setCatalogsByType(portal_type, catalogs)
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
@@ -137,7 +154,11 @@ def install(self):
 
     addPloneboardTool(self, out)
 
+    addPloneboardCatalog(self, out)
+
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
+
+    registerWithPloneboardCatalog(self, out)
 
     registerNavigationTreeSettings(self, out)
 
@@ -146,7 +167,7 @@ def install(self):
     at = getToolByName(self, TOOL_NAME)
     for type in listTypes(PROJECTNAME):
         if type['name'] != 'Ploneboard': # Let Ploneboard object be in portal_catalog
-            at.setCatalogsByType(type['name'], [UID_CATALOG])
+            at.setCatalogsByType(type['name'], [UID_CATALOG, PLONEBOARD_CATALOG])
 
     install_subskin(self, out, GLOBALS)
 

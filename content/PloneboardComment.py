@@ -4,24 +4,29 @@ from zope.interface import implements
 import random
 import Globals
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base
+from Acquisition import aq_base, aq_inner, aq_chain
 from DateTime import DateTime
 from OFS import Image
-
-from Products.CMFCore.utils import getToolByName
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget
-from Products.Ploneboard.config import PROJECTNAME
+from OFS.Image import File
 
 from BTrees.OIBTree import OIBTree
 from BTrees.Length import Length
 from Products.ZCatalog.Lazy import LazyMap
 
+from Products.CMFCore.utils import getToolByName
+
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import TextAreaWidget, ReferenceWidget
+from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
+
+from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
+from Products.CMFPlone.utils import _createObjectByType
+
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum, \
      ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment
 
-from Products.Ploneboard.interfaces import IComment
+from Products.Ploneboard.interfaces import IConversation, IComment
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -43,16 +48,28 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
                                       label = "Text",
                                       label_msgid = "label_text",
                                       rows = 5)),
+    ReferenceField(
+        name='reply_to',
+        accessor='inReplyTo', # Suboptimal accessor naming here...
+        edit_accessor='inReplyToUID',
+        mutator='setInReplyTo',
+        relationship=REPLY_RELATIONSHIP,
+        widget=ReferenceWidget(visible=False),
+        ),
     ))
 
 class PloneboardComment(BaseBTreeFolder):
-    """A comment contains regular text body and metadata."""
+    """A comment contains regular text body and metadata.
+    XXX Use RichDocument pattern for attachments
+    XXX Don't inherit from btreefolder...
+    """
 
     implements(IComment) # XXX IBaseBTreeFolder
+    #__implements__ = (INonStructuralFolder,) + BaseBTreeFolder.__implements__
 
     meta_type = 'PloneboardComment'
     archetype_name = 'Comment'
-    
+
     schema = schema
 
     content_icon = 'ploneboard_comment_icon.gif'
@@ -75,20 +92,16 @@ class PloneboardComment(BaseBTreeFolder):
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'retractComment'
         }
-    
+
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
     _in_reply_to = None   # Id to comment this is a reply to
 
     security = ClassSecurityInfo()
-    
-    #def __init__(self, id, title='', text='', creator=None):
-    #def __init__(self, oid, text='', creator=None, **kwargs):
+
     def __init__(self, oid, **kwargs):
         BaseBTreeFolder.__init__(self, oid, **kwargs)
         self.creation_date = DateTime()
-        # Archetypes doesn't set values on creation from kwargs
-        self._attachments_ids = []
 
     security.declareProtected(EditComment, 'edit')
     def edit(self, **kwargs):
@@ -96,94 +109,63 @@ class PloneboardComment(BaseBTreeFolder):
         """
         self.update(**kwargs)
 
+    security.declareProtected(ViewBoard, 'getConversation')
+    def getConversation(self):
+        """Returns containing conversation."""
+        # Try containment
+        stoptypes = ['Plone Site']
+        for obj in aq_chain(aq_inner(self)):
+            if hasattr(obj, 'portal_type') and obj.portal_type not in stoptypes:
+                if IConversation.providedBy(obj):
+                    return obj
+        return None
+
     security.declareProtected(AddComment, 'addReply')
     def addReply(self,
-                 comment_subject,
-                 comment_body,
-                 creator=None ):
+                 title,
+                 text,
+                 creator=None,
+                 files=None ):
         """Add a reply to this comment."""
-        conv = self._getConversation()
-        if not self._replies or not self._reply_count:
-            self._replies = OIBTree()
-            self._reply_count = Length()
+        conv = self.getConversation()
 
-        min_id = int(self.id) + 1
-        id = conv.generateId(comment=1, min_id=min_id)
-        if not comment_subject:
-            comment_subject = conv.Title()
-        kwargs = {'title' : comment_subject, 
-                  'creator' : creator,
-                  'text' : comment_body
+        id = conv.generateId()
+        if not title:
+            title = conv.Title()
+        kwargs = {'title' : title,
+                  'creators' : [creator],
+                  'text' : text,
+                  'reply_to' : self.UID(),
                   }
-        #comment = PloneboardComment(id, comment_subject, comment_body, creator)
-        comment = PloneboardComment(id)
-        conv._setObject(id, comment)
-        m = getattr(conv, id)
-        m.initializeArchetype(**kwargs)
-        m._setPortalTypeName('PloneboardComment')
-        m.notifyWorkflowCreated()
-        m.setInReplyTo(self)
-        # Add to replies index
-        self.setReply(m.getId())
+        m = _createObjectByType(self.portal_type, conv, id, **kwargs)
+
+        # Create files in message
+        if files:
+            for file in files:
+                # Get raw filedata, not persistent object with reference to tempstorage
+                # file.data might in fact be OFS.Image.Pdata - str will piece it all together
+                attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
+                m.addAttachment(attachment)
+
         return m
 
-    security.declareProtected(ViewBoard, 'inReplyTo')
-    def inReplyTo(self):
-        """
-        Returns comment object this comment is a reply to.
-        """
-        conv = self._getConversation()
-        if not hasattr(self, '_in_reply_to'):
-            self._in_reply_to = None
-        if self._in_reply_to:
-            return conv.getComment(self._in_reply_to)
-        return self._in_reply_to # None
-        #return self._in_reply_to and self.aq_inner.aq_parent.getComment(self._in_reply_to) or None
-
-    
-    security.declareProtected(AddComment, 'setReply')
-    def setReply(self, comment_id):
-        """ Updates the replies index """
-        if not self._replies or not self._reply_count:
-            self._replies = OIBTree()
-            self._reply_count = Length()
-        if not self._replies.has_key(comment_id):
-            self._replies[comment_id] = 1
-            self._reply_count.change(1)
-
     security.declareProtected(AddComment, 'deleteReply')
-    def deleteReply(self, comment_id):
+    def deleteReply(self, comment):
         """ Removes comment from the replies index """
-        if self._replies and self._replies.has_key(comment_id):
-            del self._replies[comment_id]
-            self._reply_count.change(-1)
-
-    security.declareProtected(AddComment, 'setInReplyTo')
-    def setInReplyTo(self, comment_or_id):
-        if type(comment_or_id) == type(''):
-            self._in_reply_to = comment_or_id
-        else:
-            self._in_reply_to = comment_or_id.getId()
+        ### XXX THIS IS KINDA STUPID IF IT ONLY REMOVES THE RELATIONSHIP...
+        comment.deleteReference(self, REPLY_RELATIONSHIP)
 
     security.declareProtected(ViewBoard, 'getReplies')
     def getReplies(self):
         """Returns the comments that were replies to this one."""
-        conv = self._getConversation()
-        if not self._replies or not self._reply_count:
-            return []
-        else:
-            return LazyMap(conv.getComment, self._replies.keys(), self._reply_count())
-    
-    security.declareProtected(ViewBoard, 'getSubject')
-    def getSubject(self):
+        # Return backreferences
+        return self.getBRefs(REPLY_RELATIONSHIP)
+
+    security.declareProtected(ViewBoard, 'getTitle')
+    def getTitle(self):
         """Returns the subject of the comment."""
         return self.Title()
-    
-    security.declareProtected(ViewBoard, 'getBody')
-    def getBody(self):
-        """Returns the body of the comment."""
-        return self.getText()
-    
+
     def childIds(self, level=0):
         """
         Returns list of ids of all child comments, excluding this comment.
@@ -197,25 +179,27 @@ class PloneboardComment(BaseBTreeFolder):
             for msg_object in replies:
                 result = result + msg_object.childIds(level+1)
         return result
-   
-    
+
+
     security.declareProtected(ManageComment, 'makeBranch')
     def makeBranch(self):
         """"""
         # Contains mappings - old_msg_id -> new_msg_id
         ids = {}
-        
+
         forum = self.getConversation().getForum()
         parent = self.getConversation()
-        conv = forum.addConversation(self.getSubject(), self.getBody(), script=0)
+        conv = forum.addConversation(self.getTitle(), self.getText())
         # here we get id of the first Comment in newly created Conversation
         first_msg_id = conv.objectIds()[0]
 
         ids.update({self.getId() : first_msg_id})
-        
+
         objects = map(parent.getComment, self.childIds())
         for obj in objects:
-            msg = conv.getComment(ids.get(obj.inReplyTo().getId())).addReply(obj.getSubject(), obj.getBody())
+            replyId = obj.inReplyTo().getId()
+            comment = conv.getComment(ids.get(replyId))
+            msg = comment.addReply(obj.getTitle(), obj.getText())
             ids.update({obj.getId() : msg.getId()})
             # Here we need to set some fields from old objects
             # What else should we update?
@@ -223,154 +207,80 @@ class PloneboardComment(BaseBTreeFolder):
             msg.setEffectiveDate(obj.EffectiveDate())
             msg.setExpirationDate(obj.ExpirationDate())
             msg.creator = obj.Creator()
-        
-        parent._delObject(self.getId(), recursive=1) # delete ourselves and all our descendants
+
+        # manually delete all replies
+        for msgid in self.childIds():
+            parent._delObject(msgid)
+        parent._delObject(self.getId()) # delete ourselves and all our descendants
         # if conversation after branching is empty, remove it
         if parent.getNumberOfComments() == 0:
             forum._delObject(parent.getId())
         # we need to reindex stuff in newly created Conversation
         #for o in conv.objectValues():
         #    o.reindexObject()
-
-    # Workflow related methods - called by workflow scripts to control what to display
-    def notifyPublished(self):
-        """ Notify about publishing, so object can be added to index """
-        conv = self._getConversation()
-        conv.setDateKey(self.id, self.creation_date or DateTime())
-        conv.notifyPublished()
-
-    security.declareProtected(AddComment, 'notifyRetracted')
-    def notifyRetracted(self):
-        """ Notify about retracting, so object can be removed from index """
-        conv = self._getConversation()
-        conv.delDateKey(self.id)
-        # Retract the whole conversation if there's nothing left once this comment has gone.
-        if conv.getNumberOfComments() == 0:
-            conv.notifyRetracted()
-
-    security.declareProtected(ViewBoard, 'Creator')
-    def Creator(self):
-        return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
-
-    # Catalog related issues
-    security.declareProtected(ViewBoard, 'indexObject')
-    def indexObject(self):
-        BaseBTreeFolder.indexObject(self)
-        self._getBoardCatalog().indexObject(self)
-        
-    security.declareProtected(ViewBoard, 'unindexObject')
-    def unindexObject(self):
-        self._getBoardCatalog().unindexObject(self)
-        BaseBTreeFolder.unindexObject(self)
-    
-    security.declareProtected(ViewBoard, 'reindexObject')
-    def reindexObject(self, idxs=[]):
-        BaseBTreeFolder.reindexObject(self)
-        self._getBoardCatalog().reindexObject(self)
-        
-    def manage_afterAdd(self, item, container):
-        """Add self to the conversation catalog."""
-        BaseBTreeFolder.manage_afterAdd(self, item, container)
-        self.indexObject()
-        
-    security.declarePrivate('manage_afterClone')
-    def manage_afterClone(self, item):
-        BaseBTreeFolder.manage_afterClone(self, item)
-        self.reindexObject()
-
-    def manage_beforeDelete(self, item, container):
-        """Remove self from the conversation catalog."""
-        # Remove from reply index
-        #self.inReplyTo().deleteReply(self.getId())
-        in_reply_to = self.inReplyTo()
-        if in_reply_to is not None:
-            in_reply_to.deleteReply(self.getId())
-        BaseBTreeFolder.manage_beforeDelete(self, item, container)
-
-    def SearchableText(self):
-        """ """
-        return (self.Title() + ' ' + self.getText())
-    
-    def _getBoardCatalog(self):
-        return self.getConversation().getForum().getBoard().getInternalCatalog()
-
-    def _getConversation(self):
-        """Return the containing conversation. For when we don't want acquisition
-        wierdness as a result of doing self.getConversation().
-        """
-        return self.aq_inner.aq_parent
+        return conv
 
     ###########################
     # Attachment support      #
+    # XXX use RichDocument pattern with NonStructuralFolder
     ###########################
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""
-        if self._attachment_ids:
-            return 1
-        else:
-            return 0
+        return not not self.objectIds(filter={'portal_type':['File', 'Image']})
 
     security.declareProtected(AddAttachment, 'addAttachment')
-    def addAttachment(self, title='', file=''):
+    def addAttachment(self, file, title=None):
         """ """
-        if self.getNumberOfAttachments() < self.getConversation().getForum().getBoard().getNumberOfAttachments():
-            id = "Attachment%08d" % (int(random.random() * 100000))
-            while id in self._attachments_ids:
-                id = "Attachment%08d" % (int(random.random() * 100000))
-            attach = Image.File(id, title, file)
-            self._setObject(id, attach)
-            self._attachments_ids.append(id)
-            self._p_checked = 1
-    
+        if self.getNumberOfAttachments() < self.getNumberOfAllowedAttachments():
+            content_type = file.getContentType()
+            if content_type.startswith('image/'):
+                type_name = 'Image'
+                mutator = 'setImage'
+            else:
+                type_name = 'File'
+                mutator = 'setFile'
+            attachment = _createObjectByType(type_name, self, file.getId())
+            #attachment.setFile(file)
+            getattr(attachment, mutator)(file)
+            if title is not None:
+                attachment.setTitle(title)
+
     security.declareProtected(AddAttachment, 'removeAttachment')
-    def removeAttachment(self, index=0):
+    def removeAttachment(self, id):
         """ """
-        if index > self.getNumberOfAttachments()-1:
-            return
-        id = self._attachments_ids[index]
-        del self._attachments_ids[index]
         self._delObject(id)
-        self._p_checked = 1
-        
-    security.declareProtected(AddAttachment, 'changeAttachment')
-    def changeAttachment(self, index=0, title='', file=''):
+
+    security.declareProtected(ViewBoard, 'getAttachment')
+    def getAttachment(self, id):
         """ """
-        attach = getattr(self, self._attachments_ids[index])
-        if file:
-            attach.manage_edit(title, '', filedata=file)
-        else:
-            # change title
-            attach.manage_edit(title, '')
-            
-    security.declareProtected(AddAttachment, 'changeAttachmentTitle')
-    def changeAttachmentTitle(self, index=0, title=''):
-        """ """
-        attach = getattr(self, self._attachments_ids[index])
-        attach.manage_edit(title,'')
-    
-    security.declareProtected(AddAttachment, 'getAttachment')
-    def getAttachment(self, index=0):
-        """ """
-        return getattr(self, self._attachments_ids[index])
-    
-    security.declareProtected(AddAttachment, 'getAttachments')
+        return getattr(self, id)
+
+    security.declareProtected(ViewBoard, 'getAttachments')
     def getAttachments(self):
         """ """
-        return map(lambda id, this=self: getattr(this, id), self._attachments_ids)
-    
+        return self.contentValues(filter={'portal_type':['File', 'Image']})
+
+    security.declareProtected(ViewBoard, 'getNumberOfAttachments')
     def getNumberOfAttachments(self):
-        return len(self._attachments_ids)
-    
+        return len(self.contentIds(filter={'portal_type':['File','Image']}))
+
+    security.declareProtected(AddAttachment, 'getNumberOfAttachments')
+    def getNumberOfAllowedAttachments(self):
+        """
+        Returns number of allowed attachments
+        """
+        return NUMBER_OF_ATTACHMENTS
+
 
     ############################################
     security.declareProtected(ViewBoard, 'getText')
     def getText(self, mimetype=None, **kwargs):
         """  """
         # Maybe we need to set caching for transform?
-        
+
         orig = self.getRawText()
-        
+
         pb_tool = getToolByName(self, 'portal_ploneboard')
         return pb_tool.performCommentTransform(orig, context=self)
 
@@ -385,6 +295,5 @@ class PloneboardComment(BaseBTreeFolder):
     def __nonzero__(self):
         return 1
 
-registerType(PloneboardComment, PROJECTNAME)
-Globals.InitializeClass(PloneboardComment)
 
+registerType(PloneboardComment, PROJECTNAME)

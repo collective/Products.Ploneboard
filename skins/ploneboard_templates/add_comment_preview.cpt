@@ -3,6 +3,11 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
 <body>
 
     <div metal:fill-slot="main" 
@@ -19,13 +24,81 @@
               enctype="multipart/form-data"
               tal:attributes="action template/getId" >
 
-            <div metal:use-macro="here/posting_macros/macros/comment_body_start" />
+            <input type="hidden" name="form.submitted" value="1" />
     
-            <div metal:use-macro="here/posting_macros/macros/comment_preview_hidden_vars" />
+            <div metal:define-macro="comment_preview_hidden_vars" tal:omit-tag="">
+                <input type="hidden"
+                       name="title"
+                       tal:condition="request/title | nothing"
+                       tal:attributes="value request/title" 
+                       />
+                <input type="hidden"
+                       name="text"
+                       tal:attributes="value python:request.get('text', '')" 
+                       />
+                <tal:loop repeat="file here/portal_ploneboard/getUploadedFiles">
+                    <input name="files:list"
+                           type="hidden"
+                           tabindex=""
+                           size="30"
+                           tal:attributes="value file/getId;
+                                           id string:files-${repeat/file/number};
+                                           tabindex tabindex/next;"
+                           />
+                    <br />
+                </tal:loop>
+            </div>
 
-            <div metal:use-macro="here/posting_macros/macros/comment_preview" />
+            <div metal:define-macro="comment_preview" tal:omit-tag="">
 
-            <div metal:use-macro="here/posting_macros/macros/comment_preview_buttons" />
+                <h2 tal:condition="request/title | nothing"
+                    tal:content="request/title">
+                    Subject
+                </h2>
+
+                <div tal:define="nl2br python:modules['Products.PythonScripts.standard'].newline_to_br;
+                                 text python:request.get('text', '(no text)');
+                                 text python:here.portal_ploneboard.performCommentTransform(text, context=here);"
+                     tal:content="structure text">
+                    Cooked Body
+                </div>
+
+            </div>
+
+            <div metal:define-macro="comment_preview_buttons" tal:omit-tag="">
+
+                <div class="row">
+                    <div class="label">&nbsp;</div>
+                    <div class="field"> 
+                        <input class="standalone" 
+                               tabindex=""
+                               type="submit" 
+                               name="form.button.Save" 
+                               value="Post" 
+                               i18n:attributes="value"
+                               tal:attributes="tabindex tabindex/next;" /> 
+
+                        <input class="context" 
+                               tabindex=""
+                               type="submit" 
+                               name="form.button.Edit" 
+                               value="Change" 
+                               i18n:attributes="value"
+                               tal:attributes="tabindex tabindex/next;" /> 
+
+
+                        <input class="destructive"
+                               tabindex=""
+                               type="submit"
+                               name="form.button.Cancel"
+                               value="Cancel"
+                               i18n:attributes="value"
+                               tal:attributes="tabindex tabindex/next"
+                               />
+                    </div>
+                </div>
+        
+            </div>
 
         </form>
 

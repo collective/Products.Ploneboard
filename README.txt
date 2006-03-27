@@ -7,6 +7,8 @@ Overview
 
   Visit "Ploneboard":http://plone.org/products/ploneboard in the Products
   area on plone.org for more.
+
+  Ploneboard is sponsored by "the Consumer Council of Norway":http://www.forbrukerradet.no
   
   See CREDITS.txt for credits.
   

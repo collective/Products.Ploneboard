@@ -53,7 +53,7 @@
 
 .boardComment {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
     position: relative;
 }
 
@@ -82,10 +82,7 @@
 }
 
 .boardCommentActions {
-    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
-    border-style: &dtml-borderStyle; none none none;
-    background-color: &dtml-globalBackgroundColor;;
-    padding: 0.5em 1em 0 1em;
+    padding: 1em;
     text-align: right;
 }
 
@@ -96,6 +93,23 @@
 .boardCommentPortrait {
     float: right; 
     margin-bottom: 1em;
+}
+
+/* Stripping down Kupu to the bare essentials */
+
+.kupu-tb-styles,
+#kupu-bg-subsuper,
+#kupu-bg-justify,
+#kupu-bg-definitionlist,
+#kupu-bg-undo,
+#kupu-bg-indent,
+#kupu-zoom,
+#kupu-spellchecker,
+#kupu-logo-button,
+#kupu-imagelibdrawer-button,
+#kupu-tabledrawer-button,
+#kupu-source {
+    display: none;
 }
 
 /* </dtml-with> */

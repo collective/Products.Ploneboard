@@ -2,4 +2,5 @@
 ##parameters=sci
 # Dispatch to more easily customizable methods
 object = sci.object
-object.notifyRetracted()
+# We don't have notifyPublished method anymore
+#object.notifyRetracted()

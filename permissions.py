@@ -1,26 +1,32 @@
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore import permissions as CMFCorePermissions
 from Products.CMFCore.permissions import setDefaultRoles
 
 
 # Gathering Ploneboard Permissions into one place
-
+RequestReview = CMFCorePermissions.RequestReview
 # Add permissions differ for each type, and are imported by __init__.initialize
 # so don't change their names!
-ViewBoard = 'Ploneboard: View'
+
+# Separate view permission creates havoc
+#ViewBoard = 'Ploneboard: View'
+ViewBoard = CMFCorePermissions.View
 SearchBoard = 'Ploneboard: Search'
 AddBoard = AddPloneboard = 'Ploneboard: Add Ploneboard'
 ManageBoard = 'Ploneboard: Add Ploneboard'
+
+
 AddForum = AddPloneboardForum = 'Ploneboard: Add Forum'
 ManageForum = 'Ploneboard: Add Forum'
+
 AddConversation = AddPloneboardConversation = 'Ploneboard: Add Conversation'
+ManageConversation = 'Ploneboard: Manage Conversation'
+
 AddComment = AddPloneboardComment = 'Ploneboard: Add Comment'
 EditComment = 'Ploneboard: Edit Comment'
 AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
-ManageConversation = 'Ploneboard: Manage Conversation'
 ManageComment = 'Ploneboard: Manage Comment'
-ApproveComment = 'Ploneboard: Approve Comment'
-# XXX This next permission can probably be removed.
-NotifyRetracted = 'Ploneboard: Notify Retracted'
+ApproveComment = 'Ploneboard: Approve Comment' # Used for moderation
+
 
 # Set up default roles for permissions
 setDefaultRoles(ViewBoard,
@@ -55,6 +61,3 @@ setDefaultRoles(ManageComment,
 
 setDefaultRoles(ApproveComment,
                 ('Manager', 'Reviewer'))
-setDefaultRoles(NotifyRetracted,
-                ('Manager', 'Reviewer', 'Owner'))
-
