@@ -19,7 +19,10 @@ msgstr ""
 
 # Example
 msgid "A line was too long."
-msgstr "" 
+msgstr "Esta linha está muito comprida." 
+
+msgid "label_body_files_posting"
+msgstr "Anexos"
 
 msgid "add_comment"
 msgstr "Adicionar comentários"
@@ -32,6 +35,9 @@ msgstr "Nome do fórum"
 
 msgid "most_recent_post"
 msgstr "Postagem mais recente"
+
+msgid "not_forums"
+msgstr "Não existem fóruns ainda, use o menu de adição de itens para adicionar os fóruns."
 
 msgid "no_conversations_started"
 msgstr "Nenhuma conversação foi iniciada"
@@ -58,7 +64,7 @@ msgid "not_permission_start_conversation"
 msgstr "Desculpe, você não tem permissão para iniciar uma conversação."
 
 msgid "log_to_start_conversation"
-msgstr "Logue-se para iniciar uma conversação"
+msgstr "Autentique-se para iniciar uma conversação"
 
 msgid "start_new_conversation"
 msgstr "Iniciar uma nova conversação"
@@ -82,16 +88,22 @@ msgid "label_description"
 msgstr "Descrição"
 
 msgid "help_description"
-msgstr "Entre com uma breve descrição sobre o fórum"
+msgstr "Informe uma breve descrição sobre o fórum"
 
 msgid "help_description_forum"
-msgstr "Entre com uma breve descrição sobre o fórum"
-
-msgid "help_text"
-msgstr "Entre com o texto de comentário"
+msgstr "Informe uma breve descrição sobre o fórum"
 
 msgid "label_description_forum"
 msgstr "Descrição do Fórum"
+
+msgid "label_category"
+msgstr "Categoria"
+
+msgid "help_category"
+msgstr "Selecione em que categoria o fórum será listado. Um fórum pode existir em várias categorias, embora seja recomendado o uso de uma categoria."
+
+msgid "help_text"
+msgstr "Informe o texto de comentário"
 
 msgid "label_text"
 msgstr "Texto"
@@ -103,7 +115,7 @@ msgid "label_display_portraits"
 msgstr "Mostrar retratos"
 
 msgid "help_description_conversation"
-msgstr "Entre com uma breve descrição sobre a conversação"
+msgstr "Informe uma breve descrição sobre a conversação"
 
 msgid "label_description_conversation"
 msgstr "Descrição da conversação"
@@ -115,13 +127,13 @@ msgid "label_title_posting"
 msgstr "Título"
 
 msgid "help_title_posting"
-msgstr "Insira o título da mensagem"
+msgstr "Informe o título da mensagem"
 
 msgid "label_body_text_posting"
 msgstr "Corpo da mensagem"
 
 msgid "help_body_text_posting"
-msgstr "Entre com o corpo da mensagem"
+msgstr "Digite o corpo da mensagem"
 
 msgid "preview_posting"
 msgstr "Visualizar"
