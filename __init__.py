@@ -26,7 +26,6 @@ def initialize(context):
     from Products.CMFCore import utils
     utils.ToolInit('Ploneboard Tool', 
             tools=(PloneboardTool, PloneboardCatalog ), 
-            product_name='Ploneboard',
             icon='tool.gif'
             ).initialize(context)
 
