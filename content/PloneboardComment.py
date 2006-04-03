@@ -265,7 +265,7 @@ class PloneboardComment(BaseBTreeFolder):
     def getNumberOfAttachments(self):
         return len(self.contentIds(filter={'portal_type':['File','Image']}))
 
-    security.declareProtected(AddAttachment, 'getNumberOfAttachments')
+    security.declareProtected(AddAttachment, 'getNumberOfAllowedAttachments')
     def getNumberOfAllowedAttachments(self):
         """
         Returns number of allowed attachments
