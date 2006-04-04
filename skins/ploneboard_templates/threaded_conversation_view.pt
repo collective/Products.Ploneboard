@@ -22,8 +22,7 @@
 
 <body>
 
-    <div metal:fill-slot="main" tal:define="noreply python: 0;
-                                            pss modules/Products/PythonScripts/standard;">
+   <div metal:fill-slot="main">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 

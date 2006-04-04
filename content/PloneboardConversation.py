@@ -75,6 +75,8 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     immediate_view = 'conversation_view'
     suppl_views = ('conversation_view', 'threaded_conversation_view')
 
+    _at_rename_after_creation = True
+
     actions = (
             { 'id'          : 'view'
             , 'name'        : 'View'
@@ -221,6 +223,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                     'getText':comment.getText(),
                     'absolute_url':comment.absolute_url(),
                     'getAttachments':attachments, 
+                    'Title':comment.Title, 
                     'inReplyTo':parentkey,
                     'portal_type':comment.portal_type,
                     'children':[]}

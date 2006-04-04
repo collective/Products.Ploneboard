@@ -32,6 +32,7 @@
 
                     <div class="boardCommentDetails" id=""
                          tal:attributes="id comment/getId">
+			 <h3 tal:content="comment/Title">Post title</h3>
                     <img src="" 
                          tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                          <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
@@ -68,16 +69,17 @@
 
                     <div class="boardCommentActions">
 
-                        <form tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
+		      <form tal:condition="python:checkPermission('Ploneboard: Add Comment', comment)"
+				    tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
                             <input class="standalone"
                                    type="submit" 
-                                   value="Reply with quote" 
+                                   value="Reply" 
                                    i18n:attributes="value"
                                    />
 
                         </form>
 
-                        <form tal:condition="isAnon"
+		      <form tal:condition="python:isAnon and not checkPermission('Ploneboard: Add Comment', comment)"
                               tal:attributes="action python:'%s/login_form?came_from=%s' %
                                                             (here.portal_url(),
                                                             pss.url_quote(request['URL']))">
