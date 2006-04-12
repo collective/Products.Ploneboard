@@ -51,7 +51,8 @@
             </div>
         </div>
 
-        <form tal:attributes="action string:${here/absolute_url}/add_comment_form">
+        <form tal:attributes="action string:${here/absolute_url}/add_comment_form"
+		tal:condition="python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
             <label>Quick reply</label>
             <p class="formHelp">
                 If you want to add a reply at the end of this discussion, you
