@@ -21,10 +21,10 @@ msgid "Message Board"
 msgstr "Forum"
 
 msgid "Forum"
-msgstr "Onderwerp"
+msgstr "Forum"
 
 msgid "Conversation"
-msgstr "Conversatie"
+msgstr "Gesprekken"
 
 msgid "Comment"
 msgstr "Reactie"
@@ -34,4 +34,38 @@ msgstr "Boom conversionweergave"
 
 msgid "conversation_view"
 msgstr "Platte conversatieweergave"
+
+msgid "A Forum contains conversations."
+msgstr "Een forum bevat gesprekken"
+
+msgid "Categories"
+msgstr "Onderwerpen"
+
+msgid "Enter a brief description of the board."
+msgstr "Geeft een korte omschrijving van dit discussiebord"
+
+msgid "Global forum listing"
+msgstr "Algemen forum overzicht"
+
+msgid "Local forum listing"
+msgstr "Lokaal forum overzicht"
+
+msgid "Message Board has been created."
+msgstr "Discussiebord is aangemakt"
+
+msgid "Moderate"
+msgstr "Beheren"
+
+msgid "help_categories"
+msgstr "Vul de beschikbare onderwerpen van forums, één onderwerp per regel."
+
+msgid "help_category"
+msgstr "Geeft aan over welke onderwerpen dit forum gaat. Een forum kan over meerdere onderwerpen hebben, het is echter aangeredan om er één te kiezen."
+
+msgid "Forum has been created."
+msgstr "Forum is aangemaakt"
+
+msgid "Search"
+msgstr "Zoeken"
+
 
