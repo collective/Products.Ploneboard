@@ -121,7 +121,7 @@
         </div>
 
         <div tal:condition="not:results">
-            <p>
+            <p i18n:translate="no_comments_queued">
                 There are no comments in the moderation queue.
             </p>
             <p>

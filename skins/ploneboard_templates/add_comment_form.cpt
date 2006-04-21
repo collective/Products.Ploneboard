@@ -78,7 +78,7 @@
 
                             <label for="text" i18n:translate="label_body_text_posting">Body text</label>
 
-                            <span class="fieldRequired" title="Required">(Required)</span>
+                            <span class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
 
                             <div tal:replace="error_text">Validation Error Comment</div>
 

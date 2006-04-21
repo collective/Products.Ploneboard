@@ -94,7 +94,7 @@
                         <fieldset tal:define="attachments comment/getAttachments"
                                   tal:condition="attachments"
                                   style="text-align: left;">
-                            <legend>Attachments</legend>
+                            <legend i18n:translate="legend_attachments">Attachments</legend>
                             <ul class="visualNoMarker">
                                 <li tal:repeat="attachment attachments">
                                     <a tal:attributes="href attachment/absolute_url">

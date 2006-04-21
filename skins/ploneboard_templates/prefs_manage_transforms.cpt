@@ -16,9 +16,12 @@
 <div class="configlet">
 
     <fieldset>
-        <legend>Existing transforms</legend>
+        <legend i18n:translate="legend_transforms">Existing transforms</legend>
         <table class="listing" tal:define="transforms here/portal_ploneboard/getTransforms">
-            <th>Transform name</th><th>Enabled?</th><th>Data provider</th><th>Action</th>
+          <th i18n:translate="transform_name">Transform name</th>
+          <th i18n:translate="enabled">Enabled?</th>
+          <th i18n:trnalsate="data_provider">Data provider</th>
+          <th i18n:translate="action">Action</th>
             <tr tal:repeat="transform transforms">
                 <tal:block tal:define="transform_name python: transform[0]; transform_status python: transform[2]; ">
                     <form class="group"
@@ -33,12 +36,14 @@
                         <td class="listingCheckbox"><input type="checkbox" name="transform_status" tal:attributes="checked python:test(int(transform_status), 'checked', nothing)"></td>
                         <td>
                             <span tal:condition="python: here.portal_ploneboard.hasDataProvider(transform_name)" tal:omit-tag="">
-                                <a href="#" tal:attributes="href string: prefs_manage_dataprovider?transform_name=${transform_name}">Manage</a>
+                              <a href="#"
+                                i18n:translate="manage"
+                                tal:attributes="href string: prefs_manage_dataprovider?transform_name=${transform_name}">Manage</a>
                             </span>
                         </td>
                         <td style="font-size: 120%; padding-top: 1em;">
                             <input class="standalone" type="submit" name="form.button.Update" value="Update" 
-                            />&nbsp;<input class="destructive" type="submit" name="form.button.Remove" value="Remove" />
+                            />&nbsp;<input class="destructive" type="submit" name="form.button.Remove" value="Remove" i18n:attributes="value remove" />
                         </td>
                     </form>
                 </tal:block>
@@ -53,21 +58,21 @@
           tal:attributes="action template/getId" >
 
         <fieldset>
-            <legend>Add transform</legend>
+            <legend i18n:translate="legend_add_transform">Add transform</legend>
             <input type="hidden" name="form.submitted" value="1" />
             
             <div class="field">
-                <label>Transform name</label>
+                <label i18n:translate="transform_name">Transform name</label>
                 <input type="text" name="transform_name"/>
             </div>
             
             <div class="field">
-                <label>Module</label>
+                <label i18n:translate="module_name">Module</label>
                 <input type="text" name="module_name"/>
             </div>
                         
             <div class="formControls">
-                <input class="context" type="submit" name="form.button.Add" value="Add">
+                <input class="context" type="submit" name="form.button.Add" value="Add" i18n:attributes="value add">
             </div>
         </fieldset>
     </form>
