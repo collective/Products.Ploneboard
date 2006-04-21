@@ -168,3 +168,18 @@ msgstr "Conversatie"
 
 msgid "Comment"
 msgstr "Reactie"
+
+msgid "help_quickreply"
+msgstr "Gebruik dit formulier om een opmerking aan het gesprek toe te voegen."
+
+msgid "label_quickreply"
+msgstr "Snelle opmerking"
+
+msgid "Reply"
+msgstr "Reageer"
+
+msgid "no_replies_yet"
+msgstr "Nog geen reacties"
+
+msgid "post_reply"
+msgstr "Geef reactie"
