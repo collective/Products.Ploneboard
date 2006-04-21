@@ -69,7 +69,7 @@
 
                     <div class="boardCommentActions">
 
-		      <form tal:condition="python:checkPermission('Ploneboard: Add Comment', comment)"
+		      <form tal:condition="python:checkPermission('Ploneboard: Add Comment', here)"
 				    tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
                             <input class="standalone"
                                    type="submit" 
@@ -79,7 +79,7 @@
 
                         </form>
 
-		      <form tal:condition="python:isAnon and not checkPermission('Ploneboard: Add Comment', comment)"
+		      <form tal:condition="python:isAnon and not checkPermission('Ploneboard: Add Comment', here)"
                               tal:attributes="action python:'%s/login_form?came_from=%s' %
                                                             (here.portal_url(),
                                                             pss.url_quote(request['URL']))">
