@@ -72,6 +72,7 @@
             <div class="formControls">
                 <input class="context"
                        name="form.button.Post" 
+                       i18n:attributes="value post_reply"
                        type="submit" value="Post reply" />
             </div>
         </form>
