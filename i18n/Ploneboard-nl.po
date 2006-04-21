@@ -33,7 +33,7 @@ msgid "most_recent_post"
 msgstr "Laatste reactie"
 
 msgid "no_conversations_started"
-msgstr "Nog geen onderwerpen."
+msgstr "Nog geen gesprekken."
 
 msgid "label_by_author"
 msgstr "door ${author}"
@@ -42,10 +42,10 @@ msgid "go_to_parent_url"
 msgstr "Terug naar ${type}"
 
 msgid "not_conversations"
-msgstr "Er zijn nog geen onderwerpen in dit forum."
+msgstr "Er zijn nog geen gesprekken in dit forum."
 
 msgid "conversation"
-msgstr "Onderwerp"
+msgstr "Gesprek"
 
 msgid "replies"
 msgstr "Reacties"
@@ -54,13 +54,13 @@ msgid "most_recent"
 msgstr "Laatste reactie"
 
 msgid "not_permission_start_conversation"
-msgstr "U heeft onvoldoende rechten om een onderwerp toe te voegen."
+msgstr "U heeft onvoldoende rechten om een gesprek toe te voegen."
 
 msgid "log_to_start_conversation"
-msgstr "U dient in te loggen om een onderwerp toe te voegen."
+msgstr "U dient in te loggen om een gesprek toe te voegen."
 
 msgid "start_new_conversation"
-msgstr "Nieuw Onderwerp"
+msgstr "Nieuw Gesprek"
 
 msgid "preview_comment"
 msgstr "Voorbeeldweergave"
@@ -96,13 +96,13 @@ msgid "label_text"
 msgstr "Reactie"
 
 msgid "help_display_portraits"
-msgstr "Indien deze optie is ingeschakeld, dan wordt naast de reacties in deze conversatie de pasfoto van de betreffende auteur getoond."
+msgstr "Indien deze optie is ingeschakeld, dan wordt naast de reacties in dit gesprek de pasfoto van de betreffende auteur getoond."
 
 msgid "label_display_portraits"
 msgstr "Pasfoto's tonen"
 
 msgid "help_description_conversation"
-msgstr "Vul hier de omschrijving in van uw conversatie."
+msgstr "Vul hier de omschrijving in van uw gesprek."
 
 msgid "label_description_conversation"
 msgstr "Omschrijving"
