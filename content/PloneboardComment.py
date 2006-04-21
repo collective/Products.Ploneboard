@@ -59,10 +59,10 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
     ))
 
 class PloneboardComment(BaseBTreeFolder):
-    """A comment contains regular text body and metadata.
-    XXX Use RichDocument pattern for attachments
-    XXX Don't inherit from btreefolder...
-    """
+    """A comment contains regular text body and metadata."""
+
+    # Use RichDocument pattern for attachments
+    # Don't inherit from btreefolder...
 
     implements(IComment) # XXX IBaseBTreeFolder
     #__implements__ = (INonStructuralFolder,) + BaseBTreeFolder.__implements__

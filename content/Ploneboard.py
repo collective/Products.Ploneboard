@@ -38,14 +38,14 @@ schema = BaseBTreeFolderSchema + Schema((
                                       label_msgid = "label_description",
                                       rows = 5)),
     LinesField('categories',
-               widget = LinesWidget(description = "Enter the categories you want to have available for forums, one category on each line.")
+               widget = LinesWidget(
+                   description = "Enter the categories you want to have available for forums, one category on each line.",
+                   descriptoin_msgid = "help_categories")
               ),
     ))
 
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
-    """
-    Ploneboard is the outmost board object, what shows up in your site.
-    """
+    """Ploneboard is the outmost board object, what shows up in your site."""
     implements((IPloneboard, fromZ2Interface(ISelectableBrowserDefault),))
 
     meta_type = 'Ploneboard'

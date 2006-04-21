@@ -55,9 +55,7 @@ MAX_UNIQUEID_ATTEMPTS = 1000
 
 
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
-    """
-    Conversation contains comments.
-    """
+    """Conversation contains comments."""
 
     implements(IConversation) # XXX IBaseBTreeFolder
 

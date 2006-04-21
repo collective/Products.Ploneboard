@@ -66,9 +66,7 @@ MAX_UNIQUEID_ATTEMPTS = 1000
 
 
 class PloneboardForum(BaseBTreeFolder):
-    """
-    A Forum contains conversations.
-    """
+    """A Forum contains conversations."""
     
     implements(IForum) # XXX IBaseBTreeFolder
 

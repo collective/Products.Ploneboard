@@ -7,9 +7,7 @@ from BTrees.Length import Length
 from BTrees.IIBTree import IIBTree
 
 class PloneboardIndex(Persistent):
-    """
-    A class for containing the date indexes and handling length (map to __len__)
-    """
+    """A class for containing the date indexes and handling length (map to __len__)"""
     _count = None         # A BTrees.Length
     _dates = None         # IIBTree: { date as int -> id (message and conversation ID always int) }
     _reverse_dates = None # IIBTree: { id -> date as int }
