@@ -8,8 +8,13 @@ from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
 from Products.Ploneboard.PloneboardCatalog import PloneboardCatalog
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.GenericSetup import EXTENSION, profile_registry
+try:
+    from Products.CMFPlone.interfaces import IPloneSiteRoot
+    from Products.GenericSetup import EXTENSION, profile_registry
+    HAS_GENERICSETUP = True
+except ImportError:
+    HAS_GENERICSETUP = False
+
 import sys, os, os.path
 
 
@@ -52,13 +57,14 @@ def initialize(context):
             fti                = ftis,
             ).initialize(context)
 
-    profile_registry.registerProfile('Ploneboard',
-                'PloneBoard',
-                'Extension profile for default Ploneboard setup',
-                'profiles/default',
-                'Ploneboard',
-                EXTENSION,
-		for_=IPloneSiteRoot)
+    if HAS_GENERICSETUP:
+        profile_registry.registerProfile('Ploneboard',
+                    'PloneBoard',
+                    'Extension profile for default Ploneboard setup',
+                    'profiles/default',
+                    'Ploneboard',
+                    EXTENSION,
+                    for_=IPloneSiteRoot)
 
 
 # Avoid breaking old Ploneboard instances when moving content types modules
