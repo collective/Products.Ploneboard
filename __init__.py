@@ -8,7 +8,10 @@ from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
 from Products.Ploneboard.PloneboardCatalog import PloneboardCatalog
+from Products.CMFPlone.interfaces import IPloneSiteRoot
+from Products.GenericSetup import EXTENSION, profile_registry
 import sys, os, os.path
+
 
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
 
@@ -48,6 +51,15 @@ def initialize(context):
             extra_constructors = (constructor,),
             fti                = ftis,
             ).initialize(context)
+
+    profile_registry.registerProfile('Ploneboard',
+                'PloneBoard',
+                'Extension profile for default Ploneboard setup',
+                'profiles/default',
+                'Ploneboard',
+                EXTENSION,
+		for_=IPloneSiteRoot)
+
 
 # Avoid breaking old Ploneboard instances when moving content types modules
 # from Ploneboard/types/ to Ploneboard/content/
