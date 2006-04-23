@@ -20,7 +20,7 @@
         <table class="listing" tal:define="transforms here/portal_ploneboard/getTransforms">
           <th i18n:translate="transform_name">Transform name</th>
           <th i18n:translate="enabled">Enabled?</th>
-          <th i18n:trnalsate="data_provider">Data provider</th>
+          <th i18n:translate="data_provider">Data provider</th>
           <th i18n:translate="action">Action</th>
             <tr tal:repeat="transform transforms">
                 <tal:block tal:define="transform_name python: transform[0]; transform_status python: transform[2]; ">
