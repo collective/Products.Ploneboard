@@ -40,8 +40,8 @@
 
         <div class="boardConversation"
              metal:define-macro="view_comments"
-             tal:define="comments here/getThreadedComments;
-                         children comments/children">	
+             tal:define="comments here/getRootComments;
+                         children comments">
 
             <ul>
                 <tal:node metal:define-macro="displaynode">
@@ -50,16 +50,21 @@
 
                         <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
-                        <tal:children define="children comment/children|nothing"
+                        <tal:children define="children comment/childIds|nothing"
                                       condition="children">
+                          <tal:block define="children python:[getattr(here, x) for x in children]">
+
                             <ul>
                                 <div metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
                             </ul>
+                          </tal:block>
                         </tal:children>
                     </li>
                 </tal:node>
             </ul>
         </div>
+
+        <metal:block use-macro="here/conversation_view/macros/quickreply">Quick reply form</metal:block>
 
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 

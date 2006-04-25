@@ -18,7 +18,7 @@
     <div metal:fill-slot="main" 
          tal:define="errors options/state/getErrors;
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
-		     tabindex python:Iterator();">
+                     tabindex python:Iterator();">
 
         <h2 i18n:translate="add_comment">Add comment</h2>
 

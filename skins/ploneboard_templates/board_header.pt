@@ -3,7 +3,7 @@
       i18n:domain="ploneboard">
       
 <body>
-<div metal:define-macro="header" tal:omit-tag="">	
+<div metal:define-macro="header" tal:omit-tag="">
 
     <a href=""
        class="link-parent"

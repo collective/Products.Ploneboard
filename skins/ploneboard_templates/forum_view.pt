@@ -83,7 +83,8 @@
                 <tal:showconversations tal:repeat="conversation conversations">
                 
                 <tr tal:define="oddrow repeat/conversation/odd;
-                                revstate python:wtool.getInfoFor(conversation, 'review_state', None)"
+                                revstate python:wtool.getInfoFor(conversation, 'review_state', None);
+                                nrcomments conversation/getNumberOfReplies"
                     tal:attributes="class python:test(oddrow, 'even', 'odd')">
                     <td>
                         <a href=""
@@ -103,14 +104,14 @@
                     </td>
                     
                     <td class="listingCheckbox"
-                        tal:condition="conversation/getNumberOfReplies">
-                        <span tal:content="conversation/getNumberOfReplies">
+                        tal:condition="nrcomments">
+                        <span tal:content="nrcomments">
                             12 comments
                         </span>
                     </td>
 
                     <td class="listingCheckbox"
-                        tal:condition="not: conversation/getNumberOfReplies">
+                        tal:condition="not: nrcomments">
                         <span i18n:translate="no_replies_yet">
                         No replies yet
                         </span>
@@ -119,7 +120,7 @@
 
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
                     <td>
-
+                      <tal:block condition="nrcomments">
                          <div i18n:translate="label_by_author">
                              by <tal:author i18n:name="author"
                           tal:content="conversation/getLastCommentAuthor" />
@@ -129,6 +130,7 @@
                         <span tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
                             Thursday 13:21
                         </span>
+                      </tal:block>
                     </td>
     
                 </tr>

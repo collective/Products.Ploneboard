@@ -12,7 +12,7 @@
       
 <body>
 
-    <div metal:fill-slot="main">	
+    <div metal:fill-slot="main">
 
         <h1>Ploneboard configuration</h1>
 

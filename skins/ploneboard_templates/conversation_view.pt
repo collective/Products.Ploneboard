@@ -51,31 +51,33 @@
             </div>
         </div>
 
-        <form tal:attributes="action string:${here/absolute_url}/add_comment_form"
-          tal:condition="python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
-            <label i18n:translate="label_quickreply">Quick reply</label>
-            <p class="formHelp" i18n:translate="help_quickreply">
-                If you want to add a reply at the end of this discussion, you
-                can do so with this form.
-            </p>
-            <tal:editor define="inputname  string:text;
-                                formname   string:add_comment_form;
-                                inputvalue nothing;
-                                cooked_inputvalue string:;
-                                rows string:10;
-                                tabindex tabindex/next;">
-              <div metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox">
-                The WYSIWYG code
+        <metal:block define-macro="quickreply">
+          <form tal:attributes="action string:${here/absolute_url}/add_comment_form"
+            tal:condition="python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
+              <label i18n:translate="label_quickreply">Quick reply</label>
+              <p class="formHelp" i18n:translate="help_quickreply">
+                  If you want to add a reply at the end of this discussion, you
+                  can do so with this form.
+              </p>
+              <tal:editor define="inputname  string:text;
+                                  formname   string:add_comment_form;
+                                  inputvalue nothing;
+                                  cooked_inputvalue string:;
+                                  rows string:10;
+                                  tabindex tabindex/next;">
+                <div metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox">
+                  The WYSIWYG code
+                </div>
+              </tal:editor>
+              <input type="hidden" name="form.submitted" value="1" />
+              <div class="formControls">
+                  <input class="context"
+                         name="form.button.Post" 
+                         i18n:attributes="value post_reply"
+                         type="submit" value="Post reply" />
               </div>
-            </tal:editor>
-            <input type="hidden" name="form.submitted" value="1" />
-            <div class="formControls">
-                <input class="context"
-                       name="form.button.Post" 
-                       i18n:attributes="value post_reply"
-                       type="submit" value="Post reply" />
-            </div>
-        </form>
+          </form>
+        </metal:block>
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
     </div>
