@@ -2,4 +2,6 @@
 <tool-setup>
   <required tool_id="ploneboard_catalog"
     class="Products.Ploneboard.PloneboardCatalog"/>
+  <required tool_id="ploneboard_tool"
+    class="Products.Ploneboard.PloneboardTool"/>
 </tool-setup>

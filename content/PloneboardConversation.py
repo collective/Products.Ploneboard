@@ -41,7 +41,7 @@ schema = PBConversationBaseBTreeFolderSchema + Schema((
               read_permission = ViewBoard,
               write_permission = AddConversation,
               default_content_type = 'text/plain',
-              default_output_type = 'text/html',
+              default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the conversation.",
                                       description_msgid = "help_description_conversation",
                                       label = "Description",
@@ -151,7 +151,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
-        return [f.getObject() for f in getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_limit=(offset+limit), path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+        catalog=getToolByName(self, PLONEBOARD_CATALOG)
+        return [f.getObject() for f in \
+                catalog(object_implements='IComment',
+                        sort_on='created',
+                        sort_limit=(offset+limit),
+                        path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
         
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
@@ -166,7 +171,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Returns the number of replies for this conversation.
         # XXX Interface method?
         """
-        return self.getNumberOfComments()-1
+        return self.getNumberOfComments()
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
@@ -193,51 +198,16 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         else:
             return None
 
-    security.declareProtected(ViewBoard, 'getThreadedComments')
-    def getThreadedComments(self):
+    security.declareProtected(ViewBoard, 'getRootComments')
+    def getRootComments(self):
         """
-        Based on navtree builder, build tree from flat structure
+        Return a list all comments rooted to the board; ie comments which
+        are not replies to other comments.
         """
-        root = {'UID':self.UID(),
-                'children':[]} # Represents the conversation
-        result = {self.UID():root}
-        
         raw = self.getComments()
-        for comment in raw:
-            attachments = []
-            uid = comment.UID()
-            for a in comment.getAttachments():
-                attachments.append({'getId':a.getId(),
-                                    'absolute_url':a.absolute_url(),
-                                    'portal_type':a.portal_type,
-                                    'getIcon':a.getIcon()})
-            parentkey = comment.inReplyToUID()
-            if parentkey is None:
-                parentkey = self.UID()
-            data = {'getId':comment.getId(),
-                    'UID':uid,
-                    'Creator':comment.Creator(),
-                    'creation_date':comment.creation_date,
-                    'getText':comment.getText(),
-                    'absolute_url':comment.absolute_url(),
-                    'getAttachments':attachments, 
-                    'Title':comment.Title, 
-                    'inReplyTo':parentkey,
-                    'portal_type':comment.portal_type,
-                    'children':[]}
+        ours = [ comment for comment in raw if comment.inReplyToUID() is None]
+        return ours
 
-            # Add to parent node
-            # Tell parent about self
-            if result.has_key(parentkey):
-                result[parentkey]['children'].append(data)
-            else:
-                result[parentkey] = {'children':[data]}
-            # If we have processed a child already, make sure we register it
-            # as a child
-            if result.has_key(uid):
-                data['children'] = result[uid]['children']
-            result[uid] = data
-        return result[self.UID()]
 
     security.declareProtected(ViewBoard, 'getFirstComment')
     def getFirstComment(self):
