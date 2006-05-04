@@ -1,15 +1,15 @@
-from Products.CMFCore import permissions as CMFCorePermissions
+from Products.CMFCore import permissions
 from Products.CMFCore.permissions import setDefaultRoles
 
 
 # Gathering Ploneboard Permissions into one place
-RequestReview = CMFCorePermissions.RequestReview
+RequestReview = permissions.RequestReview
 # Add permissions differ for each type, and are imported by __init__.initialize
 # so don't change their names!
 
 # Separate view permission creates havoc
 #ViewBoard = 'Ploneboard: View'
-ViewBoard = CMFCorePermissions.View
+ViewBoard = permissions.View
 SearchBoard = 'Ploneboard: Search'
 AddBoard = AddPloneboard = 'Ploneboard: Add Ploneboard'
 ManageBoard = 'Ploneboard: Add Ploneboard'

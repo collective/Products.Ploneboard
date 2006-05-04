@@ -91,6 +91,18 @@
                                    />
                         </form>
 
+                        <!-- Yes, this UI sucks horribly. Someone bring out the limi and fix please! :) -->
+                        <a tal:condition="python:checkPermission('Ploneboard: Manage Conversation', here)"
+                          tal:attributes="href string:${comment/absolute_url}/remove_comment#${comment/getId}"
+                          class="removePloneboardComment">Remove comment
+                        </a>
+                        <br/>
+
+                        <a tal:condition="python:checkPermission('Ploneboard: Edit Comment', here)"
+                          tal:attributes="href string:${comment/absolute_url}/base_edit"
+                          class="editPloneboardComment">Edit comment
+                        </a>
+
                         <fieldset tal:define="attachments comment/getAttachments"
                                   tal:condition="attachments"
                                   style="text-align: left;">

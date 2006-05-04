@@ -113,6 +113,11 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                     return obj
         return None
 
+    security.declareProtected(ManageConversation, 'removeComment')
+    def removeComment( self, comment):
+        self.manage_delObjects([comment.getId()])
+# TODO: reparent replies to this comment ?
+
     security.declareProtected(AddComment, 'addComment')
     def addComment( self, title, text, creator=None, files=None):
         """Adds a new comment with subject and body."""

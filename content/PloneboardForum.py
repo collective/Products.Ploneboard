@@ -138,9 +138,11 @@ class PloneboardForum(BaseBTreeFolder):
                   'text' : text}
 
         conv = _createObjectByType('PloneboardConversation', self, id, **kwargs)
+        conv.setCreators([creator])
 
         if text is not None:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(), **kwargs)
+            m.setCreators([creator])
 
             # Create files in message
             if files:
