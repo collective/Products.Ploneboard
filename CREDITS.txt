@@ -30,3 +30,6 @@ permission
 
     **Rocky Burt**, "ServerZen Software":http//www.serverzen.com -- Small
 fixes and updates on behalf of Zest Software
+
+    ** Wichert Akkerman**, "Amaze":http://www.amazesolutions.com -- Code,
+user interface improvements
