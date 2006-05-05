@@ -10,9 +10,6 @@ PloneBoard to-do list
     - Ensure conversations end up in portal_catalog.
         - Can use ArchetypeTool's catalog multiplex for this
         
-    - Would be nice if we could ensure Zope 2.7 compatability at least for
-        a little while.
-
     Workflows and Security
     ----------------------
 
@@ -31,13 +28,14 @@ PloneBoard to-do list
     UI fixes
     --------
 
-    - Create a single page showing all threads in a board, with all replies in a
-        tree view
-
     - Rename forum_view -> conversation_listing - it's actually a listing, not a
         view
     
     - Need indication in UI when threads are locked or sticky
+
+    - Implement comment moderation
+
+    - Get kupu to load everywhere
 
 
     Discussion tool integration
