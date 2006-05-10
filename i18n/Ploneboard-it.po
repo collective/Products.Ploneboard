@@ -1,0 +1,198 @@
+# translation of Ploneboard to Italian
+# Gettext File for Ploneboard
+# Enzo Cesanelli <enzo at noiza dot com>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"PO-Revision-Date: 2006-05-08 11:50+0000\n"
+"Last-Translator: Enzo Cesanelli <enzo at noiza dot com>\n"
+"Language-Team: Noiza <enzo at noiza dot com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: ploneboard\n"
+
+# Example
+msgid "A line was too long."
+msgstr "Una linea era troppo lunga" 
+
+msgid "add_comment"
+msgstr "Aggiungi commento"
+
+msgid "not_foruns"
+msgstr "Nessun forum"
+
+msgid "forum_name"
+msgstr "Nome del forum"
+
+msgid "most_recent_post"
+msgstr "Messaggi recenti"
+
+msgid "no_conversations_started"
+msgstr "Nessuna discussione &egrave; stata iniziata"
+
+msgid "label_by_author"
+msgstr "per ${author}"
+
+msgid "go_to_parent_url"
+msgstr "Vai al livello superiore"
+
+msgid "not_conversations"
+msgstr "Non ci sono ancora discussioni in questo forum"
+
+msgid "conversation"
+msgstr "Discussione"
+
+msgid "replies"
+msgstr "Risposte"
+
+msgid "most_recent"
+msgstr "Pi&ugrave; recenti"
+
+msgid "not_permission_start_conversation"
+msgstr "Spiacenti, non hai i permessi per iniziare una nuova Discussione"
+
+msgid "log_to_start_conversation"
+msgstr "Farsi riconoscere per iniziare una nuova discussione"
+
+msgid "start_new_conversation"
+msgstr "Inizia una nuova discussione"
+
+msgid "preview_comment"
+msgstr "Anteprima del commento"
+
+msgid "label_powered_by"
+msgstr ""
+
+msgid "None"
+msgstr "Nessuna"
+
+msgid "status"
+msgstr "Stato"
+
+msgid "add_message"
+msgstr "Aggiungi messaggio"
+
+msgid "label_description"
+msgstr "Descrizione"
+
+msgid "help_description"
+msgstr "Inserisci una breve descrizione"
+
+msgid "help_description_forum"
+msgstr "Inserisci una breve descrizione riguardante il forum"
+
+msgid "label_description_forum"
+msgstr "Descrizione delforum"
+
+msgid "help_text"
+msgstr "Inserisci il testo del commento"
+
+msgid "label_text"
+msgstr "Testo"
+
+msgid "help_display_portraits"
+msgstr "Seleziona i ritratti dei collaboratori"
+
+msgid "label_display_portraits"
+msgstr "Mostra i ritratti"
+
+msgid "help_description_conversation"
+msgstr "Inserisci una breve descrizione riguardante la discussione"
+
+msgid "label_description_conversation"
+msgstr "Descrizione della discussione"
+
+msgid "legend_add_conversation"
+msgstr "Dettagli"
+
+msgid "label_title_posting"
+msgstr "Titolo"
+
+msgid "help_title_posting"
+msgstr "Inserisci il titolo del messaggio"
+
+msgid "label_body_text_posting"
+msgstr "Testo del messaggio"
+
+msgid "help_body_text_posting"
+msgstr "Inserisci il testo del messaggio"
+
+msgid "preview_posting"
+msgstr "Inserisci il messaggio"
+
+msgid "preview_message"
+msgstr "Visualizzazione del messaggio"
+
+msgid "value preview_posting"
+msgstr "Visualizza"
+
+msgid "value cancel_posting"
+msgstr "Annulla"
+
+msgid "Post"
+msgstr "Inserisci"
+
+msgid "Change"
+msgstr "Cambia"
+
+msgid "Cancel"
+msgstr "Elimina"
+
+msgid "Reply to this"
+msgstr "Rispondi a questo"
+
+msgid "Retract"
+msgstr "Ritira"
+
+msgid "posted_by"
+msgstr "lasciato da"
+
+msgid "text_at"
+msgstr "-"
+
+#### Voci aggiunte manualmente.
+
+msgid "Message Board"
+msgstr "Area Forum"
+
+msgid "Forum"
+msgstr "Forum"
+
+msgid "Conversation"
+msgstr "Discussione"
+
+msgid "Comment"
+msgstr "Commento"
+
+msgid "help_quickreply"
+msgstr "Se vuoi aggiungere subito una risposta a questa discussione, puoi farlo nella form sottostante."
+
+msgid "label_quickreply"
+msgstr "Risposta immediata"
+
+msgid "Reply"
+msgstr "Rispondi"
+
+msgid "no_replies_yet"
+msgstr "Nessuna risposta"
+
+msgid "post_reply"
+msgstr "Pubblica la risposta"
+
+msgid "legend_attachments"
+msgstr "Allegati"
+
+msgid "description_ploneboard_config"
+msgstr "Qui puoi configurare Ploneboard per questo sito"
+
+msgid "manage_transforms"
+msgstr "Imposta le trasformazioni"
+
+msgid "no_comments_queued"
+msgstr "Non ci sono commenti da moderare"
