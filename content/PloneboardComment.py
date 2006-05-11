@@ -188,7 +188,7 @@ class PloneboardComment(BaseBTreeFolder):
         ids = {}
 
         parent = self.getConversation()
-        forum = parent().getForum()
+        forum = parent.getForum()
         conv = forum.addConversation(self.getTitle(), self.getText())
         # here we get id of the first Comment in newly created Conversation
         first_msg_id = conv.objectIds()[0]
