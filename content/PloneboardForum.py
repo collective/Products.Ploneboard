@@ -175,8 +175,27 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getConversations')
     def getConversations(self, limit=20, offset=0):
         """Returns conversations."""
-        # XXX Add sorting
-        return [f.getObject() for f in getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', sort_on='modified', sort_order='reverse', sort_limit=(offset+limit), path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+
+        wf_tool = self.portal_workflow
+        objects = [f.getObject() for f in getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', sort_on='modified', sort_order='reverse', sort_limit=(offset+limit), path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+        STICKY_STATES = ['sticky', 'locked_and_sticky']
+
+        def getState(ob):
+            return wf_tool.getInfoFor(ob, 'review_state')
+        
+        def stateAndDateSort(ob1, ob2):
+            state1 = getState(ob1)
+            state2 = getState(ob2)
+            if state1 in STICKY_STATES and state2 in STICKY_STATES:
+                return cmp(ob2.getLastCommentDate(), ob1.getLastCommentDate())
+            elif state1 in STICKY_STATES:
+                return -1
+            elif state2 in STICKY_STATES:
+                return 1
+            return cmp(ob2.getLastCommentDate(), ob1.getLastCommentDate())
+
+        objects.sort(stateAndDateSort)
+        return (objects);
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):

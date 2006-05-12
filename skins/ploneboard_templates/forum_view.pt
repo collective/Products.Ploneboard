@@ -73,7 +73,9 @@
 
             <thead>
                 <tr>
+                     <th></th>
                      <th i18n:translate="conversation">Conversation</th>
+                     <th i18n:translate="author">Author</th>
                      <th i18n:translate="replies">Replies</th>
                      <th i18n:translate="most_recent">Most Recent Comment</th>
                  </tr>
@@ -87,21 +89,25 @@
                                 nrcomments conversation/getNumberOfReplies"
                     tal:attributes="class python:test(oddrow, 'even', 'odd')">
                     <td>
+                    	<img src="" tal:condition="python:revstate in ['sticky', 'locked_and_sticky']"
+                        		tal:replace="structure here/sticky_icon.gif" />
+                    	<img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
+                        		tal:replace="structure here/lock_icon.gif" />
+                        <img src="" tal:condition="python: conversation.getNumberOfReplies() > 1"
+                        		tal:replace="structure here/hot_icon.gif" />
+                        <img src="" tal:condition="python: conversation.getNumberOfReplies() <= 1 and revstate not in ['locked', 'locked_and_sticky', 'sticky']"
+                        		tal:replace="structure here/norm_icon.gif" />
+			<img src="" tal:condition="conversation/isAdmin" tal:replace="structure here/site_icon.gif" />
+                    </td>
+                    <td>
                         <a href=""
                            tal:attributes="href conversation/absolute_url">
-                          <img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
-                                      tal:replace="structure here/lock_icon.gif" />
                             <span tal:replace="conversation/Title">This is a title</span>
-                              
-
-                            <div class="discreet" i18n:translate="label_by_author">
-                                   by <tal:author i18n:name="author"
-                                  tal:content="conversation/Creator" />
-                            </div>
-                            
                         </a>
                     </td>
-                    
+                    <td>
+                        <tal:author tal:content="conversation/Creator" />
+                    </td>                    
                     <td class="listingCheckbox"
                         tal:condition="nrcomments">
                         <span tal:content="nrcomments">

@@ -23,6 +23,8 @@ ManageConversation = 'Ploneboard: Manage Conversation'
 
 AddComment = AddPloneboardComment = 'Ploneboard: Add Comment'
 EditComment = 'Ploneboard: Edit Comment'
+ViewComment = 'Ploneboard: View Comment'
+
 AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
 ManageComment = 'Ploneboard: Manage Comment'
 ApproveComment = 'Ploneboard: Approve Comment' # Used for moderation
@@ -49,6 +51,9 @@ setDefaultRoles(AddComment,
 
 setDefaultRoles(EditComment,
                 ('Manager',))
+
+setDefaultRoles(ViewComment,
+                ('Anonymous', 'Member', 'Manager'))
 
 setDefaultRoles(AddAttachment,
                 ('Manager',))
