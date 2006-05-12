@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<archetypetool>
+  <catalogmap>
+    <type portal_type="Ploneboard">
+      <catalog value="portal_catalog"/>
+      <catalog value="ploneboard_catalog"/>
+    </type>
+    <type portal_type="PloneboardComment">
+      <catalog value="portal_catalog"/>
+      <catalog value="ploneboard_catalog"/>
+    </type>
+    <type portal_type="PloneboardConversation">
+      <catalog value="portal_catalog"/>
+      <catalog value="ploneboard_catalog"/>
+    </type>
+    <type portal_type="PloneboardForum">
+      <catalog value="portal_catalog"/>
+      <catalog value="ploneboard_catalog"/>
+    </type>
+  </catalogmap>
+</archetypetool>
