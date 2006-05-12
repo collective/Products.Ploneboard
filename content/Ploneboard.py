@@ -69,11 +69,6 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
             },
-            { 'id'          : 'moderate'
-            , 'name'        : 'Moderate'
-            , 'action'      : 'string:$object_url/moderation_form'
-            , 'permissions' : (ManageBoard,)
-            }
         )
 
     aliases = \
