@@ -17,7 +17,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, ReferenceWidget
+from Products.Archetypes.public import VisualWidget, ReferenceWidget
 from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
 
 from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
@@ -43,11 +43,13 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
               accessor='getText',
               read_permission = ViewBoard,
               write_permission = AddComment,
-              widget = TextAreaWidget(description = "Enter comment body.",
+              widget = VisualWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
                                       label = "Text",
                                       label_msgid = "label_text",
-                                      rows = 5)),
+                                      rows = 5,
+                                      helper_css = ('ploneboard.css',)
+                                      )),
     ReferenceField(
         name='reply_to',
         accessor='inReplyTo', # Suboptimal accessor naming here...
@@ -188,7 +190,7 @@ class PloneboardComment(BaseBTreeFolder):
         ids = {}
 
         parent = self.getConversation()
-        forum = parent.getForum()
+        forum = parent().getForum()
         conv = forum.addConversation(self.getTitle(), self.getText())
         # here we get id of the first Comment in newly created Conversation
         first_msg_id = conv.objectIds()[0]
