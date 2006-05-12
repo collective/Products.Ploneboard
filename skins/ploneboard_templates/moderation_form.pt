@@ -9,10 +9,6 @@
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
-    <metal:js fill-slot="javascript_head_slot">
-    <script type="text/javascript" src="" tal:attributes="src here/vcXMLRPC.js/absolute_url"></script>
-    <script type="text/javascript" src="" tal:attributes="src here/moderation.js/absolute_url"></script>
-    </metal:js>
 </head>
 
 <body>

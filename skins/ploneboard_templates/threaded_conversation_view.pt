@@ -8,16 +8,6 @@
         <style type="text/css" media="all"
                tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
-
-    <metal:js fill-slot="javascript_head_slot">
-
-      <tal:block condition="python:checkPermission('Ploneboard: Approve Comment', here)">
-        <script type="text/javascript" src="" tal:attributes="src here/vcXMLRPC.js/absolute_url"></script>
-        <script type="text/javascript" src="" tal:attributes="src here/moderation.js/absolute_url"></script>
-      </tal:block>
-
-    </metal:js>
-
 </head>
 
 <body>
