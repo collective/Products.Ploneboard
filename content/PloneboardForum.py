@@ -88,9 +88,9 @@ class PloneboardForum(BaseBTreeFolder):
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
             },
-            { 'id'          : 'moderate'
-            , 'name'        : 'Moderate'
-            , 'action'      : 'string:$object_url/moderation_form'
+            { 'id'          : 'rssfeed'
+            , 'name'        : 'RSS Feed'
+            , 'action'      : 'string:$object_url/editSynProperties'
             , 'permissions' : (ManageBoard,)
             }
         )
@@ -109,6 +109,10 @@ class PloneboardForum(BaseBTreeFolder):
         """
         self.update(**kwargs)
 
+    security.declarePublic('synContentValues')
+    def synContentValues(self):
+        return (self.getConversations())
+    
     security.declareProtected(ViewBoard, 'getBoard')
     def getBoard(self):
         """Returns containing or nearest board."""

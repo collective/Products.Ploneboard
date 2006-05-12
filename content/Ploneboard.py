@@ -103,6 +103,12 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
         forum.initializeArchetype(**kwargs)
         forum._setPortalTypeName('PloneboardForum')
         forum.notifyWorkflowCreated()
+        # Enable topic syndication by default
+        syn_tool = getToolByName(self, 'portal_syndication', None)
+        if syn_tool is not None:
+            if (syn_tool.isSiteSyndicationAllowed() and not syn_tool.isSyndicationAllowed(forum)):
+                syn_tool.enableSyndication(forum)
+
         #forum.setDescription(description)
         return forum
 
