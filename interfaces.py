@@ -144,10 +144,10 @@ class IConversation(Interface):
         Returns the author of the last comment for the conversation.
         """
 
-    def getThreadedComments():
+    def getrootComments():
         """
-        Returns a dict, similar to navtree.
-        XXX expand on details.
+        Return a list all comments rooted to the board; ie comments which
+        are not replies to other comments.
         """
 
     def getFirstComment():
