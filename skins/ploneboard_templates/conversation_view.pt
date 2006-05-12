@@ -51,6 +51,7 @@
             </div>
         </div>
 
+	<a id="last"></a>
         <metal:block define-macro="quickreply">
           <fieldset>
             <legend i18n:translate="label_quickreply">Quick reply</legend> 
