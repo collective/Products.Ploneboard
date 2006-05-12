@@ -23,7 +23,7 @@ msgstr "Een regel was te lang."
 msgid "add_comment"
 msgstr "Reageren"
 
-msgid "not_foruns"
+msgid "not_forums"
 msgstr "Geen forums"
 
 msgid "forum_name"

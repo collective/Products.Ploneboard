@@ -7,9 +7,11 @@
 
     <div class="poweredBy"
          i18n:translate="label_powered_by">
-        Powered by 
+      Powered by 
+      <tal:link i18n:name="link">
         <a class="link-plain" 
            href="http://plone.org/products/ploneboard">Ploneboard</a>
+      </tal:link>
     </div>
                 
 

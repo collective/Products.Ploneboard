@@ -50,14 +50,12 @@
 
                         <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
-                        <tal:children define="children comment/childIds|nothing"
+                        <tal:children define="children comment/getReplies|nothing"
                                       condition="children">
-                          <tal:block define="children python:[getattr(here, x) for x in children]">
 
-                            <ul>
-                                <div metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
-                            </ul>
-                          </tal:block>
+                          <ul>
+                              <div metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
+                          </ul>
                         </tal:children>
                     </li>
                 </tal:node>

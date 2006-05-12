@@ -1,0 +1,67 @@
+# Translation of plone.pot to German
+# Arno Gross <arno.gross@brmtec.com>, 2006
+# Sponsored by: Eurodata GmbH & Co. KG, www.eurodata.de
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1beta1\n"
+"POT-Creation-Date: Mon Feb 20 18:09:38 2006\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2005-12-18 06:20+0100\n"
+"Last-Translator: Arno Gross\n"
+"Last-Translator: Arno Gross <arno.gross@brmtec.com>\n"
+"Language-Team: "
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+"Language-Code: de\n"
+"Language-Name: Deutsch\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
+
+
+#: workflow state defined in ploneboard_forum_workflow - id memberposting
+# Default: "Require membership to post"
+# Require membership to post 
+msgid "Require membership to post"
+msgstr "Nur registrierte Benutzer"
+
+msgid "memberposting"
+msgstr "Nur registrierte Benutzer"
+
+msgid "Make Sticky"
+msgstr "???Make Sticky???"
+
+msgid "Make Locked and Sticky"
+msgstr "???Make Locked and Sticky???"
+
+msgid "Lock"
+msgstr "???Lock???"
+
+msgid "Normal state"
+msgstr "Normal"
+
+msgid "Make free-for-all"
+msgstr "Für alle freigeben"
+
+msgid "Make moderated"
+msgstr "Moderierbar"
+
+msgid "Visible but not published"
+msgstr "Öffentlicher Entwurf"
+
+# document action
+msgid "Moderate"
+msgstr "Moderieren"
+
+msgid "Enter a brief description of the conversation."
+msgstr "Geben Sie eine kurze Beschreibung des Beitrags ein."
+
+# add_comment_script.cpy
+# add_conversation_script.cpy:
+# Default: "Added comment"
+msgid "Added comment"
+msgstr "Antwort hinzugefügt."
+

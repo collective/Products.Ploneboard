@@ -10,9 +10,15 @@
 #given a time string convert it into a DateTime and then format it appropariately
 from DateTime import DateTime
 ploneboard_time=None
+ts = context.translation_service
+utranslate = context.utranslate
 
-format = '%A %H:%M'
-oldformat = '%B %d. %Y'
+format = '%Y;%m;%d;%w;%H;%M;%S'
+
+# fallback formats, english
+young_format_en = '%A %H:%M' 
+old_format_en = '%B %d. %Y'
+
 
 if not time:
     return 'Unknown date'
@@ -20,12 +26,19 @@ if not time:
 try:
     if not isinstance(time, DateTime):
         time = DateTime(str(time))
+    (year, month, day, wday, hours, minutes, seconds) = time.strftime(format).split(';')
+ 
     if time.greaterThan(DateTime()-7):
-        ploneboard_time = time.strftime(format)
+        ploneboard_time = utranslate("young_date_format: ${wday} ${hours}:${minutes}",
+                                     {'wday':utranslate(ts.day_msgid(wday)), 'hours':hours, 'minutes':minutes},
+                                      default=time.strftime(young_format_en))
     else:
-        ploneboard_time=time.strftime(oldformat)
+        ploneboard_time = utranslate("old_date_format: ${year} ${month} ${day} ${hours}:${minutes}",
+                                     {'year':year, 'month':utranslate(ts.month_msgid(month)), 
+                                      'day':day, 'hours':hours, 'minutes':minutes},
+                                      default=time.strftime(old_format_en))
+
 except IndexError:
     pass 
 
 return ploneboard_time
-

@@ -108,7 +108,7 @@
 
         <tal:category define="forums python:keyedforums.get(None, None)"
                       condition="forums">
-            <h2>General forums</h2>
+            <h2 i18n:translate="title_general_forums">General forums</h2>
 
             <table metal:use-macro="here/board_view/macros/forumdisplay" />
         </tal:category>

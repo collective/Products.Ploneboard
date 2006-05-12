@@ -5,7 +5,7 @@ from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import File
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore.permissions import View
 #from permissions import AddAttachment
 from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
@@ -81,7 +81,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             return 1
         return 0
 
-    security.declareProtected(CMFCorePermissions.View, 'performCommentTransform')
+    security.declareProtected(View, 'performCommentTransform')
     def performCommentTransform(self, orig, **kwargs):
         """ This performs the comment transform - also used for preview """
         transform_tool = getToolByName(self, 'portal_transforms')
@@ -102,9 +102,8 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         return orig
 
     # File upload - should be in a View once we get formcontroller support in Views
-    security.declareProtected(CMFCorePermissions.View, 'getUploadedFiles')
+    security.declareProtected(View, 'getUploadedFiles')
     def getUploadedFiles(self):
-
         request = self.REQUEST
 
         result = []
@@ -114,6 +113,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             return []
 
         sdm = getToolByName(self, 'session_data_manager', None)
+        pt = getToolByName(self, 'plone_utils')
         hassession = sdm.hasSessionData()
 
         for file in files:
@@ -124,8 +124,9 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                     result.append(oldfile)
             if isinstance(file, FileUpload):
                 if file:
-                    newfile = File(file.filename, file.filename, file)
-                    request.SESSION[file.filename] = newfile
+                    id = pt.normalizeString(file.filename)
+                    newfile = File(id, file.filename, file)
+                    request.SESSION[id] = newfile
                     result.append(newfile)
 
         # delete files form session if not referenced
@@ -138,7 +139,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             
         return result
 
-    security.declareProtected(CMFCorePermissions.View, 'clearUploadedFiles')
+    security.declareProtected(View, 'clearUploadedFiles')
     def clearUploadedFiles(self):
         # Get previously uploaded files with a reference in request
         # + files uploaded in this request
@@ -149,11 +150,12 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         hassession = sdm.hasSessionData()
 
         if hassession:
-            old_filelist = request.SESSION.get('ploneboard_uploads', [])
-            for file in old_filelist:
-                if request.SESSION.has_key(file):
-                    del request.SESSION[file]
-            del request.SESSION['ploneboard_uploads']
+            old_filelist = request.SESSION.get('ploneboard_uploads', None)
+            if old_filelist is not None:
+                for file in old_filelist:
+                    if request.SESSION.has_key(file):
+                        del request.SESSION[file]
+                del request.SESSION['ploneboard_uploads']
 
 
 Globals.InitializeClass(PloneboardTool)
