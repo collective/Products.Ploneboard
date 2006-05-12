@@ -96,7 +96,9 @@
 
                     </div>
 
-                    <div metal:define-macro="comment_body_attachments" tal:omit-tag="">
+                    <div metal:define-macro="comment_body_attachments"
+                      tal:omit-tag=""
+                      tal:condition="python: checkPermission('Add Comment Attachment', here)">
       
                         <div class="field"
                              tal:define="error_files errors/files|nothing;

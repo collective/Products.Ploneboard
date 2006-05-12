@@ -17,7 +17,8 @@
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
                      tabindex python:Iterator();">
 
-        <h1 i18n:translate="add_message">Add conversation</h1>
+       <h1 class="documentFirstHeading"
+           i18n:translate="add_message">Add conversation</h1>
    
         <form name="edit_form"
               action=""

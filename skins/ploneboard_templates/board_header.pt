@@ -3,7 +3,10 @@
       i18n:domain="ploneboard">
       
 <body>
-<div metal:define-macro="header" tal:omit-tag="">
+  <div metal:define-macro="header" tal:omit-tag="">
+    <div metal:use-macro="here/document_actions/macros/document_actions">
+      Document actions (print, sendto etc)
+    </div>
 
     <a href=""
        class="link-parent"
@@ -17,7 +20,6 @@
                           _parent_portal_type
           </span>
     </a>
-
-</div>
+  </div>
 </body>
 </html>

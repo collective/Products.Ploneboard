@@ -52,8 +52,10 @@
         </div>
 
         <metal:block define-macro="quickreply">
-          <form tal:attributes="action string:${here/absolute_url}/add_comment_form"
-            tal:condition="python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
+          <fieldset>
+            <legend i18n:translate="label_quickreply">Quick reply</legend> 
+            <form tal:attributes="action string:${here/absolute_url}/add_comment_form"
+                  tal:condition="python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
               <label i18n:translate="label_quickreply">Quick reply</label>
               <p class="formHelp" i18n:translate="help_quickreply">
                   If you want to add a reply at the end of this discussion, you
@@ -76,7 +78,8 @@
                          i18n:attributes="value post_reply"
                          type="submit" value="Post reply" />
               </div>
-          </form>
+            </form>
+          </fieldset>
         </metal:block>
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
