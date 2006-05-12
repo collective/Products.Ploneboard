@@ -60,18 +60,20 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         comment = conv.addComment('followup', 'text')
         self.failUnlessEqual(comment.created(), conv.getLastCommentDate())
 
-    def XXXtestGetThreadedComments(self):
+    def testGetRootComments(self):
         conv = self.conv
         comment = conv.objectValues()[0]
-        threaded = conv.getThreadedComments()
-        self.failUnlessEqual(len(threaded['children']), 1) # conv is root
+        threaded = conv.getRootComments()
+        self.failUnlessEqual(len(threaded), 1)
+
         comment = conv.addComment('followup', 'text')
-        threaded = conv.getThreadedComments()
-        self.failUnlessEqual(len(threaded['children']), 2)
+        threaded = conv.getRootComments()
+        self.failUnlessEqual(len(threaded), 2)
+
         reply = comment.addReply('anotherfollowup', 'moretext')
-        threaded = conv.getThreadedComments()
-        self.failUnlessEqual(len(threaded['children']), 2)
-        self.failUnlessEqual(len(threaded['children'][-1]['children']), 1)
+        threaded = conv.getRootComments()
+        self.failUnlessEqual(len(threaded), 2)
+        self.failUnlessEqual(len(comment.getReplies()), 1)
 
     def testGetFirstComment(self):
         conv = self.conv
