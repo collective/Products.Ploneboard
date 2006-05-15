@@ -14,6 +14,16 @@
 
 
 <div class="configlet">
+  
+   <h1>Ploneboard configuration: Manage transforms</h1>
+
+   <a class="link-parent" href="prefs_ploneboard_form" i18n:translate="up_to_ploneboard_prefs">
+     Return to Ploneboard settings
+   </a>
+
+    <div class="documentDescription" i18n:translate="description_ploneboard_config_transforms"> 
+    Here you can configure which transforms are active in Ploneboard posts.
+    </div>
 
     <fieldset>
         <legend i18n:translate="legend_transforms">Existing transforms</legend>

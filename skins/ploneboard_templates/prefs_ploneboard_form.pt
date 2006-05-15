@@ -1,9 +1,12 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="here/prefs_main_template/macros/master"
       i18n:domain="ploneboard">
 
 <head>
+    <metal:top fill-slot="top_slot">
+      <tal:block define="dummy python:request.set('disable_border', 1)"/>
+    </metal:top>
     <metal:css fill-slot="css_slot">
     <style type="text/css" media="all"
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
@@ -12,9 +15,13 @@
       
 <body>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="prefs_configlet_main">
 
         <h1>Ploneboard configuration</h1>
+        
+        <a class="link-parent" href="plone_control_panel" i18n:translate="up_to_site_setup">
+         Up to Site Setup
+        </a>
 
         <div class="documentDescription" i18n:translate="description_ploneboard_config"> 
         Here you can configure site settings for Ploneboard.

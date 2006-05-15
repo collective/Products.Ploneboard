@@ -45,6 +45,7 @@
                     <div metal:define-macro="comment_body_title" tal:omit-tag="">
 
                         <div class="field"
+                             id="archetypes-fieldname-title"
                              tal:define="error_title errors/title|nothing;
                                          Title request/title | nothing"
                              tal:attributes="class python:test(error_title, 'field error', 'field')"> 
@@ -53,7 +54,9 @@
 
                             <div tal:replace="error_title">Validation error output</div>
 
-                            <div class="form_help"></div>
+                            <div class="formHelp">
+                              
+                            </div>
 
                             <input type="text" 
                                    name="title"
@@ -81,6 +84,10 @@
                             <span class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
 
                             <div tal:replace="error_text">Validation Error Comment</div>
+
+                            <div class="formHelp">
+                              
+                            </div>
 
                             <tal:editor define="inputname  string:text;
                                                 formname   string:add_comment_form;
