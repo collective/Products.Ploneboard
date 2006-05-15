@@ -131,13 +131,17 @@
                             <ul class="visualNoMarker">
                                 <li tal:repeat="attachment attachments">
                                     <a tal:attributes="href attachment/absolute_url">
-                                        <span tal:define="pt attachment/portal_type"
+                                      <span tal:define="pt attachment/portal_type;
+                                                        size python:here.getObjSize(attachment)"
                                               tal:attributes="class python:'contenttype-'+normalizeString(pt)">
-                                            <span class="visualIconPadding"
-                                                  tal:content="attachment/getId">
-                                            Attachment title
-                                            </span>
+                                        <span class="visualIconPadding"
+                                              tal:content="attachment/getId">
+                                        Attachment title
                                         </span>
+                                        <span tal:condition="size" tal:omit-tag="">
+                                          (<span tal:replace="size">257 kB</span>)
+                                        </span>
+                                      </span>
                                     </a>
                                 </li>
                             </ul>
