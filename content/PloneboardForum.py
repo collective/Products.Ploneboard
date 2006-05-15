@@ -204,7 +204,7 @@ class PloneboardForum(BaseBTreeFolder):
             return cmp(ob2.getLastCommentDate(), ob1.getLastCommentDate())
 
         objects.sort(stateAndDateSort)
-        return (objects);
+        return (objects)
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):
