@@ -37,6 +37,13 @@ Ploneboard to-do list
 
     - Get kupu to load everywhere
 
+        - Set kupu as default editor sitewide?
+          Alternatively always call kupu
+
+        - portal_javascript calls kupu tool with allowAnonymous=False (default behaviour)
+          Change condition on kupu javascripts?
+          Add entries for kupu javascripts when used for board?
+
 
     Discussion tool integration
     ----------------------------

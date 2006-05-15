@@ -21,6 +21,7 @@ from Products.ZCatalog.Lazy import LazyMap
 from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.utils import _createObjectByType
+from Products.CMFPlone.interfaces.ConstrainTypes import IConstrainTypes
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, BooleanField, LinesField
@@ -67,8 +68,9 @@ MAX_UNIQUEID_ATTEMPTS = 1000
 
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    
-    implements(IForum) # XXX IBaseBTreeFolder
+
+    __implements__ = (IConstrainTypes,) + BaseBTreeFolder.__implements__
+    implements(IForum)
 
     meta_type = 'PloneboardForum'
     archetype_name = 'Forum'
@@ -241,6 +243,21 @@ class PloneboardForum(BaseBTreeFolder):
             return res[0].Creator
         else:
             return None
+
+    #
+    # IConstrainTypes support to make sure conversations and comments require add forms
+    #
+    def getConstrainTypesMode(self):
+        return 1
+
+    def getLocallyAllowedTypes(self):
+        return [fti.getId() for fti in self.getDefaultAddableTypes()]
+
+    def getImmediatelyAddableTypes(self):
+        return []
+
+    def getDefaultAddableTypes(self):
+        return self.allowedContentTypes()
 
     # Vocabulary
     security.declareProtected(ViewBoard, 'getCategories')
