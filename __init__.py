@@ -59,7 +59,7 @@ def initialize(context):
 
     if HAS_GENERICSETUP:
         profile_registry.registerProfile('Ploneboard',
-                    'PloneBoard',
+                    'Ploneboard',
                     'Extension profile for default Ploneboard setup',
                     'profiles/default',
                     'Ploneboard',

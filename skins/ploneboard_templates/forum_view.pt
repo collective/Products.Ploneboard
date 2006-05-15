@@ -97,7 +97,6 @@
                         		tal:replace="structure here/hot_icon.gif" />
                         <img src="" tal:condition="python: conversation.getNumberOfReplies() <= 1 and revstate not in ['locked', 'locked_and_sticky', 'sticky']"
                         		tal:replace="structure here/norm_icon.gif" />
-			<img src="" tal:condition="conversation/isAdmin" tal:replace="structure here/site_icon.gif" />
                     </td>
                     <td>
                         <a href=""

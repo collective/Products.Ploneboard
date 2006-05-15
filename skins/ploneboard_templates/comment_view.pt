@@ -5,10 +5,15 @@
       
 <body>
 
-    <metal:css fill-slot="css_slot">
+   <metal:javascript fill-slot="javascript_head_slot">
+     <script type="text/javascript"
+              tal:attributes="src string:${portal_url}/moderation.js">
+      </script>
+   </metal:javascript>
 
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    <metal:css fill-slot="css_slot">
+      <style type="text/css" media="all"
+             tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
     <div metal:fill-slot="main">

@@ -1,4 +1,4 @@
-PloneBoard to-do list
+Ploneboard to-do list
 =====================
 
     Code structure

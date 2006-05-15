@@ -247,6 +247,9 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
     def __nonzero__(self):
         return 1
-
+    
+    # No setting of default page - makes no sense
+    def canSetDefaultPage(self):
+        return False
 
 registerType(PloneboardConversation, PROJECTNAME)
