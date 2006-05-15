@@ -12,8 +12,8 @@ from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation, I
 # Catch errors in Install
 from Products.Ploneboard.Extensions import Install
 
+from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import _createObjectByType
-
 
 class TestSetup(PloneboardTestCase.PloneboardTestCase):
 
@@ -53,6 +53,13 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
         mt = getattr(self.portal, PLONEBOARD_CATALOG)
         self.failUnlessEqual(object_implements(mt, self.portal), object_implements(self.portal.portal_catalog, self.portal))
 
+    def testCatalogMultiplex(self):
+        from Products.Ploneboard.config import PLONEBOARD_CATALOG
+        attool = getToolByName(self.portal, 'archetype_tool')
+        for portal_type in ['Ploneboard', 'PloneboardComment', 'PloneboardConversation', 'PloneboardForum']:
+            catalogs = [x.getId() for x in attool.getCatalogsByType(portal_type)]
+            self.failUnless(PLONEBOARD_CATALOG in catalogs)
+            self.failUnless('portal_catalog' in catalogs)
 
 def test_suite():
     from unittest import TestSuite, makeSuite

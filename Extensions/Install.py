@@ -162,13 +162,6 @@ def install(self):
 
     registerNavigationTreeSettings(self, out)
 
-    # Here we exclude our types to be cataloged in portal_catalog by archetypes
-    # we need only UID_CATALOG from archetypes
-    at = getToolByName(self, TOOL_NAME)
-    for type in listTypes(PROJECTNAME):
-        if type['name'] != 'Ploneboard': # Let Ploneboard object be in portal_catalog
-            at.setCatalogsByType(type['name'], [UID_CATALOG, PLONEBOARD_CATALOG])
-
     install_subskin(self, out, GLOBALS)
 
     setupPloneboardWorkflow(self, out)

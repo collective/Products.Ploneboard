@@ -22,7 +22,6 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import RichWidget, ReferenceWidget
 from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
 
-from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
 
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum, \

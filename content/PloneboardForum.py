@@ -36,6 +36,14 @@ from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
 from PloneboardConversation import PloneboardConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation
     
+from Products.CMFPlone.interfaces.NonStructuralFolder \
+    import INonStructuralFolder as ZopeTwoINonStructuralFolder
+try:
+    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+except ImportError:
+    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
+
+    
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
               searchable = 1,
@@ -65,10 +73,11 @@ schema = BaseBTreeFolderSchema + Schema((
 
 MAX_UNIQUEID_ATTEMPTS = 1000
 
+
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    implements(IForum)
-    __implements__ = (BaseBTreeFolder.__implements__,)
+    implements(IForum, INonStructuralFolder)
+    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
     archetype_name = 'Forum'
