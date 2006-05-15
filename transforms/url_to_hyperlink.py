@@ -14,6 +14,8 @@ class URLToHyperlink:
         self.config_metadata = {
             'inputs' : ('list', 'Inputs', 'Input(s) MIME type. Change with care.'),
             }
+        self.urlRegexp = re.compile(r'((?:ftp|https?)://(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?\.)+(?:com|edu|biz|org|gov|int|info|mil|net|name|museum|coop|aero|[a-z][a-z])\b(?:\d+)?(?:\/[^;"\'<>()\[\]{}\s\x7f-\xff]*(?:[.,?]+[^;"\'<>()\[\]{}\s\x7f-\xff]+)*)?)', re.I|re.S|re.U)
+        self.emailRegexp = re.compile(r'["=]?(\b[A-Z0-9._%-]+@[A-Z0-9._%-]+\.[A-Z]{2,4}\b)', re.I|re.S|re.U)
         if name:
             self.__name__ = name
             
@@ -28,26 +30,23 @@ class URLToHyperlink:
         raise AttributeError(attr)
 
     def convert(self, orig, data, **kwargs):
-        urlchars = r'[A-Za-z0-9/:@_%~#=&\.\-\?]+'
-        url = r'["=]?((http|ftp|https):%s)' % urlchars
-        emailRegexp = r'["=]?(\b\S+@\S+\b)'
-        # These aren't tested yet
-        #emailRegexp = r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}'
-        #emailRegexp = r'^[a-z0-9]+([_|-|.][a-z0-9]+)*\@([a-z0-9]+((-*)(.*)[a-z0-9]+)*\.(com|edu|biz|org|gov|int|info|mil|net|arpa|name|museum|coop|aero|[a-z][a-z])|(\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\]))$'
+        text = orig
+        if not isinstance(text, unicode):
+            text = unicode(text, 'utf-8', 'replace')
         
-        regexp = re.compile(url, re.I|re.S)
+        # Replace hyperlinks with clickable <a> tags
         def replaceURL(match):
             url = match.groups()[0]
             return '<a href="%s">%s</a>' % (url, url)
-        text = regexp.subn(replaceURL, orig)[0]
+        text = self.urlRegexp.subn(replaceURL, text)[0]
         
-        regexp = re.compile(emailRegexp, re.I|re.S)
+        # Replace email strings with mailto: links
         def replaceEmail(match):
             url = match.groups()[0]
             return '<a href="mailto:%s">%s</a>' % (url, url)
-        text = regexp.subn(replaceEmail, text)[0]
+        text = self.emailRegexp.subn(replaceEmail, text)[0]
     
-        data.setData(text)
+        data.setData(text.encode('utf-8'))
         return data
 
 def register():
