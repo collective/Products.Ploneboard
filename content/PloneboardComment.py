@@ -242,8 +242,8 @@ class PloneboardComment(BaseBTreeFolder):
             else:
                 type_name = 'File'
                 mutator = 'setFile'
-            attachment = _createObjectByType(type_name, self, file.getId())
-            #attachment.setFile(file)
+            attachment = _createObjectByType(type_name, self, file.getId(),
+                    title=file.title)
             getattr(attachment, mutator)(file)
             if title is not None:
                 attachment.setTitle(title)
