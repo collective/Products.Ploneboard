@@ -61,6 +61,12 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
             self.failUnless(PLONEBOARD_CATALOG in catalogs)
             self.failUnless('portal_catalog' in catalogs)
 
+    def testPortalFactorySetup(self):
+        portal_factory = getToolByName(self.portal, 'portal_factory') 
+        factoryTypes = portal_factory.getFactoryTypes().keys()
+        for t in ['Ploneboard', 'PloneboardComment', 'PloneboardConversation', 'PloneboardForum']:
+            self.failUnless(t in factoryTypes)
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()

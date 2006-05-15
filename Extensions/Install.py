@@ -149,20 +149,32 @@ def removeTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
     pb_tool.unregisterAllTransforms()
 
+def registerTypesWithPortalFactory(self, out): 
+    #Can we use portal_factory for all types? The following just sets it up for PloneboardComment 
+    portal_factory = getToolByName(self, 'portal_factory') 
+    if portal_factory is not None: 
+        factoryTypes = list(portal_factory.getFactoryTypes().keys())
+        types = [t['portal_type'] for t in listTypes(PROJECTNAME)]
+        for factoryType in types:
+            if factoryType not in factoryTypes:
+                factoryTypes.append(factoryType)
+        portal_factory.manage_setPortalFactoryTypes(listOfTypeIds = factoryTypes) 
+        out.write('Added PloneboardComment to Portal Factory') 
+    else: 
+        out.write('Couldn\'t get Portal Factory, so couldn\'t add Ploneboard types to it') 
+
 def install(self):
     out = StringIO()
 
     addPloneboardTool(self, out)
-
     addPloneboardCatalog(self, out)
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
+    install_subskin(self, out, GLOBALS)
 
     registerWithPloneboardCatalog(self, out)
-
     registerNavigationTreeSettings(self, out)
-
-    install_subskin(self, out, GLOBALS)
+    registerTypesWithPortalFactory(self, out)
 
     setupPloneboardWorkflow(self, out)
     addPortalProperties(self, out)

@@ -43,6 +43,12 @@ PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
 PBConversationBaseBTreeFolderSchema['title'].write_permission = AddConversation
 
+from Products.CMFPlone.interfaces.NonStructuralFolder \
+    import INonStructuralFolder as ZopeTwoINonStructuralFolder
+try:
+    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+except ImportError:
+    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
 
 schema = PBConversationBaseBTreeFolderSchema + Schema((
     TextField('description',
@@ -66,7 +72,8 @@ MAX_UNIQUEID_ATTEMPTS = 1000
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
 
-    implements(IConversation) # XXX IBaseBTreeFolder
+    implements(IConversation, INonStructuralFolder)
+    __implements__ = (BaseBTreeFolder.__implements__, BrowserDefaultMixin.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardConversation'
     archetype_name = 'Conversation'
