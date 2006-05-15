@@ -89,8 +89,8 @@ class PloneboardComment(BaseBTreeFolder):
 
     aliases = \
         {
-              '(Default)'             : '(dynamic view)'
-            , 'view'                  : '(dynamic view)'
+            '(Default)'               : 'comment_view'
+            , 'view'                  : 'comment_view'
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'retractComment'
         }
