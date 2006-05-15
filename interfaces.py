@@ -144,7 +144,7 @@ class IConversation(Interface):
         Returns the author of the last comment for the conversation.
         """
 
-    def getrootComments():
+    def getRootComments():
         """
         Return a list all comments rooted to the board; ie comments which
         are not replies to other comments.
