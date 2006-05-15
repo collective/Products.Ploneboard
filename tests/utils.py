@@ -24,7 +24,11 @@ def caSetUp(self):
     placelesssetup.setUp()
     zcml.load_config('meta.zcml', Products.Five)
     zcml.load_config('permissions.zcml', Products.Five)
-    zcml.load_config('bridge.zcml', Products.ATContentTypes)
+    try:
+        zcml.load_config('bridge.zcml', Products.ATContentTypes)
+    except IOError:
+        # In Plone 2.5 and up, this file doesn't exist
+        pass
     zcml.load_config('configure.zcml', Products.Ploneboard)
 
 def caTearDown(self):

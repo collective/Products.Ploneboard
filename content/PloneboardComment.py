@@ -1,6 +1,8 @@
 # zope3, zope 2.8, or Five dependency
 from zope.interface import implements
 
+from Products.Five.bridge import fromZ2Interface
+
 import random
 import Globals
 from AccessControl import ClassSecurityInfo
@@ -17,7 +19,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import VisualWidget, ReferenceWidget
+from Products.Archetypes.public import RichWidget, ReferenceWidget
 from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
 
 from Products.CMFPlone.interfaces.NonStructuralFolder import INonStructuralFolder
@@ -27,6 +29,13 @@ from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,
      ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment
 
 from Products.Ploneboard.interfaces import IConversation, IComment
+
+from Products.CMFPlone.interfaces.NonStructuralFolder \
+    import INonStructuralFolder as ZopeTwoINonStructuralFolder
+try:
+    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+except ImportError:
+    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -43,7 +52,7 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
               accessor='getText',
               read_permission = ViewBoard,
               write_permission = AddComment,
-              widget = VisualWidget(description = "Enter comment body.",
+              widget = RichWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
                                       label = "Text",
                                       label_msgid = "label_text",
@@ -66,8 +75,8 @@ class PloneboardComment(BaseBTreeFolder):
     # Use RichDocument pattern for attachments
     # Don't inherit from btreefolder...
 
-    implements(IComment) # XXX IBaseBTreeFolder
-    #__implements__ = (INonStructuralFolder,) + BaseBTreeFolder.__implements__
+    implements(IComment, INonStructuralFolder)
+    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardComment'
     archetype_name = 'Comment'

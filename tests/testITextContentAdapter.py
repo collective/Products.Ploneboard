@@ -14,18 +14,18 @@ from Products.Ploneboard.content.PloneboardComment import PloneboardComment
 
 from OFS.Image import File
 from Products.CMFPlone.utils import _createObjectByType
-from Products import ATContentTypes
 
 class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):
+        utils.caSetUp(self)
+        from Products.ATContentTypes.z3.interfaces import ITextContent 
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
-        utils.caSetUp(self)
         
         self.comment = self.conv.objectValues()[0]
-        self.textContent = ATContentTypes.z3.interfaces.ITextContent(self.comment)
+        self.textContent = ITextContent(self.comment)
         
     def beforeTearDown(self):
         utils.caTearDown(self)

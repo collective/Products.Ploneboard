@@ -124,18 +124,7 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         forum2 = _createObjectByType('PloneboardForum', self.board, 'forum2')
         conv = forum2.addConversation('subject', 'body')
         self.failUnlessEqual(forum.getNumberOfComments(), 2)
-
-    def testAddableTypes(self):
-        from Products.CMFPlone.interfaces.ConstrainTypes import IConstrainTypes
-        forum = self.forum
-        self.failUnless(IConstrainTypes.isImplementedBy(forum))
-        typelist = ['PloneboardConversation']
-        self.failUnlessEqual([t.getId() for t in forum.allowedContentTypes()], typelist)
-        self.failUnlessEqual([t.getId() for t in forum.getDefaultAddableTypes()], typelist)
-        self.failUnlessEqual(forum.getLocallyAllowedTypes(), typelist)
-        self.failUnlessEqual(forum.getImmediatelyAddableTypes(), [])
-
-        
+    
 if __name__ == '__main__':
     framework()
 else:

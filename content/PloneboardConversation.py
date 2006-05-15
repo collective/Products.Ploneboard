@@ -5,6 +5,8 @@ $Id$
 # zope3, zope 2.8, or Five dependency
 from zope.interface import implements
 
+from Products.Five.bridge import fromZ2Interface
+
 from random import randint
 import Globals
 from AccessControl import ClassSecurityInfo
@@ -29,6 +31,13 @@ from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,
 from PloneboardComment import PloneboardComment
 from PloneboardIndex import PloneboardIndex
 from Products.Ploneboard.interfaces import IForum, IConversation, IComment
+
+from Products.CMFPlone.interfaces.NonStructuralFolder \
+    import INonStructuralFolder as ZopeTwoINonStructuralFolder
+try:
+    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+except ImportError:
+    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
 
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard

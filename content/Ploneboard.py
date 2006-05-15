@@ -16,7 +16,12 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, LinesWidget
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-from Products.CMFDynamicViewFTI.interfaces import ISelectableBrowserDefault
+from Products.CMFDynamicViewFTI.interfaces \
+    import ISelectableBrowserDefault as ZopeTwoISelectableBrowserDefault
+try:
+    from Products.CMFDynamicViewFTI.interface import ISelectableBrowserDefault
+except ImportError:
+    ISelectableBrowserDefault = fromZ2Interface(ZopeTwoISelectableBrowserDefault)
 
 from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
 from Products.Ploneboard import PloneboardCatalog
@@ -46,7 +51,8 @@ schema = BaseBTreeFolderSchema + Schema((
 
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
-    implements((IPloneboard, fromZ2Interface(ISelectableBrowserDefault),))
+    implements(IPloneboard)
+    __implements__ = (BrowserDefaultMixin.__implements__, BaseBTreeFolder.__implements__,)
 
     meta_type = 'Ploneboard'
     archetype_name = 'Message Board'
