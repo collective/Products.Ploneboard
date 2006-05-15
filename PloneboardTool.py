@@ -125,7 +125,10 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             if isinstance(file, FileUpload):
                 if file:
                     id = pt.normalizeString(file.filename)
-                    newfile = File(id, file.filename, file)
+                    ct=file.headers.getheader('content-type')
+                    if ct is not None:
+                        ct=''
+                    newfile = File(id, file.filename, file, ct)
                     request.SESSION[id] = newfile
                     result.append(newfile)
 
