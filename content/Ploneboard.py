@@ -45,7 +45,7 @@ schema = BaseBTreeFolderSchema + Schema((
     LinesField('categories',
                widget = LinesWidget(
                    description = "Enter the categories you want to have available for forums, one category on each line.",
-                   descriptoin_msgid = "help_categories")
+                   description_msgid = "help_categories")
               ),
     ))
 
