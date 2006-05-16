@@ -21,6 +21,9 @@
          tal:define="conversations here/getConversations;
                      pss modules/Products/PythonScripts/standard;">
 
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+          Document actions (print, sendto etc)
+        </div>
 
         <h1 class="documentFirstHeading">
         <img src="" tal:replace="structure here/ploneboard_forum_icon.gif" />

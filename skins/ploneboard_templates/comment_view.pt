@@ -18,9 +18,13 @@
 
     <div metal:fill-slot="main">
 
-        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+          Document actions (print, sendto etc)
+        </div>
 
         <h2 tal:content="here/Title">Conversation title</h2>
+
+        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
         <div class="documentdescription"
              tal:content="here/Description"> 
