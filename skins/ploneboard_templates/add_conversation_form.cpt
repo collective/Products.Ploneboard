@@ -18,7 +18,7 @@
                      tabindex python:Iterator();">
 
        <h1 class="documentFirstHeading"
-           i18n:translate="add_message">Add conversation</h1>
+           i18n:translate="add_conversation">Add conversation</h1>
    
         <form name="edit_form"
               action=""

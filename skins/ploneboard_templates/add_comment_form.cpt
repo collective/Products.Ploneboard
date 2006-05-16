@@ -178,7 +178,7 @@
                                        type="submit" 
                                        name="form.button.Post" 
                                        value="Post comment" 
-                                       i18n:attributes="value preview_posting"
+                                       i18n:attributes="value"
                                        tal:attributes="tabindex tabindex/next;" 
                                        /> 
                                 <input class="destructive"

@@ -110,7 +110,7 @@
                             <input class="standalone" 
                                    type="submit"
                                    value="Edit"
-                                   i18n:attributes="edit"
+                                   i18n:attributes="value"
                                    />
                         </form>
 
@@ -120,7 +120,7 @@
                             <input class="standalone" 
                                    type="submit"
                                    value="Delete"
-                                   i18n:attributes="delete"
+                                   i18n:attributes="value"
                                    />
                         </form>
 
