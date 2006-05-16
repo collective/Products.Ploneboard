@@ -4,6 +4,11 @@
       i18n:domain="ploneboard">
       
 <head>
+   <metal:top fill-slot="top_slot">
+      <tal:block condition="python:not user.has_permission('Ploneboard: Manage Conversation', here)">
+        <tal:border define="dummy python:request.set('disable_border', True)" />
+      </tal:block>
+   </metal:top>
    <metal:javascript fill-slot="javascript_head_slot">
      <script type="text/javascript"
               tal:attributes="src string:${portal_url}/moderation.js">

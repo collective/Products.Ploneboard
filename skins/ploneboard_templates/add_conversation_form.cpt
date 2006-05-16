@@ -4,9 +4,12 @@
       i18n:domain="ploneboard">
 
 <head>
+    <metal:top fill-slot="top_slot">
+        <tal:block define="dummy python:request.set('disable_border', True)" />
+    </metal:top>
     <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+      <style type="text/css" media="all"
+             tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 </head>
 
