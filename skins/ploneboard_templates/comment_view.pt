@@ -135,7 +135,7 @@
                                                         size python:here.getObjSize(attachment)"
                                               tal:attributes="class python:'contenttype-'+normalizeString(pt)">
                                         <span class="visualIconPadding"
-                                              tal:content="attachment/getId">
+                                              tal:content="attachment/title_or_id">
                                         Attachment title
                                         </span>
                                         <span tal:condition="size" tal:omit-tag="">

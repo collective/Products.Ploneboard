@@ -126,7 +126,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                 if file:
                     id = pt.normalizeString(file.filename)
                     ct=file.headers.getheader('content-type')
-                    if ct is not None:
+                    if ct is None:
                         ct=''
                     newfile = File(id, file.filename, file, ct)
                     request.SESSION[id] = newfile
