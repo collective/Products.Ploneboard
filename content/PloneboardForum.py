@@ -138,7 +138,7 @@ class PloneboardForum(BaseBTreeFolder):
         return None
 
     security.declareProtected(AddConversation, 'addConversation')
-    def addConversation(self, title, text=None, creator=None, files=None):
+    def addConversation(self, title, text=None, creator=None, files=None, **kwargs):
         """Adds a new conversation to the forum.
         XXX get rid of this and use regular content creation
         as this also enables us to instantiate different types
@@ -146,9 +146,9 @@ class PloneboardForum(BaseBTreeFolder):
         Alternatively use an interface that allows adapters
         """
         id = self.generateId()
-        kwargs = {'title' : title,
-                  'creators' : [creator],
-                  'text' : text}
+        kwargs.update({'title' : title,
+                       'creators' : [creator],
+                       'text' : text})
 
         conv = _createObjectByType('PloneboardConversation', self, id, **kwargs)
         conv.setCreators([creator])

@@ -6,9 +6,12 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
+from zope.interface.verify import verifyClass, verifyObject
 import PloneboardTestCase, utils
 
 from Products.CMFPlone.utils import _createObjectByType
+from Products.Ploneboard.interfaces import IConversation
+from Products.Ploneboard.content.PloneboardConversation import PloneboardConversation
 
 
 class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
@@ -17,6 +20,13 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('subject', 'body')
+
+    def testInterfaceVerification(self):
+        self.failUnless(verifyClass(IConversation, PloneboardConversation))
+
+    def testInterfaceConformance(self):
+        self.failUnless(IConversation.isImplementedBy(self.conv))
+        self.failUnless(verifyObject(IConversation, self.conv))
 
     def testGetForum(self):
         self.failUnlessEqual(self.forum, self.conv.getForum())
@@ -79,6 +89,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
         first = conv.getFirstComment()
         self.failUnless(first)
+        self.failUnlessEqual(first, conv.objectValues()[0])
         conv.addComment('followup', 'text')
         self.failUnlessEqual(first, conv.getFirstComment())
         

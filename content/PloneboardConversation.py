@@ -237,7 +237,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_limit=1, path='/'.join(self.getPhysicalPath()))
         if res:
-            return res[0].getObject().Creator()
+            return res[0].getObject()
         else:
             return None
 

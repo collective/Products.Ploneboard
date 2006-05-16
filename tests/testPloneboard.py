@@ -6,8 +6,10 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
+from zope.interface.verify import verifyClass, verifyObject
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation, IComment
+from Products.Ploneboard.content.Ploneboard import Ploneboard
 
 # Catch errors in Install
 from Products.Ploneboard.Extensions import Install
@@ -34,8 +36,12 @@ class TestPloneboardInterface(PloneboardTestCase.PloneboardTestCase):
     def afterSetUp(self):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
 
-    def testProvidesInterface(self):
+    def testInterfaceVerification(self):
+        self.failUnless(verifyClass(IPloneboard, Ploneboard))
+
+    def testInterfaceConformance(self):
         self.failUnless(IPloneboard.providedBy(self.board))
+        self.failUnless(verifyObject(IPloneboard, self.board))        
 
     def testAddForum(self):
         """Create new folder in home directory & check its basic 

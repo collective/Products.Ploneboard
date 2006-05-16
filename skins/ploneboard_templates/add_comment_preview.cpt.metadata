@@ -2,9 +2,9 @@
 title=Preview post
 
 [validators]
-validators..Preview=validate_posting
-validators..Save=validate_posting
-validators=validate_posting
+validators..Preview=validate_add_comment
+validators..Save=validate_add_comment
+validators=validate_add_comment
 validators..Cancel=
 
 [actions]

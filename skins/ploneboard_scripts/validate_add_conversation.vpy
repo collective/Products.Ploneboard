@@ -1,4 +1,4 @@
-## Controller Validator "validate_posting"
+## Controller Validator "validate_add_conversation"
 ##bind container=container
 ##bind context=context
 ##bind namespace=
@@ -10,10 +10,10 @@
 ##
 
 
-text = context.REQUEST.get('text', '');
+title = context.REQUEST.get('title', '');
 
-if len(text) <= 0:
-	state.setError("text", "No content entered", new_status="failure")
+if len(title) <= 0:
+	state.setError("title", "No title entered", new_status="failure")
 	
 if state.getErrors():
     return state.set(portal_status_message='Please correct the indicated errors.')

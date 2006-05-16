@@ -24,7 +24,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
 
     def testInterfaceVerification(self):
-        verifyClass(IComment, PloneboardComment)
+        self.failUnless(verifyClass(IComment, PloneboardComment))
     
     def testGetConversation(self):
         comment = self.conv.objectValues()[0]

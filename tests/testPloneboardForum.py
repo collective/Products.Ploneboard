@@ -6,7 +6,11 @@ import os, sys
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
+from zope.interface.verify import verifyClass, verifyObject
+
 import PloneboardTestCase, utils
+from Products.Ploneboard.interfaces import IForum
+from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 
 from Products.CMFPlone.utils import _createObjectByType
 
@@ -16,6 +20,13 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
     def afterSetUp(self):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
+
+    def testInterfaceVerification(self):
+        self.failUnless(verifyClass(IForum, PloneboardForum))
+
+    def testInterfaceConformance(self):
+        self.failUnless(IForum.providedBy(self.forum))
+        self.failUnless(verifyObject(IForum, self.forum))        
 
     def testForumFields(self):
         """
