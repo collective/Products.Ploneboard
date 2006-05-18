@@ -1,72 +1,75 @@
-# Gettext File for Ploneboard
-# Your Name <your@mail>, year
+# Translation of Ploneboard.pot to Norwegian
+# Helge Tesdal <tesdal@plonesolutions.com>, 2006
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Your Name <your@mail>\n"
-"Language-Team: Your Team <team@mail>\n"
+"Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: no\n"
+"Language-Name: Norsk\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
-
-# Example
-msgid "A line was too long."
-msgstr "" 
+"X-Is-Fallback-For: nb nb-no no-bok\n"
 
 msgid "add_comment"
-msgstr ""
+msgstr "Kommentér"
 
-msgid "not_foruns"
-msgstr ""
+msgid "not_forums"
+msgstr "Det finnes ingen fora ennå, men du kan bruke innholdsmenyen for å legge til innhold."
 
 msgid "forum_name"
-msgstr ""
+msgstr "Forumnavn"
 
 msgid "most_recent_post"
-msgstr ""
+msgstr "Siste kommentar"
 
 msgid "no_conversations_started"
-msgstr ""
+msgstr "Ingen diskusjoner er startet"
 
 msgid "label_by_author"
-msgstr "by ${author}"
+msgstr "av ${author}"
 
 msgid "go_to_parent_url"
-msgstr ""
+msgstr "Opp til ${type}"
 
 msgid "not_conversations"
-msgstr ""
+msgstr "Ingen diskusjoner i dette forumet ennå"
 
 msgid "conversation"
-msgstr ""
+msgstr "Diskusjon"
 
 msgid "replies"
-msgstr ""
+msgstr "Svar"
+
+msgid "author"
+msgstr "Startet av"
 
 msgid "most_recent"
-msgstr ""
+msgstr "Siste kommentar"
 
 msgid "not_permission_start_conversation"
-msgstr ""
+msgstr "Du har ikke rettigheter til å starte en diskusjon."
 
 msgid "log_to_start_conversation"
-msgstr ""
+msgstr "Logg inn for å starte en diskusjon"
 
 msgid "start_new_conversation"
-msgstr ""
+msgstr "Start diskusjon"
 
 msgid "preview_comment"
-msgstr ""
+msgstr "Forhåndsvis kommentar"
+
+msgid "add_comment"
+msgstr "Legg til kommentar"
 
 msgid "label_powered_by"
-msgstr ""
+msgstr "Basert på ${link}"
 
 msgid "None"
 msgstr ""
@@ -75,7 +78,7 @@ msgid "status"
 msgstr ""
 
 msgid "add_conversation"
-msgstr ""
+msgstr "Start diskusjon"
 
 msgid "label_description"
 msgstr ""
@@ -117,7 +120,7 @@ msgid "help_title_posting"
 msgstr ""
 
 msgid "label_body_text_posting"
-msgstr ""
+msgstr "Svartekst"
 
 msgid "help_body_text_posting"
 msgstr ""
@@ -128,29 +131,44 @@ msgstr ""
 msgid "preview_message"
 msgstr ""
 
-msgid "value preview_posting"
-msgstr ""
-
-msgid "value cancel_posting"
-msgstr ""
-
 msgid "Post"
-msgstr ""
+msgstr "Send"
 
 msgid "Change"
-msgstr ""
+msgstr "Endre"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
+
+msgid "Post comment"
+msgstr "Send kommentar"
 
 msgid "Reply to this"
-msgstr ""
+msgstr "Svar på"
 
 msgid "Retract"
-msgstr ""
+msgstr "Trekk tilbake"
+
+msgid "Edit"
+msgstr "Redigér"
+
+msgid "Delete"
+msgstr "Slett"
 
 msgid "posted_by"
-msgstr ""
+msgstr "Skrevet av"
 
 msgid "text_at"
-msgstr ""
+msgstr "&mdash;"
+
+msgid "number_of_conversations"
+msgstr "Diskusjoner"
+
+msgid "legend_attachments"
+msgstr "Vedlegg"
+
+msgid "label_quickreply"
+msgstr "Hurtigsvar"
+
+msgid "Post reply"
+msgstr "Send svar"
