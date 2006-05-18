@@ -344,7 +344,7 @@ def setupPloneboardForumWorkflow(wf):
     for p in (p_access, p_view, p_addconv, p_addcomm, p_addpc, p_review):
         wf.addManagedPermission(p)
 
-    wf.states.setInitialState('freeforall')
+    wf.states.setInitialState('memberposting')
 
     #******* Set up workflow states *******
     sdef = wf.states['freeforall']

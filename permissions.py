@@ -42,10 +42,10 @@ setDefaultRoles(ManageBoard,
                 ('Manager', 'Owner'))
 
 setDefaultRoles(AddConversation,
-                ('Anonymous', 'Member', 'Manager'))
+                ('Authenticated', 'Manager'))
 
 setDefaultRoles(AddComment,
-                ('Anonymous', 'Member', 'Manager'))
+                ('Authenticated', 'Manager'))
 
 setDefaultRoles(EditComment,
                 ('Manager',))
@@ -54,10 +54,10 @@ setDefaultRoles(AddAttachment,
                 ('Manager',))
 
 setDefaultRoles(ManageConversation,
-                ('Manager', 'Reviewer'))
+                ('Manager',))
 
 setDefaultRoles(ManageComment,
-                ('Manager', 'Reviewer'))
+                ('Manager',))
 
 setDefaultRoles(ApproveComment,
-                ('Manager', 'Reviewer'))
+                ('Manager',))
