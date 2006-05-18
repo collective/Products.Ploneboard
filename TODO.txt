@@ -32,6 +32,8 @@ Ploneboard to-do list
         view
     
     - Need indication in UI when threads are locked or sticky
+      HOWEVER
+      Sticky is _not_ implemented using workflow states. Alternatives include reference etc.
 
     - Implement comment moderation
 

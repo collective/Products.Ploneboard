@@ -69,7 +69,7 @@ msgid "add_comment"
 msgstr "Legg til kommentar"
 
 msgid "label_powered_by"
-msgstr "Basert på ${link}"
+msgstr "Drevet av ${link}"
 
 msgid "None"
 msgstr ""
@@ -145,6 +145,9 @@ msgstr "Send kommentar"
 
 msgid "Reply to this"
 msgstr "Svar på"
+
+msgid "Reply"
+msgstr "Svar"
 
 msgid "Retract"
 msgstr "Trekk tilbake"

@@ -36,8 +36,6 @@
              
             <metal:comment metal:define-macro="comment"
                            tal:define="creator comment/Creator;
-                                       canView  python:checkPermission('Ploneboard: View Comment', comment);
-                         	       revstate python:wtool.getInfoFor(comment, 'review_state');
                                        creation_date comment/creation_date;
                                        pss modules/Products/PythonScripts/standard">
 
@@ -45,7 +43,6 @@
                     <div class="boardCommentDetails" id=""
                          tal:attributes="id comment/getId">
                          <h3 tal:content="comment/Title">Post title</h3>
-	  		 <span style="float: right" tal:condition="python: revstate == 'initial'">This post need to be review by administrators.</span>
                     <img src="" 
                          tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                          <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
@@ -70,10 +67,9 @@
                           </tal:block>
                         </div>
                         
-                        <div class="boardCommentContent">
- 			     <span tal:replace="structure comment/getText"
-                                  tal:condition="canView">Comment text.</span>
-                             <span tal:condition="not: canView" i18n:translate="moderated_comment" style="color: #951001; font-weight: bold;"><br /><br /><br /><br />This comment has been widthdrawn.</span>
+                        <div class="boardCommentContent" 
+                             tal:content="structure comment/getText">
+                             Comment text.
                         </div>
                         
                     </div>
@@ -81,53 +77,39 @@
 
                     <div class="visualClear"></div>
 
-                    <div class="boardCommentActions" tal:define="canComment python:checkPermission('Ploneboard: Add Comment', comment) and checkPermission('Add portal content', comment);
-                                     							 canReview  python:checkPermission('Ploneboard: Approve Comment', comment)" >
-	
-		    <div tal:define="creatorz python: mtool.searchForMembers({'name':creator});"
-			 tal:repeat="creat creatorz"
-			 class="boardCommentSignature">
-			<p tal:replace="python: creat.getProperty('description', None)" />
-		    </div>
+                    <div class="boardCommentActions">
 
-                        <form class="group" onsubmit="return false;"
-                              tal:condition="canReview">
-                          <div>
-                            <tal:transition repeat="transition python:wtool.getTransitionsFor(comment, here)">
-                                <input class="standalone"
-                                       type="submit"
-                                       value="Retract"
-                                       name="#"
-                                       tabindex=""
-                                       onclick="#"
-                                       i18n:attributes="value"
-                                       tal:define="hId here/getId"
-                                       tal:attributes="onclick python:here.genCommentModerateOnClick(comment, transition);
-                                                       value transition/name;
-                                                       tabindex tabindex/next;" />
-                            </tal:transition>
-                          </div>
+                      <form tal:condition="python:checkPermission('Ploneboard: Add Comment', here)"
+                                    tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
+                            <input class="standalone"
+                                   type="submit" 
+                                   value="Reply" 
+                                   i18n:attributes="value"
+                                   />
+
                         </form>
 
-                        <form tal:condition="python: checkPermission('Ploneboard: Edit Comment', here)"
-                              tal:attributes="action string:${comment/absolute_url}/base_edit">
+                      <form tal:condition="python:isAnon and not checkPermission('Ploneboard: Add Comment', here)"
+                              tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                                            (here.portal_url(),
+                                                            pss.url_quote(request['URL']))">
 
                             <input class="standalone" 
-                                   type="submit"
+                                   type="submit" 
+                                   value="Log in to add comments"
+                                   i18n:attributes="value"
+                                   />
+                        </form>
+
+                        <form tal:condition="python: checkPermission('Ploneboard: Edit Comment', here)" 
+	                          tal:attributes="action string:${comment/absolute_url}/base_edit"> 
+                            <input class="standalone" 
+                                   type="submit" 
                                    value="Edit"
                                    i18n:attributes="value"
                                    />
                         </form>
 
-                        <form tal:condition="python: checkPermission('Ploneboard: Edit Comment', here)"
-                              tal:attributes="action string:${comment/absolute_url}/object_delete">
-
-                            <input class="standalone" 
-                                   type="submit"
-                                   value="Delete"
-                                   i18n:attributes="value"
-                                   />
-                        </form>
 
                         <fieldset tal:define="attachments comment/getAttachments"
                                   tal:condition="attachments"

@@ -72,14 +72,7 @@
                          type="submit" value="Post reply" />
               </div>
             </form>
-
-            <div style="font-weight: bold; text-align: center;"
-              tal:condition="python: not checkPermission('Ploneboard: Add Comment', here)"
-              i18n:translate="conversation_locked">
-                  This conversation is locked.
-            </div>
           </fieldset>
-
         </metal:block>
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
