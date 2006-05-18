@@ -41,6 +41,7 @@
                                        creation_date comment/creation_date;
                                        pss modules/Products/PythonScripts/standard">
 
+                    <a tal:attributes="name comment/getId"></a>
                     <div class="boardCommentDetails" id=""
                          tal:attributes="id comment/getId">
                          <h3 tal:content="comment/Title">Post title</h3>
