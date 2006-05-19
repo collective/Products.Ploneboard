@@ -92,7 +92,21 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.failUnlessEqual(first, conv.objectValues()[0])
         conv.addComment('followup', 'text')
         self.failUnlessEqual(first, conv.getFirstComment())
-        
+
+    def testModificationDate(self):
+        conv = self.conv
+        modified1 = conv.modified()
+        from time import sleep
+        sleep(0.1) # To make sure modified is different
+        conv.addComment('followup', 'text')
+        modified2 = conv.modified()
+        self.failIfEqual(modified1, modified2)
+        conv.objectValues()[0].addReply('followup', 'text')
+        sleep(0.1) # To make sure modified is different
+        modified3 = conv.modified()
+        self.failIfEqual(modified1, modified3)
+        self.failIfEqual(modified2, modified3)
+
     def XXXtest_delObject(self):
         forum = self.forum
         conv = forum.addConversation('subject', 'body')

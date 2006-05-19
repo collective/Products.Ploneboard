@@ -157,6 +157,7 @@ class PloneboardComment(BaseBTreeFolder):
                 attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                 m.addAttachment(attachment)
 
+        conv.reindexObject() # Sets modified
         return m
 
     security.declareProtected(AddComment, 'deleteReply')

@@ -159,6 +159,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                 attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                 m.addAttachment(attachment)
 
+        self.reindexObject() # Sets modified
         return m
     
     security.declareProtected(ViewBoard, 'getComment')
