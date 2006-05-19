@@ -92,12 +92,12 @@
                 
                 <tr tal:define="oddrow repeat/conversation/odd;
                                 revstate python:wtool.getInfoFor(conversation, 'review_state', None);
-                                nrcomments conversation/getNumberOfReplies"
+                                numComments conversation/getNumberOfComments"
                     tal:attributes="class python:test(oddrow, 'even', 'odd')">
                     <td>
                         <a href=""
                            tal:attributes="href conversation/absolute_url">
-                          <img src="" tal:condition="python:revstate in ['locked', 'locked_and_sticky']"
+                          <img src="" tal:condition="python:revstate == 'locked'"
                                       tal:replace="structure here/lock_icon.gif" />
                             <span tal:replace="conversation/Title">This is a title</span>
                               
@@ -111,14 +111,14 @@
                     </td>
                     
                     <td class="listingCheckbox"
-                        tal:condition="nrcomments">
-                        <span tal:content="nrcomments">
+                        tal:condition="numComments">
+                        <span tal:content="numComments">
                             12 comments
                         </span>
                     </td>
 
                     <td class="listingCheckbox"
-                        tal:condition="not: nrcomments">
+                        tal:condition="not: numComments">
                         <span i18n:translate="no_replies_yet">
                         No replies yet
                         </span>
@@ -127,13 +127,13 @@
 
                     <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
                     <td>
-                      <tal:block condition="nrcomments">
+                      <tal:block condition="numComments">
                          <a href="#" tal:attributes="href string:${conversation/absolute_url}#last">
-			  <div i18n:translate="label_by_author">
+                           <div i18n:translate="label_by_author">
                              by <tal:author i18n:name="author"
                           tal:content="conversation/getLastCommentAuthor" />
                           </div>
-			 </a>                                                                                                                       
+                        </a>                                                                                                                       
 
                         <span class="discreet" tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
                             Thursday 13:21

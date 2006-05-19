@@ -18,7 +18,7 @@
 
         <h2>
         <img src="" tal:replace="structure here/ploneboard_conversation_icon.gif" />
-        <img src="" tal:condition="python:wf_state in ['locked', 'locked_and_sticky']"
+        <img src="" tal:condition="python:wf_state == 'locked'"
                     tal:replace="structure here/lock_icon.gif" />
         <span tal:replace="here/Title">Conversation title</span>
         </h2>

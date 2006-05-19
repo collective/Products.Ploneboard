@@ -54,15 +54,17 @@
             </div>
         </div>
 
-	<a id="last"></a>
+        <a id="last"></a>
         <metal:block define-macro="quickreply">
+        <tal:check define="firstcomment here/getFirstComment"
+                   condition="python:checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
           <fieldset>
             <legend i18n:translate="label_quickreply">Quick reply</legend> 
-            <form tal:define="firstcomment here/getFirstComment"
-                  tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form"
-                  tal:condition="python:checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
+            <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form">
 
               <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" /> 
+
+              <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
 
               <input type="hidden" name="form.submitted" value="1" />
               <div class="formControls">
@@ -73,6 +75,7 @@
               </div>
             </form>
           </fieldset>
+        </tal:check>
         </metal:block>
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 

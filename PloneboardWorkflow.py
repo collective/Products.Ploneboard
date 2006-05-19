@@ -5,7 +5,7 @@ from Products.Ploneboard.config import GLOBALS
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from permissions import ViewBoard, SearchBoard, ManageBoard, AddForum, ManageForum,\
-     AddConversation, AddComment, EditComment, AddAttachment, ManageConversation,\
+     AddConversation, AddComment, EditComment, ManageConversation,\
      ManageComment, ApproveComment, RequestReview
 from Products.CMFCore.permissions import View, AccessContentsInformation, ModifyPortalContent
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
@@ -226,7 +226,7 @@ def setupPloneboardConversationWorkflow(wf):
         transitions=('make_active',))
     # This state just inherits everything from the forum workflow
     sdef.setPermission(AccessContentsInformation,  1, ())
-    sdef.setPermission(ViewBoard,    1, (r_manager, r_reviewer, r_owner)) # Should restrict...
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(AddComment, 1, (r_manager, r_owner)) # If owner is anon everyone can?
     sdef.setPermission(AddPortalContent,   1, ())
@@ -266,7 +266,7 @@ def setupPloneboardConversationWorkflow(wf):
     tdef.setProperties(
         title='Reviewer returns conversation to active',
         new_state_id='active',
-        actbox_name='Make Active',
+        actbox_name='Activate',
         #actbox_url='%(content_url)s/content_reject_form',
         props={'guard_permissions':ApproveComment})
 
@@ -468,7 +468,7 @@ def setupPloneboardWorkflow(wf):
     # As long as ViewBoard == 'View' we don't add it
     for p in (AccessContentsInformation, ModifyPortalContent, AddPortalContent,
               ViewBoard, SearchBoard, ManageBoard, ManageForum, 
-              AddConversation, AddComment, EditComment, AddAttachment, 
+              AddConversation, AddComment, EditComment, 
               ManageConversation, ManageComment, ApproveComment):
         wf.addManagedPermission(p)
 
@@ -486,13 +486,14 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(SearchBoard,                0, (r_manager, r_owner))
     sdef.setPermission(ManageBoard,                0, (r_manager, r_owner))
     sdef.setPermission(ManageForum,                0, (r_manager, r_owner))
+    
     sdef.setPermission(AddConversation,            0, (r_manager, r_owner))
     sdef.setPermission(AddComment,                 0, (r_manager, r_owner))
     sdef.setPermission(EditComment,                0, (r_manager, r_owner))
-    sdef.setPermission(AddAttachment,              0, (r_manager, r_owner))
-    sdef.setPermission(ManageConversation,         0, (r_manager, r_owner))
+    
+    sdef.setPermission(ManageConversation,         0, (r_manager,))
     sdef.setPermission(ManageComment,              0, (r_manager, r_owner))
-    sdef.setPermission(ApproveComment,             0, (r_manager, r_owner))
+    sdef.setPermission(ApproveComment,             0, (r_manager, r_reviewer))
 
     sdef = wf.states['published']
     sdef.setProperties(
@@ -505,13 +506,14 @@ def setupPloneboardWorkflow(wf):
     sdef.setPermission(SearchBoard,                1, (r_anon, r_manager))
     sdef.setPermission(ManageBoard,                0, (r_manager, r_owner))
     sdef.setPermission(ManageForum,                0, (r_manager, r_owner))
+    
     sdef.setPermission(AddConversation,            0, (r_manager, r_owner))
     sdef.setPermission(AddComment,                 0, (r_manager, r_owner))
     sdef.setPermission(EditComment,                0, (r_manager, r_owner))
-    sdef.setPermission(AddAttachment,              0, (r_manager, r_owner))
-    sdef.setPermission(ManageConversation,         0, (r_manager, r_owner))
+    
+    sdef.setPermission(ManageConversation,         0, (r_manager,))
     sdef.setPermission(ManageComment,              0, (r_manager, r_owner))
-    sdef.setPermission(ApproveComment,             0, (r_manager, r_owner))
+    sdef.setPermission(ApproveComment,             0, (r_manager, r_reviewer))
 
     # ***** Set up transitions *****
     tdef = wf.transitions['open']

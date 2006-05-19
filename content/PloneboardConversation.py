@@ -118,6 +118,11 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         self.update(**kwargs)
 
+    security.declareProtected(ViewBoard, 'getTitle')
+    def getTitle(self):
+        """Get the title of this conversation"""
+        return self.Title()
+
     security.declareProtected(ViewBoard, 'getForum')
     def getForum(self):
         """Returns containing forum."""
@@ -132,7 +137,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ManageConversation, 'removeComment')
     def removeComment( self, comment):
         self.manage_delObjects([comment.getId()])
-# TODO: reparent replies to this comment ?
+        # TODO: reparent replies to this comment ?
 
     security.declareProtected(AddComment, 'addComment')
     def addComment( self, title, text, creator=None, files=None):
@@ -172,12 +177,13 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
+        query = {'object_implements' : 'IComment',
+                 'sort_on'           : 'created',
+                 'sort_limit'        : (offset+limit),
+                 'path'              : '/'.join(self.getPhysicalPath()),}
+        query.update(kw)
         catalog=getToolByName(self, PLONEBOARD_CATALOG)
-        return [f.getObject() for f in \
-                catalog(object_implements='IComment',
-                        sort_on='created',
-                        sort_limit=(offset+limit),
-                        path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+        return [f.getObject() for f in catalog(**query)[offset:offset+limit]]
         
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
@@ -185,14 +191,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Returns the number of comments in this conversation.
         """
         return len(getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', path='/'.join(self.getPhysicalPath())))
-
-    security.declareProtected(ViewBoard, 'getNumberOfReplies')
-    def getNumberOfReplies(self):
-        """
-        Returns the number of replies for this conversation.
-        # XXX Interface method?
-        """
-        return self.getNumberOfComments()
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):

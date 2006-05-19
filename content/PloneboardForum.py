@@ -170,7 +170,10 @@ class PloneboardForum(BaseBTreeFolder):
     def getConversation(self, conversation_id, default=None):
         """Returns the conversation with the given conversation id."""
         #return self._getOb(conversation_id, default)
-        conversations = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', getId=conversation_id, path='/'.join(self.getPhysicalPath()))
+        catalog = getToolByName(self, PLONEBOARD_CATALOG)
+        conversations = catalog(object_implements='IConversation', 
+                                getId=conversation_id, 
+                                path='/'.join(self.getPhysicalPath()))
         if conversations:
             return conversations[0].getObject()
         else:
@@ -184,7 +187,13 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getConversations')
     def getConversations(self, limit=20, offset=0):
         """Returns conversations."""
-        return [f.getObject() for f in getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', sort_on='modified', sort_order='reverse', sort_limit=(offset+limit), path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+        catalog = getToolByName(self, PLONEBOARD_CATALOG)
+        return [f.getObject() for f in \
+                catalog(object_implements='IConversation', 
+                        sort_on='modified', 
+                        sort_order='reverse', 
+                        sort_limit=(offset+limit), 
+                        path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):

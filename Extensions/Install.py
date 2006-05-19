@@ -31,6 +31,8 @@ from Products.Ploneboard.config import PLONEBOARD_TOOL, PLONEBOARD_CATALOG, PROJ
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, URL_TRANSFORM_MODULE
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
+from Products.Ploneboard.permissions import AddAttachment
+
 from StringIO import StringIO
 
 
@@ -163,6 +165,10 @@ def registerTypesWithPortalFactory(self, out):
     else: 
         out.write('Couldn\'t get Portal Factory, so couldn\'t add Ploneboard types to it') 
 
+def setupRootPermissions(self, out):
+    root = getToolByName(self, 'portal_url').getPortalObject()
+    root.manage_permission(AddAttachment, ('Member', 'Manager',), 0)
+
 def install(self):
     out = StringIO()
 
@@ -182,6 +188,8 @@ def install(self):
     addMemberProperties(self, out)
 
     addTransforms(self, out)
+    
+    setupRootPermissions(self, out)
 
     print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
