@@ -88,7 +88,9 @@
                             
                                     <div i18n:translate="label_by_author">
                                         by <tal:author i18n:name="author"
-                                        tal:content="forum/getLastCommentAuthor" />
+                                                define="creator forum/getLastCommentAuthor;
+                                                        creatorinfo python: mtool.getMemberInfo(creator);"
+                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                                    </div>
                                                                                                                               
 

@@ -104,7 +104,9 @@
 
                             <div class="discreet" i18n:translate="label_by_author">
                                    by <tal:author i18n:name="author"
-                                  tal:content="conversation/Creator" />
+                                           define="creator conversation/Creator;
+                                                   creatorinfo python: mtool.getMemberInfo(creator);"
+                                           content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                             </div>
                             
                         </a>
@@ -131,7 +133,9 @@
                          <a href="#" tal:attributes="href string:${conversation/absolute_url}#last">
                            <div i18n:translate="label_by_author">
                              by <tal:author i18n:name="author"
-                          tal:content="conversation/getLastCommentAuthor" />
+                                     define="creator conversation/getLastCommentAuthor;
+                                             creatorinfo python: mtool.getMemberInfo(creator);"
+                                     content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                           </div>
                         </a>                                                                                                                       
 

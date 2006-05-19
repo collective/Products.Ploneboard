@@ -9,21 +9,16 @@ from permissions import ViewBoard, SearchBoard, ManageBoard, AddForum, ManageFor
      ManageComment, ApproveComment, RequestReview
 from Products.CMFCore.permissions import View, AccessContentsInformation, ModifyPortalContent
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
-from Products.PythonScripts.PythonScript import manage_addPythonScript
 from Products.CMFCore.permissions import AddPortalContent
+from Products.ExternalMethod.ExternalMethod import ExternalMethod
 
-# path_prefix is used for finding workflow scripts
-path_prefix = os.path.join( package_home(GLOBALS)
-                          , 'workflow_scripts')
-# Default is to add all scripts for all workflows
-# Override by defining script_ids as a tuple for each workflow
-script_ids = [x[:-3] for x in filter(lambda y: y.endswith('.py'), os.listdir(path_prefix))]
 
 r_anon = 'Anonymous'
 r_manager = 'Manager'
 r_reviewer = 'Reviewer'
 r_owner = 'Owner'
 r_member = 'Member'
+
 
 def setupPloneboardCommentWorkflow(wf):
     """ Sets up a workflow for Ploneboard Comments """
@@ -35,10 +30,6 @@ def setupPloneboardCommentWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for script_id in script_ids:
-        manage_addPythonScript(wf.scripts, script_id)
-        scr = getattr(wf.scripts, script_id)
-        scr.write(open(os.path.join(path_prefix, '%s.py' % script_id)).read())
     for p in (AccessContentsInformation, ViewBoard, EditComment, AddComment, AddPortalContent):
         wf.addManagedPermission(p)
 
@@ -137,8 +128,6 @@ def setupPloneboardCommentWorkflow(wf):
     tdef.setProperties(
         title='Member requests publishing',
         new_state_id='pending',
-        # The submit_script is added to scripts folder by the Install script
-        after_script_name='submit_script',
         actbox_name='Submit',
         actbox_url='%(content_url)s/content_submit_form',
         props={'guard_permissions':RequestReview})
@@ -148,8 +137,6 @@ def setupPloneboardCommentWorkflow(wf):
         title='Automatic publishing request',
         new_state_id='pending',
         trigger_type=TRIGGER_AUTOMATIC,
-        # The submit_script is added to scripts folder by the Install script
-        after_script_name='submit_script',
         actbox_name='Submit',
         actbox_url='%(content_url)s/content_submit_form',
         props={'guard_permissions':RequestReview})
@@ -191,6 +178,19 @@ def setupPloneboardCommentWorkflow(wf):
     vdef.setProperties(description='Time of the last transition',
                        default_expr="state_change/getDateTime",
                        for_status=1, update_always=1)
+
+    # Script Initialization
+    wf.scripts._setObject('autopublish_script',
+                          ExternalMethod('autopublish_script', 'autopublish_script',
+                                         'Ploneboard.WorkflowScripts', 'autopublish_script'))
+    
+    wf.scripts._setObject('publish_script',
+                          ExternalMethod('publish_script', 'publish_script',
+                                         'Ploneboard.WorkflowScripts', 'publish_script'))
+    
+    wf.scripts._setObject('reject_script',
+                          ExternalMethod('reject_script', 'reject_script',
+                                         'Ploneboard.WorkflowScripts', 'reject_script'))
 
 
 def createPloneboardCommentWorkflow(id):
@@ -322,10 +322,6 @@ def setupPloneboardForumWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for script_id in script_ids:
-        manage_addPythonScript(wf.scripts, script_id)
-        scr = getattr(wf.scripts, script_id)
-        scr.write(open(os.path.join(path_prefix, '%s.py' % script_id)).read())
     for p in (AccessContentsInformation, ViewBoard, AddConversation, AddComment, AddPortalContent, ApproveComment):
         wf.addManagedPermission(p)
 

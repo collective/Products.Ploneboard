@@ -36,6 +36,7 @@
              
             <metal:comment metal:define-macro="comment"
                            tal:define="creator comment/Creator;
+                                       creatorinfo python: mtool.getMemberInfo(creator);
                                        creation_date comment/creation_date;
                                        pss modules/Products/PythonScripts/standard">
 
@@ -46,7 +47,7 @@
                     <img src="" 
                          tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                          <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
-                         <span tal:replace="creator">author</span> 
+                         <span tal:replace="python:creatorinfo and creatorinfo['fullname'] or creator">author</span> 
                          <span i18n:translate="text_at" tal:omit-tag="">at</span>
                          <span tal:replace="python:here.toPloneboardTime(creation_date)"
                                >Thursday 13:21</span>
@@ -63,7 +64,7 @@
                                      width="75" 
                                      height="100" 
                                      tal:attributes="src portrait/absolute_url" />
-                                <div tal:content="comment/Creator">member id</div>
+                                <div tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">member id</div>
                           </tal:block>
                         </div>
                         
