@@ -18,7 +18,7 @@
 <body>
 
     <div metal:fill-slot="main"
-         tal:define="conversations here/getConversations;
+         tal:define="numConversations here/getNumberOfConversations;
                      pss modules/Products/PythonScripts/standard;">
 
         <div metal:use-macro="here/document_actions/macros/document_actions">
@@ -39,7 +39,7 @@
         
         <p class="discreet"
              i18n:translate="not_conversations"
-             tal:condition="not: conversations">
+             tal:condition="python:numConversations == 0">
         No conversations in this forum yet.     
         </p>
 
@@ -76,80 +76,90 @@
         </tal:choice>
         </tal:block>
 
-        <table class="listing"
-               tal:condition="conversations">
+        <tal:haveConversations condition="python:numConversations > 0">
+          <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
+                                     b_size python:20;b_start python:0;b_start request/b_start | b_start;
+                                     batch python:Batch(here.getConversations, numConversations, b_size, int(b_start), orphan=1);">
 
-            <thead>
-                <tr>
-                     <th i18n:translate="conversation">Conversation</th>
-                     <th i18n:translate="replies">Replies</th>
-                     <th i18n:translate="most_recent">Most Recent Comment</th>
-                 </tr>
-            </thead>
+            <table class="listing">
+
+                <thead>
+                    <tr>
+                         <th i18n:translate="conversation">Conversation</th>
+                         <th i18n:translate="replies">Replies</th>
+                         <th i18n:translate="most_recent">Most Recent Comment</th>
+                     </tr>
+                </thead>
         
-            <tbody>
-                <tal:showconversations tal:repeat="conversation conversations">
+                <tbody>
+                    <tal:showconversations tal:repeat="conversation batch">
                 
-                <tr tal:define="oddrow repeat/conversation/odd;
-                                revstate python:wtool.getInfoFor(conversation, 'review_state', None);
-                                numComments conversation/getNumberOfComments"
-                    tal:attributes="class python:test(oddrow, 'even', 'odd')">
-                    <td>
-                        <a href=""
-                           tal:attributes="href conversation/absolute_url">
-                          <img src="" tal:condition="python:revstate == 'locked'"
-                                      tal:replace="structure here/lock_icon.gif" />
-                            <span tal:replace="conversation/Title">This is a title</span>
+                    <tr tal:define="oddrow repeat/conversation/odd;
+                                    revstate python:wtool.getInfoFor(conversation, 'review_state', None);
+                                    numComments conversation/getNumberOfComments"
+                        tal:attributes="class python:test(oddrow, 'even', 'odd')">
+                        <td>
+                            <a href=""
+                               tal:attributes="href conversation/absolute_url">
+                              <img src="" tal:condition="python:revstate == 'locked'"
+                                          tal:replace="structure here/lock_icon.gif" />
+                                <span tal:replace="conversation/Title">This is a title</span>
                               
 
-                            <div class="discreet" i18n:translate="label_by_author">
-                                   by <tal:author i18n:name="author"
-                                           define="creator conversation/Creator;
-                                                   creatorinfo python: mtool.getMemberInfo(creator);"
-                                           content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                            </div>
+                                <div class="discreet" i18n:translate="label_by_author">
+                                       by <tal:author i18n:name="author"
+                                               define="creator conversation/Creator;
+                                                       creatorinfo python: mtool.getMemberInfo(creator);"
+                                               content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                                </div>
                             
-                        </a>
-                    </td>
+                            </a>
+                        </td>
                     
-                    <td class="listingCheckbox"
-                        tal:condition="numComments">
-                        <span tal:content="numComments">
-                            12 comments
-                        </span>
-                    </td>
+                        <td class="listingCheckbox"
+                            tal:condition="numComments">
+                            <span tal:content="numComments">
+                                12 comments
+                            </span>
+                        </td>
 
-                    <td class="listingCheckbox"
-                        tal:condition="not: numComments">
-                        <span i18n:translate="no_replies_yet">
-                        No replies yet
-                        </span>
+                        <td class="listingCheckbox"
+                            tal:condition="not: numComments">
+                            <span i18n:translate="no_replies_yet">
+                            No replies yet
+                            </span>
 
-                    </td>
+                        </td>
 
-                    <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                    <td>
-                      <tal:block condition="numComments">
-                         <a href="#" tal:attributes="href string:${conversation/absolute_url}#last">
-                           <div i18n:translate="label_by_author">
-                             by <tal:author i18n:name="author"
-                                     define="creator conversation/getLastCommentAuthor;
-                                             creatorinfo python: mtool.getMemberInfo(creator);"
-                                     content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                          </div>
-                        </a>                                                                                                                       
+                        <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                        <td>
+                          <tal:block condition="numComments">
+                             <a href="#" tal:attributes="href string:${conversation/absolute_url}#last">
+                               <div i18n:translate="label_by_author">
+                                 by <tal:author i18n:name="author"
+                                         define="creator conversation/getLastCommentAuthor;
+                                                 creatorinfo python: mtool.getMemberInfo(creator);"
+                                         content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                              </div>
+                            </a>                                                                                                                       
 
-                        <span class="discreet" tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
-                            Thursday 13:21
-                        </span>
-                      </tal:block>
-                    </td>
+                            <span class="discreet" tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                                Thursday 13:21
+                            </span>
+                          </tal:block>
+                        </td>
     
-                </tr>
+                    </tr>
                 
-                </tal:showconversations>
-            </tbody>
-        </table>
+                    </tal:showconversations>
+                </tbody>
+            </table>
+            
+            <!-- Navigation -->
+            <div metal:use-macro="here/batch_macros/macros/navigation" />
+            
+          </tal:conversations>
+        </tal:haveConversations>
 
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 

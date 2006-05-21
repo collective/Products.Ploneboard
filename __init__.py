@@ -25,6 +25,8 @@ import PloneboardWorkflow
 
 registerDirectory(SKINS_DIR, GLOBALS)
 
+this_module = sys.modules[ __name__ ]
+
 def initialize(context):
     ##Import Types here to register them
     from content import Ploneboard, PloneboardForum, PloneboardConversation, PloneboardComment
@@ -65,7 +67,11 @@ def initialize(context):
                     'Ploneboard',
                     EXTENSION,
                     for_=IPloneSiteRoot)
-
+              
+    from AccessControl import allow_module, allow_class      
+    from batch import Batch
+    allow_class(Batch)
+    this_module.Batch = Batch
 
 # Avoid breaking old Ploneboard instances when moving content types modules
 # from Ploneboard/types/ to Ploneboard/content/
