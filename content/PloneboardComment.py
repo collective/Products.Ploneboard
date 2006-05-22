@@ -256,6 +256,8 @@ class PloneboardComment(BaseBTreeFolder):
             getattr(attachment, mutator)(file)
             if title is not None:
                 attachment.setTitle(title)
+            attachment.unmarkCreationFlag()
+            attachment.at_post_create_script()
 
     security.declareProtected(AddAttachment, 'removeAttachment')
     def removeAttachment(self, id):
