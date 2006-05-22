@@ -85,6 +85,24 @@ class TestWorkflowsCreation(PloneboardTestCase.PloneboardTestCase):
         for workflow in workflows:
             self.failUnless(workflow in self.workflow.objectIds(), "%s missing" % workflow)
 
+    def testPreserveChainsOnReinstall(self):
+        boardtypes = ('Ploneboard',
+                      'PloneboardForum',
+                      'PloneboardConversation',
+                      'PloneboardComment')
+
+        self.workflow.setChainForPortalTypes( boardtypes, 'plone_workflow')
+        self.workflow.getChainForPortalType('Ploneboard')
+        for boardtype in boardtypes:
+            self.failUnless('plone_workflow' in self.workflow.getChainForPortalType(boardtype),
+                            'Workflow chain for %s not set' % boardtype)
+
+        self.portal.portal_quickinstaller.reinstallProducts(['Ploneboard'])
+        for boardtype in boardtypes:
+            chain = self.workflow.getChainForPortalType(boardtype)
+            self.failUnless('plone_workflow' in chain,
+                            'Overwritten workflow chain for %s: %s' % (boardtype, ', '.join(chain)))
+
     def testPermissionsOnPortal(self):
         p=Permission('Ploneboard: Add Comment Attachment', (), self.portal)
         roles=p.getRoles()

@@ -13,6 +13,9 @@ Ploneboard to-do list
     Workflows and Security
     ----------------------
 
+    - Unit tests for security and workflows!!!!!!1111
+      Without tests, changes are mostly worthless.
+
     - Add more security declarations, use the board permissions everywhere.
 
     - Various permission bugs (possibly fixed, need testing):

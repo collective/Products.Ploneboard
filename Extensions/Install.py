@@ -85,13 +85,17 @@ def registerWithPloneboardCatalog(self, out):
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
+    default_chain = wf_tool._default_chain
+    cbt = wf_tool._chains_by_type
+
     if 'ploneboard_comment_workflow' in wf_tool.objectIds():
         out.write('Removing existing Comment Workflow\n')
         wf_tool._delObject('ploneboard_comment_workflow')
     wf_tool.manage_addWorkflow( id='ploneboard_comment_workflow'
                               , workflow_type='ploneboard_comment_workflow '+\
                                 '(Comment Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('PloneboardComment',), 'ploneboard_comment_workflow')
+    if not cbt.has_key('PloneboardComment'):
+        wf_tool.setChainForPortalTypes( ('PloneboardComment',), 'ploneboard_comment_workflow')
     out.write('Added Comment Workflow\n')
 
     if 'ploneboard_conversation_workflow' in wf_tool.objectIds():
@@ -100,7 +104,8 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_conversation_workflow'
                               , workflow_type='ploneboard_conversation_workflow '+\
                                 '(Conversation Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('PloneboardConversation',), 'ploneboard_conversation_workflow')
+    if not cbt.has_key('PloneboardConversation'):
+        wf_tool.setChainForPortalTypes( ('PloneboardConversation',), 'ploneboard_conversation_workflow')
     out.write('Added Conversation Workflow\n')
 
     if 'ploneboard_forum_workflow' in wf_tool.objectIds():
@@ -109,7 +114,8 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_forum_workflow'
                               , workflow_type='ploneboard_forum_workflow '+\
                                 '(Forum Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('PloneboardForum',), 'ploneboard_forum_workflow')
+    if not cbt.has_key('PloneboardForum'):
+        wf_tool.setChainForPortalTypes( ('PloneboardForum',), 'ploneboard_forum_workflow')
     out.write('Added Forum Workflow\n')
 
     if 'ploneboard_workflow' in wf_tool.objectIds():
@@ -118,7 +124,8 @@ def setupPloneboardWorkflow(self, out):
     wf_tool.manage_addWorkflow( id='ploneboard_workflow'
                               , workflow_type='ploneboard_workflow '+\
                                 '(Ploneboard Workflow [Ploneboard])')
-    wf_tool.setChainForPortalTypes( ('Ploneboard',), 'ploneboard_workflow')
+    if not cbt.has_key('Ploneboard'):
+        wf_tool.setChainForPortalTypes( ('Ploneboard',), 'ploneboard_workflow')
     out.write('Added Ploneboard Workflow\n')
 
 def addPortalProperties(self, out):
