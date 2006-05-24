@@ -15,6 +15,7 @@
 
 .listing {
     font-size: 100%;
+    width: 100%;
 }
 
 .listing th {
