@@ -18,13 +18,14 @@
     <div metal:fill-slot="main" 
          tal:define="errors options/state/getErrors;
                      Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+                     tabindex python:Iterator();
+                     view context/@@singlecomment_view;">
 
         <h2 i18n:translate="add_comment">Add comment</h2>
 
         <div class="documentDescription"></div>
 
-        <tal:defines define="comment nocall:here"
+        <tal:defines define="comment view/comment"
          metal:define-macro="view_comments">
              
         <div class="boardConversation">

@@ -16,7 +16,8 @@
              tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main"
+         tal:define="view context/@@singlecomment_view">
 
         <div metal:use-macro="here/document_actions/macros/document_actions">
           Document actions (print, sendto etc)
@@ -32,7 +33,7 @@
         </div>
 
         <div class="boardComment visualIEFloatFix"
-             tal:define="comment python:context">
+             tal:define="comment python:view/comment">
              
             <metal:comment metal:define-macro="comment"
                            tal:define="creator comment/Creator;

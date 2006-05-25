@@ -17,8 +17,20 @@
       permission="zope2.Public"
       />
       
+  <browser:page
+      for=".interfaces.IComment"
+      class=".browser.CommentView"
+      name="singlecomment_view"
+      allowed_interface=".browser.ICommentView"
+      permission="zope2.Public"
+      />
+
   <five:traversable
       class=".content.PloneboardConversation.PloneboardConversation"
       />
       
+  <five:traversable
+      class=".content.PloneboardConversation.PloneboardComment"
+      />
+
 </configure>
