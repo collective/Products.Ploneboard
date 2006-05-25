@@ -9,4 +9,16 @@
       factory=".adapters.CommentTextContent"
       />
 
+  <browser:page
+      for=".interfaces.IConversation"
+      class=".browser.ConversationView"
+      name="comments_view"
+      allowed_interface=".browser.IConversationView"
+      permission="zope2.Public"
+      />
+      
+  <five:traversable
+      class=".content.PloneboardConversation.PloneboardConversation"
+      />
+      
 </configure>

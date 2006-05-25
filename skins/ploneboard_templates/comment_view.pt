@@ -102,7 +102,7 @@
                                    />
                         </form>
 
-                        <form tal:condition="python: checkPermission('Ploneboard: Edit Comment', here)" 
+                        <form tal:condition="comment/canEdit" 
 	                          tal:attributes="action string:${comment/absolute_url}/base_edit"> 
                             <input class="standalone" 
                                    type="submit" 

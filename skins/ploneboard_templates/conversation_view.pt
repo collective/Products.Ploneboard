@@ -1,5 +1,6 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
@@ -25,7 +26,8 @@
 
 <body>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main"
+         tal:define="view context/@@comments_view">
 
         <div metal:use-macro="here/document_actions/macros/document_actions">
           Document actions (print, sendto etc)
@@ -45,7 +47,7 @@
 
         <div class="boardConversation"
              metal:define-macro="view_comments"
-             tal:define="comments here/getComments">
+             tal:define="comments view/comments">
 
             <div class="boardComment visualIEFloatFix" tal:repeat="comment comments">
 

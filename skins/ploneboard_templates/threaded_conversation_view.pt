@@ -1,5 +1,6 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
@@ -12,7 +13,8 @@
 
 <body>
 
-   <div metal:fill-slot="main">
+   <div metal:fill-slot="main"
+        tal:define="view context/@@comments_view">
 
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
@@ -30,7 +32,7 @@
 
         <div class="boardConversation"
              metal:define-macro="view_comments"
-             tal:define="comments here/getRootComments;
+             tal:define="comments view/comments;
                          children comments">
 
             <ul>
@@ -40,11 +42,11 @@
 
                         <metal:comment metal:use-macro="here/comment_view/macros/comment" />
 
-                        <tal:children define="children comment/getReplies|nothing"
+                        <tal:children define="children python:view.children(comment)"
                                       condition="children">
 
                           <ul>
-                              <div metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
+                              <li metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
                           </ul>
                         </tal:children>
                     </li>
