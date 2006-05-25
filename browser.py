@@ -1,5 +1,6 @@
 from Products import Five
 from zope import interface
+from Products.CMFCore import utils as cmf_utils
 
 class IConversationView(interface.Interface):
     def comments():
@@ -19,6 +20,11 @@ class ConversationView(Five.BrowserView):
     """
     
     interface.implements(IConversationView)
+
+    def __init__(self, context, request):
+        Five.BrowserView.__init__(self, context, request)
+
+        self.portal_membership = cmf_utils.getToolByName(self.context, 'portal_membership')
     
     def comments(self):
         for ob in self.context.getComments():
@@ -36,7 +42,8 @@ class ConversationView(Five.BrowserView):
             yield self._buildDict(ob)       
 
     def _buildDict(self, comment):
-        canEdit = True
+        checkPermission = self.context.portal_membership.checkPermission
+        canEdit = checkPermission('Ploneboard: Edit Comment', self.context)
         
         return {
                 'Title': comment.title_or_id(),
