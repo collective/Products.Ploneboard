@@ -31,7 +31,34 @@ def caSetUp(self):
         pass
     zcml.load_config('configure.zcml', Products.Ploneboard)
 
+    # in some circumstances tests get run in a strange order which
+    # messes up Five's traversal logic
+
+    zcml.load_string('''<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:five="http://namespaces.zope.org/five">
+  <!-- basic collection of directives needed for proper traversal and request handling -->
+  <include package="zope.app.traversing" />
+  <adapter
+      for="*"
+      factory="Products.Five.traversable.FiveTraversable"
+      provides="zope.app.traversing.interfaces.ITraversable"
+      />
+  <adapter
+      for="*"
+      factory="zope.app.traversing.adapters.Traverser"
+      provides="zope.app.traversing.interfaces.ITraverser"
+      />
+  <five:implements class="ZPublisher.HTTPRequest.HTTPRequest"
+                   interface="zope.publisher.interfaces.browser.IBrowserRequest"
+                   />
+
+</configure>''')
+
 def caTearDown(self):
     """Tear down component architecture"""
 
-    placelesssetup.tearDown()
+    # tests based on PloneTestCase incorrectly setup Five which means
+    # proper cleanup can never take place ... so coomenting out the
+    # placelesssetup.tearDown() call - Rocky
+    
+    #placelesssetup.tearDown()
