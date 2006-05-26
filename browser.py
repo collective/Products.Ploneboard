@@ -4,6 +4,10 @@ from Products.Ploneboard import permissions
 from zope import interface
 
 class CommentViewableView(Five.BrowserView):
+    """Any view that might want to interact with comments should inherit
+    from this base class.
+    """
+    
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
 
@@ -11,6 +15,11 @@ class CommentViewableView(Five.BrowserView):
                                                          'portal_membership')
 
     def _buildDict(self, comment):
+        """Produce a dict representative of all the important properties
+        of a comment.
+        """
+        
+        checkPermission = self.context.portal_membership.checkPermission
         return {
                 'Title': comment.title_or_id(),
                 'Creator': comment.Creator(),
@@ -19,22 +28,9 @@ class CommentViewableView(Five.BrowserView):
                 'getText': comment.getText(),
                 'absolute_url': comment.absolute_url(),
                 'getAttachments': comment.getAttachments(),
-                'canEdit': self._canEdit(comment),
+                'canEdit': checkPermission(permissions.EditComment, comment),
                 'getObject': comment,
             }
-
-    def _canEdit(self, comment):
-        checkPermission = self.context.portal_membership.checkPermission
-        canEdit = checkPermission(permissions.EditComment, self.context)
-        if not canEdit:
-            return False
-        
-        for reply in comment.getReplies():
-            reply_canEdit = self._canEdit(reply)
-            if not reply_canEdit:
-                return False
-
-        return True
 
 class ICommentView(interface.Interface):
     def comment():
