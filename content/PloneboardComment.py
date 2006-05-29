@@ -325,7 +325,15 @@ class PloneboardComment(BaseBTreeFolder):
         return 1
     
     def __str__(self):
-        return "<PloneboardComment: title=%s;>" % self.Title()
+        return "<PloneboardComment: title=%r;>" % self.Title()
     __repr__  = __str__
+
+    
+    security.declareProtected(DeleteComment, "object_delete")
+    def object_delete(self):
+        """Delete the comment the 'proper' way.
+        """
+        
+        return self.restrictedTraverse('@@delete_view')()
 
 registerType(PloneboardComment, PROJECTNAME)
