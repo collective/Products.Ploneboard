@@ -43,7 +43,7 @@ def setupPloneboardCommentWorkflow(wf):
     # Inherit from forum
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    1, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(EditComment,  1, (r_manager, r_reviewer))
+    sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(AddComment, 1, (r_manager,))
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
 
@@ -54,7 +54,7 @@ def setupPloneboardCommentWorkflow(wf):
     # Nobody can reply when a comment is pending in case the comment is 'rejected'
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(EditComment,  1, (r_manager, r_reviewer))
+    sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
     # Acquire AddComment so that comment.notifyRetracted can be called. (It is protected
     # by AddComment.)
     sdef.setPermission(AddComment, 1, ())
@@ -68,7 +68,7 @@ def setupPloneboardCommentWorkflow(wf):
     # Inherit from forum, enables private forums
     sdef.setPermission(AccessContentsInformation,  1, (r_manager,))
     sdef.setPermission(ViewBoard,    1, (r_manager,))
-    sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(EditComment,  0, (r_manager, r_owner))
     sdef.setPermission(AddComment, 1, (r_manager,))
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
 
@@ -89,7 +89,7 @@ def setupPloneboardCommentWorkflow(wf):
     # Inherit from forum, enables private forums
     sdef.setPermission(AccessContentsInformation,  1, (r_manager,))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer))
-    sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(EditComment,  0, (r_manager, r_owner))
     sdef.setPermission(AddComment, 0, (r_manager,))
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
 
