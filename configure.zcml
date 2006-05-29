@@ -25,6 +25,13 @@
       permission="zope2.Public"
       />
 
+  <browser:page
+      for=".interfaces.IComment"
+      class=".browser.DeleteCommentView"
+      name="delete_view"
+      permission="zope2.Public"
+      />
+
   <five:traversable
       class=".content.PloneboardConversation.PloneboardConversation"
       />

@@ -25,7 +25,8 @@ from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONE
 from Products.CMFPlone.utils import _createObjectByType
 
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum, \
-     ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment
+     ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment, \
+     DeleteComment
 
 from Products.Ploneboard.interfaces import IConversation, IComment
 
@@ -305,8 +306,26 @@ class PloneboardComment(BaseBTreeFolder):
             kwargs['mimetype'] = 'text/plain'
         return self.getField('text').get(self, **kwargs)
 
+    security.declareProtected(DeleteComment, "delete")
+    def delete(self):
+        """Delete this comment and make sure all comment replies to this
+        comment are also cleaned up.
+        """
+        
+        parent_comment = self.inReplyTo()
+        for reply in self.getReplies():
+            reply.setInReplyTo(parent_comment)
+            reply.reindexObject()
+        
+        conversation = self.getConversation()
+        conversation._delObject(self.getId())
+        conversation.reindexObject()
+
     def __nonzero__(self):
         return 1
-
+    
+    def __str__(self):
+        return "<PloneboardComment: title=%s;>" % self.Title()
+    __repr__  = __str__
 
 registerType(PloneboardComment, PROJECTNAME)

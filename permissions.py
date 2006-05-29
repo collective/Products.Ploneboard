@@ -26,6 +26,7 @@ EditComment = 'Ploneboard: Edit Comment'
 AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
 ManageComment = 'Ploneboard: Manage Comment'
 ApproveComment = 'Ploneboard: Approve Comment' # Used for moderation
+DeleteComment = permissions.ManagePortal
 
 
 # Set up default roles for permissions

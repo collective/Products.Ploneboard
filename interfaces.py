@@ -193,6 +193,12 @@ class IComment(Interface):
         """
         Returns the text of the comment.
         """
+        
+    def delete():
+        """
+        Delete this comment.  Will ensure to clean up any comments
+        that were replies to this comment.
+        """
 
 class IAttachmentSupport(Interface):
     """

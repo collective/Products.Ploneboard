@@ -111,6 +111,9 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(msg.getText())
         self.failIfEqual(msg.getText(), text)
         self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), msg.getText())
+        
+    def testDeleting(self):
+        pass
 
 class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCase):
 
@@ -154,6 +157,51 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         self.failUnless('comment' in [v.Title() for v in msg.getAttachments()])
         self.failUnless('comment1' in [v.Title() for v in msg.getAttachments()])
 
+    def testDeleteing(self):
+        """Test deleting a comment.
+        """
+
+        # Was going to use doctests for this until I realized that
+        # PloneTestCase has no doctest capability :(  
+        # - Rocky
+
+
+        # Now lets start adding some comments:
+
+        first_comment = self.conv.getFirstComment()
+        c1 = first_comment.addReply('foo1', 'bar1')
+        c2 = first_comment.addReply('foo2', 'bar2')
+        c21 = c2.addReply('foo3', 'bar3')
+
+        # Make sure the first comment has exactly two replies:
+
+        self.assert_(first_comment.getReplies(), [c1, c2])
+
+        # Now lets try deleting the first reply to the main comment:
+
+        c1.delete()
+        self.assert_(first_comment.getReplies(), [c2])
+
+        # Ok, so lets try deleting a comment that has replies to it:
+
+        c2.delete()
+
+        # Now even though we deleted the last remaining reply to 
+        # first_comment, we should still have another reply because
+        # deleting a reply that had a child will make that child seem
+        # as though it is a reply to its parent's parent.
+
+        self.assert_(first_comment.getReplies(), [c21])
+        
+        # lets add a comment to c21
+        
+        c211 = c21.addReply('foo4', 'bar4')
+        
+        # Once the only root comment is deleted that means the conversation's
+        # sole root comment should become c211
+        
+        c21.delete()
+        self.assert_(self.conv.getRootComments(), [c211])
 
 if __name__ == '__main__':
     framework()
@@ -163,4 +211,5 @@ else:
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(TestPloneboardComment))
         suite.addTest(unittest.makeSuite(TestPloneboardCommentAttachmentSupport))
+        
         return suite
