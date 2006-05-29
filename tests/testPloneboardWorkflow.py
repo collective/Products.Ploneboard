@@ -8,7 +8,6 @@ if __name__ == '__main__':
 
 from Testing import ZopeTestCase
 from AccessControl.Permission import Permission
-from Products.Ploneboard.tests import PloneboardTestCase
 from Products.CMFPlone.tests import PloneTestCase
 
 from Products.CMFCore.WorkflowCore import WorkflowException
@@ -23,12 +22,12 @@ from Products.CMFCalendar.EventPermissions import ChangeEvents
 from Products.CMFPlone.utils import _createObjectByType
 
 from Products.Ploneboard.Extensions import WorkflowScripts # Catch errors
+from Products.Ploneboard.tests import PloneboardTestCase
+from Products.Ploneboard import permissions
 
 import transaction
 
 default_user = PloneTestCase.default_user
-
-ApproveComment = 'Ploneboard: Approve Comment'
 
 
 class TestCommentWorkflow(PloneboardTestCase.PloneboardTestCase):
@@ -40,6 +39,7 @@ class TestCommentWorkflow(PloneboardTestCase.PloneboardTestCase):
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
 
         self.portal.acl_users._doAddUser('member', 'secret', ['Member'], [])
+        self.portal.acl_users._doAddUser('member2', 'secret', ['Member'], [])
         self.portal.acl_users._doAddUser('reviewer', 'secret', ['Reviewer'], [])
         self.portal.acl_users._doAddUser('manager', 'secret', ['Manager'], [])
 
@@ -49,9 +49,9 @@ class TestCommentWorkflow(PloneboardTestCase.PloneboardTestCase):
         comment = self.conv.objectValues()[0]
 
         self.login('member')
-        self.failUnless(checkPerm(ApproveComment, self.forum))
-        self.failUnless(checkPerm(ApproveComment, self.conv))
-        self.failUnless(checkPerm(ApproveComment, comment))
+        self.failUnless(checkPerm(permissions.ApproveComment, self.forum))
+        self.failUnless(checkPerm(permissions.ApproveComment, self.conv))
+        self.failUnless(checkPerm(permissions.ApproveComment, comment))
 
         self.assertEqual(self.workflow.getInfoFor(self.forum, 'review_state'), 'memberposting')
         self.assertEqual(self.workflow.getInfoFor(self.conv, 'review_state'), 'active')
@@ -65,13 +65,26 @@ class TestCommentWorkflow(PloneboardTestCase.PloneboardTestCase):
         conv = self.forum.addConversation('conv2', 'conv2 body')
         comment = conv.objectValues()[0]
 
-        self.failIf(checkPerm(ApproveComment, self.forum))
-        self.failIf(checkPerm(ApproveComment, self.conv))
-        self.failIf(checkPerm(ApproveComment, comment))
+        self.failIf(checkPerm(permissions.ApproveComment, self.forum))
+        self.failIf(checkPerm(permissions.ApproveComment, self.conv))
+        self.failIf(checkPerm(permissions.ApproveComment, comment))
 
         self.assertEqual(self.workflow.getInfoFor(self.forum, 'review_state'), 'moderated')
         self.assertEqual(self.workflow.getInfoFor(conv, 'review_state'), 'pending')
         self.assertEqual(self.workflow.getInfoFor(comment, 'review_state'), 'pending')
+
+    def testCommentEditing(self):
+        self.login('member')
+
+        conv = self.forum.addConversation('conv2', 'conv2 body')
+        comment = conv.objectValues()[0]
+        
+        self.failUnless(checkPerm(permissions.EditComment, comment))
+        
+        self.logout()
+
+        self.login('member2')
+        self.failIf(checkPerm(permissions.EditComment, comment))
 
 
 class TestWorkflowsCreation(PloneboardTestCase.PloneboardTestCase):
