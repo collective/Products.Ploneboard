@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
       lang="en-US"
-      metal:use-macro="here/main_template/macros/master"
+      metal:use-macro="context/main_template/macros/master"
       i18n:domain="ploneboard">
 
 <head>
@@ -31,7 +31,7 @@
         <div class="boardConversation">
 
             <div class="boardComment visualIEFloatFix">
-                <metal:comment metal:use-macro="here/comment_view/macros/comment" />
+                <metal:comment metal:use-macro="context/comment_view/macros/comment" />
             </div>
 
             <form name="edit_form"
@@ -40,8 +40,7 @@
                   enctype="multipart/form-data"
                   tal:define="title_required python:0;
                               text_required python:1;"
-                  tal:attributes="action template/getId"
-                  tal:condition="python: comment == here">
+                  tal:attributes="action template/getId">
 
                     <input type="hidden" name="form.submitted" value="1" />
 
@@ -99,7 +98,7 @@
                                                 inputvalue text;
                                                 cooked_inputvalue string:;
                                                 tabindex tabindex/next;">
-                              <div metal:use-macro="here/wysiwyg_support/macros/wysiwygEditorBox">
+                              <div metal:use-macro="context/wysiwyg_support/macros/wysiwygEditorBox">
                                 The WYSIWYG code
                               </div>
                             </tal:editor>
@@ -110,11 +109,11 @@
 
                     <div metal:define-macro="comment_body_attachments"
                       tal:omit-tag=""
-                      tal:condition="python: checkPermission('Ploneboard: Add Comment Attachment', here)">
+                      tal:condition="python: checkPermission('Ploneboard: Add Comment Attachment', context)">
       
                         <div class="field"
                              tal:define="error_files errors/files|nothing;
-                                         files here/portal_ploneboard/getUploadedFiles"
+                                         files context/portal_ploneboard/getUploadedFiles"
                              tal:attributes="class python:test(error_files, 'field error', 'field')"> 
 
                             <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
