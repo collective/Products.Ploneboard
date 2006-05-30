@@ -36,6 +36,12 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(msg.getTitle(), 'msg_title')
         self.assertEqual(msg.getText(), 'msg_text')
 
+    def testGetLastComment(self):
+        msg = self.conv.addComment('last_comment_title', 'last_comment_text')
+        self.assertEqual(self.conv.getLastComment().getTitle(), msg.getTitle())
+        msg2 = self.conv.addComment('last_comment_title2', 'last_comment_text')
+        self.assertEqual(self.conv.getLastComment().getTitle(), msg2.getTitle())
+
     def testGetComment(self):
         conv = self.conv
         comment = conv.addComment('subject', 'body')

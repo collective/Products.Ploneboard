@@ -1,3 +1,9 @@
+    - Updated german PO file [spamsch]
+
+    - PloneboardConversation: Added getLastComment method [spamsch]
+
+    - PlonboardComment: Ignore AttributeError "at_post_create_script" silently [spamsch]
+
     - 2005/12/07 [tesdal]
       Remove the internal catalog in each board,
       will use global board catalog and catalogmultiplex as usual

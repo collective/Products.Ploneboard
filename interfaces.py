@@ -144,6 +144,12 @@ class IConversation(Interface):
         Returns the author of the last comment for the conversation.
         """
 
+    def getLastComment():
+        """
+        Returns the last comment as full object (no Brain).
+        If there is no such one then None is returned
+        """
+
     def getRootComments():
         """
         Return a list all comments rooted to the board; ie comments which

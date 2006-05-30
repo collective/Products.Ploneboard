@@ -258,7 +258,13 @@ class PloneboardComment(BaseBTreeFolder):
             if title is not None:
                 attachment.setTitle(title)
             attachment.unmarkCreationFlag()
-            attachment.at_post_create_script()
+            try:
+                attachment.at_post_create_script()
+
+            # older AT versions don't have at_post_create_script
+            # so we ignore that silently - doesn't do any harm
+            except AttributeError:
+                pass
 
     security.declareProtected(AddAttachment, 'removeAttachment')
     def removeAttachment(self, id):

@@ -199,24 +199,34 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Returns a DateTime corresponding to the timestamp of the last comment 
         for the conversation.
         """
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
-        if res:
-            return res[0].getObject().created()
-        else:
-            return None
+        comment = self.getLastComment()
+        if comment:
+            return comment.created()
+        return None
 
     security.declareProtected(ViewBoard, 'getLastCommentAuthor')
     def getLastCommentAuthor(self):
         """
         Returns the name of the author of the last comment.
-        XXX Interface method?
         """
-        # XXX Tell the catalog the number of results we need to make sorting more efficient
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+
+        comment = self.getLastComment()
+        if comment:
+            return comment.Creator()
+        return None
+
+    security.declareProtected(ViewBoard, 'getLastComment')
+    def getLastComment(self):
+        """
+        Returns the last comment as full object..
+        Returns None if there is no comment
+        """
+
+        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', \
+                sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
         if res:
-            return res[0].getObject().Creator()
-        else:
-            return None
+            return res[0].getObject()
+        return None
 
     security.declareProtected(ViewBoard, 'getRootComments')
     def getRootComments(self):
@@ -227,7 +237,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         raw = self.getComments()
         ours = [ comment for comment in raw if comment.inReplyToUID() is None]
         return ours
-
 
     security.declareProtected(ViewBoard, 'getFirstComment')
     def getFirstComment(self):

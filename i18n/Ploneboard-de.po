@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2005-08-22 11:42+0000\n"
 "PO-Revision-Date: 2006-03-29 11:18+0100\n"
-"Last-Translator: Arno Gross <arno.gross@brmtec.de>\n"
+"Last-Translator: Simon Pamies <s.pamies@banality.de>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -20,14 +20,15 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
-
-
 # Example
 msgid "A line was too long."
 msgstr "Eine Zeile war zu lang."
 
 msgid "add_comment"
 msgstr "Antwort hinzufügen"
+
+msgid "add_conversation"
+msgstr "Beitrag hinzufügen"
 
 msgid "not_forums"
 msgstr "Keine Foren"
@@ -128,6 +129,12 @@ msgstr "Kommentar"
 msgid "help_body_text_posting"
 msgstr "Fügen Sie hier den Kommentar ein."
 
+msgid "label_body_files_posting"
+msgstr "Anhänge"
+
+msgid "help_body_attachments_posting"
+msgstr "Hier können Sie Ihrem Beitrag noch Anhänge hinzufügen"
+
 msgid "preview_posting"
 msgstr "Vorschau"
 
@@ -139,6 +146,9 @@ msgstr "Vorschau"
 
 msgid "value cancel_posting"
 msgstr "Abbrechen"
+
+msgid "Post comment"
+msgstr "Beitrag abschicken"
 
 msgid "Post"
 msgstr "Abschicken"
@@ -152,6 +162,12 @@ msgstr "Abbrechen"
 msgid "Reply to this"
 msgstr "Antworten"
 
+msgid "Reply"
+msgstr "Antworten"
+
+msgid "Edit"
+msgstr "Ändern"
+
 msgid "Retract"
 msgstr "Zurückziehen"
 
@@ -159,7 +175,7 @@ msgid "posted_by"
 msgstr "Abgeschickt von"
 
 msgid "text_at"
-msgstr "um"
+msgstr "am"
 
 #### Manual entries.
 msgid "Message Board"
@@ -178,7 +194,7 @@ msgid "title_general_forums"
 msgstr "Allgemeine Foren"
 
 msgid "number_of_conversations"
-msgstr "Beitr?ge"
+msgstr "Beiträge"
 
 msgid "no_replies_yet"
 msgstr "Bisher keine Antworten"
@@ -189,3 +205,5 @@ msgstr "${wday} ${hours}:${minutes}"
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day}. ${month} ${year}"
 
+msgid "legend_attachments"
+msgstr "Anhänge"
