@@ -32,6 +32,7 @@ class CommentViewableView(Five.BrowserView):
                 'canEdit': checkPermission(permissions.EditComment, comment),
                 'canDelete': checkPermission(permissions.DeleteComment, comment),
                 'getObject': comment,
+                'UID': comment.UID,
             }
 
 class ICommentView(interface.Interface):
