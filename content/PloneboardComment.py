@@ -20,6 +20,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import RichWidget, ReferenceWidget
+from Products.Archetypes.utils import shasattr
+
 from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
 
 from Products.CMFPlone.utils import _createObjectByType
@@ -258,13 +260,8 @@ class PloneboardComment(BaseBTreeFolder):
             if title is not None:
                 attachment.setTitle(title)
             attachment.unmarkCreationFlag()
-            try:
+            if shasattr(attachment, 'at_post_create_script'):
                 attachment.at_post_create_script()
-
-            # older AT versions don't have at_post_create_script
-            # so we ignore that silently - doesn't do any harm
-            except AttributeError:
-                pass
 
     security.declareProtected(AddAttachment, 'removeAttachment')
     def removeAttachment(self, id):
