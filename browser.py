@@ -20,7 +20,8 @@ class CommentViewableView(Five.BrowserView):
         of a comment.
         """
         
-        checkPermission = self.context.portal_membership.checkPermission
+        checkPermission = self.portal_membership.checkPermission
+
         return {
                 'Title': comment.title_or_id(),
                 'Creator': comment.Creator(),
