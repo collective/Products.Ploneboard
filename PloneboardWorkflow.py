@@ -318,7 +318,9 @@ def setupPloneboardForumWorkflow(wf):
 
     for s in ('freeforall', 'memberposting', 'moderated', 'private'):
         wf.states.addState(s)
-    for t in ('make_freeforall', 'make_memberposting', 'make_moderated', 'make_private'):
+    # removed make_modered transition until moderation is fixed - Rocky
+    #for t in ('make_freeforall', 'make_memberposting', 'make_moderated', 'make_private'):
+    for t in ('make_freeforall', 'make_memberposting', 'make_private'):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
@@ -392,14 +394,15 @@ def setupPloneboardForumWorkflow(wf):
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':ManageForum})
 
-    tdef = wf.transitions['make_moderated']
-    tdef.setProperties(
-        title='Make moderated',
-        new_state_id='moderated',
-        # The make_moderated_script is added to scripts folder by the Install script
-        actbox_name='Make moderated',
-        actbox_url='%(content_url)s/content_publish_form',
-        props={'guard_permissions':ManageForum})
+    # make_moderated transition disabled until moderation is fixed
+#    tdef = wf.transitions['make_moderated']
+#    tdef.setProperties(
+#        title='Make moderated',
+#        new_state_id='moderated',
+#        # The make_moderated_script is added to scripts folder by the Install script
+#        actbox_name='Make moderated',
+#        actbox_url='%(content_url)s/content_publish_form',
+#        props={'guard_permissions':ManageForum})
 
     tdef = wf.transitions['make_private']
     tdef.setProperties(
