@@ -1,205 +1,191 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en-US"
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="ploneboard">
 
 <head>
-    <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-    </metal:css>
+  <metal:css fill-slot="css_slot">
+  <style type="text/css" media="all"
+         tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+  </metal:css>
 
-    <metal:block fill-slot="top_slot"
-                 tal:define="dummy python:request.set('disable_border',1)" />
+  <metal:block fill-slot="top_slot"
+               tal:define="dummy python:request.set('disable_border',1)" />
 </head>
 
 <body>
+  <div metal:fill-slot="main" 
+       tal:define="errors options/state/getErrors;
+                   Iterator python:modules['Products.CMFPlone'].IndexIterator;
+                   tabindex python:Iterator();
+                   view context/@@singlecomment_view;">
 
-    <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors;
-                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();
-                     view context/@@singlecomment_view;">
+    <h2 i18n:translate="add_comment">Add comment</h2>
 
-        <h2 i18n:translate="add_comment">Add comment</h2>
+    <div class="documentDescription"></div>
 
-        <div class="documentDescription"></div>
-
-        <tal:defines define="comment view/comment"
-         metal:define-macro="view_comments">
-             
-        <div class="boardConversation">
-
-            <div class="boardComment visualIEFloatFix">
-                <metal:comment metal:use-macro="context/comment_view/macros/comment" />
-            </div>
-
-            <form name="edit_form"
-                  action=""
-                  method="post" 
-                  enctype="multipart/form-data"
-                  tal:define="title_required python:0;
-                              text_required python:1;"
-                  tal:attributes="action template/getId">
-
-                    <input type="hidden" name="form.submitted" value="1" />
-
-                    <div metal:define-macro="comment_body_title" tal:omit-tag="">
-
-                        <div class="field"
-                             id="archetypes-fieldname-title"
-                             tal:define="error_title errors/title|nothing;
-                                         Title request/title | nothing"
-                             tal:attributes="class python:test(error_title, 'field error', 'field')"> 
-
-                            <label for="title" i18n:translate="label_title_posting">Title</label>
-
-                            <span tal:condition="title_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
-
-                            <div tal:replace="error_title">Validation error output</div>
-
-                            <div class="formHelp">
-                              
-                            </div>
-
-                            <input type="text" 
-                                   name="title"
-                                   id="title"
-                                   value="#" 
-                                   size="40" 
-                                   tabindex=""
-                                   tal:attributes="value Title;
-                                                   tabindex tabindex/next;"
-                                   />
-
-                        </div>
-
-                    </div>
-
-                    <div metal:define-macro="comment_body_text" tal:omit-tag="">
-      
-                        <div class="field"
-                             tal:define="error_text errors/text|nothing;
-                                         text python:request.get('text', '')"
-                             tal:attributes="class python:test(error_text, 'field error', 'field')"> 
-
-                            <label for="text" i18n:translate="label_body_text_posting">Body text</label>
-
-                            <span tal:condition="text_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
-
-                            <div tal:replace="error_text">Validation Error Comment</div>
-
-                            <div class="formHelp">
-                              
-                            </div>
-
-                            <tal:editor define="inputname  string:text;
-                                                formname   string:add_comment_form;
-                                                inputvalue text;
-                                                cooked_inputvalue string:;
-                                                tabindex tabindex/next;">
-                              <div metal:use-macro="context/wysiwyg_support/macros/wysiwygEditorBox">
-                                The WYSIWYG code
-                              </div>
-                            </tal:editor>
-
-                        </div>
-
-                    </div>
-
-                    <div metal:define-macro="comment_body_attachments"
-                      tal:omit-tag=""
-                      tal:condition="python: checkPermission('Ploneboard: Add Comment Attachment', context)">
-      
-                        <div class="field"
-                             tal:define="error_files errors/files|nothing;
-                                         files context/portal_ploneboard/getUploadedFiles"
-                             tal:attributes="class python:test(error_files, 'field error', 'field')"> 
-
-                            <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
-
-                            <div i18n:translate="help_body_attachments_posting"
-                                 class="formHelp">
-                                Attachments.
-                            </div>
-
-                            <div tal:replace="error_files">Validation Error Comment</div>
-
-                            <tal:loop repeat="file files">
-                                <input name="files:list"
-                                       type="hidden"
-                                       tabindex=""
-                                       size="30"
-                                       tal:attributes="value file/getId;
-                                                       id string:files-${repeat/file/number};
-                                                       tabindex tabindex/next;"
-                                       />
-                                <span tal:content="file/getId" />
-                                <br />
-                            </tal:loop>
-
-                            <input name="files:list"
-                                   type="file"
-                                   id="newfile"
-                                   tabindex=""
-                                   size="30"
-                                   tal:attributes="tabindex tabindex/next;"
-                                   />
-
-                            <br />
-                            <input name="files:list"
-                                   type="file"
-                                   id="newfile1"
-                                   tabindex=""
-                                   size="30"
-                                   tal:attributes="tabindex tabindex/next;"
-                                   />
-                            <br />
-                            <input name="files:list"
-                                   type="file"
-                                   id="newfile2"
-                                   tabindex=""
-                                   size="30"
-                                   tal:attributes="tabindex tabindex/next;"
-                                   />
-
-                        </div>
-
-                    </div>
-
-
-                    <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
-
-                        <div class="row">
-                            <div class="label">&nbsp;</div>
-                            <div class="field"> 
-                                <input class="context" 
-                                       tabindex=""
-                                       type="submit" 
-                                       name="form.button.Post" 
-                                       value="Post comment" 
-                                       i18n:attributes="value"
-                                       tal:attributes="tabindex tabindex/next;" 
-                                       /> 
-                                <input class="destructive"
-                                       tabindex=""
-                                       type="submit"
-                                       name="form.button.Cancel"
-                                       value="Cancel"
-                                       i18n:attributes="value"
-                                       tal:attributes="tabindex tabindex/next"
-                                       />
-                            </div>
-                        </div>
-        
-                    </div>
-
-            </form>
-        
+    <tal:defines define="comment view/comment"
+                 metal:define-macro="view_comments">
+         
+      <div class="boardConversation">
+        <div class="boardComment visualIEFloatFix">
+          <metal:comment metal:use-macro="context/comment_view/macros/comment" />
         </div>
-        </tal:defines>
-        
-    </div>
 
+        <form name="edit_form"
+              action=""
+              method="post" 
+              enctype="multipart/form-data"
+              tal:define="title_required python:0;
+                          text_required python:1;"
+              tal:attributes="action template/getId">
+
+          <input type="hidden" name="form.submitted" value="1" />
+
+          <div metal:define-macro="comment_body_title" tal:omit-tag="">
+            <div class="field"
+                 id="archetypes-fieldname-title"
+                 tal:define="error_title errors/title|nothing;
+                             Title request/title | nothing"
+                 tal:attributes="class python:test(error_title, 'field error', 'field')"> 
+
+              <label for="title" i18n:translate="label_title_posting">Title</label>
+
+              <span tal:condition="title_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
+
+              <div tal:replace="error_title">Validation error output</div>
+
+              <div class="formHelp">
+              </div>
+
+              <input type="text" 
+                     name="title"
+                     id="title"
+                     value="#" 
+                     size="40" 
+                     tabindex=""
+                     tal:attributes="value Title;
+                                     tabindex tabindex/next;"
+                     />
+
+            </div>
+          </div>
+
+          <div metal:define-macro="comment_body_text" tal:omit-tag="">
+            <div class="field"
+                 tal:define="error_text errors/text|nothing;
+                             text python:request.get('text', '')"
+                 tal:attributes="class python:test(error_text, 'field error', 'field')"> 
+
+              <label for="text" i18n:translate="label_body_text_posting">Body text</label>
+
+              <span tal:condition="text_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required">(Required)</span>
+
+              <div tal:replace="error_text">Validation Error Comment</div>
+
+              <div class="formHelp">
+              </div>
+
+              <tal:editor define="inputname  string:text;
+                                  formname   string:add_comment_form;
+                                  inputvalue text;
+                                  cooked_inputvalue string:;
+                                  tabindex tabindex/next;">
+                <div metal:use-macro="context/wysiwyg_support/macros/wysiwygEditorBox">
+                  The WYSIWYG code
+                </div>
+              </tal:editor>
+            </div>
+          </div>
+
+          <div metal:define-macro="comment_body_attachments"
+                 tal:omit-tag=""
+                 tal:condition="python: checkPermission('Ploneboard: Add Comment Attachment', context)">
+
+            <div class="field"
+                 tal:define="error_files errors/files|nothing;
+                             files context/portal_ploneboard/getUploadedFiles"
+                 tal:attributes="class python:test(error_files, 'field error', 'field')"> 
+
+              <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
+
+              <div i18n:translate="help_body_attachments_posting"
+                   class="formHelp">
+                Attachments.
+              </div>
+
+              <div tal:replace="error_files">Validation Error Comment</div>
+
+              <tal:loop repeat="file files">
+                <input name="files:list"
+                       type="hidden"
+                       tabindex=""
+                       size="30"
+                       tal:attributes="value file/getId;
+                                       id string:files-${repeat/file/number};
+                                       tabindex tabindex/next;"
+                       />
+                <span tal:content="file/getId" />
+                <br />
+              </tal:loop>
+
+              <input name="files:list"
+                     type="file"
+                     id="newfile"
+                     tabindex=""
+                     size="30"
+                     tal:attributes="tabindex tabindex/next;"
+                     />
+
+              <br />
+              <input name="files:list"
+                     type="file"
+                     id="newfile1"
+                     tabindex=""
+                     size="30"
+                     tal:attributes="tabindex tabindex/next;"
+                     />
+              <br />
+              <input name="files:list"
+                     type="file"
+                     id="newfile2"
+                     tabindex=""
+                     size="30"
+                     tal:attributes="tabindex tabindex/next;"
+                     />
+
+            </div>
+          </div>
+
+            <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
+              <div class="row">
+                <div class="label">&nbsp;</div>
+                <div class="field"> 
+                  <input class="context" 
+                         tabindex=""
+                         type="submit" 
+                         name="form.button.Post" 
+                         value="Post comment" 
+                         i18n:attributes="value"
+                         tal:attributes="tabindex tabindex/next;" 
+                         /> 
+                  <input class="destructive"
+                         tabindex=""
+                         type="submit"
+                         name="form.button.Cancel"
+                         value="Cancel"
+                         i18n:attributes="value"
+                         tal:attributes="tabindex tabindex/next"
+                         />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </tal:defines>
+  </div>
 </body>
 </html>
