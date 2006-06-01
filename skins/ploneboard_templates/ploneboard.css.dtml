@@ -96,6 +96,10 @@
     margin-bottom: 1em;
 }
 
+.boardCommentHeaderActions {
+    float: right;
+}
+
 /* Stripping down Kupu to the bare essentials */
 
 .kupu-tb-styles,

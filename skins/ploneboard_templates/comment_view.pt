@@ -44,14 +44,29 @@
                     <a tal:attributes="name comment/getId"></a>
                     <div class="boardCommentDetails" id=""
                          tal:attributes="id comment/getId">
-                         <h3 tal:content="comment/Title">Post title</h3>
-                    <img src="" 
-                         tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
-                         <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
-                         <span tal:replace="python:creatorinfo and creatorinfo['fullname'] or creator">author</span> 
-                         <span i18n:translate="text_at" tal:omit-tag="">at</span>
-                         <span tal:replace="python:here.toPloneboardTime(creation_date)"
-                               >Thursday 13:21</span>
+                      <div class="boardCommentHeaderActions">
+                        <a tal:condition="comment/canEdit" 
+                           tal:attributes="href string:${comment/absolute_url}/base_edit"> 
+                          <img title="Edit this comment" alt="Edit this comment"
+                                i18n:attributes="title alt"
+                                tal:attributes="src string:${portal_url}/edit.gif"/>
+                        </a>
+
+                        <a tal:condition="comment/canDelete" 
+                           tal:attributes="href string:${comment/absolute_url}/delete_view"
+                           onclick="if (confirm('Are you sure you want to delete this comment?')) form.submit()">
+                          <img title="Delete this comment" alt="Edit this comment"
+                                i18n:attributes="title alt"
+                                tal:attributes="src string:${portal_url}/delete_icon.gif"/>
+                        </a>
+                      </div>
+                      <h3 tal:content="comment/Title">Post title</h3>
+                      <img src="" 
+                           tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                      <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
+                      <span tal:replace="python:creatorinfo and creatorinfo['fullname'] or creator">author</span> 
+                      <span i18n:translate="text_at" tal:omit-tag="">at</span>
+                      <span tal:replace="python:here.toPloneboardTime(creation_date)">Thursday 13:21</span>
                     </div>
                 
                     <div class="boardCommentBody">
@@ -102,51 +117,31 @@
                                    i18n:attributes="value"
                                    />
                         </form>
+                      </div>
 
-                        <form tal:condition="comment/canEdit" 
-	                          tal:attributes="action string:${comment/absolute_url}/base_edit"> 
-                            <input class="standalone" 
-                                   type="submit" 
-                                   value="Edit"
-                                   i18n:attributes="value"
-                                   />
-                        </form>
 
-                        <form tal:condition="comment/canDelete" 
-	                          tal:attributes="action string:${comment/absolute_url}/delete_view">
-                            <input class="standalone" 
-                                   type="button" 
-                                   onclick="if (confirm('Are you sure you want to delete this comment?')) form.submit()"
-                                   value="Delete"
-                                   i18n:attributes="value"
-                                   />
-                        </form>
-
-                        <fieldset tal:define="attachments comment/getAttachments"
-                                  tal:condition="attachments"
-                                  style="text-align: left;">
-                            <legend i18n:translate="legend_attachments">Attachments</legend>
-                            <ul class="visualNoMarker">
-                                <li tal:repeat="attachment attachments">
-                                    <a tal:attributes="href attachment/absolute_url">
-                                      <span tal:define="pt attachment/portal_type;
-                                                        size python:here.getObjSize(attachment)"
-                                              tal:attributes="class python:'contenttype-'+normalizeString(pt)">
-                                        <span class="visualIconPadding"
-                                              tal:content="attachment/title_or_id">
-                                        Attachment title
-                                        </span>
-                                        <span tal:condition="size" tal:omit-tag="">
-                                          (<span tal:replace="size">257 kB</span>)
-                                        </span>
+                      <fieldset tal:define="attachments comment/getAttachments"
+                                tal:condition="attachments"
+                                style="text-align: left;">
+                          <legend i18n:translate="legend_attachments">Attachments</legend>
+                          <ul class="visualNoMarker">
+                              <li tal:repeat="attachment attachments">
+                                  <a tal:attributes="href attachment/absolute_url">
+                                    <span tal:define="pt attachment/portal_type;
+                                                      size python:here.getObjSize(attachment)"
+                                            tal:attributes="class python:'contenttype-'+normalizeString(pt)">
+                                      <span class="visualIconPadding"
+                                            tal:content="attachment/title_or_id">
+                                      Attachment title
                                       </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </fieldset>
-
-                    </div>
-
+                                      <span tal:condition="size" tal:omit-tag="">
+                                        (<span tal:replace="size">257 kB</span>)
+                                      </span>
+                                    </span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </fieldset>
             </metal:comment>
         </div>
     </div>
