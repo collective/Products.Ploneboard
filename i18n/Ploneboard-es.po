@@ -1,0 +1,194 @@
+# translation of Ploneboard to Spanish 
+# Gettext File for Ploneboard 
+# Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006 
+msgid "" 
+msgstr "" 
+"Project-Id-Version: Ploneboard 1.0\n" 
+"POT-Creation-Date: 2005-08-22 11:42+0000\n" 
+"PO-Revision-Date: 2006-06-01 11:50+0000\n" 
+"Last-Translator: Pedro Fuentes <pedro.fuentes@telefonica.net>\n" 
+"Language-Team: Pedro Fuentes <pedro.fuentes@telefonica.net>\n" 
+"MIME-Version: 1.0\n" 
+"Content-Type: text/plain; charset=utf-8\n" 
+"Content-Transfer-Encoding: 8bit\n" 
+"Plural-Forms: nplurals=1; plural=0;\n" 
+"Language-Code: sp\n" 
+"Language-Name: Spanish\n" 
+"Preferred-Encodings: latin1 utf-8\n" 
+"Domain: ploneboard\n" 
+ 
+msgid "add_comment" 
+msgstr "Aadir Comentario" 
+ 
+msgid "not_foruns" 
+msgstr "Sin Foros" 
+ 
+msgid "forum_name" 
+msgstr "Nombre del foro" 
+ 
+msgid "most_recent_post" 
+msgstr "mensaje mas reciente" 
+ 
+msgid "no_conversations_started" 
+msgstr "No existe ninguna conversacin iniciada" 
+ 
+msgid "label_by_author" 
+msgstr "por ${author}" 
+ 
+msgid "go_to_parent_url" 
+msgstr "I al nivel superior" 
+ 
+msgid "not_conversations" 
+msgstr "No exixte ninguna conversacin en este foro" 
+ 
+msgid "conversation" 
+msgstr "Conversacin" 
+ 
+msgid "replies" 
+msgstr "Respuestas" 
+ 
+msgid "most_recent" 
+msgstr "mas reciente" 
+ 
+msgid "not_permission_start_conversation" 
+msgstr "Disculpe, No tiene permiso para iniciar una conversacin" 
+ 
+msgid "log_to_start_conversation" 
+msgstr "Debe autentificarse para iniciar una nueva conversacin" 
+ 
+msgid "start_new_conversation" 
+msgstr "Inicia una nueva conversacin" 
+ 
+msgid "preview_comment" 
+msgstr "Vista preliminar." 
+ 
+msgid "label_powered_by" 
+msgstr "" 
+ 
+msgid "None" 
+msgstr "Ninguno" 
+ 
+msgid "status" 
+msgstr "Estado" 
+ 
+msgid "add_message" 
+msgstr "Aadir mensaje" 
+ 
+msgid "label_description" 
+msgstr "Descripcin" 
+ 
+msgid "help_description" 
+msgstr "Introduzca una breve descripcin" 
+ 
+msgid "help_description_forum" 
+msgstr "Introduzca una breve descripcin del foro" 
+ 
+msgid "label_description_forum" 
+msgstr "Descripcin del foro" 
+ 
+msgid "help_text" 
+msgstr "Introduzca el texto del comentario" 
+ 
+msgid "label_text" 
+msgstr "Texto" 
+ 
+msgid "help_display_portraits" 
+msgstr "" 
+ 
+msgid "label_display_portraits" 
+msgstr "" 
+ 
+msgid "help_description_conversation" 
+msgstr "Introduzca una breve descripcin" 
+ 
+msgid "label_description_conversation" 
+msgstr "Descripcin de la conversacin" 
+ 
+msgid "legend_add_conversation" 
+msgstr "" 
+ 
+msgid "label_title_posting" 
+msgstr "Ttulo" 
+ 
+msgid "help_title_posting" 
+msgstr "Introduzca el texto del mensaje" 
+ 
+msgid "label_body_text_posting" 
+msgstr "Texto del mensaje" 
+ 
+msgid "help_body_text_posting" 
+msgstr "Introduzca el texto del mensaje" 
+ 
+msgid "preview_posting" 
+msgstr "Previsualiza el mensaje" 
+ 
+msgid "preview_message" 
+msgstr "Previsualiza el mensaje" 
+ 
+msgid "value preview_posting" 
+msgstr "visualizacin" 
+ 
+msgid "value cancel_posting" 
+msgstr "Anula" 
+ 
+msgid "Post" 
+msgstr "" 
+ 
+msgid "Change" 
+msgstr "Cambia" 
+ 
+msgid "Cancel" 
+msgstr "Elimina" 
+ 
+msgid "Reply to this" 
+msgstr "Responder a esto" 
+ 
+msgid "Retract" 
+msgstr "Retirar" 
+ 
+msgid "posted_by" 
+msgstr "Aadido por" 
+ 
+msgid "text_at" 
+msgstr "" 
+ 
+#### Voci aggiunte manualmente. 
+ 
+msgid "Message Board" 
+msgstr "" 
+ 
+msgid "Forum" 
+msgstr "Forum" 
+ 
+msgid "Conversation" 
+msgstr "Conversacin" 
+ 
+msgid "Comment" 
+msgstr "Comentario"
+ 
+msgid "help_quickreply" 
+msgstr "" 
+ 
+msgid "label_quickreply" 
+msgstr "Respuesta rpida" 
+ 
+msgid "Reply" 
+msgstr "Replicar" 
+ 
+msgid "no_replies_yet" 
+msgstr "Sin respuestas" 
+ 
+msgid "post_reply" 
+msgstr "Publica la respuesta" 
+ 
+msgid "legend_attachments" 
+msgstr "Allegati" 
+ 
+msgid "description_ploneboard_config" 
+msgstr "" 
+ 
+msgid "manage_transforms" 
+msgstr "" 
+ 
+msgid "no_comments_queued" 
+msgstr "" 
