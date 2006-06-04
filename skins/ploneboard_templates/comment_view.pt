@@ -52,13 +52,18 @@
                     tal:attributes="src string:${portal_url}/edit.gif"/>
             </a>
 
-            <a tal:condition="comment/canDelete" 
-               tal:attributes="href string:${comment/absolute_url}/delete_view"
-               onclick="if (confirm('Are you sure you want to delete this comment?')) form.submit()">
-              <img title="Delete this comment" alt="Edit this comment"
-                    i18n:attributes="title alt"
-                    tal:attributes="src string:${portal_url}/delete_icon.gif"/>
+            <a onclick="#"
+               tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
+               tal:attributes="href string:${comment/absolute_url}/delete_view;
+                               onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+               i18n:attributes="title">
+                <img title="Delete this comment" alt="Delete this comment"
+                      i18n:attributes="title alt"
+                      tal:attributes="src string:${portal_url}/delete_icon.gif"/>
             </a>
+
+
+
           </div>
 
           <h3 tal:content="comment/Title">Post title</h3>
@@ -72,15 +77,20 @@
     
         <div class="boardCommentBody">
           <div class="portrait">
-            <tal:block define="portrait python: here.portal_membership.getPersonalPortrait(creator);"> 
-              <img class="portraitPhoto"
-                   src="defaultUser.gif" 
-                   alt="" 
-                   border="0" 
-                   width="75" 
-                   height="100" 
-                   tal:attributes="src portrait/absolute_url" />
-              <div tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">member id</div>
+            <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
+              <a href="" title="View profile"
+                tal:attributes="href string:${portal_url}/author/${creator}"
+                i18n:attributes="title">
+                <img class="portraitPhoto"
+                     src="defaultUser.gif" 
+                     alt="" 
+                     border="0" 
+                     width="75" 
+                     height="100" 
+                     tal:attributes="src portrait/absolute_url" />
+              </a>
+              <a tal:attributes="href string:${portal_url}/author/${creator}"
+                 tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">member id</a>
             </tal:block>
           </div>
           
