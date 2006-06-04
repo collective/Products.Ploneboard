@@ -185,7 +185,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return None
     
     security.declareProtected(ViewBoard, 'getComments')
-    def getComments(self, limit=5, offset=0, **kw):
+    def getComments(self, limit=30, offset=0, **kw):
         """
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.

@@ -3,6 +3,7 @@ from zope import interface
 from Products import Five
 from Products.CMFCore import utils as cmf_utils
 from Products.Ploneboard import permissions
+from Products.Ploneboard.batch import Batch
 
 class CommentViewableView(Five.BrowserView):
     """Any view that might want to interact with comments should inherit
@@ -71,8 +72,17 @@ class ConversationView(CommentView):
     interface.implements(IConversationView)
 
     def comments(self):
-        for ob in self.context.getComments():
-            yield self._buildDict(ob)
+        batchSize = 30
+        batchStart = int(self.request.get('b_start', 0))
+        numComments = self.context.getNumberOfComments()
+        return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
+        
+        # XXX: This won't work, since the batch macros depend on the 'batch'
+        # variable and its properties, not just the items its __getitem__
+        # yields
+        
+        # for ob in batch:
+        #    yield self._buildDict(ob)
     
     def root_comments(self):
         for ob in self.context.getRootComments():
@@ -83,7 +93,12 @@ class ConversationView(CommentView):
             comment = comment['getObject']
         
         for ob in comment.getReplies():
-            yield self._buildDict(ob)       
+            yield self._buildDict(ob)
+    
+    def _getComments(self, limit, offset):
+        """Dictify comments before returning them to the batch
+        """
+        return [self._buildDict(ob) for ob in self.context.getComments(limit=limit, offset=offset)]
 
 class DeleteCommentView(Five.BrowserView):
     """Delete the current comment.  If the comment is the root comment

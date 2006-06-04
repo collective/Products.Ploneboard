@@ -52,14 +52,17 @@
          tal:content="here/Description"> 
       description
     </div>
-
+    
     <div class="boardConversation"
          metal:define-macro="view_comments"
-         tal:define="comments view/comments">
+         tal:define="batch view/comments">
 
-      <div class="boardComment visualIEFloatFix" tal:repeat="comment comments">
+      <div class="boardComment visualIEFloatFix" tal:repeat="comment batch">
         <metal:comment metal:use-macro="here/comment_view/macros/comment" />
       </div>
+      
+      <!-- Navigation -->
+      <div metal:use-macro="here/batch_macros/macros/navigation" />
     </div>
 
     <a id="last"></a>
