@@ -85,11 +85,9 @@
 .boardCommentActions {
     padding: 1em;
     text-align: right;
+    right: 1em;
 }
 
-.boardCommentActions {
-    right: 1em:
-}
 
 .boardCommentPortrait {
     float: right; 

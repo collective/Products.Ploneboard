@@ -4,11 +4,17 @@
       i18n:domain="ploneboard">
       
 <body>
-  <metal:javascript fill-slot="javascript_head_slot">
-    <script type="text/javascript"
-            tal:attributes="src string:${portal_url}/moderation.js">
-     </script>
-  </metal:javascript>
+  
+  <tal:block replace="nothing">
+  
+    Disabled until this is made to work again
+  
+    <metal:javascript fill-slot="javascript_head_slot">
+      <script type="text/javascript"
+              tal:attributes="src string:${portal_url}/moderation.js">
+       </script>
+    </metal:javascript>
+  </tal:block>
 
   <metal:css fill-slot="css_slot">
     <style type="text/css" media="all"
