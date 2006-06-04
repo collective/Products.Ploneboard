@@ -102,6 +102,7 @@ class PloneboardComment(BaseBTreeFolder):
         {
             '(Default)'               : 'comment_redirect_to_conversation'
             , 'view'                  : 'comment_redirect_to_conversation'
+            , 'edit'                  : 'base_edit'
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'retractComment'
         }

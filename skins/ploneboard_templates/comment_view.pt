@@ -46,7 +46,7 @@
              tal:attributes="id comment/getId">
           <div class="boardCommentHeaderActions">
             <a tal:condition="comment/canEdit" 
-               tal:attributes="href string:${comment/absolute_url}/base_edit"> 
+               tal:attributes="href string:${comment/absolute_url}/edit"> 
               <img title="Edit this comment" alt="Edit this comment"
                     i18n:attributes="title alt"
                     tal:attributes="src string:${portal_url}/edit.gif"/>
