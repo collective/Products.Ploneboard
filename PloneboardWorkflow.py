@@ -233,7 +233,7 @@ def setupPloneboardConversationWorkflow(wf):
 
     sdef = wf.states['active']
     sdef.setProperties(
-        title='Active state',
+        title='Active',
         transitions=('lock',))
     # This state just inherits everything from the forum workflow
     sdef.setPermission(AccessContentsInformation,  1, ())
