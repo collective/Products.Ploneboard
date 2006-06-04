@@ -12,6 +12,7 @@
   </metal:top>
 
   <tal:block replace="nothing">
+    
     Disabled until this is made to work again
     
     <metal:javascript fill-slot="javascript_head_slot">

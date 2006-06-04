@@ -67,9 +67,6 @@
                       i18n:attributes="title alt"
                       tal:attributes="src string:${portal_url}/delete_icon.gif"/>
             </a>
-
-
-
           </div>
 
           <h3 tal:content="comment/Title">Post title</h3>

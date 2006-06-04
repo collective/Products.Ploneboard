@@ -98,6 +98,14 @@
     float: right;
 }
 
+.boardConversation ul.topLevelComment {
+    margin-left: 0;
+}
+
+.boardConversation li {
+    list-style: none;
+}
+
 /* Stripping down Kupu to the bare essentials */
 
 .kupu-tb-styles,
