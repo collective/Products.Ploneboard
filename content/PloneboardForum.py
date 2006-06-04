@@ -122,7 +122,7 @@ class PloneboardForum(BaseBTreeFolder):
               'edit'           : 'base_edit',
               'properties'     : 'base_metadata',
               'sharing'        : 'folder_localrole_form',
-              'rss-properties' : 'editSynProperties'.
+              'rss-properties' : 'editSynProperties'
         }
 
     security = ClassSecurityInfo()
