@@ -8,6 +8,7 @@ from zope.interface import implements, providedBy
 import Globals
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Five.bridge import fromZ2Interface
 
@@ -75,12 +76,25 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
             },
+            { 'id'          : 'edit'
+            , 'name'        : 'Edit'
+            , 'action'      : 'string:$object_url/edit'
+            , 'permissions' : (ModifyPortalContent,)
+            },
+            { 'id'          : 'metadata'
+            , 'name'        : 'Properties'
+            , 'action'      : 'string:$object_url/properties'
+            , 'permissions' : (ModifyPortalContent,)
+            },
         )
 
     aliases = \
         {
             '(Default)'  : '(dynamic view)',
             'view'       : '(selected layout)',
+            'edit'       : 'base_edit',
+            'properties' : 'base_metadata',
+            'sharing'    : 'folder_localrole_form',
             'index.html' : '(dynamic view)',
         }
 

@@ -16,6 +16,7 @@ from BTrees.Length import Length
 from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -96,6 +97,17 @@ class PloneboardComment(BaseBTreeFolder):
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
             },
+            { 'id'          : 'edit'
+            , 'name'        : 'Edit'
+            , 'action'      : 'string:$object_url/edit'
+            , 'permissions' : (ModifyPortalContent,)
+            },
+            { 'id'          : 'metadata'
+            , 'name'        : 'Properties'
+            , 'action'      : 'string:$object_url/properties'
+            , 'permissions' : (ModifyPortalContent,)
+            , 'visible'     : False
+            },
         )
 
     aliases = \
@@ -103,6 +115,8 @@ class PloneboardComment(BaseBTreeFolder):
             '(Default)'               : 'comment_redirect_to_conversation'
             , 'view'                  : 'comment_redirect_to_conversation'
             , 'edit'                  : 'base_edit'
+            , 'properties'            : 'base_metadata'
+            , 'sharing'               : 'folder_localrole_form'
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'retractComment'
         }

@@ -17,6 +17,7 @@ from OFS.Image import File
 from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -96,6 +97,17 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             , 'name'        : 'View'
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
+            },
+            { 'id'          : 'edit'
+            , 'name'        : 'Edit'
+            , 'action'      : 'string:$object_url/edit'
+            , 'permissions' : (ModifyPortalContent,)
+            },
+            { 'id'          : 'metadata'
+            , 'name'        : 'Properties'
+            , 'action'      : 'string:$object_url/properties'
+            , 'permissions' : (ModifyPortalContent,)
+            , 'visible'     : False
             },
         )
 

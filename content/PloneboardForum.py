@@ -22,6 +22,7 @@ from BTrees.Length import Length
 from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
@@ -97,17 +98,31 @@ class PloneboardForum(BaseBTreeFolder):
             , 'action'      : 'string:$object_url'
             , 'permissions' : (ViewBoard,)
             },
+            { 'id'          : 'edit'
+            , 'name'        : 'Edit'
+            , 'action'      : 'string:$object_url/edit'
+            , 'permissions' : (ModifyPortalContent,)
+            },
+            { 'id'          : 'metadata'
+            , 'name'        : 'Properties'
+            , 'action'      : 'string:$object_url/properties'
+            , 'permissions' : (ModifyPortalContent,)
+            },
             { 'id'          : 'rssfeed'
             , 'name'        : 'RSS Feed'
-            , 'action'      : 'string:$object_url/editSynProperties'
+            , 'action'      : 'string:$object_url/rss-properties'
             , 'permissions' : (ManageBoard,)
             }
         )
 
     aliases = \
         {
-              '(Default)' : 'forum_view'
-            , 'view'      : 'forum_view'
+              '(Default)'      : 'forum_view', 
+              'view'           : 'forum_view',
+              'edit'           : 'base_edit',
+              'properties'     : 'base_metadata',
+              'sharing'        : 'folder_localrole_form',
+              'rss-properties' : 'editSynProperties'.
         }
 
     security = ClassSecurityInfo()
