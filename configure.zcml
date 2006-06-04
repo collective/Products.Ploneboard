@@ -3,6 +3,11 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five">
 
+  <permission
+    id="Ploneboard.DeleteComment"
+    title="Manage portal"
+    />
+
   <adapter 
       for=".interfaces.IComment"
       provides="Products.ATContentTypes.z3.interfaces.ITextContent"
@@ -29,7 +34,7 @@
       for=".interfaces.IComment"
       class=".browser.DeleteCommentView"
       name="delete_view"
-      permission="zope2.Public"
+      permission="Ploneboard.DeleteComment"
       />
 
   <five:traversable

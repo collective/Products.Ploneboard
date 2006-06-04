@@ -113,9 +113,9 @@ class DeleteCommentView(Five.BrowserView):
         if len(conversation.getComments()) == 1:
             forum = conversation.getForum()
             conversation.delete()
-            msg = urllib.quote('Conversation Deleted')
+            msg = urllib.quote('Conversation deleted')
             redirect(forum.absolute_url()+'?portal_status_message='+msg)
         else:
             comment.delete()
-            msg = urllib.quote('Comment Deleted')
+            msg = urllib.quote('Comment deleted')
             redirect(conversation.absolute_url()+'?portal_status_message='+msg)
