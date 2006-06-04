@@ -87,7 +87,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     # Set up our views - these are available from the 'display' menu
     default_view = 'conversation_view'
     immediate_view = 'conversation_view'
-    suppl_views = ('conversation_view', 'threaded_conversation_view')
+    suppl_views = ()
 
     _at_rename_after_creation = True
 
