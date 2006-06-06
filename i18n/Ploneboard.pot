@@ -1,156 +1,243 @@
-# Gettext File for Ploneboard
-# Your Name <your@mail>, year
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2005-08-22 11:42+0000\n"
-"PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Your Name <your@mail>\n"
-"Language-Team: Your Team <team@mail>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: en\n"
 "Language-Name: English\n"
-"Preferred-Encodings: latin1 utf-8\n"
+"Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
 
-# Example
-msgid "A line was too long."
-msgstr "" 
-
-msgid "add_comment"
-msgstr ""
-
-msgid "not_foruns"
-msgstr ""
-
-msgid "forum_name"
-msgstr ""
-
-msgid "most_recent_post"
-msgstr ""
-
-msgid "no_conversations_started"
-msgstr ""
-
-msgid "label_by_author"
-msgstr "by ${author}"
-
-msgid "go_to_parent_url"
-msgstr ""
-
-msgid "not_conversations"
-msgstr ""
-
-msgid "conversation"
-msgstr ""
-
-msgid "replies"
-msgstr ""
-
-msgid "most_recent"
-msgstr ""
-
-msgid "not_permission_start_conversation"
-msgstr ""
-
-msgid "log_to_start_conversation"
-msgstr ""
-
-msgid "start_new_conversation"
-msgstr ""
-
-msgid "preview_comment"
-msgstr ""
-
-msgid "label_powered_by"
-msgstr ""
-
-msgid "None"
-msgstr ""
-
-msgid "status"
-msgstr ""
-
-msgid "add_conversation"
-msgstr ""
-
-msgid "label_description"
-msgstr ""
-
-msgid "help_description"
-msgstr ""
-
-msgid "help_description_forum"
-msgstr ""
-
-msgid "label_description_forum"
-msgstr ""
-
-msgid "help_text"
-msgstr ""
-
-msgid "label_text"
-msgstr ""
-
-msgid "help_display_portraits"
-msgstr ""
-
-msgid "label_display_portraits"
-msgstr ""
-
-msgid "help_description_conversation"
-msgstr ""
-
-msgid "label_description_conversation"
-msgstr ""
-
-msgid "legend_add_conversation"
-msgstr ""
-
-msgid "label_title_posting"
-msgstr ""
-
-msgid "help_title_posting"
-msgstr ""
-
-msgid "label_body_text_posting"
-msgstr ""
-
-msgid "help_body_text_posting"
-msgstr ""
-
-msgid "preview_posting"
-msgstr ""
-
-msgid "preview_message"
-msgstr ""
-
-msgid "value preview_posting"
-msgstr ""
-
-msgid "value cancel_posting"
-msgstr ""
-
-msgid "Post"
-msgstr ""
-
-msgid "Change"
-msgstr ""
-
+#. Default: "Cancel"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+#: ./skins/ploneboard_templates/add_comment_form.cpt
 msgid "Cancel"
 msgstr ""
 
-msgid "Reply to this"
+#. Default: "Change"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
 msgstr ""
 
-msgid "Retract"
+#. Default: "Delete this comment"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Delete this comment"
 msgstr ""
 
+#. Default: "Edit this comment"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Edit this comment"
+msgstr ""
+
+#. Default: "Log in to add comments"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr ""
+
+#. Default: "Log in to start a Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a Conversation"
+msgstr ""
+
+#. Default: "Post"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr ""
+
+#. Default: "Post comment"
+#: ./skins/ploneboard_templates/conversation_view.pt
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "Post comment"
+msgstr ""
+
+#. Default: "Reply"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Reply"
+msgstr ""
+
+#. Default: "Start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr ""
+
+#. Default: "View profile"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr ""
+
+#. Default: "Add comment"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr ""
+
+#. Default: "Add conversation"
+#: ./skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr ""
+
+#. Default: "Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr ""
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr ""
+
+#. Default: "Forum name"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr ""
+
+#. Default: "Up to ${type}"
+#: ./skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr ""
+
+#. Default: "Preview comment"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr ""
+
+#. Default: "Attachments."
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr ""
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr ""
+
+#. Default: "Body text"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr ""
+
+#. Default: "by ${author}"
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr ""
+
+#. Default: "Powered by ${link}"
+#: ./skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr ""
+
+#. Default: "Quick reply"
+#: ./skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr ""
+
+#. Default: "(Required)"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr ""
+
+#. Default: "Title"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr ""
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr ""
+
+#. Default: "<a href=\"prefs_manage_transforms\"> <img alt=\"\" src=\"smiley_smile.png\"/> Manage transforms </a>"
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr ""
+
+#. Default: "Most Recent Comment"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "most_recent"
+msgstr ""
+
+#. Default: "Most recent post"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "most_recent_post"
+msgstr ""
+
+#. Default: "There are no comments in the moderation queue."
+#: ./skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr ""
+
+#. Default: "No conversations started"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr ""
+
+#. Default: "No replies yet"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "no_replies_yet"
+msgstr ""
+
+#. Default: "No conversations in this forum yet."
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr ""
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/board_view_global.pt
+msgid "not_forums"
+msgstr ""
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr ""
+
+#. Default: "Conversations"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr ""
+
+#. Default: "Posted by"
+#: ./skins/ploneboard_templates/comment_view.pt
 msgid "posted_by"
 msgstr ""
 
+#. Default: "Preview message"
+#: ./skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr ""
+
+#. Default: "Replies"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "replies"
+msgstr ""
+
+#. Default: "at"
+#: ./skins/ploneboard_templates/comment_view.pt
 msgid "text_at"
 msgstr ""
+
+#. Default: "General forums"
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/board_view_global.pt
+msgid "title_general_forums"
+msgstr ""
+
+#. Default: "Up to Site Setup"
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

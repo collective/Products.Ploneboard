@@ -1,0 +1,83 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+#. Default: "Add"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr ""
+
+#. Default: "Remove"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr ""
+
+#. Default: "Action"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr ""
+
+#. Default: "Data provider"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr ""
+
+#. Default: "Here you can configure which transforms are active in Ploneboard posts."
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr ""
+
+#. Default: "Enabled?"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr ""
+
+#. Default: "Add transform"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr ""
+
+#. Default: "Existing transforms"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr ""
+
+#. Default: "Manage"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr ""
+
+#. Default: "Module"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr ""
+
+#. Default: "Transform name"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr ""
+
+#. Default: "Return to Ploneboard settings"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
