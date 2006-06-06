@@ -43,7 +43,7 @@
                         <input type="hidden" name="form.submitted" value="1" />
                         <input type="hidden" name="transform_name" value="" tal:attributes="value transform_name" />
                         <td tal:content="transform_name"></td>
-                        <td class="listingCheckbox"><input type="checkbox" name="transform_status" tal:attributes="checked python:test(int(transform_status), 'checked', nothing)"></td>
+                        <td class="listingCheckbox"><input type="checkbox" name="transform_status" tal:attributes="checked python:test(int(transform_status), 'checked', nothing)"/></td>
                         <td>
                             <span tal:condition="python: here.portal_ploneboard.hasDataProvider(transform_name)" tal:omit-tag="">
                               <a href="#"
@@ -82,7 +82,7 @@
             </div>
                         
             <div class="formControls">
-                <input class="context" type="submit" name="form.button.Add" value="Add" i18n:attributes="value add">
+                <input class="context" type="submit" name="form.button.Add" value="Add" i18n:attributes="value add"/>
             </div>
         </fieldset>
     </form>
