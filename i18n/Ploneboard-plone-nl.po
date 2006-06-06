@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: 2006-04-21 22:15+0000\n"
 "Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -17,57 +17,67 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: nl-be\n"
 
-msgid "Message Board"
-msgstr "Discussie bord"
+#. Default: "Add"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Voeg toe"
 
-msgid "Forum"
-msgstr "Forum"
+#. Default: "Remove"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Verwijder"
 
-msgid "Conversation"
-msgstr "Gesprekken"
+#. Default: "Action"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr ""
 
-msgid "Comment"
-msgstr "Reactie"
+#. Default: "Data provider"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr ""
 
-msgid "threaded_conversation_view"
-msgstr "Boom conversionweergave"
+#. Default: "Here you can configure which transforms are active in Ploneboard posts."
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr "Hier kunt u aangeven welke transformaties er in Ploneboard reacties gebruikt worden"
 
-msgid "conversation_view"
-msgstr "Platte conversatieweergave"
+#. Default: "Enabled?"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "Actief?"
 
-msgid "A Forum contains conversations."
-msgstr "Een forum bevat gesprekken"
+#. Default: "Add transform"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Voeg transformatie toe"
 
-msgid "Categories"
-msgstr "Onderwerpen"
+#. Default: "Existing transforms"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Bestaande transformaties"
 
-msgid "Enter a brief description of the board."
-msgstr "Geeft een korte omschrijving van dit discussiebord"
+#. Default: "Manage"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Beheer"
 
-msgid "Global forum listing"
-msgstr "Algemen forum overzicht"
+#. Default: "Module"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr ""
 
-msgid "Local forum listing"
-msgstr "Lokaal forum overzicht"
+#. Default: "Transform name"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Naam transformatie"
 
-msgid "Message Board has been created."
-msgstr "Discussiebord is aangemakt"
+#. Default: "Return to Ploneboard settings"
+#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Terug naar Ploneboard-configuratie"
 
-msgid "Moderate"
-msgstr "Beheren"
-
-msgid "help_categories"
-msgstr "Vul de beschikbare onderwerpen van forums, één onderwerp per regel."
-
-msgid "help_category"
-msgstr "Geeft aan over welke onderwerpen dit forum gaat. Een forum kan over meerdere onderwerpen hebben, het is echter aangeredan om er één te kiezen."
-
-msgid "Forum has been created."
-msgstr "Forum is aangemaakt"
-
-msgid "Search"
-msgstr "Zoeken"
-
-msgid "Category"
-msgstr "Onderwerp"
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
 

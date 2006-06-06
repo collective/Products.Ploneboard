@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: 2005-12-10 11:50+0000\n"
 "Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -16,170 +16,227 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 
-# Example
-msgid "A line was too long."
-msgstr "Een regel was te lang." 
-
-msgid "add_comment"
-msgstr "Reageren"
-
-msgid "not_forums"
-msgstr "Geen forums"
-
-msgid "forum_name"
-msgstr "Naam"
-
-msgid "most_recent_post"
-msgstr "Laatste reactie"
-
-msgid "no_conversations_started"
-msgstr "Nog geen gesprekken."
-
-msgid "label_by_author"
-msgstr "door ${author}"
-
-msgid "go_to_parent_url"
-msgstr "Terug naar ${type}"
-
-msgid "not_conversations"
-msgstr "Er zijn nog geen gesprekken in dit forum."
-
-msgid "conversation"
-msgstr "Gesprek"
-
-msgid "replies"
-msgstr "Reacties"
-
-msgid "most_recent"
-msgstr "Laatste reactie"
-
-msgid "not_permission_start_conversation"
-msgstr "U heeft onvoldoende rechten om een gesprek toe te voegen."
-
-msgid "log_to_start_conversation"
-msgstr "U dient in te loggen om een gesprek toe te voegen."
-
-msgid "start_new_conversation"
-msgstr "Nieuw Gesprek"
-
-msgid "preview_comment"
-msgstr "Voorbeeldweergave"
-
-msgid "label_powered_by"
-msgstr "Op basis van: "
-
-msgid "None"
-msgstr " - "
-
-msgid "status"
-msgstr "Status"
-
-msgid "add_message"
-msgstr "Reactie toevoegen"
-
-msgid "label_description"
-msgstr "Omschrijving"
-
-msgid "help_description"
-msgstr ""
-
-msgid "help_description_forum"
-msgstr "Vul hier de omschrijving in waar dit forum over gaat."
-
-msgid "label_description_forum"
-msgstr "Omschrijving"
-
-msgid "help_text"
-msgstr ""
-
-msgid "label_text"
-msgstr "Reactie"
-
-msgid "help_display_portraits"
-msgstr "Indien deze optie is ingeschakeld, dan wordt naast de reacties in dit gesprek de pasfoto van de betreffende auteur getoond."
-
-msgid "label_display_portraits"
-msgstr "Pasfoto's tonen"
-
-msgid "help_description_conversation"
-msgstr "Vul hier de omschrijving in van uw gesprek."
-
-msgid "label_description_conversation"
-msgstr "Omschrijving"
-
-msgid "legend_add_conversation"
-msgstr "Reactie toevoegen"
-
-msgid "label_title_posting"
-msgstr "Titel"
-
-msgid "help_title_posting"
-msgstr "Vul hier de titel van uw bericht in."
-
-msgid "label_body_text_posting"
-msgstr "Reactie"
-
-msgid "help_body_text_posting"
-msgstr "Typ hier uw reactie"
-
-msgid "preview_posting"
-msgstr "Voorbeeldweergave"
-
-msgid "preview_message"
-msgstr "Voorbeeldweergave"
-
-msgid "value preview_posting"
-msgstr "Voorbeeldweergave"
-
-msgid "value cancel_posting"
-msgstr "Annuleren"
-
-msgid "Post"
-msgstr "Toevoegen"
-
-msgid "Change"
-msgstr "Bewerken"
-
+#. Default: "Cancel"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+#: ./skins/ploneboard_templates/add_comment_form.cpt
 msgid "Cancel"
 msgstr "Annuleren"
 
-msgid "Reply to this"
-msgstr "Reageren"
+#. Default: "Change"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Bewerken"
 
-msgid "Retract"
-msgstr "Terugtrekken"
+#. Default: "Delete this comment"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Delete this comment"
+msgstr "Verwijder deze reactie"
 
-msgid "posted_by"
-msgstr "Geplaatst door"
+#. Default: "Edit this comment"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Edit this comment"
+msgstr "Bewerk deze reactie"
 
-msgid "text_at"
-msgstr "op"
+#. Default: "Log in to add comments"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Log in om een reactie toe te vogen"
 
-#### Manual entries.
+#. Default: "Log in to start a Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a Conversation"
+msgstr "Log in om een gesprek te beginnen"
 
-msgid "Message Board"
-msgstr "Forum"
+#. Default: "Post"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Toevoegen"
 
-msgid "Forum"
-msgstr "Onderwerp"
+#. Default: "Post comment"
+#: ./skins/ploneboard_templates/conversation_view.pt
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "Post comment"
+msgstr "Plaats reactie"
 
-msgid "Conversation"
-msgstr "Conversatie"
-
-msgid "Comment"
-msgstr "Reactie"
-
-msgid "help_quickreply"
-msgstr "Gebruik dit formulier om een opmerking aan het gesprek toe te voegen."
-
-msgid "label_quickreply"
-msgstr "Snelle opmerking"
-
+#. Default: "Reply"
+#: ./skins/ploneboard_templates/comment_view.pt
 msgid "Reply"
 msgstr "Reageer"
 
+#. Default: "Start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Begin een nieuw gesprek"
+
+#. Default: "View profile"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Bekijk profiel"
+
+#. Default: "Add comment"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Reageren"
+
+#. Default: "Add conversation"
+#: ./skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "Begin gesprek"
+
+#. Default: "Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr "Gesprek"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Hier kunt u de Ploneboard instelling aanpassen"
+
+#. Default: "Forum name"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Naam"
+
+#. Default: "Up to ${type}"
+#: ./skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "Terug naar ${type}"
+
+#. Default: "Preview comment"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Reactie tonen"
+
+#. Default: "Attachments."
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Attachments"
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Attachments"
+
+#. Default: "Body text"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Voer een reactie in"
+
+#. Default: "by ${author}"
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "door ${author}"
+
+#. Default: "Powered by ${link}"
+#: ./skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Op basis van: "
+
+#. Default: "Quick reply"
+#: ./skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Snelle reactie"
+
+#. Default: "(Required)"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Verplicht)"
+
+#. Default: "Title"
+#: ./skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Titel"
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Attachments"
+
+#. Default: "<a href=\"prefs_manage_transforms\"> <img alt=\"\" src=\"smiley_smile.png\"/> Manage transforms </a>"
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr ""
+
+#. Default: "Most Recent Comment"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "most_recent"
+msgstr "Laatste reactie"
+
+#. Default: "Most recent post"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "most_recent_post"
+msgstr "Laatste reactie"
+
+#. Default: "There are no comments in the moderation queue."
+#: ./skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr ""
+
+#. Default: "No conversations started"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Nog geen gesprekken."
+
+#. Default: "No replies yet"
+#: ./skins/ploneboard_templates/forum_view.pt
 msgid "no_replies_yet"
 msgstr "Nog geen reacties"
 
-msgid "post_reply"
-msgstr "Geef reactie"
+#. Default: "No conversations in this forum yet."
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Er zijn nog geen gesprekken in dit forum."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/board_view_global.pt
+msgid "not_forums"
+msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via het menu \"Toevoegen\"."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "U heeft onvoldoende rechten om een gesprek toe te voegen."
+
+#. Default: "Conversations"
+#: ./skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "gesprekken"
+
+#. Default: "Posted by"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "Geplaatst door"
+
+#. Default: "Preview message"
+#: ./skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Voorbeeldweergave"
+
+#. Default: "Replies"
+#: ./skins/ploneboard_templates/forum_view.pt
+msgid "replies"
+msgstr "Reacties"
+
+#. Default: "at"
+#: ./skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "op"
+
+#. Default: "General forums"
+#: ./skins/ploneboard_templates/board_view.pt
+#: ./skins/ploneboard_templates/board_view_global.pt
+msgid "title_general_forums"
+msgstr "Algemene fora"
+
+#. Default: "Up to Site Setup"
+#: ./skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr "Terug naar Plone-configuratie"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
