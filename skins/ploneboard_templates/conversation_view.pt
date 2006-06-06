@@ -82,7 +82,7 @@
               <input class="context"
                      name="form.button.Post" 
                      i18n:attributes="value"
-                     type="submit" value="Post reply" />
+                     type="submit" value="Post comment" />
             </div>
           </form>
         </fieldset>
