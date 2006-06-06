@@ -2,8 +2,8 @@
 # Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
 msgid ""
 msgstr ""
-"Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"Project-Id-Version: Ploneboard 1.0-alpha3\n"
+"POT-Creation-Date: 2006-06-06 14:02+0000\n"
 "PO-Revision-Date: 2006-04-21 22:15+0000\n"
 "Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -80,4 +80,41 @@ msgstr "Terug naar Ploneboard-configuratie"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
+
+# Other translations missed by i18ndude
+msgid "A Forum contains conversations."
+msgstr "Een forum bevat gesprekken."
+
+msgid "Conversation"
+msgstr "Gesprek"
+
+msgid "Conversation contains comments."
+msgstr "Een gesprek bevat reacties"
+
+msgid "Forum"
+msgstr ""
+
+msgid "Global forum listing"
+msgstr "Overzicht alle fora"
+
+msgid "Local forum listing"
+msgstr "Overzicht lokale fora"
+
+msgid "Ploneboard"
+msgstr ""
+
+msgid "PloneboardConversation"
+msgstr ""
+
+msgid "PloneboardForum"
+msgstr ""
+
+msgid "conversation_view"
+msgstr "lijst weergave"
+
+msgid "threaded_conversation_view"
+msgstr "boom weergave"
+
+msgid "Message Board"
+msgstr "Discussie Bord"
 

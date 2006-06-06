@@ -2,8 +2,8 @@
 # Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
 msgid ""
 msgstr ""
-"Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"Project-Id-Version: Ploneboard 1.0-alpha3\n"
+"POT-Creation-Date: 2006-06-06 14:03+0000\n"
 "PO-Revision-Date: 2005-12-10 11:50+0000\n"
 "Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -81,7 +81,7 @@ msgstr "Reageren"
 #. Default: "Add conversation"
 #: ./skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
-msgstr "Begin gesprek"
+msgstr "Voeg een nieuw gesprek toe"
 
 #. Default: "Conversation"
 #: ./skins/ploneboard_templates/forum_view.pt
@@ -193,7 +193,7 @@ msgstr "Er zijn nog geen gesprekken in dit forum."
 #: ./skins/ploneboard_templates/board_view.pt
 #: ./skins/ploneboard_templates/board_view_global.pt
 msgid "not_forums"
-msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via het menu \"Toevoegen\"."
+msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via \"voeg forum toe\" optie."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ./skins/ploneboard_templates/forum_view.pt
@@ -240,3 +240,15 @@ msgstr "Terug naar Plone-configuratie"
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
+# Other translations missed by i18ndude
+msgid "Message Board"
+msgstr ""
+
+msgid "help_description_forum"
+msgstr "Geef een korte omschrijving van het forum onderwerp."
+
+msgid "label_description_forum"
+msgstr "Omschrijving"
+
+msgid "start_new_conversation"
+msgstr "Begin een nieuw gesprek"
