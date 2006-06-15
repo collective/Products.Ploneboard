@@ -27,6 +27,7 @@
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="True">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
@@ -53,6 +54,7 @@
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="True">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="False">
@@ -77,6 +79,7 @@
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
@@ -125,6 +128,7 @@
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -144,7 +148,7 @@
  <transition transition_id="autosubmit"
              title="Automatic publishing request"
              new_state="pending" trigger="AUTOMATIC"
-             before_script="" after_script="submit_script">
+             before_script="" after_script="">
   <action url="%(content_url)s/content_submit_form"
           category="workflow">Submit</action>
   <guard>
@@ -183,7 +187,7 @@
  <transition transition_id="submit"
              title="Member requests publishing"
              new_state="pending" trigger="USER"
-             before_script="" after_script="submit_script">
+             before_script="" after_script="">
   <action url="%(content_url)s/content_submit_form"
           category="workflow">Submit</action>
   <guard>
@@ -243,23 +247,13 @@
   </guard>
  </variable>
  <script script_id="autopublish_script"
-         type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/autopublish_script.py"
-         module="" function=""/>
- <script script_id="autosubmit_script"
-         type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/autosubmit_script.py"
-         module="" function=""/>
- <script script_id="lock_script" type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/lock_script.py"
-         module="" function=""/>
- <script script_id="publish_script" type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/publish_script.py"
-         module="" function=""/>
- <script script_id="reject_script" type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/reject_script.py"
-         module="" function=""/>
- <script script_id="submit_script" type="Script (Python)"
-         filename="workflows/ploneboard_comment_workflow/scripts/submit_script.py"
-         module="" function=""/>
+         type="External Method" filename=""
+         module="Ploneboard.WorkflowScripts"
+         function="autopublish_script"/>
+ <script script_id="publish_script" type="External Method"
+         filename="" module="Ploneboard.WorkflowScripts"
+         function="publish_script"/>
+ <script script_id="reject_script" type="External Method"
+         filename="" module="Ploneboard.WorkflowScripts"
+         function="reject_script"/>
 </dc-workflow>

@@ -57,7 +57,7 @@
    <permission-role>Reviewer</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="View" acquired="True">
+  <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
    <permission-role>Owner</permission-role>
@@ -76,7 +76,7 @@
              title="Reviewer returns conversation to active"
              new_state="active" trigger="USER"
              before_script="" after_script="">
-  <action url="" category="workflow">Make Active</action>
+  <action url="" category="workflow">Activate</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>

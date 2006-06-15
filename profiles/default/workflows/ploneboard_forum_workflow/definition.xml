@@ -2,7 +2,7 @@
 <dc-workflow workflow_id="ploneboard_forum_workflow"
              title="Forum Workflow [Ploneboard]"
              state_variable="review_state"
-             initial_state="freeforall">
+             initial_state="memberposting">
  <permission>Access contents information</permission>
  <permission>View</permission>
  <permission>Ploneboard: Add Conversation</permission>
@@ -175,15 +175,6 @@
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="make_moderated"
-             title="Make moderated" new_state="moderated"
-             trigger="USER" before_script="" after_script="">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Make moderated</action>
-  <guard>
-   <guard-permission>Ploneboard: Add Forum</guard-permission>
-  </guard>
- </transition>
  <transition transition_id="make_private"
              title="Private closed board"
              new_state="private" trigger="USER"
@@ -246,24 +237,4 @@
   <guard>
   </guard>
  </variable>
- <script script_id="autopublish_script"
-         type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/autopublish_script.py"
-         module="" function=""/>
- <script script_id="autosubmit_script"
-         type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/autosubmit_script.py"
-         module="" function=""/>
- <script script_id="lock_script" type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/lock_script.py"
-         module="" function=""/>
- <script script_id="publish_script" type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/publish_script.py"
-         module="" function=""/>
- <script script_id="reject_script" type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/reject_script.py"
-         module="" function=""/>
- <script script_id="submit_script" type="Script (Python)"
-         filename="workflows/ploneboard_forum_workflow/scripts/submit_script.py"
-         module="" function=""/>
 </dc-workflow>

@@ -2,9 +2,10 @@
 <dc-workflow workflow_id="ploneboard_workflow"
              title="Ploneboard Workflow [Ploneboard]"
              state_variable="review_state"
-             initial_state="visible">
+             initial_state="published">
  <permission>Access contents information</permission>
  <permission>Modify portal content</permission>
+ <permission>Add portal content</permission>
  <permission>View</permission>
  <permission>Ploneboard: Search</permission>
  <permission>Ploneboard: Add Ploneboard</permission>
@@ -12,87 +13,17 @@
  <permission>Ploneboard: Add Conversation</permission>
  <permission>Ploneboard: Add Comment</permission>
  <permission>Ploneboard: Edit Comment</permission>
- <permission>Ploneboard: Add Comment Attachment</permission>
  <permission>Ploneboard: Manage Conversation</permission>
  <permission>Ploneboard: Manage Comment</permission>
  <permission>Ploneboard: Approve Comment</permission>
- <state state_id="pending" title="Waiting for reviewer">
-  <exit-transition transition_id="hide"/>
-  <exit-transition transition_id="publish"/>
-  <exit-transition transition_id="reject"/>
-  <exit-transition transition_id="retract"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment Attachment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Conversation"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Forum"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Ploneboard"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Approve Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Conversation"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Search" acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
-  <permission-map name="View" acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-   <permission-role>Reviewer</permission-role>
-  </permission-map>
- </state>
- <state state_id="private"
-        title="Visible and editable only by owner">
-  <exit-transition transition_id="show"/>
+ <state state_id="private" title="Hidden">
+  <exit-transition transition_id="open"/>
   <permission-map name="Access contents information"
                   acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -102,11 +33,6 @@
    <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment Attachment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
@@ -129,7 +55,7 @@
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="False">
@@ -144,7 +70,6 @@
   <permission-map name="Ploneboard: Manage Conversation"
                   acquired="False">
    <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Search" acquired="False">
    <permission-role>Manager</permission-role>
@@ -155,72 +80,16 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
- <state state_id="published" title="Public">
-  <exit-transition transition_id="reject"/>
-  <exit-transition transition_id="retract"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
-   <permission-role>Anonymous</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment Attachment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Conversation"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Forum"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Ploneboard"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Approve Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Conversation"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Search" acquired="True">
-   <permission-role>Anonymous</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
-  <permission-map name="View" acquired="True">
-   <permission-role>Anonymous</permission-role>
-   <permission-role>Manager</permission-role>
-  </permission-map>
- </state>
- <state state_id="visible" title="Visible but not published">
+ <state state_id="published" title="Open">
   <exit-transition transition_id="hide"/>
-  <exit-transition transition_id="publish"/>
-  <exit-transition transition_id="submit"/>
   <permission-map name="Access contents information"
                   acquired="True">
    <permission-role>Anonymous</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
@@ -228,11 +97,6 @@
    <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment Attachment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
@@ -255,7 +119,7 @@
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Edit Comment"
                   acquired="False">
@@ -270,88 +134,34 @@
   <permission-map name="Ploneboard: Manage Conversation"
                   acquired="False">
    <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Search" acquired="True">
    <permission-role>Anonymous</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Anonymous</permission-role>
    <permission-role>Manager</permission-role>
-   <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
- <transition transition_id="hide"
-             title="Member makes content private"
+ <transition transition_id="hide" title="Hide message board"
              new_state="private" trigger="USER"
              before_script="" after_script="">
-  <action url="%(content_url)s/content_hide_form"
-          category="workflow">Make private</action>
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Hide</action>
   <guard>
-   <guard-role>Owner</guard-role>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="publish"
-             title="Reviewer publishes content"
+ <transition transition_id="open" title="Open message board"
              new_state="published" trigger="USER"
              before_script="" after_script="">
   <action url="%(content_url)s/content_publish_form"
-          category="workflow">Publish</action>
+          category="workflow">Open</action>
   <guard>
-   <guard-permission>Review portal content</guard-permission>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="reject"
-             title="Reviewer rejects submission"
-             new_state="visible" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_reject_form"
-          category="workflow">Reject</action>
-  <guard>
-   <guard-permission>Review portal content</guard-permission>
-  </guard>
- </transition>
- <transition transition_id="retract"
-             title="Member retracts submission"
-             new_state="visible" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_retract_form"
-          category="workflow">Retract</action>
-  <guard>
-   <guard-permission>Request review</guard-permission>
-  </guard>
- </transition>
- <transition transition_id="show"
-             title="Member makes content visible"
-             new_state="visible" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_show_form"
-          category="workflow">Make visible</action>
-  <guard>
-   <guard-role>Owner</guard-role>
-  </guard>
- </transition>
- <transition transition_id="submit"
-             title="Member requests publishing"
-             new_state="pending" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_submit_form"
-          category="workflow">Submit</action>
-  <guard>
-   <guard-permission>Request review</guard-permission>
-  </guard>
- </transition>
- <worklist worklist_id="reviewer_queue" title="">
-  <description>Reviewer tasks</description>
-  <action url="%(portal_url)s/search?review_state=pending"
-          category="global">Pending (%(count)d)</action>
-  <guard>
-   <guard-permission>Review portal content</guard-permission>
-  </guard>
-  <match name="review_state" values="pending"/>
- </worklist>
  <variable variable_id="action" for_catalog="False"
            for_status="True" update_always="True">
   <description>The last transition</description>
@@ -390,8 +200,8 @@
    <expression>state_change/getHistory</expression>
   </default>
   <guard>
-   <guard-permission>Request review</guard-permission>
-   <guard-permission>Review portal content</guard-permission>
+   <guard-permission>Ploneboard: Add Conversation</guard-permission>
+   <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </variable>
  <variable variable_id="time" for_catalog="False"
