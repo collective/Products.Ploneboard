@@ -13,6 +13,9 @@ class CommentViewableView(Five.BrowserView):
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
 
+        self.portal_actions = cmf_utils.getToolByName(self.context,
+                                                        'portal_actions')
+        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
         self.portal_membership = cmf_utils.getToolByName(self.context, 
                                                          'portal_membership')
 
@@ -22,6 +25,7 @@ class CommentViewableView(Five.BrowserView):
         """
         
         checkPermission = self.portal_membership.checkPermission
+        actions = self.portal_actions.listFilteredActionsFor(comment)
 
         return {
                 'Title': comment.title_or_id(),
@@ -34,6 +38,9 @@ class CommentViewableView(Five.BrowserView):
                 'canEdit': checkPermission(permissions.EditComment, comment),
                 'canDelete': checkPermission(permissions.DeleteComment, comment),
                 'getObject': comment,
+                'workflowActions' : actions['workflow'],
+                'reviewStateTitle' :
+			self.plone_utils.getReviewStateTitleFor(comment),
                 'UID': comment.UID,
             }
 

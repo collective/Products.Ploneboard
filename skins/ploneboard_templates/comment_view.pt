@@ -1,5 +1,6 @@
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
@@ -50,25 +51,59 @@
         <a tal:attributes="name comment/getId"></a>
         <div class="boardCommentDetails" id=""
              tal:attributes="id comment/getId">
-          <div class="boardCommentHeaderActions">
-            <a tal:condition="comment/canEdit" 
-               tal:attributes="href string:${comment/absolute_url}/edit"> 
-              <img title="Edit this comment" alt="Edit this comment"
-                    i18n:attributes="title alt"
-                    tal:attributes="src string:${portal_url}/edit.gif"/>
-            </a>
-
-            <a onclick="#"
-               tal:condition="comment/canDelete"
-               tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
-               tal:attributes="href string:${comment/absolute_url}/delete_view;
-                               onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
-               i18n:attributes="title">
-                <img title="Delete this comment" alt="Delete this comment"
+          <ul class="boardCommentHeaderActions">
+            <li>
+              <a tal:condition="comment/canEdit" 
+                 tal:attributes="href string:${comment/absolute_url}/edit"> 
+                <img title="Edit this comment" alt="Edit this comment"
                       i18n:attributes="title alt"
-                      tal:attributes="src string:${portal_url}/delete_icon.gif"/>
-            </a>
-          </div>
+                      tal:attributes="src string:${portal_url}/edit.gif"/>
+              </a>
+            </li>
+            <li>
+              <a onclick="#"
+                 tal:condition="comment/canDelete"
+                 tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
+                 tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                 onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                 i18n:attributes="title">
+                  <img title="Delete this comment" alt="Delete this comment"
+                        i18n:attributes="title alt"
+                        tal:attributes="src string:${portal_url}/delete_icon.gif"/>
+              </a>
+            </li>
+            <li>
+              <dl class="actionMenu">
+                <dt class="actionMenuHeader">
+		  <a href="content_status_history"
+                     title="Change the state of this item"
+                     i18n:attributes="title title_change_state_of_item"
+                     tal:attributes="href string:${comment/absolute_url}/content_status_history">
+                    <span i18n:translate="label_state">State:</span>
+                    <span tal:content="comment/reviewStateTitle" i18n:translate="">
+                      Workflow state
+                    </span>
+                  </a>
+                </dt>
+                <dd class="actionMenuContent">
+                  <ul>
+                    <tal:block repeat="transition comment/workflowActions">
+                      <li>
+                        <a href="#"
+                           i18n:translate=""
+                           tal:content="transition/title"
+                           i18n:attributes="title"
+			   tal:attributes="href string:${comment/absolute_url}/content_status_modify?workflow_action=${transition/id};
+                                           title transition/title">
+                          File Menu Item 1
+                        </a>
+                      </li>
+                    </tal:block>
+                  </ul>
+                </dd>
+              </dl>
+            </li>
+          </ul>
 
           <h3 tal:content="comment/Title">Post title</h3>
           <img src="" 
