@@ -53,24 +53,35 @@
              tal:attributes="id comment/getId">
           <ul class="boardCommentHeaderActions">
             <li>
-              <a tal:condition="comment/canEdit" 
-                 tal:attributes="href string:${comment/absolute_url}/edit"> 
-                <img title="Edit this comment" alt="Edit this comment"
-                      i18n:attributes="title alt"
-                      tal:attributes="src string:${portal_url}/edit.gif"/>
-              </a>
-            </li>
-            <li>
-              <a onclick="#"
-                 tal:condition="comment/canDelete"
-                 tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
-                 tal:attributes="href string:${comment/absolute_url}/delete_view;
-                                 onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
-                 i18n:attributes="title">
-                  <img title="Delete this comment" alt="Delete this comment"
-                        i18n:attributes="title alt"
-                        tal:attributes="src string:${portal_url}/delete_icon.gif"/>
-              </a>
+	      <dl class="actionMenu">
+                <dt class="actionMenuHeader">
+                  <a title="Actions for the current content item">
+                    Actions
+                  </a>
+                </dt>
+                <dd class="actionMenuContent">
+                  <ul>
+                    <li tal:condition="comment/canEdit">
+                      <a class="visualIconPadding actionicon-plone-extedit" 
+                         title="Edit this comment"
+                         tal:attributes="href string:${comment/absolute_url}/edit"
+                         i18n:attributes="title">
+                        Edit
+                      </a>
+                    </li>
+                    <li tal:condition="comment/canDelete">
+                      <a class="visualIconPadding actionicon-object_buttons-delete" 
+                         title="Delete this comment"
+                         tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
+                         tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                         onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                         i18n:attributes="title">
+                         Delete
+                      </a>
+                    </li>
+                  </ul>
+                </dd>
+              </dl>
             </li>
             <li>
               <dl class="actionMenu">
