@@ -51,7 +51,7 @@
         <a tal:attributes="name comment/getId"></a>
         <div class="boardCommentDetails" id=""
              tal:attributes="id comment/getId">
-          <ul class="boardCommentHeaderActions">
+          <ul class="contentActions boardCommentHeaderActions">
             <li>
 	      <dl class="actionMenu">
                 <dt class="actionMenuHeader">
