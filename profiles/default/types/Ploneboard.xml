@@ -48,9 +48,4 @@
     url_expr="string:${folder_url}/view" visible="False">
   <permission value="View"/>
  </action>
- <action title="Moderate" action_id="moderate" category="object"
-    condition_expr="" url_expr="string:$object_url/moderation_form"
-    visible="True">
-  <permission value="Ploneboard: Add Ploneboard"/>
- </action>
 </object>
