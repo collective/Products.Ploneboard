@@ -74,6 +74,16 @@
     font-size: 90%;
 }
 
+.boardCommentPending {
+    opacity: 0.9;
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.9;
+}
+
+.boardCommentState {
+    float: right;
+}
+
 .boardCommentBody {
     padding: 0.5em 1em;
 }
@@ -116,6 +126,7 @@
     text-align: left;
     margin: 0 0.5em 0.5em 0.5em;
 }
+
 
 /* Stripping down Kupu to the bare essentials */
 

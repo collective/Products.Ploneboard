@@ -6,17 +6,6 @@
       
 <body>
   
-  <tal:block replace="nothing">
-  
-    Disabled until this is made to work again
-  
-    <metal:javascript fill-slot="javascript_head_slot">
-      <script type="text/javascript"
-              tal:attributes="src string:${portal_url}/moderation.js">
-       </script>
-    </metal:javascript>
-  </tal:block>
-
   <metal:css fill-slot="css_slot">
     <style type="text/css" media="all"
            tal:content="string: @import url($portal_url/ploneboard.css);"></style>
@@ -46,13 +35,23 @@
                      tal:define="creator comment/Creator;
                                  creatorinfo python: mtool.getMemberInfo(creator);
                                  creation_date comment/creation_date;
+                                 state comment/review_state;
                                  pss modules/Products/PythonScripts/standard">
+
+        <div tal:attributes="class string:state-${state} boardCommentPending" tal:omit-tag="python:state == 'published'">
 
         <a tal:attributes="name comment/getId"></a>
         <div class="boardCommentDetails" id="" 
              tal:attributes="id comment/getId;">
           
           <div class="boardCommentHeaderTitleBlock">
+            
+            <div class="boardCommentState" 
+                 tal:condition="python:state != 'published'"
+                 tal:content="comment/reviewStateTitle">
+              State here
+            </div>
+            
             <h3 tal:content="comment/Title">Post title</h3>
             <img src="" 
                  tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
@@ -100,26 +99,24 @@
                    type="submit"
                    value="Edit"/>
           </form>
-          <form method="post"
-                tal:repeat="action comment/workflowActions"
-                tal:attributes="action string:${comment/absolute_url}/content_status_modify">
-            <input type="hidden" name="workflow_action" tal:attributes="value action/id"/>
-            <input tal:attributes="value action/title"
-                   class="context"
-                   type="submit"
-                   />
-          </form>
-          <form method="post"
+         <form method="post"
                 tal:condition="comment/canDelete"
                 tal:attributes="action string:${comment/absolute_url}/delete_view">
-            
             <input tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
                    tal:attributes="href string:${comment/absolute_url}/delete_view;
                                    onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
                    class="destructive"
                    type="submit"
                    value="Delete"/>
-            
+          </form>
+           <form method="post"
+                tal:repeat="action comment/workflowActions"
+                tal:attributes="action string:${comment/absolute_url}/content_status_modify">
+            <input type="hidden" name="workflow_action" tal:attributes="value action/id"/>
+            <input tal:attributes="value action/title"
+                   class="standalone"
+                   type="submit"
+                   />
           </form>
         </div>
         <div class="boardCommentReplyActions">
@@ -167,6 +164,8 @@
             </li>
           </ul>
         </fieldset>
+      
+      </div>
       </metal:comment>
     </div>
   </div>
