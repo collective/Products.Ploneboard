@@ -106,6 +106,22 @@
     list-style: none;
 }
 
+/* Action menu on comment */
+
+.boardCommentHeaderActionBlock {
+    float: right;
+}
+
+.boardCommentHeaderActions {
+    background: transparent;
+    border-left: none;
+}
+
+.boardCommentHeaderTitleBlock {
+    
+}
+
+
 /* Stripping down Kupu to the bare essentials */
 
 .kupu-tb-styles,

@@ -131,18 +131,18 @@
                         </td>
 
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                        <td>
+                        <td tal:define="lastComment conversation/getLastComment">
                           <tal:block condition="numComments">
-                             <a href="#" tal:attributes="href string:${conversation/absolute_url}#last">
+                             <a href="#" tal:attributes="href string:${conversation/absolute_url}#${lastComment/getId}">
                                <div i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
-                                         define="creator conversation/getLastCommentAuthor;
+                                         define="creator lastComment/Creator;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                               </div>
                             </a>                                                                                                                       
 
-                            <span class="discreet" tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                            <span class="discreet" tal:content="python:here.toPloneboardTime(lastComment.created())">
                                 Thursday 13:21
                             </span>
                           </tal:block>

@@ -65,7 +65,6 @@
       <div metal:use-macro="here/batch_macros/macros/navigation" />
     </div>
 
-    <a id="last"></a>
     <metal:block define-macro="quickreply">
       <tal:check define="firstcomment here/getFirstComment"
                  condition="python:checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
