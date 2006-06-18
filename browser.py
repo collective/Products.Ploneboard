@@ -39,8 +39,7 @@ class CommentViewableView(Five.BrowserView):
                 'canDelete': checkPermission(permissions.DeleteComment, comment),
                 'getObject': comment,
                 'workflowActions' : actions['workflow'],
-                'reviewStateTitle' :
-			self.plone_utils.getReviewStateTitleFor(comment),
+                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
                 'UID': comment.UID,
             }
 
