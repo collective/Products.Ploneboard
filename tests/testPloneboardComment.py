@@ -114,7 +114,14 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         
     def testDeleting(self):
         pass
-
+        
+    def testNewCommentIsVisibleToAnonymous(self):
+        comment = self.conv.addComment('subject2', 'body2')
+        id = comment.getId()
+        self.logout()
+        comments = self.conv.getComments()
+        self.failUnless(id in [x.getId() for x in comments])
+        
 class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):

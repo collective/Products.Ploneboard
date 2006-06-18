@@ -143,6 +143,14 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(conv.getNumberOfComments(), 1)
         self.failUnless(r.getId() in [v.getId for v in self.catalog(meta_type='PloneboardComment', id=r.getId())])
         
+    def testNewConversationIsVisibleToAnonymous(self):
+        conv = self.forum.addConversation('subject2', 'body2')
+        id = conv.getId()
+        self.logout()
+        convs = self.forum.getConversations()
+        self.failUnless(id in [x.getId() for x in convs])
+        comments = conv.getComments()
+        self.assertEqual(len(comments), 1)
         
 if __name__ == '__main__':
     framework()

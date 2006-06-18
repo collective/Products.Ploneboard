@@ -160,6 +160,7 @@ class PloneboardForum(BaseBTreeFolder):
         that implements the interface
         Alternatively use an interface that allows adapters
         """
+        
         id = self.generateId()
         kwargs.update({'title' : title,
                        'creators' : [creator],
@@ -167,6 +168,7 @@ class PloneboardForum(BaseBTreeFolder):
 
         conv = _createObjectByType('PloneboardConversation', self, id, **kwargs)
         conv.setCreators([creator])
+        
 
         if text is not None:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(), **kwargs)
@@ -179,6 +181,8 @@ class PloneboardForum(BaseBTreeFolder):
                     attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                     m.addAttachment(attachment)
 
+        catalog = getToolByName(self, PLONEBOARD_CATALOG)
+        catalog.reindexObject(conv)
         return conv
 
     security.declareProtected(ViewBoard, 'getConversation')
