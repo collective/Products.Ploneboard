@@ -147,7 +147,7 @@ def setupPloneboardCommentWorkflow(wf):
         new_state_id='retracted',
         actbox_name='Retract',
         #actbox_url='%(content_url)s/content_submit_form',
-        props={'guard_permissions':ApproveComment})
+        props={'guard_permissions':EditComment})
 
     wf.variables.setStateVar('review_state')
 

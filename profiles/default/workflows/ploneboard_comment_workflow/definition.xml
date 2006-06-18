@@ -181,7 +181,7 @@
              before_script="" after_script="">
   <action url="" category="workflow">Retract</action>
   <guard>
-   <guard-permission>Ploneboard: Approve Comment</guard-permission>
+   <guard-permission>Ploneboard: Edit Comment</guard-permission>
   </guard>
  </transition>
  <transition transition_id="submit"
