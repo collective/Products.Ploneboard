@@ -1,6 +1,17 @@
 from Products.PortalTransforms.interfaces import itransform
 import re
 
+hider = "##HIDE"
+schemematcher = re.compile ("(mailto|telnet|gopher|http|https|ftp)", re.I)
+hiddenschemematcher = re.compile ("(mailto|telnet|gopher|http|https|ftp)" + hider, re.I)
+elementmatcher = re.compile("<[^>]+>")
+emailRegexp = re.compile(r'["=]?(\b[A-Z0-9._%+=?\*^-]+@[A-Z0-9._%-]+\.[A-Z]{2,4}\b)', re.I|re.S|re.U)
+urlmatcher = re.compile(
+                    r"\b(?P<url>(?P<scheme>http|https|ftp|telnet|mailto|gopher):(?P<interfix>//)"
+                    r"(?:(?P<login>(?P<username>[a-zA-Z0-9]+)(?::(?P<password>[A-Za-z0-9]+))?)@)?"
+                    r"(?P<hostname>[A-Za-z0-9.-]+(?::(?P<port>[0-9]+))?)"
+                    r"(?P<path>[A-Za-z0-9@~_=?/.&;%#+-]*))", re.I)
+
 class URLToHyperlink:
     """transform which replaces urls and email into hyperlinks"""
 
@@ -9,13 +20,12 @@ class URLToHyperlink:
     __name__ = "url_to_hyperlink"
     output = "text/plain"
 
+
     def __init__(self, name=None, inputs=('text/plain',)):
         self.config = { 'inputs' : inputs, }
         self.config_metadata = {
             'inputs' : ('list', 'Inputs', 'Input(s) MIME type. Change with care.'),
             }
-        self.urlRegexp = re.compile(r'((?:ftp|https?)://(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?\.)+(?:com|edu|biz|org|gov|int|info|mil|net|name|museum|coop|aero|[a-z][a-z])\b(?:\d+)?(?:\/[^;"\'<>()\[\]{}\s\x7f-\xff]*(?:[.,?]+[^;"\'<>()\[\]{}\s\x7f-\xff]+)*)?)', re.I|re.S|re.U)
-        self.emailRegexp = re.compile(r'["=]?(\b[A-Z0-9._%-]+@[A-Z0-9._%-]+\.[A-Z]{2,4}\b)', re.I|re.S|re.U)
         if name:
             self.__name__ = name
             
@@ -29,25 +39,34 @@ class URLToHyperlink:
             return self.config['output']
         raise AttributeError(attr)
 
+    def linkify(input):
+        def hidescheme(match):
+            text=input[match.start():match.end()]
+            text=text.replace("@", "@"+hider)
+            return schemematcher.sub("\\1"+hider, text)
+
+        def replaceEmail(match):
+            url = match.groups()[0]
+            return '<a href="mailto:%s">%s</a>' % (url, url)
+
+        buf=elementmatcher.sub(hidescheme, input)
+        buf=urlmatcher.sub(r'<a href="\1">\1</a>', buf)
+        buf=emailRegexp.subn(replaceEmail, buf)[0]
+        buf=buf.replace(hider, "")
+        return buf
+    linkify=staticmethod(linkify)
+
     def convert(self, orig, data, **kwargs):
         text = orig
         if not isinstance(text, unicode):
             text = unicode(text, 'utf-8', 'replace')
         
-        # Replace hyperlinks with clickable <a> tags
-        def replaceURL(match):
-            url = match.groups()[0]
-            return '<a href="%s">%s</a>' % (url, url)
-        text = self.urlRegexp.subn(replaceURL, text)[0]
-        
-        # Replace email strings with mailto: links
-        def replaceEmail(match):
-            url = match.groups()[0]
-            return '<a href="mailto:%s">%s</a>' % (url, url)
-        text = self.emailRegexp.subn(replaceEmail, text)[0]
+        text = self.linkify(text)
     
         data.setData(text.encode('utf-8'))
         return data
 
 def register():
     return URLToHyperlink()
+
+__all__ = [ "URLToHyperlink", "register" ]
