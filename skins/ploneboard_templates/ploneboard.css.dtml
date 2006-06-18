@@ -52,6 +52,8 @@
     background-position: 5px 10px;
 }
 
+/* Comment */
+
 .boardComment {
     border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
     margin-bottom: 1em;
@@ -127,6 +129,14 @@
     margin: 0 0.5em 0.5em 0.5em;
 }
 
+/* Moderation */
+.moderationItem {
+    margin-top: 1em;
+}
+
+.moderationItem input {
+    margin-top: 0.5em;
+}
 
 /* Stripping down Kupu to the bare essentials */
 

@@ -17,15 +17,24 @@
          tal:define="results here/moderation_search;
                      DateTime python:modules['DateTime'].DateTime;">
 
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+          Document actions (print, sendto etc)
+        </div>
+
+        <h1 tal:content="here/Title">Context title</h1>
+        
         <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
 
-        <h1 tal:content="here/Title">Conversation title</h1>
         
         <!-- Search results -->
         
         <div tal:condition="results">
         
-            <p>Moderation</p>
+            <p>
+              The following comments are pending moderation. Please click
+              'Publish' or 'Reject' as necessary. Click the title of a comment
+              to view it in the context of its conversation.
+            </p>
             
             <p>
                 <a href="#"
@@ -35,12 +44,12 @@
             </p>
 
             <metal:block tal:repeat="result results">
-            <div class="even"
+            <div class="moderationItem even"
                  id="#"
                  tal:define="oddrow repeat/result/odd;
                              resultid string:seqno${repeat/result/number};
                              resulturl string:${result/absolute_url}/${template/id};" 
-                 tal:attributes="class python:test(oddrow, 'even', 'odd');
+                 tal:attributes="class python:test(oddrow, 'moderationItem even', 'moderationItem odd');
                                  id resultid;" >
 
 
@@ -80,14 +89,14 @@
 
                 <div tal:condition="python: result.portal_type == 'PloneboardComment'">
                     <a href="#" 
-                       tal:attributes="href resulturl">
+                       tal:attributes="href result/absolute_url">
                         <img src="#" 
                              height="16"
                              width="16"
                              alt=""
                          tal:on-error="structure python:path('here/linkOpaque.gif')"
                              tal:replace="structure python:path('here/%s' % result.getIcon())" /></a>
-                    <a href="#" tal:attributes="href resulturl"
+                    <a href="#" tal:attributes="href result/absolute_url"
                        tal:content="python:result.Title() or result.getId()" />
 
                     <div tal:content="result/Creator">Author</div>

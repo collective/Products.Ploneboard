@@ -22,7 +22,7 @@ query = {}
 query['sort_on'] = 'created'
 query['review_state'] = 'pending'
 query['portal_type'] = 'PloneboardComment'
-query['path'] = '/'+ '/'.join(context.getPhysicalPath()[1:])
+query['path'] = '/'.join(context.getPhysicalPath())
 
 reqget = context.REQUEST.get
 
@@ -32,7 +32,7 @@ def supplement_query(field, index_name=None, reqget=reqget, query=query):
     if val:
         query[index_name] = val
 
-catalogresult = context.getInternalCatalog()(REQUEST=query)
+catalogresult = context.ploneboard_catalog(query)
 
 if context.portal_type == 'PloneboardConversation' or len(catalogresult) < 100:
     return [r.getObject() for r in catalogresult]
@@ -41,7 +41,7 @@ result = []
 if context.portal_type == 'Ploneboard':
     for forum in context.contentValues('PloneboardForum'):
         query['path'] = '/'+ '/'.join(forum.getPhysicalPath()[1:])
-        forumresult = context.getInternalCatalog()(REQUEST=query)
+        forumresult = context.ploneboard_catalog(query)
         if len(forumresult) > 50:
             result.append(forum)
         else:
