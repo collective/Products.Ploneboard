@@ -1,3 +1,0 @@
-
-class MockObject(object):
-    pass
