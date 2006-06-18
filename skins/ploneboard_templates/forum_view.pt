@@ -117,18 +117,17 @@
                         </td>
                     
                         <td class="listingCheckbox"
-                            tal:condition="numComments">
-                            <span tal:content="numComments">
+                            tal:condition="python:numComments > 1">
+                            <span tal:content="python:numComments - 1">
                                 12 comments
                             </span>
                         </td>
 
                         <td class="listingCheckbox"
-                            tal:condition="not: numComments">
+                            tal:condition="python:numComments <= 1">
                             <span i18n:translate="no_replies_yet">
                             No replies yet
                             </span>
-
                         </td>
 
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
