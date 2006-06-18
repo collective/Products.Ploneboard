@@ -84,18 +84,24 @@
 
 .boardCommentActions {
     padding: 1em;
+    text-align: left;
+    float: left;
+    right: 1em;
+}
+
+.boardCommentActions form {
+    display: inline;
+}
+
+.boardCommentReplyActions {
+    padding: 1em;
     text-align: right;
     right: 1em;
 }
 
-
 .boardCommentPortrait {
     float: right; 
     margin-bottom: 1em;
-}
-
-.boardCommentHeaderActions {
-    float: right;
 }
 
 .boardConversation ul.topLevelComment {
@@ -106,6 +112,10 @@
     list-style: none;
 }
 
+.commentAttachments {
+    text-align: left;
+    margin: 0 0.5em 0.5em 0.5em;
+}
 
 /* Stripping down Kupu to the bare essentials */
 

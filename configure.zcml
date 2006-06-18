@@ -36,6 +36,7 @@
       name="delete_view"
       permission="Ploneboard.DeleteComment"
       />
+  
 
   <five:traversable
       class=".content.PloneboardConversation.PloneboardConversation"

@@ -51,27 +51,7 @@
         <a tal:attributes="name comment/getId"></a>
         <div class="boardCommentDetails" id="" 
              tal:attributes="id comment/getId;">
-             
-          <div class="boardCommentHeaderActions">
-            <a tal:condition="comment/canEdit"
-               tal:attributes="href string:${comment/absolute_url}/edit">
-              <img title="Edit this comment" alt="Edit this comment"
-                    i18n:attributes="title alt"
-                    tal:attributes="src string:${portal_url}/edit.gif"/>
-            </a>
-
-            <a onclick="#"
-               tal:condition="comment/canDelete"
-               tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
-               tal:attributes="href string:${comment/absolute_url}/delete_view;
-                               onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
-               i18n:attributes="title">
-                <img title="Delete this comment" alt="Delete this comment"
-                      i18n:attributes="title alt"
-                      tal:attributes="src string:${portal_url}/delete_icon.gif"/>
-            </a>
-          </div>
-
+          
           <div class="boardCommentHeaderTitleBlock">
             <h3 tal:content="comment/Title">Post title</h3>
             <img src="" 
@@ -112,6 +92,38 @@
         <div class="visualClear"></div>
 
         <div class="boardCommentActions">
+          
+          <form method="post"
+                tal:condition="comment/canEdit"
+                tal:attributes="action string:${comment/absolute_url}/edit">
+            <input class="context"
+                   type="submit"
+                   value="Edit"/>
+          </form>
+          <form method="post"
+                tal:repeat="action comment/workflowActions"
+                tal:attributes="action string:${comment/absolute_url}/content_status_modify">
+            <input type="hidden" name="workflow_action" tal:attributes="value action/id"/>
+            <input tal:attributes="value action/title"
+                   class="context"
+                   type="submit"
+                   />
+          </form>
+          <form method="post"
+                tal:condition="comment/canDelete"
+                tal:attributes="action string:${comment/absolute_url}/delete_view">
+            
+            <input tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
+                   tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                   onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                   class="destructive"
+                   type="submit"
+                   value="Delete"/>
+            
+          </form>
+        </div>
+        <div class="boardCommentReplyActions">
+          
           <form tal:condition="python:checkPermission('Ploneboard: Add Comment', here)"
                 tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
             <input class="standalone"
@@ -133,9 +145,9 @@
           </form>
         </div>
 
-        <fieldset tal:define="attachments comment/getAttachments"
-                  tal:condition="attachments"
-                  style="text-align: left;">
+        <fieldset class="commentAttachments"
+                  tal:define="attachments comment/getAttachments"
+                  tal:condition="attachments">
           <legend i18n:translate="legend_attachments">Attachments</legend>
           <ul class="visualNoMarker">
             <li tal:repeat="attachment attachments">

@@ -13,11 +13,10 @@ class CommentViewableView(Five.BrowserView):
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
 
-        self.portal_actions = cmf_utils.getToolByName(self.context,
-                                                        'portal_actions')
+        self.portal_actions = cmf_utils.getToolByName(self.context, 'portal_actions')
         self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
-        self.portal_membership = cmf_utils.getToolByName(self.context, 
-                                                         'portal_membership')
+        self.portal_membership = cmf_utils.getToolByName(self.context, 'portal_membership')
+        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
 
     def _buildDict(self, comment):
         """Produce a dict representative of all the important properties
@@ -39,6 +38,7 @@ class CommentViewableView(Five.BrowserView):
                 'canDelete': checkPermission(permissions.DeleteComment, comment),
                 'getObject': comment,
                 'workflowActions' : actions['workflow'],
+                'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),
                 'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
                 'UID': comment.UID,
             }

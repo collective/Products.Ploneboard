@@ -6,7 +6,7 @@ from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from permissions import ViewBoard, SearchBoard, ManageBoard, AddForum, ManageForum,\
      AddConversation, AddComment, EditComment, ManageConversation,\
-     ManageComment, ApproveComment, RequestReview
+     ManageComment, ApproveComment, RetractComment, RequestReview
 from Products.CMFCore.permissions import View, AccessContentsInformation, ModifyPortalContent
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.CMFCore.permissions import AddPortalContent
@@ -38,23 +38,23 @@ def setupPloneboardCommentWorkflow(wf):
     #******* Set up workflow states *******
     sdef = wf.states['initial']
     sdef.setProperties(
-        title='Initial state',
+        title='Being created',
         transitions=('submit', 'autosubmit',))
     # Inherit from forum
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(ViewBoard,    1, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(AddComment, 1, (r_manager,))
-    sdef.setPermission(AddPortalContent,   1, (r_manager,))
+    sdef.setPermission(AddComment, 0, (r_manager,))
+    sdef.setPermission(AddPortalContent,   0, (r_manager,))
 
     sdef = wf.states['pending']
     sdef.setProperties(
-        title='Waiting for reviewer',
+        title='Waiting for moderator',
         transitions=('publish', 'reject', 'autopublish',))
     # Nobody can reply when a comment is pending in case the comment is 'rejected'
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(EditComment,  0, (r_manager, r_owner, r_reviewer))
     # Acquire AddComment so that comment.notifyRetracted can be called. (It is protected
     # by AddComment.)
     sdef.setPermission(AddComment, 1, ())
@@ -74,8 +74,8 @@ def setupPloneboardCommentWorkflow(wf):
 
     sdef = wf.states['rejected']
     sdef.setProperties(
-        title='Non-visible and editable only by owner',
-        transitions=('submit', 'publish',))
+        title='Rejected',
+        transitions=('submit',))
     sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_owner))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager, r_owner))
@@ -87,9 +87,9 @@ def setupPloneboardCommentWorkflow(wf):
         title='Retracted',
         transitions=('publish', 'submit',))
     # Inherit from forum, enables private forums
-    sdef.setPermission(AccessContentsInformation,  1, (r_manager,))
-    sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer))
-    sdef.setPermission(EditComment,  0, (r_manager, r_owner))
+    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_reviewer, r_owner))
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
+    sdef.setPermission(EditComment,  0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(AddComment, 0, (r_manager,))
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
 
@@ -147,7 +147,7 @@ def setupPloneboardCommentWorkflow(wf):
         new_state_id='retracted',
         actbox_name='Retract',
         #actbox_url='%(content_url)s/content_submit_form',
-        props={'guard_permissions':EditComment})
+        props={'guard_permissions':RetractComment})
 
     wf.variables.setStateVar('review_state')
 
@@ -318,13 +318,12 @@ def setupPloneboardForumWorkflow(wf):
 
     for s in ('freeforall', 'memberposting', 'moderated', 'private'):
         wf.states.addState(s)
-    # removed make_modered transition until moderation is fixed - Rocky
-    #for t in ('make_freeforall', 'make_memberposting', 'make_moderated', 'make_private'):
-    for t in ('make_freeforall', 'make_memberposting', 'make_private'):
+    for t in ('make_freeforall', 'make_memberposting', 'make_moderated', 'make_private'):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for p in (AccessContentsInformation, ViewBoard, AddConversation, AddComment, AddPortalContent, ApproveComment):
+    for p in (AccessContentsInformation, ViewBoard, AddConversation, 
+                AddComment, AddPortalContent, ApproveComment, RetractComment):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('memberposting')
@@ -340,6 +339,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member))
     sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member))
+    sdef.setPermission(RetractComment,  0, ())
 
     sdef = wf.states['memberposting']
     sdef.setProperties(
@@ -351,6 +351,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 0, (r_manager, r_member))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_member))
+    sdef.setPermission(RetractComment,  0, ())
 
     sdef = wf.states['moderated']
     sdef.setProperties(
@@ -363,6 +364,7 @@ def setupPloneboardForumWorkflow(wf):
     # Give anon AddPortalContent, but know that they can only add comments here, and they will be moderated anyway
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_anon))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_reviewer))
+    sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer))
 
     sdef = wf.states['private']
     sdef.setProperties(
@@ -373,14 +375,13 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddConversation, 0, (r_manager, r_member))
     sdef.setPermission(AddComment, 0, (r_manager, r_member))
     sdef.setPermission(AddPortalContent,   0, (r_manager, r_member))
-    sdef.setPermission(ApproveComment,  0, (r_manager, r_member))
+    sdef.setPermission(ApproveComment,  0, ())
 
     # ***** Set up transitions *****
     tdef = wf.transitions['make_freeforall']
     tdef.setProperties(
         title='Make the forum free for all',
         new_state_id='freeforall',
-        # The publish_script is added to scripts folder by the Install script
         actbox_name='Make free-for-all',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':ManageForum})
@@ -389,26 +390,22 @@ def setupPloneboardForumWorkflow(wf):
     tdef.setProperties(
         title='Only let members post',
         new_state_id='memberposting',
-        # The make_unmoderated_script is added to scripts folder by the Install script
         actbox_name='Make member-posting',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':ManageForum})
 
-    # make_moderated transition disabled until moderation is fixed
-#    tdef = wf.transitions['make_moderated']
-#    tdef.setProperties(
-#        title='Make moderated',
-#        new_state_id='moderated',
-#        # The make_moderated_script is added to scripts folder by the Install script
-#        actbox_name='Make moderated',
-#        actbox_url='%(content_url)s/content_publish_form',
-#        props={'guard_permissions':ManageForum})
+    tdef = wf.transitions['make_moderated']
+    tdef.setProperties(
+        title='Make moderated',
+        new_state_id='moderated',
+        actbox_name='Make moderated',
+        actbox_url='%(content_url)s/content_publish_form',
+        props={'guard_permissions':ManageForum})
 
     tdef = wf.transitions['make_private']
     tdef.setProperties(
         title='Private closed board',
         new_state_id='private',
-        # The make_unmoderated_script is added to scripts folder by the Install script
         actbox_name='Make private',
         actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':ManageForum})
