@@ -52,7 +52,7 @@ class TestUrlTransform(PloneboardTestCase.PloneboardTestCase):
     def testEmail(self):
         testdata = [
                 ("test@example.com", '<a href="mailto:test@example.com">test@example.com</a>'),
-                ("<test@example.com", "<test@example.com>"),
+                ("<test@example.com>", "<test@example.com>"),
                 ]
         self.runTest(testdata)
 
