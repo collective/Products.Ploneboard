@@ -49,6 +49,14 @@ class TestUrlTransform(PloneboardTestCase.PloneboardTestCase):
         self.runTest(testdata)
 
 
+    def testEmail(self):
+        testdata = [
+                ("test@example.com", '<a href="mailto:test@example.com">test@example.com</a>'),
+                ("<test@example.com", "<test@example.com>"),
+                ]
+        self.runTest(testdata)
+
+
 if __name__ == '__main__':
     framework()
 else:
