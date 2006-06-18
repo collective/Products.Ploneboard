@@ -118,7 +118,7 @@ class PloneboardComment(BaseBTreeFolder):
             , 'properties'            : 'base_metadata'
             , 'sharing'               : 'folder_localrole_form'
             , 'discussion_reply_form' : 'add_comment_form'
-            , 'deleteDiscussion'      : 'retractComment'
+            , 'deleteDiscussion'      : 'delete_view'
         }
 
     _replies = None       # OIBTree: { id -> 1 }
