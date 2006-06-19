@@ -56,7 +56,10 @@
             <img src="" 
                  tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
             <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
-            <span tal:replace="python:creatorinfo and creatorinfo['fullname'] or creator">author</span> 
+            <a class="link-plain"
+               tal:attributes="href string:${portal_url}/author/${creator}"
+               tal:omit-tag="not:creatorinfo"
+               tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
             <span i18n:translate="text_at" tal:omit-tag="">at</span>
             <span tal:replace="python:here.toPloneboardTime(creation_date)">Thursday 13:21</span>
           </div>
