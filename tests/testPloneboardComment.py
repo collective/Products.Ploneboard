@@ -36,6 +36,25 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         reply = comment.addReply('reply1', 'body1')
         self.failUnless(reply in conv.objectValues())
     
+    def testAddReplyAddsRe(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        reply = comment.addReply('', 'body1')
+        self.assertEqual(reply.Title(), 'Re: ' + conv.Title())
+        
+    def testAddReplyAddsReOnlyOnce(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        reply = comment.addReply('', 'body1')
+        reply2 = reply.addReply('', 'body2')
+        self.assertEqual(reply2.Title(), 'Re: ' + conv.Title())
+        
+    def testAddReplyOnlyAddsReIfNotSet(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        reply = comment.addReply('reply1', 'body1')
+        self.assertEqual(reply.Title(), 'reply1')
+    
     def testInReplyTo(self):
         comment = self.conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')

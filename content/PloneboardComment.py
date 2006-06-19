@@ -160,6 +160,8 @@ class PloneboardComment(BaseBTreeFolder):
         id = conv.generateId()
         if not title:
             title = conv.Title()
+            if not title.lower().startswith('re:'):
+                title = 'Re: ' + title
         kwargs = {'title' : title,
                   'creators' : [creator],
                   'text' : text,
