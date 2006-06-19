@@ -27,9 +27,10 @@ AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
 ManageComment = 'Ploneboard: Manage Comment'
 ApproveComment = 'Ploneboard: Approve Comment' # Used for moderation
 RetractComment = 'Ploneboard: Retract Comment'
+ModerateForum = 'Ploneboard: Moderate Forum'
 
 # Note: if this changes, you must also change configure.zcml!
-DeleteComment = permissions.ManagePortal 
+DeleteComment = permissions.DeleteObjects 
 
 
 # Set up default roles for permissions
@@ -68,3 +69,6 @@ setDefaultRoles(ApproveComment,
 
 setDefaultRoles(RetractComment,
                 ('Manager',))
+
+setDefaultRoles(ModerateForum,
+                ('Manager', 'Reviewer',))

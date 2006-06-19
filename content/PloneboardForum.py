@@ -33,7 +33,7 @@ from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-     AddForum, ManageForum, ManageBoard, AddConversation
+     AddForum, ManageForum, ManageBoard, AddConversation, ModerateForum
 from PloneboardConversation import PloneboardConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation
     
@@ -112,7 +112,17 @@ class PloneboardForum(BaseBTreeFolder):
             , 'name'        : 'RSS Feed'
             , 'action'      : 'string:$object_url/rss-properties'
             , 'permissions' : (ManageBoard,)
-            }
+            },
+            { 'id'          : 'local_roles'
+            , 'name'        : 'Sharing'
+            , 'action'      : 'string:$object_url/sharing'
+            , 'permissions' : (ManageBoard,)
+            },
+            { 'id'          : 'moderate'
+            , 'name'        : 'Moderate'
+            , 'action'      : 'string:$object_url/moderate'
+            , 'permissions' : (ModerateForum,)
+            },
         )
 
     aliases = \
@@ -122,7 +132,8 @@ class PloneboardForum(BaseBTreeFolder):
               'edit'           : 'base_edit',
               'properties'     : 'base_metadata',
               'sharing'        : 'folder_localrole_form',
-              'rss-properties' : 'editSynProperties'
+              'rss-properties' : 'editSynProperties',
+              'moderate'       : 'moderation_form',
         }
 
     security = ClassSecurityInfo()

@@ -102,22 +102,16 @@
                     <div tal:content="result/Creator">Author</div>
                     <div tal:content="result/Description">Description</div>
     
-                    <div>
+                    <div class="moderationActions">
                         <!-- Iterate over workflow transitions and make a button for each -->
-                        <form class="group" onsubmit="return false;">
-                            <tal:transition repeat="transition python:here.portal_workflow.getTransitionsFor(result, here)">
-                                <input class="context"
-                                       type="submit" 
-                                       value="#" 
-                                       name="#"
-                                       tabindex=""
-                                       onclick="#"
-                                       i18n:attributes="value"
-                                       tal:define="hId here/getId"
-                                       tal:attributes="onclick python:'moderate(\'%s\', \'%s\', \'%s\')' % ('/'.join(here.portal_url.getRelativeContentPath(result)), transition.get('id'), resultid);
-                                                       value transition/name;
-                                                       tabindex tabindex/next;" />
-                            </tal:transition>
+                        <form method="post"
+                              tal:repeat="action python:atool.listFilteredActionsFor(result)['workflow']"
+                              tal:attributes="action string:${result/absolute_url}/moderateComment">
+                          <input type="hidden" name="action" tal:attributes="value action/id"/>
+                          <input tal:attributes="value action/title"
+                                 class="context"
+                                 type="submit"
+                                 />
                         </form>
                     </div>
                 </div>
@@ -128,11 +122,6 @@
         <div tal:condition="not:results">
             <p i18n:translate="no_comments_queued">
                 There are no comments in the moderation queue.
-            </p>
-            <p>
-                <a href="#"
-                   tal:attributes="href python:here.getBoard().absolute_url()"
-                   tal:content="python:here.getBoard().Title()">Up</a>
             </p>
         </div>
 

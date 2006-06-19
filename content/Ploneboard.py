@@ -27,7 +27,7 @@ except ImportError:
 from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
 from Products.Ploneboard import PloneboardCatalog
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-    AddBoard, AddForum, ManageBoard, AddAttachment  
+    AddBoard, AddForum, ManageBoard, AddAttachment, ModerateForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
 
@@ -86,6 +86,11 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             , 'action'      : 'string:$object_url/properties'
             , 'permissions' : (ModifyPortalContent,)
             },
+            { 'id'          : 'moderate'
+            , 'name'        : 'Moderate'
+            , 'action'      : 'string:$object_url/moderate'
+            , 'permissions' : (ModerateForum,)
+            },
         )
 
     aliases = \
@@ -96,6 +101,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             'properties' : 'base_metadata',
             'sharing'    : 'folder_localrole_form',
             'index.html' : '(dynamic view)',
+            'moderate'   : 'moderation_form',
         }
 
     security = ClassSecurityInfo()

@@ -36,6 +36,7 @@ class CommentViewableView(Five.BrowserView):
                 'getAttachments': comment.getAttachments(),
                 'canEdit': checkPermission(permissions.EditComment, comment),
                 'canDelete': checkPermission(permissions.DeleteComment, comment),
+                'canReply': checkPermission(permissions.AddComment, comment),
                 'getObject': comment,
                 'workflowActions' : actions['workflow'],
                 'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),

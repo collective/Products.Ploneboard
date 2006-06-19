@@ -129,6 +129,10 @@
     margin: 0 0.5em 0.5em 0.5em;
 }
 
+.state-rejected {
+    color: &dtml-discreetColor;;
+}
+
 /* Moderation */
 .moderationItem {
     margin-top: 1em;
@@ -136,6 +140,10 @@
 
 .moderationItem input {
     margin-top: 0.5em;
+}
+
+.moderationActions form {
+    display: inline;
 }
 
 /* Stripping down Kupu to the bare essentials */

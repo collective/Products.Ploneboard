@@ -5,7 +5,7 @@
 
   <permission
     id="Ploneboard.DeleteComment"
-    title="Manage portal"
+    title="Delete objects"
     />
 
   <adapter 

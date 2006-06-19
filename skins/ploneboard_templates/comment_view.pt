@@ -109,10 +109,10 @@
                    type="submit"
                    value="Delete"/>
           </form>
-           <form method="post"
+          <form method="post"
                 tal:repeat="action comment/workflowActions"
-                tal:attributes="action string:${comment/absolute_url}/content_status_modify">
-            <input type="hidden" name="workflow_action" tal:attributes="value action/id"/>
+                tal:attributes="action string:${comment/absolute_url}/moderateComment">
+            <input type="hidden" name="action" tal:attributes="value action/id"/>
             <input tal:attributes="value action/title"
                    class="standalone"
                    type="submit"
@@ -121,7 +121,7 @@
         </div>
         <div class="boardCommentReplyActions">
           
-          <form tal:condition="python:checkPermission('Ploneboard: Add Comment', here)"
+          <form tal:condition="comment/canReply"
                 tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
             <input class="standalone"
                    type="submit" 
@@ -141,6 +141,8 @@
                    />
           </form>
         </div>
+        
+        <div class="visualClear"><!----></div>
 
         <fieldset class="commentAttachments"
                   tal:define="attachments comment/getAttachments"

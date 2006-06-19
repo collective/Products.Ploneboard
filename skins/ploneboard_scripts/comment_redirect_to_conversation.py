@@ -13,8 +13,12 @@ redirect_target = context.getConversation()
 view = redirect_target.getTypeInfo().getActionById('view')
 anchor = context.id
   
-context.REQUEST['RESPONSE'].redirect( redirect_target.absolute_url()
-     + '/%s#%s' % (view, anchor) )
+response = context.REQUEST.get('RESPONSE', None)
+if response is not None:
+  
+    context.REQUEST['RESPONSE'].redirect( redirect_target.absolute_url()
+         + '/%s#%s' % (view, anchor) )
 
-print "Redirecting to %s" % redirect_target.absolute_url()
-return printed
+    print "Redirecting to %s" % redirect_target.absolute_url()
+    return printed
+    

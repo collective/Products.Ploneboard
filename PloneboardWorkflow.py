@@ -5,8 +5,8 @@ from Products.Ploneboard.config import GLOBALS
 from Products.CMFCore.WorkflowTool import addWorkflowFactory
 from Products.DCWorkflow.DCWorkflow import DCWorkflowDefinition
 from permissions import ViewBoard, SearchBoard, ManageBoard, AddForum, ManageForum,\
-     AddConversation, AddComment, EditComment, ManageConversation,\
-     ManageComment, ApproveComment, RetractComment, RequestReview
+     AddConversation, AddComment, EditComment, ManageConversation, DeleteComment, \
+     ManageComment, ApproveComment, RetractComment, RequestReview, ModerateForum
 from Products.CMFCore.permissions import View, AccessContentsInformation, ModifyPortalContent
 from Products.DCWorkflow.Transitions import TRIGGER_AUTOMATIC
 from Products.CMFCore.permissions import AddPortalContent
@@ -30,7 +30,7 @@ def setupPloneboardCommentWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for p in (AccessContentsInformation, ViewBoard, EditComment, AddComment, AddPortalContent):
+    for p in (AccessContentsInformation, ViewBoard, EditComment, AddComment, AddPortalContent, DeleteComment):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('initial')
@@ -44,8 +44,9 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
-    sdef.setPermission(AddComment, 0, (r_manager,))
+    sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
+    sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
     sdef = wf.states['pending']
     sdef.setProperties(
@@ -57,9 +58,10 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(EditComment,  0, (r_manager, r_owner, r_reviewer))
     # Acquire AddComment so that comment.notifyRetracted can be called. (It is protected
     # by AddComment.)
-    sdef.setPermission(AddComment, 1, ())
+    sdef.setPermission(AddComment, 0, ())
     # But do not acquire AddPortalContent in order to stop anyone actually replying.
     sdef.setPermission(AddPortalContent,   0, ())
+    sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
     sdef = wf.states['published']
     sdef.setProperties(
@@ -71,16 +73,18 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(EditComment,  0, (r_manager, r_owner))
     sdef.setPermission(AddComment, 1, (r_manager,))
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
+    sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
     sdef = wf.states['rejected']
     sdef.setProperties(
         title='Rejected',
         transitions=('submit',))
-    sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_owner))
-    sdef.setPermission(ViewBoard,    0, (r_manager, r_owner))
+    sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  0, (r_manager, r_owner))
-    sdef.setPermission(AddComment, 0, (r_manager,))
+    sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
+    sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
     sdef = wf.states['retracted']
     sdef.setProperties(
@@ -90,9 +94,9 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager, r_reviewer, r_owner))
-    sdef.setPermission(AddComment, 0, (r_manager,))
+    sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
-
+    sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
     # ***** Set up transitions *****
     tdef = wf.transitions['publish']
@@ -208,9 +212,9 @@ def setupPloneboardConversationWorkflow(wf):
     """ Sets up a workflow for Ploneboard Conversations """
     wf.setProperties(title='Ploneboard Conversation Workflow [Ploneboard]')
 
-    for s in ('pending', 'active', 'locked'):
+    for s in ('pending', 'active', 'locked', 'rejected'):
         wf.states.addState(s)
-    for t in ('lock', 'make_active'):
+    for t in ('lock', 'publish', 'reject'):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
@@ -223,7 +227,7 @@ def setupPloneboardConversationWorkflow(wf):
     sdef = wf.states['pending']
     sdef.setProperties(
         title='Pending state',
-        transitions=('make_active',))
+        transitions=('publish', 'reject',))
     # This state just inherits everything from the forum workflow
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
@@ -245,13 +249,25 @@ def setupPloneboardConversationWorkflow(wf):
     sdef = wf.states['locked']
     sdef.setProperties(
         title='Locked',
-        transitions=('make_active',))
+        transitions=('publish',))
     # Acquire view permissions, as we want the forum state to apply here.
     # Only let the 'special people' make any changes
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    1, ())
     sdef.setPermission(EditComment,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
+    sdef.setPermission(AddPortalContent, 0, ())
+
+    sdef = wf.states['rejected']
+    sdef.setProperties(
+        title='Rejected',
+        transitions=('publish',))
+    # This state just inherits everything from the forum workflow
+    sdef.setPermission(AccessContentsInformation,  1, ())
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
+    sdef.setPermission(EditComment,  0, (r_manager, r_owner))
+    sdef.setPermission(AddComment, 0, ())
+    sdef.setPermission(AddPortalContent,   0, ())
 
     # ***** Set up transitions *****
     tdef = wf.transitions['lock']
@@ -262,11 +278,19 @@ def setupPloneboardConversationWorkflow(wf):
         #actbox_url='%(content_url)s/content_publish_form',
         props={'guard_permissions':ManageConversation})
 
-    tdef = wf.transitions['make_active']
+    tdef = wf.transitions['publish']
     tdef.setProperties(
         title='Reviewer returns conversation to active',
         new_state_id='active',
         actbox_name='Activate',
+        #actbox_url='%(content_url)s/content_reject_form',
+        props={'guard_permissions':ApproveComment})
+
+    tdef = wf.transitions['reject']
+    tdef.setProperties(
+        title='Reviewer rejects pending conversation',
+        new_state_id='rejected',
+        actbox_name='Reject',
         #actbox_url='%(content_url)s/content_reject_form',
         props={'guard_permissions':ApproveComment})
 
@@ -323,7 +347,7 @@ def setupPloneboardForumWorkflow(wf):
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
     for p in (AccessContentsInformation, ViewBoard, AddConversation, 
-                AddComment, AddPortalContent, ApproveComment, RetractComment):
+                AddComment, AddPortalContent, ApproveComment, RetractComment, ModerateForum,):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('memberposting')
@@ -340,6 +364,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member))
     sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member))
     sdef.setPermission(RetractComment,  0, ())
+    sdef.setPermission(ModerateForum,  0, ())
 
     sdef = wf.states['memberposting']
     sdef.setProperties(
@@ -352,6 +377,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_member))
     sdef.setPermission(RetractComment,  0, ())
+    sdef.setPermission(ModerateForum,  0, ())
 
     sdef = wf.states['moderated']
     sdef.setProperties(
@@ -365,6 +391,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_anon))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer))
+    sdef.setPermission(ModerateForum,  0, (r_manager, r_reviewer))
 
     sdef = wf.states['private']
     sdef.setProperties(
@@ -376,6 +403,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 0, (r_manager, r_member))
     sdef.setPermission(AddPortalContent,   0, (r_manager, r_member))
     sdef.setPermission(ApproveComment,  0, ())
+    sdef.setPermission(ModerateForum,  0, ())
 
     # ***** Set up transitions *****
     tdef = wf.transitions['make_freeforall']
