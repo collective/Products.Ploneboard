@@ -193,7 +193,6 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
 
 
         # Now lets start adding some comments:
-
         first_comment = self.conv.getFirstComment()
         c1 = first_comment.addReply('foo1', 'bar1')
         c2 = first_comment.addReply('foo2', 'bar2')

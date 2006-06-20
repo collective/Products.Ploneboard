@@ -24,8 +24,7 @@ try:
 except ImportError:
     ISelectableBrowserDefault = fromZ2Interface(ZopeTwoISelectableBrowserDefault)
 
-from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
-from Products.Ploneboard import PloneboardCatalog
+from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
     AddBoard, AddForum, ManageBoard, AddAttachment, ModerateForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
@@ -106,6 +105,9 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
 
     security = ClassSecurityInfo()
     
+    def getCatalog(self):
+        return getToolByName(self, 'portal_catalog')
+
     security.declareProtected(ManageBoard, 'edit')
     def edit(self, **kwargs):
         """Alias for update()
@@ -141,16 +143,17 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getForums')
     def getForums(self, sitewide=False):
         """Return all the forums in this board."""
-        query = {'object_implements':'IForum'}
+        query = {'object_implements':'Products.Ploneboard.interfaces.IForum'}
         if not sitewide:
             query['path'] = '/'.join(self.getPhysicalPath())
-        return [f.getObject() for f in getToolByName(self, PLONEBOARD_CATALOG)(query)]
+        return [f.getObject() for f in self.getCatalog()(query)]
 
 
     security.declareProtected(ViewBoard, 'getForumIds')
     def getForumIds(self):
         """Return all the forums in this board."""
-        return [f.getId for f in getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IForum')]
+        return [f.getId for f in self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IForum')]
 
     security.declareProtected(ManageBoard, 'removeForum')
     def removeForum(self, forum_id):
@@ -160,14 +163,15 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(SearchBoard, 'searchComments')
     def searchComments(self, query):
         """This method searches through all forums, conversations and comments."""
-        # XXX Use the global board catalog for this
-        return getToolByName(self, PLONEBOARD_CATALOG)(**query)
+        return self.getCatalog()(**query)
     
     security.declarePublic('getForum')
     def getForum(self, forum_id):
         """Returns forum with specified forum id."""
         #return getattr(self, forum_id, None)
-        forums = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IForum', getId=forum_id)
+        forums = self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IForum',
+		getId=forum_id)
         if forums:
             return forums[0].getObject()
         else:

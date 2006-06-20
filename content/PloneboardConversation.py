@@ -22,7 +22,7 @@ from Products.CMFCore.permissions import ModifyPortalContent
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget
-from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
+from Products.Ploneboard.config import PROJECTNAME
 
 from Products.CMFPlone.utils import _createObjectByType
 
@@ -124,6 +124,9 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
     security = ClassSecurityInfo()
     
+    def getCatalog(self):
+        return getToolByName(self, 'portal_catalog')
+
     security.declareProtected(ManageConversation, 'edit')
     def edit(self, **kwargs):
         """Alias for update()
@@ -178,7 +181,9 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     def getComment(self, comment_id, default=None):
         """Returns the comment with the specified id."""
         #return self._getOb(comment_id, default)
-        comments = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', getId=comment_id)
+        comments = self.getCatalog()(
+                object_implements='Products.Ploneboard.interfaces.IComment',
+                getId=comment_id)
         if comments:
             return comments[0].getObject()
         else:
@@ -190,12 +195,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
-        query = {'object_implements' : 'IComment',
+        query = {'object_implements' : 'Products.Ploneboard.interfaces.IComment',
                  'sort_on'           : 'created',
                  'sort_limit'        : (offset+limit),
                  'path'              : '/'.join(self.getPhysicalPath()),}
         query.update(kw)
-        catalog=getToolByName(self, PLONEBOARD_CATALOG)
+        catalog=self.getCatalog()
         return [f.getObject() for f in catalog(**query)[offset:offset+limit]]
         
     security.declareProtected(ViewBoard, 'getNumberOfComments')
@@ -203,7 +208,9 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         Returns the number of comments in this conversation.
         """
-        return len(getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', path='/'.join(self.getPhysicalPath())))
+        return len(self.getCatalog()(
+            object_implements='Products.Ploneboard.interfaces.IComment',
+            path='/'.join(self.getPhysicalPath())))
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
@@ -234,8 +241,10 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Returns None if there is no comment
         """
 
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', \
-                sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+        res = self.getCatalog()(
+                object_implements='Products.Ploneboard.interfaces.IComment', \
+                sort_on='created', sort_order='reverse', sort_limit=1,
+                path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].getObject()
         return None
@@ -255,7 +264,10 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         See IConversation.getFirstComment.__doc__
         """
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+        res = self.getCatalog()(
+                object_implements='Products.Ploneboard.interfaces.IComment',
+                sort_on='created', sort_limit=1,
+                path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].getObject()
         else:

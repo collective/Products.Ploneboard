@@ -23,7 +23,7 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import RichWidget, ReferenceWidget
 from Products.Archetypes.utils import shasattr
 
-from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, PLONEBOARD_CATALOG, REPLY_RELATIONSHIP
+from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, REPLY_RELATIONSHIP
 
 from Products.CMFPlone.utils import _createObjectByType
 

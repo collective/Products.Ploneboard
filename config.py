@@ -8,7 +8,6 @@ URL_TRANSFORM_MODULE = 'Products.Ploneboard.transforms.url_to_hyperlink'
 PLONEBOARD_TRANSFORMSCHAIN_ID = 'ploneboard_chain'
 
 PLONEBOARD_TOOL = 'portal_ploneboard'
-PLONEBOARD_CATALOG = 'ploneboard_catalog'
 
 REPLY_RELATIONSHIP = 'ploneboard_reply_to'
 # This should be configurable ttw

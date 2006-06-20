@@ -31,7 +31,7 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget
 from Products.Archetypes.public import DisplayList
 
-from Products.Ploneboard.config import PROJECTNAME, PLONEBOARD_CATALOG
+from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
      AddForum, ManageForum, ManageBoard, AddConversation, ModerateForum
 from PloneboardConversation import PloneboardConversation
@@ -138,6 +138,9 @@ class PloneboardForum(BaseBTreeFolder):
 
     security = ClassSecurityInfo()
     
+    def getCatalog(self):
+        return getToolByName(self, 'portal_catalog')
+
     security.declareProtected(ManageForum, 'edit')
     def edit(self, **kwargs):
         """Alias for update()
@@ -157,10 +160,7 @@ class PloneboardForum(BaseBTreeFolder):
             if hasattr(obj, 'portal_type') and obj.portal_type not in stoptypes:
                 if IPloneboard.providedBy(obj):
                     return obj
-        # Try nearest
-        boards = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IPloneboard')
-        if boards:
-            return boards[0].getObject()
+
         return None
 
     security.declareProtected(AddConversation, 'addConversation')
@@ -192,18 +192,17 @@ class PloneboardForum(BaseBTreeFolder):
                     attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                     m.addAttachment(attachment)
 
-        catalog = getToolByName(self, PLONEBOARD_CATALOG)
-        catalog.reindexObject(conv)
         return conv
 
     security.declareProtected(ViewBoard, 'getConversation')
     def getConversation(self, conversation_id, default=None):
         """Returns the conversation with the given conversation id."""
         #return self._getOb(conversation_id, default)
-        catalog = getToolByName(self, PLONEBOARD_CATALOG)
-        conversations = catalog(object_implements='IConversation', 
-                                getId=conversation_id, 
-                                path='/'.join(self.getPhysicalPath()))
+        catalog = self.getCatalog()
+        conversations = catalog(
+		object_implements='Products.Ploneboard.interfaces.IConversation', 
+		getId=conversation_id, 
+		path='/'.join(self.getPhysicalPath()))
         if conversations:
             return conversations[0].getObject()
         else:
@@ -217,23 +216,28 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getConversations')
     def getConversations(self, limit=20, offset=0):
         """Returns conversations."""
-        catalog = getToolByName(self, PLONEBOARD_CATALOG)
+        catalog = self.getCatalog()
         return [f.getObject() for f in \
-                catalog(object_implements='IConversation', 
-                        sort_on='modified', 
-                        sort_order='reverse', 
-                        sort_limit=(offset+limit), 
-                        path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+                catalog(
+		object_implements='Products.Ploneboard.interfaces.IConversation', 
+		sort_on='modified', 
+		sort_order='reverse', 
+		sort_limit=(offset+limit), 
+		path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):
         """Returns the number of conversations in this forum."""
-        return len(getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', path='/'.join(self.getPhysicalPath())))
+        return len(self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IConversation',
+		path='/'.join(self.getPhysicalPath())))
 
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
         """Returns the number of comments to this forum."""
-        return len(getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', path='/'.join(self.getPhysicalPath())))
+        return len(self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IComment',
+		path='/'.join(self.getPhysicalPath())))
 
     security.declareProtected(ViewBoard, 'getLastConversation')
     def getLastConversation(self):
@@ -241,7 +245,10 @@ class PloneboardForum(BaseBTreeFolder):
         Returns the last conversation.
         """
         # XXX Is Created or Modified the most interesting part? Assuming conversation is modified when a comment is added
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IConversation', sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+        res = self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IConversation',
+		sort_on='created', sort_order='reverse', sort_limit=1,
+		path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].getObject()
         else:
@@ -253,7 +260,10 @@ class PloneboardForum(BaseBTreeFolder):
         Returns a DateTime corresponding to the timestamp of the last comment 
         for the forum.
         """
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+        res = self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IComment',
+		sort_on='created', sort_order='reverse', sort_limit=1,
+		path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].created
         else:
@@ -264,7 +274,10 @@ class PloneboardForum(BaseBTreeFolder):
         """
         Returns the name of the author of the last comment.
         """
-        res = getToolByName(self, PLONEBOARD_CATALOG)(object_implements='IComment', sort_on='created', sort_order='reverse', sort_limit=1, path='/'.join(self.getPhysicalPath()))
+        res = self.getCatalog()(
+		object_implements='Products.Ploneboard.interfaces.IComment',
+		sort_on='created', sort_order='reverse', sort_limit=1,
+		path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].Creator
         else:

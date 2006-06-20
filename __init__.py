@@ -7,7 +7,6 @@ from Products.Archetypes.public import process_types, listTypes
 from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
-from Products.Ploneboard.PloneboardCatalog import PloneboardCatalog
 try:
     from Products.CMFPlone.interfaces import IPloneSiteRoot
     from Products.GenericSetup import EXTENSION, profile_registry
@@ -17,8 +16,8 @@ except ImportError:
 
 import sys, os, os.path
 
-
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
+import catalog
 
 # PloneboardWorkflow requires GLOBALS
 import PloneboardWorkflow
@@ -35,7 +34,7 @@ def initialize(context):
     # utils will magically point to Ploneboard.utils
     from Products.CMFCore import utils
     utils.ToolInit('Ploneboard Tool', 
-            tools=(PloneboardTool, PloneboardCatalog ), 
+            tools=(PloneboardTool,), 
             icon='tool.gif'
             ).initialize(context)
 

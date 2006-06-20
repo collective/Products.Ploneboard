@@ -27,7 +27,7 @@ import string
 from Products.Archetypes.public import listTypes, process_types
 from Products.Archetypes.ArchetypeTool import getType
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
-from Products.Ploneboard.config import PLONEBOARD_TOOL, PLONEBOARD_CATALOG, PROJECTNAME, GLOBALS
+from Products.Ploneboard.config import PLONEBOARD_TOOL, PROJECTNAME, GLOBALS
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, URL_TRANSFORM_MODULE
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
@@ -54,11 +54,11 @@ def addPloneboardTool(self, out):
         addTool('Ploneboard Tool')
         out.write('Added Ploneboard Tool\n')
 
-def addPloneboardCatalog(self, out):
-    if not hasattr(self, PLONEBOARD_CATALOG):
-        addTool = self.manage_addProduct['Ploneboard'].manage_addTool
-        addTool('Ploneboard Catalog')
-        out.write('Added Ploneboard Tool\n')
+def addCatalogIndices(self, out):
+    pc=getToolByName(self, 'portal_catalog')
+    if not pc.Indexes.hasObject('object_implements'):
+        pc.addIndex('object_implements', 'KeywordIndex')
+        out.write('Added object_implements index to portal_catalog')
 
 def registerNavigationTreeSettings(self, out):
     data = ['PloneboardConversation','PloneboardComment']
@@ -72,16 +72,6 @@ def registerNavigationTreeSettings(self, out):
             if t not in mdntl:
                 mdntl.append(t)
         p._updateProperty('metaTypesNotToList', mdntl)
-
-def registerWithPloneboardCatalog(self, out):
-    from Products.Ploneboard.config import PLONEBOARD_CATALOG
-    attool = getToolByName(self, 'archetype_tool')
-    typeslist = listTypes(PROJECTNAME)
-    for portal_type in [ti['portal_type'] for ti in typeslist]:
-        catalogs = [x.getId() for x in attool.getCatalogsByType(portal_type)]
-        if PLONEBOARD_CATALOG not in catalogs:
-            catalogs.append(PLONEBOARD_CATALOG)
-            attool.setCatalogsByType(portal_type, catalogs)
 
 def setupPloneboardWorkflow(self, out):
     wf_tool=getToolByName(self, 'portal_workflow')
@@ -180,12 +170,11 @@ def install(self):
     out = StringIO()
 
     addPloneboardTool(self, out)
-    addPloneboardCatalog(self, out)
+    addCatalogIndices(self, out)
 
     installTypes(self, out, listTypes(PROJECTNAME), PROJECTNAME)
     install_subskin(self, out, GLOBALS)
 
-    registerWithPloneboardCatalog(self, out)
     registerNavigationTreeSettings(self, out)
     registerTypesWithPortalFactory(self, out)
 
