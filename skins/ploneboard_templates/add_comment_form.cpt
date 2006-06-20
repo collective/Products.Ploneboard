@@ -49,8 +49,8 @@
             <div class="field"
                  id="archetypes-fieldname-title"
                  tal:define="error_title errors/title|nothing;
-                             parentTitle context/Title;
-                             Title request/title | python:test(parentTitle.lower().startswith('re:'), parentTitle, 'Re: ' + parentTitle);"
+                             Title request/title | nothing;
+                             Title python:Title and (Title.lower().startswith('re:') and Title or  'Re: '+Title) or None;"
                  tal:attributes="class python:test(error_title, 'field error', 'field')"> 
 
               <label for="title" i18n:translate="label_title_posting">Title</label>

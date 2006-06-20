@@ -47,7 +47,8 @@
 
         <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
               tal:condition="canStartConverstation">
-              <input class="standalone"
+              <input
+                  class="standalone"
                   i18n:attributes="value start_new_conversation"
                   type="submit" 
                   value="Start a new Conversation" />

@@ -126,6 +126,7 @@
           
           <form tal:condition="comment/canReply"
                 tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
+            <input type="hidden" name="title" value="" tal:attributes="value comment/Title"/>
             <input class="standalone"
                    type="submit" 
                    value="Reply" 
