@@ -39,27 +39,17 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
             self.failUnless(content_type in portal_types)
 
     def testTools(self):
-        from Products.Ploneboard.config import PLONEBOARD_TOOL, PLONEBOARD_CATALOG
+        from Products.Ploneboard.config import PLONEBOARD_TOOL
         tool_names = (
-            PLONEBOARD_TOOL, 
-            PLONEBOARD_CATALOG,
+            PLONEBOARD_TOOL,
             )
         for tool_name in tool_names:
             self.failUnless(tool_name in self.portal.objectIds())
 
     def testObjectImplements(self):
-        from Products.Ploneboard.PloneboardCatalog import object_implements
-        from Products.Ploneboard.config import PLONEBOARD_CATALOG
-        mt = getattr(self.portal, PLONEBOARD_CATALOG)
+        from Products.Ploneboard.catalog import object_implements
+        mt = getToolByName(self.portal, 'portal_catalog')
         self.failUnlessEqual(object_implements(mt, self.portal), object_implements(self.portal.portal_catalog, self.portal))
-
-    def testCatalogMultiplex(self):
-        from Products.Ploneboard.config import PLONEBOARD_CATALOG
-        attool = getToolByName(self.portal, 'archetype_tool')
-        for portal_type in ['Ploneboard', 'PloneboardComment', 'PloneboardConversation', 'PloneboardForum']:
-            catalogs = [x.getId() for x in attool.getCatalogsByType(portal_type)]
-            self.failUnless(PLONEBOARD_CATALOG in catalogs)
-            self.failUnless('portal_catalog' in catalogs)
 
     def testPortalFactorySetup(self):
         portal_factory = getToolByName(self.portal, 'portal_factory') 
