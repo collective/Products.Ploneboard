@@ -150,15 +150,15 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         request = self.REQUEST
 
         sdm = getToolByName(self, 'session_data_manager', None)
-        hassession = sdm.hasSessionData()
-
-        if hassession:
-            old_filelist = request.SESSION.get('ploneboard_uploads', None)
-            if old_filelist is not None:
-                for file in old_filelist:
-                    if request.SESSION.has_key(file):
-                        del request.SESSION[file]
-                del request.SESSION['ploneboard_uploads']
+        
+        if sdm is not None:
+            if sdm.hasSessionData():
+                old_filelist = request.SESSION.get('ploneboard_uploads', None)
+                if old_filelist is not None:
+                    for file in old_filelist:
+                        if request.SESSION.has_key(file):
+                            del request.SESSION[file]
+                    del request.SESSION['ploneboard_uploads']
 
 
 Globals.InitializeClass(PloneboardTool)
