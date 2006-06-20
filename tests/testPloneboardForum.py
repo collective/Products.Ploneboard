@@ -52,7 +52,7 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
 
     def testGetBoardOutsideStrictContainment(self):
         forum = _createObjectByType('PloneboardForum', self.folder, 'forum')
-        self.failUnlessEqual(self.board, forum.getBoard())
+        self.failUnlessEqual(None, forum.getBoard())
 
     def testAddConversation(self):
         """
