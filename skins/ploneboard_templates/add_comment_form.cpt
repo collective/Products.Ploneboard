@@ -163,7 +163,6 @@
 
             <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
               <div class="row">
-                <div class="label">&nbsp;</div>
                 <div class="field"> 
                   <input class="context" 
                          tabindex=""
