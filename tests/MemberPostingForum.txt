@@ -1,0 +1,129 @@
+Using a member-posting forum
+============================
+
+Test starting conversations, replying and modifying comments in a default
+member-posting forum.
+
+First, some set-up:
+    
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+    >>> self.portal.error_log._ignored_exceptions = ()
+
+    >>> from Products.Ploneboard.tests import utils
+    >>> utils.setUpDefaulMembersBoardAndForum(self)
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.open(self.portal.absolute_url())
+
+
+Verify that the forum is indeed a member-posting one by default and log in:
+
+    >>> self.portal.portal_workflow.getInfoFor(self.forum, 'review_state')
+    'memberposting'
+
+    >>> browser.getControl('Login Name').value = 'member1'
+    >>> browser.getControl('Password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+
+View forum
+----------
+
+The forum created behind the scenes should now be shown here.
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.contents
+    '...<a ...>Forum 1...<span class="discreet">Forum one</span...</a>...'
+
+If we go to the forum, there are no conversations shown.
+
+    >>> browser.getLink('Forum 1').click()
+    >>> browser.contents
+    '...No conversations in this forum yet...'
+
+Add a new conversation
+----------------------
+
+Now we can add a new conversation. We set a title and some body text. The body
+text can contain HTML as well.
+
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.url
+    '.../add_conversation_form...'
+    >>> browser.getControl('Title').value = 'New title'
+    >>> browser.getControl('Body text').value = 'Some <b>body</b> text'
+    
+We have attachment buttons, although we won't upload anything now.
+    
+    >>> browser.getControl(name='files:list', index=0)
+    <Control name='files:list' type='file'>
+    
+Submit the form, and we should be returned to the forum view. The conversation
+should exist, and we should be able to view it.
+
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    True
+    >>> conversation = self.forum.getConversations()[0]
+    >>> hasattr(conversation, '__fallback_traverse__')
+    True
+    
+    >>> link = browser.getLink(url='/%s' % conversation.getId())
+    >>> link.click()
+
+Edit own comment
+----------------
+
+TODO: decide if member can edit? if not, test that edit button is not there.
+
+Add comment to own comment
+--------------------------
+
+TODO: write this, both quick-reply and inline reply
+
+Delete a comment
+----------------
+
+TODO: decide if member can delete? if so, only delete last comment, if not 
+test that delete button is not there
+
+Delete a conversation
+---------------------
+
+TODO: decide if member can delete? delete first comment should delete 
+conversation
+
+Workflow actions
+-----------------
+
+TODO: decide if member has workflow actions like retract? if not, test that
+buttons are not there
+
+View other member's comment
+---------------------------
+
+TODO: write this: log in as member2 and find comment; other member cannot
+edit, delete, retract etc.
+
+Add reply to other member's comment
+-----------------------------------
+
+TODO: write this: both quick-reply and full reply.
+
+View as reviewer
+----------------
+
+TODO: Verify reviewer's actions
+TODO: Verify moderation queue is empty
+
+View as manager
+---------------
+
+TODO: Verify manager's actions
+
+Locking a conversation
+----------------------
+
+TODO: write this: test permissions when conversation is locked

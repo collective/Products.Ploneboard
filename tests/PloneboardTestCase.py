@@ -36,3 +36,13 @@ class PloneboardTestCase(PloneTestCase.PloneTestCase):
     def _setup(self):
         PloneTestCase.PloneTestCase._setup(self)
         self.app.REQUEST['SESSION'] = self.Session()
+
+class PloneboardFunctionalTestCase(PloneTestCase.FunctionalTestCase):
+    
+    class Session(dict):
+        def set(self, key, value):
+            self[key] = value
+
+    def _setup(self):
+        PloneTestCase.FunctionalTestCase._setup(self)
+        self.app.REQUEST['SESSION'] = self.Session()

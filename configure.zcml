@@ -19,7 +19,7 @@
       class=".browser.ConversationView"
       name="comments_view"
       allowed_interface=".browser.IConversationView"
-      permission="zope2.Public"
+      permission="zope.Public"
       />
       
   <browser:page
@@ -27,7 +27,7 @@
       class=".browser.CommentView"
       name="singlecomment_view"
       allowed_interface=".browser.ICommentView"
-      permission="zope2.Public"
+      permission="zope.Public"
       />
 
   <browser:page
