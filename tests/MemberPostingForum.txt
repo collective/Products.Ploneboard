@@ -9,21 +9,27 @@ First, some set-up:
     >>> from Products.Five import zcml
     >>> import Products
     >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
-    >>> self.portal.error_log._ignored_exceptions = ()
-
+    
     >>> from Products.Ploneboard.tests import utils
     >>> utils.setUpDefaulMembersBoardAndForum(self)
 
     >>> from Products.Five.testbrowser import Browser
     >>> browser = Browser()
-    >>> browser.open(self.portal.absolute_url())
+    >>> browser.handleErrors = False
+    
+Let us log all exceptions, which is useful for debugging. Also, clear portlet
+slots, to make the test browser less confused by things like the recent portlet
+and the navtree.
 
+    >>> self.portal.error_log._ignored_exceptions = ()
+    >>> self.portal.left_slots = self.portal.right_slots = []
 
 Verify that the forum is indeed a member-posting one by default and log in:
 
     >>> self.portal.portal_workflow.getInfoFor(self.forum, 'review_state')
     'memberposting'
 
+    >>> browser.open(self.portal.absolute_url() + '/login_form')
     >>> browser.getControl('Login Name').value = 'member1'
     >>> browser.getControl('Password').value = 'secret'
     >>> browser.getControl('Log in').click()
@@ -35,7 +41,7 @@ The forum created behind the scenes should now be shown here.
 
     >>> browser.open(self.board.absolute_url())
     >>> browser.contents
-    '...<a ...>Forum 1...<span class="discreet">Forum one</span...</a>...'
+    '...Forum 1...'
 
 If we go to the forum, there are no conversations shown.
 
@@ -73,15 +79,43 @@ should exist, and we should be able to view it.
     >>> link = browser.getLink(url='/%s' % conversation.getId())
     >>> link.click()
 
+Add comment to own comment
+--------------------------
+
+Add a comment to our own comment. Use the quick-reply field first.
+
+    >>> browser.getControl(name='text').value = 'A quick reply'
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(conversation.absolute_url())
+    True
+    >>> browser.contents
+    '...A quick reply...'
+    
+Then add a full reply.
+
+    >>> browser.getControl('Reply', index=0).click()
+    >>> browser.url
+    '.../add_comment_form...'
+    >>> browser.getControl(name='text').value = 'A full reply'
+
+Although we won't add attachments in this test, at least make sure the button
+is there:
+    
+    >>> browser.getControl(name='files:list', index=0)
+    <Control name='files:list' type='file'>
+    
+Submit and make sure we go back to the conversation
+    
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(conversation.absolute_url())
+    True
+    >>> browser.contents
+    '...A full reply...'
+    
 Edit own comment
 ----------------
 
 TODO: decide if member can edit? if not, test that edit button is not there.
-
-Add comment to own comment
---------------------------
-
-TODO: write this, both quick-reply and inline reply
 
 Delete a comment
 ----------------
@@ -104,26 +138,140 @@ buttons are not there
 View other member's comment
 ---------------------------
 
-TODO: write this: log in as member2 and find comment; other member cannot
-edit, delete, retract etc.
+Log in as another member
+
+    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'member2'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+
+Find the forum, and go to the new post.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
 
 Add reply to other member's comment
 -----------------------------------
 
-TODO: write this: both quick-reply and full reply.
+Add a new comment. Use the quick-reply field first.
+
+    >>> browser.getControl(name='text').value = 'Another quick reply'
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(conversation.absolute_url())
+    True
+    >>> browser.contents
+    '...Another quick reply...'
+    
+Then add a full reply.
+
+    >>> browser.getControl('Reply', index=0).click()
+    >>> browser.url
+    '.../add_comment_form...'
+    >>> browser.getControl(name='text').value = 'Another full reply'
+
+Although we won't add attachments in this test, at least make sure the button
+is there:
+    
+    >>> browser.getControl(name='files:list', index=0)
+    <Control name='files:list' type='file'>
+    
+Submit and make sure we go back to the conversation
+    
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(conversation.absolute_url())
+    True
+    >>> browser.contents
+    '...Another full reply...'
 
 View as reviewer
 ----------------
 
-TODO: Verify reviewer's actions
-TODO: Verify moderation queue is empty
+Log in as a reviewer.
+
+    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+
+Find the forum, and go to the new post.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+
+TODO: Verify reviewer's actions (edit/delete/workflow actions - if any)
+
+The moderation queue form is not shown since this is not a moderated forum.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> 'moderation_form' in browser.contents
+    False
+    
+The moderation queue form is not shown since this is not a moderated forum.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> 'moderation_form' in browser.contents
+    False
+    
+It is, however, shown at the root board, since that aggregates all forums. Make
+sure it is empty.
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.getLink('Moderate').click()
+    >>> browser.contents
+    '...There are no comments in the moderation queue...'
+    >>> conversation.getId() in browser.contents
+    False
 
 View as manager
 ---------------
 
-TODO: Verify manager's actions
+Log in as a manager.
+
+    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'manager1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+
+Find the forum, and go to the new post.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+
+TODO: Verify manager's actions (delete/edit/workflow - if any)
 
 Locking a conversation
 ----------------------
 
-TODO: write this: test permissions when conversation is locked
+Lock a conversation, and ensure that reply buttons do not appear.
+
+    >>> browser.getLink('Lock').click()
+    >>> browser.getControl(name='form.button.Post')
+    Traceback (most recent call last):
+    ...
+    LookupError: name 'form.button.Post'
+    >>> browser.getControl('Reply', index=0)
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Reply'
+
+Verify that they do not appear as a regular member either.
+
+    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'member1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    
+    >>> browser.getControl(name='form.button.Post')
+    Traceback (most recent call last):
+    ...
+    LookupError: name 'form.button.Post'
+    >>> browser.getControl('Reply', index=0)
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Reply'

@@ -71,7 +71,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager,))
     sdef.setPermission(ViewBoard,    1, (r_manager,))
     sdef.setPermission(EditComment,  0, (r_manager, r_owner))
-    sdef.setPermission(AddComment, 1, (r_manager,))
+    sdef.setPermission(AddComment, 1, ())
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
     sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 

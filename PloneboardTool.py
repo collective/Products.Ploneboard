@@ -113,32 +113,34 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             return []
 
         sdm = getToolByName(self, 'session_data_manager', None)
-        pt = getToolByName(self, 'plone_utils')
-        hassession = sdm.hasSessionData()
+        
+        if sdm is not None:        
+            pt = getToolByName(self, 'plone_utils')
+            hassession = sdm.hasSessionData()
 
-        for file in files:
-            if isinstance(file, basestring) and hassession:
-                # Look it up from session
-                oldfile = request.SESSION.get(file, None)
-                if oldfile is not None:
-                    result.append(oldfile)
-            if isinstance(file, FileUpload):
-                if file:
-                    id = pt.normalizeString(file.filename)
-                    ct=file.headers.getheader('content-type')
-                    if ct is None:
-                        ct=''
-                    newfile = File(id, file.filename, file, ct)
-                    request.SESSION[id] = newfile
-                    result.append(newfile)
+            for file in files:
+                if isinstance(file, basestring) and hassession:
+                    # Look it up from session
+                    oldfile = request.SESSION.get(file, None)
+                    if oldfile is not None:
+                        result.append(oldfile)
+                if isinstance(file, FileUpload):
+                    if file:
+                        id = pt.normalizeString(file.filename)
+                        ct=file.headers.getheader('content-type')
+                        if ct is None:
+                            ct=''
+                        newfile = File(id, file.filename, file, ct)
+                        request.SESSION[id] = newfile
+                        result.append(newfile)
 
-        # delete files form session if not referenced
-        new_filelist = [x.getId() for x in result]
-        old_filelist = hassession and request.SESSION.get('ploneboard_uploads', []) or []
-        for removed in [f for f in old_filelist if f not in new_filelist]:
-            del request.SESSION[f]
-        if hassession or new_filelist:
-            request.SESSION['ploneboard_uploads'] = new_filelist
+            # delete files form session if not referenced
+            new_filelist = [x.getId() for x in result]
+            old_filelist = hassession and request.SESSION.get('ploneboard_uploads', []) or []
+            for removed in [f for f in old_filelist if f not in new_filelist]:
+                del request.SESSION[f]
+            if hassession or new_filelist:
+                request.SESSION['ploneboard_uploads'] = new_filelist
             
         return result
 
