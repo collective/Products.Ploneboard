@@ -23,10 +23,11 @@ and the navtree.
 
     >>> self.portal.error_log._ignored_exceptions = ()
     >>> self.portal.left_slots = self.portal.right_slots = []
+    >>> workflow = self.portal.portal_workflow
 
 Verify that the forum is indeed a member-posting one by default and log in:
 
-    >>> self.portal.portal_workflow.getInfoFor(self.forum, 'review_state')
+    >>> workflow.getInfoFor(self.forum, 'review_state')
     'memberposting'
 
     >>> browser.open(self.portal.absolute_url() + '/login_form')
@@ -73,8 +74,6 @@ should exist, and we should be able to view it.
     >>> browser.url.startswith(self.forum.absolute_url() + '?')
     True
     >>> conversation = self.forum.getConversations()[0]
-    >>> hasattr(conversation, '__fallback_traverse__')
-    True
     
     >>> link = browser.getLink(url='/%s' % conversation.getId())
     >>> link.click()
@@ -172,7 +171,7 @@ View other member's comment
 
 Log in as another member
 
-    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
     >>> browser.getControl(name='__ac_name').value = 'member2'
     >>> browser.getControl(name='__ac_password').value = 'secret'
@@ -221,7 +220,7 @@ View as reviewer
 
 Log in as a reviewer.
 
-    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
     >>> browser.getControl(name='__ac_name').value = 'reviewer1'
     >>> browser.getControl(name='__ac_password').value = 'secret'
@@ -269,14 +268,64 @@ The reviewer cannot edit or delete any comments.
     
 However, a reviewer can retract a comment:
     
-    >>> # TODO: Test retract
+    >>> browser.getControl('Retract', index=0).click()
+    >>> browser.contents
+    '...Retracted...'
+    >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
+    'retracted'
+    
+Logging in as another member, the retracted comment cannot be viewed:
 
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'member2'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    >>> 'Retracted' in browser.contents
+    False
+    
+However, the owner can see it, but cannot publish.
+
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'member1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    >>> 'Retracted' in browser.contents
+    True
+    >>> browser.getControl('Publish')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Publish'
+    
+The reviewer can re-publish the comment again:
+
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    >>> 'Retracted' in browser.contents
+    True
+    >>> browser.getControl('Publish').click()
+    >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
+    'published'
+    
 View as manager
 ---------------
 
 Log in as a manager.
 
-    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
     >>> browser.getControl(name='__ac_name').value = 'manager1'
     >>> browser.getControl(name='__ac_password').value = 'secret'
@@ -288,14 +337,28 @@ Find the forum, and go to the new post.
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
 
 A manager can edit and delete comments, as well as apply workflow transitions.
+Deleting will be tested later.
 
-    >>> # TODO: Test edit, delete, workflow
+    >>> browser.getControl('Retract', index=0)
+    <SubmitControl name=None type='submit'>
 
+    >>> browser.getControl('Edit', index=0).click()
+    >>> browser.getControl('Title').value = 'New Topic - New Title'
+    >>> browser.getControl(name='text').value = 'A new topic with more text'
+
+    >>> # XXX: zope.testbrowser converts the # in the url into %23, which
+    >>> # makes the URL invalid. Until that bug if fixed, we can't reasonably
+    >>> # test this!
+    >>> # browser.getControl('Save').click()
+    >>> # browser.contents
+    >>> # '...New Topic - New Title...A new topic with more text...'
+    
 Locking a conversation
 ----------------------
 
 Lock a conversation, and ensure that reply buttons do not appear.
-
+    
+    >>> browser.open(conversation.absolute_url())
     >>> browser.getLink('Lock').click()
     >>> browser.getControl(name='form.button.Post')
     Traceback (most recent call last):
@@ -308,7 +371,7 @@ Lock a conversation, and ensure that reply buttons do not appear.
 
 Verify that they do not appear as a regular member either.
 
-    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
     >>> browser.getControl(name='__ac_name').value = 'member1'
     >>> browser.getControl(name='__ac_password').value = 'secret'
@@ -330,9 +393,54 @@ View as anonymous
 
 Log out, and ensure the post can be viewed by anonymous.
 
-    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open(self.board.absolute_url())
     >>> browser.getLink('Forum one').click()
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> browser.contents
     '...Another full reply...'
+    
+However, anonymous cannot post replies or start new threads
+
+    >>> browser.getControl('Reply')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Reply'
+
+    >>> browser.open(self.board.forum1.absolute_url())
+    >>> browser.getControl('Log in to start a conversation').click()
+    >>> browser.url
+    '.../login_form...'
+    
+Deleting comments and conversations
+-----------------------------------
+
+A manager can delete comments:
+
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'manager1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+
+    >>> commentsBefore = len(conversation.getComments())
+    >>> browser.getControl('Delete', index=-1).click()
+    >>> browser.contents
+    '...Comment deleted...'
+    >>> commentsBefore == len(conversation.getComments()) + 1
+    True
+    
+Deleting the last comment also deletes the entire thread
+
+    >>> browser.getControl('Delete', index=0).click()
+    >>> browser.getControl('Delete', index=0).click()
+    >>> browser.getControl('Delete', index=0).click()
+    >>> browser.getControl('Delete', index=0).click()
+    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    True
+    >>> browser.contents
+    '...Conversation deleted...No conversations in this forum yet...'
+    >>> 'New topic' in browser.contents
+    False

@@ -116,6 +116,7 @@
                 tal:repeat="action comment/workflowActions"
                 tal:attributes="action string:${comment/absolute_url}/moderateComment">
             <input type="hidden" name="action" tal:attributes="value action/id"/>
+            <input type="hidden" name="cameFrom" tal:attributes="value here/absolute_url"/>
             <input tal:attributes="value action/title"
                    class="standalone"
                    type="submit"

@@ -26,7 +26,7 @@ def setupPloneboardCommentWorkflow(wf):
 
     for s in ('initial', 'pending', 'published', 'rejected', 'retracted'):
         wf.states.addState(s)
-    for t in ('publish', 'reject', 'submit', 'autosubmit', 'autopublish', 'retract'):
+    for t in ('publish', 'reject', 'submit', 'autosubmit', 'autopublish', 'retract', 're-publish'):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
@@ -73,7 +73,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(EditComment,  0, (r_manager,))
     sdef.setPermission(AddComment, 1, ())
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
-    sdef.setPermission(DeleteComment,   0, ())
+    sdef.setPermission(DeleteComment,   0, (r_manager,))
 
     sdef = wf.states['rejected']
     sdef.setProperties(
@@ -89,14 +89,14 @@ def setupPloneboardCommentWorkflow(wf):
     sdef = wf.states['retracted']
     sdef.setProperties(
         title='Retracted',
-        transitions=('publish', 'submit',))
+        transitions=('re-publish',))
     # Inherit from forum, enables private forums
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
-    sdef.setPermission(DeleteComment,   0, ())
+    sdef.setPermission(DeleteComment,   0, (r_manager,))
 
     # ***** Set up transitions *****
     tdef = wf.transitions['publish']
@@ -150,6 +150,14 @@ def setupPloneboardCommentWorkflow(wf):
         title='Retract a published comment',
         new_state_id='retracted',
         actbox_name='Retract',
+        #actbox_url='%(content_url)s/content_submit_form',
+        props={'guard_permissions':RetractComment})
+        
+    tdef = wf.transitions['re-publish']
+    tdef.setProperties(
+        title='Re-publish a retracted comment',
+        new_state_id='published',
+        actbox_name='Publish',
         #actbox_url='%(content_url)s/content_submit_form',
         props={'guard_permissions':RetractComment})
 
@@ -363,7 +371,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member))
     sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member))
-    sdef.setPermission(RetractComment,  0, ())
+    sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
     sdef = wf.states['memberposting']
@@ -376,7 +384,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 0, (r_manager, r_member))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_member))
-    sdef.setPermission(RetractComment,  0, ())
+    sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
     sdef = wf.states['moderated']

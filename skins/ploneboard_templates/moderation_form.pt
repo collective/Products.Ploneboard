@@ -108,6 +108,7 @@
                               tal:repeat="action python:atool.listFilteredActionsFor(result)['workflow']"
                               tal:attributes="action string:${result/absolute_url}/moderateComment">
                           <input type="hidden" name="action" tal:attributes="value action/id"/>
+                          <input type="hidden" name="cameFrom" tal:attributes="value string:${here/absolute_url}/${template/getId}"/>
                           <input tal:attributes="value action/title"
                                  class="context"
                                  type="submit"

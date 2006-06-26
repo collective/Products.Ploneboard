@@ -62,7 +62,7 @@
 
             <input class="standalone" 
                    type="submit" 
-                   value="Log in to start a Conversation"
+                   value="Log in to start a conversation"
                    i18n:attributes="value log_to_start_conversation"
                    
                    />
