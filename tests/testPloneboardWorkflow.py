@@ -75,7 +75,7 @@ class TestCommentWorkflow(PloneboardTestCase.PloneboardTestCase):
 #        self.assertEqual(self.workflow.getInfoFor(comment, 'review_state'), 'pending')
 
     def testCommentEditing(self):
-        self.login('member')
+        self.login('manager')
 
         conv = self.forum.addConversation('conv2', 'conv2 body')
         comment = conv.objectValues()[0]
