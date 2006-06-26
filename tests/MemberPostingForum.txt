@@ -115,25 +115,57 @@ Submit and make sure we go back to the conversation
 Edit own comment
 ----------------
 
-TODO: decide if member can edit? if not, test that edit button is not there.
+A member cannot edit his own comment - no changing of history! Verify that there
+is no 'Edit' button present.
+
+    >>> browser.getControl('Edit', index=0)
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Edit'
 
 Delete a comment
 ----------------
 
-TODO: decide if member can delete? if so, only delete last comment, if not 
-test that delete button is not there
+A member cannot delete his own comment. Verify that there is no 'Delete' button
+present.
+
+    >>> browser.getControl('Delete')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Delete'
+
 
 Delete a conversation
 ---------------------
 
-TODO: decide if member can delete? delete first comment should delete 
-conversation
+If a user *could* delete his own posts, deleting the first post should also
+delete the conversation. Since that is not enabled in this type of forum, it
+is not verified here.
 
 Workflow actions
 -----------------
 
-TODO: decide if member has workflow actions like retract? if not, test that
-buttons are not there
+Workflow actions appear for operations like publish or retract. Members should
+see no such actions in this type of forum, however, since their posts are 
+automatically published.
+
+    >>> browser.getControl('Submit')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Submit'
+    >>> browser.getControl('Publish')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Publish'
+    >>> browser.getControl('Retract')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Retract'
+    >>> browser.getControl('Reject')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Reject'
+    
 
 View other member's comment
 ---------------------------
@@ -200,8 +232,6 @@ Find the forum, and go to the new post.
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
 
-TODO: Verify reviewer's actions (edit/delete/workflow actions - if any)
-
 The moderation queue form is not shown since this is not a moderated forum.
 
     >>> browser.open(self.forum.absolute_url())
@@ -223,6 +253,23 @@ sure it is empty.
     '...There are no comments in the moderation queue...'
     >>> conversation.getId() in browser.contents
     False
+    
+The reviewer cannot edit or delete any comments.
+
+    >>> browser.open(conversation.absolute_url())
+
+    >>> browser.getControl('Delete')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Delete'
+    >>> browser.getControl('Edit')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Edit'
+    
+However, a reviewer can retract a comment:
+    
+    >>> # TODO: Test retract
 
 View as manager
 ---------------
@@ -240,7 +287,9 @@ Find the forum, and go to the new post.
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
 
-TODO: Verify manager's actions (delete/edit/workflow - if any)
+A manager can edit and delete comments, as well as apply workflow transitions.
+
+    >>> # TODO: Test edit, delete, workflow
 
 Locking a conversation
 ----------------------
@@ -275,3 +324,15 @@ Verify that they do not appear as a regular member either.
     Traceback (most recent call last):
     ...
     LookupError: label 'Reply'
+    
+View as anonymous
+-----------------
+
+Log out, and ensure the post can be viewed by anonymous.
+
+    >>> browser.open('%s/logged_out' % self.portal.absolute_url())
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.getLink('Forum one').click()
+    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    >>> browser.contents
+    '...Another full reply...'
