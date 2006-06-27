@@ -56,10 +56,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  0, (r_manager, r_reviewer))
-    # Acquire AddComment so that comment.notifyRetracted can be called. (It is protected
-    # by AddComment.)
     sdef.setPermission(AddComment, 0, ())
-    # But do not acquire AddPortalContent in order to stop anyone actually replying.
     sdef.setPermission(AddPortalContent,   0, ())
     sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
 
@@ -365,12 +362,12 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setProperties(
         title='Free for all',
         transitions=('make_memberposting', 'make_moderated', 'make_private'))
-    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member))
-    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddConversation, 1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member))
-    sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member))
+    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddConversation, 1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
@@ -378,12 +375,12 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setProperties(
         title='Require membership to post',
         transitions=('make_freeforall', 'make_moderated', 'make_private'))
-    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member))
-    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddConversation, 0, (r_manager, r_member))
-    sdef.setPermission(AddComment, 0, (r_manager, r_member))
-    sdef.setPermission(AddPortalContent,   1, (r_manager, r_member))
-    sdef.setPermission(ApproveComment,  0, (r_manager, r_member))
+    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddConversation, 0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(AddComment, 0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(ApproveComment,  0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
@@ -391,10 +388,10 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setProperties(
         title='Moderated forum',
         transitions=('make_freeforall', 'make_memberposting', 'make_private'))
-    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member))
-    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddConversation, 1, (r_manager, r_anon, r_member))
-    sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member))
+    sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(ViewBoard,    1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddConversation, 1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member, r_reviewer))
     # Give anon AddPortalContent, but know that they can only add comments here, and they will be moderated anyway
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_anon))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_reviewer))
@@ -405,12 +402,13 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setProperties(
         title='Private to members only',
         transitions=('make_freeforall', 'make_memberposting', 'make_moderated'))
-    sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_member))
-    sdef.setPermission(ViewBoard,    0, (r_manager, r_member))
-    sdef.setPermission(AddConversation, 0, (r_manager, r_member))
-    sdef.setPermission(AddComment, 0, (r_manager, r_member))
-    sdef.setPermission(AddPortalContent,   0, (r_manager, r_member))
-    sdef.setPermission(ApproveComment,  0, ())
+    sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(ViewBoard,    0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(AddConversation, 0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(AddComment, 0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(ApproveComment,  0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
     # ***** Set up transitions *****
