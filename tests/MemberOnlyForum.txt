@@ -1,8 +1,9 @@
-Using a member-posting forum
-============================
+Using a members-only forum
+==========================
 
 Test starting conversations, replying and modifying comments in a default
-member-posting forum.
+members-only forum. This is very similar to a member-posting forum, except
+anonymous users cannot see the forum at all.
 
 First, some set-up:
     
@@ -27,8 +28,9 @@ and the navtree.
 
 Verify that the forum is indeed a member-posting one by default and log in:
 
+    >>> workflow.doActionFor(self.forum, 'make_private')
     >>> workflow.getInfoFor(self.forum, 'review_state')
-    'memberposting'
+    'private'
 
     >>> browser.open(self.portal.absolute_url() + '/login_form')
     >>> browser.getControl('Login Name').value = 'member1'
@@ -390,33 +392,18 @@ Verify that they do not appear as a regular member either.
 View as anonymous
 -----------------
 
-Log out, and ensure the post can be viewed by anonymous.
+In a members-only forum, anonymous cannot even see the forum:
 
     >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open(self.board.absolute_url())
-    >>> browser.getLink('Forum one').click()
-    >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> browser.contents
-    '...Another full reply...'
-    
-However, anonymous cannot post replies or start new threads
-
-    >>> browser.getControl('Reply')
-    Traceback (most recent call last):
-    ...
-    LookupError: label 'Reply'
-
-    >>> browser.open(self.board.forum1.absolute_url())
-    >>> browser.getControl('Log in to start a conversation').click()
-    >>> browser.url
-    '.../login_form...'
+    '...No forums exist in this board...'
     
 Deleting comments and conversations
 -----------------------------------
 
 A manager can delete comments:
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
     >>> browser.getControl(name='__ac_name').value = 'manager1'
     >>> browser.getControl(name='__ac_password').value = 'secret'
