@@ -77,12 +77,11 @@
     font-size: 90%;
 }
 
-.boardCommentPending {
-    opacity: 0.9;
-    -moz-opacity: 0.9;
-    -khtml-opacity: 0.9;
+.boardComment .visualGhosted:hover {
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
 }
-
 
 .boardCommentBody {
     padding: 0.5em 1em;
