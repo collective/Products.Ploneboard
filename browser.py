@@ -45,8 +45,13 @@ class CommentViewableView(Five.BrowserView):
             }
 
 class ICommentView(interface.Interface):
+    
     def comment():
         """Return active comment.
+        """
+    
+    def quotedBody():
+        """Return the body of the comment, quoted for a reply.
         """
         
 class CommentView(CommentViewableView):
@@ -58,6 +63,12 @@ class CommentView(CommentViewableView):
     def comment(self):
         return self._buildDict(self.context)
 
+    def quotedBody(self):
+        text = self.context.getText()
+        if text:
+            return '<blockquote>%s</blockquote>' % self.context.getText()
+        else:
+            return ''
 
 class IConversationView(interface.Interface):
     def comments():

@@ -16,9 +16,7 @@
 <body>
 
     <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors;
-                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+         tal:define="errors options/state/getErrors;">
 
        <h1 class="documentFirstHeading"
            i18n:translate="add_conversation">Add conversation</h1>

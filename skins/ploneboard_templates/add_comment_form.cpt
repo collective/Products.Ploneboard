@@ -19,15 +19,14 @@
 <body>
   <div metal:fill-slot="main" 
        tal:define="errors options/state/getErrors;
-                   Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                   tabindex python:Iterator();
                    view context/@@singlecomment_view;">
 
     <h2 i18n:translate="add_comment">Add comment</h2>
 
     <div class="documentDescription"></div>
 
-    <tal:defines define="comment view/comment"
+    <tal:defines define="comment view/comment;
+                         quotedBody view/quotedBody"
                  metal:define-macro="view_comments">
          
       <div class="boardConversation">
@@ -67,9 +66,7 @@
                      id="title"
                      value="#" 
                      size="40" 
-                     tabindex=""
-                     tal:attributes="value Title;
-                                     tabindex tabindex/next;"
+                     tal:attributes="value Title;"
                      />
 
             </div>
@@ -78,7 +75,8 @@
           <div metal:define-macro="comment_body_text" tal:omit-tag="">
             <div class="field"
                  tal:define="error_text errors/text|nothing;
-                             text python:request.get('text', '')"
+                             text quotedBody | string:;
+                             text python:request.get('text', text)"
                  tal:attributes="class python:test(error_text, 'field error', 'field')"> 
 
               <label for="text" i18n:translate="label_body_text_posting">Body text</label>
@@ -94,7 +92,7 @@
                                   formname   string:add_comment_form;
                                   inputvalue text;
                                   cooked_inputvalue string:;
-                                  tabindex tabindex/next;">
+                                  tabindex   nothing">
                 <div metal:use-macro="context/wysiwyg_support/macros/wysiwygEditorBox">
                   The WYSIWYG code
                 </div>
@@ -123,11 +121,9 @@
               <tal:loop repeat="file files">
                 <input name="files:list"
                        type="hidden"
-                       tabindex=""
                        size="30"
                        tal:attributes="value file/getId;
-                                       id string:files-${repeat/file/number};
-                                       tabindex tabindex/next;"
+                                       id string:files-${repeat/file/number};"
                        />
                 <span tal:content="file/getId" />
                 <br />
@@ -136,26 +132,20 @@
               <input name="files:list"
                      type="file"
                      id="newfile"
-                     tabindex=""
                      size="30"
-                     tal:attributes="tabindex tabindex/next;"
                      />
 
               <br />
               <input name="files:list"
                      type="file"
                      id="newfile1"
-                     tabindex=""
                      size="30"
-                     tal:attributes="tabindex tabindex/next;"
                      />
               <br />
               <input name="files:list"
                      type="file"
                      id="newfile2"
-                     tabindex=""
                      size="30"
-                     tal:attributes="tabindex tabindex/next;"
                      />
 
             </div>
@@ -165,20 +155,16 @@
               <div class="row">
                 <div class="field"> 
                   <input class="context" 
-                         tabindex=""
                          type="submit" 
                          name="form.button.Post" 
                          value="Post comment" 
                          i18n:attributes="value"
-                         tal:attributes="tabindex tabindex/next;" 
                          /> 
                   <input class="destructive"
-                         tabindex=""
                          type="submit"
                          name="form.button.Cancel"
                          value="Cancel"
                          i18n:attributes="value"
-                         tal:attributes="tabindex tabindex/next"
                          />
               </div>
             </div>

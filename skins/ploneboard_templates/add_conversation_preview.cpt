@@ -6,9 +6,7 @@
 <body>
 
     <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors;
-                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+         tal:define="errors options/state/getErrors;">
 
         <h1 i18n:translate="preview_message">Preview message</h1>
    

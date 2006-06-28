@@ -11,9 +11,7 @@
 <body>
 
     <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors;
-                     Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                     tabindex python:Iterator();">
+         tal:define="errors options/state/getErrors;">
 
         <h1 i18n:translate="heading_preview_comment">Preview comment</h1>
    
@@ -39,11 +37,9 @@
                 <tal:loop repeat="file here/portal_ploneboard/getUploadedFiles">
                     <input name="files:list"
                            type="hidden"
-                           tabindex=""
                            size="30"
                            tal:attributes="value file/getId;
-                                           id string:files-${repeat/file/number};
-                                           tabindex tabindex/next;"
+                                           id string:files-${repeat/file/number};"
                            />
                     <br />
                 </tal:loop>
@@ -71,29 +67,23 @@
                     <div class="label">&nbsp;</div>
                     <div class="field"> 
                         <input class="standalone" 
-                               tabindex=""
                                type="submit" 
                                name="form.button.Save" 
                                value="Post" 
-                               i18n:attributes="value"
-                               tal:attributes="tabindex tabindex/next;" /> 
+                               i18n:attributes="value"/> 
 
                         <input class="context" 
-                               tabindex=""
                                type="submit" 
                                name="form.button.Edit" 
                                value="Change" 
-                               i18n:attributes="value"
-                               tal:attributes="tabindex tabindex/next;" /> 
+                               i18n:attributes="value" /> 
 
 
                         <input class="destructive"
-                               tabindex=""
                                type="submit"
                                name="form.button.Cancel"
                                value="Cancel"
                                i18n:attributes="value"
-                               tal:attributes="tabindex tabindex/next"
                                />
                     </div>
                 </div>
