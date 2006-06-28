@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <tool-setup>
-  <required tool_id="ploneboard_catalog"
+  <required tool_id="portal_catalog"
     class="Products.Ploneboard.PloneboardCatalog"/>
   <required tool_id="portal_ploneboard"
     class="Products.Ploneboard.PloneboardTool"/>

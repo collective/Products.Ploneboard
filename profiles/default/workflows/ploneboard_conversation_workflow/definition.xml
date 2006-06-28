@@ -25,9 +25,11 @@
   </permission-map>
  </state>
  <state state_id="locked" title="Locked">
-  <exit-transition transition_id="make_active"/>
+  <exit-transition transition_id="publish"/>
   <permission-map name="Access contents information"
                   acquired="True">
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
@@ -40,7 +42,8 @@
   </permission-map>
  </state>
  <state state_id="pending" title="Pending state">
-  <exit-transition transition_id="make_active"/>
+  <exit-transition transition_id="publish"/>
+  <exit-transition transition_id="reject"/>
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
@@ -63,6 +66,26 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
+ <state state_id="rejected" title="Rejected">
+  <exit-transition transition_id="publish"/>
+  <permission-map name="Access contents information"
+                  acquired="True">
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Edit Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+   <permission-role>Owner</permission-role>
+  </permission-map>
+ </state>
  <transition transition_id="lock"
              title="Reviewer locks conversation"
              new_state="locked" trigger="USER"
@@ -72,11 +95,20 @@
    <guard-permission>Ploneboard: Manage Conversation</guard-permission>
   </guard>
  </transition>
- <transition transition_id="make_active"
+ <transition transition_id="publish"
              title="Reviewer returns conversation to active"
              new_state="active" trigger="USER"
              before_script="" after_script="">
   <action url="" category="workflow">Activate</action>
+  <guard>
+   <guard-permission>Ploneboard: Approve Comment</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="reject"
+             title="Reviewer rejects pending conversation"
+             new_state="rejected" trigger="USER"
+             before_script="" after_script="">
+  <action url="" category="workflow">Reject</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>

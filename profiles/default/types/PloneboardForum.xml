@@ -15,18 +15,22 @@
  </property>
  <property name="allow_discussion">False</property>
  <alias from="(Default)" to="forum_view"/>
+ <alias from="edit" to="base_edit"/>
+ <alias from="moderate" to="moderation_form"/>
+ <alias from="properties" to="base_metadata"/>
+ <alias from="rss-properties" to="editSynProperties"/>
+ <alias from="sharing" to="folder_localrole_form"/>
  <alias from="view" to="forum_view"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:$object_url" visible="True">
   <permission value="View"/>
  </action>
  <action title="Edit" action_id="edit" category="object" condition_expr=""
-    url_expr="string:${object_url}/base_edit" visible="True">
+    url_expr="string:$object_url/edit" visible="True">
   <permission value="Modify portal content"/>
  </action>
  <action title="Properties" action_id="metadata" category="object"
-    condition_expr="" url_expr="string:${object_url}/base_metadata"
-    visible="True">
+    condition_expr="" url_expr="string:$object_url/properties" visible="True">
   <permission value="Modify portal content"/>
  </action>
  <action title="References" action_id="references" category="object"
@@ -39,5 +43,18 @@
     condition_expr="object/isPrincipiaFolderish"
     url_expr="string:${folder_url}/view" visible="False">
   <permission value="View"/>
+ </action>
+ <action title="RSS Feed" action_id="rssfeed" category="object"
+    condition_expr="" url_expr="string:$object_url/rss-properties"
+    visible="True">
+  <permission value="Ploneboard: Add Ploneboard"/>
+ </action>
+ <action title="Sharing" action_id="local_roles" category="object"
+    condition_expr="" url_expr="string:$object_url/sharing" visible="True">
+  <permission value="Ploneboard: Add Ploneboard"/>
+ </action>
+ <action title="Moderate" action_id="moderate" category="object"
+    condition_expr="" url_expr="string:$object_url/moderate" visible="True">
+  <permission value="Ploneboard: Moderate Forum"/>
  </action>
 </object>

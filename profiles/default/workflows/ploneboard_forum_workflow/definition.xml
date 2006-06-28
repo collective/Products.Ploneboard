@@ -6,9 +6,12 @@
  <permission>Access contents information</permission>
  <permission>View</permission>
  <permission>Ploneboard: Add Conversation</permission>
+ <permission>Request review</permission>
  <permission>Ploneboard: Add Comment</permission>
  <permission>Add portal content</permission>
  <permission>Ploneboard: Approve Comment</permission>
+ <permission>Ploneboard: Retract Comment</permission>
+ <permission>Ploneboard: Moderate Forum</permission>
  <state state_id="freeforall" title="Free for all">
   <exit-transition transition_id="make_memberposting"/>
   <exit-transition transition_id="make_moderated"/>
@@ -18,34 +21,54 @@
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Add portal content" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Conversation"
                   acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
  <state state_id="memberposting"
@@ -58,30 +81,49 @@
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Add portal content" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Conversation"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
  <state state_id="moderated" title="Moderated forum">
@@ -93,6 +135,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Add portal content" acquired="True">
    <permission-role>Manager</permission-role>
@@ -104,22 +147,40 @@
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Conversation"
                   acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
  <state state_id="private" title="Private to members only">
@@ -130,29 +191,48 @@
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Add portal content" acquired="False">
+  <permission-map name="Add portal content" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Conversation"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Approve Comment"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
  <transition transition_id="make_freeforall"
@@ -171,6 +251,15 @@
              before_script="" after_script="">
   <action url="%(content_url)s/content_publish_form"
           category="workflow">Make member-posting</action>
+  <guard>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="make_moderated"
+             title="Make moderated" new_state="moderated"
+             trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Make moderated</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>

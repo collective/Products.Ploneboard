@@ -1,55 +1,6 @@
 <?xml version="1.0"?>
-<object name="ploneboard_catalog" meta_type="Ploneboard Catalog">
-  <index name="UID" meta_type="FieldIndex">
-    <indexed_attr value="UID"/>
-  </index>
+<object name="portal_catalog" meta_type="Ploneboard Catalog">
   <index name="object_implements" meta_type="KeywordIndex">
     <indexed_attr value="object_implements"/>
   </index>
-  <index name="SearchableText" meta_type="ZCTextIndex">
-    <indexed_attr value="SearchableText"/>
-    <extra name="index_type" value="Okapi BM25 Rank"/>
-    <extra name="lexicon_id" value="plone_lexicon"/>
-  </index>
-  <index name="created" meta_type="DateIndex">
-    <property name="index_naive_time_as_local">True</property>
-  </index>
-  <index name="modified" meta_type="DateIndex">
-    <property name="index_naive_time_as_local">True</property>
-  </index>
-  <index name="allowedRolesAndUsers" meta_type="KeywordIndex">
-    <indexed_attr value="allowedRolesAndUsers"/>
-  </index>
-  <index name="review_state" meta_type="FieldIndex">
-    <indexed_attr value="review_state"/>
-  </index>
-  <index name="getId" meta_type="FieldIndex">
-    <indexed_attr value="getId"/>
-  </index>
-  <index name="inReplyTo" meta_type="FieldIndex">
-    <indexed_attr value="inReplyTo"/>
-  </index>
-  <index name="path" meta_type="ExtendedPathIndex"/>
-  <index name="portal_type" meta_type="FieldIndex">
-    <indexed_attr value="portal_type"/>
-  </index>
-  <index name="startendrage" meta_type="DateRangeIndex"
-    since_field="start" until_field="end"/>
-
-  <column value="UID"/>
-  <column value="Title"/>
-  <column value="review_state"/>
-  <column value="getIcon"/>
-  <column value="created"/>
-  <column value="Creator"/>
-  <column value="effective"/>
-  <column value="expires"/>
-  <column value="modified"/>
-  <column value="CreationDate"/>
-  <column value="EffectiveDate"/>
-  <column value="ExpiresDate"/>
-  <column value="ModificationDate"/>
-  <column value="portal_type"/>
-  <column value="getId"/>
-  <column value="inReplyTo"/>
 </object>
