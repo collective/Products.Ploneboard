@@ -2,10 +2,6 @@
 # Comment tests
 #
 
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import PloneboardTestCase
 from Products.Ploneboard.transforms.url_to_hyperlink import URLToHyperlink
 
@@ -66,6 +62,4 @@ else:
         suite.addTest(unittest.makeSuite(TestUrlTransform))
         
         return suite
-
-
 

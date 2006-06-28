@@ -4,9 +4,6 @@ files in the tests directory and runs them. (stolen from Plone)
 
 import os, sys
 
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 import glob
 import doctest
 import unittest

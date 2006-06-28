@@ -2,10 +2,6 @@
 # Ploneboard tests
 #
 
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
 from zope.interface.verify import verifyClass, verifyObject
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation, IComment
