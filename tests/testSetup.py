@@ -42,6 +42,14 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
         for tool_name in tool_names:
             self.failUnless(tool_name in self.portal.objectIds())
 
+    def testTransforms(self):
+        from Products.Ploneboard.config import PLONEBOARD_TOOL
+        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
+        transforms = [t[0] for t in tool.getEnabledTransforms()]
+        self.failUnless('safe_html' in transforms)
+        self.failUnless('text_to_emoticons' in transforms)
+        self.failUnless('url_to_hyperlink' in transforms)
+
     def testObjectImplements(self):
         from Products.Ploneboard.catalog import object_implements
         mt = getToolByName(self.portal, 'portal_catalog')
