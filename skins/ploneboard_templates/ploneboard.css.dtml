@@ -82,9 +82,6 @@
     -khtml-opacity: 0.9;
 }
 
-.boardCommentState {
-    float: right;
-}
 
 .boardCommentBody {
     padding: 0.5em 1em;
@@ -146,14 +143,17 @@
     display: inline;
 }
 
+/* Removing Re: - remove these if you want to enable it, should be off OOTB */
+
+.boardCommentHeaderTitleBlock h3 { display: none; }
+.commentReplyTitle { display: none; }
+
 /* Stripping down Kupu to the bare essentials */
 
 .kupu-tb-styles,
 #kupu-bg-subsuper,
-#kupu-bg-justify,
 #kupu-bg-definitionlist,
 #kupu-bg-undo,
-#kupu-bg-indent,
 #kupu-zoom,
 #kupu-spellchecker,
 #kupu-logo-button,

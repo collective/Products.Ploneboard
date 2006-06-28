@@ -40,19 +40,16 @@
 
         <div tal:attributes="class string:state-${state} boardCommentPending" tal:omit-tag="python:state == 'published'">
 
+        <div class="visualGhosted" tal:omit-tag="python:state != 'retracted'">
+
         <a tal:attributes="name comment/getId"></a>
         <div class="boardCommentDetails" id="" 
              tal:attributes="id comment/getId;">
           
           <div class="boardCommentHeaderTitleBlock">
-            
-            <div class="boardCommentState" 
-                 tal:condition="python:state != 'published'"
-                 tal:content="comment/reviewStateTitle">
-              State here
-            </div>
-            
+                        
             <h3 tal:content="comment/Title">Post title</h3>
+
             <img src="" 
                  tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
             <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
@@ -80,6 +77,7 @@
                      height="100" 
                      tal:attributes="src portrait/absolute_url" />
               </a>
+              <br />
               <a tal:attributes="href string:${portal_url}/author/${creator}"
                  tal:content="python:creatorinfo and creatorinfo['fullname'] or creator"
                  tal:omit-tag="python:creator=='Anonymous'">member id</a>
@@ -90,6 +88,8 @@
                tal:content="structure comment/getText">
                Comment text.
           </div>
+
+        </div>
         </div>
 
 
@@ -123,6 +123,15 @@
                    class="standalone"
                    type="submit"
                    />
+
+            <small class="boardCommentState" 
+                 tal:condition="python:state != 'published'">
+              This comment is currently
+              <span tal:replace="comment/reviewStateTitle">
+              State here
+              </span>.
+            </small>
+
           </form>
         </div>
         <div class="boardCommentReplyActions">
@@ -132,7 +141,7 @@
             <input type="hidden" name="title" value="" tal:attributes="value comment/Title"/>
             <input class="standalone"
                    type="submit" 
-                   value="Reply" 
+                   value="Reply w/quote" 
                    i18n:attributes="value"
                    />
           </form>
