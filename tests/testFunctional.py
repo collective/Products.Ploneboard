@@ -33,6 +33,10 @@ def list_nontestbrowser_tests():
             if os.path.basename(filename) not in REQUIRE_TESTBROWSER]
 
 def test_suite():
+    # Work around a Zope testsuite bug
+#    from zope.testing import testrunner
+#    testrunner.setup.remove_option("--config-file")
+
     # BBB: We can obviously remove this when testbrowser is Plone
     #      mainstream, read: with Five 1.4.
     try:
@@ -52,4 +56,3 @@ def test_suite():
                test_class=PloneboardFunctionalTestCase)
          for filename in filenames]
         )
-
