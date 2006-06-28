@@ -45,12 +45,13 @@
           <input type="hidden" name="form.submitted" value="1" />
 
           <div metal:define-macro="comment_body_title" tal:omit-tag="">
+              <div class="commentReplyTitle" tal:omit-tag="title_required">
             <div class="field"
                  id="archetypes-fieldname-title"
                  tal:define="error_title errors/title|nothing;
                              Title request/title | nothing;
                              Title python:Title and (Title.lower().startswith('re:') and Title or  'Re: '+Title) or None;"
-                 tal:attributes="class python:test(error_title, 'field error', 'field commentReplyTitle')"> 
+                     tal:attributes="class python:test(error_title, 'field error', 'field')"> 
 
               <label for="title" i18n:translate="label_title_posting">Title</label>
 
@@ -68,8 +69,9 @@
                      size="40" 
                      tal:attributes="value Title;"
                      />
-
+              
             </div>
+              </div>
           </div>
 
           <div metal:define-macro="comment_body_text" tal:omit-tag="">

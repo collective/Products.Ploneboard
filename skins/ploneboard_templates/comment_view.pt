@@ -63,12 +63,12 @@
         </div>
     
         <div class="boardCommentBody">
-          <div class="portrait">
             <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
               <a href="" title="View profile"
-                tal:attributes="href string:${portal_url}/author/${creator}"
-                i18n:attributes="title"
-                tal:omit-tag="python:creator=='Anonymous'">
+                 class="commentPortrait"
+                 tal:attributes="href string:${portal_url}/author/${creator}"
+                 i18n:attributes="title"
+                 tal:omit-tag="python:creator=='Anonymous'">
                 <img class="portraitPhoto"
                      src="defaultUser.gif" 
                      alt="" 
@@ -77,20 +77,16 @@
                      height="100" 
                      tal:attributes="src portrait/absolute_url" />
               </a>
-              <br />
-              <a tal:attributes="href string:${portal_url}/author/${creator}"
-                 tal:content="python:creatorinfo and creatorinfo['fullname'] or creator"
-                 tal:omit-tag="python:creator=='Anonymous'">member id</a>
             </tal:block>
-          </div>
-          
-          <div class="boardCommentContent" 
+
+            <div class="boardCommentContent" 
                tal:content="structure comment/getText">
                Comment text.
-          </div>
+            </div>
+        </div>
+          
 
-        </div>
-        </div>
+    </div>
 
 
         <div class="visualClear"></div>
