@@ -351,7 +351,7 @@ def setupPloneboardForumWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for p in (AccessContentsInformation, ViewBoard, AddConversation, 
+    for p in (AccessContentsInformation, ViewBoard, AddConversation, RequestReview,
                 AddComment, AddPortalContent, ApproveComment, RetractComment, ModerateForum,):
         wf.addManagedPermission(p)
 
@@ -368,6 +368,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 1, (r_manager, r_anon, r_member, r_reviewer))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_anon, r_member, r_reviewer))
     sdef.setPermission(ApproveComment,  1, (r_manager, r_anon, r_member, r_reviewer))
+    sdef.setPermission(RequestReview,  1, (r_manager, r_anon, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
@@ -381,6 +382,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_reviewer))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(RequestReview,  0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 
@@ -395,6 +397,7 @@ def setupPloneboardForumWorkflow(wf):
     # Give anon AddPortalContent, but know that they can only add comments here, and they will be moderated anyway
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_anon))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_reviewer))
+    sdef.setPermission(RequestReview,  0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer))
     sdef.setPermission(ModerateForum,  0, (r_manager, r_reviewer))
 
@@ -408,6 +411,7 @@ def setupPloneboardForumWorkflow(wf):
     sdef.setPermission(AddComment, 0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(AddPortalContent,   1, (r_manager, r_member, r_reviewer))
     sdef.setPermission(ApproveComment,  0, (r_manager, r_member, r_reviewer))
+    sdef.setPermission(RequestReview,  0, (r_manager, r_member, r_reviewer))
     sdef.setPermission(RetractComment,  0, (r_manager, r_reviewer,))
     sdef.setPermission(ModerateForum,  0, ())
 

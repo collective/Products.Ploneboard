@@ -168,6 +168,7 @@ class PloneboardComment(BaseBTreeFolder):
                   'reply_to' : self.UID(),
                   }
         m = _createObjectByType(self.portal_type, conv, id, **kwargs)
+        m.setCreators([creator])
 
         # Create files in message
         if files:

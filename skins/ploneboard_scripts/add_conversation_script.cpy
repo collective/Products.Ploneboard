@@ -21,6 +21,7 @@ else:
 files = context.portal_ploneboard.getUploadedFiles()
 
 m = context.addConversation(title=title, text=text, creator=creator, files=files)
+
 if m:
     context.portal_ploneboard.clearUploadedFiles()
     state.set(context=m.getForum(), portal_status_message='Added comment')

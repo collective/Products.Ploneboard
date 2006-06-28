@@ -387,6 +387,16 @@ Verify that they do not appear as a regular member either.
     ...
     LookupError: label 'Reply'
     
+Unlock again
+
+    >>> browser.open('%s/logout' % self.portal.absolute_url())
+    >>> browser.open('%s/login_form' % self.portal.absolute_url())
+    >>> browser.getControl(name='__ac_name').value = 'manager1'
+    >>> browser.getControl(name='__ac_password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    >>> browser.open(conversation.absolute_url())
+    >>> browser.getLink('Activate').click()
+    
 View as anonymous
 -----------------
 

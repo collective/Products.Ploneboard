@@ -70,7 +70,8 @@
             <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
               <a href="" title="View profile"
                 tal:attributes="href string:${portal_url}/author/${creator}"
-                i18n:attributes="title">
+                i18n:attributes="title"
+                tal:omit-tag="python:creator=='Anonymous'">
                 <img class="portraitPhoto"
                      src="defaultUser.gif" 
                      alt="" 
@@ -80,7 +81,8 @@
                      tal:attributes="src portrait/absolute_url" />
               </a>
               <a tal:attributes="href string:${portal_url}/author/${creator}"
-                 tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">member id</a>
+                 tal:content="python:creatorinfo and creatorinfo['fullname'] or creator"
+                 tal:omit-tag="python:creator=='Anonymous'">member id</a>
             </tal:block>
           </div>
           

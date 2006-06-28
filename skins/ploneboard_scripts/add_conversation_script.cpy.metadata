@@ -1,6 +1,3 @@
-[default]
-proxy=Manager,Anonymous
-
 [validators]
 validators=validate_add_conversation
 

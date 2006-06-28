@@ -166,7 +166,8 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                   }
 
         m = _createObjectByType('PloneboardComment', self, id, **kwargs)
-
+        m.setCreators([creator])
+        
         # Create files in message
         if files:
             for file in files:
