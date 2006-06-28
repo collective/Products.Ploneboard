@@ -25,7 +25,8 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     
     def registerTransform(self, name, module):
         tr_tool = getToolByName(self, 'portal_transforms')
-        tr_tool.manage_addTransform(name, module)
+        if name not in tr_tool.objectIds():
+            tr_tool.manage_addTransform(name, module)
         
         transform = tr_tool._getOb(name)
         

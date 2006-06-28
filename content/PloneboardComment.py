@@ -49,7 +49,7 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
     TextField('text',
               searchable = 1,
               default_content_type = 'text/html',
-              default_output_type = 'text/html',
+              default_output_type = 'text/x-html-safe',
               allowable_content_types=('text/html',
                                        'text/plain'),
               accessor='getText',

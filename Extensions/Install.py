@@ -28,7 +28,9 @@ from Products.Archetypes.public import listTypes, process_types
 from Products.Archetypes.ArchetypeTool import getType
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from Products.Ploneboard.config import PLONEBOARD_TOOL, PROJECTNAME, GLOBALS
-from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, URL_TRANSFORM_MODULE
+from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, \
+                                       URL_TRANSFORM_MODULE, \
+                                       SAFE_HTML_TRANSFORM_MODULE
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
 from Products.Ploneboard.permissions import AddAttachment
@@ -143,6 +145,8 @@ def addTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
     pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE)
     pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE)
+    pb_tool.registerTransform('safe_html', SAFE_HTML_TRANSFORM_MODULE)
+    
 
 def removeTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
