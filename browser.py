@@ -66,7 +66,7 @@ class CommentView(CommentViewableView):
     def quotedBody(self):
         text = self.context.getText()
         if text:
-            return '<blockquote>%s</blockquote>' % self.context.getText()
+            return '<blockquote>%s</blockquote><p></p>' % self.context.getText()
         else:
             return ''
 
