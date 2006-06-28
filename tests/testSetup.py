@@ -66,6 +66,3 @@ def test_suite():
     suite = TestSuite()
     suite.addTest(makeSuite(TestSetup))
     return suite
-
-if __name__ == '__main__':
-    framework()

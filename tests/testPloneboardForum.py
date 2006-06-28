@@ -2,6 +2,7 @@
 # Forum tests
 #
 
+import unittest
 from zope.interface.verify import verifyClass, verifyObject
 
 import PloneboardTestCase, utils
@@ -132,11 +133,7 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         conv = forum2.addConversation('subject', 'body')
         self.failUnlessEqual(forum.getNumberOfComments(), 2)
     
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestPloneboardForum))
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestPloneboardForum))
+    return suite

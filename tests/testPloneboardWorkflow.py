@@ -125,6 +125,3 @@ def test_suite():
     suite.addTest(makeSuite(TestCommentWorkflow))
     suite.addTest(makeSuite(TestWorkflowsCreation))
     return suite
-
-if __name__ == '__main__':
-    framework()

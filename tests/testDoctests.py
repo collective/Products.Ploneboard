@@ -14,5 +14,3 @@ def test_suite():
         doctest.DocTestSuite('Products.Ploneboard.browser',
                              setUp=setup, tearDown=teardown),))
 
-if __name__ == '__main__':
-    framework()

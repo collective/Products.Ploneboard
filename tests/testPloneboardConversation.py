@@ -2,6 +2,7 @@
 # Conversation tests
 #
 
+import unittest
 from zope.interface.verify import verifyClass, verifyObject
 import PloneboardTestCase, utils
 
@@ -148,11 +149,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         comments = conv.getComments()
         self.assertEqual(len(comments), 1)
         
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestPloneboardConversation))
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestPloneboardConversation))
+    return suite

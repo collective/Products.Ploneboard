@@ -2,6 +2,7 @@
 # Comment tests
 #
 
+import unittest
 from Products.Ploneboard.tests import PloneboardTestCase, utils
 from Products.Ploneboard.interfaces import IComment
 from Products.Ploneboard.content.PloneboardComment import PloneboardComment
@@ -44,11 +45,7 @@ class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):
                          self.comment.getRawText())
 
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestITextContentAdapter))
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestITextContentAdapter))
+    return suite

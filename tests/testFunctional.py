@@ -53,6 +53,3 @@ def test_suite():
          for filename in filenames]
         )
 
-if __name__ == '__main__':
-    framework()
-

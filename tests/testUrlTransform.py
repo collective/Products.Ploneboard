@@ -2,6 +2,7 @@
 # Comment tests
 #
 
+import unittest
 import PloneboardTestCase
 from Products.Ploneboard.transforms.url_to_hyperlink import URLToHyperlink
 
@@ -53,13 +54,9 @@ class TestUrlTransform(PloneboardTestCase.PloneboardTestCase):
         self.runTest(testdata)
 
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestUrlTransform))
-        
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestUrlTransform))
+    
+    return suite
 

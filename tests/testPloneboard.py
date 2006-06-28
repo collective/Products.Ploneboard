@@ -2,6 +2,7 @@
 # Ploneboard tests
 #
 
+import unittest
 from zope.interface.verify import verifyClass, verifyObject
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation, IComment
@@ -95,13 +96,9 @@ class TestPloneboardWithoutContainment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(forum2 in forums)
 
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestPloneboardBasics))
-        suite.addTest(unittest.makeSuite(TestPloneboardInterface))
-        suite.addTest(unittest.makeSuite(TestPloneboardWithoutContainment))
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestPloneboardBasics))
+    suite.addTest(unittest.makeSuite(TestPloneboardInterface))
+    suite.addTest(unittest.makeSuite(TestPloneboardWithoutContainment))
+    return suite

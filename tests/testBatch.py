@@ -2,6 +2,7 @@
 # Ploneboard tests
 #
 
+import unittest
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 
@@ -98,11 +99,7 @@ class TestBatch(PloneboardTestCase.PloneboardTestCase):
         self.assertEqual(len(b.next), 2)
         self.assertEqual(len(b.previous), 5)
         
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestBatch))
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestBatch))
+    return suite

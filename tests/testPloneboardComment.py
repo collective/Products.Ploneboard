@@ -2,6 +2,7 @@
 # Comment tests
 #
 
+import unittest
 from zope.interface.verify import verifyClass, verifyObject
 
 import PloneboardTestCase, utils
@@ -224,13 +225,9 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         c21.delete()
         self.assert_(self.conv.getRootComments(), [c211])
 
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestPloneboardComment))
-        suite.addTest(unittest.makeSuite(TestPloneboardCommentAttachmentSupport))
-        
-        return suite
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestPloneboardComment))
+    suite.addTest(unittest.makeSuite(TestPloneboardCommentAttachmentSupport))
+    
+    return suite
