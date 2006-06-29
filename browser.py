@@ -96,10 +96,12 @@ class ConversationView(CommentView):
     def conversation(self):
         checkPermission = self.portal_membership.checkPermission
         conv = self.context
+	forum = conv.getForum()
 
         return {
-                'maximumAttachments' : conv.getForum().getMaxAttachments(),
-                'canAttach': checkPermission(permissions.AddAttachment, conv),
+                'maximumAttachments' : forum.getMaxAttachments(),
+                'canAttach': forum.getMaxAttachments()>0 and \
+				checkPermission(permissions.AddAttachment,conv),
                 }
 
     def comments(self):
