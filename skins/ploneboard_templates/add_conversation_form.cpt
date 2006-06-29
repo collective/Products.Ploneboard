@@ -16,7 +16,7 @@
 <body>
 
     <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors;">
+	 tal:define="errors options/state/getErrors">
 
        <h1 class="documentFirstHeading"
            i18n:translate="add_conversation">Add conversation</h1>
@@ -34,8 +34,6 @@
             <div metal:use-macro="here/add_comment_form/macros/comment_body_title" tal:omit-tag="" />
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
-
-            <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_buttons" tal:omit-tag="" />
 
