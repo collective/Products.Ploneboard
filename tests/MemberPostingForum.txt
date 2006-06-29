@@ -298,7 +298,6 @@ However, the owner can see it, but cannot publish.
     
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> import pdb; pdb.set_trace()
     >>> 'Retracted' in browser.contents
     True
     >>> browser.getControl('Publish')
