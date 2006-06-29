@@ -172,7 +172,7 @@ class PloneboardForum(BaseBTreeFolder):
         Alternatively use an interface that allows adapters
         """
         
-        id = self.generateId()
+        id = self.generateId(prefix='')
         kwargs.update({'title' : title,
                        'creators' : [creator],
                        'text' : text})
