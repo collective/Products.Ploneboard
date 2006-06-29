@@ -121,15 +121,18 @@ def setupPloneboardWorkflow(self, out):
     out.write('Added Ploneboard Workflow\n')
 
 def addPortalProperties(self, out):
-    # Add properties which are used throughout the site.
-    #portal._setProperty('variable',  'value', 'type')
-
-    out.write("Added properties to portal\n")
-
-    # set up variables for members
-    #portal_memberdata._setProperty('variable', 'value', 'type' )
-
-    out.write("Added member variables\n")
+    data = ['PloneboardConversation']
+    pp=getToolByName(self,'portal_properties')
+    p = getattr(pp , 'site_properties', None)
+    tns = list(p.getProperty('types_not_searched', []))
+    if not tns:
+        p._setProperty('types_not_searched', data)
+    else:
+        for t in data:
+            if t not in tns:
+                tns.append(t)
+                out.write("Added %s to types_not_searched\n" % t)
+        p._updateProperty('types_not_searched', tns)
 
 def addConfiglets(self, out):
     configTool = getToolByName(self, 'portal_controlpanel', None)

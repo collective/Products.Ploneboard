@@ -7,6 +7,9 @@
     </property>
   </object>
   <object name="site_properties" meta_type="Plone Property Sheet">
+    <property name="types_not_searched" type="lines">
+      <element value="PloneboardConversation"/>
+    </property>
     <property name="use_folder_tabs" type="lines">
       <element value="Ploneboard"/>
       <element value="PloneboardConversation"/>
