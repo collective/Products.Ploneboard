@@ -7,6 +7,12 @@
       i18n:domain="ploneboard">
 
 <head>
+  <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/pb_attachment.js">
+    </script>
+  </metal:js>
+
   <metal:css fill-slot="css_slot">
   <style type="text/css" media="all"
          tal:content="string: @import url($portal_url/ploneboard.css);"></style>
@@ -19,7 +25,7 @@
 <body>
   <div metal:fill-slot="main" 
        tal:define="errors options/state/getErrors;
-                   view context/@@singlecomment_view;">
+       view context/@@singlecomment_view;">
 
     <h2 i18n:translate="add_comment">Add comment</h2>
 
@@ -104,10 +110,11 @@
 
           <div metal:define-macro="comment_body_attachments"
                  tal:omit-tag=""
-		 tal:condition="conversation/canAttach">
+		 tal:condition="python:checkPermission('Ploneboard: Add Comment Attachment', context)">
 
             <div class="field"
-                 tal:define="error_files errors/files|nothing;"
+		    tal:define="error_files errors/files|nothing;
+		               attachments python:context.getMaxAttachments()"
                  tal:attributes="class python:test(error_files, 'field error', 'field')"> 
 
               <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
@@ -119,14 +126,14 @@
 
               <div tal:replace="error_files">Validation Error Comment</div>
 
-              <div tal:attributes="attachments conversation/maximumAttachments">
+              <div tal:attributes="attachments attachments">
                 <input name="files:list"
                        type="file"
                        size="30"
-		       /><br/>
-                <a tal:condition="python:conversation['maximumAttachments']>1"
+                       /><br/>
+                <a tal:condition="python:attachments>1"
                    i18n:translate="new_attachment"
-		   href=""
+                   href=""
                    onclick="return AddAttachmentField(this);">
                   Add another attachment
                 </a>

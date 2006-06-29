@@ -91,7 +91,7 @@ Add a comment to our own comment. Use the quick-reply field first.
     
 Then add a full reply.
 
-    >>> browser.getControl('Reply', index=0).click()
+    >>> browser.getControl('Reply to this', index=0).click()
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value = 'A full reply'

@@ -137,7 +137,7 @@
             <input type="hidden" name="title" value="" tal:attributes="value comment/Title"/>
             <input class="standalone"
                    type="submit" 
-                   value="Reply w/quote" 
+                   value="Reply to this" 
                    i18n:attributes="value"
                    />
           </form>
