@@ -45,7 +45,7 @@
           <input type="hidden" name="form.submitted" value="1" />
 
           <div metal:define-macro="comment_body_title" tal:omit-tag="">
-              <div class="commentReplyTitle" tal:omit-tag="title_required">
+            <div class="commentReplyTitle" tal:omit-tag="title_required">
             <div class="field"
                  id="archetypes-fieldname-title"
                  tal:define="error_title errors/title|nothing;
@@ -104,11 +104,10 @@
 
           <div metal:define-macro="comment_body_attachments"
                  tal:omit-tag=""
-                 tal:condition="python: checkPermission('Ploneboard: Add Comment Attachment', context)">
+		 tal:condition="conversation/canAttach">
 
             <div class="field"
-                 tal:define="error_files errors/files|nothing;
-                             files context/portal_ploneboard/getUploadedFiles"
+                 tal:define="error_files errors/files|nothing;"
                  tal:attributes="class python:test(error_files, 'field error', 'field')"> 
 
               <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
@@ -120,36 +119,12 @@
 
               <div tal:replace="error_files">Validation Error Comment</div>
 
-              <tal:loop repeat="file files">
+              <div tal:attributes="attachments conversation/maximumAttachments">
                 <input name="files:list"
-                       type="hidden"
+                       type="file"
                        size="30"
-                       tal:attributes="value file/getId;
-                                       id string:files-${repeat/file/number};"
                        />
-                <span tal:content="file/getId" />
-                <br />
-              </tal:loop>
-
-              <input name="files:list"
-                     type="file"
-                     id="newfile"
-                     size="30"
-                     />
-
-              <br />
-              <input name="files:list"
-                     type="file"
-                     id="newfile1"
-                     size="30"
-                     />
-              <br />
-              <input name="files:list"
-                     type="file"
-                     id="newfile2"
-                     size="30"
-                     />
-
+              </div>
             </div>
           </div>
 

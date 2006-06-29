@@ -75,6 +75,10 @@ class IConversationView(interface.Interface):
         """Return all comments in the conversation.
         """
         
+    def conversation():
+        """Return active conversation.
+        """
+
     def root_comments():
         """Return all of the root comments for a conversation.
         """
@@ -88,6 +92,15 @@ class ConversationView(CommentView):
     """
     
     interface.implements(IConversationView)
+
+    def conversation(self):
+        checkPermission = self.portal_membership.checkPermission
+        conv = self.context
+
+        return {
+                'maximumAttachments' : conv.getForum().getMaxAttachments(),
+                'canAttach': checkPermission(permissions.AddAttachment, conv),
+                }
 
     def comments(self):
         batchSize = 30

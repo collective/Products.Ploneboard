@@ -18,7 +18,8 @@
 
 <body>
   <div metal:fill-slot="main"
-       tal:define="view context/@@comments_view">
+       tal:define="view context/@@comments_view;
+                   conversation view/conversation">
 
     <metal:header use-macro="here/board_header/macros/header">
       Board header

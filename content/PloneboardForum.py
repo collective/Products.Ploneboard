@@ -26,9 +26,9 @@ from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, BooleanField, LinesField
+from Products.Archetypes.public import TextField, BooleanField, LinesField, IntegerField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget
+from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget, IntegerWidget
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME
@@ -69,6 +69,16 @@ schema = BaseBTreeFolderSchema + Schema((
                             label_msgid = "label_category",
                             i18n_domain = "ploneboard",
                           )),
+    IntegerField('maxAttachments',
+                write_permission = ManageForum,
+                default = 1,
+                widget = IntegerWidget(
+                         description = "Select the maximum number of attachments per comment.",
+                         description_msgid = "help_maxattachments",
+                         label = "Maximum number of attachments",
+                         label_msgid = "label_maxattachments",
+                         i18n_domain = "ploneboard",
+                )),
     ))
 
 
