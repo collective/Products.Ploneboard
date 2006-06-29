@@ -119,16 +119,14 @@
                    class="standalone"
                    type="submit"
                    />
-
-            <small class="boardCommentState" 
-                 tal:condition="python:state != 'published'">
-              This comment is currently
-              <span tal:replace="comment/reviewStateTitle">
-              State here
-              </span>.
-            </small>
-
           </form>
+          <small class="boardCommentState" 
+            tal:condition="python:state != 'published'">
+            This comment is currently
+            <span tal:replace="comment/reviewStateTitle">
+              State here
+            </span>.
+          </small>
         </div>
         <div class="boardCommentReplyActions">
           
