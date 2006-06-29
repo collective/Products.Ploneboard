@@ -11,6 +11,11 @@
     </tal:block>
   </metal:top>
 
+  <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/pb_attachment.js">
+    </script>
+  </metal:js>
 
   <metal:css fill-slot="css_slot">
     <style type="text/css" media="all"
