@@ -50,6 +50,17 @@ configlets = \
 ,
 )
 
+def MigratePloneboard(self, out):
+    tool = getToolByName(self, PLONEBOARD_TOOL)
+    if hasattr(tool, 'transforms_config') and \
+            not hasattr(tool, 'transforms'):
+        from ZODB.PersistentMapping import PersistentMapping
+        tool.transforms=PersistentMapping()
+        for (key,value) in tool.transforms_config.items():
+            tool.transforms[key]=value['transform_status']
+        del tool.transforms_config
+        out.write('Migrated transform configuration\n') 
+
 def addPloneboardTool(self, out):
     if not hasattr(self, PLONEBOARD_TOOL):
         addTool = self.manage_addProduct['Ploneboard'].manage_addTool
@@ -137,9 +148,11 @@ def addPortalProperties(self, out):
 def addConfiglets(self, out):
     configTool = getToolByName(self, 'portal_controlpanel', None)
     if configTool:
+        lets = [c['id'] for c in configTool.enumConfiglets(group='Products')]
         for conf in configlets:
-            out.write('Adding configlet %s\n' % conf['id'])
-            configTool.registerConfiglet(**conf)
+            if conf['id'] not in lets:
+                out.write('Adding configlet %s\n' % conf['id'])
+                configTool.registerConfiglet(**conf)
 
 def addMemberProperties(self, out):
     pass
@@ -212,6 +225,7 @@ def removeConfiglets(self, out):
 # CMFQuickInstaller uninstalls skins.
 def uninstall(self):
     out=StringIO()
+    MigratePloneboard(self, out)
     removeConfiglets(self, out)
     removeTransforms(self, out)
     return out.getvalue()

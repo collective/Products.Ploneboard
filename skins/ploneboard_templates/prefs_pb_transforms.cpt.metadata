@@ -1,0 +1,12 @@
+[default]
+title=Manage Ploneboard Transforms
+
+[validators]
+validators=
+
+[actions]
+action.success=traverse_to:string:update_transform_script
+action.failure=traverse_to:string:prefs_pb_transforms
+
+[security]
+View=0:Authenticated

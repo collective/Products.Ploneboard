@@ -5,7 +5,7 @@ from ZPublisher.HTTPRequest import FileUpload
 from OFS.Image import File
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore.permissions import View
+from Products.CMFCore.permissions import ManagePortal, View
 #from permissions import AddAttachment
 from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
@@ -20,67 +20,49 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
     security = ClassSecurityInfo()
     def __init__(self):
-        # {'name' : {'transform' : '', 'dataprovider' : '', 'transform_status' : '' }}
-        self.transforms_config = PersistentMapping()
+        self.transforms= PersistentMapping()
     
+    security.declarePrivate('registerTransform')
     def registerTransform(self, name, module):
         tr_tool = getToolByName(self, 'portal_transforms')
         if name not in tr_tool.objectIds():
             tr_tool.manage_addTransform(name, module)
-        
-        transform = tr_tool._getOb(name)
-        
-        dprovider = None
-        m = importModuleFromName(module)
-        if hasattr(m, 'registerDataProvider'):
-            dprovider = m.registerDataProvider()
-        
-        self.transforms_config[name] = {'transform' : aq_base(transform),
-                                        'dataprovider' : dprovider,
-                                        'transform_status' : 1}
 
+        if name not in self.transforms:
+            self.transforms[name]=False
+
+    security.declarePrivate('unregisterTransform')
     def unregisterTransform(self, name):
         tr_tool = getToolByName(self, 'portal_transforms')
         tr_tool._delObject(name)
-        del self.transforms_config[name]
+        self.transforms.remove(name)
 
-    def updateTransform(self, name, **kwargs):
-        """ Change status of transform.
-            Status may be - 'enabled' or 'disabled' 
-        """
-        transform_status = kwargs.get('transform_status')
-        self.transforms_config[name]['transform_status'] = transform_status
+    security.declareProtected(ManagePortal, 'enableTransform')
+    def enableTransform(self, name, enabled=True):
+        """Change the activity status for a transform."""
+        self.transforms[name] = enabled
 
+    security.declarePrivate('unregisterAllTransforms')
     def unregisterAllTransforms(self):
         tr_tool = getToolByName(self, 'portal_transforms')
-        for transform_name, transform_object, transform_status in self.getTransforms():
+        for transform_name in self.getTransforms():
             try:
                 tr_tool._delObject(transform_name)
             except AttributeError, e:
                 # _delObject couldn't find the transform_name. Must be gone already.
                 pass
-        self.transforms_config.clear()
+        self.transforms.clear()
 
+    security.declareProtected(ManagePortal, 'getTransforms')
     def getTransforms(self):
         """ Returns list of tuples - (transform_name, transform_object, transform_status) """
-        return [(transform_name, val['transform'], val['transform_status']) for transform_name, val in self.transforms_config.items()]
+        return self.transforms.keys()
     
+    security.declareProtected(View, 'getEnabledTransforms')
     def getEnabledTransforms(self):
         """ Returns list of tuples - (transform_name, transform_object) """
-        return [(transform_name, val['transform']) for transform_name, val in self.transforms_config.items() if val['transform_status']]
-
-    security.declarePublic('getDataProviders')
-    def getDataProviders(self):
-        """ Returns list of tuples - (transform_name, dprovider_object) """
-        return [(transform_name, val['dataprovider']) for transform_name, val in self.transforms_config.items() if val['dataprovider'] is not None]
-
-    def getDataProvider(self, name):
-        return self.transforms_config[name]['dataprovider']
-
-    def hasDataProvider(self, name):
-        if self.transforms_config[name]['dataprovider']:
-            return 1
-        return 0
+        return [name for name in self.transforms.keys() \
+                    if self.transforms[name]]
 
     security.declareProtected(View, 'performCommentTransform')
     def performCommentTransform(self, orig, **kwargs):
@@ -94,10 +76,9 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
         data = transform_tool._wrap('text/plain')
         
-        for transform in map(lambda x: x[1], self.getEnabledTransforms()):
-            data = transform.convert(orig, data, **kwargs)
+        for transform in self.getEnabledTransforms():
+            data = transform_tool(transform, orig, data)
             orig = data.getData()
-            transform_tool._setMetaData(data, transform)
         
         orig = orig.replace('\n', '<br/>')
         return orig
