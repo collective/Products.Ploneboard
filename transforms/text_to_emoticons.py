@@ -36,7 +36,27 @@ class EmoticonDataProvider(TransformDataProvider):
                 'value_label' : 'image name', 
                 'description' : 'Emoticons to images mapping'}
             })
-            
+
+    def defaultEmoticons():
+        emoticons = { ':)' : '<img src="smiley_smile.png" alt=":)" title="Smile" />'
+                    , ':(' : '<img src="smiley_sad.png" alt=":(" title="Sad" />'
+                    , '8-)' : '<img src="smiley_cool.png" alt="8)" title="Cool" />'
+                    , ':D' : '<img src="smiley_lol.png" alt=":D" title="Big grin" />'
+                    , ':|' : '<img src="smiley_skeptic.png" alt=":|" title="Skeptic" />'
+                    , ':o' : '<img src="smiley_surprised.png" alt=":o" title="Surprised" />'
+                    , ':P' : '<img src="smiley_tongue.png" alt=":P" title="Tongue-in-cheek" />'
+                    , ';)' : '<img src="smiley_wink.png" alt=";)" title="Wink" />'
+                    , ':-)' : '<img src="smiley_smile.png" alt=":)" title="Smile" />'
+                    , ':-(' : '<img src="smiley_sad.png" alt=":(" title="Sad" />'
+                    , ':-D' : '<img src="smiley_lol.png" alt=":D" title="Big grin" />'
+                    , ':-|' : '<img src="smiley_skeptic.png" alt=":|" title="Skeptic" />'
+                    , ':-o' : '<img src="smiley_surprised.png" alt=":o" title="Surprised" />'
+                    , ':-P' : '<img src="smiley_tongue.png" alt=":P" title="Tongue-in-cheek" />'
+                    , ';-)' : '<img src="smiley_wink.png" alt=";)" title="Wink" />'
+                    }
+        return emoticons
+    defaultEmoticons=staticmethod(defaultEmoticons)
+
 def registerDataProvider():
     return EmoticonDataProvider()
 
@@ -74,9 +94,8 @@ class TextToEmoticons:
         # Get acquisition context
         context = kwargs.get('context')
         
-        pb_tool = getToolByName(context, PLONEBOARD_TOOL)
         url_tool = getToolByName(context, 'portal_url')
-        dict = pb_tool.getDataProvider('text_to_emoticons').getElements()
+        dict = EmoticonDataProvider.defaultEmoticons()
         
         # Here we need to find relative images path to the root of site
         # This is done for image cashing.
