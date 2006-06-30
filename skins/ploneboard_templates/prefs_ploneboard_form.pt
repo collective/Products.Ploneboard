@@ -31,7 +31,7 @@
             <li i18n:translate="manage_transforms">
                 <a href="prefs_pb_transforms">
                 <img src="smiley_smile.png" alt="" />
-                Manage transforms
+                Manage comment text transformations
                 </a>
             </li>
         </ul>

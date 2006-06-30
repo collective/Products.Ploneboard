@@ -19,19 +19,19 @@
       </a>
 
       <div class="documentDescription" i18n:translate="description_pref_transforms">
-        Configure Ploneboard text transforms.
+        Configure Ploneboard comment text transformations.
       </div>
 
       <form action=""
             name="ploneboard"
             method="post"
             tal:define="pbtool context/portal_ploneboard;
-                               known_transforms pbtool/getTransforms;
-                               enabled_transforms pbtool/getEnabledTransforms"
+                         known_transforms pbtool/getTransforms;
+                         enabled_transforms pbtool/getEnabledTransforms"
             tal:attributes="action string:${here_url}/${template_id}">
         <fieldset>
           <legend i18n:translate="legend_pref_ploneboard_transforms">
-            Text transforms
+            Text transformations
           </legend>
 
           <div class="field"
@@ -40,8 +40,11 @@
             <label for="transforms" i18n:translate="label_transforms">Transforms</label>
 
             <div class="formHelp" i18n:translate="help_transforms">
-              Select the text transforms that should be used for comments
-              posted in ploneboard conversations.
+              Select the text transformations that should be used for comments
+              posted in Ploneboard conversations. Text transformations alter
+              the text entered by the user, either to remove potentially 
+              malicious HTML tags, or to add additional functionality, such as
+              making links clickable.
             </div>
 
             <div tal:content="error">Validation error output</div>
@@ -53,11 +56,11 @@
                        name="transforms:list"
                        tal:attributes="value transform;
                                        id python:normalizeString(transform);
-                                       checked python:test(transform in enabled_transforms, 'checked', '')"/>
+                                       checked python:test(transform in enabled_transforms, 'checked', None)"/>
                 <label for=""
                        i18n:translate=""
                        tal:attributes="for python:normalizeString(transform)"
-                       tal:content="transform">label</label>
+                       tal:content="python:pbtool.getTransformFriendlyName(transform)">label</label>
               </li>
             </ul>
           </div>

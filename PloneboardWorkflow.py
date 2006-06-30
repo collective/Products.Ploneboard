@@ -30,7 +30,8 @@ def setupPloneboardCommentWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for p in (AccessContentsInformation, ViewBoard, EditComment, AddComment, AddPortalContent, DeleteComment):
+    for p in (AccessContentsInformation, ViewBoard, ModifyPortalContent, EditComment, 
+                AddComment, AddPortalContent, DeleteComment):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('initial')
@@ -44,6 +45,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  1, (r_manager, r_owner, r_reviewer))
+    sdef.setPermission(ModifyPortalContent,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
     sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
@@ -56,6 +58,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  0, (r_manager, r_reviewer))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager, r_reviewer))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, ())
     sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
@@ -68,6 +71,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager,))
     sdef.setPermission(ViewBoard,    1, (r_manager,))
     sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager,))
     sdef.setPermission(AddComment, 1, ())
     sdef.setPermission(AddPortalContent,   1, (r_manager,))
     sdef.setPermission(DeleteComment,   0, (r_manager,))
@@ -79,6 +83,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_owner, r_reviewer))
     sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
     sdef.setPermission(DeleteComment,   0, (r_manager, r_owner, r_reviewer))
@@ -91,6 +96,7 @@ def setupPloneboardCommentWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, (r_manager,))
     sdef.setPermission(DeleteComment,   0, (r_manager,))
@@ -223,7 +229,7 @@ def setupPloneboardConversationWorkflow(wf):
         wf.transitions.addTransition(t)
     for v in ('action', 'actor', 'comments', 'review_history', 'time'):
         wf.variables.addVariable(v)
-    for p in (AccessContentsInformation, ViewBoard, EditComment, AddComment, AddPortalContent):
+    for p in (AccessContentsInformation, ViewBoard, EditComment, ModifyPortalContent, AddComment, AddPortalContent):
         wf.addManagedPermission(p)
 
     wf.states.setInitialState('pending')
@@ -237,6 +243,7 @@ def setupPloneboardConversationWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager, r_reviewer, r_owner))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(AddComment, 1, (r_manager, r_owner)) # If owner is anon everyone can?
     sdef.setPermission(AddPortalContent,   1, ())
 
@@ -247,7 +254,8 @@ def setupPloneboardConversationWorkflow(wf):
     # This state just inherits everything from the forum workflow
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    1, ())
-    sdef.setPermission(EditComment,  1, ())
+    sdef.setPermission(EditComment,  1, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  1, (r_manager,))
     sdef.setPermission(AddComment, 1, ())
     sdef.setPermission(AddPortalContent,   1, ())
 
@@ -260,6 +268,7 @@ def setupPloneboardConversationWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    1, ())
     sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent, 0, ())
 
@@ -271,6 +280,7 @@ def setupPloneboardConversationWorkflow(wf):
     sdef.setPermission(AccessContentsInformation,  1, ())
     sdef.setPermission(ViewBoard,    0, (r_manager, r_reviewer, r_owner))
     sdef.setPermission(EditComment,  0, (r_manager,))
+    sdef.setPermission(ModifyPortalContent,  0, (r_manager,))
     sdef.setPermission(AddComment, 0, ())
     sdef.setPermission(AddPortalContent,   0, ())
 

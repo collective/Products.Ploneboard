@@ -20,16 +20,18 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
     security = ClassSecurityInfo()
     def __init__(self):
-        self.transforms= PersistentMapping()
+        self.transforms = PersistentMapping()
     
     security.declarePrivate('registerTransform')
-    def registerTransform(self, name, module):
+    def registerTransform(self, name, module, friendlyName=''):
         tr_tool = getToolByName(self, 'portal_transforms')
         if name not in tr_tool.objectIds():
             tr_tool.manage_addTransform(name, module)
 
         if name not in self.transforms:
-            self.transforms[name]=False
+            self.transforms[name] = {'enabled' : True, 
+                                     'friendlyName' : friendlyName,
+                                     }
 
     security.declarePrivate('unregisterTransform')
     def unregisterTransform(self, name):
@@ -40,7 +42,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     security.declareProtected(ManagePortal, 'enableTransform')
     def enableTransform(self, name, enabled=True):
         """Change the activity status for a transform."""
-        self.transforms[name] = enabled
+        self.transforms[name]['enabled'] = enabled
 
     security.declarePrivate('unregisterAllTransforms')
     def unregisterAllTransforms(self):
@@ -55,14 +57,18 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
     security.declareProtected(ManagePortal, 'getTransforms')
     def getTransforms(self):
-        """ Returns list of tuples - (transform_name, transform_object, transform_status) """
+        """ Returns list of transform names"""
         return self.transforms.keys()
+    
+    security.declareProtected(ManagePortal, 'getTransformFriendlyName')
+    def getTransformFriendlyName(self, name):
+        """ Returns a friendly name for the given transform"""
+        return self.transforms[name]['friendlyName']
     
     security.declareProtected(View, 'getEnabledTransforms')
     def getEnabledTransforms(self):
-        """ Returns list of tuples - (transform_name, transform_object) """
-        return [name for name in self.transforms.keys() \
-                    if self.transforms[name]]
+        """ Returns list of names for enabled transforms"""
+        return [name for name in self.transforms.keys() if self.transforms[name]['enabled']]
 
     security.declareProtected(View, 'performCommentTransform')
     def performCommentTransform(self, orig, **kwargs):
@@ -71,7 +77,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         
         # This one is very important, because transform object has no 
         # acquisition context inside it, so we need to pass it our one
-	context=kwargs.get('context', self)
+        context=kwargs.get('context', self)
 
         data = transform_tool._wrap('text/plain')
         

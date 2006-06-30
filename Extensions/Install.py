@@ -159,9 +159,9 @@ def addMemberProperties(self, out):
 
 def addTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
-    pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE)
-    pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE)
-    pb_tool.registerTransform('safe_html', SAFE_HTML_TRANSFORM_MODULE)
+    pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE, 'Graphical smilies')
+    pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE, 'Clickable links')
+    pb_tool.registerTransform('safe_html', SAFE_HTML_TRANSFORM_MODULE, 'Remove dangerous HTML')
     
 
 def removeTransforms(self, out):

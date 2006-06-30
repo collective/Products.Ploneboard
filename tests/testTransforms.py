@@ -21,21 +21,15 @@ class TestTransformRegistration(PloneboardTestCase.PloneboardTestCase):
         """Check if the default registrations are present."""
         tool = getToolByName(self.portal, PLONEBOARD_TOOL)
         self.failUnlessEqual(len(tool.getTransforms()), 3)
-        self.failUnlessEqual(len(tool.getEnabledTransforms()), 0)
+        self.failUnlessEqual(len(tool.getEnabledTransforms()), 3)
 
-    def testRegistration(self):
+    def testDisabling(self):
         """Try registering and unregistering a transform"""
         tool = getToolByName(self.portal, PLONEBOARD_TOOL)
-        tool.enableTransform("safe_html")
-        self.failUnlessEqual(tool.getEnabledTransforms(), ["safe_html"])
-
-    def testEnabling(self):
-        """Try registering and unregistering a transform"""
-        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
-        tool.enableTransform("safe_html")
-        self.failUnlessEqual(tool.getEnabledTransforms(), ["safe_html"])
-        tool.enableTransform("safe_html", enabled=False)
-        self.failUnlessEqual(tool.getEnabledTransforms(), [])
+        tool.enableTransform('safe_html', enabled=False)
+        self.failIf('safe_html' in tool.getEnabledTransforms())
+        tool.enableTransform('safe_html')
+        self.failUnless('safe_html' in tool.getEnabledTransforms())
 
 
 def test_suite():

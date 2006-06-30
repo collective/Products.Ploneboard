@@ -45,7 +45,7 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
     def testTransforms(self):
         from Products.Ploneboard.config import PLONEBOARD_TOOL
         tool = getToolByName(self.portal, PLONEBOARD_TOOL)
-        transforms = [t[0] for t in tool.getEnabledTransforms()]
+        transforms = [t for t in tool.getEnabledTransforms()]
         self.failUnless('safe_html' in transforms)
         self.failUnless('text_to_emoticons' in transforms)
         self.failUnless('url_to_hyperlink' in transforms)
