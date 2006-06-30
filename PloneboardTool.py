@@ -71,13 +71,12 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         
         # This one is very important, because transform object has no 
         # acquisition context inside it, so we need to pass it our one
-        if kwargs.get('context', None) is None:
-            kwargs.update({ 'context' : self })
+	context=kwargs.get('context', self)
 
         data = transform_tool._wrap('text/plain')
         
         for transform in self.getEnabledTransforms():
-            data = transform_tool(transform, orig, data)
+            data = transform_tool.convert(transform, orig, data, context)
             orig = data.getData()
         
         orig = orig.replace('\n', '<br/>')
