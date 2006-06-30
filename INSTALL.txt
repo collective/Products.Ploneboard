@@ -1,6 +1,8 @@
 Requirements
 
-    Ploneboard requires Zope 2.8.1 or later, and Plone 2.1 later than rc3.
+    Ploneboard requires Zope 2.8.7 or later, and Plone 2.1.2 or later.
+
+    Zope 2.9.4 or later is required to run the functional tests.
 
 Installing Ploneboard
 
