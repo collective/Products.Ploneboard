@@ -14,6 +14,10 @@ try:
 except ImportError:
     HAS_GENERICSETUP = False
 
+# Disable the GenericSetup profile for now. GenericSetup is definitely the
+# future, but at this moment there are too much import-export steps missing.
+HAS_GENERICSETUP = False
+
 import sys, os, os.path
 
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
