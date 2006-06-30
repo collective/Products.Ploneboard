@@ -1,5 +1,5 @@
 [default]
-title=Add post
+title=Add comment
 
 [validators]
 validators..Preview=validate_add_comment

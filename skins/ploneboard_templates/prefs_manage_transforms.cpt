@@ -22,7 +22,7 @@
    </a>
 
     <div class="documentDescription" i18n:translate="description_ploneboard_config_transforms"> 
-    Here you can configure which transforms are active in Ploneboard posts.
+    Here you can configure which transforms are active in Ploneboard comments.
     </div>
 
     <fieldset>

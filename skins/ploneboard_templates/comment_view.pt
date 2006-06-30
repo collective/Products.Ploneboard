@@ -48,7 +48,7 @@
           
           <div class="boardCommentHeaderTitleBlock">
                         
-            <h3 tal:content="comment/Title">Post title</h3>
+            <h3 tal:content="comment/Title">Comment title</h3>
 
             <img src="" 
                  tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>

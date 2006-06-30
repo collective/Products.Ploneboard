@@ -54,7 +54,7 @@
             <tr>
               <th i18n:translate="forum_name">Forum name</th>
               <th i18n:translate="number_of_conversations">Conversations</th>
-              <th i18n:translate="most_recent_post">Most recent post</th>
+              <th i18n:translate="most_recent_comment">Most recent comment</th>
             </tr>
           </thead>
 
