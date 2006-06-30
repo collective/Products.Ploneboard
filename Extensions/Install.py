@@ -156,18 +156,18 @@ def removeTransforms(self, out):
     pb_tool.unregisterAllTransforms()
 
 def registerTypesWithPortalFactory(self, out): 
-    #Can we use portal_factory for all types? The following just sets it up for PloneboardComment 
+    #This assumes we can use portal_factory for all types
     portal_factory = getToolByName(self, 'portal_factory') 
     if portal_factory is not None: 
         factoryTypes = list(portal_factory.getFactoryTypes().keys())
         types = [t['portal_type'] for t in listTypes(PROJECTNAME)]
         for factoryType in types:
             if factoryType not in factoryTypes:
+                out.write('Added %s to Portal Factory\n' % factoryType)
                 factoryTypes.append(factoryType)
         portal_factory.manage_setPortalFactoryTypes(listOfTypeIds = factoryTypes) 
-        out.write('Added PloneboardComment to Portal Factory') 
     else: 
-        out.write('Couldn\'t get Portal Factory, so couldn\'t add Ploneboard types to it') 
+        out.write('Couldn\'t get Portal Factory, so couldn\'t add Ploneboard types to it\n') 
 
 def setupRootPermissions(self, out):
     root = getToolByName(self, 'portal_url').getPortalObject()
