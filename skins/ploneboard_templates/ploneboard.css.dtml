@@ -77,7 +77,7 @@
     font-size: 90%;
 }
 
-.boardComment .visualGhosted:hover {
+.boardComment:hover .visualGhosted {
     opacity: 0.6;
     -moz-opacity: 0.6;
     -khtml-opacity: 0.6;
