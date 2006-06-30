@@ -14,23 +14,9 @@ class EmoticonDataProvider(TransformDataProvider):
         self.config = PersistentMapping()
         self.config_metadata = PersistentMapping()
         
-        self.config.update({ 'inputs' : { ':)' : '<img src="smiley_smile.png" alt=":)" title="Smile" />'
-                                        , ':(' : '<img src="smiley_sad.png" alt=":(" title="Sad" />'
-                                        , '8-)' : '<img src="smiley_cool.png" alt="8)" title="Cool" />'
-                                        , ':D' : '<img src="smiley_lol.png" alt=":D" title="Big grin" />'
-                                        , ':|' : '<img src="smiley_skeptic.png" alt=":|" title="Skeptic" />'
-                                        , ':o' : '<img src="smiley_surprised.png" alt=":o" title="Surprised" />'
-                                        , ':P' : '<img src="smiley_tongue.png" alt=":P" title="Tongue-in-cheek" />'
-                                        , ';)' : '<img src="smiley_wink.png" alt=";)" title="Wink" />'
-                                        , ':-)' : '<img src="smiley_smile.png" alt=":)" title="Smile" />'
-                                        , ':-(' : '<img src="smiley_sad.png" alt=":(" title="Sad" />'
-                                        , ':-D' : '<img src="smiley_lol.png" alt=":D" title="Big grin" />'
-                                        , ':-|' : '<img src="smiley_skeptic.png" alt=":|" title="Skeptic" />'
-                                        , ':-o' : '<img src="smiley_surprised.png" alt=":o" title="Surprised" />'
-                                        , ':-P' : '<img src="smiley_tongue.png" alt=":P" title="Tongue-in-cheek" />'
-                                        , ';-)' : '<img src="smiley_wink.png" alt=";)" title="Wink" />'
-                                        } })
-        self.config_metadata.update({
+        self.config.update({ 'inputs' : self.defaultEmoticons()})
+
+		self.config_metadata.update({
             'inputs' : {
                 'key_label' : 'emoticon code', 
                 'value_label' : 'image name', 
