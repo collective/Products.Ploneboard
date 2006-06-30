@@ -23,10 +23,13 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         self.transforms = PersistentMapping()
     
     security.declarePrivate('registerTransform')
-    def registerTransform(self, name, module, friendlyName=''):
+    def registerTransform(self, name, module, friendlyName=None):
         tr_tool = getToolByName(self, 'portal_transforms')
         if name not in tr_tool.objectIds():
             tr_tool.manage_addTransform(name, module)
+
+        if not friendlyName:
+            friendlyName = name
 
         if name not in self.transforms:
             self.transforms[name] = {'enabled' : True, 
