@@ -121,7 +121,7 @@
 
               <div i18n:translate="help_body_attachments_posting"
                    class="formHelp">
-                Attachments.
+                Select a file to upload as an attachment to this comment.
               </div>
 
               <div tal:replace="error_files">Validation Error Comment</div>
