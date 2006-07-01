@@ -57,7 +57,10 @@ def MigratePloneboard(self, out):
         from ZODB.PersistentMapping import PersistentMapping
         tool.transforms=PersistentMapping()
         for (key,value) in tool.transforms_config.items():
-            tool.transforms[key]=value['transform_status']
+            tool.transforms[key]={
+                    'enabled' : value['transform_status'],
+                    'friendlyName' : key,
+                    }
         del tool.transforms_config
         out.write('Migrated transform configuration\n') 
 
