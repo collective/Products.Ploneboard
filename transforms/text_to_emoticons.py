@@ -16,7 +16,7 @@ class EmoticonDataProvider(TransformDataProvider):
         
         self.config.update({ 'inputs' : self.defaultEmoticons()})
 
-	self.config_metadata.update({
+        self.config_metadata.update({
             'inputs' : {
                 'key_label' : 'emoticon code', 
                 'value_label' : 'image name', 

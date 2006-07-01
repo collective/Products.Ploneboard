@@ -12,7 +12,7 @@ from Products.CMFCore.utils import getToolByName
 
 pm = getToolByName(context, 'portal_membership')
 
-if pm.isAnonymousUser():	
+if pm.isAnonymousUser():
     creator = 'Anonymous'
 else:
     creator = pm.getAuthenticatedMember().getUserName()
