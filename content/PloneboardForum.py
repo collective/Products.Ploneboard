@@ -28,7 +28,7 @@ from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, BooleanField, LinesField, IntegerField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget, IntegerWidget
+from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME
@@ -79,10 +79,18 @@ schema = BaseBTreeFolderSchema + Schema((
                          label_msgid = "label_maxattachments",
                          i18n_domain = "ploneboard",
                 )),
+    IntegerField('maxAttachmentSize',
+                write_permission = ManageForum,
+                 vocabulary = 'getAttachmentSizes',
+                default = 100,
+                widget = SelectionWidget(
+                         description = "Select the maximum attachment size.",
+                         description_msgid = "help_maxattachmentsize",
+                         label = "Maximum attachments size",
+                         label_msgid = "label_maxattachmentsize",
+                         i18n_domain = "ploneboard",
+                )),
     ))
-
-
-MAX_UNIQUEID_ATTEMPTS = 1000
 
 
 class PloneboardForum(BaseBTreeFolder):
@@ -298,7 +306,7 @@ class PloneboardForum(BaseBTreeFolder):
         else:
             return None
 
-    # Vocabulary
+    # Vocabularies
     security.declareProtected(ViewBoard, 'getCategories')
     def getCategories(self):
         value = []
@@ -309,6 +317,17 @@ class PloneboardForum(BaseBTreeFolder):
                 value = [(c,c) for c in categories]
         value.sort()
         return DisplayList(value)
+
+    security.declareProtected(ViewBoard, 'getAttachmentSizes')
+    def getAttachmentSizes(self):
+        voc = DisplayList()
+        voc.add('10', '10 kilobyte')
+        voc.add('100', '100 kilobyte')
+        voc.add('1000', '1 megabyte')
+        voc.add('10000', '10 megabyte')
+
+        return voc
+
 
     ############################################################################
     # Folder methods, indexes and such

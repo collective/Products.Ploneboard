@@ -9,13 +9,33 @@
 ##title=Validates a posting
 ##
 
+def FileSize(file):
+    if hasattr(file, 'tell'):
+        file.seek(0, 2)
+        size=file.tell()
+        file.seek(0)
+    else:
+        try:
+            size=len(file)
+        except TypeError:
+            size=0
+    return size
 
 text = context.REQUEST.get('text', '');
 
 if len(text) <= 0:
-	state.setError("text", "No content entered", new_status="failure")
-	
+    state.setError("text", "No content entered", new_status="failure")
+
+files=context.REQUEST.get('files', [])
+maxsize=context.getMaxAttachmentSize()
+
+for file in files:
+    if FileSize(file)>maxsize:
+        state.setError("files", "Attachment is too large", new_status="failure")
+        break
+
 if state.getErrors():
-    return state.set(portal_status_message='Please correct the indicated errors.')
+    return state.set(
+            portal_status_message='Please correct the indicated errors.')
 
 return state
