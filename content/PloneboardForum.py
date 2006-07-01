@@ -84,9 +84,9 @@ schema = BaseBTreeFolderSchema + Schema((
                  vocabulary = 'getAttachmentSizes',
                 default = 100,
                 widget = SelectionWidget(
-                         description = "Select the maximum attachment size.",
+                         description = "Select the maximum size for attachments.",
                          description_msgid = "help_maxattachmentsize",
-                         label = "Maximum attachments size",
+                         label = "Maximum attachment size",
                          label_msgid = "label_maxattachmentsize",
                          i18n_domain = "ploneboard",
                 )),
