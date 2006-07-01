@@ -19,7 +19,8 @@
   </metal:css>
 
   <metal:block fill-slot="top_slot"
-               tal:define="dummy python:request.set('disable_border',1)" />
+               tal:define="dummy python:request.set('disable_border',1);
+                           kdummy python:request.set('text_text_format', 'text/html');" />
 </head>
 
 <body>
