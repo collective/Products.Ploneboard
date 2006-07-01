@@ -18,7 +18,7 @@ AddConversation = AddPloneboardConversation = 'Ploneboard: Add Conversation'
 ManageConversation = 'Ploneboard: Manage Conversation'
 
 AddComment = AddPloneboardComment = 'Ploneboard: Add Comment'
-EditComment = 'Ploneboard: Edit Comment'
+EditComment = permissions.ModifyPortalContent
 AddAttachment = AddPloneboardAttachment = 'Ploneboard: Add Comment Attachment'
 ManageComment = 'Ploneboard: Manage Comment'
 ApproveComment = 'Ploneboard: Approve Comment' # Used for moderation
@@ -47,9 +47,6 @@ setDefaultRoles(AddConversation,
 
 setDefaultRoles(AddComment,
                 ('Authenticated', 'Manager'))
-
-setDefaultRoles(EditComment,
-                ('Manager',))
 
 setDefaultRoles(AddAttachment,
                 ('Manager',))

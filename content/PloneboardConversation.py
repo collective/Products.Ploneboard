@@ -28,7 +28,7 @@ from Products.CMFPlone.utils import _createObjectByType
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,\
-     ManageBoard, AddConversation, AddComment, ManageConversation
+     ManageBoard, AddConversation, AddComment, ManageConversation, EditComment
 from PloneboardComment import PloneboardComment
 from PloneboardIndex import PloneboardIndex
 from Products.Ploneboard.interfaces import IForum, IConversation, IComment
@@ -42,7 +42,7 @@ except ImportError:
 
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
-PBConversationBaseBTreeFolderSchema['title'].write_permission = AddConversation
+PBConversationBaseBTreeFolderSchema['title'].write_permission = EditComment
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
@@ -55,7 +55,7 @@ schema = PBConversationBaseBTreeFolderSchema + Schema((
     TextField('description',
               searchable = 1,
               read_permission = ViewBoard,
-              write_permission = AddConversation,
+              write_permission = EditComment,
               default_content_type = 'text/plain',
               default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the conversation.",
@@ -160,12 +160,14 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         id = self.generateId()
         if not title:
             title = self.Title()
-        kwargs = {'title' : title, 
-                  'creators' : [creator],
-                  'text' : text
-                  }
 
-        m = _createObjectByType('PloneboardComment', self, id, **kwargs)
+
+        m = _createObjectByType('PloneboardComment', self, id)
+        
+        # XXX: There is some permission problem with AT write_permission
+        # and using **kwargs in the _createObjectByType statement. 
+        m.setTitle(title)
+        m.setText(text)
         m.setCreators([creator])
         
         # Create files in message

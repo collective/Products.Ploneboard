@@ -183,16 +183,22 @@ class PloneboardForum(BaseBTreeFolder):
         """
         
         id = self.generateId(prefix='')
-        kwargs.update({'title' : title,
-                       'creators' : [creator],
-                       'text' : text})
 
-        conv = _createObjectByType('PloneboardConversation', self, id, **kwargs)
+        conv = _createObjectByType('PloneboardConversation', self, id)
+        
+        # XXX: There is some permission problem with AT write_permission
+        # and using **kwargs in the _createObjectByType statement. 
+        conv.setTitle(title)
         conv.setCreators([creator])
         
 
         if text is not None:
-            m = _createObjectByType('PloneboardComment', conv, conv.generateId(), **kwargs)
+            m = _createObjectByType('PloneboardComment', conv, conv.generateId())
+            
+            # XXX: There is some permission problem with AT write_permission
+            # and using **kwargs in the _createObjectByType statement. 
+            m.setTitle(title)
+            m.setText(text)
             m.setCreators([creator])
 
             # Create files in message

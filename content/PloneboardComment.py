@@ -42,7 +42,7 @@ except ImportError:
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
-PBCommentBaseBTreeFolderSchema['title'].write_permission = AddComment
+PBCommentBaseBTreeFolderSchema['title'].write_permission = EditComment
 
 
 schema = PBCommentBaseBTreeFolderSchema + Schema((
@@ -54,7 +54,7 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
                                        'text/plain'),
               accessor='getText',
               read_permission = ViewBoard,
-              write_permission = AddComment,
+              write_permission = EditComment,
               widget = RichWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
                                       label = "Text",
@@ -155,6 +155,7 @@ class PloneboardComment(BaseBTreeFolder):
                  creator=None,
                  files=None ):
         """Add a reply to this comment."""
+
         conv = self.getConversation()
 
         id = conv.generateId()
@@ -162,12 +163,14 @@ class PloneboardComment(BaseBTreeFolder):
             title = conv.Title()
             if not title.lower().startswith('re:'):
                 title = 'Re: ' + title
-        kwargs = {'title' : title,
-                  'creators' : [creator],
-                  'text' : text,
-                  'reply_to' : self.UID(),
-                  }
-        m = _createObjectByType(self.portal_type, conv, id, **kwargs)
+        
+        m = _createObjectByType(self.portal_type, conv, id)
+        
+        # XXX: There is some permission problem with AT write_permission
+        # and using **kwargs in the _createObjectByType statement. 
+        m.setTitle(title)
+        m.setText(text)
+        m.setInReplyTo(self.UID())
         m.setCreators([creator])
 
         # Create files in message
