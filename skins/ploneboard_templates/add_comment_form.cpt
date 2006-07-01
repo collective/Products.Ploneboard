@@ -111,11 +111,11 @@
 
           <div metal:define-macro="comment_body_attachments"
                  tal:omit-tag=""
-		 tal:condition="python:checkPermission('Ploneboard: Add Comment Attachment', context)">
+                 tal:condition="python:checkPermission('Ploneboard: Add Comment Attachment', context)">
 
             <div class="field"
-		    tal:define="error_files errors/files|nothing;
-		               attachments python:context.getMaxAttachments()"
+                    tal:define="error_files errors/files|nothing;
+                               attachments python:context.getMaxAttachments()"
                  tal:attributes="class python:test(error_files, 'field error', 'field')"> 
 
               <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
