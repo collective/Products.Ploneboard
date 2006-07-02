@@ -1,67 +1,48 @@
 Ploneboard to-do list
 =====================
 
+    Bugs
+    ----
+    
+    - testPloneboardWorkflow.testPreserveChainsOnReinstall() errors during
+        quickinstaller re-install.
+
+        -> re-install works at runtime, so test fixture must be wrong
+    
+    UI decisions
+    ------------
+    
+    - How/where/whether threaded_conversation_view should be enabled
+        - per user preference? per forum?
+        - does it cause confusion if different users have different views?
+    
+    - Whether to use title-to-id generation (with numerical suffixes to remove
+        collisions) on conversations, on comments? 
+            - note: comment urls are rarely/never shown to the user
+    
+    Missing tests
+    -------------
+    
+    - Functional tests for threaded_conversation_view (see above)
+    - Functional tests for global board view template (see above)
+    
+    - Coverage of PloneboardTool's transform management is sub-optimal
+    
     Code structure
     --------------
 
     - Split up posting macros, as entire template is evaluated each time a 
         macro is used.
-
-    - Ensure conversations end up in portal_catalog.
-        - Can use ArchetypeTool's catalog multiplex for this
         
-    Workflows and Security
-    ----------------------
-
-    - Unit tests for security and workflows!!!!!!1111
-      Without tests, changes are mostly worthless.
-
-    - Add more security declarations, use the board permissions everywhere.
-
-    - Various permission bugs (possibly fixed, need testing):
-
-        - reviewer can view moderation-form but doesn't see action buttons to 
-            publish
-    
-        - if you reject a moderated post, it vanishes from the plone UI
-    
-        - Can't edit posted comment (actually a feature, make sure it works 
-            if you change permissions)
-    
-    UI fixes
-    --------
-
-    - Rename forum_view -> conversation_listing - it's actually a listing, not a
-        view
-    
-    - Need indication in UI when threads are locked or sticky
-      HOWEVER
-      Sticky is _not_ implemented using workflow states. Alternatives include reference etc.
-
-    - Implement comment moderation
-
-    - Get kupu to load everywhere
-
-        - Set kupu as default editor sitewide?
-          Alternatively always call kupu
-
-        - portal_javascript calls kupu tool with allowAnonymous=False (default behaviour)
-          Change condition on kupu javascripts?
-          Add entries for kupu javascripts when used for board?
-
-
     Discussion tool integration
     ----------------------------
 
     - Should have an aggregate page which shows all discussions going on in the
         portal
-
-    Tests
-    ------
-
-    - Refactor tests, use PloneTestCase
+    - Should be able to adapt Discussion Item to IComment, discussion
+        container to IConversation?
 
     Future/nice-to-have
     -------------------
 
-    - Mail/news gateway (bye-bye gmane?)
+    - Mail/news gateway - possibility of integrating with 'listen'?

@@ -1,6 +1,9 @@
-Main sponsor:
+Main sponsors:
 
     "The Consumer Council of Norway":http://www.forbrukerradet.no
+
+    "Marshall Mayer, LiveModern":http://livemodern.com and various generous 
+contributors
 
 Ploneboard contributors:
 
@@ -17,7 +20,8 @@ interface, concepts
     
     **Kapil Thangavelu** -- Initial architecture
     
-    **Martin Aspeli** -- Small fixes
+    **Martin Aspeli** -- Bug fixes, moderation re-implementation, functional 
+tests (and the bugs they found)
 
     **Vidar Andersen** -- Application icons
 
@@ -31,5 +35,5 @@ permission
     **Rocky Burt**, "ServerZen Software":http//www.serverzen.com -- Small
 fixes and updates on behalf of Zest Software
 
-    ** Wichert Akkerman**, "Amaze":http://www.amazesolutions.com -- Code,
+    **Wichert Akkerman**, "Amaze":http://www.amazesolutions.com -- Code,
 user interface improvements
