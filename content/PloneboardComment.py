@@ -32,6 +32,7 @@ from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,
      DeleteComment
 
 from Products.Ploneboard.interfaces import IConversation, IComment
+from Products.Ploneboard import utils
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
@@ -158,7 +159,7 @@ class PloneboardComment(BaseBTreeFolder):
 
         conv = self.getConversation()
 
-        id = conv.generateId()
+        id = conv.generateId(prefix='')
         if not title:
             title = conv.Title()
             if not title.lower().startswith('re:'):
@@ -171,7 +172,9 @@ class PloneboardComment(BaseBTreeFolder):
         m.setTitle(title)
         m.setText(text)
         m.setInReplyTo(self.UID())
-        m.setCreators([creator])
+        
+        if creator is not None:
+            m.setCreators([creator])
 
         # Create files in message
         if files:
@@ -181,13 +184,22 @@ class PloneboardComment(BaseBTreeFolder):
                 attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                 m.addAttachment(attachment)
 
+        # If this comment is being added by anonymous, make sure that the true
+        # owner in zope is the owner of the forum, not the parent comment or
+        # conversation. Otherwise, that owner may be able to view or delete
+        # the comment.
+        membership = getToolByName(self, 'portal_membership')
+        if membership.isAnonymousUser():
+            forum = self.getConversation().getForum()
+            utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
+        
+        m.reindexObject()
         conv.reindexObject() # Sets modified
         return m
 
     security.declareProtected(AddComment, 'deleteReply')
     def deleteReply(self, comment):
         """ Removes comment from the replies index """
-        ### XXX THIS IS KINDA STUPID IF IT ONLY REMOVES THE RELATIONSHIP...
         comment.deleteReference(self, REPLY_RELATIONSHIP)
 
     security.declareProtected(ViewBoard, 'getReplies')
@@ -257,8 +269,8 @@ class PloneboardComment(BaseBTreeFolder):
 
     ###########################
     # Attachment support      #
-    # XXX use RichDocument pattern with NonStructuralFolder
     ###########################
+    
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""

@@ -38,15 +38,12 @@
                                  state comment/review_state;
                                  pss modules/Products/PythonScripts/standard">
 
-        <div tal:attributes="class string:state-${state} boardCommentPending" tal:omit-tag="python:state == 'published'">
-
-        <div class="visualGhosted" tal:omit-tag="python:state != 'retracted'">
+        <div class="visualGhosted" tal:omit-tag="python:state not in ('retracted', 'rejected')">
 
         <a tal:attributes="name comment/getId"></a>
-        <div class="boardCommentDetails" id="" 
-             tal:attributes="id comment/getId;">
+        <div class="boardCommentDetails" tal:attributes="id comment/getId;">
           
-          <div class="boardCommentHeaderTitleBlock">
+          <div tal:attributes="class python:test(state == 'published', 'boardCommentHeaderTitleBlock', 'boardCommentHeaderTitleBlock state-%s' % state)">
                         
             <h3 tal:content="comment/Title">Comment title</h3>
 
@@ -121,7 +118,7 @@
                    type="submit"
                    />
           </form>
-          <small class="boardCommentState" 
+          <small tal:attributes="class string:state-${state}"
             tal:condition="python:state != 'published'">
             This comment is currently
             <span tal:replace="comment/reviewStateTitle">
@@ -178,7 +175,6 @@
           </ul>
         </fieldset>
       
-      </div>
       </metal:comment>
     </div>
   </div>

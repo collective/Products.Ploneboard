@@ -101,7 +101,8 @@
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">
                         <td>
                             <a href=""
-                               tal:attributes="href conversation/absolute_url">
+                               tal:attributes="href conversation/absolute_url;
+                                               class string:state-${revstate}">
                               <img src="" tal:condition="python:revstate == 'locked'"
                                           tal:replace="structure here/lock_icon.gif" />
                                 <span tal:replace="conversation/Title">This is a title</span>

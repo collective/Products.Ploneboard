@@ -120,9 +120,9 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
                 , title
                 , description ):
         """Add a forum to the board.
-        XXX get rid of this and use regular content creation
-        as this also enables us to instantiate different types
-        that implements the interface
+        
+        XXX: Should be possible to parameterise the exact type that is being
+        added.
         """
         kwargs = {'title' : title, 'description' : description}
         forum = PloneboardForum(id)

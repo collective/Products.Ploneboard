@@ -17,7 +17,7 @@ from Products.Ploneboard.config import GLOBALS
 from Products.Ploneboard.tests.PloneboardTestCase import PloneboardFunctionalTestCase
 
 REQUIRE_TESTBROWSER = ['MemberPostingForum.txt', 'MemberOnlyForum.txt', 
-                        'FreeForAllForum.txt']
+                        'FreeForAllForum.txt', 'ModeratedForum.txt']
 
 OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
                doctest.ELLIPSIS |
@@ -33,9 +33,6 @@ def list_nontestbrowser_tests():
             if os.path.basename(filename) not in REQUIRE_TESTBROWSER]
 
 def test_suite():
-    # Work around a Zope testsuite bug
-#    from zope.testing import testrunner
-#    testrunner.setup.remove_option("--config-file")
 
     # BBB: We can obviously remove this when testbrowser is Plone
     #      mainstream, read: with Five 1.4.

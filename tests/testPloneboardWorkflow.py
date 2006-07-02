@@ -101,7 +101,7 @@ class TestWorkflowsCreation(PloneboardTestCase.PloneboardTestCase):
                       'PloneboardConversation',
                       'PloneboardComment')
 
-        self.workflow.setChainForPortalTypes( boardtypes, 'plone_workflow')
+        self.workflow.setChainForPortalTypes(boardtypes, 'plone_workflow')
         self.workflow.getChainForPortalType('Ploneboard')
         for boardtype in boardtypes:
             self.failUnless('plone_workflow' in self.workflow.getChainForPortalType(boardtype),

@@ -127,7 +127,7 @@
 }
 
 .state-rejected {
-    color: &dtml-discreetColor;;
+    color: &dtml-discreetColor; !important;
 }
 
 /* Moderation */

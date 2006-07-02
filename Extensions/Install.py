@@ -50,16 +50,17 @@ configlets = \
 ,
 )
 
-def MigratePloneboard(self, out):
+def migratePloneboard(self, out):
     tool = getToolByName(self, PLONEBOARD_TOOL)
     if hasattr(tool, 'transforms_config') and \
             not hasattr(tool, 'transforms'):
         from ZODB.PersistentMapping import PersistentMapping
-        tool.transforms=PersistentMapping()
+        tool.transforms = PersistentMapping()
         for (key,value) in tool.transforms_config.items():
-            tool.transforms[key]={
+            tool.transforms[key] = {
                     'enabled' : value['transform_status'],
                     'friendlyName' : key,
+                    'wasAdded' : True
                     }
         del tool.transforms_config
         out.write('Migrated transform configuration\n') 
@@ -189,7 +190,7 @@ def setupRootPermissions(self, out):
     root = getToolByName(self, 'portal_url').getPortalObject()
     root.manage_permission(AddAttachment, ('Member', 'Manager',), 0)
 
-def install(self):
+def install(self, reinstall=False):
     out = StringIO()
 
     addPloneboardTool(self, out)
@@ -209,6 +210,9 @@ def install(self):
     addTransforms(self, out)
     
     setupRootPermissions(self, out)
+    
+    if reinstall:
+        migratePloneboard(self, out)
 
     print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
@@ -228,7 +232,6 @@ def removeConfiglets(self, out):
 # CMFQuickInstaller uninstalls skins.
 def uninstall(self):
     out=StringIO()
-    MigratePloneboard(self, out)
     removeConfiglets(self, out)
     removeTransforms(self, out)
     return out.getvalue()

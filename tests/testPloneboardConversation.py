@@ -10,6 +10,7 @@ from Products.CMFPlone.utils import _createObjectByType
 from Products.Ploneboard.interfaces import IConversation
 from Products.Ploneboard.content.PloneboardConversation import PloneboardConversation
 
+from Products.Ploneboard.tests.utils import addMember
 
 class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
 
@@ -22,7 +23,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(verifyClass(IConversation, PloneboardConversation))
 
     def testInterfaceConformance(self):
-        self.failUnless(IConversation.isImplementedBy(self.conv))
+        self.failUnless(IConversation.providedBy(self.conv))
         self.failUnless(verifyObject(IConversation, self.conv))
 
     def testGetForum(self):
@@ -148,6 +149,21 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(id in [x.getId() for x in convs])
         comments = conv.getComments()
         self.assertEqual(len(comments), 1)
+        
+    def testAddCommentAsAnonymousTakesOwnerOfForumAndCreatorAnonymous(self):
+        conv = self.conv
+        self.logout()
+        reply = conv.addComment('reply1', 'body1', creator='Anonymous')
+        self.assertEqual(conv.getForum().owner_info()['id'], reply.owner_info()['id'])
+        self.assertEqual(reply.Creator(), 'Anonymous')
+    
+    def testAddCommentAsNotAnonymousLeavesOwnershipAlone(self):
+        conv = self.conv
+        addMember(self, 'member2')
+        self.login('member2')
+        self.assertNotEqual(conv.getForum().owner_info()['id'], 'member2')
+        reply = conv.addComment('reply1', 'body1')
+        self.assertEqual(reply.owner_info()['id'], 'member2')
         
 def test_suite():
     suite = unittest.TestSuite()

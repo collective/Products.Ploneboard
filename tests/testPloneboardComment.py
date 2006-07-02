@@ -12,6 +12,7 @@ from Products.Ploneboard.content.PloneboardComment import PloneboardComment
 from OFS.Image import File
 from Products.CMFPlone.utils import _createObjectByType
 
+from Products.Ploneboard.tests.utils import addMember
 
 class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
 
@@ -32,6 +33,23 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         comment = conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
         self.failUnless(reply in conv.objectValues())
+    
+    def testAddReplyAsAnonymousTakesOwnerOfForumAndCreatorAnonymous(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        self.logout()
+        reply = comment.addReply('reply1', 'body1', creator='Anonymous')
+        self.assertEqual(conv.getForum().owner_info()['id'], reply.owner_info()['id'])
+        self.assertEqual(reply.Creator(), 'Anonymous')
+    
+    def testAddReplyAsNotAnonymousLeavesOwnershipAlone(self):
+        conv = self.conv
+        comment = conv.objectValues()[0]
+        addMember(self, 'member2')
+        self.login('member2')
+        self.assertNotEqual(conv.getForum().owner_info()['id'], 'member2')
+        reply = comment.addReply('reply1', 'body1')
+        self.assertEqual(reply.owner_info()['id'], 'member2')
     
     def testAddReplyAddsRe(self):
         conv = self.conv
@@ -128,7 +146,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failIfEqual(msg.getText(), text)
         self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), msg.getText())
         
-    def testDeleting(self):
+    def XXXtestDeleting(self):
         pass
         
     def testNewCommentIsVisibleToAnonymous(self):
@@ -137,6 +155,9 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.logout()
         comments = self.conv.getComments()
         self.failUnless(id in [x.getId() for x in comments])
+        
+    
+        
         
 class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCase):
 
@@ -188,6 +209,9 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         # PloneTestCase has no doctest capability :(  
         # - Rocky
 
+        # Actually - it does!
+        # see http://plone.org/documentation/tutorial/testing :)
+        # - Martin
 
         # Now lets start adding some comments:
         first_comment = self.conv.getFirstComment()

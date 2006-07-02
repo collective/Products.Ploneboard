@@ -12,7 +12,7 @@ def addMember(self, username, fullname="", email="", roles=('Member',), last_log
     member.setMemberProperties({'fullname': fullname, 'email': email,
                                 'last_login_time': DateTime(last_login_time),})
 
-def setUpDefaulMembersBoardAndForum(self):
+def setUpDefaultMembersBoardAndForum(self):
     addMember(self, 'member1', 'Member one', roles=('Member',))
     addMember(self, 'member2', 'Member two', roles=('Member',))
     addMember(self, 'manager1', 'Manager one', roles=('Manager',))

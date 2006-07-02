@@ -31,6 +31,21 @@ class TestTransformRegistration(PloneboardTestCase.PloneboardTestCase):
         tool.enableTransform('safe_html')
         self.failUnless('safe_html' in tool.getEnabledTransforms())
 
+    def testUnregisteringAllRemovesOnlyThoseAdded(self):
+        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
+        tool.unregisterAllTransforms()
+        transforms = getToolByName(self.portal, 'portal_transforms')
+        self.failIf('url_to_hyperlink' in transforms.objectIds())
+        self.failIf('text_to_emoticons' in transforms.objectIds())
+        self.failUnless('safe_html' in transforms.objectIds())
+
+    def testUnregisteringIndividualRemovesOnlyThoseAdded(self):
+        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
+        transforms = getToolByName(self.portal, 'portal_transforms')
+        tool.unregisterTransform('url_to_hyperlink')
+        self.failIf('url_to_hyperlink' in transforms.objectIds())
+        tool.unregisterTransform('safe_html')
+        self.failUnless('safe_html' in transforms.objectIds())
 
 def test_suite():
     suite = unittest.TestSuite()

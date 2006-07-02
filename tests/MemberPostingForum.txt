@@ -11,7 +11,7 @@ First, some set-up:
     >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
     
     >>> from Products.Ploneboard.tests import utils
-    >>> utils.setUpDefaulMembersBoardAndForum(self)
+    >>> utils.setUpDefaultMembersBoardAndForum(self)
 
     >>> from Products.Five.testbrowser import Browser
     >>> browser = Browser()
@@ -271,7 +271,7 @@ However, a reviewer can retract a comment:
     
     >>> browser.getControl('Retract', index=0).click()
     >>> browser.contents
-    '...Retracted...'
+    '...retracted...'
     >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
     'retracted'
     
@@ -285,7 +285,7 @@ Logging in as another member, the retracted comment cannot be viewed:
     
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> 'Retracted' in browser.contents
+    >>> 'retracted' in browser.contents
     False
     
 However, the owner can see it, but cannot publish.
@@ -298,7 +298,7 @@ However, the owner can see it, but cannot publish.
     
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> 'Retracted' in browser.contents
+    >>> 'retracted' in browser.contents
     True
     >>> browser.getControl('Publish')
     Traceback (most recent call last):
@@ -315,7 +315,7 @@ The reviewer can re-publish the comment again:
     
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> 'Retracted' in browser.contents
+    >>> 'retracted' in browser.contents
     True
     >>> browser.getControl('Publish').click()
     >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
@@ -445,10 +445,8 @@ A manager can delete comments:
     
 Deleting the last comment also deletes the entire thread
 
-    >>> browser.getControl('Delete', index=0).click()
-    >>> browser.getControl('Delete', index=0).click()
-    >>> browser.getControl('Delete', index=0).click()
-    >>> browser.getControl('Delete', index=0).click()
+    >>> for i in range(conversation.getNumberOfComments()):
+    ...     browser.getControl('Delete', index=0).click()
     >>> browser.url.startswith(self.forum.absolute_url() + '?')
     True
     >>> browser.contents

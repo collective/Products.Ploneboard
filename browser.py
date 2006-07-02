@@ -40,7 +40,7 @@ class CommentViewableView(Five.BrowserView):
                 'getObject': comment,
                 'workflowActions' : actions['workflow'],
                 'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),
-                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
+                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment).lower(),
                 'UID': comment.UID,
             }
 
@@ -101,7 +101,7 @@ class ConversationView(CommentView):
         return {
                 'maximumAttachments' : forum.getMaxAttachments(),
                 'canAttach': forum.getMaxAttachments()>0 and \
-                            checkPermission(permissions.AddAttachment,conv),
+                              checkPermission(permissions.AddAttachment,conv),
                 }
 
     def comments(self):

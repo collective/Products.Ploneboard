@@ -30,8 +30,9 @@ from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum,\
      ManageBoard, AddConversation, AddComment, ManageConversation, EditComment
 from PloneboardComment import PloneboardComment
-from PloneboardIndex import PloneboardIndex
 from Products.Ploneboard.interfaces import IForum, IConversation, IComment
+
+from Products.Ploneboard import utils
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
@@ -149,12 +150,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ManageConversation, 'removeComment')
     def removeComment( self, comment):
         self.manage_delObjects([comment.getId()])
-        # TODO: reparent replies to this comment ?
+        # XXX reparent replies to this comment ?
 
     security.declareProtected(AddComment, 'addComment')
     def addComment( self, title, text, creator=None, files=None):
         """Adds a new comment with subject and body."""
-        id = self.generateId()
+        id = self.generateId(prefix='')
         if not title:
             title = self.Title()
 
@@ -165,7 +166,8 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         # and using **kwargs in the _createObjectByType statement. 
         m.setTitle(title)
         m.setText(text)
-        m.setCreators([creator])
+        if creator is not None:
+            m.setCreators([creator])
         
         # Create files in message
         if files:
@@ -173,6 +175,15 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                 # Get raw filedata, not persistent object with reference to tempstorage
                 attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                 m.addAttachment(attachment)
+
+        # If this comment is being added by anonymous, make sure that the true
+        # owner in zope is the owner of the forum, not the parent comment or
+        # conversation. Otherwise, that owner may be able to view or delete
+        # the comment.
+        membership = getToolByName(self, 'portal_membership')
+        if membership.isAnonymousUser():
+            forum = self.getForum()
+            utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
 
         self.reindexObject() # Sets modified
         return m
@@ -290,7 +301,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
     security.declareProtected(ViewBoard, 'Creator')
     def Creator(self):
-        # XXX Should be handled by AT now.
+        # XXX Backwards compatability with old version
         return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
 
     def __nonzero__(self):

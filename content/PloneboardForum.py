@@ -184,10 +184,9 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(AddConversation, 'addConversation')
     def addConversation(self, title, text=None, creator=None, files=None, **kwargs):
         """Adds a new conversation to the forum.
-        XXX get rid of this and use regular content creation
-        as this also enables us to instantiate different types
-        that implements the interface
-        Alternatively use an interface that allows adapters
+        
+        XXX should be possible to parameterise the exact type that is being 
+        added.
         """
         
         id = self.generateId(prefix='')
@@ -197,17 +196,21 @@ class PloneboardForum(BaseBTreeFolder):
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement. 
         conv.setTitle(title)
-        conv.setCreators([creator])
+        
+        if creator is not None:
+            conv.setCreators([creator])
         
 
         if text is not None:
-            m = _createObjectByType('PloneboardComment', conv, conv.generateId())
+            m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
             
             # XXX: There is some permission problem with AT write_permission
             # and using **kwargs in the _createObjectByType statement. 
             m.setTitle(title)
             m.setText(text)
-            m.setCreators([creator])
+            
+            if creator is not None:
+                m.setCreators([creator])
 
             # Create files in message
             if files:
@@ -215,7 +218,10 @@ class PloneboardForum(BaseBTreeFolder):
                     # Get raw filedata, not persistent object with reference to tempstorage
                     attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                     m.addAttachment(attachment)
+                    
+            m.reindexObject()
 
+        conv.reindexObject()
         return conv
 
     security.declareProtected(ViewBoard, 'getConversation')
@@ -267,7 +273,7 @@ class PloneboardForum(BaseBTreeFolder):
         """
         Returns the last conversation.
         """
-        # XXX Is Created or Modified the most interesting part? Assuming conversation is modified when a comment is added
+        # XXX Is Created or Modified the most interesting part?
         res = self.getCatalog()(
         object_implements='Products.Ploneboard.interfaces.IConversation',
         sort_on='created', sort_order='reverse', sort_limit=1,

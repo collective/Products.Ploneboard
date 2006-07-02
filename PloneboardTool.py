@@ -27,6 +27,9 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         tr_tool = getToolByName(self, 'portal_transforms')
         if name not in tr_tool.objectIds():
             tr_tool.manage_addTransform(name, module)
+            wasAdded = True
+        else:
+            wasAdded = False
 
         if not friendlyName:
             friendlyName = name
@@ -34,13 +37,18 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         if name not in self.transforms:
             self.transforms[name] = {'enabled' : True, 
                                      'friendlyName' : friendlyName,
+                                     'wasAdded' : wasAdded
                                      }
 
     security.declarePrivate('unregisterTransform')
     def unregisterTransform(self, name):
         tr_tool = getToolByName(self, 'portal_transforms')
-        tr_tool._delObject(name)
-        self.transforms.remove(name)
+        if self.transforms[name]['wasAdded']:
+            try:
+                tr_tool._delObject(name)
+            except AttributeError, e:
+                pass
+        del self.transforms[name]
 
     security.declareProtected(ManagePortal, 'enableTransform')
     def enableTransform(self, name, enabled=True):
@@ -51,11 +59,11 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     def unregisterAllTransforms(self):
         tr_tool = getToolByName(self, 'portal_transforms')
         for transform_name in self.getTransforms():
-            try:
-                tr_tool._delObject(transform_name)
-            except AttributeError, e:
-                # _delObject couldn't find the transform_name. Must be gone already.
-                pass
+            if self.transforms[transform_name]['wasAdded']:
+                try:
+                    tr_tool._delObject(transform_name)
+                except AttributeError, e:
+                    pass
         self.transforms.clear()
 
     security.declareProtected(ManagePortal, 'getTransforms')
@@ -138,7 +146,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     def clearUploadedFiles(self):
         # Get previously uploaded files with a reference in request
         # + files uploaded in this request
-        # XXX ADD VARIABLE THAT KEEPS TRACK OF FILE NAMES
+        # XXX Add variable to keep track of filenames?
         request = self.REQUEST
 
         sdm = getToolByName(self, 'session_data_manager', None)

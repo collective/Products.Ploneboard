@@ -29,7 +29,7 @@ class TestUrlTransform(PloneboardTestCase.PloneboardTestCase):
     def testPlainUrls(self):
         testdata = [
                 ("http://simple.url/", '<a href="http://simple.url/">http://simple.url/</a>'),
-# XXX are URI schemes really case insensitive?
+                # XXX are URI schemes really case insensitive?
                 ("HTtp://simple.url/", '<a href="HTtp://simple.url/">HTtp://simple.url/</a>'),
                 ("https://simple.url/", '<a href="https://simple.url/">https://simple.url/</a>'),
                 ("telnet://simple.url/", '<a href="telnet://simple.url/">telnet://simple.url/</a>'),

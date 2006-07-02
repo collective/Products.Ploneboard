@@ -8,9 +8,11 @@
 ##parameters=title='', text='', files=None
 ##title=Add a comment
 
+from AccessControl import Unauthorized
 from Products.CMFCore.utils import getToolByName
 
 pm = getToolByName(context, 'portal_membership')
+wf = getToolByName(context, 'portal_workflow')
 
 if pm.isAnonymousUser():
     creator = 'Anonymous'
@@ -24,7 +26,7 @@ new_context = context
 
 if context.getTypeInfo().getId() == 'PloneboardComment':
     m = context.addReply(title=title, text=text, creator=creator, files=files)
-    new_context = m.getConversation()
+    new_context = context.getConversation()        
 elif context.getTypeInfo().getId() == 'PloneboardConversation':
     m = context.addComment(title=title, text=text, creator=creator, files=files)
 else:
@@ -32,6 +34,13 @@ else:
 
 if m:
     context.portal_ploneboard.clearUploadedFiles()
-    state.set(context=new_context, portal_status_message='Added comment')
+    
+    status = wf.getInfoFor(m, 'review_state')
+    if status == 'pending':
+        message = 'Comment is pending moderation'
+    else:
+        message = 'Comment added'    
+    
+    state.set(context=new_context, portal_status_message=message)
 
 return state
