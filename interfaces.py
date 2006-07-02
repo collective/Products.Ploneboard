@@ -15,20 +15,17 @@ class IPloneboard(Interface):
         forum inside the board.
         Should this go away and rather just use the regular Plone content
         creation? That would make it easier to switch content types.
-        XXX delete
         """
 
     def removeForum(forum_id):
         """
         The method remove_forum removes the forum with the specified id from 
         this board.
-        XXX delete
         """
 
     def getForum(forum_id):
         """
         Return the forum for forum_id, or None.
-        XXX delete, use folder interface
         """
 
     def getForumIds():
@@ -36,7 +33,6 @@ class IPloneboard(Interface):
         Returns the ids of the forums.
         If this is the only board in a site, it should return forum ids for 
         the entire site, not just inside the board.
-        XXX delete, use folder interface
         """
 
     def getForums():
@@ -44,13 +40,11 @@ class IPloneboard(Interface):
         Return the forums
         If this is the only board in a site, it should return forums for the
         entire site, not just inside the board.
-        XXX delete, use folder interface
         """
 
     def searchComments(query):
         """
         This method searches through all forums, conversations and comments.
-        XXX delete
         """
 
 class IForum(Interface):
@@ -114,7 +108,6 @@ class IConversation(Interface):
     def addComment(comment_subject, comment_body):
         """
         Adds a new comment with subject and body.
-        XXX this will be hardcoded to a specific type of comment...
         """
     
     def getComment(comment_id):
@@ -175,8 +168,6 @@ class IComment(Interface):
     def addReply(comment_subject, comment_body):
         """
         Add a response to this comment of same type as object itself.
-        XXX Use reference engine for setting reply-to reference,
-        use UID as identifier.
         """
         
     def inReplyTo():
@@ -209,8 +200,6 @@ class IComment(Interface):
 class IAttachmentSupport(Interface):
     """
     Attachment support, typically for comments
-    XXX method for getting attachments?
-    Most likely implementation/pattern is Nonstructural folder
     """
     def addAttachment(file, title=None):
         """
