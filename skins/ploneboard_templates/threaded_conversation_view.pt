@@ -55,6 +55,7 @@
           <li tal:repeat="comment children">
             <div class="boardComment visualIEFloatFix">
               <metal:comment metal:use-macro="here/comment_view/macros/comment" />
+            </div>
 
               <tal:children define="children python:view.children(comment)"
                             condition="children">
@@ -62,7 +63,6 @@
                   <li metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
                 </ul>
               </tal:children>
-            </div>
           </li>
         </tal:node>
       </ul>
