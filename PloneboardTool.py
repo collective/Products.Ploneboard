@@ -59,7 +59,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     def unregisterAllTransforms(self):
         tr_tool = getToolByName(self, 'portal_transforms')
         for transform_name in self.getTransforms():
-            if self.transforms[transform_name]['wasAdded']:
+            if self.transforms[transform_name].get('wasAdded', False):
                 try:
                     tr_tool._delObject(transform_name)
                 except AttributeError, e:
