@@ -45,8 +45,10 @@ schema = BaseBTreeFolderSchema + Schema((
     LinesField('categories',
                widget = LinesWidget(
                    description = "Enter the categories you want to have available for forums, one category on each line.",
-                   description_msgid = "help_categories")
-              ),
+                   description_msgid = "help_categories",
+                   label = "Categories",
+                   label_msgid = "label_categories",
+                   i18n_domain = "ploneboard")),
     ))
 
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
