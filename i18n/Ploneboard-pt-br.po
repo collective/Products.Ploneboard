@@ -21,8 +21,14 @@ msgstr ""
 msgid "A line was too long."
 msgstr "Esta linha está muito comprida." 
 
+msgid "label_quickreply"
+msgstr "Resposta rápida"
+
 msgid "label_body_files_posting"
 msgstr "Anexos"
+
+msgid "help_body_attachments_posting"
+msgstr "Insira anexos se houver"
 
 msgid "add_comment"
 msgstr "Adicionar comentários"
@@ -94,13 +100,19 @@ msgid "help_description_forum"
 msgstr "Informe uma breve descrição sobre o fórum"
 
 msgid "label_description_forum"
-msgstr "Descrição do Fórum"
+msgstr "Descrição do fórum"
 
 msgid "label_category"
 msgstr "Categoria"
 
 msgid "help_category"
 msgstr "Selecione em que categoria o fórum será listado. Um fórum pode existir em várias categorias, embora seja recomendado o uso de uma categoria."
+
+msgid "label_categories"
+msgstr "Categorias"
+
+msgid "help_categories"
+msgstr "Informe as categorias que você quer que estejam disponíveis quando os fóruns forem criados. Insira uma por linha."
 
 msgid "help_text"
 msgstr "Informe o texto de comentário"
@@ -122,6 +134,9 @@ msgstr "Descrição da conversação"
 
 msgid "legend_add_conversation"
 msgstr "Detalhes"
+
+msgid "add_conversation"
+msgstr "Adicionar conversação"
 
 msgid "label_title_posting"
 msgstr "Título"
@@ -182,3 +197,9 @@ msgstr "Postado por"
 
 msgid "text_at"
 msgstr "em"
+
+msgid "Post comment"
+msgstr "Enviar comentário"
+
+msgid "Reply"
+msgstr "Responder"
