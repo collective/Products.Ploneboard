@@ -1,11 +1,10 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
 # SOME DESCRIPTIVE TITLE.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# never generate this file with i18ndude, it is managed manual
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2006-08-23 10:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,56 +15,54 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: plone\n"
+"Domain: ploneboard\n"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgid "label_text"
 msgstr ""
 
-msgid "Message Board"
+msgid "help_text"
 msgstr ""
 
-msgid "Conversation"
+msgid "help_description_conversation"
 msgstr ""
 
-msgid "Open"
+msgid "label_description_conversation"
 msgstr ""
 
-msgid "Hide"
+msgid "help_description_forum"
 msgstr ""
 
-msgid "Hidden"
+msgid "label_description_forum"
 msgstr ""
 
-msgid "Require membership to post"
+msgid "help_category"
 msgstr ""
 
-msgid "Make member-posting"
+msgid "label_category"
 msgstr ""
 
-msgid "Free for all"
+msgid "help_maxattachments"
 msgstr ""
 
-msgid "Make free-for-all"
+msgid "label_maxattachments"
 msgstr ""
 
-msgid "Private to members only"
+msgid "help_maxattachmentsize"
 msgstr ""
 
-msgid "Active"
+msgid "label_maxattachmentsize"
 msgstr ""
 
-msgid "Activate"
+msgid "help_description_board"
 msgstr ""
 
-msgid "Lock"
+msgid "label_description_board"
 msgstr ""
 
-msgid "Locked"
+msgid "help_categories_board"
 msgstr ""
 
-msgid "Flat conversion view"
+msgid "label_categories_board"
 msgstr ""
 
-msgid "Threaded conversion view"
-msgstr ""
+

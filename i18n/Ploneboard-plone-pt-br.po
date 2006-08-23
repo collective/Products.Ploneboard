@@ -12,119 +12,60 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Language-Code: pt-br\n"
+"Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-#. Default: "Add"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Add"
-msgstr "Adicionar"
-
-#. Default: "Remove"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Remove"
-msgstr "Remover"
-
-#. Default: "Action"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "action"
-msgstr "ação"
-
-#. Default: "Data provider"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "data_provider"
+msgid "Activate"
 msgstr ""
 
-#. Default: "Here you can configure which transforms are active in Ploneboard posts."
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "description_ploneboard_config_transforms"
+msgid "Active"
 msgstr ""
 
-#. Default: "Enabled?"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "enabled"
+msgid "Conversation"
 msgstr ""
 
-#. Default: "Add transform"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_add_transform"
+msgid "Flat conversion view"
 msgstr ""
 
-#. Default: "Existing transforms"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_transforms"
+msgid "Free for all"
 msgstr ""
 
-#. Default: "Manage"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "manage"
+msgid "Hidden"
 msgstr ""
 
-#. Default: "Module"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "module_name"
-msgstr "Módulo"
-
-#. Default: "Transform name"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "transform_name"
+msgid "Hide"
 msgstr ""
 
-#. Default: "Return to Ploneboard settings"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "up_to_ploneboard_prefs"
-msgstr "Retornar às configurações do Ploneboard"
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
-msgid "Message Board"
-msgstr "Pasta de Fórum"
-
-msgid "Conversation"
-msgstr "Novo Item"
-
-msgid "Open"
-msgstr "Aberto"
-
-msgid "Hide"
-msgstr "Esconder"
-
-msgid "Hidden"
-msgstr "Escondido"
-
-msgid "Require membership to post"
-msgstr "Deve ser membro para postar"
-
-msgid "Make member-posting"
-msgstr "Somente membros postam"
-
-msgid "Free for all"
-msgstr "Livre para postagem"
-
-msgid "Make free-for-all"
-msgstr "Livre para postagem"
-
-msgid "Private to members only"
-msgstr "Somente para membros"
-
-msgid "Active"
-msgstr "Ativo"
-
-msgid "Activate"
-msgstr "Ativar"
-
-msgid "Lock"
-msgstr "Fechar"
-
-msgid "Locked"
-msgstr "Fechado"
-
-msgid "Flat conversion view"
-msgstr "Conversação uma abaixo da outra"
-
-msgid "Threaded conversion view"
-msgstr "Conversação aninhada"

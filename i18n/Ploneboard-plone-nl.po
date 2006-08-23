@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0-alpha3\n"
-"POT-Creation-Date: 2006-06-06 14:02+0000\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: 2006-04-21 22:15+0000\n"
 "Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -17,104 +17,55 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: nl-be\n"
 
-#. Default: "Add"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Add"
-msgstr "Voeg toe"
-
-#. Default: "Remove"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Remove"
-msgstr "Verwijder"
-
-#. Default: "Action"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "action"
+msgid "Activate"
 msgstr ""
 
-#. Default: "Data provider"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "data_provider"
+msgid "Active"
 msgstr ""
-
-#. Default: "Here you can configure which transforms are active in Ploneboard posts."
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "description_ploneboard_config_transforms"
-msgstr "Hier kunt u aangeven welke transformaties er in Ploneboard reacties gebruikt worden"
-
-#. Default: "Enabled?"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "enabled"
-msgstr "Actief?"
-
-#. Default: "Add transform"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_add_transform"
-msgstr "Voeg transformatie toe"
-
-#. Default: "Existing transforms"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_transforms"
-msgstr "Bestaande transformaties"
-
-#. Default: "Manage"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "manage"
-msgstr "Beheer"
-
-#. Default: "Module"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "module_name"
-msgstr ""
-
-#. Default: "Transform name"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "transform_name"
-msgstr "Naam transformatie"
-
-#. Default: "Return to Ploneboard settings"
-#: ./skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "up_to_ploneboard_prefs"
-msgstr "Terug naar Ploneboard-configuratie"
-
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
-
-# Other translations missed by i18ndude
-msgid "A Forum contains conversations."
-msgstr "Een forum bevat gesprekken."
 
 msgid "Conversation"
 msgstr "Gesprek"
 
-msgid "Conversation contains comments."
-msgstr "Een gesprek bevat reacties"
-
-msgid "Forum"
+msgid "Flat conversion view"
 msgstr ""
 
-msgid "Global forum listing"
-msgstr "Overzicht alle fora"
-
-msgid "Local forum listing"
-msgstr "Overzicht lokale fora"
-
-msgid "Ploneboard"
+msgid "Free for all"
 msgstr ""
 
-msgid "PloneboardConversation"
+msgid "Hidden"
 msgstr ""
 
-msgid "PloneboardForum"
+msgid "Hide"
 msgstr ""
 
-msgid "conversation_view"
-msgstr "lijst weergave"
+msgid "Lock"
+msgstr ""
 
-msgid "threaded_conversation_view"
-msgstr "boom weergave"
+msgid "Locked"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
 
 msgid "Message Board"
 msgstr "Discussie Bord"
+
+msgid "Open"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
 

@@ -37,17 +37,17 @@ schema = BaseBTreeFolderSchema + Schema((
               default_content_type = 'text/html',
               default_output_type = 'text/plain',
               widget = TextAreaWidget(description = "Enter a brief description of the board.",
-                                      description_msgid = "help_description",
+                                      description_msgid = "help_description_board",
                                       i18n_domain = "ploneboard",
                                       label = "Description",
-                                      label_msgid = "label_description",
+                                      label_msgid = "label_description_board",
                                       rows = 5)),
     LinesField('categories',
                widget = LinesWidget(
                    description = "Enter the categories you want to have available for forums, one category on each line.",
-                   description_msgid = "help_categories",
+                   description_msgid = "help_categories_board",
                    label = "Categories",
-                   label_msgid = "label_categories",
+                   label_msgid = "label_categories_board",
                    i18n_domain = "ploneboard")),
     ))
 

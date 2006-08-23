@@ -1,20 +1,21 @@
+# Translation of Ploneboard.pot to Norwegian
+# Helge Tesdal <tesdal@plonesolutions.com>, 2006
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-08-23 11:19+0000\n"
-"PO-Revision-Date: 2006-06-11 00:16+0300\n"
-"Last-Translator: Kazimieras <cardinal@mail.lt>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: lt\n"
-"Language-Name: Lithuanian\n"
-"Preferred-Encodings: utf-8\n"
+"Language-Code: no\n"
+"Language-Name: Norsk\n"
+"Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
-"X-Poedit-Language: Lithuanian\n"
-"X-Poedit-Country: LITHUANIA\n"
+"X-Is-Fallback-For: nb nb-no no-bok\n"
 
 #. Default: "Add"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -25,12 +26,12 @@ msgstr ""
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Cancel"
-msgstr "Atðaukti"
+msgstr "Avbryt"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
-msgstr "Keisti"
+msgstr "Endre"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -45,13 +46,13 @@ msgstr ""
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Post"
-msgstr "Praneðimas"
+msgstr "Send"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 #: ../skins/ploneboard_templates/conversation_view.pt
 msgid "Post comment"
-msgstr "iðsaugoti"
+msgstr "Send kommentar"
 
 #. Default: "Remove"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -61,7 +62,7 @@ msgstr ""
 #. Default: "Reply to this"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Reply to this"
-msgstr "Atsakyti ..."
+msgstr "Svar pÃ¥"
 
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -81,12 +82,12 @@ msgstr ""
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "add_comment"
-msgstr "Pridëti komentarà"
+msgstr "Legg til kommentar"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
-msgstr "sukurti temà"
+msgstr "Start diskusjon"
 
 #. Default: "Comments"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -96,7 +97,7 @@ msgstr ""
 #. Default: "Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "conversation"
-msgstr "Tema"
+msgstr "Diskusjon"
 
 #. Default: "Data provider"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -126,12 +127,12 @@ msgstr ""
 #. Default: "Forum name"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "forum_name"
-msgstr "Forumo pavadinimas"
+msgstr "Forumnavn"
 
 #. Default: "Up to ${type}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
-msgstr "Vienu lygiu aukðtyn"
+msgstr "Opp til ${type}"
 
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -146,12 +147,12 @@ msgstr ""
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_attachments_posting"
-msgstr "Pridedami failai."
+msgstr ""
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_text_posting"
-msgstr "praneðimo tekstas"
+msgstr ""
 
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -161,19 +162,17 @@ msgstr ""
 msgid "help_categories_board"
 msgstr ""
 
-#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.",
-#, fuzzy
 msgid "help_category"
-msgstr "adsadas"
+msgstr ""
 
 msgid "help_description_board"
 msgstr ""
 
 msgid "help_description_conversation"
-msgstr "temos apraðymas"
+msgstr ""
 
 msgid "help_description_forum"
-msgstr "Forumo apraðymas"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr ""
@@ -182,7 +181,7 @@ msgid "help_maxattachmentsize"
 msgstr ""
 
 msgid "help_text"
-msgstr "tekstas"
+msgstr ""
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -192,33 +191,33 @@ msgstr ""
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_body_files_posting"
-msgstr "Priedai"
+msgstr ""
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_body_text_posting"
-msgstr "praneðimo tekstas"
+msgstr "Svartekst"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/board_view.pt
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "label_by_author"
-msgstr "${author}"
+msgstr "av ${author}"
 
 msgid "label_categories_board"
 msgstr ""
 
 msgid "label_category"
-msgstr "Kategorija"
+msgstr ""
 
 msgid "label_description_board"
 msgstr ""
 
 msgid "label_description_conversation"
-msgstr "temos apraðymas"
+msgstr ""
 
 msgid "label_description_forum"
-msgstr "Forumo apraðymas"
+msgstr ""
 
 msgid "label_maxattachments"
 msgstr ""
@@ -229,12 +228,12 @@ msgstr ""
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt
 msgid "label_powered_by"
-msgstr " "
+msgstr "Drevet av ${link}"
 
 #. Default: "Quick reply"
 #: ../skins/ploneboard_templates/conversation_view.pt
 msgid "label_quickreply"
-msgstr "Greitas atsakymas"
+msgstr "Hurtigsvar"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -247,12 +246,12 @@ msgid "label_save"
 msgstr ""
 
 msgid "label_text"
-msgstr "tekstas"
+msgstr ""
 
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_title_posting"
-msgstr "praneðimo antraðtë"
+msgstr ""
 
 #. Default: "Transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -272,7 +271,7 @@ msgstr ""
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "legend_attachments"
-msgstr ""
+msgstr "Vedlegg"
 
 #. Default: "Text transformations"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -302,7 +301,7 @@ msgstr ""
 #. Default: "Most Recent Comment"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "most_recent"
-msgstr "naujausi"
+msgstr "Siste kommentar"
 
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt
@@ -327,49 +326,49 @@ msgstr ""
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "no_conversations_started"
-msgstr "nëra pradëtø diskusijø"
+msgstr "Ingen diskusjoner er startet"
 
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "not_conversations"
-msgstr "Ðiame forume kol kas diskusijø nëra"
+msgstr "Ingen diskusjoner i dette forumet ennÃ¥"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "not_forums"
-msgstr ""
+msgstr "Det finnes ingen fora ennÃ¥, men du kan bruke innholdsmenyen for Ã¥ legge til innhold."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "not_permission_start_conversation"
-msgstr "neturite teisiø pradëti diskusijà"
+msgstr "Du har ikke rettigheter til Ã¥ starte en diskusjon."
 
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "number_of_conversations"
-msgstr "Temos"
+msgstr "Diskusjoner"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "posted_by"
-msgstr "paraðë:"
+msgstr "Skrevet av"
 
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt
 msgid "preview_message"
-msgstr "Perþiûrëti praneðimà"
+msgstr ""
 
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "text_at"
-msgstr "tekstas"
+msgstr "&mdash;"
 
 #. Default: "General forums"
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "title_general_forums"
-msgstr "Bendri forumai"
+msgstr ""
 
 #. Default: "Transform name"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt

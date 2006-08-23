@@ -4,8 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1beta1\n"
-"POT-Creation-Date: Mon Feb 20 18:09:38 2006\n"
-"PO-Revision-Date: Mon May 30 18:11:20 2006\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: 2005-12-18 06:20+0100\n"
 "Last-Translator: Simon Pamies <s.pamies@banality.de>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -13,53 +12,64 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Generated-By: zope/app/translation_files/extract.py\n"
 "Language-Code: de\n"
 "Language-Name: Deutsch\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
-#: workflow state defined in ploneboard_forum_workflow - id memberposting
-# Default: "Require membership to post"
-# Require membership to post 
-msgid "Require membership to post"
-msgstr "Nur registrierte Benutzer"
+msgid "Activate"
+msgstr ""
 
-msgid "memberposting"
-msgstr "Nur registrierte Benutzer"
+msgid "Active"
+msgstr ""
 
-msgid "Make Sticky"
-msgstr "???Make Sticky???"
+msgid "Conversation"
+msgstr ""
 
-msgid "Make Locked and Sticky"
-msgstr "???Make Locked and Sticky???"
+msgid "Flat conversion view"
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
 
 msgid "Lock"
 msgstr "Sperren"
 
-msgid "Normal state"
-msgstr "Normal"
+msgid "Locked"
+msgstr ""
 
 msgid "Make free-for-all"
 msgstr "Für alle freigeben"
 
-msgid "Make moderated"
-msgstr "Moderierbar"
+msgid "Make member-posting"
+msgstr ""
 
-msgid "Visible but not published"
-msgstr "Öffentlicher Entwurf"
+msgid "Message Board"
+msgstr ""
 
-# document action
-msgid "Moderate"
-msgstr "Moderieren"
+msgid "Open"
+msgstr ""
 
-msgid "Enter a brief description of the conversation."
-msgstr "Geben Sie eine kurze Beschreibung des Beitrags ein."
+msgid "Private to members only"
+msgstr ""
 
-# add_comment_script.cpy
-# add_conversation_script.cpy:
-# Default: "Added comment"
-msgid "Added comment"
-msgstr "Antwort hinzugefügt."
+# Require membership to post
+#. Default: "Require membership to post"
+msgid "Require membership to post"
+msgstr "Nur registrierte Benutzer"
+
+msgid "Threaded conversion view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
 

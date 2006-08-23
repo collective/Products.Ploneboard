@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2005-08-22 11:42+0000\n"
+"POT-Creation-Date: 2006-08-23 11:19+0000\n"
 "PO-Revision-Date: 2006-03-29 11:18+0100\n"
 "Last-Translator: Simon Pamies <s.pamies@banality.de>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -20,190 +20,371 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
-# Example
-msgid "A line was too long."
-msgstr "Eine Zeile war zu lang."
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr ""
 
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Ändern"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr ""
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr ""
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Abschicken"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "Beitrag abschicken"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr ""
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Antworten"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr ""
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr ""
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr ""
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "add_comment"
 msgstr "Antwort hinzufügen"
 
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Beitrag hinzufügen"
 
-msgid "not_forums"
-msgstr "Keine Foren"
+#. Default: "Comments"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "comments"
+msgstr ""
 
-msgid "forum_name"
-msgstr "Name"
-
-msgid "most_recent_post"
-msgstr "Letzter Beitrag"
-
-msgid "no_conversations_started"
-msgstr "Bisher keine Beiträge."
-
-msgid "label_by_author"
-msgstr "von ${author}"
-
-msgid "go_to_parent_url"
-msgstr "Zurück zu ${type}"
-
-msgid "not_conversations"
-msgstr "Es gibt keine Beiträge in diesem Forum."
-
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
 msgid "conversation"
 msgstr "Beitrag"
 
-msgid "replies"
-msgstr "Antworten"
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr ""
 
-msgid "most_recent"
-msgstr "Letzter Kommentar"
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr ""
 
-msgid "not_permission_start_conversation"
-msgstr "Sie haben keine Berechtigung einen Beitrag zu starten."
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr ""
 
-msgid "log_to_start_conversation"
-msgstr "Bitte einloggen um Beitrag zu starten."
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr ""
 
-msgid "start_new_conversation"
-msgstr "Mit einem neuen Beitrag beginnen."
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr ""
 
-msgid "preview_comment"
-msgstr "Vorschau Beitrag"
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Name"
 
-msgid "label_powered_by"
-msgstr "Auf Basis von ${link}"
+#. Default: "Up to ${type}"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "Zurück zu ${type}"
 
-msgid "None"
-msgstr " - "
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr ""
 
-msgid "status"
-msgstr "Status"
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr ""
 
-msgid "add_message"
-msgstr "Beitrag hinzufügen"
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Hier können Sie Ihrem Beitrag noch Anhänge hinzufügen"
 
-msgid "label_description"
-msgstr "Beschreibung"
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "Fügen Sie hier den Kommentar ein."
 
-msgid "help_description"
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr ""
+
+msgid "help_categories_board"
+msgstr ""
+
+msgid "help_category"
+msgstr ""
+
+msgid "help_description_board"
+msgstr ""
+
+msgid "help_description_conversation"
 msgstr ""
 
 msgid "help_description_forum"
-msgstr "Beschreibung des Themas in diesem Forum."
+msgstr ""
 
-msgid "label_description_forum"
-msgstr "Beschreibung"
+msgid "help_maxattachments"
+msgstr ""
+
+msgid "help_maxattachmentsize"
+msgstr ""
 
 msgid "help_text"
 msgstr ""
 
-msgid "label_text"
-msgstr "Kommentar"
-
-msgid "help_display_portraits"
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
 msgstr ""
 
-msgid "label_display_portraits"
-msgstr ""
-
-msgid "help_description_conversation"
-msgstr "Kurze Beschreibung des Beitrags."
-
-msgid "label_description_conversation"
-msgstr "Beschreibung"
-
-msgid "legend_add_conversation"
-msgstr "Kommentar hinzufügen."
-
-msgid "label_title_posting"
-msgstr "Titel"
-
-msgid "help_title_posting"
-msgstr "Titel des Beitrags"
-
-msgid "label_body_text_posting"
-msgstr "Kommentar"
-
-msgid "help_body_text_posting"
-msgstr "Fügen Sie hier den Kommentar ein."
-
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_body_files_posting"
 msgstr "Anhänge"
 
-msgid "help_body_attachments_posting"
-msgstr "Hier können Sie Ihrem Beitrag noch Anhänge hinzufügen"
-
-msgid "preview_posting"
-msgstr "Vorschau"
-
-msgid "preview_message"
-msgstr "Vorschau"
-
-msgid "value preview_posting"
-msgstr "Vorschau"
-
-msgid "value cancel_posting"
-msgstr "Abbrechen"
-
-msgid "Post comment"
-msgstr "Beitrag abschicken"
-
-msgid "Post"
-msgstr "Abschicken"
-
-msgid "Change"
-msgstr "Ändern"
-
-msgid "Cancel"
-msgstr "Abbrechen"
-
-msgid "Reply to this"
-msgstr "Antworten"
-
-msgid "Reply"
-msgstr "Antworten"
-
-msgid "Edit"
-msgstr "Ändern"
-
-msgid "Retract"
-msgstr "Zurückziehen"
-
-msgid "posted_by"
-msgstr "Abgeschickt von"
-
-msgid "text_at"
-msgstr "am"
-
-#### Manual entries.
-msgid "Message Board"
-msgstr "Forum"
-
-msgid "Forum"
-msgstr "Forum"
-
-msgid "Conversation"
-msgstr "Beitrag"
-
-msgid "Comment"
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
 msgstr "Kommentar"
 
-msgid "title_general_forums"
-msgstr "Allgemeine Foren"
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "von ${author}"
 
+msgid "label_categories_board"
+msgstr ""
+
+msgid "label_category"
+msgstr ""
+
+msgid "label_description_board"
+msgstr ""
+
+msgid "label_description_conversation"
+msgstr ""
+
+msgid "label_description_forum"
+msgstr ""
+
+msgid "label_maxattachments"
+msgstr ""
+
+msgid "label_maxattachmentsize"
+msgstr ""
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Auf Basis von ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr ""
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr ""
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr ""
+
+msgid "label_text"
+msgstr ""
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Titel"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr ""
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr ""
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr ""
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Anhänge"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr ""
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr ""
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr ""
+
+#. Default: "<a href=\"prefs_pb_transforms\"> <img alt=\"\" src=\"smiley_smile.png\"/> Manage comment text transformations </a>"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr ""
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr ""
+
+#. Default: "Most Recent Comment"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "most_recent"
+msgstr "Letzter Kommentar"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "most_recent_comment"
+msgstr ""
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr ""
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr ""
+
+#. Default: "No comments yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_comments_yet"
+msgstr ""
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Bisher keine Beiträge."
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Es gibt keine Beiträge in diesem Forum."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Keine Foren"
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "Sie haben keine Berechtigung einen Beitrag zu starten."
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
 msgid "number_of_conversations"
 msgstr "Beiträge"
 
-msgid "no_replies_yet"
-msgstr "Bisher keine Antworten"
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "Abgeschickt von"
 
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Vorschau"
 
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "${day}. ${month} ${year}"
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "am"
 
-msgid "legend_attachments"
-msgstr "Anhänge"
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Allgemeine Foren"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr ""
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr ""
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr ""
+

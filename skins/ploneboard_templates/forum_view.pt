@@ -126,7 +126,7 @@
                         </td>
 
                         <td class="listingCheckbox"
-                            tal:condition="python:numComments <= 1">
+                            tal:condition="python:numComments &lt;= 1">
                             <span i18n:translate="no_comments_yet">
                             No comments yet
                             </span>
