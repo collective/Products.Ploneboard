@@ -47,9 +47,8 @@
 
         <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
               tal:condition="canStartConverstation">
-              <input
+              <input i18n:attributes="value"
                   class="standalone"
-                  i18n:attributes="value start_new_conversation"
                   type="submit" 
                   value="Start a new Conversation" />
         </form>
@@ -88,7 +87,7 @@
                     <tr>
                          <th i18n:translate="conversation">Conversation</th>
                          <th i18n:translate="comments">Comments</th>
-                         <th i18n:translate="most_recent">Most Recent Comment</th>
+                         <th i18n:translate="most_recent_comment">Most recent comment</th>
                      </tr>
                 </thead>
         
@@ -154,7 +153,9 @@
                               </div>
                             </span>                               
 
-                            <span class="discreet" tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                            <span
+                                  class="discreet"
+                                  tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
                                 Thursday 13:21
                             </span>
                           </tal:block>

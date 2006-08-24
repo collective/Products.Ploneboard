@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-23 11:19+0000\n"
+"POT-Creation-Date: 2006-08-24 13:06+0000\n"
 "PO-Revision-Date: 2005-11-25 11:50-0300\n"
 "Last-Translator: Rafahela Garcia Bazzanella <rafabazzanella@yahoo.com.br>\n"
 "Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
@@ -88,6 +88,11 @@ msgstr "Adicionar comentários"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Adicionar conversação"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr ""
 
 #. Default: "Comments"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -288,9 +293,24 @@ msgstr ""
 msgid "manage"
 msgstr ""
 
-#. Default: "<a href=\"prefs_pb_transforms\"> <img alt=\"\" src=\"smiley_smile.png\"/> Manage comment text transformations </a>"
+#. Default: "Manage comment text transformations"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "manage_transforms"
+msgstr ""
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr ""
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr ""
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
 msgstr ""
 
 #. Default: "Module"
@@ -298,13 +318,9 @@ msgstr ""
 msgid "module_name"
 msgstr "Módulo"
 
-#. Default: "Most Recent Comment"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "most_recent"
-msgstr "Mais Recente"
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
 msgid "most_recent_comment"
 msgstr ""
 

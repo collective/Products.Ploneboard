@@ -40,7 +40,7 @@ class CommentViewableView(Five.BrowserView):
                 'getObject': comment,
                 'workflowActions' : actions['workflow'],
                 'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),
-                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment).lower(),
+                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
                 'UID': comment.UID,
             }
 

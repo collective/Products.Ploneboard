@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-08-23 11:19+0000\n"
+"POT-Creation-Date: 2006-08-24 13:06+0000\n"
 "PO-Revision-Date: 2006-05-08 11:50+0000\n"
 "Last-Translator: Enzo Cesanelli <enzo at noiza dot com>\n"
 "Language-Team: Noiza <enzo at noiza dot com>\n"
@@ -87,6 +87,11 @@ msgstr "Aggiungi commento"
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
+msgstr ""
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
 msgstr ""
 
 #. Default: "Comments"
@@ -288,23 +293,35 @@ msgstr ""
 msgid "manage"
 msgstr ""
 
-#. Default: "<a href=\"prefs_pb_transforms\"> <img alt=\"\" src=\"smiley_smile.png\"/> Manage comment text transformations </a>"
+#. Default: "Manage comment text transformations"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+#, fuzzy
 msgid "manage_transforms"
 msgstr "Imposta le trasformazioni"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr ""
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr ""
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr ""
 
 #. Default: "Module"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "module_name"
 msgstr ""
 
-#. Default: "Most Recent Comment"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "most_recent"
-msgstr "Pi&ugrave; recenti"
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
 msgid "most_recent_comment"
 msgstr ""
 

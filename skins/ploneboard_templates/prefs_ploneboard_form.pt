@@ -28,10 +28,11 @@
         </div>
 
         <ul class="configlets">
-            <li i18n:translate="manage_transforms">
+            <li>
                 <a href="prefs_pb_transforms">
                 <img src="smiley_smile.png" alt="" />
-                Manage comment text transformations
+                    <a href="prefs_pb_transforms"
+                       i18n:translate="manage_transforms">Manage comment text transformations</a>
                 </a>
             </li>
         </ul>

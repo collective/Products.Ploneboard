@@ -64,5 +64,3 @@ msgstr ""
 
 msgid "label_categories_board"
 msgstr ""
-
-

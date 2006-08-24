@@ -91,39 +91,49 @@
 
         <div class="boardCommentActions">
           
-          <form method="post"
+          <form i18n:domain="plone"
+                method="post"
                 tal:condition="comment/canEdit"
                 tal:attributes="action string:${comment/absolute_url}/edit">
-            <input class="context"
+            <input i18n:attributes="value"
+                   class="context"
                    type="submit"
                    value="Edit"/>
           </form>
-         <form method="post"
+         <form  i18n:domain="plone"
+                method="post"
                 tal:condition="comment/canDelete"
                 tal:attributes="action string:${comment/absolute_url}/delete_view">
             <input tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
                    tal:attributes="href string:${comment/absolute_url}/delete_view;
                                    onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
                    class="destructive"
+                   i18n:attributes="value"
                    type="submit"
                    value="Delete"/>
           </form>
-          <form method="post"
+          <form i18n:domain="plone"
+                method="post"
                 tal:repeat="action comment/workflowActions"
                 tal:attributes="action string:${comment/absolute_url}/moderateComment">
             <input type="hidden" name="action" tal:attributes="value action/id"/>
             <input type="hidden" name="cameFrom" tal:attributes="value here/absolute_url"/>
             <input tal:attributes="value action/title"
+                   i18n:attributes="value"
                    class="standalone"
                    type="submit"
                    />
           </form>
           <small tal:attributes="class string:state-${state}"
-            tal:condition="python:state != 'published'">
-            This comment is currently
-            <span tal:replace="comment/reviewStateTitle">
+                 tal:condition="python:state != 'published'">
+            <span i18n:translate="comment_current_state">
+                Current state: 
+            </span>
+            <span i18n:domain="plone" 
+                  i18n:translate=""
+                  tal:content="comment/reviewStateTitle">
               State here
-            </span>.
+            </span>
           </small>
         </div>
         <div class="boardCommentReplyActions">

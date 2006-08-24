@@ -13,6 +13,7 @@
        tal:attributes="href parent_url"
        i18n:translate="go_to_parent_url">
     Up to <span tal:content="here/aq_parent/Type"
+                i18n:domain="plone"
                 i18n:translate=""
                 i18n:name="type">
                           _parent_portal_type

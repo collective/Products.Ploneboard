@@ -30,7 +30,7 @@
         
         <div tal:condition="results">
         
-            <p>
+            <p i18n:translate="moderation_description">
               The following comments are pending moderation. Please click
               'Publish' or 'Reject' as necessary. Click the title of a comment
               to view it in the context of its conversation.
@@ -40,6 +40,7 @@
                 <a href="#"
                    tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardComment')"
                    tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
+                   i18n:translate="moderation_up"
                    tal:content="here/aq_inner/aq_parent/Title">Up</a>
             </p>
 
@@ -53,7 +54,7 @@
                                  id resultid;" >
 
 
-                <div tal:condition="python: result.portal_type == 'PloneboardForum'">
+                <div tal:condition="python: result.portal_type in ['PloneboardConversation','PloneboardForum']">    
                     <a href="#"
                        tal:attributes="href resulturl">
                         <img src="#" 
@@ -65,26 +66,11 @@
                          /></a>
                     <a href="#"
                        tal:attributes="href resulturl"
-                       tal:content="result/Title" />
-                    - <tal:count replace="python: here.moderation_count_search(result)" /> 
-                    comments in queue.
-                </div>
-
-                <div tal:condition="python: result.portal_type == 'PloneboardConversation'">
-                    <a href="#"
-                       tal:attributes="href resulturl">
-                        <img src="#" 
-                         height="16"
-                         width="16"
-                         alt=""
-                         tal:on-error="structure python:path('here/linkOpaque.gif')"
-                         tal:replace="structure python:path('here/%s' % result.getIcon())" 
-                         /></a>
-                    <a href="#"
-                       tal:attributes="href resulturl"
-                       tal:content="result/Title" />
-                    - <tal:count replace="python: here.moderation_count_search(result)" /> 
-                    comments in queue.
+                       tal:content="result/Title" /> -
+                    <span i18n:translate="moderation_count" tal:omit-tag="">
+                    <span i18n:name="count"
+                                 replace="python: here.moderation_count_search(result)" /> 
+                    comments in queue.</span>
                 </div>
 
                 <div tal:condition="python: result.portal_type == 'PloneboardComment'">
@@ -104,12 +90,13 @@
     
                     <div class="moderationActions">
                         <!-- Iterate over workflow transitions and make a button for each -->
-                        <form method="post"
+                        <form i18n:domain="plone"
+                              method="post"
                               tal:repeat="action python:atool.listFilteredActionsFor(result)['workflow']"
                               tal:attributes="action string:${result/absolute_url}/moderateComment">
                           <input type="hidden" name="action" tal:attributes="value action/id"/>
                           <input type="hidden" name="cameFrom" tal:attributes="value string:${here/absolute_url}/${template/getId}"/>
-                          <input tal:attributes="value action/title"
+                          <input i18n:attributes="value" tal:attributes="value action/title"
                                  class="context"
                                  type="submit"
                                  />
@@ -126,7 +113,7 @@
             </p>
         </div>
 
-    </div>                     
+    </div>
 
 </body>
 </html>

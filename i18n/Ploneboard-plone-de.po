@@ -20,56 +20,80 @@ msgstr ""
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
 msgid "Activate"
-msgstr ""
+msgstr "Aktivieren"
 
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
+
+msgid "Comment"
+msgstr "Kommentar"
 
 msgid "Conversation"
-msgstr ""
+msgstr "Gespräch"
 
 msgid "Flat conversion view"
-msgstr ""
+msgstr "Gesprächsstruktur flach anzeigen"
+
+msgid "Forum"
+msgstr "Thema"
 
 msgid "Free for all"
-msgstr ""
+msgstr "Frei für alle"
 
 msgid "Hidden"
-msgstr ""
+msgstr "Versteckt"
 
 msgid "Hide"
-msgstr ""
+msgstr "Verstecken"
 
 msgid "Lock"
 msgstr "Sperren"
 
 msgid "Locked"
-msgstr ""
+msgstr "Gesperrt"
 
 msgid "Make free-for-all"
-msgstr "Für alle freigeben"
+msgstr "für alle freigeben"
 
 msgid "Make member-posting"
-msgstr ""
+msgstr "Beiträge nur von Mitgliedern erlauben"
 
 msgid "Message Board"
-msgstr ""
+msgstr "Forum"
+
+msgid "Moderate"
+msgstr "Moderieren"
 
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
 
 msgid "Private to members only"
-msgstr ""
+msgstr "Privat nur für Mitglieder"
+
+msgid "Public"
+msgstr "Veröffentlicht"
+
+msgid "Rejected"
+msgstr "Zurückgewiesen"
 
 # Require membership to post
 #. Default: "Require membership to post"
 msgid "Require membership to post"
-msgstr "Nur registrierte Benutzer"
+msgstr "Nur Beiträge von Mitgliedern"
+
+msgid "Retracted"
+msgstr "Zurückgezogen"
 
 msgid "Threaded conversion view"
-msgstr ""
+msgstr "Gesprächsstruktur als Baum anzeigen"
+
+msgid "Waiting for moderator"
+msgstr "Wartet auf Moderation"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${day}.${month}.${year} ${hours}:${minutes}"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
+msgstr "${wday} ${hours}:${minutes}"
 
