@@ -25,9 +25,6 @@ msgstr ""
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr ""
 
-msgid "Forum"
-msgstr ""
-
 msgid "Message Board"
 msgstr ""
 

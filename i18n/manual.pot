@@ -17,6 +17,9 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
 
+msgid "Forum"
+msgstr "Thema"
+
 msgid "label_text"
 msgstr ""
 

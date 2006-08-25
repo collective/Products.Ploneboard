@@ -34,9 +34,6 @@ msgstr "Gespräch"
 msgid "Flat conversion view"
 msgstr "Gesprächsstruktur flach anzeigen"
 
-msgid "Forum"
-msgstr "Thema"
-
 msgid "Free for all"
 msgstr "Frei für alle"
 

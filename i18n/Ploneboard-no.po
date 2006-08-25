@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-24 13:06+0000\n"
+"POT-Creation-Date: 2006-08-25 07:02+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -32,6 +32,9 @@ msgstr "Avbryt"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
 msgstr "Endre"
+
+msgid "Forum"
+msgstr ""
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt

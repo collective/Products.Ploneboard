@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-24 13:06+0000\n"
+"POT-Creation-Date: 2006-08-25 07:02+0000\n"
 "PO-Revision-Date: 2006-03-29 11:18+0100\n"
 "Last-Translator: Simon Pamies <s.pamies@banality.de>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -20,6 +20,13 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
+# translation convention for german:
+# en          |     de
+# -----------------------------------
+# Message Board   |   Forum
+# Forum           |   Thema
+# Conversation    |   Gespräch
+# Comment         |   Kommentar
 #. Default: "Add"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "Add"
@@ -35,6 +42,9 @@ msgstr "Abbrechen"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
 msgstr "Ändern"
+
+msgid "Forum"
+msgstr "Thema"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt

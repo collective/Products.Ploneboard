@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-24 13:06+0000\n"
+"POT-Creation-Date: 2006-08-25 07:02+0000\n"
 "PO-Revision-Date: 2006-01-17 20:28+0100\n"
 "Last-Translator: Lukas Zdych <lukas.zdych@surecase.org>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -30,6 +30,9 @@ msgstr "Storno"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
 msgstr "Změnit"
+
+msgid "Forum"
+msgstr ""
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-24 13:06+0000\n"
+"POT-Creation-Date: 2006-08-25 07:02+0000\n"
 "PO-Revision-Date: 2005-11-25 11:50-0300\n"
 "Last-Translator: Rafahela Garcia Bazzanella <rafabazzanella@yahoo.com.br>\n"
 "Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
@@ -32,6 +32,9 @@ msgstr "Cancelar"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
 msgstr "Alterar"
+
+msgid "Forum"
+msgstr ""
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt

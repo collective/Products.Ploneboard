@@ -32,9 +32,6 @@ msgstr "Gesprek"
 msgid "Flat conversion view"
 msgstr ""
 
-msgid "Forum"
-msgstr ""
-
 msgid "Free for all"
 msgstr ""
 
