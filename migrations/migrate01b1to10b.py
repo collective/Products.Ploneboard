@@ -61,7 +61,7 @@ class Migration(object):
         if getattr(aq_base(ob), '_index', None) is not None:
             delattr(ob, '_index')
             msg = u"Removed stale '_index' from %s at %s."
-            print >> self.out, msg % (ob.meta_type, '/'.join(pb.getPhysicalPath()))
+            print >> self.out, msg % (ob.meta_type, '/'.join(ob.getPhysicalPath()))
         else:
             msg = u"Checked for stale '_index' attribute on '%s' at %s, but not present."
             print >> self.out, msg % (ob.meta_type, '/'.join(ob.getPhysicalPath()))
