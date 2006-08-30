@@ -34,6 +34,7 @@ from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, \
 from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
 from Products.Ploneboard.permissions import AddAttachment
+from Products.Ploneboard.migrations import migrate01b1to10b
 
 from StringIO import StringIO
 
@@ -170,7 +171,11 @@ def addTransforms(self, out):
 
 def removeTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
-    pb_tool.unregisterAllTransforms()
+    try:
+        pb_tool.unregisterAllTransforms()
+    except (KeyError, AttributeError):
+        # This gets raised if your instance is based on Ploneboard 0.1b1
+        print >> out, u"It looks like your Ploneboard instance is based on 0.1b1. Unregistering transforms has failed."
 
 def registerTypesWithPortalFactory(self, out): 
     #This assumes we can use portal_factory for all types
@@ -190,6 +195,21 @@ def setupRootPermissions(self, out):
     root = getToolByName(self, 'portal_url').getPortalObject()
     root.manage_permission(AddAttachment, ('Member', 'Manager',), 0)
 
+def automigrate(self, out):
+    qi_tool = getToolByName(self, 'portal_quickinstaller')
+    code_version = qi_tool.getProductVersion('Ploneboard')
+    instance_version = getattr(qi_tool, 'Ploneboard').getInstalledVersion()
+    if instance_version != code_version:
+        # XXX This is rather brittle; it only knows about migrating from 0.1b1 to 1.0b!
+        # Better code here would figure out if the instance_version is any release in
+        # the 1.0 series, and then skip the migration call.
+        # However, it *is* safe to make multiple calls to the migration, so you are only
+        # wasting a few cycles.
+        migration = migrate01b1to10b.Migration(self, out).migrate()
+    else:
+        msg = u"No migration necessary."
+        print >> out, msg
+
 def install(self, reinstall=False):
     out = StringIO()
 
@@ -207,6 +227,8 @@ def install(self, reinstall=False):
     addConfiglets(self, out)
     addMemberProperties(self, out)
 
+    # Not sure when is best to make this call, but it works here ;-).
+    automigrate(self, out)
     addTransforms(self, out)
     
     setupRootPermissions(self, out)
@@ -234,4 +256,5 @@ def uninstall(self):
     out=StringIO()
     removeConfiglets(self, out)
     removeTransforms(self, out)
+        
     return out.getvalue()
