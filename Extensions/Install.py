@@ -198,7 +198,11 @@ def setupRootPermissions(self, out):
 def automigrate(self, out):
     qi_tool = getToolByName(self, 'portal_quickinstaller')
     code_version = qi_tool.getProductVersion('Ploneboard')
-    instance_version = getattr(qi_tool, 'Ploneboard').getInstalledVersion()
+    installed_prod = getattr(qi_tool, 'Ploneboard', None)
+    if installed_prod is None:
+        instance_version = code_version
+    else:
+        instance_version = installed_prod.getInstalledVersion()
     if instance_version != code_version:
         # XXX This is rather brittle; it only knows about migrating from 0.1b1 to 1.0b!
         # Better code here would figure out if the instance_version is any release in
