@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0-alpha3\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2005-12-10 11:50+0000\n"
 "Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -90,6 +90,9 @@ msgstr "Reageren"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Voeg een nieuw gesprek toe"
+
+msgid "alert_delete_popup"
+msgstr ""
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt

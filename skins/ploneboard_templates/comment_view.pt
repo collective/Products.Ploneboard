@@ -100,11 +100,20 @@
                    type="submit"
                    value="Edit"/>
           </form>
-         <form  i18n:domain="plone"
-                method="post"
+         <form  method="post"
+                i18n:domain="plone"
                 tal:condition="comment/canDelete"
                 tal:attributes="action string:${comment/absolute_url}/delete_view">
-        <!-- von hier -->
+        <!-- the translation should work - but it do not work - at least for german (includes non-ascii), well, better stick it to english only so long
+            <input tal:define="alert_msg python:context.translate('alert_delete_popup', default='Do you really want to delete this comment?', domain='ploneboard', escape_for_js=True)"
+                   tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                   onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                   class="destructive"
+                   i18n:attributes="value"
+                   type="submit"
+                   value="Delete"/>
+        -->
+        <!-- here the fallback english-only popup -->
             <input tal:define="alert_msg python:'Do you really want to delete this comment?'"
                    tal:attributes="href string:${comment/absolute_url}/delete_view;
                                    onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
@@ -112,7 +121,7 @@
                    i18n:attributes="value"
                    type="submit"
                    value="Delete"/>
-        <!-- bis hier-->
+        <!-- end of fallback-->
           </form>
 
           <form i18n:domain="plone"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -91,6 +91,9 @@ msgstr "Legg til kommentar"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Start diskusjon"
+
+msgid "alert_delete_popup"
+msgstr ""
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt

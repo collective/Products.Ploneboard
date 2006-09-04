@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,9 @@ msgstr ""
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
+msgstr ""
+
+msgid "alert_delete_popup"
 msgstr ""
 
 #. Default: "Current state:"

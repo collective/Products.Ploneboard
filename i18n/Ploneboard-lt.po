@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2006-06-11 00:16+0300\n"
 "Last-Translator: Kazimieras <cardinal@mail.lt>\n"
 "Language-Team: \n"
@@ -90,6 +90,9 @@ msgstr "Pridëti komentarà"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "sukurti temà"
+
+msgid "alert_delete_popup"
+msgstr ""
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt

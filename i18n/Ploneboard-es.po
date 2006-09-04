@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2006-06-01 11:50+0000\n"
 "Last-Translator: Pedro Fuentes <pedro.fuentes@telefonica.net>\n"
 "Language-Team: Pedro Fuentes <pedro.fuentes@telefonica.net>\n"
@@ -90,6 +90,9 @@ msgstr "Aadir Comentario"
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
+msgstr ""
+
+msgid "alert_delete_popup"
 msgstr ""
 
 #. Default: "Current state:"

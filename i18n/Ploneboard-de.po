@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2006-09-04 11:18+0100\n"
 "Last-Translator: Jens Klein <jens@bluedynamics.com>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -25,7 +25,6 @@ msgstr ""
 # Forum           |   Thema
 # Conversation    |   Gespräch
 # Comment         |   Kommentar
-
 #. Default: "Add"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "Add"
@@ -100,6 +99,9 @@ msgstr "Kommentar hinzufügen"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Gesprächstitel hinzufügen"
+
+msgid "alert_delete_popup"
+msgstr "Wollen Sie diesen Beitrag wirklich löschen?"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt

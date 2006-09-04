@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-08-25 07:02+0000\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2005-11-25 11:50-0300\n"
 "Last-Translator: Rafahela Garcia Bazzanella <rafabazzanella@yahoo.com.br>\n"
 "Language-Team: TcheZope.org <tchezope@yahoogroups.com>\n"
@@ -91,6 +91,9 @@ msgstr "Adicionar comentários"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
 msgstr "Adicionar conversação"
+
+msgid "alert_delete_popup"
+msgstr ""
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt
