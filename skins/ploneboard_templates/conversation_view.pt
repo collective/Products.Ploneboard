@@ -28,7 +28,7 @@
 
 <body>
   <div metal:fill-slot="main"
-       tal:define="view context/@@comments_view">
+       tal:define="view context/@@conversation_browserview">
 
     <div metal:use-macro="here/document_actions/macros/document_actions">
       Document actions (print, sendto etc)

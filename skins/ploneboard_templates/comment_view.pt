@@ -104,14 +104,17 @@
                 method="post"
                 tal:condition="comment/canDelete"
                 tal:attributes="action string:${comment/absolute_url}/delete_view">
-            <input tal:define="alert_msg python:here.translate('alert_really_delete', default='Do you really want to delete this comment?')"
+        <!-- von hier -->
+            <input tal:define="alert_msg python:'Do you really want to delete this comment?'"
                    tal:attributes="href string:${comment/absolute_url}/delete_view;
                                    onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
                    class="destructive"
                    i18n:attributes="value"
                    type="submit"
                    value="Delete"/>
+        <!-- bis hier-->
           </form>
+
           <form i18n:domain="plone"
                 method="post"
                 tal:repeat="action comment/workflowActions"
@@ -136,6 +139,8 @@
             </span>
           </small>
         </div>
+        <!-- bis hier-->
+
         <div class="boardCommentReplyActions">
           
           <form tal:condition="comment/canReply"

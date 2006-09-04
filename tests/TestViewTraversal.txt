@@ -21,8 +21,8 @@ Add a conversation and traverse to its view
     >>> conversation = self.portal.board1.forum1.getConversations()[0]
     >>> conversation.restrictedTraverse('@@plone')
     <...Plone...>
-    >>> conversation.unrestrictedTraverse('@@comments_view')
+    >>> conversation.unrestrictedTraverse('@@conversation_browserview')
     <...ConversationView...>
-    >>> conversation.restrictedTraverse('@@comments_view')
+    >>> conversation.restrictedTraverse('@@conversation_browserview')
     <...ConversationView...>
 

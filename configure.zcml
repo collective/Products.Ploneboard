@@ -17,7 +17,7 @@
   <browser:page
       for=".interfaces.IConversation"
       class=".browser.ConversationView"
-      name="comments_view"
+      name="conversation_browserview"
       allowed_interface=".browser.IConversationView"
       permission="zope.Public"
       />

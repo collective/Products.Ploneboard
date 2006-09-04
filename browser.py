@@ -4,6 +4,7 @@ from Products import Five
 from Products.CMFCore import utils as cmf_utils
 from Products.Ploneboard import permissions
 from Products.Ploneboard.batch import Batch
+from Products.Ploneboard.interfaces import IConversationView, ICommentView
 
 class CommentViewableView(Five.BrowserView):
     """Any view that might want to interact with comments should inherit
@@ -26,10 +27,10 @@ class CommentViewableView(Five.BrowserView):
         checkPermission = self.portal_membership.checkPermission
         actions = self.portal_actions.listFilteredActionsFor(comment)
 
-        return {
+        res= {
                 'Title': comment.title_or_id(),
                 'Creator': comment.Creator(),
-                'creation_date': comment.creation_date,
+                'creation_date': comment.CreationDate(),
                 'getId': comment.getId(),
                 'getText': comment.getText(),
                 'absolute_url': comment.absolute_url(),
@@ -41,18 +42,9 @@ class CommentViewableView(Five.BrowserView):
                 'workflowActions' : actions['workflow'],
                 'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),
                 'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
-                'UID': comment.UID,
+                'UID': comment.UID(),
             }
-
-class ICommentView(interface.Interface):
-    
-    def comment():
-        """Return active comment.
-        """
-    
-    def quotedBody():
-        """Return the body of the comment, quoted for a reply.
-        """
+        return res
         
 class CommentView(CommentViewableView):
     """A view for getting information about one specific comment.
@@ -69,23 +61,6 @@ class CommentView(CommentViewableView):
             return '<blockquote>%s</blockquote><p></p>' % self.context.getText()
         else:
             return ''
-
-class IConversationView(interface.Interface):
-    def comments():
-        """Return all comments in the conversation.
-        """
-        
-    def conversation():
-        """Return active conversation.
-        """
-
-    def root_comments():
-        """Return all of the root comments for a conversation.
-        """
-        
-    def children(comment):
-        """Return all of the children comments for a parent comment.
-        """
 
 class ConversationView(CommentView):
     """A view component for querying conversations.
@@ -108,17 +83,11 @@ class ConversationView(CommentView):
         batchSize = 30
         batchStart = int(self.request.get('b_start', 0))
         numComments = self.context.getNumberOfComments()
-        return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
-        
-        # XXX: This won't work, since the batch macros depend on the 'batch'
-        # variable and its properties, not just the items its __getitem__
-        # yields
-        
-        # for ob in batch:
-        #    yield self._buildDict(ob)
+        return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)    
     
     def root_comments(self):
-        for ob in self.context.getRootComments():
+        rootcomments =  self.context.getRootComments()
+        for ob in rootcomments:
             yield self._buildDict(ob)
 
     def children(self, comment):
