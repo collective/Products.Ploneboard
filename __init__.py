@@ -16,7 +16,7 @@ except ImportError:
 
 # Disable the GenericSetup profile for now. GenericSetup is definitely the
 # future, but at this moment there are too much import-export steps missing.
-HAS_GENERICSETUP = False
+#HAS_GENERICSETUP = False
 
 import sys, os, os.path
 
