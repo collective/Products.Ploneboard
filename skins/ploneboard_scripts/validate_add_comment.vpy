@@ -30,10 +30,11 @@ if len(text) <= 0:
 files=context.REQUEST.get('files', [])
 maxsize=context.getConversation().getMaxAttachmentSize()
 
-for file in files:
-    if FileSize(file)>maxsize:
-        state.setError("files", "Attachment is too large", new_status="failure")
-        break
+if maxsize!=-1:
+    for file in files:
+        if FileSize(file)>maxsize:
+            state.setError("files", "Attachment is too large", new_status="failure")
+            break
 
 if state.getErrors():
     return state.set(

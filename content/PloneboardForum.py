@@ -331,6 +331,7 @@ class PloneboardForum(BaseBTreeFolder):
         voc.add('100', '100 kilobyte')
         voc.add('1000', '1 megabyte')
         voc.add('10000', '10 megabyte')
+        voc.add('-1', 'unlimited')
 
         return voc
 
