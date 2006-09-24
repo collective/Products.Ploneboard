@@ -120,7 +120,8 @@
 
           <div metal:define-macro="comment_body_attachments"
                  tal:omit-tag=""
-		 tal:define="attachments python:context.getMaxAttachments()"
+                 tal:define="attachments context/getMaxAttachments;
+                             maxsize context/getMaxAttachmentSize"
                  tal:condition="python:attachments and checkPermission('Ploneboard: Add Comment Attachment', context)">
 
             <div class="field"
@@ -129,9 +130,16 @@
 
               <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
 
-              <div i18n:translate="help_body_attachments_posting"
-                   class="formHelp">
-                Select a file to upload as an attachment to this comment.
+              <div class="formHelp">
+                <span tal:omit-tag="" i18n:translate="help_body_attachments_posting">
+                  Select a file to upload as an attachment to this comment.
+                </span>
+                <span tal:omit-tag="" tal:condition="python:maxsize&gt;0"
+                      i18n:translate="help_body_attachments_maxsize">
+                  The maximum allowed attachmend size is
+                  <span tal:omit-tag="" tal:content="maxsize">1024</span>
+                  kilobytes.
+                </span>
               </div>
 
               <div tal:replace="error_files">Validation Error Comment</div>

@@ -84,6 +84,7 @@ class ConversationView(CommentView):
 
         return {
                 'maximumAttachments' : forum.getMaxAttachments(),
+                'maximumAttachmentSize' : forum.getMaxAttachmentSize(),
                 'canAttach': forum.getMaxAttachments()>0 and \
                               checkPermission(permissions.AddAttachment,conv),
                 }
