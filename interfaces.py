@@ -248,6 +248,11 @@ class ICommentView(Interface):
         """Return active comment.
         """
     
+    def author():
+        """Return the name of the author of this comment.
+        If no full name is known the userid is returned.
+        """
+
     def quotedBody():
         """Return the body of the comment, quoted for a reply.
         """

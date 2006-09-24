@@ -55,10 +55,19 @@ class CommentView(CommentViewableView):
     def comment(self):
         return self._buildDict(self.context)
 
+    def author(self):
+        creator = self.context.Creator()
+        info = self.portal_membership.getMemberInfo(creator)
+        if info is None:
+            return creator
+        return info.get('fullname', creator)
+
     def quotedBody(self):
         text = self.context.getText()
         if text:
-            return '<blockquote>%s</blockquote><p></p>' % self.context.getText()
+            return '<p>Previously %s wrote:</p>' \
+                   '<blockquote>%s</blockquote><p></p>' % \
+                   (self.author(), self.context.getText())
         else:
             return ''
 
