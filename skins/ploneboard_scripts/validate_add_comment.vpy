@@ -19,7 +19,8 @@ def FileSize(file):
             size=len(file)
         except TypeError:
             size=0
-    return size
+
+    return size/1024
 
 text = context.REQUEST.get('text', '');
 
@@ -27,7 +28,7 @@ if len(text) <= 0:
     state.setError("text", "No content entered", new_status="failure")
 
 files=context.REQUEST.get('files', [])
-maxsize=context.getMaxAttachmentSize()
+maxsize=context.getConversation().getMaxAttachmentSize()
 
 for file in files:
     if FileSize(file)>maxsize:
