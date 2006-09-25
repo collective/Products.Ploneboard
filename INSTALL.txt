@@ -2,7 +2,7 @@ Requirements
 
     Ploneboard requires Zope 2.8.7 or later, and Plone 2.1.3 or later.
 
-    Zope 2.9.4 or later is required to run the functional tests.
+    Zope 2.9.4 or later with Five 1.3 is required to run the tests.
 
 Installing Ploneboard
 
