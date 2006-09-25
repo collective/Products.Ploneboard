@@ -33,6 +33,7 @@
          
       <metal:comment metal:define-macro="comment"
                      tal:define="creator comment/Creator;
+		                 creatorinfo python: mtool.getMemberInfo(creator);
                                  creation_date comment/creation_date;
                                  state comment/review_state;
                                  pss modules/Products/PythonScripts/standard">
@@ -51,7 +52,8 @@
             <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
             <a class="link-plain"
                tal:attributes="href string:${portal_url}/author/${creator}"
-               tal:content="view/author">author</a> 
+	       tal:omit-tag="not:creatorinfo"
+               tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
             <span i18n:translate="text_at" tal:omit-tag="">at</span>
             <span tal:replace="python:here.toPloneboardTime(creation_date)">Thursday 13:21</span>
           </div>
