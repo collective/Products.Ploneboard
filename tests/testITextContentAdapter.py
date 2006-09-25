@@ -13,7 +13,6 @@ from Products.CMFPlone.utils import _createObjectByType
 class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):
-        utils.caSetUp(self)
         from Products.ATContentTypes.z3.interfaces import ITextContent 
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
@@ -22,8 +21,6 @@ class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):
         self.comment = self.conv.objectValues()[0]
         self.textContent = ITextContent(self.comment)
         
-    def beforeTearDown(self):
-        utils.caTearDown(self)
 
     def testGetText(self):
         self.assertEqual(self.comment.getText(), 
