@@ -95,7 +95,7 @@ Then add a full reply.
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value
-    '<blockquote>Some <b>body</b> text</blockquote><p></p>'
+    '<p>Previously Member one wrote:</p><blockquote>Some <b>body</b> text</blockquote><p></p>'
     >>> browser.getControl(name='text').value = 'A full reply'
 
 Although we won't add attachments in this test, at least make sure the button

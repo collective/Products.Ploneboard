@@ -86,7 +86,7 @@ The comment should be marked as pending. As a regular member and owner, we can
 view and delete, but not publish or edit. We also can't add replies to the
 pending comment.
 
-    >>> 'waiting for moderator' in browser.contents
+    >>> 'Waiting for moderator' in browser.contents
     True
     >>> browser.getControl('Delete')
     <SubmitControl ... type='submit'>
@@ -224,17 +224,17 @@ Publish one, reject one inline.
     
     >>> browser.getLink('Publish inline').click()
     >>> browser.contents
-    '...waiting for moderator...'
+    '...Waiting for moderator...'
     >>> browser.getControl('Publish').click()
-    >>> 'waiting for moderator' in browser.contents
+    >>> 'Waiting for moderator' in browser.contents
     False
     
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink('Reject inline').click()
     >>> browser.contents
-    '...waiting for moderator...'
+    '...Waiting for moderator...'
     >>> browser.getControl('Reject').click()
-    >>> 'waiting for moderator' in browser.contents
+    >>> 'Waiting for moderator' in browser.contents
     False
     >>> browser.contents
     '...rejected...'
@@ -301,7 +301,7 @@ Then add a full reply.
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value
-    '<blockquote>Some <b>body</b> text</blockquote><p></p>'
+    '<p>Previously Member one wrote:</p><blockquote>Some <b>body</b> text</blockquote><p></p>'
     >>> browser.getControl(name='text').value = 'A full reply'
 
 Although we won't add attachments in this test, at least make sure the button
@@ -443,7 +443,7 @@ Again, these comments are pending - publish them, using the board-level
 moderation queue this time.
 
     >>> browser.contents
-    '...waiting for moderator...waiting for moderator...'
+    '...Waiting for moderator...Waiting for moderator...'
 
     >>> browser.open('%s/logout' % self.portal.absolute_url())
     >>> browser.open('%s/login_form' % self.portal.absolute_url())
