@@ -1,5 +1,6 @@
 import urllib
 from zope import interface
+from Acquisition import aq_inner
 from Products import Five
 from Products.CMFCore import utils as cmf_utils
 from Products.Ploneboard import permissions
@@ -112,6 +113,48 @@ class ConversationView(CommentView):
         """
         return [self._buildDict(ob) for ob in self.context.getComments(limit=limit, offset=offset)]
 
+class RecentConversationsPortletView(Five.BrowserView):
+    """Find recent conversations for portlet display
+    """
+    
+    def __init__(self, context, request):
+        Five.BrowserView.__init__(self, context, request)
+        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
+        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
+    
+    def results(self, sort_limit=5):
+        catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
+        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+                            sort_on='modified', 
+                            sort_order='reverse',
+                            sort_limit=sort_limit)[:sort_limit]
+        for r in results:
+            yield self._buildDict(r.getObject())
+
+    def _buildDict(self, ob):
+        forum = ob.getForum()
+        wfstate = self.portal_workflow.getInfoFor(ob, 'review_state')
+        wfstate = self.plone_utils.normalizeString(wfstate)
+        ptype = self.plone_utils.normalizeString(ob.getTypeInfo().getId())
+        
+        return { 'Title': ob.title_or_id(),
+                 'Description' : ob.Description(),
+                 'absolute_url': ob.absolute_url(),
+                 'forum_title' : forum.title_or_id(),
+                 'forum_url' : forum.absolute_url(),
+                 'review_state_normalized' : wfstate,
+                 'portal_type_normalized' : ptype,
+               }
+
+    
+class RecentCommentsView(CommentViewableView):
+    """Find recent comments
+    """
+    
+class UnansweredCommentsView(CommentViewableView):
+    """Find unanswered comments
+    """
+
 class DeleteCommentView(Five.BrowserView):
     """Delete the current comment.  If the comment is the root comment
     of a conversation, delete the entire conversation instead.
@@ -131,3 +174,4 @@ class DeleteCommentView(Five.BrowserView):
             comment.delete()
             msg = urllib.quote('Comment deleted')
             redirect(conversation.absolute_url()+'?portal_status_message='+msg)
+

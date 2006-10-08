@@ -9,6 +9,21 @@ Ploneboard to-do list
 
         -> re-install works at runtime, so test fixture must be wrong
     
+    Features
+    --------
+    
+    - Reporting/highlighting:
+    
+      -> page for "recent comments"
+          - most recent first
+          - all/since last log-in
+          - link from portlet, each forum, conversation, comment (?)
+          - list forum title, conversation title, author, comment count, last comment date
+          - 20 items per page, batched
+
+      -> page for "conversations with no replies"
+          - permissions to view this?
+    
     UI decisions
     ------------
     

@@ -36,7 +36,24 @@
       name="delete_view"
       permission="Ploneboard.DeleteComment"
       />
-  
+      
+  <browser:page
+      for="*"
+      name="ploneboard_recent_portlet_view"
+      class=".browser.RecentConversationsPortletView"
+      permission="zope.Public"
+      allowed_attributes="results"
+      />
+
+  <!-- Needed for Zope 2.8/Plone 2.1 only -->
+
+  <five:traversable
+      class=".content.Ploneboard.Ploneboard"
+      />
+
+  <five:traversable
+      class=".content.PloneboardForum.PloneboardForum"
+      />
 
   <five:traversable
       class=".content.PloneboardConversation.PloneboardConversation"
