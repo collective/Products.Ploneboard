@@ -113,6 +113,21 @@
 
       <table metal:use-macro="here/board_view/macros/forumdisplay" />
     </tal:category>
+    
+    <p>
+      <img tal:replace="structure context/new_conversation.gif" />
+      <a i18n:translate="show_new_conversations_all"
+         tal:attributes="href string:${context/absolute_url}/ploneboard_recent">
+        Show conversations from all forums with recent activity 
+      </a>
+    </p>
+    <p>
+      <img tal:replace="structure context/new_conversation.gif" />
+      <a i18n:translate="show_no_replies_all"
+         tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+        Show conversations from all forums with no replies 
+      </a>
+    </p>
 
     <metal:footer use-macro="here/board_footer/macros/footer">
       Board footer

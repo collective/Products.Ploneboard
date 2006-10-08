@@ -19,7 +19,10 @@
 
     <div metal:fill-slot="main"
          tal:define="numConversations here/getNumberOfConversations;
-                     pss modules/Products/PythonScripts/standard;">
+                     pss modules/Products/PythonScripts/standard;
+                     DateTime nocall:modules/DateTime/DateTime;
+                     last_login python:isAnon and None or member.getProperty('last_login_time', None);
+                     last_login python:last_login and DateTime(last_login) or None;">
 
         <div metal:use-macro="here/document_actions/macros/document_actions">
           Document actions (print, sendto etc)
@@ -42,6 +45,13 @@
              tal:condition="python:numConversations == 0">
         No conversations in this forum yet.     
         </p>
+        
+        <p tal:condition="python:numConversations > 0" i18n:translate="new_conversations_marked_with">
+          Conversations marked with
+            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
+            have had activity since your last log-in.
+        </p>
+
 
        <tal:block define="canStartConverstation python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
 
@@ -77,6 +87,7 @@
         </tal:block>
 
         <tal:haveConversations condition="python:numConversations > 0">
+                    
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
                                      b_size python:20;b_start python:0;b_start request/b_start | b_start;
                                      batch python:Batch(here.getConversations, numConversations, b_size, int(b_start), orphan=1);">
@@ -86,7 +97,7 @@
                 <thead>
                     <tr>
                          <th i18n:translate="conversation">Conversation</th>
-                         <th i18n:translate="comments">Comments</th>
+                         <th i18n:translate="replies">Replies</th>
                          <th i18n:translate="most_recent_comment">Most recent comment</th>
                      </tr>
                 </thead>
@@ -99,6 +110,8 @@
                                     numComments conversation/getNumberOfComments"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">
                         <td>
+                            <img tal:replace="structure context/new_conversation.gif" 
+                                 tal:condition="python:last_login and conversation.modified() > last_login" />
                             <a href=""
                                tal:attributes="href conversation/absolute_url;
                                                class string:state-${revstate}">
@@ -120,14 +133,14 @@
                         <td class="listingCheckbox"
                             tal:condition="python:numComments > 1">
                             <span tal:content="python:numComments - 1">
-                                12 comments
+                                12 replies
                             </span>
                         </td>
 
                         <td class="listingCheckbox"
                             tal:condition="python:numComments &lt;= 1">
-                            <span i18n:translate="no_comments_yet">
-                            No comments yet
+                            <span i18n:translate="no_replies_yet">
+                            No replies yet
                             </span>
                         </td>
 
@@ -169,6 +182,13 @@
             
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
+            
+            <p>
+              <a i18n:translate="show_no_replies"
+                 tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+                Show conversations with no replies 
+              </a>
+            </p>
             
           </tal:conversations>
         </tal:haveConversations>

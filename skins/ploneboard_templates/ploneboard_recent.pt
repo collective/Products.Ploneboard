@@ -63,7 +63,7 @@
                 <thead>
                     <tr>
                          <th i18n:translate="conversation">Conversation</th>
-                         <th i18n:translate="comments">Comments</th>
+                         <th i18n:translate="replies">Replies</th>
                          <th i18n:translate="most_recent_comment">Most recent comment</th>
                      </tr>
                 </thead>
@@ -102,14 +102,14 @@
                         <td class="listingCheckbox"
                             tal:condition="python:numComments > 1">
                             <span tal:content="python:numComments - 1">
-                                12 comments
+                                12 replies
                             </span>
                         </td>
 
                         <td class="listingCheckbox"
                             tal:condition="python:numComments &lt;= 1">
-                            <span i18n:translate="no_comments_yet">
-                            No comments yet
+                            <span i18n:translate="no_replies_yet">
+                            No replies yet
                             </span>
                         </td>
 

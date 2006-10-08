@@ -49,7 +49,7 @@
           
           <p i18n:translate="recent_conversations_description">
             The following conversations have been posted, but have not yet
-            received an answer. Conversations marked with
+            received any replies. Conversations marked with
             <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
             are new since your last log-in.
           </p>
