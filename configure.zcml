@@ -45,6 +45,22 @@
       allowed_attributes="results"
       />
 
+  <browser:page
+      for="*"
+      name="ploneboard_recent_view"
+      class=".browser.RecentConversationsView"
+      permission="zope.Public"
+      allowed_attributes="results num_conversations"
+      />
+  
+  <browser:page
+      for="*"
+      name="ploneboard_unanswered_view"
+      class=".browser.UnansweredConversationsView"
+      permission="zope.Public"
+      allowed_attributes="results num_conversations"
+      />
+
   <!-- Needed for Zope 2.8/Plone 2.1 only -->
 
   <five:traversable

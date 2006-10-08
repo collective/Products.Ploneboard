@@ -4,25 +4,15 @@ Ploneboard to-do list
     Bugs
     ----
     
-    - testPloneboardWorkflow.testPreserveChainsOnReinstall() errors during
-        quickinstaller re-install.
-
-        -> re-install works at runtime, so test fixture must be wrong
+    - Can't display portlet on portal root etc in Zope 2.8
+      - needs items marked as five:traversable
+    - ploneboard_recent breaks in the same situations
+    
+    - ploneboard_recent is not linked to from anywhere
+    - ploneboard_recent does not correctly display author
     
     Features
     --------
-    
-    - Reporting/highlighting:
-    
-      -> page for "recent comments"
-          - most recent first
-          - all/since last log-in
-          - link from portlet, each forum, conversation, comment (?)
-          - list forum title, conversation title, author, comment count, last comment date
-          - 20 items per page, batched
-
-      -> page for "conversations with no replies"
-          - permissions to view this?
     
     UI decisions
     ------------

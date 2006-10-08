@@ -1,6 +1,7 @@
 import urllib
 from zope import interface
-from Acquisition import aq_inner
+from Acquisition import aq_inner, aq_base
+from DateTime.DateTime import DateTime
 from Products import Five
 from Products.CMFCore import utils as cmf_utils
 from Products.Ploneboard import permissions
@@ -122,12 +123,12 @@ class RecentConversationsPortletView(Five.BrowserView):
         self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
         self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
     
-    def results(self, sort_limit=5):
+    def results(self, limit=5):
         catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
         results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
                             sort_on='modified', 
                             sort_order='reverse',
-                            sort_limit=sort_limit)[:sort_limit]
+                            sort_limit=limit)[:limit]
         for r in results:
             yield self._buildDict(r.getObject())
 
@@ -147,13 +148,118 @@ class RecentConversationsPortletView(Five.BrowserView):
                }
 
     
-class RecentCommentsView(CommentViewableView):
-    """Find recent comments
+class RecentConversationsView(CommentViewableView):
+    """Find recent conversations
     """
     
-class UnansweredCommentsView(CommentViewableView):
-    """Find unanswered comments
+    def __init__(self, context, request):
+        Five.BrowserView.__init__(self, context, request)
+        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
+        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
+        self.portal_catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
+        self.portal_membership = cmf_utils.getToolByName(self.context, 'portal_membership')
+    
+    def num_conversations(self):
+        catalog = self.portal_catalog
+        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation',
+                          path='/'.join(self.context.getPhysicalPath()),)
+        return len(results)
+    
+    def results(self, limit=20, offset=0):
+        catalog = self.portal_catalog
+        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+                            sort_on='modified', 
+                            sort_order='reverse',
+                            sort_limit=(offset+limit),
+                            path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]
+        return [self._buildDict(r.getObject()) for r in results]
+    
+    def _buildDict(self, ob):
+        forum = ob.getForum()
+        wfstate = self.portal_workflow.getInfoFor(ob, 'review_state')
+        wfstate = self.plone_utils.normalizeString(wfstate)
+        
+        creator = ob.Creator()
+        creatorInfo = self.portal_membership.getMemberInfo(creator)
+        if creatorInfo is not None and creatorInfo.get('fullname', "") != "":
+            creator = creatorInfo['fullname']
+        
+        lastComment = ob.getLastComment()
+        canAccessLastComment = self.portal_membership.checkPermission('View', lastComment)
+        
+        lastCommentCreator = lastComment.Creator()
+        creatorInfo = self.portal_membership.getMemberInfo(lastCommentCreator)
+        if creatorInfo is not None and creatorInfo.get('fullname', '') != "":
+            lastCommentCreator = creatorInfo['fullname']
+        
+        return { 'Title': ob.title_or_id(),
+                 'Description' : ob.Description(),
+                 'absolute_url': ob.absolute_url(),
+                 'forum_title' : forum.title_or_id(),
+                 'forum_url' : forum.absolute_url(),
+                 'review_state_normalized' : wfstate,
+                 'num_comments' : ob.getNumberOfComments(),
+                 'creator' : creator,
+                 'last_comment_id' : lastComment.getId(),
+                 'last_comment_creator' : lastCommentCreator,
+                 'last_comment_date' : lastComment.created(),
+                 'can_access_last_comment' : canAccessLastComment,
+                 'is_new' : self._is_new(ob.modified()),
+               }
+               
+    def _is_new(self, modified):
+        llt = getattr(aq_base(self), '_last_login_time', [])
+        if llt == []:
+            m = self.portal_membership.getAuthenticatedMember()
+            if m is None:
+                llt = self._last_login_time = None
+            else:
+                llt = self._last_login_time = m.getProperty('last_login_time', None)
+        if not llt:
+            return True
+        return (modified >= DateTime(llt)) 
+    
+class UnansweredConversationsView(RecentConversationsView):
+    """Find unanswered conversations
     """
+    
+    def num_conversations(self):
+        catalog = self.portal_catalog
+        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation',
+                          num_comments=1,
+                          path='/'.join(self.context.getPhysicalPath()),)
+        return len(results)
+    
+    def results(self, limit=20, offset=0):
+        catalog = self.portal_catalog
+        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+                            num_comments=1,
+                            sort_on='modified', 
+                            sort_order='reverse',
+                            sort_limit=(offset+limit),
+                            path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]
+        return [self._buildDict(r.getObject()) for r in results]
+
+    def _buildDict(self, ob):
+        forum = ob.getForum()
+        wfstate = self.portal_workflow.getInfoFor(ob, 'review_state')
+        wfstate = self.plone_utils.normalizeString(wfstate)
+        
+        creator = ob.Creator()
+        creatorInfo = self.portal_membership.getMemberInfo(creator)
+        if creatorInfo is not None and creatorInfo.get('fullname', "") != "":
+            creator = creatorInfo['fullname']
+        
+        return { 'Title': ob.title_or_id(),
+                 'Description' : ob.Description(),
+                 'created' : ob.created(),
+                 'absolute_url': ob.absolute_url(),
+                 'forum_title' : forum.title_or_id(),
+                 'forum_url' : forum.absolute_url(),
+                 'review_state_normalized' : wfstate,
+                 'creator' : creator,
+                 'is_new' : self._is_new(ob.modified()),
+               }
 
 class DeleteCommentView(Five.BrowserView):
     """Delete the current comment.  If the comment is the root comment

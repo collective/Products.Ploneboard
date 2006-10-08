@@ -77,6 +77,9 @@ def addCatalogIndices(self, out):
     if 'object_implements' not in pc.indexes():
         pc.addIndex('object_implements', 'KeywordIndex')
         out.write('Added object_implements index to portal_catalog\n')
+    if 'num_comments' not in pc.indexes():
+        pc.addIndex('num_comments', 'FieldIndex')
+        out.write('Added num_comments index to portal_catalog\n')
 
 def registerNavigationTreeSettings(self, out):
     data = ['PloneboardConversation','PloneboardComment']

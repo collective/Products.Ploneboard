@@ -1,4 +1,5 @@
 from Products.CMFPlone.CatalogTool import registerIndexableAttribute
+from Products.Ploneboard.interfaces import IConversation
 from zope.interface import providedBy
 try:
     from zope.app.component.interface import interfaceToName
@@ -12,3 +13,12 @@ def object_implements(object, portal, **kw):
     return [interfaceToName(portal, i) for i in providedBy(object).flattened()]
 
 registerIndexableAttribute('object_implements', object_implements)
+
+def num_comments(object, portal, **kw):
+    conv = IConversation(object, None)
+    if conv is None:
+        return None
+    else:
+        return conv.getNumberOfComments()
+
+registerIndexableAttribute('num_comments', num_comments)
