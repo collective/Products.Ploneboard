@@ -1,13 +1,13 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# WORKFLOW TRANSLATE.
+# LEANDRO ZANUZ <lzanuz@ucs.br>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Leandro Zanuz <lzanuz@ucs.br>\n"
+"Language-Team: Universidade de Caxias do Sul <lzanuz@ucs.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,75 +18,82 @@ msgstr ""
 "Domain: plone\n"
 
 msgid "Activate"
-msgstr ""
+msgstr "Ativar"
 
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 msgid "Comment"
-msgstr ""
+msgstr "Comentário"
 
 msgid "Conversation"
-msgstr ""
+msgstr "Conversação"
 
 msgid "Flat conversion view"
 msgstr ""
 
 msgid "Free for all"
-msgstr ""
+msgstr "Liberado para Anônimos"
 
 msgid "Hidden"
-msgstr ""
+msgstr "Fechado"
 
 msgid "Hide"
-msgstr ""
+msgstr "Hechar"
 
 msgid "Lock"
-msgstr ""
+msgstr "Bloquear"
 
 msgid "Locked"
-msgstr ""
+msgstr "Bloqueado"
 
 msgid "Make free-for-all"
-msgstr ""
+msgstr "Liberar para Anônimos"
+
+msgid "Make moderated"
+msgstr "Tornar moderado"
 
 msgid "Make member-posting"
-msgstr ""
+msgstr "Só Membros Postam"
 
 msgid "Message Board"
-msgstr ""
+msgstr "Mural de mensagens"
 
 msgid "Moderate"
-msgstr ""
+msgstr "Moderar"
 
 msgid "Open"
-msgstr ""
+msgstr "Aberto"
 
 msgid "Private to members only"
-msgstr ""
+msgstr "Privado somente para membros"
 
 msgid "Public"
-msgstr ""
+msgstr "Público"
 
 msgid "Rejected"
-msgstr ""
+msgstr "Rejeitado"
 
 msgid "Require membership to post"
-msgstr ""
+msgstr "Só Membros Postam"
+
+msgid "Moderated forum"
+msgstr "Fórum Moderado"
 
 msgid "Retracted"
-msgstr ""
+msgstr "Retraído"
 
 msgid "Threaded conversion view"
 msgstr ""
 
 msgid "Waiting for moderator"
-msgstr ""
+msgstr "Aguardando moderação"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr ""
+msgstr "old_date_format: ${day} ${month} ${year} ${hours}:${minutes}"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
+
 
