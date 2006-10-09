@@ -100,7 +100,7 @@
 
         </tal:choice>
 
-        <p tal:condition="python:numConversations > 0" 
+        <p tal:condition="python:not isAnon and numConversations > 0" 
            class="discreet"
            i18n:translate="new_conversations_marked_with">
           Conversations marked with

@@ -211,13 +211,16 @@ class RecentConversationsView(CommentViewableView):
         llt = getattr(aq_base(self), '_last_login_time', [])
         if llt == []:
             m = self.portal_membership.getAuthenticatedMember()
-            if m is None:
+            if m.has_role('Anonymous'):
                 llt = self._last_login_time = None
             else:
-                llt = self._last_login_time = m.getProperty('last_login_time', None)
-        if not llt:
+                llt = self._last_login_time = m.getProperty('last_login_time', 0)
+        if llt is None: # not logged in
+            return False
+        elif llt == 0: # never logged in before
             return True
-        return (modified >= DateTime(llt)) 
+        else:
+            return (modified >= DateTime(llt)) 
     
 class UnansweredConversationsView(RecentConversationsView):
     """Find unanswered conversations

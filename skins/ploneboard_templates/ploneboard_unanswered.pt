@@ -51,7 +51,7 @@
             The following conversations have been posted, but have not yet
             received any replies.
           </p>
-          <p class="discreet"
+          <p class="discreet" tal:condition="not:isAnon"
              i18n:translate="new_conversations_marked_with">
             Conversations marked with
             <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
