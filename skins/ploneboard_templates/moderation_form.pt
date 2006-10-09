@@ -23,8 +23,14 @@
 
         <h1 tal:content="here/Title">Context title</h1>
         
-        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
-
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+            Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+        </a>
         
         <!-- Search results -->
         

@@ -33,7 +33,25 @@
         <span tal:replace="here/Title">Forum title</span>
         </h1>
 
-        <metal:header use-macro="here/board_header/macros/header">Board header</metal:header>
+        <ul class="visualNoMarker discreet"
+            style="float:right; margin: 0 0 1em 1em;">
+            <li>
+                <img tal:replace="structure context/new_conversation.gif" />
+                <a i18n:translate="show_no_replies"
+                   tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+                   Show only unanswered 
+                </a>
+            </li>
+        </ul>
+
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+            Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+        </a>
 
         <div class="documentDescription"
              tal:content="here/Description">
