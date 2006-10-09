@@ -5,12 +5,16 @@
 <body>
   <div metal:define-macro="header" tal:omit-tag="">
     
-    <a i18n:translate="show_no_replies"
-       class="discreet"
-       style="float: right; clear: both"
-       tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
-       Only show conversations with no replies 
-    </a>
+    <ul class="visualNoMarker discreet"
+        style="float:right; margin: 0 0 1em 1em;">
+        <li>
+            <img tal:replace="structure context/new_conversation.gif" />
+            <a i18n:translate="show_no_replies"
+               tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+               Show only unanswered 
+            </a>
+        </li>
+    </ul>
 
     <a href=""
        class="link-parent"

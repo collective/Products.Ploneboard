@@ -40,6 +40,8 @@
         Forum Description
         </div>
         
+        <div class="visualClear"></div>
+        
         <p class="discreet"
              i18n:translate="not_conversations"
              tal:condition="python:numConversations == 0">

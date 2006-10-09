@@ -25,10 +25,31 @@
       <span tal:replace="here/Title">Board title</span>
     </h1>
       
+
+    <ul class="visualNoMarker discreet"
+        style="float:right; margin: 0 0 1em 1em;">
+        <li>
+          <img tal:replace="structure context/new_conversation.gif" />
+          <a i18n:translate="show_new_conversations_all"
+             tal:attributes="href string:${context/absolute_url}/ploneboard_recent">
+            Show all recent activity 
+          </a>
+        </li>
+        <li>
+          <img tal:replace="structure context/new_conversation.gif" />
+          <a i18n:translate="show_no_replies_all"
+             tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+            Show all unanswered 
+          </a>
+        </li>
+    </ul>
+
     <p class="documentDescription"
        tal:content="here/description">
       Board Description
     </p>
+
+    <div class="visualClear"></div>
 
     <div class="discreet"
          tal:condition="not: forums" i18n:translate="not_forums">
@@ -113,21 +134,6 @@
 
       <table metal:use-macro="here/board_view/macros/forumdisplay" />
     </tal:category>
-    
-    <p>
-      <img tal:replace="structure context/new_conversation.gif" />
-      <a i18n:translate="show_new_conversations_all"
-         tal:attributes="href string:${context/absolute_url}/ploneboard_recent">
-        Show conversations from all forums with recent activity 
-      </a>
-    </p>
-    <p>
-      <img tal:replace="structure context/new_conversation.gif" />
-      <a i18n:translate="show_no_replies_all"
-         tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
-        Show conversations from all forums with no replies 
-      </a>
-    </p>
 
     <metal:footer use-macro="here/board_footer/macros/footer">
       Board footer

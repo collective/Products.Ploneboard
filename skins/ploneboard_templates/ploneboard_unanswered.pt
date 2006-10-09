@@ -28,7 +28,7 @@
 
         <h1 class="documentFirstHeading" i18n:translate="title_unanswered_conversations">
           Unanswered posts in
-          <span i18n:name="title" tal:replace="here/Title">title</span>.
+          <span i18n:name="title" tal:replace="here/Title">title</span>
         </h1>
         
         <a href=""

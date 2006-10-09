@@ -28,7 +28,7 @@
 
         <h1 class="documentFirstHeading" i18n:translate="title_recent_conversations">
           Recent conversations in
-          <span i18n:name="title" tal:replace="here/Title">title</span>.
+          <span i18n:name="title" tal:replace="here/Title">title</span>
         </h1>
         
         <a href=""
@@ -49,11 +49,15 @@
           
           <p i18n:translate="recent_conversations_description">
             The following conversations have had recent activity.
-            Conversations marked with
-            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
-            are new since your last log-in.
           </p>
           
+          <p class="discreet"
+             i18n:translate="new_conversations_marked_with">
+            Conversations marked with
+            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
+            have had activity since your last log-in.
+          </p>
+
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
                                      b_size python:20;b_start python:0;b_start request/b_start | b_start;
                                      batch python:Batch(view.results, numConversations, b_size, int(b_start), orphan=1);">
