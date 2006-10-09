@@ -49,9 +49,13 @@
           
           <p i18n:translate="recent_conversations_description">
             The following conversations have been posted, but have not yet
-            received any replies. Conversations marked with
+            received any replies.
+          </p>
+          <p class="discreet"
+             i18n:translate="new_conversations_marked_with">
+            Conversations marked with
             <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
-            are new since your last log-in.
+            have had activity since your last log-in.
           </p>
           
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;

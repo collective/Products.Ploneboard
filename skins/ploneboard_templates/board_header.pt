@@ -5,6 +5,12 @@
 <body>
   <div metal:define-macro="header" tal:omit-tag="">
     
+    <a i18n:translate="show_no_replies"
+       class="discreet"
+       style="float: right; clear: both"
+       tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+       Only show conversations with no replies 
+    </a>
 
     <a href=""
        class="link-parent"

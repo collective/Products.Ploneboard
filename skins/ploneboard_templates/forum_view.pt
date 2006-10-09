@@ -45,18 +45,12 @@
              tal:condition="python:numConversations == 0">
         No conversations in this forum yet.     
         </p>
-        
-        <p tal:condition="python:numConversations > 0" i18n:translate="new_conversations_marked_with">
-          Conversations marked with
-            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
-            have had activity since your last log-in.
-        </p>
 
-
-       <tal:block define="canStartConverstation python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
+       <tal:vars define="canStartConverstation python:checkPermission('Ploneboard: Add Comment', here) and checkPermission('Add portal content', here)">
 
         <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
-              tal:condition="canStartConverstation">
+              tal:condition="canStartConverstation"
+              style="float: right">
               <input i18n:attributes="value"
                   class="standalone"
                   type="submit" 
@@ -78,13 +72,23 @@
         </form>
 
         <p class="discreet"
+           style="text-align: center"
            i18n:translate="not_permission_start_conversation"
            tal:condition="not: isAnon">
         Sorry, you do not have permission to start a new Conversation
         </p>
 
         </tal:choice>
-        </tal:block>
+
+        <p tal:condition="python:numConversations > 0" 
+           class="discreet"
+           i18n:translate="new_conversations_marked_with">
+          Conversations marked with
+            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
+            have had activity since your last log-in.
+        </p>
+
+        </tal:vars>
 
         <tal:haveConversations condition="python:numConversations > 0">
                     
@@ -182,14 +186,7 @@
             
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
-            
-            <p>
-              <a i18n:translate="show_no_replies"
-                 tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
-                Show conversations with no replies 
-              </a>
-            </p>
-            
+                        
           </tal:conversations>
         </tal:haveConversations>
 
