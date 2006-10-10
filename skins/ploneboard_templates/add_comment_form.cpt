@@ -137,7 +137,8 @@
                 <span tal:omit-tag="" tal:condition="python:maxsize&gt;0"
                       i18n:translate="help_body_attachments_maxsize">
                   The maximum allowed attachment size is
-                  <span tal:omit-tag="" tal:content="maxsize">1024</span>
+                  <span tal:omit-tag="" i18n:name="maxsize"
+                        tal:content="maxsize">1024</span>
                   kilobytes.
                 </span>
               </div>
