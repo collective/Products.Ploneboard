@@ -1,0 +1,93 @@
+# translation of Ploneboard to Italian
+# Gettext File for Ploneboard
+# Enzo Cesanelli <enzo at noiza dot com>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2006-05-08 11:50+0000\n"
+"Last-Translator: Bingkai Zhang <zhangbingkai at zopen dot cn>\n"
+"Language-Team: ZOpen <www.zopen.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: zh\n"
+"Language-Name: Chinese\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+msgid "Activate"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Conversation"
+msgstr "Discussione"
+
+msgid "Flat conversion view"
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+#### Voci aggiunte manualmente.
+msgid "Message Board"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
