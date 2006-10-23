@@ -2,7 +2,7 @@ from Products.CMFPlone.CatalogTool import registerIndexableAttribute
 from Products.Ploneboard.interfaces import IConversation
 from zope.interface import providedBy
 try:
-    from zope.app.component.interface import interfaceToName
+    from zope.component.interface import interfaceToName
 except ImportError:
     # BBB for Zope < 2.9
     def interfaceToName(context, interface):
