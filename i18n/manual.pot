@@ -18,7 +18,7 @@ msgstr ""
 "Domain: ploneboard\n"
 
 msgid "Forum"
-msgstr "Thema"
+msgstr ""
 
 msgid "label_text"
 msgstr ""
