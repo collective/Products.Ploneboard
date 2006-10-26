@@ -148,10 +148,10 @@ msgstr "aktiv"
 msgid "forum_name"
 msgstr "Name des Forums"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
-msgstr "Zurück zu ${type}"
+msgstr "Zurück zu ${title}"
 
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
