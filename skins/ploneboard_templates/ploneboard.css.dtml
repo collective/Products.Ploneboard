@@ -22,8 +22,22 @@
     font-size: &dtml-fontSmallSize;;
 }
 
+.listing td {
+    vertical-align: top;
+    padding-top: 5px;
+}
+
+.listing .count {
+    width:10%;
+    text-align:center;
+}
+
+.listing .author {
+    width: 30%;
+}
+
 .listing .discreet {
-    text-align: right;
+    text-align: left;
     display: block;
 }
 
@@ -46,11 +60,12 @@
 
 .listingForum {
     display: block;
-    padding: 10px;
-    padding-left: 25px;
+    padding: 0px;
+    padding-left: 18px;
+    margin-bottom: 5px;
     font-size: 110%;
     background: transparent url("<dtml-var portal_url>/ploneboard_forum_icon.gif") no-repeat;
-    background-position: 5px 10px;
+    background-position: 0px 2px;
 }
 
 /* Comment */
