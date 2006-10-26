@@ -198,6 +198,10 @@ class PloneboardForum(BaseBTreeFolder):
         conv.setTitle(title)
         
         if creator is not None:
+            pm = getToolByName(self, 'portal_membership')
+            if pm.isAnonymousUser():
+                if self.acl_users.getUserById(creator):
+                    creator = '%s %s' % (creator, '(Anonymous)')
             conv.setCreators([creator])
         
 

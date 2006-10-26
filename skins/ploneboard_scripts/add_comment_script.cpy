@@ -15,7 +15,9 @@ pm = getToolByName(context, 'portal_membership')
 wf = getToolByName(context, 'portal_workflow')
 
 if pm.isAnonymousUser():
-    creator = 'Anonymous'
+    creator = context.REQUEST.get('author', None)
+    if not creator:
+        creator = 'Anonymous'
 else:
     creator = pm.getAuthenticatedMember().getUserName()
 

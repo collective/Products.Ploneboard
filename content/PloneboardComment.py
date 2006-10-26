@@ -174,6 +174,10 @@ class PloneboardComment(BaseBTreeFolder):
         m.setInReplyTo(self.UID())
         
         if creator is not None:
+            pm = getToolByName(self, 'portal_membership')
+            if pm.isAnonymousUser():
+                if self.acl_users.getUserById(creator):
+                    creator = '%s %s' % (creator, '(Anonymous)')
             m.setCreators([creator])
 
         # Create files in message
