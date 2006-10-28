@@ -57,7 +57,7 @@ msgid "Make member-posting"
 msgstr "Só Membros Postam"
 
 msgid "Message Board"
-msgstr "Mural de mensagens"
+msgstr "Pasta de Fóruns"
 
 msgid "Moderate"
 msgstr "Moderar"
@@ -89,11 +89,11 @@ msgstr ""
 msgid "Waiting for moderator"
 msgstr "Aguardando moderação"
 
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:32
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "old_date_format: ${day} ${month} ${year} ${hours}:${minutes}"
+msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:36
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
-
+msgstr "${wday} ${hours}:${minutes}"
 

@@ -34,7 +34,7 @@ msgid "Change"
 msgstr "Alterar"
 
 msgid "Forum"
-msgstr ""
+msgstr "Fórum"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -212,6 +212,8 @@ msgstr "Corpo da mensagem"
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/board_view.pt
 #: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "label_by_author"
 msgstr "por ${author}"
 
@@ -343,7 +345,7 @@ msgstr "Não há comentários na lista de moderação."
 #. Default: "No comments yet"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "no_comments_yet"
-msgstr "Sem comentário ainda"
+msgstr "sem comentários"
 
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt
@@ -364,7 +366,7 @@ msgstr "Não existem fóruns ainda, use o menu de adição de itens para adicion
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "not_permission_start_conversation"
-msgstr "Desculpe, você não tem permissão para iniciar uma conversação."
+msgstr "Desculpe, você não tem permissão para iniciar uma conversação!"
 
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt
@@ -390,7 +392,7 @@ msgstr "em"
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "title_general_forums"
-msgstr "Forums:"
+msgstr "Fóruns"
 
 #. Default: "Transform name"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -407,4 +409,80 @@ msgstr "Retornar as configurações do Ploneboard"
 msgid "up_to_site_setup"
 msgstr "Retornar as configurações do site"
 
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "no_replies_yet"
+msgstr "0"
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "replies"
+msgstr "Respostas"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "title_unanswered_conversations"
+msgstr "Conversações não respondidas em ${title}"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "go_to_view_url"
+msgstr "Retornar para ${name}"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "no_recent_conversations"
+msgstr "Nenhuma conversação encontrada."
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "recent_conversations_description"
+msgstr "As seguintes conversações foram postadas, mas ainda não possuem nenhuma resposta."
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "new_conversations_marked_with"
+msgstr "Conversações marcadas com ${star} tiveram atividade desde seu último acesso."
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "show_no_replies"
+msgstr "Exibir somente não respondidos"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_forum"
+msgstr "Fórum"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_posted"
+msgstr "Postados"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_no_replies_all"
+msgstr "Exibir todos não respondidos"
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_new_conversations_all"
+msgstr "Exibir todas novas atividades"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "title_recent_conversations"
+msgstr "Conversações recentes em ${title}"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "label_in_forum"
+msgstr "em ${forum}"
 
