@@ -72,8 +72,6 @@
           <legend i18n:translate="label_quickreply">Quick reply</legend> 
           <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form" method="post" enctype="multipart/form-data">
 
-            <div metal:use-macro="here/add_comment_form/macros/comment_author" tal:omit-tag="" />
-
             <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" /> 
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />

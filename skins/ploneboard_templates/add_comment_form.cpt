@@ -51,16 +51,6 @@
 
           <input type="hidden" name="form.submitted" value="1" />
 
-          <div metal:define-macro="comment_author" tal:omit-tag="">
-             <div tal:condition="isAnon">
-                <div class="field">
-                    <label for="author" i18n:translate="label_author_posting">Author</label>
-                    <div class="formHelp"><!-- --></div>
-                    <input type="text" name="author" size="30" />
-                </div>
-             </div>
-          </div>
-
           <div metal:define-macro="comment_body_title" tal:omit-tag="">
             <div class="commentReplyTitle" tal:omit-tag="title_required">
             <div class="field"

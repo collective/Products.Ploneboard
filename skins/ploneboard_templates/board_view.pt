@@ -89,25 +89,25 @@
                      class="listingForum"
                      tal:attributes="href forum/absolute_url">
                     <span tal:replace="forum/Title">This is a title</span>
-                  </a>
-                  <span class="discreet" tal:content="forum/Description">
+                    <span class="discreet" tal:content="forum/Description">
                       This is the Forum Description
-                  </span>
+                    </span>
+                  </a>
                 </td>
 
-                <td tal:content="forum/getNumberOfConversations" class="count">
+                <td tal:content="forum/getNumberOfConversations">
                   34
                 </td>
 
                 <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
                      if older than this week. (limi) -->
-                <td tal:condition="not: forum/getLastCommentAuthor" class="author">
+                <td tal:condition="not: forum/getLastCommentAuthor">
                   <span i18n:translate="no_conversations_started" class="discreet">
                     No conversations started
                   </span>
                 </td>
 
-                <td tal:condition="forum/getLastCommentAuthor" class="author">
+                <td tal:condition="forum/getLastCommentAuthor">
                   <div i18n:translate="label_by_author">
                     by <tal:author i18n:name="author"
                                    define="creator forum/getLastCommentAuthor;

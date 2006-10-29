@@ -38,9 +38,5 @@ fixes and updates on behalf of Zest Software
     **Wichert Akkerman**, Simplon -- Code, user interface improvements
 
     **Jens Klein**, **Thomas Gatterer**, "BlueDynamics 
-Alliance":http://www.bluedynamics.com -- i18n-cleanup, better german 
-translations, code-cleanup.
-
-    **Robert Niederreiter**, "BlueDynamics 
-Alliance":http://www.bluedynamics.com -- anonymous author input functionality,
-css modifications
+Alliance":http://www.bluedynamics.com -- i18n-cleanup, better german translations, 
+code-cleanup.

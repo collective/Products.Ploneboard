@@ -159,18 +159,14 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         if not title:
             title = self.Title()
 
+
         m = _createObjectByType('PloneboardComment', self, id)
         
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement. 
         m.setTitle(title)
         m.setText(text)
-        
         if creator is not None:
-            pm = getToolByName(self, 'portal_membership')
-            if pm.isAnonymousUser():
-                if self.acl_users.getUserById(creator):
-                    creator = '%s %s' % (creator, '(Anonymous)')
             m.setCreators([creator])
         
         # Create files in message
