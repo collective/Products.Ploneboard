@@ -1,1 +1,1 @@
-1.0-beta3 (svn/unreleased)
+1.0-RC (svn/unreleased)
