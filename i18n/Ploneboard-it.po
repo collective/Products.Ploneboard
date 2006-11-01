@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2006-09-04 13:55+0000\n"
-"PO-Revision-Date: 2006-05-08 11:50+0000\n"
-"Last-Translator: Enzo Cesanelli <enzo at noiza dot com>\n"
+"PO-Revision-Date: 2006-11-01 12:04+0100\n"
+"Last-Translator: Fabio Corneti <info@corneti.com>\n"
 "Language-Team: Noiza <enzo at noiza dot com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -26,12 +26,12 @@ msgstr ""
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Cancel"
-msgstr "Elimina"
+msgstr "Annulla"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "Change"
-msgstr "Cambia"
+msgstr "Modifica"
 
 msgid "Forum"
 msgstr ""
@@ -39,12 +39,12 @@ msgstr ""
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Log in to add comments"
-msgstr ""
+msgstr "Effettua il login per aggiungere commenti"
 
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "Log in to start a conversation"
-msgstr ""
+msgstr "Effettua il login per avviare una nuova discussione"
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
@@ -55,32 +55,32 @@ msgstr "Inserisci"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 #: ../skins/ploneboard_templates/conversation_view.pt
 msgid "Post comment"
-msgstr ""
+msgstr "Aggiunti un nuovo commento."
 
 #. Default: "Remove"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "Remove"
-msgstr ""
+msgstr "Elimina"
 
 #. Default: "Reply to this"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Reply to this"
-msgstr "Rispondi a questo"
+msgstr "Rispondi"
 
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "Start a new Conversation"
-msgstr ""
+msgstr "Nuova discussione"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "View profile"
-msgstr ""
+msgstr "Visualizza profilo"
 
 #. Default: "Action"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "action"
-msgstr ""
+msgstr "Azione"
 
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -90,7 +90,7 @@ msgstr "Aggiungi commento"
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
-msgstr ""
+msgstr "Nuova discussione"
 
 msgid "alert_delete_popup"
 msgstr ""
@@ -98,17 +98,17 @@ msgstr ""
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "comment_current_state"
-msgstr ""
+msgstr "Stato:"
 
 #. Default: "Comments"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "comments"
-msgstr ""
+msgstr "Commenti"
 
 #. Default: "Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "conversation"
-msgstr "Discussione"
+msgstr "Argomento"
 
 #. Default: "Data provider"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -123,7 +123,7 @@ msgstr "Qui puoi configurare Ploneboard per questo sito"
 #. Default: "Here you can configure which transforms are active in Ploneboard comments."
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "description_ploneboard_config_transforms"
-msgstr ""
+msgstr "Qui puoi configurare le trasformazioni disponibili per i commenti inseriti in Ploneboard"
 
 #. Default: "Configure Ploneboard comment text transformations."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -138,7 +138,7 @@ msgstr ""
 #. Default: "Forum name"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "forum_name"
-msgstr "Nome del forum"
+msgstr "Forum"
 
 #. Default: "Up to ${type}"
 #: ../skins/ploneboard_templates/board_header.pt
@@ -213,7 +213,7 @@ msgstr "Testo del messaggio"
 #: ../skins/ploneboard_templates/board_view.pt
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "label_by_author"
-msgstr "per ${author}"
+msgstr "di ${author}"
 
 msgid "label_categories_board"
 msgstr ""
@@ -228,7 +228,7 @@ msgid "label_description_conversation"
 msgstr "Descrizione della discussione"
 
 msgid "label_description_forum"
-msgstr "Descrizione delforum"
+msgstr "Descrizione del forum"
 
 msgid "label_maxattachments"
 msgstr ""
@@ -272,7 +272,7 @@ msgstr ""
 #. Default: "Up to Ploneboard Setup"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "label_up_to_ploneboard_setup"
-msgstr ""
+msgstr "Torna alla configurazione di Ploneboard"
 
 #. Default: "Add transform"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -329,7 +329,7 @@ msgstr ""
 #: ../skins/ploneboard_templates/board_view.pt
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "most_recent_comment"
-msgstr ""
+msgstr "Ultimo commento"
 
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -344,33 +344,33 @@ msgstr "Non ci sono commenti da moderare"
 #. Default: "No comments yet"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "no_comments_yet"
-msgstr ""
+msgstr "Nessun commento"
 
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "no_conversations_started"
-msgstr "Nessuna discussione &egrave; stata iniziata"
+msgstr "Nessuna discussione &egrave; stata avviata"
 
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "not_conversations"
-msgstr "Non ci sono ancora discussioni in questo forum"
+msgstr "Non sono presenti discussioni in questo forum"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "not_forums"
-msgstr ""
+msgstr "Non sono presenti forum in questa area, clicca su Aggiungi per creare nuovi forum"
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "not_permission_start_conversation"
-msgstr "Spiacenti, non hai i permessi per iniziare una nuova Discussione"
+msgstr "Spiacenti, non hai i permessi per avviare una nuova discussione"
 
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "number_of_conversations"
-msgstr ""
+msgstr "discussioni"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -380,7 +380,7 @@ msgstr "lasciato da"
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt
 msgid "preview_message"
-msgstr "Visualizzazione del messaggio"
+msgstr "Anteprima"
 
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -401,7 +401,7 @@ msgstr ""
 #. Default: "Return to Ploneboard settings"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "up_to_ploneboard_prefs"
-msgstr ""
+msgstr "Torna alla configurazione di Ploneboard"
 
 #. Default: "Up to Site Setup"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
