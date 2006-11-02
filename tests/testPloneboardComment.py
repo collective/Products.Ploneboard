@@ -199,9 +199,7 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         self.failUnlessEqual(msg.getNumberOfAllowedAttachments(), 1)
 
 
-    def testAttachmentSizeRestriction(self):
-        conv = self.conv
-        msg = conv.objectValues()[0]
+    def tryAttachmentSizeRestrictions(self, msg):
         self.forum.setMaxAttachments(10)
 
         self.forum.setMaxAttachmentSize(1)
@@ -219,6 +217,19 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
 
         self.forum.setMaxAttachmentSize(2)
         msg.addAttachment(file=file, title='comment')
+
+
+    def testAttachmentSizeRestriction(self):
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        self.tryAttachmentSizeRestrictions(msg)
+
+    def testAttachmentSizeRestrictionsOnChild(self):
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        reply = msg.addReply('reply1', 'body1')
+        self.tryAttachmentSizeRestrictions(reply)
+
         
     def testAttachmentNumberRestriction(self):
         conv = self.conv
