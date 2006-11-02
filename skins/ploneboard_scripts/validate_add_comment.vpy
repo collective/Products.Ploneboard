@@ -10,7 +10,9 @@
 ##
 
 def FileSize(file):
-    if hasattr(file, 'tell'):
+    if hasattr(file, 'size'):
+        size=file.size
+    elif hasattr(file, 'tell'):
         file.seek(0, 2)
         size=file.tell()
         file.seek(0)
