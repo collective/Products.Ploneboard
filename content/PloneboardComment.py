@@ -277,24 +277,54 @@ class PloneboardComment(BaseBTreeFolder):
         return not not self.objectIds(filter={'portal_type':['File', 'Image']})
 
     security.declareProtected(AddAttachment, 'addAttachment')
+    def validateAddAttachment(self, file):
+        def FileSize(file):
+            if hasattr(file, 'size'):
+                size=file.size
+            elif hasattr(file, 'tell'):
+                file.seek(0, 2)
+                size=file.tell()
+                file.seek(0)
+            else:
+                try:
+                    size=len(file)
+                except TypeError:
+                    size=0
+
+            return size/1024
+
+        if self.getNumberOfAttachments()>=self.getNumberOfAllowedAttachments():
+            return False
+
+        maxsize=self.getConversation().getMaxAttachmentSize()
+        if maxsize!=-1:
+            if FileSize(file)>maxsize:
+                return False
+
+        return True
+
+
+    security.declareProtected(AddAttachment, 'addAttachment')
     def addAttachment(self, file, title=None):
         """ """
-        if self.getNumberOfAttachments() < self.getNumberOfAllowedAttachments():
-            content_type = file.getContentType()
-            if content_type.startswith('image/'):
-                type_name = 'Image'
-                mutator = 'setImage'
-            else:
-                type_name = 'File'
-                mutator = 'setFile'
-            attachment = _createObjectByType(type_name, self, file.getId(),
-                    title=file.title)
-            getattr(attachment, mutator)(file)
-            if title is not None:
-                attachment.setTitle(title)
-            attachment.unmarkCreationFlag()
-            if shasattr(attachment, 'at_post_create_script'):
-                attachment.at_post_create_script()
+        if not self.validateAddAttachment(file):
+            raise ValueError, "Attachment could not be added"
+
+        content_type = file.getContentType()
+        if content_type.startswith('image/'):
+            type_name = 'Image'
+            mutator = 'setImage'
+        else:
+            type_name = 'File'
+            mutator = 'setFile'
+        attachment = _createObjectByType(type_name, self, file.getId(),
+                title=file.title)
+        getattr(attachment, mutator)(file)
+        if title is not None:
+            attachment.setTitle(title)
+        attachment.unmarkCreationFlag()
+        if shasattr(attachment, 'at_post_create_script'):
+            attachment.at_post_create_script()
 
     security.declareProtected(AddAttachment, 'removeAttachment')
     def removeAttachment(self, id):
@@ -320,7 +350,9 @@ class PloneboardComment(BaseBTreeFolder):
         """
         Returns number of allowed attachments
         """
-        return NUMBER_OF_ATTACHMENTS
+        parent = self.getConversation()
+        forum = parent.getForum()
+        return forum.getMaxAttachments()
 
 
     ############################################

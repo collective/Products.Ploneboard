@@ -188,10 +188,57 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         self.assertEqual(msg.getNumberOfAttachments(), 1)
         msg.removeAttachment('testfile')
         self.assertEqual(msg.getNumberOfAttachments(), 0)
+
+
+    def testAttachmentRestrictionChanging(self):
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        self.forum.setMaxAttachments(10)
+        self.failUnlessEqual(msg.getNumberOfAllowedAttachments(), 10)
+        self.forum.setMaxAttachments(1)
+        self.failUnlessEqual(msg.getNumberOfAllowedAttachments(), 1)
+
+
+    def testAttachmentSizeRestriction(self):
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        self.forum.setMaxAttachments(10)
+
+        self.forum.setMaxAttachmentSize(1)
+        file = File('testfile', 'testtitle', 'X')
+        msg.addAttachment(file=file, title='comment')
+        msg.removeAttachment('testfile')
+
+        file = File('testfile', 'testtitle', 'X'*2048)
+        try:
+            msg.addAttachment(file=file, title='comment')
+        except ValueError:
+            pass
+        else:
+            self.fail("Can add too many attachments")
+
+        self.forum.setMaxAttachmentSize(2)
+        msg.addAttachment(file=file, title='comment')
+        
+    def testAttachmentNumberRestriction(self):
+        conv = self.conv
+        msg = conv.objectValues()[0]
+        self.forum.setMaxAttachments(1)
+        file = File('testfile', 'testtitle', 'asdf')
+        msg.addAttachment(file=file, title='comment')
+        file = File('testfile2', 'testtitle2', 'asdf')
+        try:
+            msg.addAttachment(file=file, title='another comment')
+        except ValueError:
+            pass
+        else:
+            self.fail("Can add too many attachments")
+
         
     def testGetAttachments(self):
         conv = self.conv
         msg = conv.objectValues()[0]
+        self.forum.setMaxAttachments(5)
       
         file = File('testfile', 'testtitle', 'asdf')
         msg.addAttachment(file=file, title='comment')
