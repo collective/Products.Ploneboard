@@ -15,7 +15,7 @@ msgstr ""
 "Language-Name: danish\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
-"X-Is-Fallback-For: en nb nb-no no-bok\n"
+"X-Is-Fallback-For: nb nb-no no-bok\n"
 
 
 # translation convention for danish:
