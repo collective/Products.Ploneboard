@@ -276,7 +276,7 @@ class PloneboardComment(BaseBTreeFolder):
         """Return 0 or 1 if this comment has attachments."""
         return not not self.objectIds(filter={'portal_type':['File', 'Image']})
 
-    security.declareProtected(AddAttachment, 'addAttachment')
+    security.declareProtected(AddAttachment, 'validateAddAttachment')
     def validateAddAttachment(self, file):
         def FileSize(file):
             if hasattr(file, 'size'):
