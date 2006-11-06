@@ -5,7 +5,7 @@ ZopeTestCase.installProduct('Ploneboard')
 
 from Products.PloneTestCase import PloneTestCase
 
-PloneTestCase.setupPloneSite(products=('Ploneboard',))
+PloneTestCase.setupPloneSite(products=('SimpleAttachment', 'Ploneboard'))
 
 
 class PloneboardTestCase(PloneTestCase.PloneTestCase):
