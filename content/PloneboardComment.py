@@ -270,11 +270,19 @@ class PloneboardComment(BaseBTreeFolder):
     ###########################
     # Attachment support      #
     ###########################
+
+    def attachmentFilter(self):
+        return { 'portal_type' : [
+                            'File', 'Image',
+                            'ImageAttachment', 'FileAttachment'
+                            ],
+                }
+
     
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""
-        return not not self.objectIds(filter={'portal_type':['File', 'Image']})
+        return not not self.objectIds(filter=self.attachmentFilter())
 
     security.declareProtected(AddAttachment, 'validateAddAttachment')
     def validateAddAttachment(self, file):
@@ -339,11 +347,11 @@ class PloneboardComment(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getAttachments')
     def getAttachments(self):
         """ """
-        return self.contentValues(filter={'portal_type':['File', 'Image']})
+        return self.contentValues(filter=self.attachmentFilter())
 
     security.declareProtected(ViewBoard, 'getNumberOfAttachments')
     def getNumberOfAttachments(self):
-        return len(self.contentIds(filter={'portal_type':['File','Image']}))
+        return len(self.contentIds(filter=self.attachmentFilter()))
 
     security.declareProtected(AddAttachment, 'getNumberOfAllowedAttachments')
     def getNumberOfAllowedAttachments(self):
