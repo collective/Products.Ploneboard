@@ -1,6 +1,7 @@
 from Testing import ZopeTestCase
 
 # Make the boring stuff load quietly
+ZopeTestCase.installProduct('SimpleAttachment')
 ZopeTestCase.installProduct('Ploneboard')
 
 from Products.PloneTestCase import PloneTestCase
