@@ -312,10 +312,10 @@ class PloneboardComment(BaseBTreeFolder):
 
         content_type = file.getContentType()
         if content_type.startswith('image/'):
-            type_name = 'Image'
+            type_name = 'ImageAttachment'
             mutator = 'setImage'
         else:
-            type_name = 'File'
+            type_name = 'FileAttachment'
             mutator = 'setFile'
         attachment = _createObjectByType(type_name, self, file.getId(),
                 title=file.title)
