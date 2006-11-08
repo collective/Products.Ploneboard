@@ -53,10 +53,12 @@ configlets = \
 
 def migratePloneboard(self, out):
     tool = getToolByName(self, PLONEBOARD_TOOL)
-    if hasattr(tool, 'transforms_config') and \
-            not hasattr(tool, 'transforms'):
+    if not hasattr(tool, 'transforms'):
         from ZODB.PersistentMapping import PersistentMapping
         tool.transforms = PersistentMapping()
+        out.write('Adding transforms registry\n')
+
+    if hasattr(tool, 'transforms_config'):
         for (key,value) in tool.transforms_config.items():
             tool.transforms[key] = {
                     'enabled' : value['transform_status'],
