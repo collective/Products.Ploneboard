@@ -51,7 +51,7 @@ configlets = \
 ,
 )
 
-def migratePloneboard(self, out):
+def migrateTransforms(self, out):
     tool = getToolByName(self, PLONEBOARD_TOOL)
     if not hasattr(tool, 'transforms'):
         from ZODB.PersistentMapping import PersistentMapping
@@ -172,7 +172,6 @@ def addTransforms(self, out):
     pb_tool.registerTransform('text_to_emoticons', EMOTICON_TRANSFORM_MODULE, 'Graphical smilies')
     pb_tool.registerTransform('url_to_hyperlink', URL_TRANSFORM_MODULE, 'Clickable links')
     pb_tool.registerTransform('safe_html', SAFE_HTML_TRANSFORM_MODULE, 'Remove dangerous HTML')
-    
 
 def removeTransforms(self, out):
     pb_tool = getToolByName(self, 'portal_ploneboard')
@@ -199,6 +198,25 @@ def registerTypesWithPortalFactory(self, out):
 def setupRootPermissions(self, out):
     root = getToolByName(self, 'portal_url').getPortalObject()
     root.manage_permission(AddAttachment, ('Member', 'Manager',), 0)
+
+def removeOldCatalog(self, out):
+    at_tool = getToolByName(self, 'archetype_tool')
+    catalog = getattr(self, 'ploneboard_catalog', None)
+    if catalog is not None and catalog.meta_type == 'Broken Because Product is Gone':
+        meta_types = [
+            'Ploneboard',
+            'PloneboardConversation',
+            'PloneboardComment',
+            'PloneboardForum',
+        ]
+        for meta_type in meta_types:
+            catalogs = at_tool.getCatalogsByType(meta_type)
+            if 'ploneboard_catalog' in catalogs:
+                catalogs.remove('ploneboard_catalog')
+                at_tool.setCatalogsByType(meta_type, catalogs)
+                out.write('Unselected ploneboard_catalog for %s.\n' % meta_type)
+        self._delObject('ploneboard_catalog')
+        out.write('Removed old ploneboard_catalog object.\n')
 
 def automigrate(self, out):
     qi_tool = getToolByName(self, 'portal_quickinstaller')
@@ -238,12 +256,11 @@ def install(self, reinstall=False):
 
     # Not sure when is best to make this call, but it works here ;-).
     automigrate(self, out)
+    removeOldCatalog(self, out)
+    migrateTransforms(self, out)
     addTransforms(self, out)
-    
+
     setupRootPermissions(self, out)
-    
-    if reinstall:
-        migratePloneboard(self, out)
 
     print >> out, "Successfully installed %s." % PROJECTNAME
     return out.getvalue()
