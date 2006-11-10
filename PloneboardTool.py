@@ -1,17 +1,19 @@
-from AccessControl import ClassSecurityInfo
 import Globals
+from Acquisition import aq_base
+from AccessControl import ClassSecurityInfo
+from OFS.Image import File
 from OFS.Folder import Folder
 from ZPublisher.HTTPRequest import FileUpload
-from OFS.Image import File
-from Products.CMFCore.ActionProviderBase import ActionProviderBase
-from Products.CMFCore.utils import UniqueObject
-from Products.CMFCore.permissions import ManagePortal, View
-#from permissions import AddAttachment
-from Products.CMFCore.utils import getToolByName
 from ZODB.PersistentMapping import PersistentMapping
-from Products.Ploneboard.utils import importModuleFromName
-from Acquisition import aq_base
+
+from Products.CMFCore.utils import UniqueObject
+from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import View
+from Products.CMFCore.permissions import ManagePortal
+from Products.CMFCore.ActionProviderBase import ActionProviderBase
+
 from Products.Ploneboard.config import PLONEBOARD_TOOL
+from Products.Ploneboard.utils import importModuleFromName
 
 
 class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
@@ -21,7 +23,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     security = ClassSecurityInfo()
     def __init__(self):
         self.transforms = PersistentMapping()
-    
+
     security.declarePrivate('registerTransform')
     def registerTransform(self, name, module, friendlyName=None):
         tr_tool = getToolByName(self, 'portal_transforms')
@@ -35,7 +37,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
             friendlyName = name
 
         if name not in self.transforms:
-            self.transforms[name] = {'enabled' : True, 
+            self.transforms[name] = {'enabled' : True,
                                      'friendlyName' : friendlyName,
                                      'wasAdded' : wasAdded
                                      }
@@ -65,39 +67,38 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                     tr_tool._delObject(transform_name)
                 except AttributeError:
                     pass
-
         self.transforms.clear()
 
     security.declareProtected(ManagePortal, 'getTransforms')
     def getTransforms(self):
-        """ Returns list of transform names"""
+        """Returns list of transform names."""
         return self.transforms.keys()
-    
+
     security.declareProtected(ManagePortal, 'getTransformFriendlyName')
     def getTransformFriendlyName(self, name):
-        """ Returns a friendly name for the given transform"""
+        """Returns a friendly name for the given transform."""
         return self.transforms[name]['friendlyName']
-    
+
     security.declareProtected(View, 'getEnabledTransforms')
     def getEnabledTransforms(self):
-        """ Returns list of names for enabled transforms"""
+        """Returns list of names for enabled transforms"""
         return [name for name in self.transforms.keys() if self.transforms[name]['enabled']]
 
     security.declareProtected(View, 'performCommentTransform')
     def performCommentTransform(self, orig, **kwargs):
-        """ This performs the comment transform - also used for preview """
+        """This performs the comment transform - also used for preview."""
         transform_tool = getToolByName(self, 'portal_transforms')
-        
-        # This one is very important, because transform object has no 
+
+        # This one is very important, because transform object has no
         # acquisition context inside it, so we need to pass it our one
         context=kwargs.get('context', self)
 
         data = transform_tool._wrap('text/plain')
-        
+
         for transform in self.getEnabledTransforms():
             data = transform_tool.convert(transform, orig, data, context)
             orig = data.getData()
-        
+
         orig = orig.replace('\n', '<br/>')
         return orig
 
@@ -108,13 +109,13 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
         result = []
         files = request.get('files', [])
-        
+
         if not files:
             return []
 
         sdm = getToolByName(self, 'session_data_manager', None)
-        
-        if sdm is not None:        
+
+        if sdm is not None:
             pt = getToolByName(self, 'plone_utils')
             hassession = sdm.hasSessionData()
 
@@ -126,10 +127,11 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                         result.append(oldfile)
                 if isinstance(file, FileUpload):
                     if file:
-                        id = pt.normalizeString(file.filename)
-                        ct=file.headers.getheader('content-type')
+                        filename = file.filename.split('\\')[-1]
+                        id = pt.normalizeString(filename)
+                        ct = file.headers.getheader('content-type')
                         if ct is None:
-                            ct=''
+                            ct = ''
                         newfile = File(id, file.filename, file, ct)
                         request.SESSION[id] = newfile
                         result.append(newfile)
@@ -141,7 +143,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                 del request.SESSION[f]
             if hassession or new_filelist:
                 request.SESSION['ploneboard_uploads'] = new_filelist
-            
+
         return result
 
     security.declareProtected(View, 'clearUploadedFiles')
@@ -152,7 +154,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         request = self.REQUEST
 
         sdm = getToolByName(self, 'session_data_manager', None)
-        
+
         if sdm is not None:
             if sdm.hasSessionData():
                 old_filelist = request.SESSION.get('ploneboard_uploads', None)
