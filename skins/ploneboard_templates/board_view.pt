@@ -95,7 +95,8 @@
                   </a>
                 </td>
 
-                <td tal:content="forum/getNumberOfConversations">
+                <td class="listingCheckbox"
+                    tal:content="forum/getNumberOfConversations">
                   34
                 </td>
 
