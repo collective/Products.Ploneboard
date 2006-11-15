@@ -31,7 +31,7 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
 from Products.Archetypes.public import DisplayList
 
-from Products.Ploneboard.config import PROJECTNAME
+from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
      AddForum, ManageForum, ManageBoard, AddConversation, ModerateForum
 from PloneboardConversation import PloneboardConversation
@@ -91,6 +91,13 @@ schema = BaseBTreeFolderSchema + Schema((
                          i18n_domain = "ploneboard",
                 )),
     ))
+
+
+if not HAS_SIMPLEATTACHMENT:
+    schema['maxAttachments'].mode="r"
+    schema['maxAttachments'].default=0
+    schema['maxAttachments'].widget.visible={'edit' : 'invisible', 'view' : 'invisible' }
+    schema['maxAttachmentSize'].widget.visible={'edit' : 'invisible', 'view' : 'invisible' }
 
 
 class PloneboardForum(BaseBTreeFolder):

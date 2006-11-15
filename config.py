@@ -15,3 +15,10 @@ REPLY_RELATIONSHIP = 'ploneboard_reply_to'
 NUMBER_OF_ATTACHMENTS = 5
 
 GLOBALS = globals()
+
+try:
+    import Products.SimpleAttachment
+    HAS_SIMPLEATTACHMENT = True
+except ImportError:
+    HAS_SIMPLEATTACHMENT = False
+
