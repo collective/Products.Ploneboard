@@ -140,10 +140,10 @@ msgstr ""
 msgid "forum_name"
 msgstr "Forumnavn"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
-msgstr "Opp til ${type}"
+msgstr "Opp til ${title}"
 
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt

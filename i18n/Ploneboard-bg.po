@@ -141,10 +141,10 @@ msgstr "Разрешен?"
 msgid "forum_name"
 msgstr "Име на форума"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
-msgstr "Нагоре към ${type}"
+msgstr "Нагоре към ${title}"
 
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt

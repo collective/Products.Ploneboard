@@ -140,10 +140,10 @@ msgstr "Actief?"
 msgid "forum_name"
 msgstr "Naam"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
-msgstr "Terug naar ${type}"
+msgstr "Terug naar ${title}"
 
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt

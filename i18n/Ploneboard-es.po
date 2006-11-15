@@ -140,7 +140,7 @@ msgstr ""
 msgid "forum_name"
 msgstr "Nombre del foro"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
 msgstr "I al nivel superior"

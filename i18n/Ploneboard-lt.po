@@ -139,7 +139,7 @@ msgstr "Ájungti?"
 msgid "forum_name"
 msgstr "Forumo pavadinimas"
 
-#. Default: "Up to ${type}"
+#. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/board_header.pt
 msgid "go_to_parent_url"
 msgstr "Vienu lygiu aukðtyn"
