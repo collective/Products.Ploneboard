@@ -103,7 +103,7 @@ class TextToEmoticons:
         
         #based on ASPN recipe - http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/81330
         # Create a regular expression  from the dictionary keys
-        regex = re.compile("(%s)" % "|".join(map(re.escape, dictionary.keys())))
+        regex = re.compile("(%s)(?!\")" % "|".join(map(re.escape, dictionary.keys())))
         # For each match, look-up corresponding value in dictionary
         newdata = regex.sub(lambda mo, d=dictionary: d[mo.string[mo.start():mo.end()]], orig) 
         data.setData(newdata)
