@@ -87,8 +87,8 @@ def registerNavigationTreeSettings(self, out):
     data = ['PloneboardConversation','PloneboardComment']
     pp=getToolByName(self,'portal_properties')
     p = getattr(pp , 'navtree_properties', None)
-    mdntl = list(p.getProperty('metaTypesNotToList', []))
-    if not mdntl:
+    mdntl = list(p.getProperty('metaTypesNotToList', None))
+    if mdntl is None:
         p._setProperty('metaTypesNotToList', data)
     else:
         for t in data:
