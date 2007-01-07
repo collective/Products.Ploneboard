@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-09-04 13:55+0000\n"
-"PO-Revision-Date: 2006-01-17 20:28+0100\n"
-"Last-Translator: Lukas Zdych <lukas.zdych@surecase.org>\n"
+"PO-Revision-Date: 2007-01-06 23:00+0100\n"
+"Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. Default: "Add"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -32,17 +32,17 @@ msgid "Change"
 msgstr "Změnit"
 
 msgid "Forum"
-msgstr ""
+msgstr "Fórum"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Log in to add comments"
-msgstr ""
+msgstr "Pro přidávání komentářů je nutné se přihlásit"
 
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "Log in to start a conversation"
-msgstr ""
+msgstr "Pro založení konverzace je nutné se přihlásit"
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
@@ -53,12 +53,12 @@ msgstr "Příspěvek"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 #: ../skins/ploneboard_templates/conversation_view.pt
 msgid "Post comment"
-msgstr ""
+msgstr "Odeslat komentář"
 
 #. Default: "Remove"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "Remove"
-msgstr ""
+msgstr "Odstranit"
 
 #. Default: "Reply to this"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -68,17 +68,17 @@ msgstr "Reagovat na tento příspěvek"
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "Start a new Conversation"
-msgstr ""
+msgstr "Začít novou konverzaci"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "View profile"
-msgstr ""
+msgstr "Zobrazit profil"
 
 #. Default: "Action"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "action"
-msgstr ""
+msgstr "Akce"
 
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -88,20 +88,20 @@ msgstr "Přidat komentář"
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
-msgstr ""
+msgstr "Přidat konverzaci"
 
 msgid "alert_delete_popup"
-msgstr ""
+msgstr "Opravdu si přejete odstranit tento komentář?"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "comment_current_state"
-msgstr ""
+msgstr "Aktuální stav:"
 
 #. Default: "Comments"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "comments"
-msgstr ""
+msgstr "Komentáře"
 
 #. Default: "Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -116,22 +116,22 @@ msgstr ""
 #. Default: "Here you can configure site settings for Ploneboard."
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "description_ploneboard_config"
-msgstr ""
+msgstr "Zde můžete měnit nastavení Ploneboardu."
 
 #. Default: "Here you can configure which transforms are active in Ploneboard comments."
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "description_ploneboard_config_transforms"
-msgstr ""
+msgstr "Zde můžete aktivovat nebo deaktivovat transformace komentářů Ploneboardu."
 
 #. Default: "Configure Ploneboard comment text transformations."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "description_pref_transforms"
-msgstr ""
+msgstr "Nastavte textové transformace komentářů Ploneboardu."
 
 #. Default: "Enabled?"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "enabled"
-msgstr ""
+msgstr "Povoleno?"
 
 #. Default: "Forum name"
 #: ../skins/ploneboard_templates/board_view.pt
@@ -146,17 +146,17 @@ msgstr "Nahoru o jednu úroveň"
 #. Default: "Ploneboard transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "heading_pref_transforms"
-msgstr ""
+msgstr "Transformace Ploneboardu"
 
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt
 msgid "heading_preview_comment"
-msgstr ""
+msgstr "Náhled komentáře"
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_attachments_posting"
-msgstr ""
+msgstr "Vyberte soubor, který má být nahrán na server jako příloha tohoto komentáře."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -166,16 +166,16 @@ msgstr "Text příspěvku"
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_text_posting_linkify_enabled"
-msgstr ""
+msgstr "URL adresy budou automaticky aktitivními hyperlinky."
 
 msgid "help_categories_board"
-msgstr ""
+msgstr "Zadejte kategorie, které mají být k dispozici pro fóra, každou na samostatný řádek."
 
 msgid "help_category"
-msgstr ""
+msgstr "Vyberte kategori, ve které má být toto fórum zařazeno. Fórum může být ve více kategoriích, ačkoliv je doporučována pouze jedna."
 
 msgid "help_description_board"
-msgstr ""
+msgstr "Zadejte stručný popis tabule."
 
 msgid "help_description_conversation"
 msgstr "Popis příspěvku"
@@ -184,10 +184,10 @@ msgid "help_description_forum"
 msgstr "Popis fóra"
 
 msgid "help_maxattachments"
-msgstr ""
+msgstr "Zadejte povolený počet příloh komentáře."
 
 msgid "help_maxattachmentsize"
-msgstr ""
+msgstr "Zadejte povolenou velikost příloh komentáře."
 
 msgid "help_text"
 msgstr "Zadejte text"
@@ -195,12 +195,12 @@ msgstr "Zadejte text"
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "help_transforms"
-msgstr ""
+msgstr "Vyberte transformace textu, které mají být použity v komentářích odeslaných v konverzacích Ploneboardu. Transformace textu upravují text zadaný uživatelem, buď odstraňují nežádoucí HTML značky nebo mu přidávají dodatečné vlastnosti jako třeba aktivní odkazy."
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_body_files_posting"
-msgstr ""
+msgstr "Přílohy"
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -214,13 +214,13 @@ msgid "label_by_author"
 msgstr "od ${author}"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "label_category"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "label_description_board"
-msgstr ""
+msgstr "Popis"
 
 msgid "label_description_conversation"
 msgstr "Popis konverzace"
@@ -229,10 +229,10 @@ msgid "label_description_forum"
 msgstr "Popis fóra"
 
 msgid "label_maxattachments"
-msgstr ""
+msgstr "Dovolený počet příloh"
 
 msgid "label_maxattachmentsize"
-msgstr ""
+msgstr "Dovolená velikost přílohy"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt
@@ -242,17 +242,17 @@ msgstr "Powered by"
 #. Default: "Quick reply"
 #: ../skins/ploneboard_templates/conversation_view.pt
 msgid "label_quickreply"
-msgstr ""
+msgstr "Rychlá reakce"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "label_required"
-msgstr ""
+msgstr "(Vyžadováno)"
 
 #. Default: "Save"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "label_save"
-msgstr ""
+msgstr "Uložit"
 
 msgid "label_text"
 msgstr "Text"
@@ -265,83 +265,83 @@ msgstr "Nadpis příspěvku"
 #. Default: "Transforms"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "label_transforms"
-msgstr ""
+msgstr "Transformace"
 
 #. Default: "Up to Ploneboard Setup"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "label_up_to_ploneboard_setup"
-msgstr ""
+msgstr "Zpět na nastavení Ploneboardu"
 
 #. Default: "Add transform"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "legend_add_transform"
-msgstr ""
+msgstr "Přidat transformaci"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "legend_attachments"
-msgstr ""
+msgstr "Přílohy"
 
 #. Default: "Text transformations"
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "legend_pref_ploneboard_transforms"
-msgstr ""
+msgstr "Textové transformace"
 
 #. Default: "Existing transforms"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "legend_transforms"
-msgstr ""
+msgstr "Existující transformace"
 
 #. Default: "Manage"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "manage"
-msgstr ""
+msgstr "Spravovat"
 
 #. Default: "Manage comment text transformations"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "manage_transforms"
-msgstr ""
+msgstr "Spravovat transformace textu komentářů"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt
 msgid "moderation_count"
-msgstr ""
+msgstr "Ve frontě je ${count} komentářů."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
 #: ../skins/ploneboard_templates/moderation_form.pt
 msgid "moderation_description"
-msgstr ""
+msgstr "Následující komentáře čekají na schválení. Rozhodněte a klikněte na 'Zveřejnit' nebo 'Zamítnout'. Klikněte na nadpis komentáře pro jeho zobrazení v kontextu jeho konverzace."
 
 #. Default: "Up"
 #: ../skins/ploneboard_templates/moderation_form.pt
 msgid "moderation_up"
-msgstr ""
+msgstr "Nahoru"
 
 #. Default: "Module"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "module_name"
-msgstr ""
+msgstr "Modul"
 
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "most_recent_comment"
-msgstr ""
+msgstr "Poslední komentáře"
 
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "new_attachment"
-msgstr ""
+msgstr "Přidat další přílohu"
 
 #. Default: "There are no comments in the moderation queue."
 #: ../skins/ploneboard_templates/moderation_form.pt
 msgid "no_comments_queued"
-msgstr ""
+msgstr "Žádné komentáře nečekají na  schválení."
 
 #. Default: "No comments yet"
 #: ../skins/ploneboard_templates/forum_view.pt
 msgid "no_comments_yet"
-msgstr ""
+msgstr "Zatím žádné komentáře"
 
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt
@@ -357,7 +357,7 @@ msgstr "V tomto fóru zatím nejsou žádné konverzace."
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "not_forums"
-msgstr ""
+msgstr "Na této tabuly zatím nejsou žádná fóra, pro přidání nových fór použijte nabídku přidat."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -367,7 +367,7 @@ msgstr "Omlouváme se, nejste oprávněni začínat nové konverzace."
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "number_of_conversations"
-msgstr ""
+msgstr "Konverzace"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -388,20 +388,20 @@ msgstr "v"
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "title_general_forums"
-msgstr ""
+msgstr "Obecná fóra"
 
 #. Default: "Transform name"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "transform_name"
-msgstr ""
+msgstr "Název transformace"
 
 #. Default: "Return to Ploneboard settings"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "up_to_ploneboard_prefs"
-msgstr ""
+msgstr "Návrat do nastavení Ploneboardu"
 
 #. Default: "Up to Site Setup"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "up_to_site_setup"
-msgstr ""
+msgstr "Zpět na nastavení portálu"
 
