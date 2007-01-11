@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2006-12-20 07:58+0000\n"
-"PO-Revision-Date: 2007-01-11 08:27+0100\n"
+"PO-Revision-Date: 2007-01-11 16:03+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr "Oraindik ez da mezuetan aldaketarik egon"
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt
 msgid "by_author"
-msgstr "${author}-(e)k egina"
+msgstr "${author}"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt
@@ -254,7 +254,7 @@ msgstr "Testua"
 #: ../skins/ploneboard_templates/forum_view.pt
 #: ../skins/ploneboard_templates/ploneboard_recent.pt
 msgid "label_by_author"
-msgstr "${author}-(e)k egina"
+msgstr "${author}"
 
 msgid "label_categories_board"
 msgstr "Kategoriak"
