@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-09-04 13:55+0000\n"
-"PO-Revision-Date: 2007-01-06 23:00+0100\n"
+"PO-Revision-Date: 2007-01-14 23:53+0100\n"
 "Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
@@ -346,7 +346,7 @@ msgstr "Zatím žádné komentáře"
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "no_conversations_started"
-msgstr "Nebyli začaty žádné konverzace."
+msgstr "Zatím žádné konverzace."
 
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -388,7 +388,7 @@ msgstr "v"
 #: ../skins/ploneboard_templates/board_view_global.pt
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "title_general_forums"
-msgstr "Obecná fóra"
+msgstr "Obecné"
 
 #. Default: "Transform name"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -404,4 +404,99 @@ msgstr "Návrat do nastavení Ploneboardu"
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
 msgid "up_to_site_setup"
 msgstr "Zpět na nastavení portálu"
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_new_conversations_all"
+msgstr "Zobrazit poslední aktivitu"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_no_replies_all"
+msgstr "Zobrazit vše nezodpovězené"
+
+#. Default: "Recent conversations"
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_recent_conversations"
+msgstr "Poslední konverzace"
+
+#. Default: "No conversations changed yet."
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_recent_conversations_no_items"
+msgstr "Zatím se nezměnili žádné konverzace."
+
+#. Default: "More&hellip;"
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_more_recent_conversations"
+msgstr "Více&hellip;"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "title_unanswered_conversations"
+msgstr "Nezodpovězené příspěvky v ${title}"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "go_to_view_url"
+msgstr "Návrat do ${name}"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "no_recent_conversations"
+msgstr "Žádné konverzace."
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "recent_conversations_description"
+msgstr "Následující konverzace byli založeny, ale zatím na ně nikdo nezareagoval."
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "new_conversations_marked_with"
+msgstr "U Konverzací označených ${star} byla od vašeho posledního přihlášení zaznamenána aktivita."
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_forum"
+msgstr "Fórum"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_posted"
+msgstr "Založil"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "title_recent_conversations"
+msgstr "Poslední konverzace v  ${title}"
+
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "recent_conversations_description"
+msgstr "Poslední aktivita byla zaznamenána u následujících konverzací."
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "replies"
+msgstr "Reakce"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "most_recent_comment"
+msgstr "Poslední komentář"
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "no_replies_yet"
+msgstr "Zatím žádné reakce"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "label_in_forum"
+msgstr "v ${forum}"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Založeno na ${link}"
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2007-01-06 23:05+0100\n"
+"PO-Revision-Date: 2007-01-14 23:46+0100\n"
 "Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,9 +85,24 @@ msgid "Waiting for moderator"
 msgstr "Čekající na moderátora"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "starý formát datumu: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "nový formát datumu: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+
+msgid "Global forum listing"
+msgstr "Globální seznam fór"
+
+msgid "Local forum listing"
+msgstr "Lokální seznam fór"
+
+msgid "Preview post"
+msgstr "Náhled příspěvku"
+
+msgid "Add conversation"
+msgstr "Přidat konverzaci"
+
+msgid "Add comment"
+msgstr "Přidat komentář"
 
