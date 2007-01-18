@@ -91,13 +91,13 @@ msgid "Waiting for moderator"
 msgstr "En attente de modération"
 
 msgid "Rejected"
-msgstr "Rejeté"
+msgstr "Rejetée"
 
 msgid "Public"
 msgstr "Publique"
 
 msgid "Retracted"
-msgstr "Rétracté"
+msgstr "Rétractée"
 
 msgid "Comment is pending moderation"
 msgstr "Contribution en attente de modération"

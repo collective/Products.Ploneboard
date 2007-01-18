@@ -119,7 +119,7 @@ msgstr "Cette page vous permet de configurer Ploneboard."
 #. Default: "Here you can configure which transforms are active in Ploneboard comments."
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "description_ploneboard_config_transforms"
-msgstr "Cette page vous permet de configurer les transformations active au sein des commentaires de Ploneboard."
+msgstr "Cette page vous permet de configurer les transformations actives au sein des commentaires de Ploneboard."
 
 #. Default: "Configure Ploneboard comment text transformations."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -154,7 +154,7 @@ msgstr "Prévisualisation de la contribution"
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_attachments_posting"
-msgstr "Selectionnez un fichier à attacher à cette contribution."
+msgstr "Sélectionnez un fichier à attacher à cette contribution."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -172,7 +172,7 @@ msgstr "Entrez les catégories qui seront disponibles pour votre forum, une cat�
 
 #. Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.
 msgid "help_category"
-msgstr "Selectionnez dans quelle catégorie ce forum sera placé. Un forum peut être placé dans plusieurs catégories, mais n'utiliser qu'une catégorie est recommandée."
+msgstr "Sélectionnez dans quelle catégorie ce forum sera placé. Un forum peut être placé dans plusieurs catégories, mais n'utiliser qu'une catégorie est recommandé."
 
 #. Enter a brief description of the board.
 msgid "help_description_board"
@@ -196,7 +196,7 @@ msgstr ""
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "help_transforms"
-msgstr "Selectionnez la transformation de test qui doit être utilisée pour les contributions envoyées dans les conversations Ploneboard. Les transformtions textuelles modifient le texte entré par l'utilisateur, soit en retirant des balises HTML potentiellement dangereuses, soit en rajoutant des fonctionnalités, comme rendre les liens cliquables."
+msgstr "Sélectionnez la transformation de test qui doit être utilisée pour les contributions envoyées dans les conversations Ploneboard. Les transformations textuelles modifient le texte entré par l'utilisateur, soit en retirant des balises HTML potentiellement dangereuses, soit en rajoutant des fonctionnalités, comme rendre les liens cliquables."
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -428,7 +428,7 @@ msgstr "Montrer les contributions sans réponse"
 
 #. Conversations marked with ${star} have had activity since your last log-in.
 msgid "new_conversations_marked_with"
-msgstr "Les conversations marquées avec ${star} ont reçues une contribution depuis votre dernière visite."
+msgstr "Les conversations marquées avec ${star} ont reçu une contribution depuis votre dernière visite."
 
 #. Recent conversations in ${title}
 msgid "title_recent_conversations"
@@ -440,7 +440,7 @@ msgstr "Revenir à ${name}"
 
 #. The following conversations have had recent activity.
 msgid "recent_conversations_description"
-msgstr "Les conversations suivantes ont récemment reçue des contributions."
+msgstr "Les conversations suivantes ont récemment reçu des contributions."
 
 #. in ${forum}
 msgid "label_in_forum"
