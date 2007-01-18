@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-01-16 16:04+0100\n"
+"Last-Translator: Ingeniweb <support@ingeniweb.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+
+#: skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+msgid "Message Board"
+msgstr "Tableau Ploneboard"
+
+msgid "Comment"
+msgstr "Contribution"
+
+msgid "Conversation"
+msgstr "Conversation"
+
+msgid "Open"
+msgstr "Ouvert"
+
+msgid "Hide"
+msgstr "Cacher"
+
+msgid "Hidden"
+msgstr "Caché"
+
+msgid "Comment added"
+msgstr "Contribution ajoutée."
+
+msgid "Require membership to post"
+msgstr "Inscription requise pour écrire"
+
+msgid "Make member-posting"
+msgstr "Restreindre aux seuls membres"
+
+msgid "Free for all"
+msgstr "Contributions libres"
+
+msgid "Make free-for-all"
+msgstr "Rendre les contributions libres"
+
+msgid "Make moderated"
+msgstr "Modérer les contributions"
+
+msgid "Moderated forum"
+msgstr "Contributions modérées"
+
+msgid "Make private"
+msgstr "Rendre privé"
+
+msgid "Private to members only"
+msgstr "Restreint aux seuls membres"
+
+msgid "Active"
+msgstr "Activé"
+
+msgid "Activate"
+msgstr "Activer"
+
+msgid "Lock"
+msgstr "Verrouiller"
+
+msgid "Locked"
+msgstr "Verrouillé"
+
+msgid "conversation_view"
+msgstr "Vue à plat"
+
+msgid "threaded_conversation_view"
+msgstr "Vue en arbre"
+
+msgid "Moderate"
+msgstr "Modérer"
+
+msgid "Waiting for moderator"
+msgstr "En attente de modération"
+
+msgid "Rejected"
+msgstr "Rejeté"
+
+msgid "Public"
+msgstr "Publique"
+
+msgid "Retracted"
+msgstr "Rétracté"
+
+msgid "Comment is pending moderation"
+msgstr "Contribution en attente de modération"
