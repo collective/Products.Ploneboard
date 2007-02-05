@@ -430,7 +430,7 @@ msgstr "Ez duzu mezu berri bat argitaratzeko baimenik."
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt
 msgid "number_of_conversations"
-msgstr "Mezuak"
+msgstr "Elkarrizketak"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt
