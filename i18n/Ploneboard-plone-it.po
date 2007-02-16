@@ -1,13 +1,14 @@
 # translation of Ploneboard to Italian
 # Gettext File for Ploneboard
 # Enzo Cesanelli <enzo at noiza dot com>, 2006
+# Paolo Melchiorre < paolo at advansis dot it>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2006-05-08 11:50+0000\n"
-"Last-Translator: Enzo Cesanelli <enzo at noiza dot com>\n"
-"Language-Team: Noiza <enzo at noiza dot com>\n"
+"PO-Revision-Date: 2007-02-16 17:29+0100\n"
+"Last-Translator: Paolo Melchiorre < paolo at advansis dot it>\n"
+"Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,76 +19,74 @@ msgstr ""
 "Domain: plone\n"
 
 msgid "Activate"
-msgstr ""
+msgstr "Attiva"
 
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 msgid "Comment"
-msgstr ""
+msgstr "Commento"
 
 msgid "Conversation"
 msgstr "Discussione"
 
 msgid "Flat conversion view"
-msgstr ""
+msgstr "Visualizzazione semplice"
 
 msgid "Free for all"
-msgstr ""
+msgstr "Aperto a tutti"
 
 msgid "Hidden"
-msgstr ""
+msgstr "Nascosto"
 
 msgid "Hide"
-msgstr ""
+msgstr "Nascondi"
 
 msgid "Lock"
-msgstr ""
+msgstr "Chiudi"
 
 msgid "Locked"
-msgstr ""
+msgstr "Chiuso"
 
 msgid "Make free-for-all"
-msgstr ""
+msgstr "Rendi aperto a tutti"
 
 msgid "Make member-posting"
-msgstr ""
+msgstr "Rendi riservato ai membri"
 
-#### Voci aggiunte manualmente.
 msgid "Message Board"
 msgstr "Area Forum"
 
 msgid "Moderate"
-msgstr ""
+msgstr "Moderato"
 
 msgid "Open"
-msgstr ""
+msgstr "Aperto"
 
 msgid "Private to members only"
-msgstr ""
+msgstr "Riservato soli ai membri"
 
 msgid "Public"
-msgstr ""
+msgstr "Pubblico"
 
 msgid "Rejected"
-msgstr ""
+msgstr "Rifiutato"
 
 msgid "Require membership to post"
-msgstr ""
+msgstr "Richiede la registrazione per scrivere"
 
 msgid "Retracted"
-msgstr ""
+msgstr "Ritirato"
 
 msgid "Threaded conversion view"
-msgstr ""
+msgstr "Visualizzazione ad albero"
 
 msgid "Waiting for moderator"
-msgstr ""
+msgstr "In attesa del moderatore"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr ""
+msgstr "${day} ${month} ${year} alle ${hours}:${minutes}"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
-
+msgstr "${wday} alle ${hours}:${minutes}"
