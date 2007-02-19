@@ -7,9 +7,9 @@
   <object name="ploneboard_templates" meta_type="Filesystem Directory View"
     directory="Ploneboard/skins/ploneboard_templates"/>
   <skin-path name="*">
-    <layer name="ploneboard_images"/>
-    <layer name="ploneboard_scripts"/>
-    <layer name="ploneboard_templates"/>
+    <layer name="ploneboard_images" insert-after="custom"/>
+    <layer name="ploneboard_scripts" insert-after="ploneboard_images"/>
+    <layer name="ploneboard_templates" insert-after="ploneboard_templates"/>
   </skin-path>
 </object>
 
