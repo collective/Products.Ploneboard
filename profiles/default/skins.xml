@@ -6,12 +6,7 @@
     directory="Ploneboard/skins/ploneboard_scripts"/>
   <object name="ploneboard_templates" meta_type="Filesystem Directory View"
     directory="Ploneboard/skins/ploneboard_templates"/>
-  <skin-path name="Plone Default">
-    <layer name="ploneboard_images"/>
-    <layer name="ploneboard_scripts"/>
-    <layer name="ploneboard_templates"/>
-  </skin-path>
-  <skin-path name="Plone Tableless">
+  <skin-path name="*">
     <layer name="ploneboard_images"/>
     <layer name="ploneboard_scripts"/>
     <layer name="ploneboard_templates"/>
