@@ -172,7 +172,7 @@ class RecentConversationsView(CommentViewableView):
                             sort_order='reverse',
                             sort_limit=(offset+limit),
                             path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]
-        return [self._buildDict(r.getObject()) for r in results]
+        return filter(None, [self._buildDict(r.getObject()) for r in results])
     
     def _buildDict(self, ob):
         forum = ob.getForum()
@@ -185,6 +185,8 @@ class RecentConversationsView(CommentViewableView):
             creator = creatorInfo['fullname']
         
         lastComment = ob.getLastComment()
+        if lastComment is None:
+            return None
         canAccessLastComment = self.portal_membership.checkPermission('View', lastComment)
         
         lastCommentCreator = lastComment.Creator()
