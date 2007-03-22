@@ -1,13 +1,13 @@
 # translation of Ploneboard-pt-br.po to Brazilian Portuguese
 # Gettext File for Ploneboard
-# Fabio Rizzo <fabiorizzo@gmail.com>, 2005
+# Fabio Rizzo <fabiorizzo@gmail.com>, 2005-2007
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-09-04 13:55+0000\n"
 "PO-Revision-Date: 2005-11-25 11:50-0300\n"
-"Last-Translator: Leandro Zanuz <lzanuz@ucs.br>\n"
-"Language-Team: Universidade de Caxias do Sul <lzanuz@ucs.br>\n"
+"Last-Translator:  Fabio Rizzo <fabiorizzo@threepointsweb.com>\n"
+"Language-Team: <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -171,19 +171,19 @@ msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLs serão linkadas automaticamente."
 
 msgid "help_categories_board"
-msgstr ""
+msgstr "Entre com as categorias que você quer disponibilizar nos fóruns. Uma categoria por linha."
 
 msgid "help_category"
-msgstr ""
+msgstr "Selecione abaixo qual categoria o fórum pertence. Um fórum pode existir em várias categorias, porém somente uma é recomendado."
 
 msgid "help_description_board"
-msgstr ""
+msgstr "Informe uma breve descrição da board."
 
 msgid "help_description_conversation"
 msgstr ""
 
 msgid "help_description_forum"
-msgstr ""
+msgstr "Breve descrição do fórum."
 
 msgid "help_maxattachments"
 msgstr ""
@@ -218,19 +218,19 @@ msgid "label_by_author"
 msgstr "por ${author}"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Categorias"
 
 msgid "label_category"
-msgstr ""
+msgstr "Categoria"
 
 msgid "label_description_board"
-msgstr ""
+msgstr "Descrição"
 
 msgid "label_description_conversation"
 msgstr ""
 
 msgid "label_description_forum"
-msgstr ""
+msgstr "Descrição"
 
 msgid "label_maxattachments"
 msgstr ""
