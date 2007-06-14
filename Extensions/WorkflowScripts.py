@@ -4,6 +4,7 @@ from Products.CMFCore.utils import _mergedLocalRoles
 from ZODB.POSException import ConflictError
 
 from Products.ATContentTypes.migration.common import unrestricted_rename
+from Products.Ploneboard.interfaces import IConversation, IComment
 
 from DateTime import DateTime
 
@@ -18,9 +19,9 @@ def autopublish_script(self, sci):
     wftool = sci.getPortal().portal_workflow
 
     # Try to make sure that conversation and contained messages are in sync
-    if object.portal_type == 'PloneboardComment':
+    if IComment.providedBy(object):
         parent = object.aq_inner.aq_parent
-        if parent.portal_type == 'PloneboardConversation':
+        if IConversation.providedBy(parent):
             try:
                 if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'publish')
@@ -33,9 +34,9 @@ def publish_script(self, sci):
 
     wftool = sci.getPortal().portal_workflow
 
-    if object.portal_type == 'PloneboardComment':
+    if IComment.providedBy(object):
         parent = object.aq_inner.aq_parent
-        if parent.portal_type == 'PloneboardConversation':
+        if IConversation.providedBy(parent):
             try:
                 if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'publish')
@@ -52,9 +53,9 @@ def reject_script(self, sci):
     wftool = sci.getPortal().portal_workflow
 
     # Try to make sure that conversation and contained messages are in sync
-    if object.portal_type == 'PloneboardComment':
+    if IComment.providedBy(object):
         parent = object.aq_inner.aq_parent
-        if parent.portal_type == 'PloneboardConversation':
+        if IConversation.providedBy(parent):
             try:
                  if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'reject')
