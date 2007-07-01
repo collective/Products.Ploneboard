@@ -193,7 +193,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """Returns the comment with the specified id."""
         #return self._getOb(comment_id, default)
         comments = self.getCatalog()(
-                object_implements='Products.Ploneboard.interfaces.IComment',
+                object_provides='Products.Ploneboard.interfaces.IComment',
                 getId=comment_id)
         if comments:
             return comments[0].getObject()
@@ -206,7 +206,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
-        query = {'object_implements' : 'Products.Ploneboard.interfaces.IComment',
+        query = {'object_provides' : 'Products.Ploneboard.interfaces.IComment',
                  'sort_on'           : 'created',
                  'sort_limit'        : (offset+limit),
                  'path'              : '/'.join(self.getPhysicalPath()),}
@@ -220,7 +220,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Returns the number of comments in this conversation.
         """
         return len(self.getCatalog()(
-            object_implements='Products.Ploneboard.interfaces.IComment',
+            object_provides='Products.Ploneboard.interfaces.IComment',
             path='/'.join(self.getPhysicalPath())))
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
@@ -253,7 +253,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
 
         res = self.getCatalog()(
-                object_implements='Products.Ploneboard.interfaces.IComment', \
+                object_provides='Products.Ploneboard.interfaces.IComment', \
                 sort_on='created', sort_order='reverse', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
         if res:
@@ -276,7 +276,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         See IConversation.getFirstComment.__doc__
         """
         res = self.getCatalog()(
-                object_implements='Products.Ploneboard.interfaces.IComment',
+                object_provides='Products.Ploneboard.interfaces.IComment',
                 sort_on='created', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
         if res:

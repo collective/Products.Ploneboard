@@ -1,18 +1,17 @@
 from Products.CMFPlone.CatalogTool import registerIndexableAttribute
 from Products.Ploneboard.interfaces import IConversation
 from zope.interface import providedBy
+from zope.component.interface import interfaceToName
+
 try:
-    from zope.component.interface import interfaceToName
+    from Products.CMFPlone.CatalogTool import object_provides
 except ImportError:
-    # BBB for Zope < 2.9
-    def interfaceToName(context, interface):
-        return interface.__module__ + '.' + interface.__name__
+    def object_provides(object, portal, **kw):
+        return [interfaceToName(portal, i) for i in
+                providedBy(object).flattened()]
 
-# Use extensible object wrapper to always list the interfaces
-def object_implements(object, portal, **kw):
-    return [interfaceToName(portal, i) for i in providedBy(object).flattened()]
+    registerIndexableAttribute('object_provides', object_provides)
 
-registerIndexableAttribute('object_implements', object_implements)
 
 def num_comments(object, portal, **kw):
     conv = IConversation(object, None)

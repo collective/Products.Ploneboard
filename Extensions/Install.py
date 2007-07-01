@@ -70,9 +70,11 @@ def addPloneboardTool(self, out):
 
 def addCatalogIndices(self, out):
     pc=getToolByName(self, 'portal_catalog')
-    if 'object_implements' not in pc.indexes():
-        pc.addIndex('object_implements', 'KeywordIndex')
-        out.write('Added object_implements index to portal_catalog\n')
+    if 'object_implements' in pc.indexes():
+        pc.delIndex('object_implements')
+    if 'object_provides' not in pc.indexes():
+        pc.addIndex('object_provides', 'KeywordIndex')
+        out.write('Added object_provides index to portal_catalog\n')
     if 'num_comments' not in pc.indexes():
         pc.addIndex('num_comments', 'FieldIndex')
         out.write('Added num_comments index to portal_catalog\n')

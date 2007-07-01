@@ -145,7 +145,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getForums')
     def getForums(self, sitewide=False):
         """Return all the forums in this board."""
-        query = {'object_implements':'Products.Ploneboard.interfaces.IForum'}
+        query = {'boject_provides':'Products.Ploneboard.interfaces.IForum'}
         if not sitewide:
             query['path'] = '/'.join(self.getPhysicalPath())
         return [f.getObject() for f in self.getCatalog()(query)]
@@ -155,7 +155,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     def getForumIds(self):
         """Return all the forums in this board."""
         return [f.getId for f in self.getCatalog()(
-                object_implements='Products.Ploneboard.interfaces.IForum')]
+                object_provides='Products.Ploneboard.interfaces.IForum')]
 
     security.declareProtected(ManageBoard, 'removeForum')
     def removeForum(self, forum_id):
@@ -172,7 +172,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
         """Returns forum with specified forum id."""
         #return getattr(self, forum_id, None)
         forums = self.getCatalog()(
-                object_implements='Products.Ploneboard.interfaces.IForum',
+                object_provides='Products.Ploneboard.interfaces.IForum',
                 getId=forum_id)
         if forums:
             return forums[0].getObject()

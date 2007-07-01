@@ -50,11 +50,6 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
         self.failUnless('text_to_emoticons' in transforms)
         self.failUnless('url_to_hyperlink' in transforms)
 
-    def testObjectImplements(self):
-        from Products.Ploneboard.catalog import object_implements
-        mt = getToolByName(self.portal, 'portal_catalog')
-        self.failUnlessEqual(object_implements(mt, self.portal), object_implements(self.portal.portal_catalog, self.portal))
-
     def testPortalFactorySetup(self):
         portal_factory = getToolByName(self.portal, 'portal_factory') 
         factoryTypes = portal_factory.getFactoryTypes().keys()

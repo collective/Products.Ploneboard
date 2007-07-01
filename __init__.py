@@ -2,16 +2,14 @@
 $Id$
 """
 
-from Globals import package_home
 from Products.Archetypes.public import process_types, listTypes
-from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
 
 import sys, os, os.path
 
-from config import SKINS_DIR, GLOBALS, PROJECTNAME
-import catalog
+from Products.Ploneboard.config import SKINS_DIR, GLOBALS, PROJECTNAME
+import Products.Ploneboard.catalog
 
 registerDirectory(SKINS_DIR, GLOBALS)
 
