@@ -18,25 +18,19 @@ Ploneboard into the Plone Site instance.
 """
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.CMFCorePermissions import ManagePortal
-from Products.CMFCore.TypesTool import ContentFactoryMetadata
+from Products.CMFCore.permissions import ManagePortal
 
 from cStringIO import StringIO
-import string
 
-from Products.Archetypes.public import listTypes, process_types
-from Products.Archetypes.ArchetypeTool import getType
+from Products.Archetypes.public import listTypes
 from Products.Archetypes.Extensions.utils import installTypes, install_subskin
 from Products.Ploneboard.config import PLONEBOARD_TOOL, PROJECTNAME, GLOBALS
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE, \
                                        URL_TRANSFORM_MODULE, \
                                        SAFE_HTML_TRANSFORM_MODULE
-from Products.Archetypes.config import TOOL_NAME, UID_CATALOG
 
 from Products.Ploneboard.permissions import AddAttachment
 from Products.Ploneboard.migrations import migrate01b1to10b
-
-from StringIO import StringIO
 
 
 configlets = \

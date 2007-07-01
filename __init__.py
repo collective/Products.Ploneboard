@@ -7,24 +7,11 @@ from Products.Archetypes.public import process_types, listTypes
 from Products.Archetypes.ArchetypeTool import getType
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
-try:
-    from Products.CMFPlone.interfaces import IPloneSiteRoot
-    from Products.GenericSetup import EXTENSION, profile_registry
-    HAS_GENERICSETUP = True
-except ImportError:
-    HAS_GENERICSETUP = False
-
-# Disable the GenericSetup profile for now. GenericSetup is definitely the
-# future, but at this moment there are too much import-export steps missing.
-HAS_GENERICSETUP = False
 
 import sys, os, os.path
 
 from config import SKINS_DIR, GLOBALS, PROJECTNAME
 import catalog
-
-# PloneboardWorkflow requires GLOBALS
-import PloneboardWorkflow
 
 registerDirectory(SKINS_DIR, GLOBALS)
 
@@ -62,14 +49,6 @@ def initialize(context):
             fti                = ftis,
             ).initialize(context)
 
-    if HAS_GENERICSETUP:
-        profile_registry.registerProfile('Ploneboard',
-                    'Ploneboard',
-                    'Extension profile for default Ploneboard setup',
-                    'profiles/default',
-                    'Ploneboard',
-                    EXTENSION,
-                    for_=IPloneSiteRoot)
               
     from AccessControl import allow_module, allow_class      
     from batch import Batch

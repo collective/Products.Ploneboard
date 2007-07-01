@@ -1,7 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:five="http://namespaces.zope.org/five">
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="ploneboard">>
 
   <permission
     id="Ploneboard.DeleteComment"
@@ -61,22 +62,13 @@
       allowed_attributes="results num_conversations"
       />
 
-  <!-- Needed for Zope 2.8/Plone 2.1 only -->
-
-  <five:traversable
-      class=".content.Ploneboard.Ploneboard"
-      />
-
-  <five:traversable
-      class=".content.PloneboardForum.PloneboardForum"
-      />
-
-  <five:traversable
-      class=".content.PloneboardConversation.PloneboardConversation"
-      />
-      
-  <five:traversable
-      class=".content.PloneboardConversation.PloneboardComment"
+  <genericsetup:registerProfile
+      name="ploneboard"
+      title="Ploneboard"
+      directory="profiles/default"
+      description="Install the Ploneboard forum product"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       />
 
 </configure>
