@@ -1,0 +1,8 @@
+Changelog for Ploneboard
+
+    (name of developer listed in brackets)
+
+Ploneboard 2.0 - unreleased
+
+    - Port to Plone 3.0
+      [wichert]
