@@ -1,15 +1,5 @@
-from Acquisition import aq_inner, aq_base, aq_parent
-from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.utils import _mergedLocalRoles
-from ZODB.POSException import ConflictError
-
-from Products.ATContentTypes.migration.common import unrestricted_rename
+from Acquisition import aq_inner, aq_parent
 from Products.Ploneboard.interfaces import IConversation, IComment
-
-from DateTime import DateTime
-
-import re
-from random import random
 
 
 def autopublish_script(self, sci):
@@ -20,7 +10,7 @@ def autopublish_script(self, sci):
 
     # Try to make sure that conversation and contained messages are in sync
     if IComment.providedBy(object):
-        parent = object.aq_inner.aq_parent
+        parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
                 if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
@@ -35,7 +25,7 @@ def publish_script(self, sci):
     wftool = sci.getPortal().portal_workflow
 
     if IComment.providedBy(object):
-        parent = object.aq_inner.aq_parent
+        parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
                 if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
@@ -54,7 +44,7 @@ def reject_script(self, sci):
 
     # Try to make sure that conversation and contained messages are in sync
     if IComment.providedBy(object):
-        parent = object.aq_inner.aq_parent
+        parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
                  if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
