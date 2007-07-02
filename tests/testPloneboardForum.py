@@ -78,7 +78,7 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         conv = forum.addConversation('subject', 'body')
         conv_id = conv.getId()
         forum.removeConversation(conv_id)
-        self.assertEqual(len(forum.contentValues('PloneboardConversation')), 0)
+        self.assertEqual(len(forum.objectIds()), 0)
         self.failIf(conv_id in forum.objectIds())
 
     def testGetConversations(self):

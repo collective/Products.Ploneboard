@@ -131,7 +131,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getForums')
     def getForums(self, sitewide=False):
         """Return all the forums in this board."""
-        query = {'boject_provides':'Products.Ploneboard.interfaces.IForum'}
+        query = {'object_provides':'Products.Ploneboard.interfaces.IForum'}
         if not sitewide:
             query['path'] = '/'.join(self.getPhysicalPath())
         return [f.getObject() for f in self.getCatalog()(query)]

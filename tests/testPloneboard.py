@@ -76,7 +76,9 @@ class TestPloneboardInterface(PloneboardTestCase.PloneboardTestCase):
         forum_ids = ['forum1', 'forum2']
         for forum_id in forum_ids:
             board.addForum(forum_id, 'title', 'description')
-        self.failUnlessEqual([board.getForum(forum_id) for forum_id in forum_ids], board.getForums())
+        self.failUnlessEqual(
+                set([board.getForum(forum_id) for forum_id in forum_ids]),
+                set(board.getForums()))
 
     def testSearchComments(self):
         pass

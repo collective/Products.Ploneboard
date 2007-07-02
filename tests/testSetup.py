@@ -48,6 +48,10 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
         self.failUnless('text_to_emoticons' in transforms)
         self.failUnless('url_to_hyperlink' in transforms)
 
+    def testCatalogIndex(self):
+        ct = getToolByName(self.portal, 'portal_catalog') 
+        self.failUnless('object_provides' in ct.indexes())
+
     def testPortalFactorySetup(self):
         portal_factory = getToolByName(self.portal, 'portal_factory') 
         factoryTypes = portal_factory.getFactoryTypes().keys()

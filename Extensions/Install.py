@@ -4,7 +4,7 @@ from Products.CMFPlone.utils import getFSVersionTuple
 def install(self, reinstall=False):
     tool=getToolByName(self, "portal_setup")
 
-    if getFSVersionTuple()>[0]=3:
+    if getFSVersionTuple()[0]>=3:
         tool.runAllImportStepsFromProfile(
                 "profile-Products.Ploneboard:ploneboard",
                 purge_old=False)

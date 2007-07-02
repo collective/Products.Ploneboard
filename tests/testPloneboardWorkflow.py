@@ -84,7 +84,9 @@ class TestWorkflowsCreation(PloneboardTestCase.PloneboardTestCase):
         for workflow in workflows:
             self.failUnless(workflow in self.workflow.objectIds(), "%s missing" % workflow)
 
-    def testPreserveChainsOnReinstall(self):
+    def XXXtestPreserveChainsOnReinstall(self):
+        # Disable this test: GenericSetup profiles will always overwrite the
+        # workflow chains for the types
         boardtypes = ('Ploneboard',
                       'PloneboardForum',
                       'PloneboardConversation',
