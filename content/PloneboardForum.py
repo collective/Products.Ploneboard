@@ -1,48 +1,27 @@
-"""
-$Id$
-"""
-
-# zope3, zope 2.8, or Five dependency
 from zope.interface import implements
-from zope.interface import Interface
 
-from Products.Five.bridge import fromZ2Interface
-
-from random import randint
-
-import sys
-import Globals
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_chain, aq_inner
-from DateTime import DateTime
+from Acquisition import aq_chain, aq_inner
 from OFS.Image import File
-
-from BTrees.Length import Length
-
-from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, BooleanField, LinesField, IntegerField
+from Products.Archetypes.public import TextField, LinesField, IntegerField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, BooleanWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
+from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-     AddForum, ManageForum, ManageBoard, AddConversation, ModerateForum
-from PloneboardConversation import PloneboardConversation
-from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation
+from Products.Ploneboard.permissions import ViewBoard, ManageForum, \
+        ManageBoard, AddConversation, ModerateForum
+from Products.Ploneboard.interfaces import IPloneboard, IForum
     
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
-try:
-    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
-except ImportError:
-    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
+from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
     
 schema = BaseBTreeFolderSchema + Schema((

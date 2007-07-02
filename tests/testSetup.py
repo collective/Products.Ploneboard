@@ -3,13 +3,11 @@
 #
 
 from Products.Ploneboard.tests import PloneboardTestCase
-from Products.Ploneboard.interfaces import IPloneboard, IForum, IConversation, IComment
 
 # Catch errors in Install
 from Products.Ploneboard.Extensions import Install
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType
 
 class TestSetup(PloneboardTestCase.PloneboardTestCase):
 

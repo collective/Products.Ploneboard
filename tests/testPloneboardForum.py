@@ -5,7 +5,7 @@
 import unittest
 from zope.interface.verify import verifyClass, verifyObject
 
-import PloneboardTestCase, utils
+import PloneboardTestCase
 from Products.Ploneboard.interfaces import IForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 

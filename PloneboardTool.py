@@ -1,5 +1,4 @@
 import Globals
-from Acquisition import aq_base
 from AccessControl import ClassSecurityInfo
 from OFS.Image import File
 from OFS.Folder import Folder
@@ -13,7 +12,6 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 
 from Products.Ploneboard.config import PLONEBOARD_TOOL
-from Products.Ploneboard.utils import importModuleFromName
 
 
 class PloneboardTool(UniqueObject, Folder, ActionProviderBase):

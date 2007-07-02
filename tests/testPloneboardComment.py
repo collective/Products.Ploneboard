@@ -3,9 +3,9 @@
 #
 
 import unittest
-from zope.interface.verify import verifyClass, verifyObject
+from zope.interface.verify import verifyClass
 
-import PloneboardTestCase, utils
+import PloneboardTestCase
 from Products.Ploneboard.interfaces import IComment
 from Products.Ploneboard.content.PloneboardComment import PloneboardComment
 

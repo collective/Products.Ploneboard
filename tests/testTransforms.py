@@ -3,7 +3,6 @@
 #
 
 import unittest
-from zope.interface.verify import verifyClass, verifyObject
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.config import PLONEBOARD_TOOL

@@ -2,26 +2,15 @@
 # Tests the default workflow
 #
 
-from Testing import ZopeTestCase
 from AccessControl.Permission import Permission
 from Products.CMFPlone.tests import PloneTestCase
 
-from Products.CMFCore.WorkflowCore import WorkflowException
-
 from Products.CMFCore.utils import _checkPermission as checkPerm
-from Products.CMFCore.permissions import AccessContentsInformation
-from Products.CMFCore.permissions import View
-from Products.CMFCore.permissions import ModifyPortalContent
-from Products.CMFCore.permissions import AccessContentsInformation
-from Products.CMFCore.permissions import ListFolderContents
-from Products.CMFCalendar.EventPermissions import ChangeEvents
 from Products.CMFPlone.utils import _createObjectByType
 
 from Products.Ploneboard.Extensions import WorkflowScripts # Catch errors
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard import permissions
-
-import transaction
 
 default_user = PloneTestCase.default_user
 

@@ -8,7 +8,6 @@ import glob
 import doctest
 import unittest
 from Globals import package_home
-from Products.PloneTestCase import PloneTestCase
 from Testing.ZopeTestCase import FunctionalDocFileSuite as Suite
 
 from Products.Ploneboard.config import GLOBALS

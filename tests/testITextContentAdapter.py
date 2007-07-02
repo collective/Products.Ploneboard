@@ -3,11 +3,7 @@
 #
 
 import unittest
-from Products.Ploneboard.tests import PloneboardTestCase, utils
-from Products.Ploneboard.interfaces import IComment
-from Products.Ploneboard.content.PloneboardComment import PloneboardComment
-
-from OFS.Image import File
+from Products.Ploneboard.tests import PloneboardTestCase
 from Products.CMFPlone.utils import _createObjectByType
 
 class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):

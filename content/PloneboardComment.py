@@ -1,19 +1,8 @@
-# zope3, zope 2.8, or Five dependency
 from zope.interface import implements
-
-from Products.Five.bridge import fromZ2Interface
-
-import random
-import Globals
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_base, aq_inner, aq_chain
+from Acquisition import aq_inner, aq_chain
 from DateTime import DateTime
-from OFS import Image
 from OFS.Image import File
-
-from BTrees.OIBTree import OIBTree
-from BTrees.Length import Length
-from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
@@ -23,23 +12,19 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import RichWidget, ReferenceWidget
 from Products.Archetypes.utils import shasattr
 
-from Products.Ploneboard.config import PROJECTNAME, NUMBER_OF_ATTACHMENTS, REPLY_RELATIONSHIP
+from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
 
 from Products.CMFPlone.utils import _createObjectByType
 
-from Products.Ploneboard.permissions import ViewBoard, SearchBoard, ManageForum, \
-     ManageBoard, AddConversation, AddComment, EditComment, AddAttachment, ManageComment, \
-     DeleteComment
+from Products.Ploneboard.permissions import ViewBoard, AddComment, \
+        EditComment, AddAttachment, ManageComment, DeleteComment
 
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
-try:
-    from Products.CMFPlone.interfaces.structure import INonStructuralFolder
-except ImportError:
-    INonStructuralFolder = fromZ2Interface(ZopeTwoINonStructuralFolder)
+from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard

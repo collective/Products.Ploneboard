@@ -1,6 +1,6 @@
 import urllib
 from zope import interface
-from Acquisition import aq_inner, aq_base
+from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from Products import Five
 from Products.CMFCore import utils as cmf_utils

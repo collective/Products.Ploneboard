@@ -1,32 +1,18 @@
-"""
-$Id$
-"""
+from zope.interface import implements
 
-# zope3, zope 2.8, or Five dependency
-from zope.interface import implements, providedBy
-
-import Globals
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.permissions import ModifyPortalContent
-
-from Products.Five.bridge import fromZ2Interface
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, LinesField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, LinesWidget
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-from Products.CMFDynamicViewFTI.interfaces \
-    import ISelectableBrowserDefault as ZopeTwoISelectableBrowserDefault
-try:
-    from Products.CMFDynamicViewFTI.interface import ISelectableBrowserDefault
-except ImportError:
-    ISelectableBrowserDefault = fromZ2Interface(ZopeTwoISelectableBrowserDefault)
 
 from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-    AddBoard, AddForum, ManageBoard, AddAttachment, ModerateForum
+    AddForum, ManageBoard, ModerateForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
 

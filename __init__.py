@@ -6,7 +6,7 @@ from Products.Archetypes.public import process_types, listTypes
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool
 
-import sys, os, os.path
+import sys
 
 from Products.Ploneboard.config import SKINS_DIR, GLOBALS, PROJECTNAME
 import Products.Ploneboard.catalog
@@ -17,7 +17,7 @@ this_module = sys.modules[ __name__ ]
 
 def initialize(context):
     ##Import Types here to register them
-    from content import Ploneboard, PloneboardForum, PloneboardConversation, PloneboardComment
+    import Products.Ploneboard.content
 
     # If we put this import line to the top of module then
     # utils will magically point to Ploneboard.utils
@@ -48,7 +48,7 @@ def initialize(context):
             ).initialize(context)
 
               
-    from AccessControl import allow_module, allow_class      
+    from AccessControl import allow_class      
     from batch import Batch
     allow_class(Batch)
     this_module.Batch = Batch

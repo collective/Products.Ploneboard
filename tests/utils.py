@@ -1,6 +1,3 @@
-from zope.app.tests import placelesssetup
-
-from Products.Five import zcml
 import Products.Five
 import Products.ATContentTypes
 

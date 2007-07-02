@@ -1,6 +1,5 @@
 from Products.PortalTransforms.interfaces import itransform
 from ZODB.PersistentMapping import PersistentMapping
-from Products.Ploneboard.config import PLONEBOARD_TOOL
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.utils import TransformDataProvider
 import re

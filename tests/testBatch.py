@@ -4,7 +4,6 @@
 
 import unittest
 from Products.Ploneboard.tests import PloneboardTestCase
-from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 
 from Products.Ploneboard.batch import Batch
 

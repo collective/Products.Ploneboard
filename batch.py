@@ -1,9 +1,7 @@
 from ExtensionClass import Base
-from ZTUtils.Batch import Batch as ZTUBatch
 from Products.CMFPlone.PloneBatch import Batch as PloneBatch,        \
                                          calculate_pagenumber,       \
                                          calculate_pagerange,        \
-                                         calculate_quantum_leap_gap, \
                                          calculate_leapback,         \
                                          calculate_leapforward
                                          
