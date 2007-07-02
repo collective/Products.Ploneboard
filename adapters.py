@@ -1,6 +1,6 @@
 from zope.interface import implements
 
-from Products.ATContentTypes.z3.interfaces import ITextContent
+from Products.ATContentTypes.interface import ITextContent
 
 class CommentTextContent(object):
     implements(ITextContent)

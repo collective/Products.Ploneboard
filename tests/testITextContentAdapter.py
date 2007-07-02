@@ -13,7 +13,7 @@ from Products.CMFPlone.utils import _createObjectByType
 class TestITextContentAdapter(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):
-        from Products.ATContentTypes.z3.interfaces import ITextContent 
+        from Products.ATContentTypes.interface import ITextContent 
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
