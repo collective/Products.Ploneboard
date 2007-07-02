@@ -76,7 +76,8 @@ should exist, and we should be able to view it.
     True
     >>> conversation = self.forum.getConversations()[0]
     
-    >>> browser.getLink(url='/%s' % conversation.getId()).click()
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
 
 Add comment to own comment
 --------------------------
