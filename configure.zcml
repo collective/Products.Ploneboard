@@ -11,7 +11,7 @@
 
   <adapter 
       for=".interfaces.IComment"
-      provides="Products.ATContentTypes.z3.interfaces.ITextContent"
+      provides="Products.ATContentTypes.interface.ITextContent"
       factory=".adapters.CommentTextContent"
       />
 
