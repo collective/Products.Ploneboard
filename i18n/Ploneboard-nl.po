@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2006-09-04 13:55+0000\n"
-"PO-Revision-Date: 2005-12-10 11:50+0000\n"
-"Last-Translator: Jean-Paul Ladage <j.ladage@zestsoftware.nl>\n"
+"PO-Revision-Date: 2007-07-26 20:35+0100\n"
+"Last-Translator: THijs <THijs@pareto.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -38,7 +38,7 @@ msgstr "Forum"
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Log in to add comments"
-msgstr "Log in om een reactie toe te vogen"
+msgstr "Log in om een reactie toe te voegen"
 
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -64,7 +64,7 @@ msgstr "Verwijder"
 #. Default: "Reply to this"
 #: ../skins/ploneboard_templates/comment_view.pt
 msgid "Reply to this"
-msgstr "Reageer met quote"
+msgstr "Reageer"
 
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt
@@ -89,7 +89,7 @@ msgstr "Reageer"
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt
 msgid "add_conversation"
-msgstr "Voeg een nieuwe discussie toe"
+msgstr "Voeg discussie toe"
 
 msgid "alert_delete_popup"
 msgstr "Weet u zeker dat u dit bericht wilt verwijderen?"
@@ -112,7 +112,7 @@ msgstr "Onderwerpen"
 #. Default: "Data provider"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
 msgid "data_provider"
-msgstr ""
+msgstr "Data verschaffer"
 
 #. Default: "Here you can configure site settings for Ploneboard."
 #: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
@@ -121,14 +121,13 @@ msgstr "Hier kunt u de Ploneboard instelling aanpassen"
 
 #. Default: "Here you can configure which transforms are active in Ploneboard comments."
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-#, fuzzy
 msgid "description_ploneboard_config_transforms"
-msgstr "Hier kunt u aangeven welke transformaties er in Ploneboard reacties gebruikt worden"
+msgstr "Hier kunt u aangeven welke transformaties er in Ploneboard reacties gebruikt worden."
 
 #. Default: "Configure Ploneboard comment text transformations."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
 msgid "description_pref_transforms"
-msgstr "Stel de Ploneboard reacties tekst transformaties in."
+msgstr "Stel de Ploneboard reactie tekst transformaties in."
 
 #. Default: "Enabled?"
 #: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
@@ -157,7 +156,6 @@ msgstr "Voorbeeld van reactie bekijken"
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
-#, fuzzy
 msgid "help_body_attachments_posting"
 msgstr "Kies een bestand om als bijlage toe te voegen aan deze reactie."
 
@@ -172,28 +170,28 @@ msgid "help_body_text_posting_linkify_enabled"
 msgstr "URL's worden automatisch omgezet naar links."
 
 msgid "help_categories_board"
-msgstr ""
+msgstr "Voeg de gewenste onderwerpen in, die voor de fora beschikbaar moeten zijn. Eén onderwerp per regel."
 
 msgid "help_category"
-msgstr ""
+msgstr "Kies onder welk onderwerp het forum geplaatst moet worden. Aan een forum kunnen meerdere onderwerpen worden toegekend, maar één enkel onderwerp wordt aangeraden."
 
 msgid "help_description_board"
-msgstr ""
+msgstr "Voeg een korte beschrijving van het prikbord toe."
 
 msgid "help_description_conversation"
-msgstr ""
+msgstr "Voeg een korte beschrijving van de discussie toe."
 
 msgid "help_description_forum"
-msgstr ""
+msgstr "Voeg een korte beschrijving van het forum thema toe."
 
 msgid "help_maxattachments"
-msgstr ""
+msgstr "Selecteer het maximale aantal te selecteren bijlagen per reactie."
 
 msgid "help_maxattachmentsize"
-msgstr ""
+msgstr "Selecteer de maximale bijlage bestandsgrootte."
 
 msgid "help_text"
-msgstr ""
+msgstr "Voer reactie tekst in."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -217,25 +215,25 @@ msgid "label_by_author"
 msgstr "door ${author}"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Onderwerpen"
 
 msgid "label_category"
-msgstr ""
+msgstr "Onderwerp"
 
 msgid "label_description_board"
-msgstr ""
+msgstr "Beschrijving"
 
 msgid "label_description_conversation"
-msgstr ""
+msgstr "Beschrijving"
 
 msgid "label_description_forum"
-msgstr ""
+msgstr "Beschrijving"
 
 msgid "label_maxattachments"
-msgstr ""
+msgstr "Maximaal aantal bijlagen"
 
 msgid "label_maxattachmentsize"
-msgstr ""
+msgstr "Maximale bijlage grootte"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt
@@ -258,7 +256,7 @@ msgid "label_save"
 msgstr "Bewaren"
 
 msgid "label_text"
-msgstr ""
+msgstr "Tekst"
 
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -408,9 +406,6 @@ msgstr "Terug naar Ploneboard instellingen"
 msgid "up_to_site_setup"
 msgstr "Terug naar Plone Configuratie"
 
-
-
-
 #### My own findings
 msgid "Make moderated"
 msgstr "Maak gemodereerd"
@@ -450,3 +445,4 @@ msgstr "Geplaatst"
 
 msgid "by_author"
 msgstr "door ${author}"
+
