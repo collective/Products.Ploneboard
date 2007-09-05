@@ -3,4 +3,8 @@
   <index name="object_provides" meta_type="KeywordIndex">
     <indexed_attr value="object_provides"/>
   </index>
+  <index name="num_comments" meta_type="FieldIndex">
+    <indexed_attr value="num_comments"/>
+  </index>
+ <column value="num_comments"/>
 </object>

@@ -51,6 +51,8 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
     def testCatalogIndex(self):
         ct = getToolByName(self.portal, 'portal_catalog') 
         self.failUnless('object_provides' in ct.indexes())
+        self.failUnless('num_comments' in ct.indexes())
+        self.failUnless('num_comments' in ct.schema())
 
     def testPortalFactorySetup(self):
         portal_factory = getToolByName(self.portal, 'portal_factory') 
