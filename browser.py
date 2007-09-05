@@ -125,7 +125,7 @@ class RecentConversationsPortletView(Five.BrowserView):
     
     def results(self, limit=5):
         catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
-        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation', 
                             sort_on='modified', 
                             sort_order='reverse',
                             sort_limit=limit)[:limit]
@@ -161,13 +161,13 @@ class RecentConversationsView(CommentViewableView):
     
     def num_conversations(self):
         catalog = self.portal_catalog
-        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation',
+        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
                           path='/'.join(self.context.getPhysicalPath()),)
         return len(results)
     
     def results(self, limit=20, offset=0):
         catalog = self.portal_catalog
-        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation', 
                             sort_on='modified', 
                             sort_order='reverse',
                             sort_limit=(offset+limit),
@@ -230,14 +230,14 @@ class UnansweredConversationsView(RecentConversationsView):
     
     def num_conversations(self):
         catalog = self.portal_catalog
-        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation',
+        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
                           num_comments=1,
                           path='/'.join(self.context.getPhysicalPath()),)
         return len(results)
     
     def results(self, limit=20, offset=0):
         catalog = self.portal_catalog
-        results = catalog(object_implements='Products.Ploneboard.interfaces.IConversation', 
+        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation', 
                             num_comments=1,
                             sort_on='modified', 
                             sort_order='reverse',
