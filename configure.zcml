@@ -1,8 +1,19 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="ploneboard">>
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+   xmlns:five="http://namespaces.zope.org/five"
+   i18n_domain="ploneboard">
+
+  <five:implements
+     class=".content.Ploneboard.Ploneboard"
+     interface="plone.portlets.interfaces.ILocalPortletAssignable"
+     />
+
+  <five:implements
+     class=".content.PloneboardForum.PloneboardForum"
+     interface="plone.portlets.interfaces.ILocalPortletAssignable"
+     />
 
   <permission
     id="Ploneboard.DeleteComment"
