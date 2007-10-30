@@ -48,7 +48,6 @@
                 <a href="#"
                    tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardComment')"
                    tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
-                   i18n:translate="moderation_up"
                    tal:content="here/aq_inner/aq_parent/Title">Up</a>
             </p>
 
