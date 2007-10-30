@@ -135,7 +135,7 @@ class PloneboardForum(BaseBTreeFolder):
               'view'           : 'forum_view',
               'edit'           : 'base_edit',
               'properties'     : 'base_metadata',
-              'sharing'        : 'folder_localrole_form',
+              'sharing'        : '@@sharing',
               'rss-properties' : 'editSynProperties',
               'moderate'       : 'moderation_form',
         }

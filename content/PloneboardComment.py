@@ -102,7 +102,7 @@ class PloneboardComment(BaseBTreeFolder):
             , 'view'                  : 'comment_redirect_to_conversation'
             , 'edit'                  : 'base_edit'
             , 'properties'            : 'base_metadata'
-            , 'sharing'               : 'folder_localrole_form'
+            , 'sharing'               : '@@sharing'
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'delete_view'
         }

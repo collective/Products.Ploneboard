@@ -92,7 +92,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             'index.html' : '(dynamic view)',
             'edit'       : 'base_edit',
             'properties' : 'base_metadata',
-            'sharing'    : 'folder_localrole_form',
+            'sharing'    : '@@sharing',
             'gethtml'    : '',
             'mkdir'      : '',
         }

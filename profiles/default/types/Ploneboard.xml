@@ -26,7 +26,7 @@
  <alias from="index.html" to="(dynamic view)"/>
  <alias from="moderate" to="moderation_form"/>
  <alias from="properties" to="base_metadata"/>
- <alias from="sharing" to="folder_localrole_form"/>
+ <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="(selected layout)"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:$object_url" visible="True">
