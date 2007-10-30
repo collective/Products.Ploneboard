@@ -43,6 +43,7 @@ schema = PBConversationBaseBTreeFolderSchema + Schema((
                                       i18n_domain = "ploneboard",
                                       rows = 5)),
     ))
+utils.finalizeSchema(schema)
 
     
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
@@ -78,12 +79,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             , 'action'      : 'string:$object_url/edit'
             , 'permissions' : (ModifyPortalContent,)
             },
-            { 'id'          : 'metadata'
-            , 'name'        : 'Properties'
-            , 'action'      : 'string:$object_url/properties'
-            , 'permissions' : (ModifyPortalContent,)
-            , 'visible'     : False
-            },
         )
 
     aliases = {
@@ -91,7 +86,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             'view'       : '(selected layout)',
             'index.html' : '(dynamic view)',
             'edit'       : 'base_edit',
-            'properties' : 'base_metadata',
             'sharing'    : '@@sharing',
             'gethtml'    : '',
             'mkdir'      : '',

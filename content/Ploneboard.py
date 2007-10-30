@@ -15,6 +15,7 @@ from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
     AddForum, ManageBoard, ModerateForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
+from Products.Ploneboard import utils
 
 
 schema = BaseBTreeFolderSchema + Schema((
@@ -36,6 +37,9 @@ schema = BaseBTreeFolderSchema + Schema((
                    label_msgid = "label_categories_board",
                    i18n_domain = "ploneboard")),
     ))
+
+utils.finalizeSchema(schema)
+
 
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
@@ -68,11 +72,6 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             , 'action'      : 'string:$object_url/edit'
             , 'permissions' : (ModifyPortalContent,)
             },
-            { 'id'          : 'metadata'
-            , 'name'        : 'Properties'
-            , 'action'      : 'string:$object_url/properties'
-            , 'permissions' : (ModifyPortalContent,)
-            },
             { 'id'          : 'moderate'
             , 'name'        : 'Moderate'
             , 'action'      : 'string:$object_url/moderate'
@@ -85,7 +84,6 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
             '(Default)'  : '(dynamic view)',
             'view'       : '(selected layout)',
             'edit'       : 'base_edit',
-            'properties' : 'base_metadata',
             'sharing'    : '@@sharing',
             'index.html' : '(dynamic view)',
             'moderate'   : 'moderation_form',

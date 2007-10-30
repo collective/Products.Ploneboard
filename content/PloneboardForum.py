@@ -18,6 +18,7 @@ from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
 from Products.Ploneboard.permissions import ViewBoard, ManageForum, \
         ManageBoard, AddConversation, ModerateForum
 from Products.Ploneboard.interfaces import IPloneboard, IForum
+from Products.Ploneboard import utils
     
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
@@ -70,6 +71,7 @@ schema = BaseBTreeFolderSchema + Schema((
                          i18n_domain = "ploneboard",
                 )),
     ))
+utils.finalizeSchema(schema)
 
 
 if not HAS_SIMPLEATTACHMENT:
@@ -107,11 +109,6 @@ class PloneboardForum(BaseBTreeFolder):
             , 'action'      : 'string:$object_url/edit'
             , 'permissions' : (ModifyPortalContent,)
             },
-            { 'id'          : 'metadata'
-            , 'name'        : 'Properties'
-            , 'action'      : 'string:$object_url/properties'
-            , 'permissions' : (ModifyPortalContent,)
-            },
             { 'id'          : 'rssfeed'
             , 'name'        : 'RSS Feed'
             , 'action'      : 'string:$object_url/rss-properties'
@@ -134,7 +131,6 @@ class PloneboardForum(BaseBTreeFolder):
               '(Default)'      : 'forum_view', 
               'view'           : 'forum_view',
               'edit'           : 'base_edit',
-              'properties'     : 'base_metadata',
               'sharing'        : '@@sharing',
               'rss-properties' : 'editSynProperties',
               'moderate'       : 'moderation_form',

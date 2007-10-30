@@ -103,3 +103,40 @@ class TransformDataProvider(Implicit):
         return self.config_metadata['inputs']
     
 Globals.InitializeClass(TransformDataProvider)
+
+def finalizeSchema(schema):
+    # Categorization
+    if schema.has_key('subject'):
+        schema.changeSchemataForField('subject', 'categorization')
+    if schema.has_key('relatedItems'):
+        schema.changeSchemataForField('relatedItems', 'categorization')
+    if schema.has_key('location'):
+        schema.changeSchemataForField('location', 'categorization')
+    if schema.has_key('language'):
+        schema.changeSchemataForField('language', 'categorization')
+
+    # Dates
+    if schema.has_key('effectiveDate'):
+        schema.changeSchemataForField('effectiveDate', 'dates')
+    if schema.has_key('expirationDate'):
+        schema.changeSchemataForField('expirationDate', 'dates')
+    if schema.has_key('creation_date'):
+        schema.changeSchemataForField('creation_date', 'dates')
+    if schema.has_key('modification_date'):
+        schema.changeSchemataForField('modification_date', 'dates')
+
+    # Ownership
+    if schema.has_key('creators'):
+        schema.changeSchemataForField('creators', 'ownership')
+    if schema.has_key('contributors'):
+        schema.changeSchemataForField('contributors', 'ownership')
+    if schema.has_key('rights'):
+        schema.changeSchemataForField('rights', 'ownership')
+
+    # Settings
+    if schema.has_key('allowDiscussion'):
+        schema.changeSchemataForField('allowDiscussion', 'settings')
+    if schema.has_key('excludeFromNav'):
+        schema.changeSchemataForField('excludeFromNav', 'settings')
+    if schema.has_key('nextPreviousEnabled'):
+        schema.changeSchemataForField('nextPreviousEnabled', 'settings')

@@ -57,6 +57,8 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         widget=ReferenceWidget(visible=False),
         ),
     ))
+utils.finalizeSchema(schema)
+
 
 class PloneboardComment(BaseBTreeFolder):
     """A comment contains regular text body and metadata."""
@@ -88,12 +90,6 @@ class PloneboardComment(BaseBTreeFolder):
             , 'action'      : 'string:$object_url/edit'
             , 'permissions' : (ModifyPortalContent,)
             },
-            { 'id'          : 'metadata'
-            , 'name'        : 'Properties'
-            , 'action'      : 'string:$object_url/properties'
-            , 'permissions' : (ModifyPortalContent,)
-            , 'visible'     : False
-            },
         )
 
     aliases = \
@@ -101,7 +97,6 @@ class PloneboardComment(BaseBTreeFolder):
             '(Default)'               : 'comment_redirect_to_conversation'
             , 'view'                  : 'comment_redirect_to_conversation'
             , 'edit'                  : 'base_edit'
-            , 'properties'            : 'base_metadata'
             , 'sharing'               : '@@sharing'
             , 'discussion_reply_form' : 'add_comment_form'
             , 'deleteDiscussion'      : 'delete_view'

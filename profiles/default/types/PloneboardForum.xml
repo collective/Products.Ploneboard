@@ -17,7 +17,6 @@
  <alias from="(Default)" to="forum_view"/>
  <alias from="edit" to="base_edit"/>
  <alias from="moderate" to="moderation_form"/>
- <alias from="properties" to="base_metadata"/>
  <alias from="rss-properties" to="editSynProperties"/>
  <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="forum_view"/>
@@ -27,10 +26,6 @@
  </action>
  <action title="Edit" action_id="edit" category="object" condition_expr=""
     url_expr="string:$object_url/edit" visible="True">
-  <permission value="Modify portal content"/>
- </action>
- <action title="Properties" action_id="metadata" category="object"
-    condition_expr="" url_expr="string:$object_url/properties" visible="True">
   <permission value="Modify portal content"/>
  </action>
  <action title="References" action_id="references" category="object"
