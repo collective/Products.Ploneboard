@@ -30,14 +30,14 @@
   <div metal:fill-slot="main"
        tal:define="view context/@@conversation_browserview">
 
-    <div metal:use-macro="here/document_actions/macros/document_actions">
-      Document actions (print, sendto etc)
-    </div>
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
 
     <h1 class="documentFirstHeading">
       <img src="" tal:replace="structure here/ploneboard_conversation_icon.gif" />
       <span tal:replace="here/Title">Conversation title</span>
     </h1>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
 
     <a href=""
        class="link-parent"
@@ -52,7 +52,9 @@
          tal:content="here/Description"> 
       description
     </div>
-    
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+
     <div class="boardConversation"
          metal:define-macro="view_comments"
          tal:define="batch view/comments">
@@ -90,6 +92,9 @@
     <metal:footer use-macro="here/board_footer/macros/footer">
       Board footer
     </metal:footer>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
   </div>
 </body>
 </html>

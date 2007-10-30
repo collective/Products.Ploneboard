@@ -17,12 +17,12 @@
          tal:define="results here/moderation_search;
                      DateTime python:modules['DateTime'].DateTime;">
 
-        <div metal:use-macro="here/document_actions/macros/document_actions">
-          Document actions (print, sendto etc)
-        </div>
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 tal:content="here/Title">Context title</h1>
         
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
         <a href=""
            class="link-parent"
            tal:define="parent_url python:here.navigationParent(here, template.getId())"
@@ -31,7 +31,9 @@
            i18n:translate="go_to_parent_url">
             Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
         </a>
-        
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
         <!-- Search results -->
         
         <div tal:condition="results">
@@ -118,6 +120,8 @@
                 There are no comments in the moderation queue.
             </p>
         </div>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
 

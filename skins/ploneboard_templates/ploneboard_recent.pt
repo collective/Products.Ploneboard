@@ -22,15 +22,15 @@
                      numConversations view/num_conversations;
                      pss modules/Products/PythonScripts/standard;">
 
-        <div metal:use-macro="here/document_actions/macros/document_actions">
-          Document actions (print, sendto etc)
-        </div>
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 class="documentFirstHeading" i18n:translate="title_recent_conversations">
           Recent conversations in
           <span i18n:name="title" tal:replace="here/Title">title</span>
         </h1>
-        
+
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
         <a href=""
            class="link-parent"
            tal:attributes="href context/absolute_url"
@@ -38,7 +38,8 @@
            Return to <span i18n:name="name" tal:content="context/Title" />
         </a>
 
-        
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
         <p class="discreet"
              i18n:translate="no_recent_conversations"
              tal:condition="python:numConversations == 0">
@@ -145,6 +146,8 @@
             
           </tal:conversations>
         </tal:haveConversations>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
                      

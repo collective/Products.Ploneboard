@@ -14,11 +14,11 @@
   <div metal:fill-slot="main"
        tal:define="view context/@@singlecomment_view">
 
-    <div metal:use-macro="here/document_actions/macros/document_actions">
-      Document actions (print, sendto etc)
-    </div>
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
 
     <h2 tal:content="here/Title">Conversation title</h2>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
 
     <a href=""
        class="link-parent"
@@ -32,6 +32,8 @@
     <div class="documentdescription" tal:content="here/Description"> 
       description
     </div>
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
 
     <div class="boardComment visualIEFloatFix"
          tal:define="comment python:view/comment">
@@ -206,6 +208,9 @@
       
       </metal:comment>
     </div>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
   </div>
 </body>
 </html>

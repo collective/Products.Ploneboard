@@ -24,14 +24,14 @@
                      last_login python:isAnon and None or member.getProperty('last_login_time', None);
                      last_login python:last_login and DateTime(last_login) or None;">
 
-        <div metal:use-macro="here/document_actions/macros/document_actions">
-          Document actions (print, sendto etc)
-        </div>
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 class="documentFirstHeading">
         <img src="" tal:replace="structure here/ploneboard_forum_icon.gif" />
         <span tal:replace="here/Title">Forum title</span>
         </h1>
+
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <ul class="visualNoMarker discreet"
             style="float:right; margin: 0 0 1em 1em;">
@@ -57,7 +57,9 @@
              tal:content="here/Description">
         Forum Description
         </div>
-        
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
         <div class="visualClear"></div>
         
         <p class="discreet"
@@ -211,6 +213,8 @@
         </tal:haveConversations>
 
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
                      
