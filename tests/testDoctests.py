@@ -4,7 +4,7 @@
 
 import unittest
 from zope.testing import doctest
-from zope.app.tests import placelesssetup
+from zope.app.testing import placelesssetup
 
 setup = placelesssetup.setUp
 teardown = placelesssetup.tearDown

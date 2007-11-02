@@ -16,70 +16,91 @@
      />
 
   <permission
-    id="Ploneboard.DeleteComment"
-    title="Delete objects"
-    />
+     id="Ploneboard.DeleteComment"
+     title="Delete objects"
+     />
 
   <adapter 
-      for=".interfaces.IComment"
-      provides="Products.ATContentTypes.interface.ITextContent"
-      factory=".adapters.CommentTextContent"
-      />
+     for=".interfaces.IComment"
+     provides="Products.ATContentTypes.interface.ITextContent"
+     factory=".adapters.CommentTextContent"
+     />
 
   <browser:page
-      for=".interfaces.IConversation"
-      class=".browser.ConversationView"
-      name="conversation_browserview"
-      allowed_interface=".browser.IConversationView"
-      permission="zope.Public"
-      />
-      
-  <browser:page
-      for=".interfaces.IComment"
-      class=".browser.CommentView"
-      name="singlecomment_view"
-      allowed_interface=".browser.ICommentView"
-      permission="zope.Public"
-      />
-
-  <browser:page
-      for=".interfaces.IComment"
-      class=".browser.DeleteCommentView"
-      name="delete_view"
-      permission="Ploneboard.DeleteComment"
-      />
-      
-  <browser:page
-      for="*"
-      name="ploneboard_recent_portlet_view"
-      class=".browser.RecentConversationsPortletView"
-      permission="zope.Public"
-      allowed_attributes="results"
-      />
-
-  <browser:page
-      for="*"
-      name="ploneboard_recent_view"
-      class=".browser.RecentConversationsView"
-      permission="zope.Public"
-      allowed_attributes="results num_conversations"
-      />
+     for=".interfaces.IConversation"
+     class=".browser.ConversationView"
+     name="conversation_browserview"
+     allowed_interface=".browser.IConversationView"
+     permission="zope.Public"
+     />
   
   <browser:page
-      for="*"
-      name="ploneboard_unanswered_view"
-      class=".browser.UnansweredConversationsView"
-      permission="zope.Public"
-      allowed_attributes="results num_conversations"
-      />
+     for=".interfaces.IComment"
+     class=".browser.CommentView"
+     name="singlecomment_view"
+     allowed_interface=".browser.ICommentView"
+     permission="zope.Public"
+     />
+
+  <browser:page
+     for=".interfaces.IComment"
+     class=".browser.DeleteCommentView"
+     name="delete_view"
+     permission="Ploneboard.DeleteComment"
+     />
+  
+  <browser:page
+     for="*"
+     name="ploneboard_recent_portlet_view"
+     class=".browser.RecentConversationsPortletView"
+     permission="zope.Public"
+     allowed_attributes="results"
+     />
+
+  <browser:page
+     for="*"
+     name="ploneboard_recent_view"
+     class=".browser.RecentConversationsView"
+     permission="zope.Public"
+     allowed_attributes="results num_conversations"
+     />
+  
+  <browser:page
+     for="*"
+     name="ploneboard_unanswered_view"
+     class=".browser.UnansweredConversationsView"
+     permission="zope.Public"
+     allowed_attributes="results num_conversations"
+     />
 
   <genericsetup:registerProfile
-      name="ploneboard"
-      title="Ploneboard"
-      directory="profiles/default"
-      description="Install the Ploneboard forum product"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      />
+     name="ploneboard"
+     title="Ploneboard"
+     directory="profiles/default"
+     description="Install the Ploneboard forum product"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <!--
+      As Archetypes doesn't use the events machinery on the BaseObject
+      we must mark the deprecated methods to avoid noisy warnings
+    -->
+
+  <five:deprecatedManageAddDelete
+     class=".content.Ploneboard.Ploneboard"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardForum.PloneboardForum"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardConversation.PloneboardConversation"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardComment.PloneboardComment"
+     />
 
 </configure>

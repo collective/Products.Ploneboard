@@ -1,7 +1,7 @@
 from Products.CMFPlone.CatalogTool import registerIndexableAttribute
 from Products.Ploneboard.interfaces import IConversation
 from zope.interface import providedBy
-from zope.app.component.interface import interfaceToName
+from zope.component.interface import interfaceToName
 
 try:
     from Products.CMFPlone.CatalogTool import object_provides
