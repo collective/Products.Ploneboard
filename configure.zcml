@@ -5,6 +5,8 @@
    xmlns:five="http://namespaces.zope.org/five"
    i18n_domain="ploneboard">
 
+  <!-- $Id$ -->
+
   <five:implements
      class=".content.Ploneboard.Ploneboard"
      interface="plone.portlets.interfaces.ILocalPortletAssignable"
@@ -20,7 +22,7 @@
      title="Delete objects"
      />
 
-  <adapter 
+  <adapter
      for=".interfaces.IComment"
      provides="Products.ATContentTypes.interface.ITextContent"
      factory=".adapters.CommentTextContent"
@@ -33,7 +35,7 @@
      allowed_interface=".browser.IConversationView"
      permission="zope.Public"
      />
-  
+
   <browser:page
      for=".interfaces.IComment"
      class=".browser.CommentView"
@@ -48,7 +50,7 @@
      name="delete_view"
      permission="Ploneboard.DeleteComment"
      />
-  
+
   <browser:page
      for="*"
      name="ploneboard_recent_portlet_view"
@@ -64,7 +66,7 @@
      permission="zope.Public"
      allowed_attributes="results num_conversations"
      />
-  
+
   <browser:page
      for="*"
      name="ploneboard_unanswered_view"
