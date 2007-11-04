@@ -2,22 +2,22 @@ Using a moderated forum
 =======================
 
 Test starting conversations, replying and modifying comments in a moderated
-forum. This is very similar to a member-posting forum, except anonymous users 
+forum. This is very similar to a member-posting forum, except anonymous users
 cannot see the forum at all.
 
 First, some set-up:
-    
+
     >>> from Products.Five import zcml
     >>> import Products
     >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
-    
+
     >>> from Products.Ploneboard.tests import utils
     >>> utils.setUpDefaultMembersBoardAndForum(self)
 
     >>> from Products.Five.testbrowser import Browser
     >>> browser = Browser()
     >>> browser.handleErrors = False
-    
+
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
 and the navtree.
@@ -32,10 +32,7 @@ Verify that the forum is indeed a member-posting one by default and log in:
     >>> workflow.getInfoFor(self.forum, 'review_state')
     'moderated'
 
-    >>> browser.open(self.portal.absolute_url() + '/login_form')
-    >>> browser.getControl('Login Name').value = 'member1'
-    >>> browser.getControl('Password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
 
 View forum
 ----------
@@ -63,12 +60,13 @@ text can contain HTML as well.
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'New title'
     >>> browser.getControl('Body text').value = 'Some <b>body</b> text'
-    
+
 We have attachment buttons, although we won't upload anything now.
-    
+INFO: This test fails (LookupError: name 'files:list') if SimpleAttachment is not installed.
+
     >>> browser.getControl(name='files:list', index=0)
     <Control name='files:list' type='file'>
-    
+
 Submit the form, and we should be returned to the forum view. The conversation
 should exist, and we should be able to view it.
 
@@ -76,7 +74,7 @@ should exist, and we should be able to view it.
     >>> browser.url.startswith(self.forum.absolute_url() + '?')
     True
     >>> conversation = self.forum.getConversations()[0]
-    
+
     >>> import re
     >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
 
@@ -91,7 +89,7 @@ pending comment.
     True
     >>> browser.getControl('Delete')
     <SubmitControl ... type='submit'>
-    
+
     >>> browser.getControl('Edit')
     Traceback (most recent call last):
     ...
@@ -112,7 +110,7 @@ pending comment.
     Traceback (most recent call last):
     ...
     LookupError: label 'Reject'
-    
+
 
 Deleting pending comment
 ------------------------
@@ -127,9 +125,9 @@ last comment in the thread should delete the entire thread.
     '...Conversation deleted...No conversations in this forum yet...'
     >>> 'New topic' in browser.contents
     False
-    
+
 Create a few conversations so we can go on testing: one will be rejected from
-the moderation queue, one will be rejected in-line, one will be published via 
+the moderation queue, one will be rejected in-line, one will be published via
 the moderation queue and one will be published in-line.
 
     >>> browser.getControl('Start a new Conversation').click()
@@ -138,23 +136,23 @@ the moderation queue and one will be published in-line.
     >>> browser.getControl('Title').value = 'New title'
     >>> browser.getControl('Body text').value = 'Some <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
-    
+
     >>> conversation = self.forum.getConversations()[0]
-    
+
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'Publish inline'
     >>> browser.getControl('Body text').value = 'Publish inline <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
-    
+
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'Reject queue'
     >>> browser.getControl('Body text').value = 'Reject queue <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
-    
+
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
@@ -167,13 +165,9 @@ View as other member
 
 Another member cannot see the newly pending conversation or comment.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'manager2'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'manager2')
     >>> browser.open(self.forum.absolute_url())
-    
+
     >>> browser.contents
     '...No conversations in this forum yet...'
 
@@ -183,11 +177,7 @@ Moderate
 A reviewer can see the comment in the moderation queue and reject or publish
 it. Moderation can also happen inline.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
     >>> browser.open(self.forum.absolute_url())
 
 The moderation tab should appear.
@@ -222,14 +212,14 @@ Publish one, reject one inline.
     True
     >>> 'Reject inline' in browser.contents
     True
-    
+
     >>> browser.getLink('Publish inline').click()
     >>> browser.contents
     '...Waiting for moderator...'
     >>> browser.getControl('Publish').click()
     >>> 'Waiting for moderator' in browser.contents
     False
-    
+
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink('Reject inline').click()
     >>> browser.contents
@@ -242,11 +232,7 @@ Publish one, reject one inline.
 
 The original member should see all four conversations.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
     >>> browser.open(self.forum.absolute_url())
 
     >>> 'New title' in browser.contents
@@ -260,11 +246,7 @@ The original member should see all four conversations.
 
 However, another member can only see the published ones.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member2'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member2')
     >>> browser.open(self.forum.absolute_url())
 
     >>> 'New title' in browser.contents
@@ -279,14 +261,10 @@ However, another member can only see the published ones.
 Add comment to own comment
 --------------------------
 
-Now that we have a published comment, add a reply. Use the quick-reply field 
+Now that we have a published comment, add a reply. Use the quick-reply field
 first.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
     >>> browser.open(conversation.absolute_url())
 
     >>> browser.getControl(name='text').value = 'A quick reply'
@@ -295,7 +273,7 @@ first.
     True
     >>> browser.contents
     '...A quick reply...'
-    
+
 Then add a full reply.
 
     >>> browser.getControl('Reply', index=0).click()
@@ -307,43 +285,35 @@ Then add a full reply.
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
-    
+
     >>> browser.getControl(name='files:list', index=0)
     <Control name='files:list' type='file'>
-    
+
 Submit and make sure we go back to the conversation
-    
+
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
     >>> browser.contents
     '...A full reply...'
-    
+
 Both of these comments are now pending. Check that they appear in the moderation
 queue and publish them.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
     >>> browser.open(self.forum.absolute_url())
-    
+
     >>> browser.getLink('Moderate').click()
     >>> browser.getControl('Publish', index=0).click()
     >>> browser.getControl('Publish', index=0).click()
     >>> browser.contents
     '...no comments in the moderation queue...'
-    
+
 Log back in as original member.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
     >>> browser.open(self.forum.absolute_url())
-    
+
 Edit own comment
 ----------------
 
@@ -358,7 +328,7 @@ is no 'Edit' button present.
 Delete a comment
 ----------------
 
-A member cannot delete a published comment. Verify that there is no 'Delete' 
+A member cannot delete a published comment. Verify that there is no 'Delete'
 button present.
 
     >>> browser.getControl('Delete')
@@ -370,7 +340,7 @@ Workflow actions
 -----------------
 
 Workflow actions appear for operations like publish or retract. Members should
-see no such actions in this type of forum, however, since their posts are 
+see no such actions in this type of forum, however, since their posts are
 automatically published.
 
     >>> browser.getControl('Submit')
@@ -389,18 +359,14 @@ automatically published.
     Traceback (most recent call last):
     ...
     LookupError: label 'Reject'
-    
+
 
 View other member's comment
 ---------------------------
 
 Other members can view published comments. First, log in.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member2'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member2')
 
 Find the forum, and go to the new post.
 
@@ -418,7 +384,7 @@ Add a new comment. Use the quick-reply field first.
     True
     >>> browser.contents
     '...Another quick reply...'
-    
+
 Then add a full reply.
 
     >>> browser.getControl('Reply', index=0).click()
@@ -428,12 +394,12 @@ Then add a full reply.
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
-    
+
     >>> browser.getControl(name='files:list', index=0)
     <Control name='files:list' type='file'>
-    
+
 Submit and make sure we go back to the conversation
-    
+
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
@@ -446,13 +412,9 @@ moderation queue this time.
     >>> browser.contents
     '...Waiting for moderator...Waiting for moderator...'
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
     >>> browser.open(self.board.absolute_url())
-    
+
     >>> browser.getLink('Moderate').click()
     >>> browser.getControl('Publish', index=0).click()
     >>> browser.getControl('Publish', index=0).click()
@@ -479,36 +441,28 @@ The reviewer cannot edit or delete any comments.
     Traceback (most recent call last):
     ...
     LookupError: label 'Edit'
-    
+
 However, a reviewer can retract a comment:
-    
+
     >>> browser.getControl('Retract', index=0).click()
     >>> browser.contents
     '...retracted...'
     >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
     'retracted'
-    
+
 Logging in as another member, the retracted comment cannot be viewed:
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member2'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
-    
+    >>> utils.logoutThenLoginAs(self, browser, 'member2')
+
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> 'retracted' in browser.contents
     False
-    
+
 However, the owner can see it, but cannot publish.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
-    
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
+
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> 'retracted' in browser.contents
@@ -517,15 +471,11 @@ However, the owner can see it, but cannot publish.
     Traceback (most recent call last):
     ...
     LookupError: label 'Publish'
-    
+
 The reviewer can re-publish the comment again:
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
-    
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
+
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> 'retracted' in browser.contents
@@ -533,17 +483,13 @@ The reviewer can re-publish the comment again:
     >>> browser.getControl('Publish').click()
     >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
     'published'
-    
+
 View as manager
 ---------------
 
 Log in as a manager.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'manager1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'manager1')
 
 Find the forum, and go to the new post.
 
@@ -566,12 +512,12 @@ Deleting will be tested later.
     >>> # browser.getControl('Save').click()
     >>> # browser.contents
     >>> # '...New Topic - New Title...A new topic with more text...'
-    
+
 Locking a conversation
 ----------------------
 
 Lock a conversation, and ensure that reply buttons do not appear.
-    
+
     >>> browser.open(conversation.absolute_url())
     >>> browser.getLink('Lock').click()
     >>> browser.getControl(name='form.button.Post')
@@ -585,14 +531,10 @@ Lock a conversation, and ensure that reply buttons do not appear.
 
 Verify that they do not appear as a regular member either.
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'member1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    
+
     >>> browser.getControl(name='form.button.Post')
     Traceback (most recent call last):
     ...
@@ -601,17 +543,13 @@ Verify that they do not appear as a regular member either.
     Traceback (most recent call last):
     ...
     LookupError: label 'Reply'
-    
+
 Unlock again
 
-    >>> browser.open('%s/logout' % self.portal.absolute_url())
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'manager1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'manager1')
     >>> browser.open(conversation.absolute_url())
     >>> browser.getLink('Activate').click()
-    
+
 View as anonymous
 -----------------
 
@@ -623,7 +561,7 @@ Log out, and ensure the post can be viewed by anonymous.
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> browser.contents
     '...Another full reply...'
-    
+
 Anonymous can also submit replies and new threads for moderation.
 
     >>> browser.getControl(name='text').value = 'Anonymous quick reply'
@@ -643,23 +581,23 @@ A full reply:
     >>> browser.getControl(name='text').value = 'Anonymous full reply'
 
 Note - anonymous cannot add attachments!
-    
+
     >>> browser.getControl(name='files:list', index=0)
     Traceback (most recent call last):
     ...
     LookupError: name 'files:list'
-    
+
 Submit and make sure we go back to the conversation
-    
+
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
-    
+
 The item is now up for moderation, but it is not visible to anonymous.
-    
+
     >>> 'Anonymous full reply' in browser.contents
     False
-    
+
 Anonymous can start new threads, too:
 
     >>> browser.open(self.forum.absolute_url())
@@ -668,14 +606,14 @@ Anonymous can start new threads, too:
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'Anonymous posting title'
     >>> browser.getControl('Body text').value = 'Anonymous <b>body</b> text'
-    
+
 Note - anonymous cannot add attachments!
-    
+
     >>> browser.getControl(name='files:list', index=0)
     Traceback (most recent call last):
     ...
     LookupError: name 'files:list'
-    
+
 Submit the form, and we should be returned to the forum view. The conversation
 should exist, but we should be able to view it because it is pending and we're
 not logged in.
@@ -690,10 +628,7 @@ not logged in.
 
 Check that they appear in the moderation queue, and publish/reject.
 
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'reviewer1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'reviewer1')
     >>> browser.open(self.forum.absolute_url())
 
     >>> browser.getLink('Moderate').click()
@@ -718,17 +653,14 @@ The posts should now appear.
     True
     >>> 'Anonymous full reply' in browser.contents
     True
-    
-    
+
+
 Deleting comments and conversations
 -----------------------------------
 
 A manager can delete comments:
 
-    >>> browser.open('%s/login_form' % self.portal.absolute_url())
-    >>> browser.getControl(name='__ac_name').value = 'manager1'
-    >>> browser.getControl(name='__ac_password').value = 'secret'
-    >>> browser.getControl('Log in').click()
+    >>> utils.logoutThenLoginAs(self, browser, 'manager1')
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
 
@@ -738,7 +670,7 @@ A manager can delete comments:
     '...Comment deleted...'
     >>> commentsBefore == len(conversation.getComments()) + 1
     True
-    
+
 Deleting the last comment also deletes the entire thread
 
     >>> for i in range(conversation.getNumberOfComments()):
