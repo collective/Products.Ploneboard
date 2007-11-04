@@ -8,6 +8,7 @@ from zope.interface.verify import verifyClass
 import PloneboardTestCase
 from Products.Ploneboard.interfaces import IComment
 from Products.Ploneboard.content.PloneboardComment import PloneboardComment
+from Products.Ploneboard.config import HAS_SIMPLEATTACHMENT
 
 from OFS.Image import File
 from Products.CMFPlone.utils import _createObjectByType
@@ -23,7 +24,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
 
     def testInterfaceVerification(self):
         self.failUnless(verifyClass(IComment, PloneboardComment))
-    
+
     def testGetConversation(self):
         comment = self.conv.objectValues()[0]
         self.failUnlessEqual(comment.getConversation(), self.conv)
@@ -33,7 +34,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         comment = conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
         self.failUnless(reply in conv.objectValues())
-    
+
     def testAddReplyAsAnonymousTakesOwnerOfForumAndCreatorAnonymous(self):
         conv = self.conv
         comment = conv.objectValues()[0]
@@ -41,7 +42,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         reply = comment.addReply('reply1', 'body1', creator='Anonymous')
         self.assertEqual(conv.getForum().owner_info()['id'], reply.owner_info()['id'])
         self.assertEqual(reply.Creator(), 'Anonymous')
-    
+
     def testAddReplyAsNotAnonymousLeavesOwnershipAlone(self):
         conv = self.conv
         comment = conv.objectValues()[0]
@@ -50,26 +51,26 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.assertNotEqual(conv.getForum().owner_info()['id'], 'member2')
         reply = comment.addReply('reply1', 'body1')
         self.assertEqual(reply.owner_info()['id'], 'member2')
-    
+
     def testAddReplyAddsRe(self):
         conv = self.conv
         comment = conv.objectValues()[0]
         reply = comment.addReply('', 'body1')
         self.assertEqual(reply.Title(), 'Re: ' + conv.Title())
-        
+
     def testAddReplyAddsReOnlyOnce(self):
         conv = self.conv
         comment = conv.objectValues()[0]
         reply = comment.addReply('', 'body1')
         reply2 = reply.addReply('', 'body2')
         self.assertEqual(reply2.Title(), 'Re: ' + conv.Title())
-        
+
     def testAddReplyOnlyAddsReIfNotSet(self):
         conv = self.conv
         comment = conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
         self.assertEqual(reply.Title(), 'reply1')
-    
+
     def testInReplyTo(self):
         comment = self.conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
@@ -98,30 +99,30 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         msg1 = conv.addComment('msg_subject1', 'msg_body1')
         msg1.setInReplyTo(msg)
         self.assertEqual(msg.getId(), msg1.inReplyTo().getId())
-       
+
     def testDeleteReply(self):
         conv = self.conv
-     
+
         m = conv.objectValues()[0]
         self.assertEqual(conv.getNumberOfComments(), 1)
         r = m.addReply('reply1', 'body1')
         self.assertEqual(conv.getNumberOfComments(), 2)
-        
+
         m.deleteReply(r)
         self.assertEqual(len(m.getReplies()), 0)
 
     def testMakeBranch(self):
         forum = self.forum
         conv = self.conv
-        
+
         comment = conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
         reply1 = reply.addReply('reply2', 'body2')
         self.assertEqual(conv.getNumberOfComments(), 3)
         self.assertEqual(forum.getNumberOfConversations(), 1)
-        
+
         branch = reply.makeBranch()
-        
+
         self.assertEqual(conv.getNumberOfComments(), 1)
         self.assertEqual(forum.getNumberOfConversations(), 2)
 
@@ -136,7 +137,7 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         r2 = msg.addReply('reply_subject2', 'reply_body2')
         r2.addReply('rs', 'rb').addReply('rs1', 'rb1').addReply('rs2', 'rb2')
         self.assertEqual(len(msg.childIds()), 6)
-        
+
     def testTransforms(self):
         conv = self.conv
         msg = conv.objectValues()[0]
@@ -145,20 +146,20 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(msg.getText())
         self.failIfEqual(msg.getText(), text)
         self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), msg.getText())
-        
+
     def XXXtestDeleting(self):
         pass
-        
+
     def testNewCommentIsVisibleToAnonymous(self):
         comment = self.conv.addComment('subject2', 'body2')
         id = comment.getId()
         self.logout()
         comments = self.conv.getComments()
         self.failUnless(id in [x.getId() for x in comments])
-        
-    
-        
-        
+
+
+
+
 class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCase):
 
     def afterSetUp(self):
@@ -169,7 +170,7 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
     def testAddAttachment(self):
         conv = self.conv
         msg = conv.objectValues()[0]
-        
+
         self.assertEqual(msg.getNumberOfAttachments(), 0)
         file = File('testfile', 'testtitle', 'asdf')
         msg.addAttachment(file=file, title='comment')
@@ -182,7 +183,7 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
     def testRemoveAttachment(self):
         conv = self.conv
         msg = conv.objectValues()[0]
-      
+
         file = File('testfile', 'testtitle', 'asdf')
         msg.addAttachment(file=file, title='comment')
         self.assertEqual(msg.getNumberOfAttachments(), 1)
@@ -230,7 +231,7 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         reply = msg.addReply('reply1', 'body1')
         self.tryAttachmentSizeRestrictions(reply)
 
-        
+
     def testAttachmentNumberRestriction(self):
         conv = self.conv
         msg = conv.objectValues()[0]
@@ -245,12 +246,12 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         else:
             self.fail("Can add too many attachments")
 
-        
+
     def testGetAttachments(self):
         conv = self.conv
         msg = conv.objectValues()[0]
         self.forum.setMaxAttachments(5)
-      
+
         file = File('testfile', 'testtitle', 'asdf')
         msg.addAttachment(file=file, title='comment')
         file1 = File('testfile1', 'testtitle1', 'asdf')
@@ -264,7 +265,7 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         """
 
         # Was going to use doctests for this until I realized that
-        # PloneTestCase has no doctest capability :(  
+        # PloneTestCase has no doctest capability :(
         # - Rocky
 
         # Actually - it does!
@@ -290,26 +291,27 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
 
         c2.delete()
 
-        # Now even though we deleted the last remaining reply to 
+        # Now even though we deleted the last remaining reply to
         # first_comment, we should still have another reply because
         # deleting a reply that had a child will make that child seem
         # as though it is a reply to its parent's parent.
 
         self.assert_(first_comment.getReplies(), [c21])
-        
+
         # lets add a comment to c21
-        
+
         c211 = c21.addReply('foo4', 'bar4')
-        
+
         # Once the only root comment is deleted that means the conversation's
         # sole root comment should become c211
-        
+
         c21.delete()
         self.assert_(self.conv.getRootComments(), [c211])
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestPloneboardComment))
-    suite.addTest(unittest.makeSuite(TestPloneboardCommentAttachmentSupport))
-    
+    if HAS_SIMPLEATTACHMENT:
+        suite.addTest(unittest.makeSuite(TestPloneboardCommentAttachmentSupport))
+
     return suite
