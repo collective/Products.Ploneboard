@@ -14,9 +14,9 @@ def setUpDefaultMembersBoardAndForum(self):
     addMember(self, 'member2', 'Member two', roles=('Member',))
     addMember(self, 'manager1', 'Manager one', roles=('Manager',))
     addMember(self, 'reviewer1', 'Manager one', roles=('Reviewer',))
-    
+
     self.workflow = self.portal.portal_workflow
-    
+
     self.setRoles(('Manager',))
     self.portal.invokeFactory('Ploneboard', 'board1')
     self.board = self.portal.board1
@@ -34,3 +34,11 @@ def disableScriptValidators(portal):
     except:
         pass
 
+def logoutThenLoginAs(self, browser, userid):
+    browser.open('%s/logout' % self.portal.absolute_url())
+    browser.open('%s/login_form' % self.portal.absolute_url())
+    browser.getControl(name='came_from').value = self.portal.absolute_url()
+    browser.getControl(name='__ac_name').value = userid
+    browser.getControl(name='__ac_password').value = 'secret'
+    browser.getControl('Log in').click()
+    return
