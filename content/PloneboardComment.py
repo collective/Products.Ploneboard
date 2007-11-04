@@ -5,7 +5,6 @@ from DateTime import DateTime
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -70,37 +69,8 @@ class PloneboardComment(BaseBTreeFolder):
     __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardComment'
-    archetype_name = 'Comment'
 
     schema = schema
-
-    content_icon = 'ploneboard_comment_icon.gif'
-    filter_content_types = 1
-    allowed_content_types = ()
-    global_allow = 0 # To avoid being visible in the add menu
-
-    actions = (
-            { 'id'          : 'view'
-            , 'name'        : 'View'
-            , 'action'      : 'string:$object_url'
-            , 'permissions' : (ViewBoard,)
-            },
-            { 'id'          : 'edit'
-            , 'name'        : 'Edit'
-            , 'action'      : 'string:$object_url/edit'
-            , 'permissions' : (ModifyPortalContent,)
-            },
-        )
-
-    aliases = \
-        {
-            '(Default)'               : 'comment_redirect_to_conversation'
-            , 'view'                  : 'comment_redirect_to_conversation'
-            , 'edit'                  : 'base_edit'
-            , 'sharing'               : '@@sharing'
-            , 'discussion_reply_form' : 'add_comment_form'
-            , 'deleteDiscussion'      : 'delete_view'
-        }
 
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
@@ -144,15 +114,15 @@ class PloneboardComment(BaseBTreeFolder):
             title = conv.Title()
             if not title.lower().startswith('re:'):
                 title = 'Re: ' + title
-        
+
         m = _createObjectByType(self.portal_type, conv, id)
-        
+
         # XXX: There is some permission problem with AT write_permission
-        # and using **kwargs in the _createObjectByType statement. 
+        # and using **kwargs in the _createObjectByType statement.
         m.setTitle(title)
         m.setText(text)
         m.setInReplyTo(self.UID())
-        
+
         if creator is not None:
             m.setCreators([creator])
 
@@ -172,7 +142,7 @@ class PloneboardComment(BaseBTreeFolder):
         if membership.isAnonymousUser():
             forum = self.getConversation().getForum()
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
-        
+
         m.reindexObject()
         conv.reindexObject() # Sets modified
         return m
@@ -258,7 +228,7 @@ class PloneboardComment(BaseBTreeFolder):
                             ],
                 }
 
-    
+
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""
@@ -367,29 +337,29 @@ class PloneboardComment(BaseBTreeFolder):
         """Delete this comment and make sure all comment replies to this
         comment are also cleaned up.
         """
-        
+
         parent_comment = self.inReplyTo()
         for reply in self.getReplies():
             reply.setInReplyTo(parent_comment)
             reply.reindexObject()
-        
+
         conversation = self.getConversation()
         conversation._delObject(self.getId())
         conversation.reindexObject()
 
     def __nonzero__(self):
         return 1
-    
+
     def __str__(self):
         return "<PloneboardComment: title=%r;>" % self.Title()
     __repr__  = __str__
 
-    
+
     security.declareProtected(DeleteComment, "object_delete")
     def object_delete(self):
         """Delete the comment the 'proper' way.
         """
-        
+
         return self.restrictedTraverse('@@delete_view')()
 
 registerType(PloneboardComment, PROJECTNAME)

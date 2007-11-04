@@ -2,7 +2,6 @@ from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, LinesField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -12,7 +11,7 @@ from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 
 from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-    AddForum, ManageBoard, ModerateForum
+    AddForum, ManageBoard
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
 from Products.Ploneboard import utils
@@ -47,50 +46,13 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     __implements__ = (BrowserDefaultMixin.__implements__, BaseBTreeFolder.__implements__,)
 
     meta_type = 'Ploneboard'
-    archetype_name = 'Message Board'
 
     schema = schema
 
-    content_icon = 'ploneboard_icon.gif'
-    allowed_content_types = ('PloneboardForum',)
-
     _at_rename_after_creation = True
 
-    # Set up our views - these are available from the 'display' menu
-    default_view = 'board_view'
-    immediate_view = 'board_view'
-    suppl_views = ('board_view', 'board_view_global')
-
-    actions = (
-            { 'id'          : 'view'
-            , 'name'        : 'View'
-            , 'action'      : 'string:$object_url'
-            , 'permissions' : (ViewBoard,)
-            },
-            { 'id'          : 'edit'
-            , 'name'        : 'Edit'
-            , 'action'      : 'string:$object_url/edit'
-            , 'permissions' : (ModifyPortalContent,)
-            },
-            { 'id'          : 'moderate'
-            , 'name'        : 'Moderate'
-            , 'action'      : 'string:$object_url/moderate'
-            , 'permissions' : (ModerateForum,)
-            },
-        )
-
-    aliases = \
-        {
-            '(Default)'  : '(dynamic view)',
-            'view'       : '(selected layout)',
-            'edit'       : 'base_edit',
-            'sharing'    : '@@sharing',
-            'index.html' : '(dynamic view)',
-            'moderate'   : 'moderation_form',
-        }
-
     security = ClassSecurityInfo()
-    
+
     def getCatalog(self):
         return getToolByName(self, 'portal_catalog')
 
@@ -106,7 +68,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
                 , title
                 , description ):
         """Add a forum to the board.
-        
+
         XXX: Should be possible to parameterise the exact type that is being
         added.
         """
@@ -150,7 +112,7 @@ class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     def searchComments(self, query):
         """This method searches through all forums, conversations and comments."""
         return self.getCatalog()(**query)
-    
+
     security.declarePublic('getForum')
     def getForum(self, forum_id):
         """Returns forum with specified forum id."""

@@ -5,7 +5,6 @@ from Acquisition import aq_inner, aq_chain
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -15,8 +14,8 @@ from Products.Ploneboard.config import PROJECTNAME
 from Products.CMFPlone.utils import _createObjectByType
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-from Products.Ploneboard.permissions import ViewBoard, AddComment, \
-        ManageConversation, EditComment
+from Products.Ploneboard.permissions import (
+    ViewBoard, AddComment, ManageConversation, EditComment)
 from Products.Ploneboard.interfaces import IForum, IConversation
 
 from Products.Ploneboard import utils
@@ -45,7 +44,7 @@ schema = PBConversationBaseBTreeFolderSchema + Schema((
     ))
 utils.finalizeSchema(schema)
 
-    
+
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
 
@@ -53,46 +52,14 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     __implements__ = (BaseBTreeFolder.__implements__, BrowserDefaultMixin.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardConversation'
-    archetype_name = 'Conversation'
 
     schema = schema
 
-    content_icon = 'ploneboard_conversation_icon.gif'
-    allowed_content_types = ('PloneboardComment',)
-    global_allow = 0 # To avoid it being visible in the add contents menu
-
-    # Set up our views - these are available from the 'display' menu
-    default_view = 'conversation_view'
-    immediate_view = 'conversation_view'
-    suppl_views = ( 'conversation_view', 'threaded_conversation_view' )
-
     _at_rename_after_creation = True
 
-    actions = (
-            { 'id'          : 'view'
-            , 'name'        : 'View'
-            , 'action'      : 'string:$object_url'
-            , 'permissions' : (ViewBoard,)
-            },
-            { 'id'          : 'edit'
-            , 'name'        : 'Edit'
-            , 'action'      : 'string:$object_url/edit'
-            , 'permissions' : (ModifyPortalContent,)
-            },
-        )
-
-    aliases = {
-            '(Default)'  : '(dynamic view)',
-            'view'       : '(selected layout)',
-            'index.html' : '(dynamic view)',
-            'edit'       : 'base_edit',
-            'sharing'    : '@@sharing',
-            'gethtml'    : '',
-            'mkdir'      : '',
-        }
 
     security = ClassSecurityInfo()
-    
+
     def getCatalog(self):
         return getToolByName(self, 'portal_catalog')
 
@@ -132,14 +99,14 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
 
         m = _createObjectByType('PloneboardComment', self, id)
-        
+
         # XXX: There is some permission problem with AT write_permission
-        # and using **kwargs in the _createObjectByType statement. 
+        # and using **kwargs in the _createObjectByType statement.
         m.setTitle(title)
         m.setText(text)
         if creator is not None:
             m.setCreators([creator])
-        
+
         # Create files in message
         if files:
             for file in files:
@@ -158,7 +125,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
         self.reindexObject() # Sets modified
         return m
-    
+
     security.declareProtected(ViewBoard, 'getComment')
     def getComment(self, comment_id, default=None):
         """Returns the comment with the specified id."""
@@ -170,7 +137,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return comments[0].getObject()
         else:
             return None
-    
+
     security.declareProtected(ViewBoard, 'getComments')
     def getComments(self, limit=30, offset=0, **kw):
         """
@@ -184,7 +151,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         query.update(kw)
         catalog=self.getCatalog()
         return [f.getObject() for f in catalog(**query)[offset:offset+limit]]
-        
+
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
         """
@@ -197,7 +164,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
         """
-        Returns a DateTime corresponding to the timestamp of the last comment 
+        Returns a DateTime corresponding to the timestamp of the last comment
         for the conversation.
         """
         comment = self.getLastComment()
@@ -263,7 +230,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             parent = self.getForum()
             cut_objects = parent.manage_cutObjects((self.getId(),) )
             forum.manage_pasteObjects(cut_objects)
-            
+
     security.declareProtected(ManageConversation, 'delete')
     def delete(self):
         """"""
@@ -277,7 +244,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
     def __nonzero__(self):
         return 1
-    
+
     # No setting of default page - makes no sense
     def canSetDefaultPage(self):
         return False

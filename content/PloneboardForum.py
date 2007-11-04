@@ -5,7 +5,6 @@ from Acquisition import aq_chain, aq_inner
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.permissions import ModifyPortalContent
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
@@ -15,16 +14,15 @@ from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, Int
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-from Products.Ploneboard.permissions import ViewBoard, ManageForum, \
-        ManageBoard, AddConversation, ModerateForum
+from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard import utils
-    
+
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
-    
+
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
               searchable = 1,
@@ -87,57 +85,13 @@ class PloneboardForum(BaseBTreeFolder):
     __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
-    archetype_name = 'Forum'
-    
-    schema = schema
 
-    content_icon = 'ploneboard_forum_icon.gif'
-    allowed_content_types = ('PloneboardConversation',)
-    global_allow = 0 # To avoid it showing in the add content menu
-    default_view = ''
+    schema = schema
 
     _at_rename_after_creation = True
 
-    actions = (
-            { 'id'          : 'view'
-            , 'name'        : 'View'
-            , 'action'      : 'string:$object_url'
-            , 'permissions' : (ViewBoard,)
-            },
-            { 'id'          : 'edit'
-            , 'name'        : 'Edit'
-            , 'action'      : 'string:$object_url/edit'
-            , 'permissions' : (ModifyPortalContent,)
-            },
-            { 'id'          : 'rssfeed'
-            , 'name'        : 'RSS Feed'
-            , 'action'      : 'string:$object_url/rss-properties'
-            , 'permissions' : (ManageBoard,)
-            },
-            { 'id'          : 'local_roles'
-            , 'name'        : 'Sharing'
-            , 'action'      : 'string:$object_url/sharing'
-            , 'permissions' : (ManageBoard,)
-            },
-            { 'id'          : 'moderate'
-            , 'name'        : 'Moderate'
-            , 'action'      : 'string:$object_url/moderate'
-            , 'permissions' : (ModerateForum,)
-            },
-        )
-
-    aliases = \
-        {
-              '(Default)'      : 'forum_view', 
-              'view'           : 'forum_view',
-              'edit'           : 'base_edit',
-              'sharing'        : '@@sharing',
-              'rss-properties' : 'editSynProperties',
-              'moderate'       : 'moderation_form',
-        }
-
     security = ClassSecurityInfo()
-    
+
     def getCatalog(self):
         return getToolByName(self, 'portal_catalog')
 
@@ -150,7 +104,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declarePublic('synContentValues')
     def synContentValues(self):
         return (self.getConversations())
-    
+
     security.declareProtected(ViewBoard, 'getBoard')
     def getBoard(self):
         """Returns containing or nearest board."""
@@ -166,31 +120,31 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(AddConversation, 'addConversation')
     def addConversation(self, title, text=None, creator=None, files=None, **kwargs):
         """Adds a new conversation to the forum.
-        
-        XXX should be possible to parameterise the exact type that is being 
+
+        XXX should be possible to parameterise the exact type that is being
         added.
         """
-        
+
         id = self.generateId(prefix='')
 
         conv = _createObjectByType('PloneboardConversation', self, id)
-        
+
         # XXX: There is some permission problem with AT write_permission
-        # and using **kwargs in the _createObjectByType statement. 
+        # and using **kwargs in the _createObjectByType statement.
         conv.setTitle(title)
-        
+
         if creator is not None:
             conv.setCreators([creator])
-        
+
 
         if text is not None:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
-            
+
             # XXX: There is some permission problem with AT write_permission
-            # and using **kwargs in the _createObjectByType statement. 
+            # and using **kwargs in the _createObjectByType statement.
             m.setTitle(title)
             m.setText(text)
-            
+
             if creator is not None:
                 m.setCreators([creator])
 
@@ -200,7 +154,7 @@ class PloneboardForum(BaseBTreeFolder):
                     # Get raw filedata, not persistent object with reference to tempstorage
                     attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                     m.addAttachment(attachment)
-                    
+
             m.reindexObject()
 
         conv.reindexObject()
@@ -212,28 +166,28 @@ class PloneboardForum(BaseBTreeFolder):
         #return self._getOb(conversation_id, default)
         catalog = self.getCatalog()
         conversations = catalog(
-                object_provides='Products.Ploneboard.interfaces.IConversation', 
-                getId=conversation_id, 
+                object_provides='Products.Ploneboard.interfaces.IConversation',
+                getId=conversation_id,
                 path='/'.join(self.getPhysicalPath()))
         if conversations:
             return conversations[0].getObject()
         else:
             return None
-    
+
     security.declareProtected(ManageForum, 'removeConversation')
     def removeConversation(self, conversation_id):
         """Removes a conversation with the given conversation id from the forum."""
         self._delObject(conversation_id)
-    
+
     security.declareProtected(ViewBoard, 'getConversations')
     def getConversations(self, limit=20, offset=0):
         """Returns conversations."""
         catalog = self.getCatalog()
         return [f.getObject() for f in \
-                catalog(object_provides='Products.Ploneboard.interfaces.IConversation', 
-                        sort_on='modified', 
-                        sort_order='reverse', 
-                        sort_limit=(offset+limit), 
+                catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
+                        sort_on='modified',
+                        sort_order='reverse',
+                        sort_limit=(offset+limit),
                         path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
@@ -268,7 +222,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
         """
-        Returns a DateTime corresponding to the timestamp of the last comment 
+        Returns a DateTime corresponding to the timestamp of the last comment
         for the forum.
         """
         res = self.getCatalog()(
