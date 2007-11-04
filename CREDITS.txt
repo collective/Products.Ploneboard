@@ -44,3 +44,7 @@ code-cleanup.
     **Jean-Paul Ladage**, "Zest Software":http://www.zestsoftware.nl -- Dutch translations, user interface
 
     **Jarno de Wit**, "Pareto":http://www.pareto.nl -- Dutch translations
+
+    **Florian Schulze** -- Plone 3 port.
+
+    **Gilles Lenfant, "Ingeniweb":htt://www.ingeniweb.com -- Plone 3 port, french translation.

@@ -1,8 +1,15 @@
+########################
 Changelog for Ploneboard
+########################
 
     (name of developer listed in brackets)
 
 Ploneboard 2.0 - unreleased
+###########################
 
+    - Portlets management enabled, Plone 3.0 tests, deprecations hidden.
+      [glenfant]
+    - French translation completed.
+      [glenfant]
     - Port to Plone 3.0
-      [wichert]
+      [wichert] [fschulze]

@@ -1,6 +1,6 @@
 Requirements
 
-    Ploneboard requires Zope 2.9.7 And Plone 2.5.3 or later
+    Ploneboard requires Zope 2.10.4, Plone 3.0.x or later.
 
     If you want to support attachments the SimpleAttachment product is
     also required.
