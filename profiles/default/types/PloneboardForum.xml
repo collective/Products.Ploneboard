@@ -17,7 +17,7 @@
  <alias from="(Default)" to="forum_view"/>
  <alias from="edit" to="base_edit"/>
  <alias from="moderate" to="moderation_form"/>
- <alias from="rss-properties" to="editSynProperties"/>
+ <alias from="rss-properties" to="synPropertiesForm"/>
  <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="forum_view"/>
  <action title="View" action_id="view" category="object" condition_expr=""
