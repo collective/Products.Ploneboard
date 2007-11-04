@@ -26,10 +26,12 @@ RetractComment = 'Ploneboard: Retract Comment'
 ModerateForum = 'Ploneboard: Moderate Forum'
 
 # Note: if this changes, you must also change configure.zcml!
-DeleteComment = permissions.DeleteObjects 
+DeleteComment = permissions.DeleteObjects
 
 
 # Set up default roles for permissions
+# FIXME: Should set roles/permissions with GS step and remove this
+
 setDefaultRoles(ViewBoard,
                 ('Anonymous', 'Member', 'Manager'))
 
