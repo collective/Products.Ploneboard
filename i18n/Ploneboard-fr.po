@@ -1,13 +1,14 @@
 # translation of Ploneboard-fr.po to
 # Guillaume Lederer <glederer@cirb.irisnet.be>; 2007.
 # Encolpe Degoute <encolpe.degoute@ingeniweb.com>, 2007.
+# Gilles Lenfant <gilles.lenfant@ingeniweb.com>, 2007.
 # First translator : Guillaume Lederer <glederer@cirb.irisnet.be>; 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2007-04-23 08:16+0200\n"
-"Last-Translator: Encolpe Degoute <encolpe.degoute@ingeniweb.com>\n"
+"Last-Translator: Gilles Lenfant <gilles.lenfant@ingeniweb.com>\n"
 "Language-Team:  <support@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -425,6 +426,9 @@ msgstr "Montrer les nouvelles conversations"
 
 msgid "show_no_replies_all"
 msgstr "Montrer les messages sans réponse"
+
+msgid "no_replies_yet"
+msgstr "Pas encore de réponse"
 
 msgid "show_no_replies"
 msgstr "Montrer les messages sans réponse"
