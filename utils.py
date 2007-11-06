@@ -1,10 +1,15 @@
+"""
+$Id$
+"""
 from ZODB.PersistentMapping import PersistentMapping
 
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
 from Acquisition import Implicit, aq_inner, aq_parent
 import Globals
+from zope.i18nmessageid import MessageFactory
 
 from Products.CMFCore.utils import getToolByName
+import config
 
 def importModuleFromName(module_name):
     """ import and return a module by its name """
@@ -16,13 +21,13 @@ def importModuleFromName(module_name):
     except AttributeError, e:
         raise ImportError(str(e))
     return m
-    
+
 def changeOwnershipOf(object, userid, recursive=0):
-    """Changes the ownership of an object. Stolen from Plone and CMFCore, but 
+    """Changes the ownership of an object. Stolen from Plone and CMFCore, but
     be less restrictive about where the owner is found.
     """
     membership = getToolByName(object, 'portal_membership')
-    
+
     user = None
     uf = object.acl_users
     while uf is not None:
@@ -32,10 +37,10 @@ def changeOwnershipOf(object, userid, recursive=0):
         container = aq_parent(aq_inner(uf))
         parent = aq_parent(aq_inner(container))
         uf = getattr(parent, 'acl_users', None)
-    
+
     if user is None:
         raise KeyError, "User %s cannot be found." % userid
-    
+
     object.changeOwnership(user, recursive)
 
     def fixOwnerRole(object, user_id):
@@ -65,21 +70,21 @@ def changeOwnershipOf(object, userid, recursive=0):
         for obj in subobjects:
             fixOwnerRole(obj, user.getId())
             catalog_tool.reindexObject(obj)
-    
+
 class TransformDataProvider(Implicit):
     """ Base class for data providers """
     security = ClassSecurityInfo()
     security.declareObjectPublic()
-    
+
     def __init__(self):
         self.config = PersistentMapping()
         self.config_metadata = PersistentMapping()
-        
+
         self.config.update({'inputs' : {} })
         self.config_metadata.update({
             'inputs' : {
-                'key_label' : '', 
-                'value_label' : '', 
+                'key_label' : '',
+                'value_label' : '',
                 'description' : ''}
             })
 
@@ -87,21 +92,21 @@ class TransformDataProvider(Implicit):
     def setElement(self, inputs):
         """ inputs - dictionary, but may be extended to new data types"""
         self.config['inputs'].update(inputs)
-            
+
     def delElement(self, el):
         """ el - dictionary key"""
         del self.config['inputs'][el]
-        
+
     security.declarePublic('getElements')
     def getElements(self):
         """ Returns mapping """
         return self.config['inputs']
-    
+
     security.declarePublic('getConfigMetadata')
     def getConfigMetadata(self):
         """ Returns config metadata """
         return self.config_metadata['inputs']
-    
+
 Globals.InitializeClass(TransformDataProvider)
 
 def finalizeSchema(schema):
@@ -140,3 +145,7 @@ def finalizeSchema(schema):
         schema.changeSchemataForField('excludeFromNav', 'settings')
     if schema.has_key('nextPreviousEnabled'):
         schema.changeSchemataForField('nextPreviousEnabled', 'settings')
+
+# Use PloneboardMessageFactory for translations in Python
+PloneboardMessageFactory = MessageFactory(config.I18N_DOMAIN)
+ModuleSecurityInfo('Products.Ploneboard.utils').declarePublic('PloneboardMessageFactory')
