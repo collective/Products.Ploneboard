@@ -1,5 +1,9 @@
+"""
+$Id$
+"""
 PROJECTNAME = "Ploneboard"
 SKINS_DIR = 'skins'
+I18N_DOMAIN = PROJECTNAME.lower()
 
 # Transform config
 EMOTICON_TRANSFORM_ID = 'text_to_emoticons'
