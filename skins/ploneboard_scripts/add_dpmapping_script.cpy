@@ -7,13 +7,18 @@
 ##bind subpath=traverse_subpath
 ##parameters=key, value, transform_name
 ##title=
+# $Id$
+
+from Products.CMFCore.utils import getToolByName
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
+
+putils = getToolByName(context, 'plone_utils')
 
 dprovider = context.portal_ploneboard.getDataProvider(transform_name)
 dprovider.setElement({key : value})
 
 REQUEST = context.REQUEST
 REFERER = REQUEST.HTTP_REFERER
-if REFERER.find('portal_status_message')!=-1:
-    REFERER = REFERER[:REFERER.find('portal_status_message')]
-url = '%s&%s' % (REFERER, 'portal_status_message=Data+provider+updated.')
-return REQUEST.RESPONSE.redirect(url)
+message = _(u'Data provider updated.')
+putils.addPortalMessage()
+return REQUEST.RESPONSE.redirect(REFERER)

@@ -7,7 +7,11 @@
 ##bind subpath=traverse_subpath
 ##parameters=
 ##title=Validates a posting
-##
+# $Id$
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone import PloneMessageFactory as _
+
+putils = getToolByName(context, 'plone_utils')
 
 def FileSize(file):
     if hasattr(file, 'size'):
@@ -39,7 +43,7 @@ if maxsize!=-1:
             break
 
 if state.getErrors():
-    return state.set(
-            portal_status_message='Please correct the indicated errors.')
+    message = _(u'Please correct the indicated errors.')
+    putils.addPortalMessage(message)
 
 return state

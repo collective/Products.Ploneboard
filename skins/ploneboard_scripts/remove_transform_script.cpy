@@ -7,6 +7,12 @@
 ##bind subpath=traverse_subpath
 ##parameters=transform_name
 ##title=
+# $Id$
+
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from Products.CMFCore.utils import getToolByName
+
+putils = getToolByName(context, 'plone_utils')
 
 context.portal_ploneboard.unregisterTransform(transform_name)
 
@@ -14,7 +20,8 @@ context.portal_ploneboard.unregisterTransform(transform_name)
 state.setNextAction('redirect_to:string:prefs_manage_transforms')
 
 # Optionally pass a message to display to the user
-state.setKwargs( {'portal_status_message':'Transform %s removed.' % transform_name} )
+message = _(u'Transform %s removed') % unicode(transform_name)
+putils.addPortalMessage(message)
 
 return state
-  
+

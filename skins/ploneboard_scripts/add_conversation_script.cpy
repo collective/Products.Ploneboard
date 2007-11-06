@@ -7,12 +7,15 @@
 ##bind subpath=traverse_subpath
 ##parameters=title, text='', files=None
 ##title=Add a conversation
+# $Id$
 
 from AccessControl import Unauthorized
 from Products.CMFCore.utils import getToolByName
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
 pm = getToolByName(context, 'portal_membership')
 wf = getToolByName(context, 'portal_workflow')
+putils = getToolByName(context, 'plone_utils')
 
 if pm.isAnonymousUser():
     creator = 'Anonymous'
@@ -32,13 +35,14 @@ if m:
         # If we are unable to view the new comment (e.g. because it is pending
         # and user is anonymous, rely on old context)
         new_context = context
-    
+
     status = wf.getInfoFor(m, 'review_state')
     if status == 'pending':
-        message = 'Comment is pending moderation'
+        message = _(u'Conversation is pending moderation')
     else:
-        message = 'Comment added'
-        
-    state.set(context=new_context, portal_status_message=message)
+        message = _(u'Conversation added')
+
+    putils.addPortalMessage(message)
+    state.set(context=new_context)
 
 return state
