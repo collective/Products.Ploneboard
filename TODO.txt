@@ -24,12 +24,13 @@ Ploneboard to-do list
                 site, it should not remove this info for all forums)
             - should be possible to "mark all as viewed" manually
 
+    - Use KSS style edit widgets where possible
+
     Missing tests
     -------------
 
     - Functional tests for threaded_conversation_view (see above)
     - Functional tests for global board view template (see above)
-
     - Coverage of PloneboardTool's transform management is sub-optimal
 
     Code structure
