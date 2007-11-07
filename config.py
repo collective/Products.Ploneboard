@@ -23,6 +23,7 @@ GLOBALS = globals()
 try:
     import Products.SimpleAttachment
     HAS_SIMPLEATTACHMENT = True
+    del Products.SimpleAttachment
 except ImportError:
     HAS_SIMPLEATTACHMENT = False
 
