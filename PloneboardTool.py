@@ -1,3 +1,6 @@
+"""
+$Id$
+"""
 import Globals
 from AccessControl import ClassSecurityInfo
 from OFS.Image import File
@@ -5,16 +8,21 @@ from OFS.Folder import Folder
 from ZPublisher.HTTPRequest import FileUpload
 from ZODB.PersistentMapping import PersistentMapping
 
+from zope.interface import implements
+
 from Products.CMFCore.utils import UniqueObject
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.utils import registerToolInterface
 from Products.CMFCore.permissions import View
 from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.ActionProviderBase import ActionProviderBase
 
 from Products.Ploneboard.config import PLONEBOARD_TOOL
-
+from Products.Ploneboard.interfaces import IPloneboardTool
 
 class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
+    implements(IPloneboardTool)
+
     id = PLONEBOARD_TOOL
     meta_type = 'Ploneboard Tool'
 
@@ -164,3 +172,4 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
 
 
 Globals.InitializeClass(PloneboardTool)
+registerToolInterface(PLONEBOARD_TOOL, IPloneboardTool)
