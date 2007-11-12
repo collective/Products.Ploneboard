@@ -132,12 +132,14 @@ class PloneboardForum(BaseBTreeFolder):
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
         conv.setTitle(title)
+        if text is not None:
+            conv.setDescription(text)
 
         if creator is not None:
             conv.setCreators([creator])
 
 
-        if text is not None:
+        if files is not None:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
 
             # XXX: There is some permission problem with AT write_permission
