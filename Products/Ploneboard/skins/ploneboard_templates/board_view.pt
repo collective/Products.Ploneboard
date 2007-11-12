@@ -85,7 +85,7 @@
               <tr tal:define="oddrow repeat/forum/odd;"
                   tal:attributes="class python:test(oddrow, 'even', 'odd')">
 
-                <td>      
+                <td class="forumTitleCell">
                   <a href=""
                      class="listingForum"
                      tal:attributes="href forum/absolute_url">
@@ -96,20 +96,22 @@
                   </a>
                 </td>
 
-                <td class="listingCheckbox"
+                <td class="listingCheckbox forumConversationsCell"
                     tal:content="forum/getNumberOfConversations">
                   34
                 </td>
 
                 <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
                      if older than this week. (limi) -->
-                <td tal:condition="not: forum/getLastCommentAuthor">
+                <td tal:condition="not: forum/getLastCommentAuthor"
+                    class="forumMostRecentCell">
                   <span i18n:translate="no_conversations_started" class="discreet">
                     No conversations started
                   </span>
                 </td>
 
-                <td tal:condition="forum/getLastCommentAuthor">
+                <td tal:condition="forum/getLastCommentAuthor"
+                    class="forumMostRecentCell">
                   <div i18n:translate="label_by_author">
                     by <tal:author i18n:name="author"
                                    define="creator forum/getLastCommentAuthor;
