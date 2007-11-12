@@ -24,5 +24,6 @@ setup(name='Products.Ploneboard',
       download_url='http://plone.org/products/ploneboard',
       install_requires=[
         'setuptools',
+        'Products.SimpleAttachment',
       ],
 )
