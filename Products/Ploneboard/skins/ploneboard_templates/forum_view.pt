@@ -118,7 +118,7 @@
                                      b_size python:20;b_start python:0;b_start request/b_start | b_start;
                                      batch python:Batch(here.getConversations, numConversations, b_size, int(b_start), orphan=1);">
 
-            <table class="listing">
+            <table class="listing nosort">
 
                 <thead>
                     <tr>

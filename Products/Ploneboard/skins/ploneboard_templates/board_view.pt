@@ -69,7 +69,7 @@
              container) -->
 
         <table metal:define-macro="forumdisplay"
-               class="listing"
+               class="listing nosort"
                style="width: 100%;">
 
           <thead>
