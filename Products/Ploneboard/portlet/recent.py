@@ -32,7 +32,7 @@ class Renderer(base.Renderer):
         ct=getToolByName(self.context, "portal_catalog")
         normalize=getUtility(IIDNormalizer).normalize
         icons=getMultiAdapter((self.context, self.request),
-                                name="plone_view").icons_visible()
+                                name="plone").icons_visible()
         if icons:
             portal=getMultiAdapter((self.context, self.request),
                                     name="plone_portal_state").portal_url()+"/"
