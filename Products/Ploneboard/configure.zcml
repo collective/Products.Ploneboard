@@ -6,6 +6,7 @@
    i18n_domain="ploneboard">
 
   <include package="Products.SimpleAttachment" />
+  <include package="plone.app.portlets" />
 
   <five:implements
      class=".content.Ploneboard.Ploneboard"
@@ -53,14 +54,6 @@
 
   <browser:page
      for="*"
-     name="ploneboard_recent_portlet_view"
-     class=".browser.RecentConversationsPortletView"
-     permission="zope.Public"
-     allowed_attributes="results"
-     />
-
-  <browser:page
-     for="*"
      name="ploneboard_recent_view"
      class=".browser.RecentConversationsView"
      permission="zope.Public"
@@ -83,6 +76,8 @@
      provides="Products.GenericSetup.interfaces.EXTENSION"
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
+
+  <include package=".portlet" />
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject

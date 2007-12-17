@@ -118,39 +118,6 @@ class ConversationView(CommentView):
         """
         return [self._buildDict(ob) for ob in self.context.getComments(limit=limit, offset=offset)]
 
-class RecentConversationsPortletView(Five.BrowserView):
-    """Find recent conversations for portlet display
-    """
-
-    def __init__(self, context, request):
-        Five.BrowserView.__init__(self, context, request)
-        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
-        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
-
-    def results(self, limit=5):
-        catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
-        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
-                            sort_on='modified',
-                            sort_order='reverse',
-                            sort_limit=limit)[:limit]
-        for r in results:
-            yield self._buildDict(r.getObject())
-
-    def _buildDict(self, ob):
-        forum = ob.getForum()
-        wfstate = self.portal_workflow.getInfoFor(ob, 'review_state')
-        wfstate = self.plone_utils.normalizeString(wfstate)
-        ptype = self.plone_utils.normalizeString(ob.getTypeInfo().getId())
-
-        return { 'Title': ob.title_or_id(),
-                 'Description' : ob.Description(),
-                 'absolute_url': ob.absolute_url(),
-                 'forum_title' : forum.title_or_id(),
-                 'forum_url' : forum.absolute_url(),
-                 'review_state_normalized' : wfstate,
-                 'portal_type_normalized' : ptype,
-               }
-
 
 class RecentConversationsView(CommentViewableView):
     """Find recent conversations

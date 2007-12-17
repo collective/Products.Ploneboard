@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<portlets>
+  <portlet
+      addview="ploneboard.RecentConversations"
+      title="Recent Ploneboard conversations"
+      description="A portlet which shows an overview of all recently updated conversations"
+      />
+        
+</portlets>
