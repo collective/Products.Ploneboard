@@ -28,6 +28,19 @@
     <ul class="visualNoMarker discreet"
         style="float:right; margin: 0 0 1em 1em;">
         <li>
+            <form tal:attributes="action string:${context/absolute_url}/search">
+                <label class="hiddenStructure" for="boardSearch"
+                    i18n:domain="ploneboard" i18n:translate="board_search_label">
+                    Search the boards
+                </label>
+                <input type="text" name="q"
+                    title="Search the boards"
+                    i18n:attributes="title board_search_label"/>
+                <input class="searchButton" type="submit" value="Search"
+                    i18n:attributes="value board_search_button"/>
+            </form>
+        </li>
+        <li>
           <img tal:replace="structure context/new_conversation.gif" />
           <a i18n:translate="show_new_conversations_all"
              tal:attributes="href string:${context/absolute_url}/ploneboard_recent">

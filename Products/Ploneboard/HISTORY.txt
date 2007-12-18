@@ -4,6 +4,9 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Add a search form to the board view.
+  [wichert]
+
 - Disable non-working javascript-based sorting on conversation and forum views.
   [wichert]
 

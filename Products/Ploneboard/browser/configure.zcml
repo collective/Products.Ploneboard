@@ -3,6 +3,11 @@
    xmlns:browser="http://namespaces.zope.org/browser"
    i18n_domain="ploneboard">
 
+  <browser:page
+     for="..interfaces.IPloneboard"
+     class=".search.SearchView"
+     name="search"
+     permission="zope2.View"/>
 
   <browser:page
      for="..interfaces.IConversation"

@@ -28,7 +28,6 @@ class Renderer(base.Renderer):
 
     @memoize
     def results(self, limit=5):
-        wt=getToolByName(self.context, "portal_workflow")
         ct=getToolByName(self.context, "portal_catalog")
         normalize=getUtility(IIDNormalizer).normalize
         icons=getMultiAdapter((self.context, self.request),
