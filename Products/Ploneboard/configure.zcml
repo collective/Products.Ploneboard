@@ -8,15 +8,15 @@
   <include package="Products.SimpleAttachment" />
   <include package="plone.app.portlets" />
 
-  <five:implements
-     class=".content.Ploneboard.Ploneboard"
-     interface="plone.portlets.interfaces.ILocalPortletAssignable"
-     />
+  <class class=".content.Ploneboard.Ploneboard">
+      <implements
+          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+  </class>
 
-  <five:implements
-     class=".content.PloneboardForum.PloneboardForum"
-     interface="plone.portlets.interfaces.ILocalPortletAssignable"
-     />
+  <class class=".content.PloneboardForum.PloneboardForum">
+      <implements
+          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+  </class>
 
   <permission
      id="Ploneboard.DeleteComment"
