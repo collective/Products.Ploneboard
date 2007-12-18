@@ -1,12 +1,6 @@
 Ploneboard to-do list
 =====================
 
-    Bugs/Known issues
-    -----------------
-
-    - needs items marked as five:traversable
-    - ploneboard_recent breaks in the same situations
-
     Features
     --------
 
