@@ -4,6 +4,9 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Correct attachment handling, which broke in previous 2.0 releases.
+  [fschulze]
+
 - Add a search form to the board view.
   [wichert]
 
