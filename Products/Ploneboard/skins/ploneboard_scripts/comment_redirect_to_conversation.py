@@ -10,12 +10,12 @@
 
 # XXX if we ever do batching, we need extra logic here.
 redirect_target = context.getConversation()
-view = redirect_target.getTypeInfo().getActionById('view')
+view = redirect_target.restrictedTraverse("@@plone_context_state").view_url()
 anchor = context.getId()
   
 response = context.REQUEST.get('RESPONSE', None)
 if response is not None:
-    response.redirect(redirect_target.absolute_url() + '/%s#%s' % (view, anchor))
+    response.redirect('%s#%s' % (view, anchor))
     print "Redirecting to %s" % redirect_target.absolute_url()
     return printed
     
