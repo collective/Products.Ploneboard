@@ -25,6 +25,12 @@
         </span>
     </h1>
 
+    <a class="link-parent"
+        tal:attributes="href view/board_url"
+        i18n:domain="ploneboard" i18n:translate="label_to_board">
+        Up to discussion board
+    </a>
+
     <tal:block tal:condition="results"
                tal:define="Batch python:modules['Products.CMFPlone'].Batch;
                            b_size python:30;

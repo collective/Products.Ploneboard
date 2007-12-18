@@ -22,6 +22,8 @@ class SearchView(BrowserView):
         self.icons=plone.icons_visible()
         self.portal=getMultiAdapter((context, request),
                                     name="plone_portal_state").portal_url()+"/"
+
+
     def update(self):
         if "q" not in self.request.form:
             self.results=[]
@@ -58,6 +60,12 @@ class SearchView(BrowserView):
                 review_state = self.normalize(brain.review_state),
                 portal_type = self.normalize(brain.portal_type),
                 relevance = brain.data_record_normalized_score_)
+
+
+    def board_url(self):
+        state=getMultiAdapter((self.context, self.request), name="plone_context_state")
+        return state.view_url()
+
 
     def __call__(self):
         self.update()
