@@ -12,6 +12,22 @@
 <body>
 <div metal:fill-slot="main"
     tal:define="results view/results">
+    <a class="link-parent"
+        tal:attributes="href view/board_url"
+        i18n:domain="ploneboard" i18n:translate="label_to_board">
+        Up to discussion board
+    </a>
+
+    <form action="search" class="searchPage">
+        <input class="searchPage" name="q" type="text" size="25"
+               title="Search Forum"
+               i18n:domain="ploneboard"
+               i18n:attributes="title title_search_title"
+               tal:attributes="value request/q|nothing"/>
+        <input class="searchPage searchButton" type="submit"
+               value="Search" i18n:attributes="value label_search;"/>
+    </form>
+
     <h1 class="documentFirstHeading">
         <span i18n:translate="heading_search_results">
             Search results
@@ -25,11 +41,6 @@
         </span>
     </h1>
 
-    <a class="link-parent"
-        tal:attributes="href view/board_url"
-        i18n:domain="ploneboard" i18n:translate="label_to_board">
-        Up to discussion board
-    </a>
 
     <tal:block tal:condition="results"
                tal:define="Batch python:modules['Products.CMFPlone'].Batch;
