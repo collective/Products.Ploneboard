@@ -46,6 +46,7 @@ class SearchView(BrowserView):
         text=obj.Schema()["text"].get(obj, mimetype="text/plain").strip()
 
         return dict(
+                author = brain.Creator,
                 title = brain.Title,
                 description = self.crop(text),
                 url = brain.getURL()+"/view",

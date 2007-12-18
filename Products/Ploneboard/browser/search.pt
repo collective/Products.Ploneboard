@@ -62,6 +62,20 @@
                         </span>
 
                         <span class="documentByLine">
+
+                            <span class="documentAuthor"
+                                i18n:translate="label_by_author">
+                                by
+                                <a href="#"
+                                    tal:attributes="href string:${portal_url}/author/${info/author}"
+                                    tal:content="info/author"
+                                    tal:omit-tag="not:info/author"
+                                    i18n:name="author">
+                                    Bob Dobalina
+                                </a>
+                                &mdash;
+                            </span>
+
                            <tal:relevance i18n:translate="label_relevance_percentage">
                            Relevance:
                            <span tal:replace="info/relevance">13</span>%
