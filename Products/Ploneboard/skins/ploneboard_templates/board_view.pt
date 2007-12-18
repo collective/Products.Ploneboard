@@ -31,10 +31,10 @@
             <form tal:attributes="action string:${context/absolute_url}/search">
                 <label class="hiddenStructure" for="boardSearch"
                     i18n:domain="ploneboard" i18n:translate="board_search_label">
-                    Search the boards
+                    Search Boards
                 </label>
-                <input type="text" name="q"
-                    title="Search the boards"
+                <input type="text" name="q" class="inputLabel"
+                    title="Search Board"
                     i18n:attributes="title board_search_label"/>
                 <input class="searchButton" type="submit" value="Search"
                     i18n:attributes="value board_search_button"/>

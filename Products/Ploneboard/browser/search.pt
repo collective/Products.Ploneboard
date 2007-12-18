@@ -20,9 +20,9 @@
 
     <form action="search" class="searchPage">
         <input class="searchPage" name="q" type="text" size="25"
-               title="Search Forum"
+               title="Search Board"
                i18n:domain="ploneboard"
-               i18n:attributes="title title_search_title"
+               i18n:attributes="title board_search_label"
                tal:attributes="value request/q|nothing"/>
         <input class="searchPage searchButton" type="submit"
                value="Search" i18n:attributes="value label_search;"/>
