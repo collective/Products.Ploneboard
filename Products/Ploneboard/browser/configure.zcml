@@ -8,7 +8,7 @@
      for="..interfaces.IConversation"
      class=".browser.ConversationView"
      name="conversation_browserview"
-     allowed_interface=".browser.IConversationView"
+     allowed_interface=".interfaces.IConversationView"
      permission="zope.Public"
      />
 
@@ -16,7 +16,7 @@
      for="..interfaces.IComment"
      class=".browser.CommentView"
      name="singlecomment_view"
-     allowed_interface=".browser.ICommentView"
+     allowed_interface=".interfaces.ICommentView"
      permission="zope.Public"
      />
 

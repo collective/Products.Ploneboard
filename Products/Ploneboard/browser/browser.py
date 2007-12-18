@@ -9,7 +9,8 @@ from Products import Five
 from Products.CMFCore import utils as cmf_utils
 from Products.Ploneboard import permissions
 from Products.Ploneboard.batch import Batch
-from Products.Ploneboard.interfaces import IConversationView, ICommentView
+from Products.Ploneboard.browser.interfaces import IConversationView
+from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
 class CommentViewableView(Five.BrowserView):
