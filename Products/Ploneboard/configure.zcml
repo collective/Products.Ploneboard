@@ -29,44 +29,9 @@
      factory=".adapters.CommentTextContent"
      />
 
-  <browser:page
-     for=".interfaces.IConversation"
-     class=".browser.ConversationView"
-     name="conversation_browserview"
-     allowed_interface=".browser.IConversationView"
-     permission="zope.Public"
-     />
 
-  <browser:page
-     for=".interfaces.IComment"
-     class=".browser.CommentView"
-     name="singlecomment_view"
-     allowed_interface=".browser.ICommentView"
-     permission="zope.Public"
-     />
-
-  <browser:page
-     for=".interfaces.IComment"
-     class=".browser.DeleteCommentView"
-     name="delete_view"
-     permission="Ploneboard.DeleteComment"
-     />
-
-  <browser:page
-     for="*"
-     name="ploneboard_recent_view"
-     class=".browser.RecentConversationsView"
-     permission="zope.Public"
-     allowed_attributes="results num_conversations"
-     />
-
-  <browser:page
-     for="*"
-     name="ploneboard_unanswered_view"
-     class=".browser.UnansweredConversationsView"
-     permission="zope.Public"
-     allowed_attributes="results num_conversations"
-     />
+  <include package=".browser" />
+  <include package=".portlet" />
 
   <genericsetup:registerProfile
      name="ploneboard"
@@ -77,7 +42,6 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
-  <include package=".portlet" />
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject
