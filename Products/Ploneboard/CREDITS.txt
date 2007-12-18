@@ -7,7 +7,7 @@ contributors
 
 Ploneboard contributors:
 
-    **Helge Tesdal**, "Plone Solutions":http://www.plonesolutions.com -- Code,
+    **Helge Tesdal**, "Jarn":http://www.jarn.com -- Code,
 idea, architecture
 
     **Tim Hicks** -- Numerous fixes and cleanups, bringing Ploneboard into the
@@ -15,7 +15,7 @@ modern ages.
 
     **Ruslan Spivak** -- Code
 
-    **Alexander Limi**, "Plone Solutions":http://www.plonesolutions.com -- User 
+    **Alexander Limi**, "Jarn":http://www.jarm.com -- User 
 interface, concepts
     
     **Kapil Thangavelu** -- Initial architecture
@@ -35,7 +35,7 @@ permission
     **Rocky Burt**, "ServerZen Software":http//www.serverzen.com -- Small
 fixes and updates on behalf of Zest Software
 
-    **Wichert Akkerman**, Simplon -- Code, user interface improvements
+    **Wichert Akkerman**, Simplon -- Code, user interface improvements, Plone 3 port
 
     **Jens Klein**, **Thomas Gatterer**, "BlueDynamics 
 Alliance":http://www.bluedynamics.com -- i18n-cleanup, better german translations, 
