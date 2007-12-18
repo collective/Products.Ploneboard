@@ -21,9 +21,9 @@ NUMBER_OF_ATTACHMENTS = 5
 GLOBALS = globals()
 
 try:
-    import Products.SimpleAttachment
+    from Products import SimpleAttachment as SA
     HAS_SIMPLEATTACHMENT = True
-    del Products.SimpleAttachment
+    del SA
 except ImportError:
     HAS_SIMPLEATTACHMENT = False
 
