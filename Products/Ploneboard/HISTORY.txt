@@ -1,15 +1,24 @@
-########################
-Changelog for Ploneboard
-########################
+Changelog
+=========
 
-    (name of developer listed in brackets)
+2.0 - UNRELEASED
+----------------
 
-Ploneboard 2.0 - unreleased
-###########################
+- Disable non-working javascript-based sorting on conversation and forum views.
+  [wichert]
 
-    - Portlets management enabled, Plone 3.0 tests, deprecations hidden.
-      [glenfant]
-    - French translation completed.
-      [glenfant]
-    - Port to Plone 3.0
-      [wichert] [fschulze]
+- Port the recent conversations portlet to plone.portlets
+  [wichert]
+
+2.0b1 - November 28, 2007 
+-------------------------
+
+- Portlets management enabled, Plone 3.0 tests, deprecations hidden.
+  [glenfant]
+
+- French translation completed.
+  [glenfant]
+
+- Port to Plone 3.0
+  [wichert, fschulze]
+
