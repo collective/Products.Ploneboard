@@ -30,7 +30,6 @@ DeleteComment = permissions.DeleteObjects
 
 
 # Set up default roles for permissions
-# FIXME: Should set roles/permissions with GS step and remove this
 
 setDefaultRoles(ViewBoard,
                 ('Anonymous', 'Member', 'Manager'))
