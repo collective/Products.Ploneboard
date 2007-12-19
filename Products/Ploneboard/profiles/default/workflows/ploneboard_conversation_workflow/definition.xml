@@ -15,10 +15,11 @@
   </permission-map>
   <permission-map name="Add portal content" acquired="True">
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="True">
-  </permission-map>
   <permission-map name="Modify portal content"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
                   acquired="True">
   </permission-map>
   <permission-map name="View" acquired="True">
@@ -31,12 +32,12 @@
   </permission-map>
   <permission-map name="Add portal content" acquired="False">
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-  </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
   </permission-map>
   <permission-map name="View" acquired="True">
   </permission-map>
@@ -47,18 +48,16 @@
   <permission-map name="Access contents information"
                   acquired="True">
   </permission-map>
-  <permission-map name="Add portal content" acquired="True">
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
+  <permission-map name="Add portal content" acquired="False">
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
    <permission-role>Owner</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -73,12 +72,12 @@
   </permission-map>
   <permission-map name="Add portal content" acquired="False">
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-  </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>

@@ -141,6 +141,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Anonymous</permission-role>
+   <permission-role>Reviewer</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="True">
@@ -173,6 +174,7 @@
   </permission-map>
   <permission-map name="Request review" acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
    <permission-role>Member</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
