@@ -4,6 +4,9 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Correct login-name vs userid usage.
+  [wichert]
+
 - Correct attachment handling, which broke in previous 2.0 releases.
   [fschulze]
 
@@ -13,7 +16,7 @@ Changelog
 - Disable non-working javascript-based sorting on conversation and forum views.
   [wichert]
 
-- Port the recent conversations portlet to plone.portlets
+- Port the recent conversations portlet to plone.portlets.
   [wichert]
 
 2.0b1 - November 28, 2007 

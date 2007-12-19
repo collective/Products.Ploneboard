@@ -5,7 +5,8 @@ version = '2.0'
 setup(name='Products.Ploneboard',
       version=version,
       description="A discussion boardPlone.",
-      long_description=open("README.txt").read(),
+      long_description=open("README.txt").read() + \
+                        open("docs/INSTALL.txt").read(),
       classifiers=[
         "Framework :: Plone",
         "Framework :: Zope2",
