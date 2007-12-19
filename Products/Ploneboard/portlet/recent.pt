@@ -6,7 +6,7 @@
         <a href="#" 
            class="tile"
            tal:attributes="href view/next_url"
-           i18n:translate="box_recent_conversations">Recent conversations</a>
+           tal:content="view/title">Recent conversations</a>
         <span class="portletTopRight"></span>
     </dt>
 

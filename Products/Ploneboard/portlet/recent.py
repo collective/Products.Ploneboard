@@ -19,6 +19,11 @@ class IRecentConversationsPortlet(IPortletDataProvider):
     """
 
 
+    title = schema.TextLine(title=_(u"title_title",
+                                default=u"Portlet title"),
+                        required=True,
+                        default=u"Recent messages")
+
     count = schema.Int(title=_(u"title_count",
                                 default=u"Number of items to display"),
                        description=_(u"help_count",
@@ -29,11 +34,14 @@ class IRecentConversationsPortlet(IPortletDataProvider):
 class Assignment(base.Assignment):
     implements(IRecentConversationsPortlet)
 
-    title = _(u"box_recent_conversations", "Recent conversations")
+    title = u"Recent messages"
     count = 5
 
-    def __init__(self, count=5):
-        self.count=count
+    def __init__(self, title=None, count=None):
+        if title is not None:
+            self.title=title
+        if count is not None:
+            self.count=count
 
 
 class Renderer(base.Renderer):
@@ -79,6 +87,10 @@ class Renderer(base.Renderer):
         self.conversations=self.results()
 
     @property
+    def title(self):
+        return self.data.title
+
+    @property
     def next_url(self):
         state=getMultiAdapter((self.context, self.request),
                                 name="plone_portal_state")
@@ -95,7 +107,7 @@ class AddForm(base.NullAddForm):
             default=u"This portlet shows conversations with recent comments.")
 
     def create(self, data):
-        return Assignment(count=data.get("count", 5))
+        return Assignment(title=data.get("title"), count=data.get("count"))
 
 
 class EditForm(base.EditForm):
