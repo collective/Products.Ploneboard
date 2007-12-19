@@ -5,7 +5,7 @@
              initial_state="pending">
  <permission>Access contents information</permission>
  <permission>View</permission>
- <permission>Ploneboard: Edit Comment</permission>
+ <permission>Modify portal content</permission>
  <permission>Ploneboard: Add Comment</permission>
  <permission>Add portal content</permission>
  <state state_id="active" title="Active">
@@ -18,7 +18,7 @@
   <permission-map name="Ploneboard: Add Comment"
                   acquired="True">
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="True">
   </permission-map>
   <permission-map name="View" acquired="True">
@@ -34,7 +34,7 @@
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
@@ -54,7 +54,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
@@ -76,7 +76,7 @@
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>

@@ -12,7 +12,7 @@
  <permission>Ploneboard: Add Forum</permission>
  <permission>Ploneboard: Add Conversation</permission>
  <permission>Ploneboard: Add Comment</permission>
- <permission>Ploneboard: Edit Comment</permission>
+ <permission>Modify portal content</permission>
  <permission>Ploneboard: Manage Conversation</permission>
  <permission>Ploneboard: Manage Comment</permission>
  <permission>Ploneboard: Approve Comment</permission>
@@ -57,7 +57,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
@@ -121,7 +121,7 @@
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Edit Comment"
+  <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
