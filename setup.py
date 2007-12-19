@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
-version = '2.0'
+version = '2.0b2'
 
 setup(name='Products.Ploneboard',
       version=version,
-      description="A discussion boardPlone.",
+      description="A discussion board for Plone.",
       long_description=open("README.txt").read() + \
                         open("docs/INSTALL.txt").read() + \
                         open("docs/HISTORY.txt").read(),
