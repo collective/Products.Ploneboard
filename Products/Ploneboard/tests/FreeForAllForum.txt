@@ -433,7 +433,7 @@ Submit the form, and we should be returned to the forum view. The conversation
 should exist, and we should be able to view it.
 
     >>> browser.getControl(name='form.button.Post').click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url()?')
     True
     >>> browser.contents
     '...Anonymous posting title...'
@@ -461,7 +461,7 @@ Deleting the last comment also deletes the entire thread
 
     >>> for i in range(conversation.getNumberOfComments()):
     ...     browser.getControl('Delete', index=0).click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url()?')
     True
     >>> browser.contents
     '...Conversation deleted...'

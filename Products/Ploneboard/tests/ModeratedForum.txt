@@ -119,7 +119,7 @@ So long as a comment is pending, it can be deleted by the owner. Deleting the
 last comment in the thread should delete the entire thread.
 
     >>> browser.getControl('Delete').click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url())
     True
     >>> browser.contents
     '...Conversation deleted...No conversations in this forum yet...'
@@ -619,7 +619,7 @@ should exist, but we should be able to view it because it is pending and we're
 not logged in.
 
     >>> browser.getControl(name='form.button.Post').click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url())
     True
     >>> browser.contents
     '...pending moderation...'
@@ -675,7 +675,7 @@ Deleting the last comment also deletes the entire thread
 
     >>> for i in range(conversation.getNumberOfComments()):
     ...     browser.getControl('Delete', index=0).click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url())
     True
     >>> browser.contents
     '...Conversation deleted...'

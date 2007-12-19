@@ -410,7 +410,7 @@ Deleting the last comment also deletes the entire thread
 
     >>> for i in range(conversation.getNumberOfComments()):
     ...     browser.getControl('Delete', index=0).click()
-    >>> browser.url.startswith(self.forum.absolute_url() + '?')
+    >>> browser.url.startswith(self.forum.absolute_url()?')
     True
     >>> browser.contents
     '...Conversation deleted...No conversations in this forum yet...'
