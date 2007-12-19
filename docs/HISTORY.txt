@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0 - December 19, 2007
------------------------
+2.0b2 - December 19, 2007
+-------------------------
 
 - Correct login-name vs userid usage.
   [wichert]
