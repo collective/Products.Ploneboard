@@ -20,7 +20,7 @@ putils = getToolByName(context, 'plone_utils')
 if pm.isAnonymousUser():
     creator = 'Anonymous'
 else:
-    creator = pm.getAuthenticatedMember().getUserName()
+    creator = pm.getAuthenticatedMember().getId()
 
 # Get files from session etc instead of just request
 files = context.portal_ploneboard.getUploadedFiles()
