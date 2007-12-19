@@ -21,76 +21,66 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
+        self.comment = self.conv.addComment("comment1", "comment1 body")
 
     def testInterfaceVerification(self):
         self.failUnless(verifyClass(IComment, PloneboardComment))
 
     def testGetConversation(self):
-        comment = self.conv.objectValues()[0]
-        self.failUnlessEqual(comment.getConversation(), self.conv)
+        self.failUnlessEqual(self.comment.getConversation(), self.conv)
 
     def testAddReply(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
-        reply = comment.addReply('reply1', 'body1')
+        reply = self.comment.addReply('reply1', 'body1')
         self.failUnless(reply in conv.objectValues())
 
     def testAddReplyAsAnonymousTakesOwnerOfForumAndCreatorAnonymous(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
         self.logout()
-        reply = comment.addReply('reply1', 'body1', creator='Anonymous')
+        reply = self.comment.addReply('reply1', 'body1', creator='Anonymous')
         self.assertEqual(conv.getForum().owner_info()['id'], reply.owner_info()['id'])
         self.assertEqual(reply.Creator(), 'Anonymous')
 
     def testAddReplyAsNotAnonymousLeavesOwnershipAlone(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
         addMember(self, 'member2')
         self.login('member2')
         self.assertNotEqual(conv.getForum().owner_info()['id'], 'member2')
-        reply = comment.addReply('reply1', 'body1')
+        reply = self.comment.addReply('reply1', 'body1')
         self.assertEqual(reply.owner_info()['id'], 'member2')
 
     def testAddReplyAddsRe(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
-        reply = comment.addReply('', 'body1')
+        reply = self.comment.addReply('', 'body1')
         self.assertEqual(reply.Title(), 'Re: ' + conv.Title())
 
     def testAddReplyAddsReOnlyOnce(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
-        reply = comment.addReply('', 'body1')
+        reply = self.comment.addReply('', 'body1')
         reply2 = reply.addReply('', 'body2')
         self.assertEqual(reply2.Title(), 'Re: ' + conv.Title())
 
     def testAddReplyOnlyAddsReIfNotSet(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
-        reply = comment.addReply('reply1', 'body1')
+        reply = self.comment.addReply('reply1', 'body1')
         self.assertEqual(reply.Title(), 'reply1')
 
     def testInReplyTo(self):
-        comment = self.conv.objectValues()[0]
-        reply = comment.addReply('reply1', 'body1')
-        self.failUnlessEqual(comment, reply.inReplyTo())
+        reply = self.comment.addReply('reply1', 'body1')
+        self.failUnlessEqual(self.comment, reply.inReplyTo())
 
     def testGetReplies(self):
-        comment = self.conv.objectValues()[0]
-        reply = comment.addReply('reply1', 'body1')
-        reply2 = comment.addReply('reply2', 'body2')
-        self.failUnlessEqual(len(comment.getReplies()), 2)
-        self.failUnless(reply in comment.getReplies())
-        self.failUnless(reply2 in comment.getReplies())
+        reply = self.comment.addReply('reply1', 'body1')
+        reply2 = self.comment.addReply('reply2', 'body2')
+        self.failUnlessEqual(len(self.comment.getReplies()), 2)
+        self.failUnless(reply in self.comment.getReplies())
+        self.failUnless(reply2 in self.comment.getReplies())
 
     def testGetTitle(self):
-        comment = self.conv.objectValues()[0]
-        self.failUnlessEqual(comment.getTitle(), 'conv1')
+        self.failUnlessEqual(self.comment.getTitle(), 'comment1')
 
     def testGetText(self):
-        comment = self.conv.objectValues()[0]
-        self.failUnlessEqual(comment.getText(), 'conv1 body')
+        self.failUnlessEqual(self.comment.getText(), 'comment1 body')
 
     def testSetInReplyTo(self):
         forum = self.forum
@@ -131,21 +121,19 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
 
     def testChildIds(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
-        r = msg.addReply('reply_subject', 'reply_body')
-        r1 = msg.addReply('reply_subject1', 'reply_body1')
-        r2 = msg.addReply('reply_subject2', 'reply_body2')
+        r = self.comment.addReply('reply_subject', 'reply_body')
+        r1 = self.comment.addReply('reply_subject1', 'reply_body1')
+        r2 = self.comment.addReply('reply_subject2', 'reply_body2')
         r2.addReply('rs', 'rb').addReply('rs1', 'rb1').addReply('rs2', 'rb2')
-        self.assertEqual(len(msg.childIds()), 6)
+        self.assertEqual(len(self.comment.childIds()), 6)
 
     def testTransforms(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
         text = 'Smiley :)'
-        msg.setText(text)
-        self.failUnless(msg.getText())
-        self.failIfEqual(msg.getText(), text)
-        self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), msg.getText())
+        self.comment.setText(text)
+        self.failUnless(self.comment.getText())
+        self.failIfEqual(self.comment.getText(), text)
+        self.failUnlessEqual(self.portal.portal_ploneboard.performCommentTransform(text), self.comment.getText())
 
     def XXXtestDeleting(self):
         pass
@@ -166,38 +154,36 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('conv1', 'conv1 body')
+        self.comment = self.conv.addComment("comment1", "comment1 body")
 
     def testAddAttachment(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
 
-        self.assertEqual(msg.getNumberOfAttachments(), 0)
+        self.assertEqual(self.comment.getNumberOfAttachments(), 0)
         file = File('testfile', 'testtitle', 'asdf')
-        msg.addAttachment(file=file, title='comment')
-        self.assertEqual(msg.getNumberOfAttachments(), 1)
-        self.failUnless(msg.getAttachment('testfile'))
+        self.comment.addAttachment(file=file, title='comment')
+        self.assertEqual(self.comment.getNumberOfAttachments(), 1)
+        self.failUnless(self.comment.getAttachment('testfile'))
 
     def testHasAttachment(self):
         pass
 
     def testRemoveAttachment(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
 
         file = File('testfile', 'testtitle', 'asdf')
-        msg.addAttachment(file=file, title='comment')
-        self.assertEqual(msg.getNumberOfAttachments(), 1)
-        msg.removeAttachment('testfile')
-        self.assertEqual(msg.getNumberOfAttachments(), 0)
+        self.comment.addAttachment(file=file, title='comment')
+        self.assertEqual(self.comment.getNumberOfAttachments(), 1)
+        self.comment.removeAttachment('testfile')
+        self.assertEqual(self.comment.getNumberOfAttachments(), 0)
 
 
     def testAttachmentRestrictionChanging(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
         self.forum.setMaxAttachments(10)
-        self.failUnlessEqual(msg.getNumberOfAllowedAttachments(), 10)
+        self.failUnlessEqual(self.comment.getNumberOfAllowedAttachments(), 10)
         self.forum.setMaxAttachments(1)
-        self.failUnlessEqual(msg.getNumberOfAllowedAttachments(), 1)
+        self.failUnlessEqual(self.comment.getNumberOfAllowedAttachments(), 1)
 
 
     def tryAttachmentSizeRestrictions(self, msg):
@@ -222,25 +208,22 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
 
     def testAttachmentSizeRestriction(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
-        self.tryAttachmentSizeRestrictions(msg)
+        self.tryAttachmentSizeRestrictions(self.comment)
 
     def testAttachmentSizeRestrictionsOnChild(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
-        reply = msg.addReply('reply1', 'body1')
+        reply = self.comment.addReply('reply1', 'body1')
         self.tryAttachmentSizeRestrictions(reply)
 
 
     def testAttachmentNumberRestriction(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
         self.forum.setMaxAttachments(1)
         file = File('testfile', 'testtitle', 'asdf')
-        msg.addAttachment(file=file, title='comment')
+        self.comment.addAttachment(file=file, title='comment')
         file = File('testfile2', 'testtitle2', 'asdf')
         try:
-            msg.addAttachment(file=file, title='another comment')
+            self.comment.addAttachment(file=file, title='another comment')
         except ValueError:
             pass
         else:
@@ -249,16 +232,15 @@ class TestPloneboardCommentAttachmentSupport(PloneboardTestCase.PloneboardTestCa
 
     def testGetAttachments(self):
         conv = self.conv
-        msg = conv.objectValues()[0]
         self.forum.setMaxAttachments(5)
 
         file = File('testfile', 'testtitle', 'asdf')
-        msg.addAttachment(file=file, title='comment')
+        self.comment.addAttachment(file=file, title='comment')
         file1 = File('testfile1', 'testtitle1', 'asdf')
-        msg.addAttachment(file=file1, title='comment1')
-        self.assertEqual(len(msg.getAttachments()), 2)
-        self.failUnless('comment' in [v.Title() for v in msg.getAttachments()])
-        self.failUnless('comment1' in [v.Title() for v in msg.getAttachments()])
+        self.comment.addAttachment(file=file1, title='comment1')
+        self.assertEqual(len(self.comment.getAttachments()), 2)
+        self.failUnless('comment' in [v.Title() for v in self.comment.getAttachments()])
+        self.failUnless('comment1' in [v.Title() for v in self.comment.getAttachments()])
 
     def testDeleteing(self):
         """Test deleting a comment.

@@ -121,17 +121,18 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         forum = self.forum
         self.failUnlessEqual(forum.getNumberOfComments(), 0)
         conv = forum.addConversation('subject', 'body')
-        self.failUnlessEqual(forum.getNumberOfComments(), 1)
+        self.failUnlessEqual(forum.getNumberOfComments(), 0)
         conv2 = forum.addConversation('subject2', 'body2')
-        self.failUnlessEqual(forum.getNumberOfComments(), 2)
+        self.failUnlessEqual(forum.getNumberOfComments(), 0)
         forum.removeConversation(conv.getId())
-        self.failUnlessEqual(forum.getNumberOfComments(), 1)
+        self.failUnlessEqual(forum.getNumberOfComments(), 0)
         conv2.addComment('followup', 'text')
-        self.failUnlessEqual(forum.getNumberOfComments(), 2)
+        self.failUnlessEqual(forum.getNumberOfComments(), 1)
         # Check to make sure it doesn't count comments elsewhere
         forum2 = _createObjectByType('PloneboardForum', self.board, 'forum2')
         conv = forum2.addConversation('subject', 'body')
-        self.failUnlessEqual(forum.getNumberOfComments(), 2)
+        conv.addComment("another", "another")
+        self.failUnlessEqual(forum.getNumberOfComments(), 1)
     
 def test_suite():
     suite = unittest.TestSuite()

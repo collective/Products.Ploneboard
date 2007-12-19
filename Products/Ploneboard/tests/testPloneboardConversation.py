@@ -18,6 +18,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('subject', 'body')
+        self.comment = self.conv.addComment('subject', 'body')
 
     def testInterfaceVerification(self):
         self.failUnless(verifyClass(IConversation, PloneboardConversation))
@@ -42,20 +43,17 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
 
     def testGetComment(self):
         conv = self.conv
-        comment = conv.addComment('subject', 'body')
-        self.failUnlessEqual(comment, conv.getComment(comment.getId()))
+        self.failUnlessEqual(self.comment, conv.getComment(self.comment.getId()))
 
     def testGetComments(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
         comment2 = conv.addComment('subject2', 'body2')
-        self.failUnlessEqual(conv.getComments(), [comment, comment2]) 
+        self.failUnlessEqual(conv.getComments(), [self.comment, comment2]) 
 
     def testGetCommentsSlicing(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
         comment2 = conv.addComment('subject2', 'body2')
-        self.failUnlessEqual(conv.getComments(limit=1, offset=0), [comment]) 
+        self.failUnlessEqual(conv.getComments(limit=1, offset=0), [self.comment]) 
         self.failUnlessEqual(conv.getComments(limit=1, offset=1), [comment2]) 
 
     def testGetNumberOfComments(self):
@@ -69,25 +67,22 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
 
     def testGetLastCommentDate(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
-        self.failUnlessEqual(comment.created(), conv.getLastCommentDate())
+        self.failUnlessEqual(self.comment.created(), conv.getLastCommentDate())
         comment = conv.addComment('followup', 'text')
         self.failUnlessEqual(comment.created(), conv.getLastCommentDate())
 
     def testGetRootComments(self):
         conv = self.conv
-        comment = conv.objectValues()[0]
         threaded = conv.getRootComments()
         self.failUnlessEqual(len(threaded), 1)
 
-        comment = conv.addComment('followup', 'text')
         threaded = conv.getRootComments()
         self.failUnlessEqual(len(threaded), 2)
 
-        reply = comment.addReply('anotherfollowup', 'moretext')
+        reply = self.comment.addReply('anotherfollowup', 'moretext')
         threaded = conv.getRootComments()
         self.failUnlessEqual(len(threaded), 2)
-        self.failUnlessEqual(len(comment.getReplies()), 1)
+        self.failUnlessEqual(len(self.comment.getReplies()), 1)
 
     def testGetFirstComment(self):
         conv = self.conv
