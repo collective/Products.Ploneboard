@@ -1,6 +1,8 @@
 from zope.interface import implements
+from zope import schema
 from zope.component import getUtility
 from zope.component import getMultiAdapter
+from zope.formlib.form import Fields
 from plone.memoize.view import memoize
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -16,10 +18,22 @@ class IRecentConversationsPortlet(IPortletDataProvider):
     """A portlet which shows recent Ploneboard conversations.
     """
 
+
+    count = schema.Int(title=_(u"title_count",
+                                default=u"Number of items to display"),
+                       description=_(u"help_count",
+                                default=u"How many items to list."),
+                       required=True,
+                       default=5)
+
 class Assignment(base.Assignment):
     implements(IRecentConversationsPortlet)
 
     title = _(u"box_recent_conversations", "Recent conversations")
+    count = 5
+
+    def __init__(self, count=5):
+        self.count=count
 
 
 class Renderer(base.Renderer):
@@ -27,7 +41,7 @@ class Renderer(base.Renderer):
         base.Renderer.__init__(self, context, request, view, manager, data)
 
     @memoize
-    def results(self, limit=5):
+    def results(self):
         ct=getToolByName(self.context, "portal_catalog")
         normalize=getUtility(IIDNormalizer).normalize
         icons=getMultiAdapter((self.context, self.request),
@@ -39,7 +53,7 @@ class Renderer(base.Renderer):
                 object_provides="Products.Ploneboard.interfaces.IConversation",
                 sort_on="modified",
                 sort_order="reverse",
-                sort_limit=limit)[:limit]
+                sort_limit=self.data.count)[:self.data.count]
 
         def morph(brain):
             obj=brain.getObject()
@@ -72,7 +86,22 @@ class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile("recent.pt")
 
+
 class AddForm(base.NullAddForm):
-    def create(self):
-        return Assignment()
+    form_fields = Fields(IRecentConversationsPortlet)
+    label = _(u"label_add_portlet",
+                default=u"Add recent conversations portlet.")
+    description = _(u"help_add_portlet",
+            default=u"This portlet shows conversations with recent comments.")
+
+    def create(self, data):
+        return Assignment(count=data.get("count", 5))
+
+
+class EditForm(base.EditForm):
+    form_fields = Fields(IRecentConversationsPortlet)
+    label = _(u"label_add_portlet",
+                default=u"Add recent conversations portlet.")
+    description = _(u"help_add_portlet",
+            default=u"This portlet shows conversations with recent comments.")
 
