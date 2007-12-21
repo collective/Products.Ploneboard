@@ -99,7 +99,7 @@ class Renderer(base.Renderer):
     render = ViewPageTemplateFile("recent.pt")
 
 
-class AddForm(base.NullAddForm):
+class AddForm(base.AddForm):
     form_fields = Fields(IRecentConversationsPortlet)
     label = _(u"label_add_portlet",
                 default=u"Add recent conversations portlet.")
