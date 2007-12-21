@@ -57,6 +57,6 @@ class ControlPanel(ControlPanelForm):
     description = _(u"description_ploneboard_config",
             default=u"Here you can configure site settings for Ploneboard.")
 
-    form_name = _(u"description_pref_transforms",
-            default=u"Configure Ploneboard comment text transformations")
+    form_name = _(u"ploneboard_transform_panel",
+            default=u"Text transformations")
 
