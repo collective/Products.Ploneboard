@@ -136,13 +136,14 @@ class PloneboardForum(BaseBTreeFolder):
         if creator is not None:
             conv.setCreators([creator])
 
-        if files is not None:
+        if files is not None or files:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
 
             # XXX: There is some permission problem with AT write_permission
             # and using **kwargs in the _createObjectByType statement.
             m.setTitle(title)
-            m.setText(text)
+            if text is not None:
+                m.setText(text)
 
             if creator is not None:
                 m.setCreators([creator])
