@@ -3,6 +3,9 @@ Changelog
 
 2.0 - UNRELEASED
 ----------------
+- When creating a new conversation do not set its description to the 
+  entered text.
+  [wichert]
 
 - Switch to a plone.app.controlpanel based control panel.
   [wichert]
