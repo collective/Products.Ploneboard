@@ -184,22 +184,22 @@ msgstr "Sélectionnez dans quelle catégorie ce forum sera placé. Un forum peut
 
 #. Enter a brief description of the board.
 msgid "help_description_board"
-msgstr "Entrez une description brève du forum."
+msgstr "Entrez une brève description de ce groupe de forums."
 
 msgid "help_description_conversation"
-msgstr ""
+msgstr "Entrez le résumé de cette conversation."
 
 msgid "help_description_forum"
-msgstr ""
+msgstr "Entrez une brève description de ce forum."
 
 msgid "help_maxattachments"
-msgstr ""
+msgstr "Nombre maximum de pièces jointes par intervention (message ou réponse)."
 
 msgid "help_maxattachmentsize"
-msgstr ""
+msgstr "Taille maximum autorisée pour les pièces jointes (en Ko)."
 
 msgid "help_text"
-msgstr ""
+msgstr "Entrez le texte de votre commentaire."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
@@ -223,7 +223,7 @@ msgid "label_by_author"
 msgstr "par ${author}"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Catégories"
 
 #. Category
 msgid "label_category"
@@ -234,17 +234,17 @@ msgid "label_description_board"
 msgstr "Description"
 
 msgid "label_description_conversation"
-msgstr ""
+msgstr "Description"
 
 #. Description
 msgid "label_description_forum"
 msgstr "Description"
 
 msgid "label_maxattachments"
-msgstr ""
+msgstr "Nombre maximum de pièces jointes"
 
 msgid "label_maxattachmentsize"
-msgstr ""
+msgstr "Taille maximum de chaque pièce jointe"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt
@@ -267,7 +267,7 @@ msgid "label_save"
 msgstr "Sauvegarder"
 
 msgid "label_text"
-msgstr ""
+msgstr "Votre commentaire"
 
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt
