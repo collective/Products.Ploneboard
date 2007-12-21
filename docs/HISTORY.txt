@@ -3,6 +3,10 @@ Changelog
 
 2.0 - UNRELEASED
 ----------------
+- Make the comment-icon a link to the comment. This fixes
+  http://plone.org/products/ploneboard/issues/78
+  [wichert]
+
 - Fix a corner case: creating a conversation without text but with attachments
   would loose the attachments.
   [wichert]

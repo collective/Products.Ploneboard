@@ -60,8 +60,12 @@
                 
                 <h3 tal:content="comment/Title">Comment title</h3>
 
-                <img src="" 
-                     tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                <a class="link-plain"
+                    tal:attributes="href string:${context/absolute_url}#${comment/getId}">
+                   <img src="" 
+                        tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                </a>
+
                 <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
                 <a class="link-plain"
                    tal:attributes="href string:${portal_url}/author/${creator}"
