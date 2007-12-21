@@ -48,4 +48,14 @@
      allowed_attributes="results num_conversations"
      />
 
+  <adapter factory=".controlpanel.ControlPanelAdapter" />
+
+  <browser:page
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     name="ploneboard-controlpanel"
+     class=".controlpanel.ControlPanel"
+     permission="cmf.ManagePortal"
+     />
+
 </configure>
+

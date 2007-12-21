@@ -1,3 +1,0 @@
-[actions]
-action.failure=traverse_to:string:prefs_pb_transforms
-action.success=traverse_to:string:prefs_ploneboard_form

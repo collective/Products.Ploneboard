@@ -2,7 +2,7 @@
 <object name="portal_controlpanel">
   <configlet title="Ploneboard Setup" action_id="Ploneboard" appId="Ploneboard"
     category="Products" condition_expr=""
-    url_expr="string:${portal_url}/prefs_ploneboard_form" visible="True">
+    url_expr="string:${portal_url}/ploneboard-controlpanel" visible="True">
     <permission>Manage portal</permission>
   </configlet>
 </object>

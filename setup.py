@@ -26,6 +26,7 @@ setup(name='Products.Ploneboard',
       install_requires=[
         'setuptools',
         'Products.SimpleAttachment',
+        'plone.app.controlpanel',
         'plone.app.portlets',
         'plone.portlets',
         'plone.memoize',

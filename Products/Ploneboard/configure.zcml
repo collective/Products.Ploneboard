@@ -33,6 +33,11 @@
   <include package=".browser" />
   <include package=".portlet" />
 
+  <utility
+    component=".vocabulary.AvailableTransformsVocabularyFactory"
+    name="Products.Ploneboard.AvailableTransforms"
+    />
+
   <genericsetup:registerProfile
      name="ploneboard"
      title="Ploneboard"

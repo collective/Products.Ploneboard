@@ -4,6 +4,9 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Switch to a plone.app.controlpanel based control panel.
+  [wichert]
+
 - Correct base class for portlet add form. This fixes 
   http://plone.org/products/ploneboard/issues/154
   [wichert]
