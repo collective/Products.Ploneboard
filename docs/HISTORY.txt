@@ -1,8 +1,9 @@
 Changelog
 =========
 
-2.0 - UNRELEASED
-----------------
+2.0rc1 - December 21, 2007
+--------------------------
+
 - Make the comment-icon a link to the comment. This fixes
   http://plone.org/products/ploneboard/issues/78
   [wichert]
