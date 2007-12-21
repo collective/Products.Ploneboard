@@ -18,7 +18,6 @@ class IRecentConversationsPortlet(IPortletDataProvider):
     """A portlet which shows recent Ploneboard conversations.
     """
 
-
     title = schema.TextLine(title=_(u"title_title",
                                 default=u"Portlet title"),
                         required=True,
@@ -30,6 +29,7 @@ class IRecentConversationsPortlet(IPortletDataProvider):
                                 default=u"How many items to list."),
                        required=True,
                        default=5)
+
 
 class Assignment(base.Assignment):
     implements(IRecentConversationsPortlet)
