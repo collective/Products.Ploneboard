@@ -95,17 +95,19 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
         """This performs the comment transform - also used for preview."""
         transform_tool = getToolByName(self, 'portal_transforms')
 
+        content_type=kwargs.get("content_type", "text/plain")
+
         # This one is very important, because transform object has no
         # acquisition context inside it, so we need to pass it our one
         context=kwargs.get('context', self)
 
-        data = transform_tool._wrap('text/plain')
+
+        data = transform_tool._wrap(content_type)
 
         for transform in self.getEnabledTransforms():
             data = transform_tool.convert(transform, orig, data, context)
             orig = data.getData()
 
-        orig = orig.replace('\n', '<br/>')
         return orig
 
     # File upload - should be in a View once we get formcontroller support in Views

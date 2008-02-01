@@ -320,10 +320,14 @@ class PloneboardComment(BaseBTreeFolder):
         """  """
         # Maybe we need to set caching for transform?
 
-        orig = self.getRawText()
+
+        unit=self.Schema()["text"].getBaseUnit(self)
+        raw = unit.getRaw()
+        content_type = unit.getContentType()
 
         pb_tool = getToolByName(self, 'portal_ploneboard')
-        return pb_tool.performCommentTransform(orig, context=self)
+        return pb_tool.performCommentTransform(raw, context=self,
+                                               content_type=content_type)
 
     security.declareProtected(ViewBoard, 'Description')
     def Description(self, **kwargs):

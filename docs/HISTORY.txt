@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.0 - UNRELEASED
+----------------
+
+- Honour the content-type for comments when transforming them. Doing things
+  like replacing newlines with <br/> on text/html comments is kind of silly.
+  [wichert].
+
+
 2.0rc1 - December 21, 2007
 --------------------------
 
