@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<tool-setup>
+  <required tool_id="portal_catalog"
+    class="Products.CMFPlone.CatalogTool.CatalogTool"/>
+  <required tool_id="portal_ploneboard"
+    class="Products.Ploneboard.PloneboardTool"/>
+</tool-setup>

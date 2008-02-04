@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2006-06-11 00:16+0300\n"
+"Last-Translator: Kazimieras <cardinal@mail.lt>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: lt\n"
+"Language-Name: Lithuanian\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone\n"
+"X-Poedit-Language: Lithuanian\n"
+"X-Poedit-Country: LITHUANIA\n"
+
+msgid "Activate"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Flat conversion view"
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

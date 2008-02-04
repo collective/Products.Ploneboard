@@ -1,0 +1,448 @@
+# Gettext File for Ploneboard
+# Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
+"PO-Revision-Date: 2007-07-26 20:35+0100\n"
+"Last-Translator: THijs <THijs@pareto.nl>\n"
+"Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: ploneboard\n"
+
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Voeg toe"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Bewerken"
+
+msgid "Forum"
+msgstr "Forum"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Log in om een reactie toe te voegen"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr "Log in om een discussie te starten"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Toevoegen"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "Plaats reactie"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Verwijder"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Reageer"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Begin een nieuwe discussie"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Bekijk profiel"
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr "actie"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Reageer"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "Voeg discussie toe"
+
+msgid "alert_delete_popup"
+msgstr "Weet u zeker dat u dit bericht wilt verwijderen?"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr "Huidige status:"
+
+#. Default: "Comments"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "comments"
+msgstr "Reacties"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr "Onderwerpen"
+
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr "Data verschaffer"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Hier kunt u de Ploneboard instelling aanpassen"
+
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr "Hier kunt u aangeven welke transformaties er in Ploneboard reacties gebruikt worden."
+
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr "Stel de Ploneboard reactie tekst transformaties in."
+
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "Actief?"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Forum naam"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "Terug naar ${title}"
+
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr "Ploneboard transformaties"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Voorbeeld van reactie bekijken"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Kies een bestand om als bijlage toe te voegen aan deze reactie."
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "Basis HTML tags zijn toegestaan."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "URL's worden automatisch omgezet naar links."
+
+msgid "help_categories_board"
+msgstr "Voeg de gewenste onderwerpen in, die voor de fora beschikbaar moeten zijn. Eén onderwerp per regel."
+
+msgid "help_category"
+msgstr "Kies onder welk onderwerp het forum geplaatst moet worden. Aan een forum kunnen meerdere onderwerpen worden toegekend, maar één enkel onderwerp wordt aangeraden."
+
+msgid "help_description_board"
+msgstr "Voeg een korte beschrijving van het prikbord toe."
+
+msgid "help_description_conversation"
+msgstr "Voeg een korte beschrijving van de discussie toe."
+
+msgid "help_description_forum"
+msgstr "Voeg een korte beschrijving van het forum thema toe."
+
+msgid "help_maxattachments"
+msgstr "Selecteer het maximale aantal te selecteren bijlagen per reactie."
+
+msgid "help_maxattachmentsize"
+msgstr "Selecteer de maximale bijlage bestandsgrootte."
+
+msgid "help_text"
+msgstr "Voer reactie tekst in."
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
+msgstr "Kies de teksttransformaties die moeten worden gebruikt voor reacties in Ploneboard discussies. Teksttransformaties veranderen de door de gebruiker toegevoegde tekst. Dit gebeurt enerzijds om mogelijk gevaarlijke HTML tags te verwijderen, anderzijds om extra functionaliteit, zoals het klikbaar maken van links, toe te voegen "
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Bijlagen"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Voer een reactie in"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "door ${author}"
+
+msgid "label_categories_board"
+msgstr "Onderwerpen"
+
+msgid "label_category"
+msgstr "Onderwerp"
+
+msgid "label_description_board"
+msgstr "Beschrijving"
+
+msgid "label_description_conversation"
+msgstr "Beschrijving"
+
+msgid "label_description_forum"
+msgstr "Beschrijving"
+
+msgid "label_maxattachments"
+msgstr "Maximaal aantal bijlagen"
+
+msgid "label_maxattachmentsize"
+msgstr "Maximale bijlage grootte"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Op basis van ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Snelle reactie"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Verplicht)"
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr "Bewaren"
+
+msgid "label_text"
+msgstr "Tekst"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Titel"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr "Transformaties"
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr "Naar de Plonebord instellingen"
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Voeg transformatie toe"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Bijlagen"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr "Teksttransformaties"
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Bestaande transformaties"
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Beheer"
+
+#. Default: "Manage comment text transformations"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr "Beheer teksttransformaties in reacties"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr "${count} reacties in de wachtrij."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr "De volgende reacties wachten op moderatie. Klik a.u.b. op 'Publiseren' of 'Wijgeren'. Klik op de title van een reactie om de complete inhoud van de reactie te lezen."
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr "Omhoog"
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr "Module"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "most_recent_comment"
+msgstr "Meest recente reacties"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr "Voeg nog een bijlage toe"
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr "Er staan geen reacties in de moderatie wachtrij."
+
+#. Default: "No comments yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_comments_yet"
+msgstr "Nog geen reacties"
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Nog geen discussies."
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Er zijn nog geen discussies in dit forum."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via \"voeg forum toe\" optie."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "U heeft onvoldoende rechten om een nieuwe discussie toe te voegen."
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "Discussies"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "Geplaatst door"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Voorbeeldweergave"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "op"
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Algemene fora"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Naam transformatie"
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Terug naar Ploneboard instellingen"
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr "Terug naar Plone Configuratie"
+
+#### My own findings
+msgid "Make moderated"
+msgstr "Maak gemodereerd"
+
+msgid "show_no_replies_all"
+msgstr "Toon alleen onbeantwoorde berichten"
+
+msgid "show_no_replies"
+msgstr "Toon alleen onbeantwoorde berichten"
+
+msgid "show_new_conversations_all"
+msgstr "Toon alle nieuwe berichten"
+
+msgid "new_conversations_marked_with"
+msgstr "Alle met een ${star} gemarkeerde reacties bevatten nieuwe reacties sinds uw laatste bezoek."
+
+msgid "replies"
+msgstr "reacties"
+
+msgid "no_recent_conversations"
+msgstr "Geen recente discussies gevonden"
+
+msgid "go_to_view_url"
+msgstr "Ga terug naar ${name}"
+
+msgid "title_unanswered_conversations"
+msgstr "Onbeantwoorde berichten in ${title}"
+
+msgid "recent_conversations_description"
+msgstr "De volgende discussies zijn geplaatst, maar hebben nog geen reacties ontvangen."
+
+msgid "no_replies_yet"
+msgstr "Nog geen reacties"
+
+msgid "conversation_posted"
+msgstr "Geplaatst"
+
+msgid "by_author"
+msgstr "door ${author}"
+

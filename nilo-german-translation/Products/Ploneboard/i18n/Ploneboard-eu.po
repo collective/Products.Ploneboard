@@ -1,0 +1,506 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-12-20 07:58+0000\n"
+"PO-Revision-Date: 2007-01-11 16:03+0100\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: eu\n"
+"Language-Name: Basque\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ploneboard\n"
+
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Gehitu"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Ezeztatu"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Aldatu"
+
+msgid "Forum"
+msgstr "Foroa"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Saioa hasi erantzunak gehitzeko"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr "Saioa hasi hari bat hasteko"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Argitaratu"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "Erantzuna argitaratu"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Ezabatu"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Honi erantzun"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Hari berria hasi"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Profila ikusi"
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr ""
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Erantzuna gehitu"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "Haria gehitu"
+
+msgid "alert_delete_popup"
+msgstr "Ziur al zaude hau ezabatu nahi duzula?"
+
+#. Default: "More"
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_more_recent_conversations"
+msgstr "Gehiago"
+
+#. Default: "Recent conversations"
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_recent_conversations"
+msgstr "Azken mezuak"
+
+#. Default: "No conversations changed yet."
+#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+msgid "box_recent_conversations_no_items"
+msgstr "Oraindik ez da mezuetan aldaketarik egon"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "by_author"
+msgstr "${author}"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr "Egoera:"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "conversation"
+msgstr "Mezua"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_forum"
+msgstr "Foroa"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_posted"
+msgstr "Argitaratuta"
+
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr ""
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Ploneboarden konfigurazioa aldatu dezakezu hemen."
+
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr "Ploneboardeko erantzunei aplikatuko zaizkien transformazioak konfiguratu ditzakezu hemendik."
+
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr "Konfiguratu erantzunen testuaren transformazioak."
+
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "Gaituta?"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Foroaren izena"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/conversation_view.pt
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "go_to_parent_url"
+msgstr "${title}-(e)ra joan"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "go_to_view_url"
+msgstr "${name}-(e)ra itzuli"
+
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr "Ploneboarden transformazioak"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Erantzuna aurreikusi"
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_maxsize"
+msgstr "Fitxategiaren gehienezko tamaina ${maxsize} kilobytekoa da."
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Aukeratu erantzun honi gehituko zaion fitxategia"
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "Oinarrizko HTML etiketak idatz ditzakezu."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "Web helbideak automatikoki lotura bihurtuko dira"
+
+msgid "help_categories_board"
+msgstr "Foroak sailkatzeko erabiliko diren kategorien izenak. Bat lerro bakoitzeko."
+
+msgid "help_category"
+msgstr "Foro hau zein kategoriatakoa den aukeratu. Normalean kategoria bakar bat erabiltzea gomendatzen den arren, bat baino gehiago aukeratu dezakezu."
+
+msgid "help_description_board"
+msgstr "Foroaren inguruko deskribapen laburra"
+
+msgid "help_description_conversation"
+msgstr "Deskribapen laburra"
+
+msgid "help_description_forum"
+msgstr "Foroaren inguruko deskribapen laburra"
+
+msgid "help_maxattachments"
+msgstr "Aukeratu mezuetan onartuko den gehitutako fitxategi kopurua"
+
+msgid "help_maxattachmentsize"
+msgstr "Aukeratu gehitutako fitxategien tamaina maximoa"
+
+msgid "help_text"
+msgstr "Testua idatzi"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
+msgstr "Ploneboardeko erantzunei aplikatu behar zaizkien transformazioak aukeratu. Testuzko transformazioek, erabiltzaileek sarturiko testua eraldatzen dute, adibidez behar ez den HTMLa ezabatu edo funtzionalitate gehigarriak eskeintzeko, loturak klikagarri egiteko adibidez."
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Gehitutako fitxategiak"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Testua"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "label_by_author"
+msgstr "${author}"
+
+msgid "label_categories_board"
+msgstr "Kategoriak"
+
+msgid "label_category"
+msgstr "Kategoriak"
+
+msgid "label_description_board"
+msgstr "Deskribapena"
+
+msgid "label_description_conversation"
+msgstr "Deskribapena"
+
+msgid "label_description_forum"
+msgstr "Deskribapena"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "label_in_forum"
+msgstr "${forum}-(e)n"
+
+msgid "label_maxattachments"
+msgstr "Gehienezko gehitutako fitxategi kopurua"
+
+msgid "label_maxattachmentsize"
+msgstr "Gehienezko tamaina"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "${link}ekin egina"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Erantzun azkarra"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Beharrezkoa)"
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr "Gorde"
+
+msgid "label_text"
+msgstr "Testua"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Izenburua"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr "Transformazioak"
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr "Ploneboarden konfiguraziora joan"
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Transformazioa gehitu"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Gehitutako fitxategiak"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr "Testu-transformazioak"
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Dauden transformazioak"
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Kudeatu"
+
+#. Default: "Manage comment text transformations"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr "Transformazioak kudeatu"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr "${count} mezu moderazio kolan."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr "Mezu hauek moderazio kolan daude. Egin klik 'Argitaratu' edo 'Atzera bota' botoietan, behar bezala. Egin klik erantzunaren izenburuan mezua bere kontestuan ikusteko."
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr ""
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr "Modulua"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "most_recent_comment"
+msgstr "Azken erantzuna"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr "Beste fitxategi bat gehitu"
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "new_conversations_marked_with"
+msgstr "${star} ikurrarekin markatutako mezuetan, azken aldiz etorri zinenetik aldaketak egon dira."
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr "Ez dago erantzunik moderazio kolan."
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Ez dago mezurik."
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "no_recent_conversations"
+msgstr "Ez dago mezurik."
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "no_replies_yet"
+msgstr "Ez dago erantzunik."
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Ez dago mezurik."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Ez dago fororik oraindik. Erabili menua foro berri bat gehitzeko."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "Ez duzu mezu berri bat argitaratzeko baimenik."
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "Elkarrizketak"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr ""
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Mezua aurreikusi"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "recent_conversations_description"
+msgstr "Mezu hauek argitaratuta daude, baina ez dute oraindik erantzunik."
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "replies"
+msgstr "Erantzunak"
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_new_conversations_all"
+msgstr "Azken aldaketak ikusi"
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "show_no_replies"
+msgstr "Erantzunik ez dutenak erakutsi"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "show_no_replies_all"
+msgstr "Erantzunik ez duten guztiak erakutsi"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr ""
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Foro orokorrak"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt
+msgid "title_recent_conversations"
+msgstr "${title}-(e)n dauden azken mezuak"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "title_unanswered_conversations"
+msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Transformazioaren izena"
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Ploneboarden konfiguraziora joan"
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr "Ploneren konfiguraziora joan"
+

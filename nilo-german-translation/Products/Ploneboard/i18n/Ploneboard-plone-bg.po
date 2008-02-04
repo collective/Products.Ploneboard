@@ -1,0 +1,96 @@
+# Gettext File for Ploneboard
+# Vladimir Iliev <vladimir.iliev@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2006-10-19 16:34+0200\n"
+"Last-Translator: Vladimir Iliev <vlado@vintech.bg>\n"
+"Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: bg\n"
+"Language-Name: Bulgarian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Poedit-Language: Bulgarian\n"
+"X-Poedit-Country: BULGARIA\n"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Comment"
+msgstr "Коментар"
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Conversation"
+msgstr "Разговор"
+
+msgid "Open"
+msgstr "Отваряне"
+
+msgid "Hide"
+msgstr "Скриване"
+
+msgid "Hidden"
+msgstr "Скрит"
+
+msgid "Require membership to post"
+msgstr "Изисква регистрация за изпращане"
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Free for all"
+msgstr "Свободен за всички"
+
+msgid "Make free-for-all"
+msgstr "Направи свободен за всички"
+
+msgid "Private to members only"
+msgstr "Само за регистрирани"
+
+msgid "Active"
+msgstr "Активен"
+
+msgid "Activate"
+msgstr "Активирай"
+
+msgid "Lock"
+msgstr "Заключи"
+
+msgid "Locked"
+msgstr "Заключен"
+
+msgid "Flat conversion view"
+msgstr "Плосък изглед на разговор"
+
+msgid "Threaded conversion view"
+msgstr "Нишков изглед на разговор"
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr "Чакащ одобрение"
+
+msgid "Rejected"
+msgstr "Отказан"
+
+msgid "Public"
+msgstr "Публичен"
+
+msgid "Retracted"
+msgstr "Анулиран"
+

@@ -1,0 +1,108 @@
+# Gettext File for Ploneboard
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2007-01-14 23:46+0100\n"
+"Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
+"Language-Team: SureCase.org <info@surecase.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: cs\n"
+"Language-Name: Czech\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone\n"
+
+msgid "Activate"
+msgstr "Aktivovat"
+
+msgid "Active"
+msgstr "Aktivní"
+
+msgid "Comment"
+msgstr "Komentář"
+
+msgid "Conversation"
+msgstr "Konverzace"
+
+msgid "Flat conversion view"
+msgstr "Jednoduché zobrazení konverzace"
+
+msgid "Free for all"
+msgstr "Přístupné všem"
+
+msgid "Hidden"
+msgstr "Skryté"
+
+msgid "Hide"
+msgstr "Skrýt"
+
+msgid "Lock"
+msgstr "Zamknout"
+
+msgid "Locked"
+msgstr "Uzamčeno"
+
+msgid "Make free-for-all"
+msgstr "Povolit všem"
+
+msgid "Make member-posting"
+msgstr "Omezit přispívání pro členy"
+
+msgid "Message Board"
+msgstr "Tabule zpráv"
+
+msgid "Moderate"
+msgstr "Moderovat"
+
+msgid "Make moderated"
+msgstr "Změnit na moderované"
+
+msgid "Open"
+msgstr "Otevřít"
+
+msgid "Private to members only"
+msgstr "Pouze pro členy"
+
+msgid "Public"
+msgstr "Veřejné"
+
+msgid "Rejected"
+msgstr "Zamítnuto"
+
+msgid "Require membership to post"
+msgstr "Přispívání vyžaduje registraci"
+
+msgid "Retracted"
+msgstr "Staženo"
+
+msgid "Threaded conversion view"
+msgstr "Vláknové zobrazení konverzace"
+
+msgid "Waiting for moderator"
+msgstr "Čekající na moderátora"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+
+msgid "Global forum listing"
+msgstr "Globální seznam fór"
+
+msgid "Local forum listing"
+msgstr "Lokální seznam fór"
+
+msgid "Preview post"
+msgstr "Náhled příspěvku"
+
+msgid "Add conversation"
+msgstr "Přidat konverzaci"
+
+msgid "Add comment"
+msgstr "Přidat komentář"
+

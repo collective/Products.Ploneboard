@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object>
+  <factorytypes>
+    <type portal_type="Ploneboard"/>
+    <type portal_type="PloneboardComment"/>
+    <type portal_type="PloneboardConversation"/>
+    <type portal_type="PloneboardForum"/>
+  </factorytypes>
+</object>
+
