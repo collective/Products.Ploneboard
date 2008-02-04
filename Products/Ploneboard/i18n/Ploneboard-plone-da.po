@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-02-04 14:12+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Sune Toft <sune@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -17,76 +17,40 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: da-dk\n"
 
-msgid "Activate"
-msgstr "Aktiver"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
 
-msgid "Active"
-msgstr "Aktivt"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
 
-msgid "Comment"
-msgstr "Kommentar"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
 
-msgid "Conversation"
-msgstr "Indlæg"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
 
-msgid "Flat conversion view"
-msgstr "Enkel visning af indlæg"
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
 
-msgid "Free for all"
-msgstr "Åbent for alle"
+#. Default: "Edit"
+#: ../skins/ploneboard_templates/comment_view.pt:116
+msgid "Edit"
+msgstr ""
 
-msgid "Hidden"
-msgstr "Skjult"
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
 
-msgid "Hide"
-msgstr "Skjul"
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
 
-msgid "Lock"
-msgstr "Lås"
-
-msgid "Locked"
-msgstr "Låst"
-
-msgid "Make free-for-all"
-msgstr "Gør åbent for alle"
-
-msgid "Make member-posting"
-msgstr "Opret medlemsindlæg"
-
-msgid "Message Board"
-msgstr "Forum"
-
-msgid "Moderate"
-msgstr "Godkendelse"
-
-msgid "Open"
-msgstr "Åben"
-
-msgid "Private to members only"
-msgstr "Kun synligt for medlemmer"
-
-msgid "Public"
-msgstr "Publiceret"
-
-msgid "Rejected"
-msgstr "Afvist"
-
-msgid "Require membership to post"
-msgstr "Medlemskab påkrævet"
-
-msgid "Retracted"
-msgstr "Trukket tilbage"
-
-msgid "Threaded conversion view"
-msgstr "Indlæg vist i tråde"
-
-msgid "Waiting for moderator"
-msgstr "Afventer godkendelse"
-
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "Gammelt datoformat: ${year} ${month} ${day} ${hours}:${minutes}"
-
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "Nyt datoformat: ${wday} ${hours}:${minutes}"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
 

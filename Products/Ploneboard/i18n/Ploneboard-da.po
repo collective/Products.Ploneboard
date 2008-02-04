@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-02-04 14:12+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Sune Toft <sune@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -17,165 +17,166 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: da-dk\n"
 
-
-# translation convention for danish:
-# en              |   de
-# -----------------------------------
-# Message Board   |   Forum
-# Forum           |   Tema
-# Conversation    |   Indlæg
-# Comment         |   Kommentar
-
-#. Default: "Add"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Add"
-msgstr "Tilføj"
-
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:172
 msgid "Cancel"
 msgstr "Annuller"
 
 #. Default: "Change"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:75
 msgid "Change"
 msgstr "Rediger"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
 
 msgid "Forum"
 msgstr "Forum"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:191
 msgid "Log in to add comments"
 msgstr "Login for kommentar"
 
-#. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "Log in to start a conversation"
-msgstr "Login for at oprette indlæg"
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
 
 #. Default: "Post"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:69
 msgid "Post"
 msgstr "Send"
 
 #. Default: "Post comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-#: ../skins/ploneboard_templates/conversation_view.pt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:166
 msgid "Post comment"
 msgstr "Send kommentar"
 
-#. Default: "Remove"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Remove"
-msgstr "Slet"
-
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:180
 msgid "Reply to this"
 msgstr "Svar på"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:76
 msgid "Start a new Conversation"
 msgstr "Opret ny debat"
 
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
+
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:83
 msgid "View profile"
 msgstr "Vis profil"
 
-#. Default: "Action"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "action"
-msgstr "Handling"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:31
 msgid "add_comment"
 msgstr "Tilføj kommentar"
 
 #. Default: "Add conversation"
-#: ../skins/ploneboard_templates/add_conversation_form.cpt
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:28
 msgid "add_conversation"
 msgstr "Opret indlæg"
 
 msgid "alert_delete_popup"
 msgstr "Bemærk at popup-vindue anvendes"
 
+#. Default: "Search"
+#: ../skins/ploneboard_templates/board_view.pt:39
+msgid "board_search_button"
+msgstr ""
+
+#. Default: "Search Boards"
+#: ../skins/ploneboard_templates/board_view.pt:32
+msgid "board_search_label"
+msgstr ""
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:99
+msgid "by_author"
+msgstr ""
+
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:163
 msgid "comment_current_state"
 msgstr "Nuværende status:"
 
-#. Default: "Comments"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "comments"
-msgstr "Kommentarer"
-
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:125
 msgid "conversation"
 msgstr "Indlæg"
 
-#. Default: "Data provider"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "data_provider"
-msgstr "Indholdsredaktør"
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:71
+msgid "conversation_forum"
+msgstr ""
 
-#. Default: "Here you can configure site settings for Ploneboard."
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
-msgid "description_ploneboard_config"
-msgstr "Indstillinger for PloneBoard"
-
-#. Default: "Here you can configure which transforms are active in Ploneboard comments."
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "description_ploneboard_config_transforms"
-msgstr "Indstil hvilken transformationer, der er aktive i PloneBoard kommentarer. Transformationer anvendes til filtrering af indtastninger."
-
-#. Default: "Configure Ploneboard comment text transformations."
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "description_pref_transforms"
-msgstr "Indstil filtering af PloneBoard kommentarer"
-
-#. Default: "Enabled?"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "enabled"
-msgstr "Tændt?"
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+msgid "conversation_posted"
+msgstr ""
 
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:90
 msgid "forum_name"
 msgstr "Temanavn"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/board_header.pt
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "Op til ${title}"
 
-#. Default: "Ploneboard transforms"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "heading_pref_transforms"
-msgstr "Ploneboard transformationer"
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:38
+msgid "go_to_view_url"
+msgstr ""
 
 #. Default: "Preview comment"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:16
 msgid "heading_preview_comment"
 msgstr "Vis kommentar"
 
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:140
+msgid "help_body_attachments_maxsize"
+msgstr ""
+
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:134
 msgid "help_body_attachments_posting"
 msgstr "Vælg en fil, der skal vedhæftes kommentar"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:104
 msgid "help_body_text_posting"
 msgstr "Basale HTML tags er tilladt"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:99
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLs indsættes automatisk som links"
 
@@ -203,24 +204,18 @@ msgstr "Et indlæg kan max. tilføjes filer af den størrelse, der angives her."
 msgid "help_text"
 msgstr "Hjælpetekst"
 
-#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "help_transforms"
-msgstr "Vælg hvilket filter, der skal anvendes til filtrering af indtastet tekst i indlæg."
-
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "label_body_files_posting"
 msgstr "Vedhæftede filer"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:91
 msgid "label_body_text_posting"
 msgstr "Svartekst"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:129
 msgid "label_by_author"
 msgstr "af ${author}"
 
@@ -239,6 +234,11 @@ msgstr "Indlæg"
 msgid "label_description_forum"
 msgstr "Tema"
 
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:100
+msgid "label_in_forum"
+msgstr ""
+
 msgid "label_maxattachments"
 msgstr "Maximum antal vedhæftede filer"
 
@@ -246,173 +246,155 @@ msgid "label_maxattachmentsize"
 msgstr "Maximal filstørrelse for vedhæftede filer"
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt
+#: ../skins/ploneboard_templates/board_footer.pt:11
 msgid "label_powered_by"
 msgstr "Baseret på ${link}"
 
 #. Default: "Quick reply"
-#: ../skins/ploneboard_templates/conversation_view.pt
+#: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Hurtigsvar"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:65
 msgid "label_required"
 msgstr "(Påkrævet)"
-
-#. Default: "Save"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "label_save"
-msgstr "Gem"
 
 msgid "label_text"
 msgstr "Tekst"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:63
 msgid "label_title_posting"
 msgstr "Titel"
 
-#. Default: "Transforms"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "label_transforms"
-msgstr "Filtre"
-
-#. Default: "Up to Ploneboard Setup"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "label_up_to_ploneboard_setup"
-msgstr "Tilbage til PloneBoard indstillinger"
-
-#. Default: "Add transform"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_add_transform"
-msgstr "Tilføj filter"
-
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:204
 msgid "legend_attachments"
 msgstr "Vedhæftede filer"
 
-#. Default: "Text transformations"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "legend_pref_ploneboard_transforms"
-msgstr "Tekstfiltre"
-
-#. Default: "Existing transforms"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_transforms"
-msgstr "Eksisterende filtre"
-
-#. Default: "Manage"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "manage"
-msgstr "Indstillinger"
-
-#. Default: "Manage comment text transformations"
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
-msgid "manage_transforms"
-msgstr "Indstil filtre for kommentarer"
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:88
+msgid "log_to_start_conversation"
+msgstr ""
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:78
 msgid "moderation_count"
 msgstr "${count} kommentarer afventer."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:41
 msgid "moderation_description"
 msgstr "Følgende kommentarer afventer godkendelse. Vælg 'Publicer' eller 'Afvis'. Klik på titlen, hvis du vil se indlægget i kontekst."
 
-#. Default: "Up"
-#: ../skins/ploneboard_templates/moderation_form.pt
-msgid "moderation_up"
-msgstr "Op"
-
-#. Default: "Module"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "module_name"
-msgstr "Modul"
-
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
 msgstr "Seneste kommentarer"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_form.cpt:153
 msgid "new_attachment"
 msgstr "Tilføj flere filer"
 
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt:109
+msgid "new_conversations_marked_with"
+msgstr ""
+
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:118
 msgid "no_comments_queued"
 msgstr "Ingen kommentarer afventer godkendelse"
 
-#. Default: "No comments yet"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "no_comments_yet"
-msgstr "Ingen kommentarer"
-
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:121
 msgid "no_conversations_started"
 msgstr "Ingen debatter startet"
 
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:43
+msgid "no_recent_conversations"
+msgstr ""
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt:168
+msgid "no_replies_yet"
+msgstr ""
+
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:65
 msgid "not_conversations"
 msgstr "Ingen debatter i dette tema endnu."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:68
 msgid "not_forums"
 msgstr "Det findes endnu ingen temaer i dette forum."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:96
 msgid "not_permission_start_conversation"
 msgstr "Du har ikke rettigheder til at oprette et indlæg."
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:91
 msgid "number_of_conversations"
 msgstr "Indlæg"
 
 #. Default: "Posted by"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:70
 msgid "posted_by"
 msgstr "Skrevet af"
 
 #. Default: "Preview message"
-#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:11
 msgid "preview_message"
 msgstr "Vis indlæg"
 
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:51
+msgid "recent_conversations_description"
+msgstr ""
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt:126
+msgid "replies"
+msgstr ""
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt:45
+msgid "show_new_conversations_all"
+msgstr ""
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/forum_view.pt:40
+msgid "show_no_replies"
+msgstr ""
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt:52
+msgid "show_no_replies_all"
+msgstr ""
+
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:75
 msgid "text_at"
 msgstr "&mdash;"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:150
 msgid "title_general_forums"
 msgstr "Alle temaer"
 
-#. Default: "Transform name"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "transform_name"
-msgstr "Filternavn"
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:29
+msgid "title_recent_conversations"
+msgstr ""
 
-#. Default: "Return to Ploneboard settings"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "up_to_ploneboard_prefs"
-msgstr "Tilbage til PloneBoard indstillinger"
-
-#. Default: "Up to Site Setup"
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
-msgid "up_to_site_setup"
-msgstr "Tilbage til kontrolpanel"
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
+msgid "title_unanswered_conversations"
+msgstr ""
 
