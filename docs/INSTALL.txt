@@ -6,7 +6,7 @@ Requirements
 
 Ploneboard requires Zope 2.10.4, Plone 3.0.x or later.
 
-SimpleAttachment is required to handle attachments in comments.
+Products.SimpleAttachment 
 
 Installing with buildout
 ------------------------
