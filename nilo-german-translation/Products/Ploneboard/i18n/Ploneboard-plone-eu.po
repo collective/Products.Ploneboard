@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-02-04 14:12+0000\n"
 "PO-Revision-Date: 2006-12-20 10:57+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,76 +18,40 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "Activate"
-msgstr "Aktibatu"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
 
-msgid "Active"
-msgstr "Aktibatuta"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
 
-msgid "Comment"
-msgstr "Erantzun"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
 
-msgid "Conversation"
-msgstr "Mezua"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
 
-msgid "Flat conversion view"
-msgstr "Ikuspen arrunta"
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
 
-msgid "Free for all"
-msgstr "Guztientzat irekita"
+#. Default: "Edit"
+#: ../skins/ploneboard_templates/comment_view.pt:116
+msgid "Edit"
+msgstr ""
 
-msgid "Hidden"
-msgstr "Ezkutatuta"
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
 
-msgid "Hide"
-msgstr "Ezkutuan"
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
 
-msgid "Lock"
-msgstr "Itxi"
-
-msgid "Locked"
-msgstr "Itxita"
-
-msgid "Make free-for-all"
-msgstr "Guztiei ireki"
-
-msgid "Make member-posting"
-msgstr "Kideentzat bakarrik ireki"
-
-msgid "Message Board"
-msgstr "Foroa"
-
-msgid "Moderate"
-msgstr "Moderatu"
-
-msgid "Open"
-msgstr "Irekita"
-
-msgid "Private to members only"
-msgstr "Kideentzat bakarrik"
-
-msgid "Public"
-msgstr "Publikoa"
-
-msgid "Rejected"
-msgstr "Baztertuta"
-
-msgid "Require membership to post"
-msgstr "Argitaratzeko kide izatea eskatu"
-
-msgid "Retracted"
-msgstr "Baztertuta"
-
-msgid "Threaded conversion view"
-msgstr "Harikaturiko ikuspena"
-
-msgid "Waiting for moderator"
-msgstr "Moderazioaren zain"
-
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "${year} ${month} ${day} ${hours}:${minutes}"
-
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
 

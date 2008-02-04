@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-02-04 14:12+0000\n"
 "PO-Revision-Date: 2007-03-22 10:32+000\n"
 "Last-Translator: Fabio Rizzo <fabiorizzo@threepointsweb.com>\n"
 "Language-Team: <plone-i18n@lists.sourceforge.net>\n"
@@ -16,89 +16,40 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "Ploneboard Setup"
-msgstr "Configurações do Ploneboard"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Objeto do Ploneboard que irá conter fóruns no site."
-
-msgid "Activate"
-msgstr "Ativar"
-
-msgid "Active"
-msgstr "Ativo"
-
-msgid "Comment"
-msgstr "Comentário"
-
-msgid "Conversation"
-msgstr "Conversação"
-
-msgid "Flat conversion view"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
 msgstr ""
 
-msgid "Free for all"
-msgstr "Liberado para Anônimos"
-
-msgid "Hidden"
-msgstr "Fechado"
-
-msgid "Hide"
-msgstr "Hechar"
-
-msgid "Lock"
-msgstr "Bloquear"
-
-msgid "Locked"
-msgstr "Bloqueado"
-
-msgid "Make free-for-all"
-msgstr "Liberar para Anônimos"
-
-msgid "Make moderated"
-msgstr "Tornar moderado"
-
-msgid "Make member-posting"
-msgstr "Só Membros Postam"
-
-msgid "Message Board"
-msgstr "Pasta de Fóruns"
-
-msgid "Moderate"
-msgstr "Moderar"
-
-msgid "Open"
-msgstr "Aberto"
-
-msgid "Private to members only"
-msgstr "Privado somente para membros"
-
-msgid "Public"
-msgstr "Público"
-
-msgid "Rejected"
-msgstr "Rejeitado"
-
-msgid "Require membership to post"
-msgstr "Só Membros Postam"
-
-msgid "Moderated forum"
-msgstr "Fórum Moderado"
-
-msgid "Retracted"
-msgstr "Retraído"
-
-msgid "Threaded conversion view"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
 msgstr ""
 
-msgid "Waiting for moderator"
-msgstr "Aguardando moderação"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:32
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:36
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
+
+#. Default: "Edit"
+#: ../skins/ploneboard_templates/comment_view.pt:116
+msgid "Edit"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
+
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
 

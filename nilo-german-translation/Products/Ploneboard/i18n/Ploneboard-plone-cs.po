@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-02-04 14:12+0000\n"
 "PO-Revision-Date: 2007-01-14 23:46+0100\n"
 "Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -15,94 +15,40 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
-msgid "Activate"
-msgstr "Aktivovat"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
 
-msgid "Active"
-msgstr "Aktivní"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
 
-msgid "Comment"
-msgstr "Komentář"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
 
-msgid "Conversation"
-msgstr "Konverzace"
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
 
-msgid "Flat conversion view"
-msgstr "Jednoduché zobrazení konverzace"
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
 
-msgid "Free for all"
-msgstr "Přístupné všem"
+#. Default: "Edit"
+#: ../skins/ploneboard_templates/comment_view.pt:116
+msgid "Edit"
+msgstr ""
 
-msgid "Hidden"
-msgstr "Skryté"
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
 
-msgid "Hide"
-msgstr "Skrýt"
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
 
-msgid "Lock"
-msgstr "Zamknout"
-
-msgid "Locked"
-msgstr "Uzamčeno"
-
-msgid "Make free-for-all"
-msgstr "Povolit všem"
-
-msgid "Make member-posting"
-msgstr "Omezit přispívání pro členy"
-
-msgid "Message Board"
-msgstr "Tabule zpráv"
-
-msgid "Moderate"
-msgstr "Moderovat"
-
-msgid "Make moderated"
-msgstr "Změnit na moderované"
-
-msgid "Open"
-msgstr "Otevřít"
-
-msgid "Private to members only"
-msgstr "Pouze pro členy"
-
-msgid "Public"
-msgstr "Veřejné"
-
-msgid "Rejected"
-msgstr "Zamítnuto"
-
-msgid "Require membership to post"
-msgstr "Přispívání vyžaduje registraci"
-
-msgid "Retracted"
-msgstr "Staženo"
-
-msgid "Threaded conversion view"
-msgstr "Vláknové zobrazení konverzace"
-
-msgid "Waiting for moderator"
-msgstr "Čekající na moderátora"
-
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "${year} ${month} ${day} ${hours}:${minutes}"
-
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
-
-msgid "Global forum listing"
-msgstr "Globální seznam fór"
-
-msgid "Local forum listing"
-msgstr "Lokální seznam fór"
-
-msgid "Preview post"
-msgstr "Náhled příspěvku"
-
-msgid "Add conversation"
-msgstr "Přidat konverzaci"
-
-msgid "Add comment"
-msgstr "Přidat komentář"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
 
