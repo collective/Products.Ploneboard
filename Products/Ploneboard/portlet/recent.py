@@ -75,7 +75,8 @@ class Renderer(base.Renderer):
                     forum_url = forum.absolute_url(),
                     forum_title = forum.title_or_id(),
                     review_state = normalize(brain.review_state),
-                    portal_type = normalize(brain.portal_type))
+                    portal_type = normalize(brain.portal_type),
+                    date = brain.modified)
 
         return [morph(brain) for brain in brains]
 
