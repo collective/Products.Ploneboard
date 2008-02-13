@@ -14,8 +14,8 @@
     tal:define="results view/results">
     <a class="link-parent"
         tal:attributes="href view/board_url"
-        i18n:domain="ploneboard" i18n:translate="label_to_board">
-        Up to discussion board
+        i18n:domain="ploneboard" i18n:translate="label_back_to_board">
+        Back to discussion board
     </a>
 
     <form action="search" class="searchPage">
