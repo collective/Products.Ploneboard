@@ -4,6 +4,10 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- In preparation of PLIP195 being merged for Plone 3.1: declare
+  Products.SimpleAttachment as a dependency in our GS profile.
+  [wichert]
+
 _ Update the Lithuanian translation. This fixes
   http://plone.org/products/ploneboard/issues/164
   [wichert]
