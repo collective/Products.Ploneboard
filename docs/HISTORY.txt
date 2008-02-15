@@ -14,6 +14,7 @@ _ Update the Lithuanian translation. This fixes
 
 - Correct the attachment size vocabulary: the values should be integers,
   not strings. This fixes http://plone.org/products/ploneboard/issues/168
+  as well as http://plone.org/products/ploneboard/issues/144
   [wichert]
 
 - Honour the content-type for comments when transforming them. Doing things
