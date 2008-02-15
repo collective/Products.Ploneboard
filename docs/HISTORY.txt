@@ -4,6 +4,10 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Correct the attachment size vocabulary: the values should be integers,
+  not strings. This fixes http://plone.org/products/ploneboard/issues/168
+  [wichert]
+
 - Honour the content-type for comments when transforming them. Doing things
   like replacing newlines with <br/> on text/html comments is kind of silly.
   [wichert].
