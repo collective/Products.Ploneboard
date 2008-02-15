@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2006-06-11 00:16+0300\n"
-"Last-Translator: Kazimieras <cardinal@mail.lt>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2008-01-10 16:56+0200\n"
+"Last-Translator: Jaroslav Ðatkeviè <jaro@akl.lt>\n"
+"Language-Team: Lithuanian Plone Translation Team <kristiina@akl.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-13\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,75 +17,77 @@ msgstr ""
 "X-Poedit-Country: LITHUANIA\n"
 
 msgid "Activate"
-msgstr ""
+msgstr "Aktyvuoti"
 
 msgid "Active"
-msgstr ""
+msgstr "Aktyvu"
 
 msgid "Comment"
-msgstr ""
+msgstr "Komentaras"
 
 msgid "Conversation"
-msgstr ""
+msgstr "Pokalbis"
 
 msgid "Flat conversion view"
-msgstr ""
+msgstr "Plokðèias konvertavimo vaizdas"
 
 msgid "Free for all"
-msgstr ""
+msgstr "Laisva visiems"
 
 msgid "Hidden"
-msgstr ""
+msgstr "Paslëpta"
 
 msgid "Hide"
-msgstr ""
+msgstr "Paslëpti"
 
 msgid "Lock"
-msgstr ""
+msgstr "Uþrakinti"
 
 msgid "Locked"
-msgstr ""
+msgstr "Uþrakinta"
 
 msgid "Make free-for-all"
-msgstr ""
+msgstr "Padaryti laisvu visiems"
 
 msgid "Make member-posting"
-msgstr ""
+msgstr "Padaryti nario paskelbimà"
 
 msgid "Message Board"
-msgstr ""
+msgstr "Þinuèiø lenta"
 
 msgid "Moderate"
-msgstr ""
+msgstr "Moderuoti"
 
 msgid "Open"
-msgstr ""
+msgstr "Atverti"
 
 msgid "Private to members only"
-msgstr ""
+msgstr "Privatu tik nariams"
 
 msgid "Public"
-msgstr ""
+msgstr "Vieða"
 
 msgid "Rejected"
-msgstr ""
+msgstr "Atmesta"
 
 msgid "Require membership to post"
-msgstr ""
+msgstr "Reikalauti narystës paskelbimui"
 
 msgid "Retracted"
-msgstr ""
+msgstr "Atsisakyta"
 
 msgid "Threaded conversion view"
-msgstr ""
+msgstr "Konvertavimo gijø vaizdas"
 
 msgid "Waiting for moderator"
-msgstr ""
+msgstr "Laukiama moderatoriaus"
 
+#, fuzzy
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr ""
+msgstr "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+#, fuzzy
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
+msgstr "young_date_format: ${wday} ${hours}:${minutes}"
 

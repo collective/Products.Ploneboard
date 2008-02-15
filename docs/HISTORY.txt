@@ -4,6 +4,10 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+_ Update the Lithuanian translation. This fixes
+  http://plone.org/products/ploneboard/issues/164
+  [wichert]
+
 - Correct the attachment size vocabulary: the values should be integers,
   not strings. This fixes http://plone.org/products/ploneboard/issues/168
   [wichert]
