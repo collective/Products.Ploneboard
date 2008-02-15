@@ -112,6 +112,8 @@
 
         </tal:vars>
 
+        <div class="visualClear"></div>
+
         <tal:haveConversations condition="python:numConversations > 0">
                     
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;

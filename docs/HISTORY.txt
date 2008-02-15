@@ -4,6 +4,11 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Add an explicit visualClear below the 'start new conversation' button
+  so it does not overlap the table. This fixes
+  http://plone.org/products/ploneboard/issues/161
+  [wichert]
+
 - In preparation of PLIP195 being merged for Plone 3.1: declare
   Products.SimpleAttachment as a dependency in our GS profile.
   [wichert]
