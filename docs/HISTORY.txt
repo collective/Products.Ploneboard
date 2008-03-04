@@ -4,6 +4,9 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Index newly added comments so all their data is correct in the catalog.
+  [wichert]
+
 - Rework the RSS feed: make the Ploneboard RSS feed work recursively so
   a feed on a forum shows all conversations and a feed on the board itself
   shows all comments from all fora. Enabled feeds on the Ploneboard type.

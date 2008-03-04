@@ -1,7 +1,6 @@
 """
 $Id$
 """
-import urllib
 from zope import interface
 from Acquisition import aq_base
 from DateTime.DateTime import DateTime

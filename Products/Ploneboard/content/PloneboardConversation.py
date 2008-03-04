@@ -123,6 +123,8 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             forum = self.getForum()
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
 
+        m.indexObject()
+
         self.reindexObject() # Sets modified
         return m
 
