@@ -25,6 +25,7 @@
  <alias from="edit" to="base_edit"/>
  <alias from="index.html" to="(dynamic view)"/>
  <alias from="moderate" to="moderation_form"/>
+ <alias from="rss-properties" to="synPropertiesForm"/>
  <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="(selected layout)"/>
  <action title="View" action_id="view" category="object" condition_expr=""
@@ -34,6 +35,11 @@
  <action title="Edit" action_id="edit" category="object" condition_expr=""
     url_expr="string:$object_url/edit" visible="True">
   <permission value="Modify portal content"/>
+ </action>
+ <action title="RSS Feed" action_id="rssfeed" category="object"
+    condition_expr="" url_expr="string:$object_url/rss-properties"
+    visible="True">
+  <permission value="Ploneboard: Add Ploneboard"/>
  </action>
  <action title="References" action_id="references" category="object"
     condition_expr="object/archetype_tool/has_graphviz"

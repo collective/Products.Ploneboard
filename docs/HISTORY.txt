@@ -4,6 +4,15 @@ Changelog
 2.0 - UNRELEASED
 ----------------
 
+- Rework the RSS feed: make the Ploneboard RSS feed work recursively so
+  a feed on a forum shows all conversations and a feed on the board itself
+  shows all comments from all fora. Enabled feeds on the Ploneboard type.
+  [wichert]
+
+- Remove the object_provides index from Ploneboard: Plone 3.0 has a much
+  more efficient version of that itself.
+  [wichert]
+
 - Add an explicit visualClear below the 'start new conversation' button
   so it does not overlap the table. This fixes
   http://plone.org/products/ploneboard/issues/161

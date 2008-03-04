@@ -42,7 +42,7 @@
  <action title="RSS Feed" action_id="rssfeed" category="object"
     condition_expr="" url_expr="string:$object_url/rss-properties"
     visible="True">
-  <permission value="Ploneboard: Add Ploneboard"/>
+  <permission value="Modify portal content"/>
  </action>
  <action title="Moderate" action_id="moderate" category="object"
     condition_expr="" url_expr="string:$object_url/moderate" visible="True">

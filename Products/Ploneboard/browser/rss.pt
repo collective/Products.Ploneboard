@@ -13,7 +13,7 @@
         <title tal:content="view/title">Futurama, FOX</title>
         <link tal:content="view/url">http://localhost/futurama/RSS</link>
 
-        <description>
+        <description tal:content="view/description">
         </description>
 
         <syn:updatePeriod tal:content="view/updatePeriod">daily</syn:updatePeriod>
@@ -32,5 +32,11 @@
           rdf:about="http://localhost/board/forum/conversation"
           tal:attributes="rdf:about comment/url">
         <title tal:content="comment/title">Comment title</title>
+        <link tal:content="comment/url">http://localhost/board/forum/conv/1</link>
+        <description tal:content="comment/description">
+            The first part of the comment text goes here
+        </description>
+        <dc:date tal:content="comment/date">2007-11-27T11:20:00Z</dc:date>
+        <dc:type>Comment</dc:type>
     </item>
 </rdf:RDF>

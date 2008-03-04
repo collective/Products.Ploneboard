@@ -4,6 +4,12 @@
    i18n_domain="ploneboard">
 
   <browser:page
+    for="..interfaces.IPloneboard"
+    class=".rss.RSSView"
+    name="RSS"
+    permission="zope2.View"/>
+
+  <browser:page
      for="..interfaces.IPloneboard"
      class=".search.SearchView"
      name="search"
