@@ -132,9 +132,21 @@ class TestPloneboardRSSFeed(PloneboardTestCase.PloneboardTestCase):
     def testFirstComment(self):
         forum=self.board.addForum('forum1', 'Title one', 'Description one')
         conv=forum.addConversation('Conversation one', 'Text one')
+        conv.addComment("comment title", "comment body")
         self.view.update()
-        self.assertEqual(self.view.comments, [])
+        self.assertEqual(len(self.view.comments), 1)
 
+    def testCommentInfo(self):
+        forum=self.board.addForum('forum1', 'Title one', 'Description one')
+        conv=forum.addConversation('Conversation one', 'Text one')
+        conv.addComment("comment title", "comment body")
+        self.view.update()
+        comment=self.view.comments[0]
+        self.assertEqual(comment['title'], 'comment title')
+        self.assertEqual(comment['description'], 'comment body')
+        self.assertEqual(comment['author'], 'test_user_1_')
+        self.failUnless('date' in comment)
+        self.failUnless('url' in comment)
 
 
 def test_suite():

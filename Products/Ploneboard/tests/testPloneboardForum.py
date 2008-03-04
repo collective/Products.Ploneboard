@@ -3,12 +3,14 @@
 #
 
 import unittest
+from zExceptions import Unauthorized
 from zope.interface.verify import verifyClass, verifyObject
 
 import PloneboardTestCase
 from Products.Ploneboard.interfaces import IForum
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 
+from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import _createObjectByType
 
 
@@ -134,7 +136,57 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         conv.addComment("another", "another")
         self.failUnlessEqual(forum.getNumberOfComments(), 1)
     
+class TestPloneboardForumRSSFeed(PloneboardTestCase.PloneboardTestCase):
+
+    def afterSetUp(self):
+        self.board = _createObjectByType('Ploneboard', self.folder, 'board',
+                title='Test Board')
+        self.forum=self.board.addForum('forum1', 'Title one', 'Description one')
+        self.syn_tool = getToolByName(self.portal, 'portal_syndication')
+        self.view = self.forum.restrictedTraverse("@@RSS")
+
+    def testDisblingSyndication(self):
+        self.assertEqual(self.syn_tool.isSyndicationAllowed(self.forum), True)
+        self.syn_tool.disableSyndication(self.forum)
+        self.assertEqual(self.syn_tool.isSyndicationAllowed(self.forum), False)
+
+    def testViewNotAllowedWithSyndicationDisabled(self):
+        self.syn_tool.disableSyndication(self.forum)
+        self.assertRaises(Unauthorized, self.view.__call__)
+
+    def testViewUrl(self):
+        self.assertEqual(self.view.url(), self.forum.absolute_url())
+
+    def testViewDate(self):
+        self.assertEqual(self.view.date(), self.forum.modified().HTML4())
+
+    def testViewTitle(self):
+        self.assertEqual(self.view.title(), 'Title one')
+
+    def testHumbleBeginnings(self):
+        self.view.update()
+        self.assertEqual(self.view.comments, [])
+
+    def testFirstComment(self):
+        conv=self.forum.addConversation('Conversation one', 'Text one')
+        conv.addComment("comment title", "comment body")
+        self.view.update()
+        self.assertEqual(len(self.view.comments), 1)
+
+    def testCommentInfo(self):
+        conv=self.forum.addConversation('Conversation one', 'Text one')
+        conv.addComment("comment title", "comment body")
+        self.view.update()
+        comment=self.view.comments[0]
+        self.assertEqual(comment['title'], 'comment title')
+        self.assertEqual(comment['description'], 'comment body')
+        self.assertEqual(comment['author'], 'test_user_1_')
+        self.failUnless('date' in comment)
+        self.failUnless('url' in comment)
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestPloneboardForum))
+    suite.addTest(unittest.makeSuite(TestPloneboardForumRSSFeed))
     return suite
