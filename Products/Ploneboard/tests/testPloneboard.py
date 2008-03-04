@@ -3,10 +3,12 @@
 #
 
 import unittest
+from zExceptions import Unauthorized
 from zope.interface.verify import verifyClass, verifyObject
 from Products.Ploneboard.tests import PloneboardTestCase
 from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard.content.Ploneboard import Ploneboard
+from Products.CMFCore.utils import getToolByName
 
 # Catch errors in Install
 from Products.Ploneboard.Extensions import Install
@@ -98,9 +100,47 @@ class TestPloneboardWithoutContainment(PloneboardTestCase.PloneboardTestCase):
         self.failUnless(forum2 in forums)
 
 
+class TestPloneboardRSSFeed(PloneboardTestCase.PloneboardTestCase):
+
+    def afterSetUp(self):
+        self.board = _createObjectByType('Ploneboard', self.folder, 'board',
+                title='Test Board')
+        self.syn_tool = getToolByName(self.portal, 'portal_syndication')
+        self.view = self.board.restrictedTraverse("@@RSS")
+
+    def testEnablingSyndication(self):
+        self.assertEqual(self.syn_tool.isSyndicationAllowed(self.board), False)
+        self.syn_tool.enableSyndication(self.board)
+        self.assertEqual(self.syn_tool.isSyndicationAllowed(self.board), True)
+
+    def testViewNotAllowedWithSyndicationDisabled(self):
+        self.assertRaises(Unauthorized, self.view.__call__)
+
+    def testViewUrl(self):
+        self.assertEqual(self.view.url(), self.board.absolute_url())
+
+    def testViewDate(self):
+        self.assertEqual(self.view.date(), self.board.modified().HTML4())
+
+    def testViewTitle(self):
+        self.assertEqual(self.view.title(), 'Test Board')
+
+    def testHumbleBeginnings(self):
+        self.view.update()
+        self.assertEqual(self.view.comments, [])
+
+    def testFirstComment(self):
+        forum=self.board.addForum('forum1', 'Title one', 'Description one')
+        conv=forum.addConversation('Conversation one', 'Text one')
+        self.view.update()
+        self.assertEqual(self.view.comments, [])
+
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestPloneboardBasics))
     suite.addTest(unittest.makeSuite(TestPloneboardInterface))
     suite.addTest(unittest.makeSuite(TestPloneboardWithoutContainment))
+    suite.addTest(unittest.makeSuite(TestPloneboardRSSFeed))
     return suite
