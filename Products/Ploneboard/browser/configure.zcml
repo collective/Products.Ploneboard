@@ -10,6 +10,12 @@
     permission="zope2.View"/>
 
   <browser:page
+    for="..interfaces.IForum"
+    class=".rss.RSSView"
+    name="RSS"
+    permission="zope2.View"/>
+
+  <browser:page
      for="..interfaces.IPloneboard"
      class=".search.SearchView"
      name="search"
