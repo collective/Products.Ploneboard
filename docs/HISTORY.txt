@@ -1,8 +1,12 @@
 Changelog
 =========
 
-2.0 - UNRELEASED
+2.1 - Unreleased
 ----------------
+
+
+2.0 - March 14, 2008
+--------------------
 
 - Index newly added comments so all their data is correct in the catalog.
   [wichert]
