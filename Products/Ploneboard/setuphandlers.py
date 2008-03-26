@@ -4,8 +4,11 @@ from Products.Ploneboard.config import URL_TRANSFORM_MODULE
 from Products.Ploneboard.config import SAFE_HTML_TRANSFORM_MODULE
 
 def setupVarious(context):
+    
+    if not context.readDataFile('ploneboard_various.txt'):
+        return
+    
     site=context.getSite()
-
     addTransforms(site)
 
 
