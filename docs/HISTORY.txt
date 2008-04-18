@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Add missing empty alt-text for content type icons in the search results.
+  [wichert]
+
 
 2.0 - March 14, 2008
 --------------------

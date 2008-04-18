@@ -53,7 +53,7 @@
                 <tal:info define="info python:view.info(result);
                                 item_wf_state_class string:state-${info/review_state};">
                     <dt tal:attributes="class string:contenttype-${info/portal_type};">
-                        <img tal:condition="info/icon" tal:attributes="src info/icon"/>
+                        <img alt="" tal:condition="info/icon" tal:attributes="src info/icon"/>
                         <a tal:attributes="href info/url;
                                            title info/title;
                                            class item_wf_state_class"
