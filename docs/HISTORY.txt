@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Add Russian translation, courtesy of Eugene Korenevsky.
+  [wichert]
+
 - Add missing empty alt-text for content type icons in the search results.
   [wichert]
 
