@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Added Swedish translation, thanks to Martin Lundwall.
+  [hannosch]
+
 - Add Russian translation, courtesy of Eugene Korenevsky.
   [wichert]
 
