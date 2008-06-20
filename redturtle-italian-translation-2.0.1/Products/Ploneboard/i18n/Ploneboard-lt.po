@@ -1,0 +1,464 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
+"PO-Revision-Date: 2006-10-26 12:44+0300\n"
+"Last-Translator: Darius <darkius84@yahoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: lt\n"
+"Language-Name: Lithuanian\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: ploneboard\n"
+"X-Poedit-Language: Lithuanian\n"
+"X-Poedit-Country: LITHUANIA\n"
+
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Pridëti"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Atðaukti"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Keisti"
+
+msgid "Forum"
+msgstr "Forumas"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Tik registruoti vartotojai gali komentuoti"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr "Tik registruoti vartotojai gali pradëti temà"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Praneðimas"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "iðsaugoti"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Ðalinti"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Atsakyti ..."
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Pradëti naujà temà"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Þiûrëti profilá"
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr "Ávykis"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Pridëti komentarà"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "sukurti temà"
+
+msgid "alert_delete_popup"
+msgstr "***"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr "Bûklë:"
+
+#. Default: "Comments"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "comments"
+msgstr "Komentarai"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr "Tema"
+
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr "***"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Èia galite nustatyti forumo parametrus"
+
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr "Èia galima nustatyti, kokie nustatymai "
+
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr "Konfigûruoti Ploneboard komentarø teksto transformacijas."
+
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "Ájungti?"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Forumo pavadinimas"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "Vienu lygiu aukðtyn"
+
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr "Ploneboard transformacijos"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Perþiûrëti komentarus"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Pridedami failai."
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "praneðimo tekstas"
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "Interneto adresai paraðyti forume bus veikianèios nuorodos."
+
+msgid "help_categories_board"
+msgstr "kategorijos"
+
+#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.",
+msgid "help_category"
+msgstr "Pasirinkite forumo kategorijà. Forumas gali priklausyti kelioms kategorijos, taèiau rekomenduojama tik viena."
+
+msgid "help_description_board"
+msgstr "apibûdinimas"
+
+msgid "help_description_conversation"
+msgstr "temos apraðymas"
+
+msgid "help_description_forum"
+msgstr "Forumo apraðymas"
+
+msgid "help_maxattachments"
+msgstr "Pasirinkite kiek norite maksimaliai prikabintø failø prie forumo."
+
+msgid "help_maxattachmentsize"
+msgstr "Pasirinkite kokio maksimalaus dydþio failus bus galima prisegti prie forumo."
+
+msgid "help_text"
+msgstr "tekstas"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
+msgstr "Pasirinkite teksto transformacijà, kuri bus naudojama forumo þinutëms. "
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Priedai"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Praneðimo tekstas"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "${author}"
+
+msgid "label_categories_board"
+msgstr "kategorijos"
+
+msgid "label_category"
+msgstr "Kategorija"
+
+msgid "label_description_board"
+msgstr "apibûdinimas"
+
+msgid "label_description_conversation"
+msgstr "temos apraðymas"
+
+msgid "label_description_forum"
+msgstr "Forumo apraðymas"
+
+msgid "label_maxattachments"
+msgstr "Maksimalus prikabinamø failø skaièius"
+
+msgid "label_maxattachmentsize"
+msgstr "Maksimalus prikabinamo failo dydis"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Sukurta ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Greitas atsakymas"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Privaloma)"
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr "Iðsaugoti"
+
+msgid "label_text"
+msgstr "tekstas"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "praneðimo antraðtë"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr "Transformacijos"
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr "Á Ploneboard sàrankà"
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Pridëti transformacijà"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Priedai"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr "Teksto transformacijos"
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Esamos transformacijos"
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Tvarkyti"
+
+#. Default: "Manage comment text transformations"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr "Nustatyti komentarø teksto transformacijas"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr "Komentarai laukiantys patvirtinimo: ${count}."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr "Ðie komentarai laukia moderatoriaus patvirtinimo. Pasirinkite 'Publikuoti' arba 'Atmesti'. Paspauskite ant komentaro norëdami pamatyti kur jis buvo paraðytas."
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr "Á virðø"
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr "Modulis"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "most_recent_comment"
+msgstr "Pakutiniai komentarai"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr "Pridëti dar vienà failà."
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr "Nëra komentarø, laukianèiø moderatoriaus patvirtinimo."
+
+#. Default: "No comments yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_comments_yet"
+msgstr "Kol kas nëra jokiø komentarø."
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "nëra pradëtø diskusijø"
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Ðiame forume kol kas diskusijø nëra"
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Kol kas nëra jokio sukurto forumo. Norëdami pridëti forumà pasinaudokite meniu juosta."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "neturite teisiø pradëti diskusijà"
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "Temos"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "paraðë:"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Perþiûrëti praneðimà"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "tekstas"
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Bendri forumai"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Transformacijø pavadinimas"
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Gráþti á forumo nustatymus"
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr "Á portalo nustatymus"
+
+####
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "replies"
+msgstr "atsakymai"
+
+#. Default: "Conversations marked with ... have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "new_conversations_marked_with"
+msgstr "Temos paþymëtos þvaigþdute buvo aptarinëjamos nuo jûsø paskutinio prisijungimo"
+
+#. Default: "Show only unanswered "
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "show_no_replies"
+msgstr "Rodyti tik temas be atsakymø"
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_replies_yet"
+msgstr "Nëra atsakymø"
+
+#. Default: "Unanswered posts in"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "title_unanswered_conversations"
+msgstr "Temos neturinèios atsakymø"
+
+#. Default: "Return to"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "go_to_view_url"
+msgstr "Vienu lygiu aukðtyn"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "recent_conversations_description"
+msgstr "Buvo sukurta tema, taèiau kol kas niekas á jà neatsakë"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_forum"
+msgstr "Forumas"
+
+#. Default: "by"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "by_author"
+msgstr "paskelbë"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "conversation_posted"
+msgstr "paskelbta"
+
+#. Default: "No conversations found"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+msgid "no_recent_conversations"
+msgstr "Nëra sukurtø temø"

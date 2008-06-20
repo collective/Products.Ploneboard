@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<dc-workflow workflow_id="ploneboard_forum_workflow"
+             title="Forum Workflow [Ploneboard]"
+             state_variable="review_state"
+             initial_state="memberposting">
+ <permission>Access contents information</permission>
+ <permission>View</permission>
+ <permission>Ploneboard: Add Conversation</permission>
+ <permission>Request review</permission>
+ <permission>Ploneboard: Add Comment</permission>
+ <permission>Add portal content</permission>
+ <permission>Ploneboard: Approve Comment</permission>
+ <permission>Ploneboard: Retract Comment</permission>
+ <permission>Ploneboard: Moderate Forum</permission>
+ <state state_id="freeforall" title="Free for all">
+  <exit-transition transition_id="make_memberposting"/>
+  <exit-transition transition_id="make_moderated"/>
+  <exit-transition transition_id="make_private"/>
+  <permission-map name="Access contents information"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Conversation"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Approve Comment"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+ </state>
+ <state state_id="memberposting"
+        title="Require membership to post">
+  <exit-transition transition_id="make_freeforall"/>
+  <exit-transition transition_id="make_moderated"/>
+  <exit-transition transition_id="make_private"/>
+  <permission-map name="Access contents information"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Conversation"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Approve Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+ </state>
+ <state state_id="moderated" title="Moderated forum">
+  <exit-transition transition_id="make_freeforall"/>
+  <exit-transition transition_id="make_memberposting"/>
+  <exit-transition transition_id="make_private"/>
+  <permission-map name="Access contents information"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Conversation"
+                  acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Approve Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+ </state>
+ <state state_id="private" title="Private to members only">
+  <exit-transition transition_id="make_freeforall"/>
+  <exit-transition transition_id="make_memberposting"/>
+  <exit-transition transition_id="make_moderated"/>
+  <permission-map name="Access contents information"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Add Conversation"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Approve Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Ploneboard: Moderate Forum"
+                  acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Retract Comment"
+                  acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="Request review" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Member</permission-role>
+   <permission-role>Reviewer</permission-role>
+  </permission-map>
+ </state>
+ <transition transition_id="make_freeforall"
+             title="Make the forum free for all"
+             new_state="freeforall" trigger="USER"
+             before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Make free-for-all</action>
+  <guard>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="make_memberposting"
+             title="Only let members post"
+             new_state="memberposting" trigger="USER"
+             before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Make member-posting</action>
+  <guard>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="make_moderated"
+             title="Make moderated" new_state="moderated"
+             trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Make moderated</action>
+  <guard>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="make_private"
+             title="Private closed board"
+             new_state="private" trigger="USER"
+             before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form"
+          category="workflow">Make private</action>
+  <guard>
+   <guard-permission>Ploneboard: Add Forum</guard-permission>
+  </guard>
+ </transition>
+ <variable variable_id="action" for_catalog="False"
+           for_status="True" update_always="True">
+  <description>The last transition</description>
+  <default>
+   
+   <expression>transition/getId|nothing</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="actor" for_catalog="False"
+           for_status="True" update_always="True">
+  <description>The ID of the user who performed the last transition</description>
+  <default>
+   
+   <expression>user/getId</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="comments" for_catalog="False"
+           for_status="True" update_always="True">
+  <description>Comments about the last transition</description>
+  <default>
+   
+   <expression>python:state_change.kwargs.get('comment', '')</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+ <variable variable_id="review_history" for_catalog="False"
+           for_status="False" update_always="False">
+  <description>Provides access to workflow history</description>
+  <default>
+   
+   <expression>state_change/getHistory</expression>
+  </default>
+  <guard>
+   <guard-permission>Ploneboard: Add Conversation</guard-permission>
+   <guard-permission>Ploneboard: Approve Comment</guard-permission>
+  </guard>
+ </variable>
+ <variable variable_id="time" for_catalog="False"
+           for_status="True" update_always="True">
+  <description>Time of the last transition</description>
+  <default>
+   
+   <expression>state_change/getDateTime</expression>
+  </default>
+  <guard>
+  </guard>
+ </variable>
+</dc-workflow>

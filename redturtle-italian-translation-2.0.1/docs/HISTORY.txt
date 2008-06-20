@@ -1,0 +1,98 @@
+Changelog
+=========
+
+2.1 - Unreleased
+----------------
+
+
+2.0 - March 14, 2008
+--------------------
+
+- Index newly added comments so all their data is correct in the catalog.
+  [wichert]
+
+- Rework the RSS feed: make the Ploneboard RSS feed work recursively so
+  a feed on a forum shows all conversations and a feed on the board itself
+  shows all comments from all fora. Enabled feeds on the Ploneboard type.
+  [wichert]
+
+- Remove the object_provides index from Ploneboard: Plone 3.0 has a much
+  more efficient version of that itself.
+  [wichert]
+
+- Add an explicit visualClear below the 'start new conversation' button
+  so it does not overlap the table. This fixes
+  http://plone.org/products/ploneboard/issues/161
+  [wichert]
+
+- In preparation of PLIP195 being merged for Plone 3.1: declare
+  Products.SimpleAttachment as a dependency in our GS profile.
+  [wichert]
+
+_ Update the Lithuanian translation. This fixes
+  http://plone.org/products/ploneboard/issues/164
+  [wichert]
+
+- Correct the attachment size vocabulary: the values should be integers,
+  not strings. This fixes http://plone.org/products/ploneboard/issues/168
+  as well as http://plone.org/products/ploneboard/issues/144
+  [wichert]
+
+- Honour the content-type for comments when transforming them. Doing things
+  like replacing newlines with <br/> on text/html comments is kind of silly.
+  [wichert].
+
+
+2.0rc1 - December 21, 2007
+--------------------------
+
+- Make the comment-icon a link to the comment. This fixes
+  http://plone.org/products/ploneboard/issues/78
+  [wichert]
+
+- Fix a corner case: creating a conversation without text but with attachments
+  would loose the attachments.
+  [wichert]
+
+- When creating a new conversation do not set its description to the 
+  entered text.
+  [wichert]
+
+- Switch to a plone.app.controlpanel based control panel.
+  [wichert]
+
+- Correct base class for portlet add form. This fixes 
+  http://plone.org/products/ploneboard/issues/154
+  [wichert]
+
+
+2.0b2 - December 19, 2007
+-------------------------
+
+- Correct login-name vs userid usage.
+  [wichert]
+
+- Correct attachment handling, which broke in previous 2.0 releases.
+  [fschulze]
+
+- Add a search form to the board view.
+  [wichert]
+
+- Disable non-working javascript-based sorting on conversation and forum views.
+  [wichert]
+
+- Port the recent conversations portlet to plone.portlets.
+  [wichert]
+
+2.0b1 - November 28, 2007 
+-------------------------
+
+- Portlets management enabled, Plone 3.0 tests, deprecations hidden.
+  [glenfant]
+
+- French translation completed.
+  [glenfant]
+
+- Port to Plone 3.0
+  [wichert, fschulze]
+

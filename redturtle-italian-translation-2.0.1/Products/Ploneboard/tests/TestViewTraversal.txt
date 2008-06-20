@@ -1,0 +1,28 @@
+Test traversing to views
+========================
+
+Set up a simple board and forum:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> self.setRoles(('Manager',))
+    >>> self.portal.invokeFactory('Ploneboard', 'board1')
+    'board1'
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum1')
+    'forum1'
+    >>> self.setRoles(('Member',))
+
+Add a conversation and traverse to its view
+
+    >>> self.portal.board1.forum1.addConversation('C1', 'Conversation 1')
+    <PloneboardConversation at ...>
+    >>> conversation = self.portal.board1.forum1.getConversations()[0]
+    >>> conversation.restrictedTraverse('@@plone')
+    <...Plone...>
+    >>> conversation.unrestrictedTraverse('@@conversation_browserview')
+    <...ConversationView...>
+    >>> conversation.restrictedTraverse('@@conversation_browserview')
+    <...ConversationView...>
+

@@ -1,0 +1,7 @@
+[validators]
+validators=
+
+[actions]
+action.failure=redirect_to:string:prefs_manage_transforms
+action.success=redirect_to:string:prefs_manage_transforms
+
