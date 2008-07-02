@@ -87,6 +87,63 @@ msgstr "In attesa del moderatore"
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} ${month} ${year} alle ${hours}:${minutes}"
 
+msgid "month_jan"
+msgstr "Gennaio"
+
+msgid "month_feb"
+msgstr "Febbraio"
+
+msgid "month_mar"
+msgstr "Marzo"
+
+msgid "month_apr"
+msgstr "Aprile"
+
+msgid "month_may"
+msgstr "Maggio"
+
+msgid "month_jun"
+msgstr "Giugno"
+
+msgid "month_jul"
+msgstr "Luglio"
+
+msgid "month_aug"
+msgstr "Agosto"
+
+msgid "month_sep"
+msgstr "Settembre"
+
+msgid "month_oct"
+msgstr "Ottobre"
+
+msgid "month_nov"
+msgstr "Novembre"
+
+msgid "month_dec"
+msgstr "Dicembre"
+
+msgid "weekday_sun"
+msgstr "Domenica"
+
+msgid "weekday_mon"
+msgstr "Lunedì"
+
+msgid "weekday_tue"
+msgstr "Martedì"
+
+msgid "weekday_wed"
+msgstr "Mercoledì"
+
+msgid "weekday_thu"
+msgstr "Giovedì"
+
+msgid "weekday_fri"
+msgstr "Venerdì"
+
+msgid "weekday_sat"
+msgstr "Sabato"
+
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} alle ${hours}:${minutes}"
