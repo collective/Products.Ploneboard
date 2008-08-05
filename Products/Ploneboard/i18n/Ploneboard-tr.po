@@ -1,0 +1,424 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
+"PO-Revision-Date: 2008-07-29 01:32+0200\n"
+"Last-Translator: M. Göktürk Yüksek <yuksekm@itu.edu.tr>\n"
+"Language-Team: M. Göktürk Yüksek <yuksekm@itu.edu.tr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: tr\n"
+"Language-Name: Türkçe\n"
+"Preferred-Encodings: utf-8 latin5\n"
+"Domain: ploneboard\n"
+"X-Is-Fallback-For: tr-tr\n"
+
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Ekle"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Değiştir"
+
+msgid "Forum"
+msgstr "Forum"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Yorum eklemek için siteye gir"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr "Bir konuşma başlatmak için siteye gir"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Gönder"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "Yorumu gönder"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Kaldır"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Bunu yanıtla"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Yeni bir Konuşma başlat"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Profile bak"
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr "Eylem"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Yorum ekle"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "Konuşma ekle"
+
+#. Default: "Do you really want to delete this comment?"
+msgid "alert_delete_popup"
+msgstr "Bu yorumu silmek istediğinizden emin misiniz?"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr "Şu anki durum:"
+
+#. Default: "Comments"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "comments"
+msgstr "Yorumlar"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr "Konuşma"
+
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr "Veri sağlayıcı"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Burada Ploneboard için site ayarlarını yapabilirsiniz."
+
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr "Burada Ploneboard için yorumlarda hangi dönüşümlerin etkin olacağını belirleyebilirsiniz."
+
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr "Ploneboard yorum metin dönüşümlerini ayarla."
+
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "İzin Var Mı?"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Forum ismi"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "${title} sayfasına çık"
+
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr "Ploneboard dönüşümleri"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Yorumu önizle"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Bu yoruma eklemek istediğiniz dosyayı seçin."
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "Temel HTML takıları kullanılabilir."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "URL adresleri kendiliğinden bağlantıya dönüştürülecektir."
+
+#. Default: "Enter the categories you want to have available for forums, one category on each line."
+msgid "help_categories_board"
+msgstr "Forumlarda kullanılabilmesini istediğiniz kategorileri her satıra bir kategori gelecek şekilde yazın."
+
+#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended."
+msgid "help_category"
+msgstr "Forumun hangi kategoride gösterileceğini seçin. Bir forum birden fazla kategoride olabilir ama tek bir kategoride olması önerilir."
+
+#. Default: "Enter a brief description of the board."
+msgid "help_description_board"
+msgstr "Panonun kısa bir tanımını yazın."
+
+#. Default: "Enter a brief description of the conversation."
+msgid "help_description_conversation"
+msgstr "Konuşmanın kısa bir tanımını yazın."
+
+#. Default: "Brief description of the forum topic."
+msgid "help_description_forum"
+msgstr "Forum konusunun kısa bir tanımı."
+
+#. Default: "Select the maximum number of attachments per comment."
+msgid "help_maxattachments"
+msgstr "Bir yoruma en fazla kaç ek iliştirilebileceğini seçin."
+
+#. Default: "Select the maximum size for attachments."
+msgid "help_maxattachmentsize"
+msgstr "Ekler için kabul edilecek en büyük dosya boyutunu seçin."
+
+#. Default: "Enter comment body."
+msgid "help_text"
+msgstr "Yorum gövdesini yazın."
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
+msgstr "Ploneboard konuşmalarına gönderilen yorumlarda kullanılacak metin dönüşümlerini seçin. Metin dönüşümleri ya zararlı olabilecek HTML takılarını ayıklamak ya da URL adreslerini bağlantı haline getirmek gibi işlevler eklemek amacıyla kullanıcının yazdığı metni değiştirirler."
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Ekler"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Gövde metni"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "Yazan: ${author}"
+
+#. Default: "Categories"
+msgid "label_categories_board"
+msgstr "Kategoriler"
+
+#. Default: "Category"
+msgid "label_category"
+msgstr "Kategori"
+
+#. Default: "Description"
+msgid "label_description_board"
+msgstr "Tanım"
+
+#. Default: "Description"
+msgid "label_description_conversation"
+msgstr "Tanım"
+
+#. Default: "Description"
+msgid "label_description_forum"
+msgstr "Tanım"
+
+#. Default: "Maximum number of attachments"
+msgid "label_maxattachments"
+msgstr "Ek sayısı sınırı"
+
+#. Default: "Maximum attachment size"
+msgid "label_maxattachmentsize"
+msgstr "Ek boyutu sınırı"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "${link} üzerinde çalışıyor"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Hızlı yanıt"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Zorunlu)"
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr "Kaydet"
+
+#. Default: "Text"
+msgid "label_text"
+msgstr "Metin"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Başlık"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr "Dönüşümler"
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr "Ploneboard Ayarlarına çık"
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Dönüşüm ekle"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Ekler"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr "Metin dönüşümleri"
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Var olan dönüşümler"
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Yönet"
+
+#. Default: "Manage comment text transformations"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr "Yorum metni dönüşümlerini yönet"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr "Kuyrukta ${count} yorum var."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr "Aşağıdaki yorumlar onay bekliyor. Lütfen 'Yayımla' veya 'Reddet' tuşlarından gerekli olana tıklayın. Yorumu içinde bulunduğu konuşma bağlamında görmek için yorum başlığına tıklayın."
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr "Yukarı"
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr "Modül"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "most_recent_comment"
+msgstr "Son yorum"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr "Bir ek daha iliştir"
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr "Kuyrukta onay bekleyen yorum yok."
+
+#. Default: "No comments yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_comments_yet"
+msgstr "Hiç yorum yok"
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Hiç konuşma başlatılmamış"
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Bu forumda henüz hiç konuşma yok."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Bu panoda henüz hiçbir forum yok, ekleme menüsünü kullanarak forum ekleyin."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "Özür dileriz, yeni bir Konuşma başlatma yetkiniz yok"
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "Konuşmalar"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "Gönderen:"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "İletiyi önizle"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "zamanı: "
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Genel forumlar"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Dönüşüm ismi"
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Ploneboard ayarlarına dön"
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr "Site ayarlarına çık"
+
