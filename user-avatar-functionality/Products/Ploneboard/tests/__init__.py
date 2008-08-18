@@ -1,2 +1,0 @@
-"""Ploneboard tests package
-"""
