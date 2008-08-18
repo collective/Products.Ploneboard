@@ -1,0 +1,16 @@
+#!/bin/sh
+
+plonepot=../PloneTranslations/i18n/plone.pot
+
+i18ndude rebuild-pot --pot i18n/Ploneboard.pot --create ploneboard .
+i18ndude sync --pot i18n/Ploneboard.pot i18n/Ploneboard-??.po
+
+if [ -f $plonepot ] ; then
+    echo Can not find plone.net, skipping plone domain translations 1>&2
+else
+    tmp=$(tempfile)
+    i18ndude rebuild-pot --pot "$tmp" --create plone .
+    i18ndude filter "$tmp" $plonepot > i18n/Ploneboard-plone.pot
+    rm "$tmp"
+    i18ndude sync --pot i18n/Ploneboard-plone.pot i18n/Ploneboard-plone-??.po
+fi

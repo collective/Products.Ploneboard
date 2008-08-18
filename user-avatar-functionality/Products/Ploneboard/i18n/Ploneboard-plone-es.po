@@ -1,0 +1,94 @@
+# translation of Ploneboard to Spanish
+# Gettext File for Ploneboard
+# Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2006-12-20 10:19+0100\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Poedit-Language: Spanish\n"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Conversation"
+msgstr "Conversacin"
+
+msgid "Flat conversion view"
+msgstr "Vista plana"
+
+msgid "Free for all"
+msgstr "Libre para todos"
+
+msgid "Hidden"
+msgstr "Oculto"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid "Lock"
+msgstr "Bloquear"
+
+msgid "Locked"
+msgstr "Bloqueado"
+
+msgid "Make free-for-all"
+msgstr "Dejar libre para todos"
+
+msgid "Make member-posting"
+msgstr "Sólo para miembros"
+
+#### Voci aggiunte manualmente.
+msgid "Message Board"
+msgstr "Foro"
+
+msgid "Moderate"
+msgstr "Moderar"
+
+msgid "Open"
+msgstr "Abierto"
+
+msgid "Private to members only"
+msgstr "Privado solo para miembros"
+
+msgid "Public"
+msgstr "Público"
+
+msgid "Rejected"
+msgstr "Rechazado"
+
+msgid "Require membership to post"
+msgstr "Solicitar login para publicar"
+
+msgid "Retracted"
+msgstr "Retirado"
+
+msgid "Threaded conversion view"
+msgstr "Mostrar hilo de conversación"
+
+msgid "Waiting for moderator"
+msgstr "Pendientes de moderación"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

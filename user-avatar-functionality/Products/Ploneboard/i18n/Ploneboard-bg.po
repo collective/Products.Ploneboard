@@ -1,0 +1,410 @@
+# Gettext File for Ploneboard
+# Vladimir Iliev <vladimir.iliev@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-09-04 13:55+0000\n"
+"PO-Revision-Date: 2006-10-20 14:40+0200\n"
+"Last-Translator: Vladimir Iliev <vlado@vintech.bg>\n"
+"Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: bg\n"
+"Language-Name: Bulgarian\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: ploneboard\n"
+"X-Poedit-Language: Bulgarian\n"
+"X-Poedit-Country: BULGARIA\n"
+
+#. Default: "Add"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Add"
+msgstr "Добавяне"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Cancel"
+msgstr "Отказване"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Change"
+msgstr "Промяна"
+
+msgid "Forum"
+msgstr "Форум"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Log in to add comments"
+msgstr "Влезте за добавяне на коментар"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Log in to start a conversation"
+msgstr "Влезте за да започнете разговор"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "Post"
+msgstr "Изпращане"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "Post comment"
+msgstr "Пускане на коментар"
+
+#. Default: "Remove"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "Remove"
+msgstr "Премахване"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "Reply to this"
+msgstr "Отговаряне на този"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "Start a new Conversation"
+msgstr "Започване на нов разговор"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "View profile"
+msgstr "Преглед на профил"
+
+#. Default: "Action"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "action"
+msgstr "Действие"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "add_comment"
+msgstr "Добавянеа на коментар"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt
+msgid "add_conversation"
+msgstr "Добавяне на разговор"
+
+msgid "alert_delete_popup"
+msgstr ""
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "comment_current_state"
+msgstr "Текущо състояние:"
+
+#. Default: "Comments"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "comments"
+msgstr "Коментари"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "conversation"
+msgstr "Разговор"
+
+#. Default: "Data provider"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "data_provider"
+msgstr "Доставчик на данни"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "description_ploneboard_config"
+msgstr "Тук може да конфигурирате настройките на Ploneboard."
+
+#. Default: "Here you can configure which transforms are active in Ploneboard comments."
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "description_ploneboard_config_transforms"
+msgstr ""
+
+#. Default: "Configure Ploneboard comment text transformations."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "description_pref_transforms"
+msgstr "Конфигуриране на текстови трансформации в Ploneboard."
+
+#. Default: "Enabled?"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "enabled"
+msgstr "Разрешен?"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "forum_name"
+msgstr "Име на форума"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/board_header.pt
+msgid "go_to_parent_url"
+msgstr "Нагоре към ${title}"
+
+#. Default: "Ploneboard transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "heading_pref_transforms"
+msgstr "Трансформации в Ploneboard"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt
+msgid "heading_preview_comment"
+msgstr "Преглед на коментара"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_attachments_posting"
+msgstr "Изберете файл който да бъде прикачен към този коментар."
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting"
+msgstr "Базови HTML тагове са OK."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "URL ще станат препратки."
+
+msgid "help_categories_board"
+msgstr ""
+
+msgid "help_category"
+msgstr ""
+
+msgid "help_description_board"
+msgstr ""
+
+msgid "help_description_conversation"
+msgstr ""
+
+msgid "help_description_forum"
+msgstr ""
+
+msgid "help_maxattachments"
+msgstr ""
+
+msgid "help_maxattachmentsize"
+msgstr ""
+
+msgid "help_text"
+msgstr ""
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "help_transforms"
+msgstr ""
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_files_posting"
+msgstr "Прикачени"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_body_text_posting"
+msgstr "Текст"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by_author"
+msgstr "от ${author}"
+
+msgid "label_categories_board"
+msgstr ""
+
+msgid "label_category"
+msgstr ""
+
+msgid "label_description_board"
+msgstr ""
+
+msgid "label_description_conversation"
+msgstr ""
+
+msgid "label_description_forum"
+msgstr ""
+
+msgid "label_maxattachments"
+msgstr ""
+
+msgid "label_maxattachmentsize"
+msgstr ""
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt
+msgid "label_powered_by"
+msgstr "Създаден с ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt
+msgid "label_quickreply"
+msgstr "Бърз отговор"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_required"
+msgstr "(Необходим)"
+
+#. Default: "Save"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_save"
+msgstr "Записване"
+
+msgid "label_text"
+msgstr ""
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "label_title_posting"
+msgstr "Заглавие"
+
+#. Default: "Transforms"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_transforms"
+msgstr "Трансформации"
+
+#. Default: "Up to Ploneboard Setup"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "label_up_to_ploneboard_setup"
+msgstr "Нагоре до настройки на Ploneboard"
+
+#. Default: "Add transform"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_add_transform"
+msgstr "Добавяне на трансформация"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "legend_attachments"
+msgstr "Прикачени"
+
+#. Default: "Text transformations"
+#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+msgid "legend_pref_ploneboard_transforms"
+msgstr "Текстови трансформации"
+
+#. Default: "Existing transforms"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "legend_transforms"
+msgstr "Съществуващи трансформации"
+
+#. Default: "Manage"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "manage"
+msgstr "Управление"
+
+#. Default: "Manage comment text transformations"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "manage_transforms"
+msgstr "Управление на трансформации на текст"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_count"
+msgstr "${count} коментара в опашката."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_description"
+msgstr "Следните коментари чакат одобрение. Моля щракнете 'Publish' или 'Reject' както е необходимо. Щракнете на заглавието на коментара за да го видите в контекста на разговора."
+
+#. Default: "Up"
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "moderation_up"
+msgstr "Нагоре"
+
+#. Default: "Module"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "module_name"
+msgstr "Модул"
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "most_recent_comment"
+msgstr "Най-нов коментар"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt
+msgid "new_attachment"
+msgstr "Добавяне на друг прикачен файл"
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt
+msgid "no_comments_queued"
+msgstr "Няма коментари в опашката за одобряване."
+
+#. Default: "No comments yet"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "no_comments_yet"
+msgstr "Все още няма коментари"
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "no_conversations_started"
+msgstr "Все още няма започнати разговори"
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_conversations"
+msgstr "Все още няма разговори в този форум."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "not_forums"
+msgstr "Все още няма форуми, използвайте менюто за добавяне на такива."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "not_permission_start_conversation"
+msgstr "За съжаление нямате необходимите права за започване на нов разговор"
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "number_of_conversations"
+msgstr "Разговори"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "posted_by"
+msgstr "Изпратен от"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt
+msgid "preview_message"
+msgstr "Преглед на съобщението"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt
+msgid "text_at"
+msgstr "на"
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt
+#: ../skins/ploneboard_templates/board_view.pt
+msgid "title_general_forums"
+msgstr "Общи форуми"
+
+#. Default: "Transform name"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "transform_name"
+msgstr "Име на трансформация"
+
+#. Default: "Return to Ploneboard settings"
+#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
+msgid "up_to_ploneboard_prefs"
+msgstr "Връщане на настройки на Ploneboard"
+
+#. Default: "Up to Site Setup"
+#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+msgid "up_to_site_setup"
+msgstr ""
+

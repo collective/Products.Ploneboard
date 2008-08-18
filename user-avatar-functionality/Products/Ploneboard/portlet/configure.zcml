@@ -1,0 +1,13 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:plone="http://namespaces.plone.org/plone">
+
+    <plone:portlet
+        name="ploneboard.RecentConversations"
+        interface=".recent.IRecentConversationsPortlet"
+        assignment=".recent.Assignment"
+        renderer=".recent.Renderer"
+        addview=".recent.AddForm"
+        editview=".recent.EditForm"
+        />
+
+</configure>

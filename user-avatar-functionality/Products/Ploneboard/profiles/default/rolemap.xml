@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<rolemap>
+  <permissions>
+    <permission name="Ploneboard: Add Comment Attachment"
+                acquire="False">
+      <role name="Manager"/>
+      <role name="Member"/>
+    </permission>
+  </permissions>
+</rolemap>

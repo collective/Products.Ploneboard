@@ -1,0 +1,171 @@
+/* 
+** Ploneboard style sheet for CSS2-capable browsers.
+**
+** Copyright Alexander Limi (http://www.plonesolutions.com/)
+** & Michael Zeltner (http://niij.org/) 2003.
+**
+** Feel free to use whole or parts of this for your own designs, but give credit
+** where credit is due.
+**
+*/
+
+/* <dtml-with base_properties> */
+
+/* Adjusting a few basic Plone classes */
+
+.listing {
+    font-size: 100%;
+    width: 100%;
+}
+
+.listing th {
+    font-size: &dtml-fontSmallSize;;
+}
+
+.listing .discreet {
+    text-align: right;
+    display: block;
+}
+
+.commentPortrait {
+    float: right;
+    clear: both;
+    margin: 0 0 0.5em 0.5em;
+}
+
+.commentPortrait .portraitPhoto {
+    width: 45px;
+    height: 60px;
+}
+
+/* The listing classes */
+
+.listingConversation {
+    display: block;
+    padding: 10px;
+    padding-left: 25px;
+    font-size: 110%;
+    background: transparent url("<dtml-var portal_url>/ploneboard_conversation_icon.gif") no-repeat;
+    background-position: 5px 10px;
+}
+
+.listingForum {
+    display: block;
+    padding: 10px;
+    padding-left: 25px;
+    font-size: 110%;
+    background: transparent url("<dtml-var portal_url>/ploneboard_forum_icon.gif") no-repeat;
+    background-position: 5px 10px;
+}
+
+/* Comment */
+
+.boardComment {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    margin-bottom: 1em;
+    position: relative;
+}
+
+.boardCommentVisible {
+    background: white;
+}
+
+.boardCommentHidden {
+    background: #c0c0c0;
+}
+
+.boardCommentDetails {
+    border: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+    border-style: none none &dtml-borderStyle; none;
+    background-color: &dtml-globalBackgroundColor;;
+    padding: 0.5em 1em;
+    font-size: 90%;
+}
+
+.boardComment:hover .visualGhosted {
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+}
+
+.boardCommentBody {
+    padding: 0.5em 1em;
+}
+
+.boardCommentContent {
+    line-height: 1.5em;
+}
+
+.boardCommentActions {
+    padding: 1em;
+    text-align: left;
+    float: left;
+    right: 1em;
+}
+
+.boardCommentActions form {
+    display: inline;
+}
+
+.boardCommentReplyActions {
+    padding: 1em;
+    text-align: right;
+    right: 1em;
+}
+
+.boardCommentPortrait {
+    float: right; 
+    margin-bottom: 1em;
+}
+
+.boardConversation ul.topLevelComment {
+    margin-left: 0;
+}
+
+.boardConversation li {
+    list-style: none;
+}
+
+.commentAttachments {
+    text-align: left;
+    margin: 0 0.5em 0.5em 0.5em;
+}
+
+.state-rejected {
+    color: &dtml-discreetColor; !important;
+}
+
+/* Moderation */
+.moderationItem {
+    margin-top: 1em;
+}
+
+.moderationItem input {
+    margin-top: 0.5em;
+}
+
+.moderationActions form {
+    display: inline;
+}
+
+/* Removing Re: - remove these if you want to enable it, should be off OOTB */
+
+.boardCommentHeaderTitleBlock h3 { display: none; }
+.commentReplyTitle { display: none; }
+
+/* Stripping down Kupu to the bare essentials */
+
+.kupu-tb-styles,
+#kupu-bg-subsuper,
+#kupu-bg-definitionlist,
+#kupu-bg-undo,
+#kupu-zoom,
+#kupu-spellchecker,
+#kupu-logo-button,
+#kupu-imagelibdrawer-button,
+#kupu-tabledrawer-button,
+#kupu-source {
+    display: none;
+}
+
+/* </dtml-with> */

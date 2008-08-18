@@ -1,0 +1,50 @@
+Main sponsors:
+
+    "The Consumer Council of Norway":http://www.forbrukerradet.no
+
+    "Marshall Mayer, LiveModern":http://livemodern.com and various generous 
+contributors
+
+Ploneboard contributors:
+
+    **Helge Tesdal**, "Jarn":http://www.jarn.com -- Code,
+idea, architecture
+
+    **Tim Hicks** -- Numerous fixes and cleanups, bringing Ploneboard into the
+modern ages.
+
+    **Ruslan Spivak** -- Code
+
+    **Alexander Limi**, "Jarn":http://www.jarm.com -- User 
+interface, concepts
+    
+    **Kapil Thangavelu** -- Initial architecture
+    
+    **Martin Aspeli** -- Bug fixes, moderation re-implementation, functional 
+tests (and the bugs they found)
+
+    **Vidar Andersen** -- Application icons
+
+    **Johan H. Borg** -- Smiley icons, copyright 2003, used in Ploneboard with 
+permission
+
+    **Fabio Rizzo** -- i18n implementation
+
+    **Rafahela Garcia Bazzanella** -- i18n improvements
+
+    **Rocky Burt**, "ServerZen Software":http//www.serverzen.com -- Small
+fixes and updates on behalf of Zest Software
+
+    **Wichert Akkerman**, Simplon -- Code, user interface improvements, Plone 3 port
+
+    **Jens Klein**, **Thomas Gatterer**, "BlueDynamics 
+Alliance":http://www.bluedynamics.com -- i18n-cleanup, better german translations, 
+code-cleanup.
+
+    **Jean-Paul Ladage**, "Zest Software":http://www.zestsoftware.nl -- Dutch translations, user interface
+
+    **Jarno de Wit**, "Pareto":http://www.pareto.nl -- Dutch translations
+
+    **Florian Schulze** -- Plone 3 port.
+
+    **Gilles Lenfant, "Ingeniweb":htt://www.ingeniweb.com -- Plone 3 port, french translation.

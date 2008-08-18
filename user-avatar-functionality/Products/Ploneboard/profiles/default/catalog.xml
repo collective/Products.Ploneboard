@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object name="portal_catalog">
+  <index name="num_comments" meta_type="FieldIndex">
+    <indexed_attr value="num_comments"/>
+  </index>
+ <column value="num_comments"/>
+</object>

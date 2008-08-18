@@ -1,0 +1,58 @@
+Requirements
+------------
+
+Ploneboard requires:
+
+* Plone 3.0 or later
+* SimpleAttachment_
+
+
+.. _SimpleAttachment: http://plone.org/products/simpleattachment
+
+Installation
+============
+
+See the `Installing an Add-on Product`_ tutorial for more detailed product installation instructions.
+
+.. _Installing an Add-on Product: http://plone.org/documentation/tutorial/third-party-products/installing
+
+
+
+Installing with buildout
+------------------------
+
+If you are using `buildout`_ to manage your instance installing Ploneboard
+is very simple. You can install it by adding it to the eggs line for your
+instance::
+
+  [instance]
+  eggs = Products.Ploneboard
+
+
+If another egg package depends on Products.Ploneboard you do not need
+to specify anything in the buildout configuration: buildout will detect this
+automatically.
+
+After updating the configuration you need to run the ''bin/buildout'', which
+will take care of updating your system.
+
+.. _buildout: http://pypi.python.org/pypi/zc.buildout
+
+Installing without buildout
+---------------------------
+
+You can install Ploneboard easily using the easy_install command from
+setuptools; this will install both Ploneboard and SimpleAttachment. You can
+install this in either the system python path or in the lib/python directory
+of your Zope instance. If you have setuptools installed you can do this
+using easy_install::
+
+  easy_install Products.Ploneboard
+
+If you do not have setuptools you can install both manually by using the
+setup.py script in the SimpleAttachment and Ploneboard sources. If you want
+to install SimpleAttachment inside your Zope instance instead of system wide
+you can its ''--prefix='' option to install in the ''lib/python'' directory
+of your Zope instance.
+
+
