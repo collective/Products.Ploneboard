@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2006-10-19 16:34+0200\n"
-"Last-Translator: Vladimir Iliev <vlado@vintech.bg>\n"
+"PO-Revision-Date: 2008-09-16 00:50+0200\n"
+"Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -38,7 +38,7 @@ msgid "Conversation"
 msgstr "Разговор"
 
 msgid "Open"
-msgstr "Отваряне"
+msgstr "Отворен"
 
 msgid "Hide"
 msgstr "Скриване"
@@ -59,16 +59,16 @@ msgid "Make free-for-all"
 msgstr "Направи свободен за всички"
 
 msgid "Private to members only"
-msgstr "Само за регистрирани"
+msgstr "Само за регистрирани потребители"
 
 msgid "Active"
 msgstr "Активен"
 
 msgid "Activate"
-msgstr "Активирай"
+msgstr "Активиране"
 
 msgid "Lock"
-msgstr "Заключи"
+msgstr "Заключване"
 
 msgid "Locked"
 msgstr "Заключен"
@@ -80,10 +80,10 @@ msgid "Threaded conversion view"
 msgstr "Нишков изглед на разговор"
 
 msgid "Moderate"
-msgstr ""
+msgstr "Модерация"
 
 msgid "Waiting for moderator"
-msgstr "Чакащ одобрение"
+msgstr "Чакащ модератора"
 
 msgid "Rejected"
 msgstr "Отказан"
