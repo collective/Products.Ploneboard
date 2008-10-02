@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-10-02 13:27+0000\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,14 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "Activate"
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
-msgid "Active"
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+msgid "Message Board"
 msgstr ""
 
 msgid "Comment"
@@ -29,69 +33,80 @@ msgstr ""
 msgid "Conversation"
 msgstr ""
 
-msgid "Free for all"
-msgstr ""
-
-msgid "Hidden"
+msgid "Open"
 msgstr ""
 
 msgid "Hide"
 msgstr ""
 
-msgid "Lock"
+msgid "Hidden"
 msgstr ""
 
-msgid "Make free-for-all"
-msgstr ""
-
-msgid "Make member-posting"
-msgstr ""
-
-msgid "Make moderated"
-msgstr ""
-
-msgid "Message Board"
-msgstr ""
-
-msgid "Moderate"
-msgstr ""
-
-msgid "Moderated forum"
-msgstr ""
-
-msgid "Open"
-msgstr ""
-
-msgid "Private to members only"
-msgstr ""
-
-msgid "Public"
-msgstr ""
-
-msgid "Rejected"
+msgid "Comment added"
 msgstr ""
 
 msgid "Require membership to post"
 msgstr ""
 
-msgid "Retracted"
+msgid "Make member-posting"
 msgstr ""
 
-msgid "Waiting for moderator"
+msgid "Free for all"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Make private"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
 msgstr ""
 
 #. Flat conversion view
 msgid "conversation_view"
 msgstr ""
 
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr ""
-
 #. Threaded conversion view
 msgid "threaded_conversation_view"
 msgstr ""
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgid "Moderate"
 msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Comment is pending moderation"
+msgstr ""
+
+
+
 
