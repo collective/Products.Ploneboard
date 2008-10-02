@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2006-12-20 10:57+0100\n"
+"POT-Creation-Date: 2008-10-02 15:04+0000\n"
+"PO-Revision-Date: 2008-10-02 17:09+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,9 +30,6 @@ msgstr "Erantzun"
 msgid "Conversation"
 msgstr "Mezua"
 
-msgid "Flat conversion view"
-msgstr "Ikuspen arrunta"
-
 msgid "Free for all"
 msgstr "Guztientzat irekita"
 
@@ -45,20 +42,23 @@ msgstr "Ezkutuan"
 msgid "Lock"
 msgstr "Itxi"
 
-msgid "Locked"
-msgstr "Itxita"
-
 msgid "Make free-for-all"
 msgstr "Guztiei ireki"
 
 msgid "Make member-posting"
 msgstr "Kideentzat bakarrik ireki"
 
+msgid "Make moderated"
+msgstr "Moderazioa aktibatu"
+
 msgid "Message Board"
 msgstr "Foroa"
 
 msgid "Moderate"
 msgstr "Moderatu"
+
+msgid "Moderated forum"
+msgstr "Moderatutako foroa"
 
 msgid "Open"
 msgstr "Irekita"
@@ -78,14 +78,19 @@ msgstr "Argitaratzeko kide izatea eskatu"
 msgid "Retracted"
 msgstr "Baztertuta"
 
-msgid "Threaded conversion view"
-msgstr "Harikaturiko ikuspena"
-
 msgid "Waiting for moderator"
 msgstr "Moderazioaren zain"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Elkarrizketen bista"
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Haritutako elkarrizketen bista"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
