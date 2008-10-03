@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2006-04-21 22:15+0000\n"
 "Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -29,9 +29,6 @@ msgstr "Reactie"
 msgid "Conversation"
 msgstr "Discussie"
 
-msgid "Flat conversion view"
-msgstr "Platte discussie weergave"
-
 msgid "Free for all"
 msgstr "Openbaar voor iedereen"
 
@@ -44,20 +41,24 @@ msgstr "Verberg"
 msgid "Lock"
 msgstr "Zet op slot"
 
-msgid "Locked"
-msgstr "Gesloten"
-
 msgid "Make free-for-all"
 msgstr "Maak openbaar voor iedereen"
 
 msgid "Make member-posting"
 msgstr ""
 
+#### My own findings
+msgid "Make moderated"
+msgstr "Maak gemodereerd"
+
 msgid "Message Board"
 msgstr "Discussie Bord"
 
 msgid "Moderate"
 msgstr "Modereer"
+
+msgid "Moderated forum"
+msgstr ""
 
 msgid "Open"
 msgstr "Open"
@@ -77,26 +78,21 @@ msgstr "Vereis lidmaatschap om te reageren"
 msgid "Retracted"
 msgstr "Teruggetrokken"
 
-msgid "Threaded conversion view"
-msgstr "Geneste discussie weergave"
-
 msgid "Waiting for moderator"
 msgstr "Wacht op moderator"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
 msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
-
-#### My own findings
-msgid "Make moderated"
-msgstr "Maak gemodereerd"
-
-msgid "show_no_replies_all"
-msgstr "Toon alleen onbeantwoorde berichten"
-
-msgid "show_new_conversations_all"
-msgstr "Toon alle nieuwe berichten"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone.pot\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2008-05-25 11:29+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -29,9 +29,6 @@ msgstr "Kommentar"
 msgid "Conversation"
 msgstr "Konversation"
 
-msgid "Flat conversion view"
-msgstr "Platt konversationsvy"
-
 msgid "Free for all"
 msgstr "Öppen för alla"
 
@@ -44,20 +41,23 @@ msgstr "Göm"
 msgid "Lock"
 msgstr "Lås"
 
-msgid "Locked"
-msgstr "Låst"
-
 msgid "Make free-for-all"
 msgstr "Gör öppen för alla"
 
 msgid "Make member-posting"
 msgstr "Gör endast för medlemmar"
 
+msgid "Make moderated"
+msgstr ""
+
 msgid "Message Board"
 msgstr "Forum"
 
 msgid "Moderate"
 msgstr "Moderera"
+
+msgid "Moderated forum"
+msgstr ""
 
 msgid "Open"
 msgstr "Öppen"
@@ -77,14 +77,19 @@ msgstr "Kräv medlemsskap för att posta"
 msgid "Retracted"
 msgstr "Tillbakadraget"
 
-msgid "Threaded conversion view"
-msgstr "Trådad konversationsvy"
-
 msgid "Waiting for moderator"
 msgstr "Väntar på moderator"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"

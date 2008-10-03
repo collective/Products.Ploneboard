@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -29,9 +29,6 @@ msgstr ""
 msgid "Conversation"
 msgstr ""
 
-msgid "Flat conversion view"
-msgstr ""
-
 msgid "Free for all"
 msgstr ""
 
@@ -44,19 +41,22 @@ msgstr ""
 msgid "Lock"
 msgstr ""
 
-msgid "Locked"
-msgstr ""
-
 msgid "Make free-for-all"
 msgstr ""
 
 msgid "Make member-posting"
 msgstr ""
 
+msgid "Make moderated"
+msgstr ""
+
 msgid "Message Board"
 msgstr ""
 
 msgid "Moderate"
+msgstr ""
+
+msgid "Moderated forum"
 msgstr ""
 
 msgid "Open"
@@ -77,13 +77,18 @@ msgstr ""
 msgid "Retracted"
 msgstr ""
 
-msgid "Threaded conversion view"
-msgstr ""
-
 msgid "Waiting for moderator"
 msgstr ""
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
 msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2008-09-16 10:14+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
@@ -18,15 +18,11 @@ msgstr ""
 "X-Poedit-Language: Bulgarian\n"
 "X-Poedit-Country: BULGARIA\n"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "young_date_format: ${wday} ${hours}:${minutes}"
+msgid "Activate"
+msgstr "Активиране"
 
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "old_date_format: ${wday}, ${day} ${month} ${year} ${hours}:${minutes}"
-
-msgid "Message Board"
-msgstr ""
+msgid "Active"
+msgstr "Активен"
 
 msgid "Comment"
 msgstr "Коментар"
@@ -34,60 +30,69 @@ msgstr "Коментар"
 msgid "Conversation"
 msgstr "Разговор"
 
-msgid "Open"
-msgstr "Отворен"
-
-msgid "Hide"
-msgstr "Скриване"
+msgid "Free for all"
+msgstr "Свободен за всички"
 
 msgid "Hidden"
 msgstr "Скрит"
 
-msgid "Require membership to post"
-msgstr "Изисква регистрация за изпращане"
-
-msgid "Make member-posting"
-msgstr "Направи само за регистрирани потребители"
-
-msgid "Free for all"
-msgstr "Свободен за всички"
-
-msgid "Make free-for-all"
-msgstr "Направи свободен за всички"
-
-msgid "Private to members only"
-msgstr "Само за регистрирани потребители"
-
-msgid "Active"
-msgstr "Активен"
-
-msgid "Activate"
-msgstr "Активиране"
+msgid "Hide"
+msgstr "Скриване"
 
 msgid "Lock"
 msgstr "Заключване"
 
-msgid "Locked"
-msgstr "Заключен"
+msgid "Make free-for-all"
+msgstr "Направи свободен за всички"
 
-msgid "Flat conversion view"
-msgstr "Плосък изглед на разговор"
+msgid "Make member-posting"
+msgstr "Направи само за регистрирани потребители"
 
-msgid "Threaded conversion view"
-msgstr "Нишков изглед на разговор"
+msgid "Make moderated"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Модерация"
 
-msgid "Waiting for moderator"
-msgstr "Чакащ модератора"
+msgid "Moderated forum"
+msgstr ""
 
-msgid "Rejected"
-msgstr "Отказан"
+msgid "Open"
+msgstr "Отворен"
+
+msgid "Private to members only"
+msgstr "Само за регистрирани потребители"
 
 msgid "Public"
 msgstr "Публичен"
 
+msgid "Rejected"
+msgstr "Отказан"
+
+msgid "Require membership to post"
+msgstr "Изисква регистрация за изпращане"
+
 msgid "Retracted"
 msgstr "Анулиран"
+
+msgid "Waiting for moderator"
+msgstr "Чакащ модератора"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "old_date_format: ${wday}, ${day} ${month} ${year} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "young_date_format: ${wday} ${hours}:${minutes}"
 

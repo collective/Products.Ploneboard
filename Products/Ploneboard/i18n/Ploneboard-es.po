@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2006-12-20 08:04+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2007-01-11 08:40+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: \n"
@@ -18,204 +18,153 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Poedit-Language: Spanish\n"
 
-#. Default: "Add"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Add"
-msgstr "Añadir"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
 
-#. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
-msgid "Cancel"
-msgstr "Cancelar"
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr ""
 
-#. Default: "Change"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
-msgid "Change"
-msgstr "Modificar"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
 
 msgid "Forum"
 msgstr "Foro"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:191
 msgid "Log in to add comments"
 msgstr "Haga login para añadir comentarios"
 
-#. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
-msgid "Log in to start a conversation"
-msgstr "Haga login para comenzar una nueva conversacion"
-
-#. Default: "Post"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
-msgid "Post"
-msgstr "Publicar"
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr ""
 
 #. Default: "Post comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-#: ../skins/ploneboard_templates/conversation_view.pt
+#: ../skins/ploneboard_templates/conversation_view.pt:83
 msgid "Post comment"
 msgstr "Publicar"
 
-#. Default: "Remove"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "Remove"
-msgstr "Eliminar"
-
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:180
 msgid "Reply to this"
 msgstr "Responder a esto"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:76
 msgid "Start a new Conversation"
 msgstr "Nueva conversación"
 
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
+
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:83
 msgid "View profile"
 msgstr "Ver perfil"
 
-#. Default: "Action"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "action"
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
 msgstr ""
-
-#. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "add_comment"
-msgstr "Añadir comentario"
-
-#. Default: "Add conversation"
-#: ../skins/ploneboard_templates/add_conversation_form.cpt
-msgid "add_conversation"
-msgstr "Añadir conversación"
 
 msgid "alert_delete_popup"
 msgstr "¿Está seguro de que desea eliminar este comentario?"
 
-#. Default: "More"
-#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
+#. Default: "Search"
+#: ../skins/ploneboard_templates/board_view.pt:39
+msgid "board_search_button"
+msgstr ""
+
+#. Default: "Search Board"
+#: ../browser/search.pt:22
+msgid "board_search_label"
+msgstr ""
+
+#. Default: "More…"
+#: ../portlet/recent.pt:39
+#, fuzzy
 msgid "box_more_recent_conversations"
 msgstr "Más"
 
-#. Default: "Recent conversations"
-#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
-msgid "box_recent_conversations"
-msgstr "Conversaciones recientes"
-
-#. Default: "No conversations changed yet."
-#: ../skins/ploneboard_templates/portlet_ploneboard_recent.pt
-msgid "box_recent_conversations_no_items"
-msgstr "No hay nuevas conversaciones."
-
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:99
 msgid "by_author"
 msgstr "por ${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:163
 msgid "comment_current_state"
 msgstr "Estado actual:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:70
 msgid "conversation"
 msgstr "Conversación"
 
 #. Default: "Forum"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:71
 msgid "conversation_forum"
 msgstr "Foro"
 
 #. Default: "Posted"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
 msgid "conversation_posted"
 msgstr "Publicado"
 
-#. Default: "Data provider"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "data_provider"
-msgstr ""
-
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
+#: ../browser/controlpanel.py:57
 msgid "description_ploneboard_config"
 msgstr "Aquí puede configurar Ploneboard"
 
-#. Default: "Here you can configure which transforms are active in Ploneboard comments."
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "description_ploneboard_config_transforms"
-msgstr "Aquí puede configurar las transformaciones activas para los comentarios de Ploneboard"
-
-#. Default: "Configure Ploneboard comment text transformations."
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "description_pref_transforms"
-msgstr "Configurar las transformaciones de los textos de los comentarios."
-
-#. Default: "Enabled?"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "enabled"
-msgstr "¿Activado?"
-
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:90
 msgid "forum_name"
 msgstr "Nombre del foro"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/conversation_view.pt
-#: ../skins/ploneboard_templates/threaded_conversation_view.pt
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "Ir a ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:38
 msgid "go_to_view_url"
 msgstr "Volver a ${name}"
 
-#. Default: "Ploneboard transforms"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "heading_pref_transforms"
-msgstr "Transformaciones de Ploneboard"
-
-#. Default: "Preview comment"
-#: ../skins/ploneboard_templates/add_comment_preview.cpt
-msgid "heading_preview_comment"
-msgstr "Previsualizar comentario"
-
-#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "help_body_attachments_maxsize"
-msgstr "El tamaño máximo del archivo adjunto es de ${maxsize} kilobytes"
-
-#. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "help_body_attachments_posting"
-msgstr "Seleccione un archivo para añadirlo como archivo adjunto a este comentario."
-
-#. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "help_body_text_posting"
-msgstr "Se permiten etiquetas básicas de HTML"
-
-#. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "help_body_text_posting_linkify_enabled"
-msgstr "Las URLs crearán automáticamente enlaces en HTML"
+#. Default: "This portlet shows conversations with recent comments."
+#: ../portlet/recent.py:107
+msgid "help_add_portlet"
+msgstr ""
 
 msgid "help_categories_board"
 msgstr "Introduzca las categorías en las que quiera clasificar los foros, una categoría por línea."
 
 msgid "help_category"
 msgstr "Seleccione a qué categoría(s) corresponde este foro"
+
+#. Default: "How many items to list."
+#: ../portlet/recent.py:28
+msgid "help_count"
+msgstr ""
 
 msgid "help_description_board"
 msgstr "Descripción del foro"
@@ -236,24 +185,22 @@ msgid "help_text"
 msgstr "Introduzca el texto"
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+#: ../browser/controlpanel.py:18
 msgid "help_transforms"
 msgstr "Selecciones las transformaciones que se aplicarán a los textos de los comentarios en Ploneboard. Las transformaciones alteran el texto introducido el usuario, tanto para eliminar HTML malicioso, como para añadir alguna funcionalidad como hacer los enlaces clicables."
 
-#. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "label_body_files_posting"
-msgstr "Archivos adjuntos"
+#. Default: "Add recent conversations portlet."
+#: ../portlet/recent.py:105
+msgid "label_add_portlet"
+msgstr ""
 
-#. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "label_body_text_posting"
-msgstr "Texto del mensaje"
+#. Default: "Back to discussion board"
+#: ../browser/search.pt:15
+msgid "label_back_to_board"
+msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:129
 msgid "label_by_author"
 msgstr "escrito por ${author}"
 
@@ -273,7 +220,7 @@ msgid "label_description_forum"
 msgstr "Descripción"
 
 #. Default: "in ${forum}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:100
 msgid "label_in_forum"
 msgstr "en ${forum}"
 
@@ -284,224 +231,165 @@ msgid "label_maxattachmentsize"
 msgstr "Tamaño máximo de los archivos adjuntos"
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt
+#: ../skins/ploneboard_templates/board_footer.pt:11
 msgid "label_powered_by"
 msgstr "Creado con ${link}"
 
 #. Default: "Quick reply"
-#: ../skins/ploneboard_templates/conversation_view.pt
+#: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Respuesta rápida"
-
-#. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "label_required"
-msgstr "(Obligatorio)"
-
-#. Default: "Save"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "label_save"
-msgstr "Guardar"
 
 msgid "label_text"
 msgstr "Texto"
 
-#. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "label_title_posting"
-msgstr "Título"
-
 #. Default: "Transforms"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
+#: ../browser/controlpanel.py:16
 msgid "label_transforms"
 msgstr "Transformaciones"
 
-#. Default: "Up to Ploneboard Setup"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "label_up_to_ploneboard_setup"
-msgstr "Volver a la configuración de Ploneboard"
-
-#. Default: "Add transform"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_add_transform"
-msgstr "Añadir transformación"
-
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:204
 msgid "legend_attachments"
 msgstr "Archivos adjuntos"
 
-#. Default: "Text transformations"
-#: ../skins/ploneboard_templates/prefs_pb_transforms.cpt
-msgid "legend_pref_ploneboard_transforms"
-msgstr "Transformaciones del texto"
-
-#. Default: "Existing transforms"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "legend_transforms"
-msgstr "Transformaciones existentes"
-
-#. Default: "Manage"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "manage"
-msgstr "Gestionar"
-
-#. Default: "Manage comment text transformations"
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
-msgid "manage_transforms"
-msgstr "Gestionar las transformaciones del texto de los comentarios."
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:88
+msgid "log_to_start_conversation"
+msgstr ""
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:78
 msgid "moderation_count"
 msgstr "${count} comentarios en cola de moderación"
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:41
 msgid "moderation_description"
 msgstr "Los siguientes comentarios están pendientes de moderación. Haga clic en 'Publicar' o 'Rechazar' según sea necesario. Haga clic en el título de un comentario para ver el mensaje en el contexto de la conversación."
 
-#. Default: "Up"
-#: ../skins/ploneboard_templates/moderation_form.pt
-msgid "moderation_up"
-msgstr "Volver"
-
-#. Default: "Module"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "module_name"
-msgstr "Módulo"
-
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
 msgstr "Comentario más reciente"
 
-#. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt
-msgid "new_attachment"
-msgstr "Añadir otro archivo adjunto"
-
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:58
 msgid "new_conversations_marked_with"
 msgstr "Las conversaciones marcadas con ${star} han tenido actividad desde la última vez que nos visitó"
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt
+#: ../skins/ploneboard_templates/moderation_form.pt:118
 msgid "no_comments_queued"
 msgstr "No hay mensajes en cola de moderación"
 
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:121
 msgid "no_conversations_started"
 msgstr "No se ha iniciado ninguna conversación"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:43
 msgid "no_recent_conversations"
 msgstr "No hay conversaciones."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:170
 msgid "no_replies_yet"
 msgstr "No hay comentarios"
 
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:65
 msgid "not_conversations"
 msgstr "No hay mensajes en este foro"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:68
 msgid "not_forums"
 msgstr "Todavía no hay foros, utilice el menú para añadir uno."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:96
 msgid "not_permission_start_conversation"
 msgstr "Disculpe, no puede iniciar una conversación en este foro."
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:91
 msgid "number_of_conversations"
 msgstr "Conversaciones"
 
+#. Default: "Ploneboard configuration"
+#: ../browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr ""
+
+#. Default: "Text transformations"
+#: ../browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr ""
+
 #. Default: "Posted by"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:70
 msgid "posted_by"
 msgstr "Enviado por"
 
-#. Default: "Preview message"
-#: ../skins/ploneboard_templates/add_conversation_preview.cpt
-msgid "preview_message"
-msgstr "Previsualizar el mensaje"
-
 #. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:51
 msgid "recent_conversations_description"
 msgstr "Estas conversaciones están publicadas pero no tienen comentarios todavía."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:128
 msgid "replies"
 msgstr "Respuestas"
 
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
+msgid "search_result_location"
+msgstr ""
+
 #. Default: "Show all recent activity"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Mostrar toda la actividad reciente."
 
 #. Default: "Show only unanswered"
-#: ../skins/ploneboard_templates/forum_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt:40
 msgid "show_no_replies"
 msgstr "Mostrar sólo los que no tengan respuestas"
 
 #. Default: "Show all unanswered"
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Mostrar todos los que no tengan respuestas"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt
+#: ../skins/ploneboard_templates/comment_view.pt:75
 msgid "text_at"
 msgstr "el"
 
+#. Default: "Number of items to display"
+#: ../portlet/recent.py:26
+msgid "title_count"
+msgstr ""
+
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt
-#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/board_view.pt:150
 msgid "title_general_forums"
 msgstr "Foros generales"
 
 #. Default: "Recent conversations in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:29
 msgid "title_recent_conversations"
 msgstr "Conversaciones recientes en ${title}"
 
+#. Default: "Portlet title"
+#: ../portlet/recent.py:21
+msgid "title_title"
+msgstr ""
+
 #. Default: "Unanswered posts in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
 msgid "title_unanswered_conversations"
 msgstr "Mensajes sin respuesta en ${title}"
-
-#. Default: "Transform name"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "transform_name"
-msgstr "Nombre de la transformación"
-
-#. Default: "Return to Ploneboard settings"
-#: ../skins/ploneboard_templates/prefs_manage_transforms.cpt
-msgid "up_to_ploneboard_prefs"
-msgstr "Volver a la configuración de Ploneboard"
-
-#. Default: "Up to Site Setup"
-#: ../skins/ploneboard_templates/prefs_ploneboard_form.pt
-msgid "up_to_site_setup"
-msgstr "Ir a la configuración de Plone"
 

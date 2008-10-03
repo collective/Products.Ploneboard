@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-10-02 15:04+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2008-10-02 17:08+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,7 +114,7 @@ msgid "comment_current_state"
 msgstr "Egoera:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:127
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:70
 msgid "conversation"
 msgstr "Mezua"
 
@@ -139,7 +139,7 @@ msgid "forum_name"
 msgstr "Foroaren izena"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/forum_view.pt:53
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "${title}-(e)ra joan"
 
@@ -198,7 +198,7 @@ msgid "label_back_to_board"
 msgstr "Forora itzuli"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/forum_view.pt:152
+#: ../skins/ploneboard_templates/board_view.pt:129
 msgid "label_by_author"
 msgstr "${author}"
 
@@ -267,12 +267,12 @@ msgid "moderation_description"
 msgstr "Mezu hauek moderazio kolan daude. Egin klik 'Argitaratu' edo 'Atzera bota' botoietan, behar bezala. Egin klik erantzunaren izenburuan mezua bere kontestuan ikusteko."
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/forum_view.pt:129
+#: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
 msgstr "Azken erantzuna"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/forum_view.pt:109
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:58
 msgid "new_conversations_marked_with"
 msgstr "${star} ikurrarekin markatutako mezuetan, azken aldiz etorri zinenetik aldaketak egon dira."
 

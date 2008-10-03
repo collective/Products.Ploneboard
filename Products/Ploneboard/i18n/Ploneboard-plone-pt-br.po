@@ -4,10 +4,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2008-07-14 15:23-0300\n"
 "Last-Translator: Érico Andrei <erico@simplesconsultoria.com.br>\n"
-"Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
+"Language-Team: <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,12 +16,6 @@ msgstr ""
 "Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
-
-msgid "Ploneboard Setup"
-msgstr "Configurações do Ploneboard"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Objeto do Ploneboard que irá conter fóruns no site."
 
 msgid "Activate"
 msgstr "Ativar"
@@ -35,9 +29,6 @@ msgstr "Comentário"
 msgid "Conversation"
 msgstr "Tópico"
 
-msgid "Flat conversion view"
-msgstr "Visualização simples"
-
 msgid "Free for all"
 msgstr "Liberado para Anônimos"
 
@@ -50,23 +41,23 @@ msgstr "Ocultar"
 msgid "Lock"
 msgstr "Bloquear"
 
-msgid "Locked"
-msgstr "Bloqueado"
-
 msgid "Make free-for-all"
 msgstr "Liberar para Anônimos"
 
-msgid "Make moderated"
-msgstr "Tornar moderado"
-
 msgid "Make member-posting"
 msgstr "Só Membros Postam"
+
+msgid "Make moderated"
+msgstr "Tornar moderado"
 
 msgid "Message Board"
 msgstr "Pasta de Fóruns"
 
 msgid "Moderate"
 msgstr "Moderar"
+
+msgid "Moderated forum"
+msgstr "Fórum Moderado"
 
 msgid "Open"
 msgstr "Aberto"
@@ -83,23 +74,24 @@ msgstr "Rejeitado"
 msgid "Require membership to post"
 msgstr "Só Membros Postam"
 
-msgid "Moderated forum"
-msgstr "Fórum Moderado"
-
 msgid "Retracted"
 msgstr "Retraído"
-
-msgid "Threaded conversion view"
-msgstr "Visualização aninhada"
 
 msgid "Waiting for moderator"
 msgstr "Aguardando moderação"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:32
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:36
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
 

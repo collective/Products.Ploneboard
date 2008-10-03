@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2008-10-03 13:05+0000\n"
 "PO-Revision-Date: 2008-01-10 16:56+0200\n"
 "Last-Translator: Jaroslav Ðatkeviè <jaro@akl.lt>\n"
 "Language-Team: Lithuanian Plone Translation Team <kristiina@akl.lt>\n"
@@ -28,9 +28,6 @@ msgstr "Komentaras"
 msgid "Conversation"
 msgstr "Pokalbis"
 
-msgid "Flat conversion view"
-msgstr "Plokðèias konvertavimo vaizdas"
-
 msgid "Free for all"
 msgstr "Laisva visiems"
 
@@ -43,20 +40,23 @@ msgstr "Paslëpti"
 msgid "Lock"
 msgstr "Uþrakinti"
 
-msgid "Locked"
-msgstr "Uþrakinta"
-
 msgid "Make free-for-all"
 msgstr "Padaryti laisvu visiems"
 
 msgid "Make member-posting"
 msgstr "Padaryti nario paskelbimà"
 
+msgid "Make moderated"
+msgstr ""
+
 msgid "Message Board"
 msgstr "Þinuèiø lenta"
 
 msgid "Moderate"
 msgstr "Moderuoti"
+
+msgid "Moderated forum"
+msgstr ""
 
 msgid "Open"
 msgstr "Atverti"
@@ -76,15 +76,20 @@ msgstr "Reikalauti narystës paskelbimui"
 msgid "Retracted"
 msgstr "Atsisakyta"
 
-msgid "Threaded conversion view"
-msgstr "Konvertavimo gijø vaizdas"
-
 msgid "Waiting for moderator"
 msgstr "Laukiama moderatoriaus"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
 
 #, fuzzy
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 #, fuzzy
