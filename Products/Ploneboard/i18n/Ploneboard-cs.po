@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2008-10-03 13:05+0000\n"
-"PO-Revision-Date: 2008-10-03 17:25+0100\n"
+"PO-Revision-Date: 2008-10-04 19:34+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr "Vyhledat"
 #. Default: "Search Board"
 #: ../browser/search.pt:22
 msgid "board_search_label"
-msgstr "Vyhleda v diskusi"
+msgstr "Vyhledat v diskusi"
 
 #. Default: "More…"
 #: ../portlet/recent.pt:39
@@ -229,7 +229,7 @@ msgstr "Dovolená velikost přílohy"
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:11
 msgid "label_powered_by"
-msgstr "Powered by"
+msgstr "Provozováno na"
 
 #. Default: "Quick reply"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
@@ -302,7 +302,7 @@ msgstr "V tomto fóru zatím nejsou žádné konverzace."
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view.pt:68
 msgid "not_forums"
-msgstr "Na této tabuly zatím nejsou žádná fóra, pro přidání nových fór použijte nabídku přidat."
+msgstr "V této diskusi zatím nejsou žádná fóra, pro přidání nových fór použijte nabídku přidat."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:96
