@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2008-10-03 13:05+0000\n"
-"PO-Revision-Date: 2007-01-14 23:46+0100\n"
-"Last-Translator: Lukas Zdych <lukas.zdych@corenet.cz>\n"
+"PO-Revision-Date: 2008-10-03 17:26+0100\n"
+"Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -55,7 +55,7 @@ msgid "Moderate"
 msgstr "Moderovat"
 
 msgid "Moderated forum"
-msgstr ""
+msgstr "Moderovaná konverzace"
 
 msgid "Open"
 msgstr "Otevřít"
@@ -80,14 +80,14 @@ msgstr "Čekající na moderátora"
 
 #. Flat conversion view
 msgid "conversation_view"
-msgstr ""
+msgstr "Jednoduché zobrazení"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
-msgstr ""
+msgstr "Stromové zobrazení"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
