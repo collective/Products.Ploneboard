@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2008-10-03 13:05+0000\n"
+"POT-Creation-Date: 2008-10-06 14:32+0000\n"
 "PO-Revision-Date: 2008-07-14 15:32-0300\n"
 "Last-Translator: Érico Andrei <erico@simplesconsultoria.com.br>\n"
 "Language-Team: <plone-i18n@lists.sourceforge.net>\n"
@@ -267,6 +267,42 @@ msgstr "${count} comentários na lista."
 msgid "moderation_description"
 msgstr "Os seguintes comentários estão pendentes para moderação. Por favor, clique em 'Publicar' ou 'Rejeitar' conforme necessário. Clique no título de um comentário para visualizá-lo e o conteúdo de seu tópico."
 
+msgid "month_apr"
+msgstr ""
+
+msgid "month_aug"
+msgstr ""
+
+msgid "month_dec"
+msgstr ""
+
+msgid "month_feb"
+msgstr ""
+
+msgid "month_jan"
+msgstr ""
+
+msgid "month_jul"
+msgstr ""
+
+msgid "month_jun"
+msgstr ""
+
+msgid "month_mar"
+msgstr ""
+
+msgid "month_may"
+msgstr ""
+
+msgid "month_nov"
+msgstr ""
+
+msgid "month_oct"
+msgstr ""
+
+msgid "month_sep"
+msgstr ""
+
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
@@ -391,4 +427,25 @@ msgstr ""
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
 msgid "title_unanswered_conversations"
 msgstr "Tópicos não respondidos em ${title}"
+
+msgid "weekday_fri"
+msgstr ""
+
+msgid "weekday_mon"
+msgstr ""
+
+msgid "weekday_sat"
+msgstr ""
+
+msgid "weekday_sun"
+msgstr ""
+
+msgid "weekday_thu"
+msgstr ""
+
+msgid "weekday_tue"
+msgstr ""
+
+msgid "weekday_wed"
+msgstr ""
 

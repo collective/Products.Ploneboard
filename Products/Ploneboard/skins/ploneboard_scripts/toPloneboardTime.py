@@ -30,11 +30,11 @@ try:
  
     if time.greaterThan(DateTime()-7):
         ploneboard_time = utranslate("young_date_format: ${wday} ${hours}:${minutes}",
-                                     {'wday':utranslate(ts.day_msgid(wday)), 'hours':hours, 'minutes':minutes},
+                                     {'wday':utranslate(ts.day_msgid(wday), domain="ploneboard"), 'hours':hours, 'minutes':minutes},
                                       default=time.strftime(young_format_en))
     else:
         ploneboard_time = utranslate("old_date_format: ${year} ${month} ${day} ${hours}:${minutes}",
-                                     {'year':year, 'month':utranslate(ts.month_msgid(month)), 
+                                     {'year':year, 'month':utranslate(ts.month_msgid(month), domain="ploneboard"), 
                                       'day':day, 'hours':hours, 'minutes':minutes},
                                       default=time.strftime(old_format_en))
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-03 13:05+0000\n"
+"POT-Creation-Date: 2008-10-06 14:32+0000\n"
 "PO-Revision-Date: 2006-09-04 11:18+0100\n"
 "Last-Translator: Jens Klein <jens@bluedynamics.com>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -274,6 +274,42 @@ msgstr "${count} Beiträge in der Moderationswarteschlange."
 msgid "moderation_description"
 msgstr "Folgende Kommentare warten auf Moderation. Schalten sie diese frei oder setzen sie diese zurück mit den zur Verfügung stehenden Buttons. Klicken sie auf die Überschrift eines Kommentars um seinen Ursprung zu sehen."
 
+msgid "month_apr"
+msgstr ""
+
+msgid "month_aug"
+msgstr ""
+
+msgid "month_dec"
+msgstr ""
+
+msgid "month_feb"
+msgstr ""
+
+msgid "month_jan"
+msgstr ""
+
+msgid "month_jul"
+msgstr ""
+
+msgid "month_jun"
+msgstr ""
+
+msgid "month_mar"
+msgstr ""
+
+msgid "month_may"
+msgstr ""
+
+msgid "month_nov"
+msgstr ""
+
+msgid "month_oct"
+msgstr ""
+
+msgid "month_sep"
+msgstr ""
+
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
@@ -397,5 +433,26 @@ msgstr ""
 #. Default: "Unanswered posts in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
 msgid "title_unanswered_conversations"
+msgstr ""
+
+msgid "weekday_fri"
+msgstr ""
+
+msgid "weekday_mon"
+msgstr ""
+
+msgid "weekday_sat"
+msgstr ""
+
+msgid "weekday_sun"
+msgstr ""
+
+msgid "weekday_thu"
+msgstr ""
+
+msgid "weekday_tue"
+msgstr ""
+
+msgid "weekday_wed"
 msgstr ""
 

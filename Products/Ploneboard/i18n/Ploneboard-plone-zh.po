@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-03 13:05+0000\n"
+"POT-Creation-Date: 2008-10-06 14:32+0000\n"
 "PO-Revision-Date: 2006-05-08 11:50+0000\n"
 "Last-Translator: Bingkai Zhang <zhangbingkai at zopen dot cn>\n"
 "Language-Team: ZOpen <www.zopen.cn>\n"

@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2008-10-03 13:05+0000\n"
-"PO-Revision-Date: 2008-10-02 15:06+0200\n"
+"POT-Creation-Date: 2008-10-06 14:32+0000\n"
+"PO-Revision-Date: 2008-10-06 16:33+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
@@ -281,6 +281,42 @@ msgstr "${count} messages en attente."
 msgid "moderation_description"
 msgstr "Les messages suivants sont en attente de modération. Cliquez sur les boutons \"Publier\" ou \"Rejeter\". Cliquez sur le titre d'un message pour voir celui-ci dans le contexte de la conversation."
 
+msgid "month_apr"
+msgstr "avril"
+
+msgid "month_aug"
+msgstr "août"
+
+msgid "month_dec"
+msgstr "décembre"
+
+msgid "month_feb"
+msgstr "février"
+
+msgid "month_jan"
+msgstr "janvier"
+
+msgid "month_jul"
+msgstr "juillet"
+
+msgid "month_jun"
+msgstr "juin"
+
+msgid "month_mar"
+msgstr "mars"
+
+msgid "month_may"
+msgstr "mai"
+
+msgid "month_nov"
+msgstr "novembre"
+
+msgid "month_oct"
+msgstr "octobre"
+
+msgid "month_sep"
+msgstr "septembre"
+
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/board_view.pt:92
 msgid "most_recent_comment"
@@ -383,7 +419,7 @@ msgstr "Montrer les messages sans réponse"
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt:75
 msgid "text_at"
-msgstr "à"
+msgstr "le"
 
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:26
@@ -411,4 +447,25 @@ msgstr "Titre de la boîte"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
 msgid "title_unanswered_conversations"
 msgstr "${title} : messages sans réponse"
+
+msgid "weekday_fri"
+msgstr "vendredi"
+
+msgid "weekday_mon"
+msgstr "lundi"
+
+msgid "weekday_sat"
+msgstr "samedi"
+
+msgid "weekday_sun"
+msgstr "dimanche"
+
+msgid "weekday_thu"
+msgstr "jeudi"
+
+msgid "weekday_tue"
+msgstr "mardi"
+
+msgid "weekday_wed"
+msgstr "mercredi"
 
