@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ru\n"
-"POT-Creation-Date: 2008-10-06 14:32+0000\n"
+"POT-Creation-Date: 2008-10-21 15:32+0000\n"
 "PO-Revision-Date: 2008-04-06 01:13+0800\n"
 "Last-Translator: Eugene V. Korenevsky <weiqist@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -20,6 +20,16 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIA\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+msgid "Cancel"
+msgstr ""
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:78
+msgid "Change"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
@@ -61,6 +71,11 @@ msgstr "Зарегистрируйтесь чтобы добавлять ком�
 msgid "Please correct the indicated errors."
 msgstr ""
 
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:72
+msgid "Post"
+msgstr ""
+
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
 msgid "Post comment"
@@ -72,7 +87,7 @@ msgid "Reply to this"
 msgstr "Ответить на это"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:76
+#: ../skins/ploneboard_templates/forum_view.pt:78
 msgid "Start a new Conversation"
 msgstr "Начать новый разговор"
 
@@ -89,11 +104,21 @@ msgstr "Посмотреть профиль"
 msgid "You can only add comments to conversations or comments."
 msgstr ""
 
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+msgid "add_comment"
+msgstr ""
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+msgid "add_conversation"
+msgstr ""
+
 msgid "alert_delete_popup"
 msgstr "Предупреждение об удалении"
 
 #. Default: "Search"
-#: ../skins/ploneboard_templates/board_view.pt:39
+#: ../skins/ploneboard_templates/board_view.pt:41
 msgid "board_search_button"
 msgstr "Искать"
 
@@ -109,10 +134,15 @@ msgstr ""
 
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:99
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
 #, fuzzy
 msgid "by_author"
 msgstr "от $author"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:173
+msgid "cancel_comment"
+msgstr ""
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
@@ -120,18 +150,18 @@ msgid "comment_current_state"
 msgstr "Текущее состояние:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:70
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
 msgid "conversation"
 msgstr "Разговор"
 
 #. Default: "Forum"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:71
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
 #, fuzzy
 msgid "conversation_forum"
 msgstr "Форум"
 
 #. Default: "Posted"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
 #, fuzzy
 msgid "conversation_posted"
 msgstr "Опубликован"
@@ -142,7 +172,7 @@ msgid "description_ploneboard_config"
 msgstr "Здесь можно сконфигурировать настройки Ploneboard."
 
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt:90
+#: ../skins/ploneboard_templates/board_view.pt:92
 msgid "forum_name"
 msgstr "Название форума"
 
@@ -153,14 +183,39 @@ msgstr "Наверх к ${title}"
 
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:38
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 #, fuzzy
 msgid "go_to_view_url"
 msgstr "Вернуться к просмотру $name"
 
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
+msgid "heading_preview_comment"
+msgstr ""
+
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 msgid "help_add_portlet"
+msgstr ""
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+msgid "help_body_attachments_maxsize"
+msgstr ""
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+msgid "help_body_attachments_posting"
+msgstr ""
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+msgid "help_body_text_posting"
+msgstr ""
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+msgid "help_body_text_posting_linkify_enabled"
 msgstr ""
 
 msgid "help_categories_board"
@@ -207,8 +262,18 @@ msgstr ""
 msgid "label_back_to_board"
 msgstr ""
 
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+msgid "label_body_files_posting"
+msgstr ""
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+msgid "label_body_text_posting"
+msgstr ""
+
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:129
+#: ../skins/ploneboard_templates/board_view.pt:131
 msgid "label_by_author"
 msgstr "от ${author}"
 
@@ -228,7 +293,7 @@ msgid "label_description_forum"
 msgstr "Описание форума"
 
 #. Default: "in ${forum}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:100
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
 msgid "label_in_forum"
 msgstr ""
 
@@ -239,7 +304,7 @@ msgid "label_maxattachmentsize"
 msgstr "Максимальный размер приложения."
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt:11
+#: ../skins/ploneboard_templates/board_footer.pt:14
 msgid "label_powered_by"
 msgstr "Поддержка от ${link}"
 
@@ -248,8 +313,18 @@ msgstr "Поддержка от ${link}"
 msgid "label_quickreply"
 msgstr "Быстрый ответ"
 
+#. Default: "Required"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+msgid "label_required"
+msgstr ""
+
 msgid "label_text"
 msgstr "Тест"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+msgid "label_title_posting"
+msgstr ""
 
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
@@ -262,17 +337,17 @@ msgid "legend_attachments"
 msgstr "Приложения"
 
 #. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:88
+#: ../skins/ploneboard_templates/forum_view.pt:90
 msgid "log_to_start_conversation"
 msgstr "Зарегистрируйтесь чтобы начать разговор"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:78
+#: ../skins/ploneboard_templates/moderation_form.pt:80
 msgid "moderation_count"
 msgstr "${count} комментариев в очереди."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt:41
+#: ../skins/ploneboard_templates/moderation_form.pt:43
 msgid "moderation_description"
 msgstr "Следующие комментарии ждут одобрения. Пожалуйста нажмите 'Публиковать' или 'Отвергнуть' по необходимости. Нажмите на заголовок комментария для просмотра контекста разговора."
 
@@ -313,54 +388,59 @@ msgid "month_sep"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:92
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "most_recent_comment"
 msgstr "Последнее сообщение"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+msgid "new_attachment"
+msgstr ""
 
 # Defanlt: "Conversations marked with"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:58
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
 msgid "new_conversations_marked_with"
 msgstr "Разговоры отмеченные $star имели активность с вашего прошлого входа"
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:118
+#: ../skins/ploneboard_templates/moderation_form.pt:120
 msgid "no_comments_queued"
 msgstr "В очереди на одобрение нет сообщений."
 
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt:121
+#: ../skins/ploneboard_templates/board_view.pt:123
 msgid "no_conversations_started"
 msgstr "Ни одного разговора не начато"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:43
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
 msgstr "Разговоров нет."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:170
+#: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
 msgstr "Ещё не никто не ответил"
 
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt:65
+#: ../skins/ploneboard_templates/forum_view.pt:67
 msgid "not_conversations"
 msgstr "Ещё нет разговоров в этом форуме."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view.pt:68
+#: ../skins/ploneboard_templates/board_view.pt:70
 msgid "not_forums"
 msgstr "Ещё нет форумов, используйте меню для их добавления."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:96
+#: ../skins/ploneboard_templates/forum_view.pt:98
 msgid "not_permission_start_conversation"
 msgstr "К сожалению у вас нет прав доступа чтобы начать новуй разговор"
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt:91
+#: ../skins/ploneboard_templates/board_view.pt:93
 msgid "number_of_conversations"
 msgstr "Разговоры"
 
@@ -374,19 +454,29 @@ msgstr ""
 msgid "ploneboard_transform_panel"
 msgstr ""
 
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:167
+msgid "post_comment"
+msgstr ""
+
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:70
 msgid "posted_by"
 msgstr "Отправитель"
 
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
+msgid "preview_message"
+msgstr ""
+
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
 #. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:51
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "recent_conversations_description"
 msgstr "Следующие разговоры были опубликованы, но ещё не получили ни одного ответа."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:128
+#: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
 msgstr "Количество ответов"
 
@@ -396,21 +486,21 @@ msgid "search_result_location"
 msgstr ""
 
 #. Default: "Show all recent activity"
-#: ../skins/ploneboard_templates/board_view.pt:45
+#: ../skins/ploneboard_templates/board_view.pt:47
 msgid "show_new_conversations_all"
 msgstr "Показать все наиболее активные"
 
 # Defanlt: "Show only unanswered"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Show only unanswered"
-#: ../skins/ploneboard_templates/forum_view.pt:40
+#: ../skins/ploneboard_templates/forum_view.pt:42
 msgid "show_no_replies"
 msgstr "Показать только неотвеченные"
 
 # Defanlt: "Show all unanswered"
 # ../skins/ploneboard_templates/board_view.pt
 #. Default: "Show all unanswered"
-#: ../skins/ploneboard_templates/board_view.pt:52
+#: ../skins/ploneboard_templates/board_view.pt:54
 msgid "show_no_replies_all"
 msgstr "Показать все неотвеченные"
 
@@ -425,12 +515,12 @@ msgid "title_count"
 msgstr ""
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view.pt:150
+#: ../skins/ploneboard_templates/board_view.pt:152
 msgid "title_general_forums"
 msgstr "Общие форумы"
 
 #. Default: "Recent conversations in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:29
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
 msgid "title_recent_conversations"
 msgstr ""
 
@@ -441,7 +531,7 @@ msgstr ""
 
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
 #. Default: "Unanswered posts in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:29
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
 #, fuzzy
 msgid "title_unanswered_conversations"
 msgstr "Неотвеченные публикации в $title"

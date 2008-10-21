@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-fr\n"
-"POT-Creation-Date: 2008-10-06 14:32+0000\n"
+"POT-Creation-Date: 2008-10-21 15:32+0000\n"
 "PO-Revision-Date: 2008-10-06 16:25+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"

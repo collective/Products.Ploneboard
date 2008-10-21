@@ -1,4 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en-US"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
@@ -64,7 +67,7 @@
             <div metal:define-macro="comment_preview_buttons" tal:omit-tag="">
 
                 <div class="row">
-                    <div class="label">&nbsp;</div>
+                    <div class="label"> </div>
                     <div class="field"> 
                         <input class="standalone" 
                                type="submit" 
