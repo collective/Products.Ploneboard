@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-22 13:31+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -17,12 +17,11 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: da-dk\n"
 
-#"Content-Type: text/plain; charset=iso-8859-1\n"
-
+# "Content-Type: text/plain; charset=iso-8859-1\n"
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
-msgstr "Fortryd"
+msgstr "Anuller"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
@@ -133,12 +132,12 @@ msgstr "Flere..."
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
 msgid "by_author"
-msgstr ""
+msgstr "af ${author}"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:173
 msgid "cancel_comment"
-msgstr "Fortryd"
+msgstr "Anuller"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
@@ -146,7 +145,7 @@ msgid "comment_current_state"
 msgstr "Nuværende status:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
 msgstr "Indlæg"
 
@@ -165,18 +164,18 @@ msgstr "Postet"
 msgid "description_ploneboard_config"
 msgstr "Indstillinger for PloneBoard"
 
-#. Default: "Forum nIn ${forum} &rarr; ${conversation}.ame"
+#. Default: "Forum name"
 #: ../skins/ploneboard_templates/board_view.pt:92
 msgid "forum_name"
-msgstr "Temanavn"
+msgstr "Forummets navn"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
 msgstr "Op til ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
 msgstr "Tilbage til ${title}"
 
@@ -265,7 +264,7 @@ msgid "label_body_text_posting"
 msgstr "Brødtekst"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:131
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
 msgstr "af ${author}"
 
@@ -380,7 +379,7 @@ msgid "month_sep"
 msgstr "sep"
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:94
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
 msgstr "Seneste kommentarer"
 
@@ -390,7 +389,7 @@ msgid "new_attachment"
 msgstr "Vedhæft endnu en fil"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
 msgstr "Debatter markeret med ${star} har været aktive siden sidst du var logget ind."
 
@@ -405,12 +404,12 @@ msgid "no_conversations_started"
 msgstr "Ingen debatter startet"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr "Ingen debatter"
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
 msgstr "Endnu ingen svar"
 
@@ -459,13 +458,13 @@ msgstr "Skrevet af"
 msgid "preview_message"
 msgstr "Vis indlæg"
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 msgid "recent_conversations_description"
 msgstr "De følgende debatter er oprettet, men har endnu ingen indlæg."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
 msgstr "Svar"
 
