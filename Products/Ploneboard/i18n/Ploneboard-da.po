@@ -8,7 +8,7 @@ msgstr ""
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: da\n"
@@ -16,6 +16,8 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: da-dk\n"
+
+#"Content-Type: text/plain; charset=iso-8859-1\n"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -42,7 +44,7 @@ msgstr "Kommentar afventer gennemsyn"
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation added"
 msgstr "Debat tilføjet"
-conversation
+
 #: ../browser/comment.py:254
 msgid "Conversation deleted"
 msgstr "Debat slettet"
@@ -296,7 +298,7 @@ msgstr "Maximal filstørrelse for vedhæftede filer"
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:14
 msgid "label_powered_by"
-msgstr "Baseret på ${link}"
+msgstr "Baseret p&aring; ${link}"
 
 #. Default: "Quick reply"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
