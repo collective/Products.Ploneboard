@@ -539,3 +539,5 @@ msgstr "tir"
 msgid "weekday_wed"
 msgstr "ons"
 
+msgid "help_description_forum"
+msgstr "et forum indeholder debatter"

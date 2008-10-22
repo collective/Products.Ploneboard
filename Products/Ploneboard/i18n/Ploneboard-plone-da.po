@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-22 13:31+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -85,7 +85,7 @@ msgid "conversation_view"
 msgstr "debatvisning"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "Gammelt datoformat: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
@@ -93,5 +93,5 @@ msgstr "trådet debatvisning"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "Nyt datoformat: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
 
