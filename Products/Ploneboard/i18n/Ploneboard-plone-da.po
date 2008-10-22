@@ -8,7 +8,7 @@ msgstr ""
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: da\n"
@@ -27,10 +27,10 @@ msgid "Comment"
 msgstr "Kommentar"
 
 msgid "Conversation"
-msgstr "Indl�g"
+msgstr "Indlæg"
 
 msgid "Free for all"
-msgstr "�bent for alle"
+msgstr "Åbent for alle"
 
 msgid "Hidden"
 msgstr "Skjult"
@@ -39,16 +39,16 @@ msgid "Hide"
 msgstr "Skjul"
 
 msgid "Lock"
-msgstr "L�s"
+msgstr "Lås"
 
 msgid "Make free-for-all"
-msgstr "G�r �bent for alle"
+msgstr "Gør åbent for alle"
 
 msgid "Make member-posting"
-msgstr "Opret medlemsindl�g"
+msgstr "Opret medlemsindlæg"
 
 msgid "Make moderated"
-msgstr ""
+msgstr "Gør modereret"
 
 msgid "Message Board"
 msgstr "Forum"
@@ -60,7 +60,7 @@ msgid "Moderated forum"
 msgstr "Moderet forum"
 
 msgid "Open"
-msgstr "�ben"
+msgstr "Åben"
 
 msgid "Private to members only"
 msgstr "Kun synligt for medlemmer"
@@ -72,7 +72,7 @@ msgid "Rejected"
 msgstr "Afvist"
 
 msgid "Require membership to post"
-msgstr "Medlemskab p�kr�vet"
+msgstr "Medlemskab påkrævet"
 
 msgid "Retracted"
 msgstr "Trukket tilbage"
@@ -89,7 +89,7 @@ msgstr "Gammelt datoformat: ${year} ${month} ${day} ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
-msgstr "tr�det debatvisning"
+msgstr "trådet debatvisning"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
