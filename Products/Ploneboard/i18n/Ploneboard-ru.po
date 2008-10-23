@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ru\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2008-04-06 01:13+0800\n"
 "Last-Translator: Eugene V. Korenevsky <weiqist@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -150,7 +150,7 @@ msgid "comment_current_state"
 msgstr "Текущее состояние:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
 msgstr "Разговор"
 
@@ -177,13 +177,13 @@ msgid "forum_name"
 msgstr "Название форума"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
 msgstr "Наверх к ${title}"
 
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 #, fuzzy
 msgid "go_to_view_url"
 msgstr "Вернуться к просмотру $name"
@@ -273,7 +273,7 @@ msgid "label_body_text_posting"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:131
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
 msgstr "от ${author}"
 
@@ -388,7 +388,7 @@ msgid "month_sep"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:94
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
 msgstr "Последнее сообщение"
 
@@ -400,7 +400,7 @@ msgstr ""
 # Defanlt: "Conversations marked with"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
 msgstr "Разговоры отмеченные $star имели активность с вашего прошлого входа"
 
@@ -415,12 +415,12 @@ msgid "no_conversations_started"
 msgstr "Ни одного разговора не начато"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr "Разговоров нет."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
 msgstr "Ещё не никто не ответил"
 
@@ -470,13 +470,14 @@ msgid "preview_message"
 msgstr ""
 
 # : ../skins/ploneboard_templates/ploneboard_unanswered.pt
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Следующие разговоры были опубликованы, но ещё не получили ни одного ответа."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
 msgstr "Количество ответов"
 

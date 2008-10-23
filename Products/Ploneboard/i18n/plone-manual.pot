@@ -107,6 +107,16 @@ msgstr ""
 msgid "Comment is pending moderation"
 msgstr ""
 
+msgid "A Forum contains conversations."
+msgstr ""
 
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 

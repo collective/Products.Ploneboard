@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2006-09-04 06:20+0100\n"
 "Last-Translator: Jens Klein <jens@bluedynamics.com>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"
@@ -19,6 +19,12 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: de-at de-li de-lu de-ch de-de\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Aktivieren"
 
@@ -30,6 +36,9 @@ msgstr "Kommentar"
 
 msgid "Conversation"
 msgstr "Gespräch"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Frei für alle"
@@ -63,6 +72,9 @@ msgstr ""
 
 msgid "Open"
 msgstr "Öffnen"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Privat nur für Mitglieder"

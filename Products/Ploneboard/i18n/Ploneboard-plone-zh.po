@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2006-05-08 11:50+0000\n"
 "Last-Translator: Bingkai Zhang <zhangbingkai at zopen dot cn>\n"
 "Language-Team: ZOpen <www.zopen.cn>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr ""
 
@@ -28,6 +34,9 @@ msgstr ""
 
 msgid "Conversation"
 msgstr "Discussione"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr ""
@@ -61,6 +70,9 @@ msgid "Moderated forum"
 msgstr ""
 
 msgid "Open"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
 msgstr ""
 
 msgid "Private to members only"

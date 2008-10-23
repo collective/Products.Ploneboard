@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-fr\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2008-10-06 16:25+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -22,6 +22,12 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Activer"
 
@@ -33,6 +39,9 @@ msgstr "Message"
 
 msgid "Conversation"
 msgstr "Conversation"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Ouvert à tous"
@@ -66,6 +75,9 @@ msgstr "Forum modérés"
 
 msgid "Open"
 msgstr "Ouvert"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Restreint aux seuls membres"

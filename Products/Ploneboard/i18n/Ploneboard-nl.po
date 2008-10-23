@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2007-07-26 20:35+0100\n"
 "Last-Translator: THijs <THijs@pareto.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -143,7 +143,7 @@ msgid "comment_current_state"
 msgstr "Huidige status:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
 msgstr "Onderwerpen"
 
@@ -168,12 +168,12 @@ msgid "forum_name"
 msgstr "Forum naam"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
 msgstr "Terug naar ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
 msgstr "Ga terug naar ${name}"
 
@@ -262,7 +262,7 @@ msgid "label_body_text_posting"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:131
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
 msgstr "door ${author}"
 
@@ -377,7 +377,7 @@ msgid "month_sep"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:94
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
 msgstr "Meest recente reacties"
 
@@ -387,7 +387,7 @@ msgid "new_attachment"
 msgstr ""
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
 msgstr "Alle met een ${star} gemarkeerde reacties bevatten nieuwe reacties sinds uw laatste bezoek."
 
@@ -402,12 +402,12 @@ msgid "no_conversations_started"
 msgstr "Nog geen discussies."
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr "Geen recente discussies gevonden"
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
 msgstr "Nog geen reacties"
 
@@ -456,13 +456,14 @@ msgstr "Geplaatst door"
 msgid "preview_message"
 msgstr ""
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#, fuzzy
 msgid "recent_conversations_description"
 msgstr "De volgende discussies zijn geplaatst, maar hebben nog geen reacties ontvangen."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
 msgstr "reacties"
 

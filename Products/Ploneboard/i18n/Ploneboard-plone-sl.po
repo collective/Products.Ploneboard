@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Matej Barič <matej.baric@hruska.si>\n"
 "Language-Team: Slovenian <matej.baric@hruska.si>\n"
@@ -18,6 +18,12 @@ msgstr ""
 "Preferred-Encodings: utf-8 iso-8859-1\n"
 "Domain: plone\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Aktiviraj"
 
@@ -29,6 +35,9 @@ msgstr "Komentar"
 
 msgid "Conversation"
 msgstr "temo"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Odprto za vse"
@@ -62,6 +71,9 @@ msgstr ""
 
 msgid "Open"
 msgstr "Odpri"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Skrij - samo za člane"

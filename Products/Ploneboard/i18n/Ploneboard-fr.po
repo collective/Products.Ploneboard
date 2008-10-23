@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2008-10-21 17:36+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -151,7 +151,7 @@ msgid "comment_current_state"
 msgstr "État actuel :"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
 msgstr "Conversation"
 
@@ -176,13 +176,13 @@ msgid "forum_name"
 msgstr "Nom du forum"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
 msgstr "Remonter à ${title}"
 
 #. Return to ${name}
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
 msgstr "Revenir à ${name}"
 
@@ -274,7 +274,7 @@ msgid "label_body_text_posting"
 msgstr "Corps de texte"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:131
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
 msgstr "par ${author}"
 
@@ -393,7 +393,7 @@ msgid "month_sep"
 msgstr "septembre"
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:94
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
 msgstr "Message le plus récent"
 
@@ -404,7 +404,7 @@ msgstr "Ajouter une nouvelle pièce jointe"
 
 #. Conversations marked with ${star} have had activity since your last log-in.
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
 msgstr "Les conversations marquées avec ${star} ont reçu une contribution depuis votre dernière visite."
 
@@ -420,12 +420,12 @@ msgstr "Aucune conversation en cours."
 
 #. No conversations found.
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr "Pas de conversation trouvée."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
 msgstr "Pas encore de réponse"
 
@@ -475,14 +475,15 @@ msgid "preview_message"
 msgstr "Message d'aperçu"
 
 #. The following conversations have had recent activity.
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Les conversations suivantes ont récemment reçu des messages."
 
 #. Replies
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
 msgstr "Réponses"
 

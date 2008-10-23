@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2008-09-16 10:14+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
@@ -18,6 +18,12 @@ msgstr ""
 "X-Poedit-Language: Bulgarian\n"
 "X-Poedit-Country: BULGARIA\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Активиране"
 
@@ -29,6 +35,9 @@ msgstr "Коментар"
 
 msgid "Conversation"
 msgstr "Разговор"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Свободен за всички"
@@ -62,6 +71,9 @@ msgstr ""
 
 msgid "Open"
 msgstr "Отворен"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Само за регистрирани потребители"

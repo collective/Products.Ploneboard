@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2006-04-21 22:15+0000\n"
 "Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: nl-be\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Activeer"
 
@@ -28,6 +34,9 @@ msgstr "Reactie"
 
 msgid "Conversation"
 msgstr "Discussie"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Openbaar voor iedereen"
@@ -62,6 +71,9 @@ msgstr ""
 
 msgid "Open"
 msgstr "Open"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Alleen toegankelijk voor leden"

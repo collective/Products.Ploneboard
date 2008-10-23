@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2008-08-05 13:44+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: H. Turgut Uyar <uyar@itu.edu.tr>\n"
@@ -15,6 +15,12 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: tr-tr\n"
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
 msgid "Activate"
 msgstr "Etkinleştir"
 
@@ -26,6 +32,9 @@ msgstr "Yorum"
 
 msgid "Conversation"
 msgstr "Konuşma"
+
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Herkese açık"
@@ -59,6 +68,9 @@ msgstr ""
 
 msgid "Open"
 msgstr "Açık"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
 msgid "Private to members only"
 msgstr "Üyelere özel"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-21 15:32+0000\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
 "PO-Revision-Date: 2006-05-08 11:50+0000\n"
 "Last-Translator: Bingkai Zhang <zhangbingkai at zopen dot cn>\n"
 "Language-Team: ZOpen <www.zopen.cn>\n"
@@ -144,7 +144,7 @@ msgid "comment_current_state"
 msgstr ""
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:72
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
 msgstr "主题"
 
@@ -171,12 +171,12 @@ msgstr "论坛名称"
 # Defanlt: "No replies yet"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
 msgstr "返回到${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgid "label_body_text_posting"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/board_view.pt:131
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
 msgstr "发贴人: ${author}"
 
@@ -382,7 +382,7 @@ msgstr ""
 # Defanlt: "Most recent comment"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/board_view.pt:94
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
 msgstr "最近评论"
 
@@ -397,7 +397,7 @@ msgstr ""
 # D
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:60
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
 msgstr "主题中标记${star}的是您上次登录之后有变化的主题"
 
@@ -412,14 +412,14 @@ msgid "no_conversations_started"
 msgstr "没有主题"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr ""
 
 # Defanlt: "No replies yet"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
 msgstr "暂无回复"
 
@@ -468,15 +468,15 @@ msgstr "发贴人："
 msgid "preview_message"
 msgstr ""
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 msgid "recent_conversations_description"
 msgstr ""
 
 # Defanlt: "replies"
 # ../skins/ploneboard_templates/forum_view.pt
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
 msgstr "回复"
 
