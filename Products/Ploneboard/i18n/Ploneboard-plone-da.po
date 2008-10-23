@@ -18,10 +18,10 @@ msgstr ""
 "X-Is-Fallback-For: da-dk\n"
 
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Et forum indeholder debatter."
 
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "En kommentar indeholder en brødtekst og metadata."
 
 msgid "Activate"
 msgstr "Aktiver"
@@ -36,7 +36,7 @@ msgid "Conversation"
 msgstr "Indlæg"
 
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Debatter indeholder kommentarer."
 
 msgid "Free for all"
 msgstr "Åbent for alle"
@@ -72,7 +72,7 @@ msgid "Open"
 msgstr "Åben"
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "Indeholder fora"
 
 msgid "Private to members only"
 msgstr "Kun synligt for medlemmer"

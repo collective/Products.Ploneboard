@@ -34,7 +34,7 @@ msgstr "Kommentar tilføjet"
 
 #: ../browser/comment.py:259
 msgid "Comment deleted"
-msgstr "KOmmentar slettet"
+msgstr "Kommentar slettet"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:45
 msgid "Comment is pending moderation"
@@ -307,7 +307,7 @@ msgstr "Hurtigsvar"
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr ""
+msgstr "Påkrævet"
 
 msgid "label_text"
 msgstr "Tekst"
