@@ -3,7 +3,8 @@
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title">Comment</property>
  <property
-    name="description">A comment contains regular text body and metadata.</property>
+    name="description" 
+    i18n:translate="">A comment contains regular text body and metadata.</property>
  <property name="content_icon">ploneboard_comment_icon.gif</property>
  <property name="content_meta_type">PloneboardComment</property>
  <property name="product">Ploneboard</property>

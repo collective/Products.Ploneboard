@@ -2,7 +2,8 @@
 <object name="PloneboardForum" meta_type="Factory-based Type Information"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title">Forum</property>
- <property name="description">A Forum contains conversations.</property>
+ <property name="description"
+           i18n:translate="">A Forum contains conversations.</property>
  <property name="content_icon">ploneboard_forum_icon.gif</property>
  <property name="content_meta_type">PloneboardForum</property>
  <property name="product">Ploneboard</property>

@@ -3,7 +3,8 @@
    meta_type="Factory-based Type Information with dynamic views"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title">Conversation</property>
- <property name="description">Conversation contains comments.</property>
+ <property name="description"
+           i18n:translate="">Conversation contains comments.</property>
  <property name="content_icon">ploneboard_conversation_icon.gif</property>
  <property name="content_meta_type">PloneboardConversation</property>
  <property name="product">Ploneboard</property>
