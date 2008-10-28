@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2008-10-23 07:43+0000\n"
-"PO-Revision-Date: 2008-09-16 10:14+0200\n"
+"PO-Revision-Date: 2008-10-28 10:21+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,10 +19,10 @@ msgstr ""
 "X-Poedit-Country: BULGARIA\n"
 
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Форума съдържа разговори."
 
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Коментара съдържа текст и общи данни."
 
 msgid "Activate"
 msgstr "Активиране"
@@ -37,7 +37,7 @@ msgid "Conversation"
 msgstr "Разговор"
 
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Разговора съдържа кометари."
 
 msgid "Free for all"
 msgstr "Свободен за всички"
@@ -58,7 +58,7 @@ msgid "Make member-posting"
 msgstr "Направи само за регистрирани потребители"
 
 msgid "Make moderated"
-msgstr ""
+msgstr "Направи модериран"
 
 msgid "Message Board"
 msgstr ""
@@ -67,7 +67,7 @@ msgid "Moderate"
 msgstr "Модерация"
 
 msgid "Moderated forum"
-msgstr ""
+msgstr "Модериран форум"
 
 msgid "Open"
 msgstr "Отворен"
@@ -95,16 +95,16 @@ msgstr "Чакащ модератора"
 
 #. Flat conversion view
 msgid "conversation_view"
-msgstr ""
+msgstr "Плосък изглед на разговора"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "old_date_format: ${wday}, ${day} ${month} ${year} ${hours}:${minutes}"
+msgstr "${wday}, ${day} ${month} ${year} ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
-msgstr ""
+msgstr "Йерархичен изглед на разговора"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
 
