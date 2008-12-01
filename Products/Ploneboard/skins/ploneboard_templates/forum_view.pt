@@ -150,12 +150,12 @@
                                 <span tal:replace="conversation/Title">This is a title</span>
                               
 
-                                <div class="discreet" i18n:translate="label_by_author">
+                                <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
                                                define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                                </div>
+                                </span>
                             
                             </a>
                         </td>
@@ -180,20 +180,20 @@
                           <tal:block condition="numComments">
                              <a href="#" tal:condition="canAccess" 
                                          tal:attributes="href string:${conversation/absolute_url}#${lastComment/getId}">
-                               <div i18n:translate="label_by_author">
+                               <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator lastComment/Creator;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                              </div>
+                              </span>
                             </a>                                                                                        
                             <span tal:condition="not:canAccess">
-                              <div i18n:translate="label_by_author">
+                              <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator conversation/getLastCommentAuthor;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                              </div>
+                              </span>
                             </span>                               
 
                             <span

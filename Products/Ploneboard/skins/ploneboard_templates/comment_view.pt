@@ -53,8 +53,8 @@
 
           <div class="visualGhosted" tal:omit-tag="python:state not in ('retracted', 'rejected')">
 
-            <a tal:attributes="name comment/getId"></a>
-            <div class="boardCommentDetails" tal:attributes="id comment/getId;">
+            <a tal:attributes="name string:_${comment/getId}"></a>
+            <div class="boardCommentDetails" tal:attributes="id string:_${comment/getId};">
               
               <div tal:attributes="class python:test(state == 'published', 'boardCommentHeaderTitleBlock', 'boardCommentHeaderTitleBlock state-%s' % state)">
                 
@@ -63,7 +63,7 @@
                 <a class="link-plain"
                     tal:attributes="href string:${comment/absolute_url}">
                    <img src="" 
-                        alt=""
+                        alt="Comment icon"
                         tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                 </a>
 
