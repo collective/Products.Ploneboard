@@ -21,7 +21,7 @@
                     tal:attributes="href obj/url;
                                     title obj/title;
                                     class string:$item_wf_state_class tile">
-                    <img tal:condition="obj/icon" tal:attributes="src obj/icon" alt="Conversation icon" />
+                    <img tal:condition="obj/icon" tal:attributes="src obj/icon" />
                     <span tal:replace="obj/title">
                         Title
                     </span>
