@@ -437,7 +437,7 @@ msgstr "Aucune conversation dans ce forum pour le moment."
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view.pt:70
 msgid "not_forums"
-msgstr "Il n'existe aucun forum actuellement. Utilisez le menu pour ajouter un forum."
+msgstr "Désolé, vous ne pouvez voir aucun forum : soit vous n'avez pas la permission de les voir (sans être identifié ?), soit aucun forum n'existe."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:98

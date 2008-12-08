@@ -23,10 +23,10 @@ msgstr ""
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Un forum contient des conversations."
 
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Un commentaire contient une zone principale de texte et des métadonnées."
 
 msgid "Activate"
 msgstr "Activer"
@@ -41,7 +41,7 @@ msgid "Conversation"
 msgstr "Conversation"
 
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Une conversation contient des commentaires."
 
 msgid "Free for all"
 msgstr "Ouvert à tous"
@@ -77,7 +77,7 @@ msgid "Open"
 msgstr "Ouvert"
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "Une zone Forum est l'élément de premier niveau qui s'affiche sur le site."
 
 msgid "Private to members only"
 msgstr "Restreint aux seuls membres"
