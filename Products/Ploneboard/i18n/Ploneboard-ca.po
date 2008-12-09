@@ -1,295 +1,292 @@
-# translation of Ploneboard to Spanish
-# Gettext File for Ploneboard
-# Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006
 msgid ""
 msgstr ""
-"Project-Id-Version: Ploneboard 1.0\n"
+"Project-Id-Version: Ploneboard-ca\n"
 "POT-Creation-Date: 2008-10-23 07:43+0000\n"
-"PO-Revision-Date: 2008-12-09 08:36+0100\n"
+"PO-Revision-Date: 2008-12-09 08:21+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
-"Language-Team: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language-Code: es\n"
-"Language-Name: Spanish\n"
-"Preferred-Encodings: latin1 utf-8\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: ca\n"
+"Language-Name: Catala\n"
+"Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
-"X-Poedit-Language: Spanish\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Cancel.la"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
 msgid "Change"
-msgstr "Modificar"
+msgstr "Canvia"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
-msgstr "Comentario añadido"
+msgstr "Comentari afegit"
 
 #: ../browser/comment.py:259
 msgid "Comment deleted"
-msgstr "Comentario borrado"
+msgstr "Comentari esborrat"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:45
 msgid "Comment is pending moderation"
-msgstr "Comentario pendiente de moderación"
+msgstr "Comentari pendent de moderació"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 #, fuzzy
 msgid "Conversation added"
-msgstr "Conversación"
+msgstr "Conversa"
 
 #: ../browser/comment.py:254
 #, fuzzy
 msgid "Conversation deleted"
-msgstr "Publicado"
+msgstr "Publicat"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
 msgid "Conversation is pending moderation"
-msgstr "Conversación pendiente de moderación"
+msgstr "Conversa pendent de moderació"
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
 #, fuzzy
 msgid "Data provider updated."
-msgstr "Proveedor de datos"
+msgstr "Proveïdor de dades"
 
 msgid "Forum"
-msgstr "Foro"
+msgstr "Fòrum"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:191
 msgid "Log in to add comments"
-msgstr "Haga login para añadir comentarios"
+msgstr "Posa comentaris"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
 msgid "Please correct the indicated errors."
-msgstr "Por favor, corrige los errores indicados."
+msgstr "Si us plau, corregeixi els errors indicats."
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr "Publicar"
+msgstr "Respon"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
 msgid "Post comment"
-msgstr "Publicar"
+msgstr "Respon comentari"
 
 #. Default: "Reply to this"
 #: ../skins/ploneboard_templates/comment_view.pt:180
 msgid "Reply to this"
-msgstr "Responder a esto"
+msgstr "Respondre"
 
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:78
 msgid "Start a new Conversation"
-msgstr "Nueva conversación"
+msgstr "Comença una nova conversa"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
 msgid "Transform %s removed"
-msgstr "Transforma %s borrados"
+msgstr "Transforma %s esborrats"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:83
 msgid "View profile"
-msgstr "Ver perfil"
+msgstr "Veure el perfil"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:36
 msgid "You can only add comments to conversations or comments."
-msgstr "Solo puedes añadir comentarios a las conversaciones o a otros comentarios."
+msgstr "Només pots afegir comentaris a les converses o a altres comentaris."
 
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:32
 msgid "add_comment"
-msgstr "Añadir comentario"
+msgstr "Afegir comentari"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:31
 msgid "add_conversation"
-msgstr "Añadir conversación"
+msgstr "Afegir conversa"
 
 msgid "alert_delete_popup"
-msgstr "¿Está seguro de que desea eliminar este comentario?"
+msgstr "Està segur que desitja esborrar aquest comentari? "
 
 #. Default: "Search"
 #: ../skins/ploneboard_templates/board_view.pt:41
 msgid "board_search_button"
-msgstr "Búsqueda"
+msgstr "Cerca"
 
 #. Default: "Search Board"
 #: ../browser/search.pt:22
 msgid "board_search_label"
-msgstr "Tablero búsqueda"
+msgstr "Taulell de cerca"
 
 #. Default: "More…"
 #: ../portlet/recent.pt:39
 msgid "box_more_recent_conversations"
-msgstr "Más"
+msgstr "Més"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
 msgid "by_author"
-msgstr "por ${author}"
+msgstr "per ${author}"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:173
 #, fuzzy
 msgid "cancel_comment"
-msgstr "Añadir comentario"
+msgstr "Afegir comentari"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
 msgid "comment_current_state"
-msgstr "Estado actual:"
+msgstr "Estat actual:"
 
 #. Default: "Conversation"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:72
 msgid "conversation"
-msgstr "Conversación"
+msgstr "Conversa"
 
 #. Default: "Forum"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
 msgid "conversation_forum"
-msgstr "Foro"
+msgstr "Fòrum"
 
 #. Default: "Posted"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
 msgid "conversation_posted"
-msgstr "Publicado"
+msgstr "Publicat"
 
 #. Default: "Here you can configure site settings for Ploneboard."
 #: ../browser/controlpanel.py:57
 msgid "description_ploneboard_config"
-msgstr "Aquí puede configurar Ploneboard"
+msgstr "Configuració dels paràmetres del Ploneboard"
 
 #. Default: "Forum name"
 #: ../skins/ploneboard_templates/board_view.pt:92
 msgid "forum_name"
-msgstr "Nombre del foro"
+msgstr "Nom del fòrum"
 
 #. Default: "Up to ${title}"
 #: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
 msgid "go_to_parent_url"
-msgstr "Ir a ${title}"
+msgstr "Pujar a ${title}"
 
 #. Default: "Return to ${name}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
-msgstr "Volver a ${name}"
+msgstr "Tornar a ${name}"
 
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
-msgstr "Previsualizar comentario"
+msgstr "Previsualitzar comentari"
 
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 #, fuzzy
 msgid "help_add_portlet"
-msgstr "Introduzca el texto"
+msgstr "Introdueixi el cos del comentari"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr "El tamaño máximo del archivo adjunto es de ${maxsize} kilobytes"
+msgstr "La grandària màxima de l'arxiu adjunt és de ${maxsize} kilobytes"
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
 msgid "help_body_attachments_posting"
-msgstr "Seleccione un archivo para añadirlo como archivo adjunto a este comentario."
+msgstr "Seleccioni un fitxer per posar com a annex a aquest comentari"
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:105
 msgid "help_body_text_posting"
-msgstr "Se permiten etiquetas básicas de HTML"
+msgstr "Els tags HTML estan OK."
 
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting_linkify_enabled"
-msgstr "Las URLs crearán automáticamente enlaces en HTML"
+msgstr "Les URLS seran automaticament enllaçades"
 
 msgid "help_categories_board"
-msgstr "Introduzca las categorías en las que quiera clasificar los foros, una categoría por línea."
+msgstr "Introdueixi les categories que vol tenir disponibles pels taulells, una categoria per a cada línia"
 
 msgid "help_category"
-msgstr "Seleccione a qué categoría(s) corresponde este foro"
+msgstr "Seleccioni la categoria sota la que s'ha d'ubicar el fòrum. Un fòrum pot estar en vàries categories, encara que es recomana utilitzar només una categoria"
 
 #. Default: "How many items to list."
 #: ../portlet/recent.py:28
 #, fuzzy
 msgid "help_count"
-msgstr "Introduzca el texto"
+msgstr "Introdueixi el cos del comentari"
 
 msgid "help_description_board"
-msgstr "Descripción del foro"
+msgstr "Introdueixi una breu descripció del taulell"
 
 msgid "help_description_conversation"
-msgstr "Descripción"
+msgstr "Introdueixi una breu descripció de la conversa"
 
 msgid "help_description_forum"
-msgstr "Una descripción del foro"
+msgstr "Introduexi una breu descripció del fòrum"
 
 msgid "help_maxattachments"
-msgstr "Seleccione el número máximo de archivos adjuntos permitidos por comentario"
+msgstr "Seleccioni el nombre màxim d'arxius adjunts permesos per comentari "
 
 msgid "help_maxattachmentsize"
-msgstr "Seleccione el tamaño máximo de cada archivo adjunto"
+msgstr "Seleccioni la grandària màxima de cada arxiu adjunt"
 
 msgid "help_text"
-msgstr "Introduzca el texto"
+msgstr "Introdueixi el cos del comentari"
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../browser/controlpanel.py:18
 msgid "help_transforms"
-msgstr "Selecciones las transformaciones que se aplicarán a los textos de los comentarios en Ploneboard. Las transformaciones alteran el texto introducido el usuario, tanto para eliminar HTML malicioso, como para añadir alguna funcionalidad como hacer los enlaces clicables."
+msgstr "Seleccioni les transformacions del text que han d'utilitzar-se en els comentaris de les converses"
 
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:105
 #, fuzzy
 msgid "label_add_portlet"
-msgstr "Texto"
+msgstr "Text"
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
 #, fuzzy
 msgid "label_back_to_board"
-msgstr "Categorías"
+msgstr "Categories"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:132
 msgid "label_body_files_posting"
-msgstr "Archivos adjuntos"
+msgstr "Annexes"
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:92
 msgid "label_body_text_posting"
-msgstr "Texto del mensaje"
+msgstr "Cos del missatge"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:97
 msgid "label_by_author"
-msgstr "escrito por ${author}"
+msgstr "per ${author}"
 
 msgid "label_categories_board"
-msgstr "Categorías"
+msgstr "Categories"
 
 msgid "label_category"
-msgstr "Categoría(s)"
+msgstr "Categoria"
 
 msgid "label_description_board"
-msgstr "Descripción"
+msgstr "Descripció taulell"
 
 msgid "label_description_conversation"
-msgstr "Descripción"
+msgstr "Descripció conversa"
 
 msgid "label_description_forum"
-msgstr "Descripción"
+msgstr "Descripció Fòrum"
 
 #. Default: "in ${forum}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:102
@@ -297,59 +294,59 @@ msgid "label_in_forum"
 msgstr "en ${forum}"
 
 msgid "label_maxattachments"
-msgstr "Número máximo de archivos adjuntos"
+msgstr "Nombre màxim d'arxius adjunts"
 
 msgid "label_maxattachmentsize"
-msgstr "Tamaño máximo de los archivos adjuntos"
+msgstr "Grandària màxima dels arxius adjunts"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:14
 msgid "label_powered_by"
-msgstr "Creado con ${link}"
+msgstr "Amb el suport de ${link}"
 
 #. Default: "Quick reply"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
-msgstr "Respuesta rápida"
+msgstr "Resposta ràpida"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr "(Obligatorio)"
+msgstr "(Requerit)"
 
 msgid "label_text"
-msgstr "Texto"
+msgstr "Text"
 
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:64
 msgid "label_title_posting"
-msgstr "Título"
+msgstr "Títol"
 
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
 msgid "label_transforms"
-msgstr "Transformaciones"
+msgstr "Transformacions"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/comment_view.pt:204
 msgid "legend_attachments"
-msgstr "Archivos adjuntos"
+msgstr "Annexes"
 
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:90
 #, fuzzy
 msgid "log_to_start_conversation"
-msgstr "Haga login para comenzar una nueva conversacion"
+msgstr "Comença una nova conversa"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:80
 msgid "moderation_count"
-msgstr "${count} comentarios en cola de moderación"
+msgstr "${count} comentaris encuats"
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
 #: ../skins/ploneboard_templates/moderation_form.pt:43
 msgid "moderation_description"
-msgstr "Los siguientes comentarios están pendientes de moderación. Haga clic en 'Publicar' o 'Rechazar' según sea necesario. Haga clic en el título de un comentario para ver el mensaje en el contexto de la conversación."
+msgstr "Els següents comentaris estan pendents de moderació. Faci clic en 'Publicar' o 'Rebutjar' segons sigui necessari. Faci clic en el títol d'un comentari per a veure el missatge en el context de la conversa. "
 
 msgid "month_apr"
 msgstr ""
@@ -390,145 +387,145 @@ msgstr ""
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:74
 msgid "most_recent_comment"
-msgstr "Comentario más reciente"
+msgstr "Comentari més recent"
 
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:154
 msgid "new_attachment"
-msgstr "Añadir otro archivo adjunto"
+msgstr "Afegir annexe"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:60
 msgid "new_conversations_marked_with"
-msgstr "Las conversaciones marcadas con ${star} han tenido actividad desde la última vez que nos visitó"
+msgstr "Les converses marcades amb ${star} han tingut activitat des de l'última vegada que ens va visitar"
 
 #. Default: "There are no comments in the moderation queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:120
 msgid "no_comments_queued"
-msgstr "No hay mensajes en cola de moderación"
+msgstr "No hi ha comentaris encuats"
 
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt:123
 msgid "no_conversations_started"
-msgstr "No se ha iniciado ninguna conversación"
+msgstr "No hi ha converses encara"
 
 #. Default: "No conversations found."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
-msgstr "No hay conversaciones."
+msgstr "No hi ha converses."
 
 #. Default: "No replies yet"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:118
 msgid "no_replies_yet"
-msgstr "No hay comentarios"
+msgstr "Sense respostes encara"
 
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt:67
 msgid "not_conversations"
-msgstr "No hay mensajes en este foro"
+msgstr "No hi ha converses encara"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view.pt:70
 msgid "not_forums"
-msgstr "Todavía no hay foros, utilice el menú para añadir uno."
+msgstr "No hi ha fòrums encara"
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:98
 msgid "not_permission_start_conversation"
-msgstr "Disculpe, no puede iniciar una conversación en este foro."
+msgstr "No teniu permisos per iniciar una conversa"
 
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt:93
 msgid "number_of_conversations"
-msgstr "Conversaciones"
+msgstr "Converses"
 
 #. Default: "Ploneboard configuration"
 #: ../browser/controlpanel.py:55
 #, fuzzy
 msgid "ploneboard_configuration"
-msgstr "Aquí puede configurar Ploneboard"
+msgstr "Configuració dels paràmetres del Ploneboard"
 
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
 #, fuzzy
 msgid "ploneboard_transform_panel"
-msgstr "Transformaciones del texto"
+msgstr "Transformacions del text"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
 #, fuzzy
 msgid "post_comment"
-msgstr "Publicar"
+msgstr "Respon comentari"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:70
 msgid "posted_by"
-msgstr "Enviado por"
+msgstr "Enviat per"
 
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
-msgstr "Previsualizar el mensaje"
+msgstr "Previsualitza el missatge"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 msgid "recent_conversations_description"
-msgstr "Estas conversaciones están publicadas pero no tienen comentarios todavía."
+msgstr "Les següents converses han estat publicades, però encara no han rebut cap resposta."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:73
 msgid "replies"
-msgstr "Respuestas"
+msgstr "Respostes"
 
 #. Default: "In ${forum} &rarr; ${conversation}."
 #: ../browser/search.pt:72
 msgid "search_result_location"
-msgstr "En ${forum} &rarr; ${conversation}."
+msgstr "Al ${forum} &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
 #: ../skins/ploneboard_templates/board_view.pt:47
 msgid "show_new_conversations_all"
-msgstr "Mostrar toda la actividad reciente."
+msgstr "Veure totes les noves converses"
 
 #. Default: "Show only unanswered"
 #: ../skins/ploneboard_templates/forum_view.pt:42
 msgid "show_no_replies"
-msgstr "Mostrar sólo los que no tengan respuestas"
+msgstr "Sense respostes"
 
 #. Default: "Show all unanswered"
 #: ../skins/ploneboard_templates/board_view.pt:54
 msgid "show_no_replies_all"
-msgstr "Mostrar todos los que no tengan respuestas"
+msgstr "Veure tots els no resposts"
 
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt:75
 msgid "text_at"
-msgstr "el"
+msgstr "A"
 
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:26
 msgid "title_count"
-msgstr "Número de items a mostrar"
+msgstr "Nombre d'ítems a mostrar"
 
 #. Default: "General forums"
 #: ../skins/ploneboard_templates/board_view.pt:152
 msgid "title_general_forums"
-msgstr "Foros generales"
+msgstr "Fòrums generals"
 
 #. Default: "Recent conversations in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:31
 msgid "title_recent_conversations"
-msgstr "Conversaciones recientes en ${title}"
+msgstr "Converses recents en ${title}"
 
 #. Default: "Portlet title"
 #: ../portlet/recent.py:21
 msgid "title_title"
-msgstr "Título"
+msgstr "Títol"
 
 #. Default: "Unanswered posts in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
 msgid "title_unanswered_conversations"
-msgstr "Mensajes sin respuesta en ${title}"
+msgstr "Converses sense resposta"
 
 msgid "weekday_fri"
 msgstr ""
@@ -552,52 +549,51 @@ msgid "weekday_wed"
 msgstr ""
 
 #~ msgid "Add"
-#~ msgstr "Añadir"
+#~ msgstr "Afegeix"
 #~ msgid "Remove"
-#~ msgstr "Eliminar"
+#~ msgstr "Esborrar"
 #~ msgid "action"
-#~ msgstr "Acción"
+#~ msgstr "Acció"
 #~ msgid "comments"
-#~ msgstr "Comentarios"
+#~ msgstr "Comentaris"
 #~ msgid "box_recent_conversations"
-#~ msgstr "Conversaciones recientes"
+#~ msgstr "Converses recents"
 #~ msgid "box_recent_conversations_no_items"
-#~ msgstr "No hay nuevas conversaciones."
+#~ msgstr "No hi ha noves converses."
 #~ msgid "description_ploneboard_config_transforms"
 #~ msgstr ""
-#~ "Aquí puede configurar las transformaciones activas para los comentarios "
-#~ "de Ploneboard"
+#~ "Configuració de quines transformacions són actives en els comentaris del "
+#~ "Ploneboard"
 #~ msgid "description_pref_transforms"
-#~ msgstr ""
-#~ "Configuración de las transformaciones de los comentarios del Ploneboard"
+#~ msgstr "Configuració de les transformacions dels comentaris del Ploneboard"
 #~ msgid "description_pref_help_body_attachments_maxsizetransforms"
-#~ msgstr "Configurar las transformaciones de los textos de los comentarios."
+#~ msgstr "Configurar les transformacions dels textos dels comentaris."
 #~ msgid "enabled"
-#~ msgstr "¿Activado?"
+#~ msgstr "Actiu?"
 #~ msgid "heading_pref_transforms"
-#~ msgstr "Transformaciones de Ploneboard"
+#~ msgstr "Transformacions del Ploneboard"
 #~ msgid "label_save"
-#~ msgstr "Guardar"
+#~ msgstr "Desa"
 #~ msgid "label_up_to_ploneboard_setup"
-#~ msgstr "Volver a la configuración de Ploneboard"
+#~ msgstr "Al Ploneboard Setup"
 #~ msgid "legend_add_transform"
-#~ msgstr "Añadir transformación"
+#~ msgstr "Afegeix transformació"
 #~ msgid "legend_transforms"
-#~ msgstr "Transformaciones existentes"
+#~ msgstr "Transformacions existents"
 #~ msgid "manage"
-#~ msgstr "Gestionar"
+#~ msgstr "Gestió"
 #~ msgid "manage_transforms"
-#~ msgstr "Gestionar las transformaciones del texto de los comentarios."
+#~ msgstr "Gestió de les transformacions del text"
 #~ msgid "moderation_up"
-#~ msgstr "Volver"
+#~ msgstr "Amunt"
 #~ msgid "module_name"
-#~ msgstr "Módulo"
+#~ msgstr "Mòdul"
 #~ msgid "no_comments_yet"
-#~ msgstr "No hay comentarios"
+#~ msgstr "No hi ha comentaris encara"
 #~ msgid "transform_name"
-#~ msgstr "Nombre de la transformación"
+#~ msgstr "Nom de la transformació"
 #~ msgid "up_to_ploneboard_prefs"
-#~ msgstr "Volver a la configuración de Ploneboard"
+#~ msgstr "Tornar a la configuració dels paràmetres del Ploneboard"
 #~ msgid "up_to_site_setup"
-#~ msgstr "Ir a la configuración de Plone"
+#~ msgstr "Tornar a la configuració del Site"
 
