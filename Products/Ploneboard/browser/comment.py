@@ -66,7 +66,8 @@ class CommentView(CommentViewableView):
         info = self.portal_membership.getMemberInfo(creator)
         if info is None:
             return creator
-        return info.get('fullname', creator)
+        fullname_or_id = info.get('fullname') or info.get('username') or creator
+        return fullname_or_id
 
     def quotedBody(self):
         text = self.context.getText()
