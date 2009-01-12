@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2008-10-23 07:43+0000\n"
-"PO-Revision-Date: 2008-07-14 15:32-0300\n"
-"Last-Translator: Érico Andrei <erico@simplesconsultoria.com.br>\n"
-"Language-Team: <plone-i18n@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2009-01-12 11:23-0200\n"
+"Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
+"Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,20 +21,20 @@ msgstr ""
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
 msgid "Change"
-msgstr ""
+msgstr "Alterar"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
-msgstr ""
+msgstr "Comentário adicionado"
 
 #: ../browser/comment.py:259
 msgid "Comment deleted"
-msgstr ""
+msgstr "Comentário apagado"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:45
 msgid "Comment is pending moderation"
@@ -42,11 +42,11 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation added"
-msgstr ""
+msgstr "Conversa adicionada"
 
 #: ../browser/comment.py:254
 msgid "Conversation deleted"
-msgstr ""
+msgstr "Conversa apagada"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
 msgid "Conversation is pending moderation"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
 msgid "Data provider updated."
-msgstr ""
+msgstr "Provedor de dados atualizado"
 
 msgid "Forum"
 msgstr "Fórum"
@@ -66,7 +66,7 @@ msgstr "Autentique-se para adicionar comentários"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
 msgid "Please correct the indicated errors."
-msgstr ""
+msgstr "Por favor corrija os erros indicados."
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
@@ -99,17 +99,17 @@ msgstr "Ver perfil"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:36
 msgid "You can only add comments to conversations or comments."
-msgstr ""
+msgstr "Você só pode adicionar comentários às conversas ou comentários"
 
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:32
 msgid "add_comment"
-msgstr ""
+msgstr "Comentar"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:31
 msgid "add_conversation"
-msgstr ""
+msgstr "Adicionar conversa"
 
 msgid "alert_delete_popup"
 msgstr "Você realmente deseja apagar este comentário?"
@@ -117,27 +117,27 @@ msgstr "Você realmente deseja apagar este comentário?"
 #. Default: "Search"
 #: ../skins/ploneboard_templates/board_view.pt:41
 msgid "board_search_button"
-msgstr ""
+msgstr "Buscar"
 
 #. Default: "Search Board"
 #: ../browser/search.pt:22
 msgid "board_search_label"
-msgstr ""
+msgstr "Buscar nos fóruns"
 
 #. Default: "More…"
 #: ../portlet/recent.pt:39
 msgid "box_more_recent_conversations"
-msgstr ""
+msgstr "Mais..."
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
 msgid "by_author"
-msgstr ""
+msgstr "por ${author}"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:173
 msgid "cancel_comment"
-msgstr ""
+msgstr "Cancelar"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
@@ -182,32 +182,32 @@ msgstr "Retornar para ${name}"
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
-msgstr ""
+msgstr "Visualizar comentário"
 
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 msgid "help_add_portlet"
-msgstr ""
+msgstr "Este portlet mostra conversas com comentários recentes."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr ""
+msgstr "O tamanho máximo de um anexo é ${maxsize} kilobytes."
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
 msgid "help_body_attachments_posting"
-msgstr ""
+msgstr "Selecione um arquivo para anexar a este comentário."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:105
 msgid "help_body_text_posting"
-msgstr ""
+msgstr "Tags HTML básicas HTML são permitidas."
 
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting_linkify_enabled"
-msgstr ""
+msgstr "URLs serão automaticamente linkadas."
 
 msgid "help_categories_board"
 msgstr "Entre com as categorias que você quer disponibilizar nos fóruns. Uma categoria por linha."
@@ -218,10 +218,10 @@ msgstr "Selecione abaixo qual categoria o fórum pertence. Um fórum pode existi
 #. Default: "How many items to list."
 #: ../portlet/recent.py:28
 msgid "help_count"
-msgstr ""
+msgstr "Quantos itens na lista."
 
 msgid "help_description_board"
-msgstr "Informe uma breve descrição da board."
+msgstr "Informe uma breve descrição do board."
 
 msgid "help_description_conversation"
 msgstr "Digite um breve descritivo deste tópico."
@@ -246,22 +246,22 @@ msgstr "Selecione as transformações de texto que deverão ser utilizadas nos c
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:105
 msgid "label_add_portlet"
-msgstr ""
+msgstr "Adicionar portlet de conversas recentes"
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
 msgid "label_back_to_board"
-msgstr ""
+msgstr "Voltar para a discussão"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:132
 msgid "label_body_files_posting"
-msgstr ""
+msgstr "Anexos"
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:92
 msgid "label_body_text_posting"
-msgstr ""
+msgstr "Corpo do texto"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:97
@@ -307,7 +307,7 @@ msgstr "Resposta rápida"
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr ""
+msgstr "Obrigatório"
 
 msgid "label_text"
 msgstr "Corpo"
@@ -315,7 +315,7 @@ msgstr "Corpo"
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:64
 msgid "label_title_posting"
-msgstr ""
+msgstr "Título"
 
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
@@ -343,40 +343,40 @@ msgid "moderation_description"
 msgstr "Os seguintes comentários estão pendentes para moderação. Por favor, clique em 'Publicar' ou 'Rejeitar' conforme necessário. Clique no título de um comentário para visualizá-lo e o conteúdo de seu tópico."
 
 msgid "month_apr"
-msgstr ""
+msgstr "abril"
 
 msgid "month_aug"
-msgstr ""
+msgstr "agosto"
 
 msgid "month_dec"
-msgstr ""
+msgstr "dezembro"
 
 msgid "month_feb"
-msgstr ""
+msgstr "fevereiro"
 
 msgid "month_jan"
-msgstr ""
+msgstr "janeiro"
 
 msgid "month_jul"
-msgstr ""
+msgstr "julho"
 
 msgid "month_jun"
-msgstr ""
+msgstr "junho"
 
 msgid "month_mar"
-msgstr ""
+msgstr "março"
 
 msgid "month_may"
-msgstr ""
+msgstr "maio"
 
 msgid "month_nov"
-msgstr ""
+msgstr "novembro"
 
 msgid "month_oct"
-msgstr ""
+msgstr "outubro"
 
 msgid "month_sep"
-msgstr ""
+msgstr "Setembro"
 
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:74
@@ -386,7 +386,7 @@ msgstr "Comentários recentes"
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:154
 msgid "new_attachment"
-msgstr ""
+msgstr "Adicionar outro anexo"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:60
@@ -436,7 +436,7 @@ msgstr "Tópicos"
 #. Default: "Ploneboard configuration"
 #: ../browser/controlpanel.py:55
 msgid "ploneboard_configuration"
-msgstr ""
+msgstr "Configurações do Ploneboard"
 
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
@@ -446,7 +446,7 @@ msgstr ""
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
 msgid "post_comment"
-msgstr ""
+msgstr "Postar comentário"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:70
@@ -456,13 +456,12 @@ msgstr "Postado por"
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
-msgstr ""
+msgstr "Visualizar mensagem"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Os seguintes tópicos foram postadas, mas ainda não possuem nenhuma resposta."
+msgstr "Os seguintes tópicos foram postados, mas ainda não possuem nenhuma resposta."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:73
@@ -472,7 +471,7 @@ msgstr "Respostas"
 #. Default: "In ${forum} &rarr; ${conversation}."
 #: ../browser/search.pt:72
 msgid "search_result_location"
-msgstr ""
+msgstr "Em ${forum} &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
 #: ../skins/ploneboard_templates/board_view.pt:47
@@ -497,7 +496,7 @@ msgstr "em"
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:26
 msgid "title_count"
-msgstr ""
+msgstr "Número de itens para exibir"
 
 #. Default: "General forums"
 #: ../skins/ploneboard_templates/board_view.pt:152
@@ -512,7 +511,7 @@ msgstr "Tópicos recentes em ${title}"
 #. Default: "Portlet title"
 #: ../portlet/recent.py:21
 msgid "title_title"
-msgstr ""
+msgstr "Título do portlet"
 
 #. Default: "Unanswered posts in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
@@ -520,23 +519,23 @@ msgid "title_unanswered_conversations"
 msgstr "Tópicos não respondidos em ${title}"
 
 msgid "weekday_fri"
-msgstr ""
+msgstr "sexta-feira"
 
 msgid "weekday_mon"
-msgstr ""
+msgstr "segunda-feira"
 
 msgid "weekday_sat"
-msgstr ""
+msgstr "sábado"
 
 msgid "weekday_sun"
-msgstr ""
+msgstr "domingo"
 
 msgid "weekday_thu"
-msgstr ""
+msgstr "quinta-feira"
 
 msgid "weekday_tue"
-msgstr ""
+msgstr "terça-feira"
 
 msgid "weekday_wed"
-msgstr ""
+msgstr "quarta-feira"
 
