@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2008-10-23 07:43+0000\n"
-"PO-Revision-Date: 2009-01-12 11:47-0200\n"
+"PO-Revision-Date: 2009-01-12 12:07-0200\n"
 "Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
 "Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Por favor corrija os erros indicados."
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
@@ -90,7 +90,7 @@ msgstr "Começar uma nova conversa"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
 msgid "Transform %s removed"
-msgstr ""
+msgstr "Transformações %s removidas"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:83
@@ -441,7 +441,7 @@ msgstr "Configurações do Ploneboard"
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
 msgid "ploneboard_transform_panel"
-msgstr ""
+msgstr "Transformações de texto"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
