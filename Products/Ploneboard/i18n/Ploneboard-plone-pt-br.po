@@ -72,7 +72,7 @@ msgid "Open"
 msgstr "Aberto"
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "Uma pasta de fórums, com os fórums que aparecerão em seu site"
 
 msgid "Private to members only"
 msgstr "Privado somente para membros"
@@ -94,14 +94,14 @@ msgstr "Aguardando moderação"
 
 #. Flat conversion view
 msgid "conversation_view"
-msgstr ""
+msgstr "Visão de conversa"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
-msgstr ""
+msgstr "Visão de conversa threaded"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
