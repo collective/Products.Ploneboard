@@ -59,7 +59,7 @@ msgid "Make member-posting"
 msgstr "Beiträge nur von Mitgliedern erlauben"
 
 msgid "Make moderated"
-msgstr "Moderiert machen"
+msgstr "moderiert machen"
 
 msgid "Message Board"
 msgstr "Forum"
