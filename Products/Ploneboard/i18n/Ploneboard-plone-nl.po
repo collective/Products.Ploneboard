@@ -1,0 +1,110 @@
+# Gettext File for Ploneboard
+# Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"PO-Revision-Date: 2006-04-21 22:15+0000\n"
+"Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
+"Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: nl-be\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr "Activeer"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Comment"
+msgstr "Reactie"
+
+msgid "Conversation"
+msgstr "Discussie"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr "Openbaar voor iedereen"
+
+msgid "Hidden"
+msgstr "Verborgen"
+
+msgid "Hide"
+msgstr "Verberg"
+
+msgid "Lock"
+msgstr "Zet op slot"
+
+msgid "Make free-for-all"
+msgstr "Maak openbaar voor iedereen"
+
+msgid "Make member-posting"
+msgstr ""
+
+#### My own findings
+msgid "Make moderated"
+msgstr "Maak gemodereerd"
+
+msgid "Message Board"
+msgstr "Discussie Bord"
+
+msgid "Moderate"
+msgstr "Modereer"
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Alleen toegankelijk voor leden"
+
+msgid "Public"
+msgstr "Publiek"
+
+msgid "Rejected"
+msgstr "Gewijgerd"
+
+msgid "Require membership to post"
+msgstr "Vereis lidmaatschap om te reageren"
+
+msgid "Retracted"
+msgstr "Teruggetrokken"
+
+msgid "Waiting for moderator"
+msgstr "Wacht op moderator"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

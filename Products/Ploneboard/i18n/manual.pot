@@ -1,0 +1,153 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-08-23 10:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ploneboard\n"
+
+msgid "Forum"
+msgstr ""
+
+msgid "label_text"
+msgstr ""
+
+msgid "help_text"
+msgstr ""
+
+msgid "help_description_conversation"
+msgstr ""
+
+msgid "label_description_conversation"
+msgstr ""
+
+msgid "help_description_forum"
+msgstr ""
+
+msgid "label_description_forum"
+msgstr ""
+
+msgid "help_category"
+msgstr ""
+
+msgid "label_category"
+msgstr ""
+
+msgid "help_maxattachments"
+msgstr ""
+
+msgid "label_maxattachments"
+msgstr ""
+
+msgid "help_maxattachmentsize"
+msgstr ""
+
+msgid "label_maxattachmentsize"
+msgstr ""
+
+msgid "help_description_board"
+msgstr ""
+
+msgid "label_description_board"
+msgstr ""
+
+msgid "help_categories_board"
+msgstr ""
+
+msgid "label_categories_board"
+msgstr ""
+
+msgid "alert_delete_popup"
+msgstr ""
+
+msgid "month_jan"
+msgstr ""
+
+msgid "month_feb"
+msgstr ""
+
+msgid "month_mar"
+msgstr ""
+
+msgid "month_apr"
+msgstr ""
+
+msgid "month_may"
+msgstr ""
+
+msgid "month_jun"
+msgstr ""
+
+msgid "month_jul"
+msgstr ""
+
+msgid "month_aug"
+msgstr ""
+
+msgid "month_sep"
+msgstr ""
+
+msgid "month_oct"
+msgstr ""
+
+msgid "month_nov"
+msgstr ""
+
+msgid "month_dec"
+msgstr ""
+
+msgid "month_dec"
+msgstr ""
+
+msgid "weekday_sun"
+msgstr ""
+
+msgid "weekday_mon"
+msgstr ""
+
+msgid "weekday_tue"
+msgstr ""
+
+msgid "weekday_wed"
+msgstr ""
+
+msgid "weekday_thu"
+msgstr ""
+
+msgid "weekday_fri"
+msgstr ""
+
+msgid "weekday_sat"
+msgstr ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
