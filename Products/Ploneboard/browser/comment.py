@@ -35,7 +35,8 @@ class CommentViewableView(Five.BrowserView):
 
         res= {
                 'Title': comment.title_or_id(),
-                'Creator': comment.Creator(),
+                'Creator': comment.getCreator(),
+                'Email': comment.getEmail(),
                 'creation_date': comment.CreationDate(),
                 'getId': comment.getId(),
                 'getText': comment.getText(),
