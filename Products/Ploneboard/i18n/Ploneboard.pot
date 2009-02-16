@@ -538,3 +538,5 @@ msgstr ""
 msgid "weekday_wed"
 msgstr ""
 
+msgid "label_quote"
+msgstr ""

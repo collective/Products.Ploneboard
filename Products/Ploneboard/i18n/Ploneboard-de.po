@@ -546,3 +546,5 @@ msgstr "Dienstag"
 msgid "weekday_wed"
 msgstr "Mittwoch"
 
+msgid "label_quote"
+msgstr "${author} hat geschrieben: ${quote}"
