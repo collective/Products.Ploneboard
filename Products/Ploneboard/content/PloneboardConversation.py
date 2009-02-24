@@ -182,7 +182,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
         comment = self.getLastComment()
         if comment:
-            return comment.getCreator()
+            return comment.Creator()
         return None
 
     security.declareProtected(ViewBoard, 'getLastComment')
@@ -200,32 +200,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return res[0].getObject()
         return None
 
-    security.declareProtected(ViewBoard, 'getFirstFirstAuthor')
-    def getFirstCommentAuthor(self):
-        """
-        Returns the name of the author of the first comment.
-        """
-
-        comment = self.getFirstComment()
-        if comment:
-            return comment.getCreator()
-        return None
-        
-    security.declareProtected(ViewBoard, 'getFirstComment')
-    def getFirstComment(self):
-        """
-        Returns the first comment as full object..
-        Returns None if there is no comment
-        """
-
-        res = self.getCatalog()(
-                object_provides='Products.Ploneboard.interfaces.IComment', \
-                sort_on='created', sort_limit=1,
-                path='/'.join(self.getPhysicalPath()))
-        if res:
-            return res[0].getObject()
-        return None
-        
     security.declareProtected(ViewBoard, 'getRootComments')
     def getRootComments(self):
         """

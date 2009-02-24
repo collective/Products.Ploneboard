@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=title, text='', email='', name='', files=None
+##parameters=title, text='', files=None
 ##title=Add a conversation
 # $Id$
 
@@ -25,7 +25,7 @@ else:
 # Get files from session etc instead of just request
 files = context.portal_ploneboard.getUploadedFiles()
 
-m = context.addConversation(title=title, text=text, name=name, email=email, creator=creator, files=files)
+m = context.addConversation(title=title, text=text, creator=creator, files=files)
 
 if m:
     context.portal_ploneboard.clearUploadedFiles()

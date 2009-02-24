@@ -152,7 +152,7 @@
 
                                 <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
-                                               define="creator conversation/getFirstCommentAuthor;
+                                               define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                                 </span>
@@ -182,7 +182,7 @@
                                          tal:attributes="href string:${conversation/absolute_url}#${lastComment/getId}">
                                <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
-                                         define="creator lastComment/getCreator;
+                                         define="creator lastComment/Creator;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                               </span>

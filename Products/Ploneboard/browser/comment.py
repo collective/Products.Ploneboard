@@ -35,8 +35,7 @@ class CommentViewableView(Five.BrowserView):
 
         res= {
                 'Title': comment.title_or_id(),
-                'Creator': comment.getCreator(),
-                'Email': comment.getEmail(),
+                'Creator': comment.Creator(),
                 'creation_date': comment.CreationDate(),
                 'getId': comment.getId(),
                 'getText': comment.getText(),
@@ -151,7 +150,7 @@ class RecentConversationsView(CommentViewableView):
         wfstate = self.portal_workflow.getInfoFor(ob, 'review_state')
         wfstate = self.plone_utils.normalizeString(wfstate)
 
-        creator = ob.getFirstCommentAuthor()
+        creator = ob.Creator()
         creatorInfo = self.portal_membership.getMemberInfo(creator)
         if creatorInfo is not None and creatorInfo.get('fullname', "") != "":
             creator = creatorInfo['fullname']
@@ -161,7 +160,7 @@ class RecentConversationsView(CommentViewableView):
             return None
         canAccessLastComment = self.portal_membership.checkPermission('View', lastComment)
 
-        lastCommentCreator = lastComment.getCreator()
+        lastCommentCreator = lastComment.Creator()
         creatorInfo = self.portal_membership.getMemberInfo(lastCommentCreator)
         if creatorInfo is not None and creatorInfo.get('fullname', '') != "":
             lastCommentCreator = creatorInfo['fullname']

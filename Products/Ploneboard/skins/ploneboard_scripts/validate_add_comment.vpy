@@ -11,7 +11,6 @@
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import PloneMessageFactory as _
 
-reg_tool=context.portal_registration 
 putils = getToolByName(context, 'plone_utils')
 
 def FileSize(file):
@@ -29,21 +28,10 @@ def FileSize(file):
 
     return size/1024
 
-text = context.REQUEST.get('text', '')
-name = context.REQUEST.get('name', '')
-email = context.REQUEST.get('email', '')
+text = context.REQUEST.get('text', '');
 
 if len(text) <= 0:
-    state.setError("text", _(u"No content entered"), new_status="failure")
-if len(name) <= 0:
-    state.setError("name", _(u"No name entered"), new_status="failure")
-if not email:
-    state.setError('email', _(u'Please submit an email address.'), 'sender_from_address_required')
-else:
-    if reg_tool.isValidEmail(email):
-        pass
-    else:
-        state.setError('email', _(u'You entered an invalid email address.'), 'invalid_email')
+    state.setError("text", "No content entered", new_status="failure")
 
 files=context.REQUEST.get('files', [])
 maxsize=context.getConversation().getMaxAttachmentSize()
