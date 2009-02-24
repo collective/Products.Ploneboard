@@ -6,9 +6,9 @@ from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
 
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, StringField, ReferenceField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import RichWidget, ReferenceWidget
+from Products.Archetypes.public import RichWidget, ReferenceWidget, StringWidget
 from Products.Archetypes.utils import shasattr
 
 from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
@@ -55,6 +55,25 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         relationship=REPLY_RELATIONSHIP,
         widget=ReferenceWidget(visible=False),
         ),
+    StringField('name',
+        required=1,
+        searchable=0,
+        index = ('TextIndex'),                     
+        widget=StringWidget(label_msgid='ploneboard_label_fullname',
+                            label='Name',
+                            description_msgid='ploneboard_desc_fullname',
+                            description='Please enter your full name ',
+                            ),
+        ),      
+    StringField('email',
+        required=1,
+        searchable=0,                    
+        widget=StringWidget(label_msgid='ploneboard_label_email',
+                            label='E-Mail',
+                            description_msgid='ploneboard_desc_email',
+                            description='Please enter your e-mail address',
+                            ),
+        ),                  
     ))
 utils.finalizeSchema(schema)
 
@@ -103,6 +122,8 @@ class PloneboardComment(BaseBTreeFolder):
     def addReply(self,
                  title,
                  text,
+                 name,
+                 email,
                  creator=None,
                  files=None ):
         """Add a reply to this comment."""
@@ -121,6 +142,8 @@ class PloneboardComment(BaseBTreeFolder):
         # and using **kwargs in the _createObjectByType statement.
         m.setTitle(title)
         m.setText(text)
+        m.setName(name)
+        m.setEmail(email)
         m.setInReplyTo(self.UID())
 
         if creator is not None:
@@ -197,7 +220,7 @@ class PloneboardComment(BaseBTreeFolder):
         for obj in objects:
             replyId = obj.inReplyTo().getId()
             comment = conv.getComment(ids.get(replyId))
-            msg = comment.addReply(obj.getTitle(), obj.getText())
+            msg = comment.addReply(obj.getTitle(), obj.getText(), obj.getName(), obj.getEmail())
             ids.update({obj.getId() : msg.getId()})
             # Here we need to set some fields from old objects
             # What else should we update?
@@ -366,5 +389,14 @@ class PloneboardComment(BaseBTreeFolder):
         """
 
         return self.restrictedTraverse('@@delete_view')()
+        
+    security.declareProtected(ViewBoard, "getCreator")
+    def getCreator(self):
+        """ return the creator. If anonymous, return the value of 'name'
+        """
+        if self.Creator() == 'Anonymous':
+            return self.getName()
+        else: 
+            return self.Creator()
 
 registerType(PloneboardComment, PROJECTNAME)

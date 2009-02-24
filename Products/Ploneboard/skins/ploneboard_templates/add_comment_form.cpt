@@ -82,7 +82,69 @@
               </div>
           </div>
 
+          <div metal:define-macro="comment_name" tal:omit-tag="">
+            <div class="field"
+              tal:define="error errors/name|nothing"
+              tal:attributes="class python:test(error, 'field error', 'field')"
+              tal:condition="isAnon">
+              <label for="name" i18n:translate="label_name">
+                Name
+              </label>
+              <span class="fieldRequired" title="Required"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">(Required)</span>
+            
+              <div class="formHelp" i18n:translate="help_name">
+                Please enter your full name
+              </div>
+            
+              <div tal:content="error">Validation error output</div>            
+            
+              <input type="text" 
+                     id="name" 
+                     name="name" 
+                     size="40" 
+                     value="" 
+                     tal:attributes="value request/name|nothing"
+                     />
+            </div>
+            <input type="hidden" name="name" id="name" 
+                   tal:condition="not:isAnon"
+                   tal:attributes="value python:request.get('name', member)"/>
+
+          </div>
+          <div metal:define-macro="comment_email" tal:omit-tag="">
+            <div class="field"
+              tal:define="error errors/email|nothing"
+              tal:attributes="class python:test(error, 'field error', 'field')"
+              tal:condition="isAnon">
+              <label for="email" i18n:translate="label_email">
+                E-Mail
+              </label>
+              <span class="fieldRequired" title="Required"
+                      i18n:attributes="title title_required;"
+                      i18n:translate="label_required">(Required)</span>
+            
+              <div class="formHelp" i18n:translate="help_email">
+                Please enter your e-mail address
+              </div>
+            
+              <div tal:content="error">Validation error output</div>            
+            
+              <input type="text" 
+                     id="email" 
+                     name="email" 
+                     size="40" 
+                     value="" 
+                     tal:attributes="value request/email|nothing"
+                     />
+            </div>
+            <input type="hidden" name="email" id="email" tal:on-error="nothing"
+                   tal:condition="not: isAnon"
+                   tal:attributes="value python: request.get('email', member.getProperty('email',''))"/>
+          </div>
           <div metal:define-macro="comment_body_text" tal:omit-tag="">
+
             <div class="field"
                  tal:define="error_text errors/text|nothing;
                              text quotedBody | string:;
@@ -90,7 +152,6 @@
                  tal:attributes="class python:test(error_text, 'field error', 'field')"> 
 
               <label for="text" i18n:translate="label_body_text_posting">Body text</label>
-
 
               <span tal:condition="text_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required" i18n:attributes="title label_required;">(Required)</span>
 

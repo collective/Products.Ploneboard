@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=title='', text='', files=None
+##parameters=title='', text='', name='', email='', files=None
 ##title=Add a comment
 # $Id$
 
@@ -28,7 +28,7 @@ files = context.portal_ploneboard.getUploadedFiles()
 new_context = context
 
 if context.getTypeInfo().getId() == 'PloneboardComment':
-    m = context.addReply(title=title, text=text, creator=creator, files=files)
+    m = context.addReply(title=title, text=text, name=name, email=email, creator=creator, files=files)
     new_context = context.getConversation()
 elif context.getTypeInfo().getId() == 'PloneboardConversation':
     m = context.addComment(title=title, text=text, creator=creator, files=files)

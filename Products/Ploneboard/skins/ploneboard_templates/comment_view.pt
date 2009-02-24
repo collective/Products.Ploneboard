@@ -50,7 +50,6 @@
                                    creation_date comment/creation_date;
                                    state comment/review_state;
                                    pss modules/Products/PythonScripts/standard">
-
           <div class="visualGhosted" tal:omit-tag="python:state not in ('retracted', 'rejected')">
 
             <a tal:attributes="name comment/getId"></a>
@@ -76,9 +75,8 @@
                 <span tal:replace="python:here.toPloneboardTime(creation_date)">Thursday 13:21</span>
               </div>
             </div>
-
             <div class="boardCommentBody">
-              <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
+              <!--tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
                 <div class="commentPortrait">
                   <a href="" title="View profile"                 
                      tal:attributes="href string:${portal_url}/author/${creator}"
@@ -93,7 +91,7 @@
                          tal:attributes="src portrait/absolute_url" />
                   </a>
                 </div>
-              </tal:block>
+              </tal:block-->
 
               <div class="boardCommentContent" 
                    tal:content="structure comment/getText">
