@@ -200,7 +200,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return res[0].getObject()
         return None
 
-    security.declareProtected(ViewBoard, 'getFirstFirstAuthor')
+    security.declareProtected(ViewBoard, 'getFirstCommentAuthor')
     def getFirstCommentAuthor(self):
         """
         Returns the name of the author of the first comment.
