@@ -118,7 +118,7 @@ class PloneboardForum(BaseBTreeFolder):
         return None
 
     security.declareProtected(AddConversation, 'addConversation')
-    def addConversation(self, title, text=None, creator=None, files=None, **kwargs):
+    def addConversation(self, title, text=None, name=None, email=None, creator=None, files=None, **kwargs):
         """Adds a new conversation to the forum.
 
         XXX should be possible to parameterise the exact type that is being
@@ -147,6 +147,12 @@ class PloneboardForum(BaseBTreeFolder):
 
             if creator is not None:
                 m.setCreators([creator])
+            
+            if email is not None:
+                m.setEmail(email)
+                
+            if name is not None:
+                m.setName(name)
 
             # Create files in message
             if files:
@@ -244,7 +250,7 @@ class PloneboardForum(BaseBTreeFolder):
                 sort_on='created', sort_order='reverse', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
         if res:
-            return res[0].Creator
+            return res[0].getObject().getCreator()
         else:
             return None
 
