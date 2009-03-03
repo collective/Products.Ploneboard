@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2009-03-03 11:35+0000\n"
-"PO-Revision-Date: 2008-10-02 17:08+0100\n"
+"PO-Revision-Date: 2009-03-03 14:44+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,12 +20,12 @@ msgstr ""
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
-msgstr ""
+msgstr "Utzi"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
 msgid "Change"
-msgstr ""
+msgstr "Aldatu"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
@@ -53,7 +53,7 @@ msgstr "Elkarrizketa-haria moderazio kolan dago"
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
 msgid "Data provider updated."
-msgstr ""
+msgstr "Datu emalea eguneratuta."
 
 msgid "Forum"
 msgstr "Foroa"
@@ -70,7 +70,7 @@ msgstr "Zuzendu adierazitako erroreak"
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr ""
+msgstr "Argitaratu"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
@@ -103,12 +103,12 @@ msgstr "Erantzunak elkarrizketetan edo beste erantzunetan bakarrik gehitu daitez
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:32
 msgid "add_comment"
-msgstr ""
+msgstr "Erantzuna gehitu"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:31
 msgid "add_conversation"
-msgstr ""
+msgstr "Haria hasi"
 
 msgid "alert_delete_popup"
 msgstr "Ziur al zaude hau ezabatu nahi duzula?"
@@ -136,7 +136,7 @@ msgstr "${author}"
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:173
 msgid "cancel_comment"
-msgstr ""
+msgstr "Utzi"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
@@ -181,7 +181,7 @@ msgstr "${name}-(e)ra itzuli"
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
-msgstr ""
+msgstr "Erantzuna aurreikusi"
 
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
@@ -191,22 +191,22 @@ msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakust
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr ""
+msgstr "Fitxategiaren gehienezko tamaina ${maxsize} kilobytekoa da"
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
 msgid "help_body_attachments_posting"
-msgstr ""
+msgstr "Mezu honekin batera argitaratuko den fitxategia kargatu"
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:105
 msgid "help_body_text_posting"
-msgstr ""
+msgstr "Oinarrizko HTML etiketak idatz daitezke"
 
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting_linkify_enabled"
-msgstr ""
+msgstr "URLak automatikoki lotura bihurtuko dira"
 
 msgid "help_categories_board"
 msgstr "Foroak sailkatzeko erabiliko diren kategorien izenak. Bat lerro bakoitzeko."
@@ -255,12 +255,12 @@ msgstr "Forora itzuli"
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:132
 msgid "label_body_files_posting"
-msgstr ""
+msgstr "Fitxategiak"
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:92
 msgid "label_body_text_posting"
-msgstr ""
+msgstr "Testua"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/forum_view.pt:154
@@ -306,12 +306,12 @@ msgstr "Erantzun azkarra"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "${author}(e)k zera idatzi zuen: ${quote}"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr ""
+msgstr "Beharrezkoa"
 
 msgid "label_text"
 msgstr "Testua"
@@ -319,7 +319,7 @@ msgstr "Testua"
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:64
 msgid "label_title_posting"
-msgstr ""
+msgstr "Izenburua"
 
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
@@ -347,40 +347,40 @@ msgid "moderation_description"
 msgstr "Mezu hauek moderazio kolan daude. Egin klik 'Argitaratu' edo 'Atzera bota' botoietan, behar bezala. Egin klik erantzunaren izenburuan mezua bere kontestuan ikusteko."
 
 msgid "month_apr"
-msgstr ""
+msgstr "Apirilia"
 
 msgid "month_aug"
-msgstr ""
+msgstr "Abuztua"
 
 msgid "month_dec"
-msgstr ""
+msgstr "Abendua"
 
 msgid "month_feb"
-msgstr ""
+msgstr "Otsaila"
 
 msgid "month_jan"
-msgstr ""
+msgstr "Urtarrila"
 
 msgid "month_jul"
-msgstr ""
+msgstr "Uztaila"
 
 msgid "month_jun"
-msgstr ""
+msgstr "Ekaina"
 
 msgid "month_mar"
-msgstr ""
+msgstr "Martxoa"
 
 msgid "month_may"
-msgstr ""
+msgstr "Maiatza"
 
 msgid "month_nov"
-msgstr ""
+msgstr "Azaroa"
 
 msgid "month_oct"
-msgstr ""
+msgstr "Urria"
 
 msgid "month_sep"
-msgstr ""
+msgstr "Iraila"
 
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/forum_view.pt:131
@@ -390,7 +390,7 @@ msgstr "Azken erantzuna"
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:154
 msgid "new_attachment"
-msgstr ""
+msgstr "Beste fitxategi bat gehitu"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/forum_view.pt:111
@@ -450,7 +450,7 @@ msgstr "Testu eraldaketak"
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
 msgid "post_comment"
-msgstr ""
+msgstr "Erantzuna bidali"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:70
@@ -460,11 +460,10 @@ msgstr "-k idatzita"
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
-msgstr ""
+msgstr "Aurreikusi"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Mezu hauek argitaratuta daude, baina ez dute oraindik erantzunik."
 
@@ -524,23 +523,23 @@ msgid "title_unanswered_conversations"
 msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
 
 msgid "weekday_fri"
-msgstr ""
+msgstr "Ostirala"
 
 msgid "weekday_mon"
-msgstr ""
+msgstr "Astelehena"
 
 msgid "weekday_sat"
-msgstr ""
+msgstr "Larunbata"
 
 msgid "weekday_sun"
-msgstr ""
+msgstr "Igandea"
 
 msgid "weekday_thu"
-msgstr ""
+msgstr "Osteguna"
 
 msgid "weekday_tue"
-msgstr ""
+msgstr "Asteartea"
 
 msgid "weekday_wed"
-msgstr ""
+msgstr "Asteazkena"
 
