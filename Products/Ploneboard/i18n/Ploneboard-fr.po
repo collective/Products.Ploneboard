@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2008-10-21 17:36+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -131,7 +131,7 @@ msgid "board_search_label"
 msgstr "Chercher dans les forums"
 
 #. Default: "More…"
-#: ../portlet/recent.pt:39
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Suite..."
 
@@ -151,7 +151,7 @@ msgid "comment_current_state"
 msgstr "État actuel :"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
+#: ../skins/ploneboard_templates/forum_view.pt:129
 msgid "conversation"
 msgstr "Conversation"
 
@@ -182,7 +182,7 @@ msgstr "Remonter à ${title}"
 
 #. Return to ${name}
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
 msgstr "Revenir à ${name}"
 
@@ -274,7 +274,7 @@ msgid "label_body_text_posting"
 msgstr "Corps de texte"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
+#: ../skins/ploneboard_templates/forum_view.pt:154
 msgid "label_by_author"
 msgstr "par ${author}"
 
@@ -317,6 +317,11 @@ msgstr "Rendu par ${link}"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Réponse rapide"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -393,7 +398,7 @@ msgid "month_sep"
 msgstr "septembre"
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
+#: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
 msgstr "Message le plus récent"
 
@@ -404,7 +409,7 @@ msgstr "Ajouter une nouvelle pièce jointe"
 
 #. Conversations marked with ${star} have had activity since your last log-in.
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
+#: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
 msgstr "Les conversations marquées avec ${star} ont reçu une contribution depuis votre dernière visite."
 
@@ -420,12 +425,12 @@ msgstr "Aucune conversation en cours."
 
 #. No conversations found.
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
 msgstr "Pas de conversation trouvée."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
+#: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
 msgstr "Pas encore de réponse"
 
@@ -435,7 +440,7 @@ msgid "not_conversations"
 msgstr "Aucune conversation dans ce forum pour le moment."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view.pt:70
+#: ../skins/ploneboard_templates/board_view_global.pt:37
 msgid "not_forums"
 msgstr "Désolé, vous ne pouvez voir aucun forum : soit vous n'avez pas la permission de les voir (sans être identifié ?), soit aucun forum n'existe."
 
@@ -475,15 +480,15 @@ msgid "preview_message"
 msgstr "Message d'aperçu"
 
 #. The following conversations have had recent activity.
-#. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "Les conversations suivantes ont récemment reçu des messages."
 
 #. Replies
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
+#: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
 msgstr "Réponses"
 
@@ -518,7 +523,7 @@ msgid "title_count"
 msgstr "Nombre d'éléments à afficher"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view.pt:152
+#: ../skins/ploneboard_templates/board_view_global.pt:61
 msgid "title_general_forums"
 msgstr "Forums généraux"
 

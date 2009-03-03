@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2008-10-04 19:34+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -122,7 +122,7 @@ msgid "board_search_label"
 msgstr "Vyhledat v diskusi"
 
 #. Default: "More…"
-#: ../portlet/recent.pt:39
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Více&hellip;"
 
@@ -142,7 +142,7 @@ msgid "comment_current_state"
 msgstr "Aktuální stav:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
+#: ../skins/ploneboard_templates/forum_view.pt:129
 msgid "conversation"
 msgstr "Konverzace"
 
@@ -172,7 +172,7 @@ msgid "go_to_parent_url"
 msgstr "Nahoru o jednu úroveň"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
 msgstr "Návrat do ${name}"
 
@@ -261,7 +261,7 @@ msgid "label_body_text_posting"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
+#: ../skins/ploneboard_templates/forum_view.pt:154
 msgid "label_by_author"
 msgstr "od ${author}"
 
@@ -300,6 +300,11 @@ msgstr "Provozováno na"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Rychlá reakce"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -376,7 +381,7 @@ msgid "month_sep"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
+#: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
 msgstr "Poslední komentář"
 
@@ -386,7 +391,7 @@ msgid "new_attachment"
 msgstr ""
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
+#: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
 msgstr "U Konverzací označených ${star} byla od vašeho posledního přihlášení zaznamenána aktivita."
 
@@ -401,12 +406,12 @@ msgid "no_conversations_started"
 msgstr "Zatím žádné konverzace."
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
 msgstr "Žádné konverzace."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
+#: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
 msgstr "Zatím žádné reakce"
 
@@ -416,7 +421,7 @@ msgid "not_conversations"
 msgstr "V tomto fóru zatím nejsou žádné konverzace."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view.pt:70
+#: ../skins/ploneboard_templates/board_view_global.pt:37
 msgid "not_forums"
 msgstr "V této diskusi zatím nejsou žádná fóra, pro přidání nových fór použijte nabídku přidat."
 
@@ -455,14 +460,14 @@ msgstr "Autor"
 msgid "preview_message"
 msgstr ""
 
-#. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "Poslední aktivita byla zaznamenána u následujících konverzací."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
+#: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
 msgstr "Reakce"
 
@@ -497,7 +502,7 @@ msgid "title_count"
 msgstr "Počet položek, které se mají zobrazit"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view.pt:152
+#: ../skins/ploneboard_templates/board_view_global.pt:61
 msgid "title_general_forums"
 msgstr "Obecné"
 

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -125,7 +125,7 @@ msgid "board_search_label"
 msgstr "Søg"
 
 #. Default: "More…"
-#: ../portlet/recent.pt:39
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Flere..."
 
@@ -145,7 +145,7 @@ msgid "comment_current_state"
 msgstr "Nuværende status:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
+#: ../skins/ploneboard_templates/forum_view.pt:129
 msgid "conversation"
 msgstr "Indlæg"
 
@@ -175,7 +175,7 @@ msgid "go_to_parent_url"
 msgstr "Op til ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
 msgstr "Tilbage til ${title}"
 
@@ -264,7 +264,7 @@ msgid "label_body_text_posting"
 msgstr "Brødtekst"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
+#: ../skins/ploneboard_templates/forum_view.pt:154
 msgid "label_by_author"
 msgstr "af ${author}"
 
@@ -303,6 +303,11 @@ msgstr "Baseret p&aring; ${link}"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Hurtigsvar"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -379,7 +384,7 @@ msgid "month_sep"
 msgstr "sep"
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
+#: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
 msgstr "Seneste kommentarer"
 
@@ -389,7 +394,7 @@ msgid "new_attachment"
 msgstr "Vedhæft endnu en fil"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
+#: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
 msgstr "Debatter markeret med ${star} har været aktive siden sidst du var logget ind."
 
@@ -404,12 +409,12 @@ msgid "no_conversations_started"
 msgstr "Ingen debatter startet"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
 msgstr "Ingen debatter"
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
+#: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
 msgstr "Endnu ingen svar"
 
@@ -419,7 +424,7 @@ msgid "not_conversations"
 msgstr "Ingen debatter i dette tema endnu."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view.pt:70
+#: ../skins/ploneboard_templates/board_view_global.pt:37
 msgid "not_forums"
 msgstr "Det findes endnu ingen temaer i dette forum."
 
@@ -458,13 +463,14 @@ msgstr "Skrevet af"
 msgid "preview_message"
 msgstr "Vis indlæg"
 
-#. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#, fuzzy
 msgid "recent_conversations_description"
 msgstr "De følgende debatter er oprettet, men har endnu ingen indlæg."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
+#: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
 msgstr "Svar"
 
@@ -499,7 +505,7 @@ msgid "title_count"
 msgstr "Antal elementer, der skal vises"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view.pt:152
+#: ../skins/ploneboard_templates/board_view_global.pt:61
 msgid "title_general_forums"
 msgstr "Alle temaer"
 

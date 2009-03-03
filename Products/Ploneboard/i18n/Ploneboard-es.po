@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2008-12-09 08:36+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: \n"
@@ -128,7 +128,7 @@ msgid "board_search_label"
 msgstr "Tablero búsqueda"
 
 #. Default: "More…"
-#: ../portlet/recent.pt:39
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Más"
 
@@ -149,7 +149,7 @@ msgid "comment_current_state"
 msgstr "Estado actual:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:72
+#: ../skins/ploneboard_templates/forum_view.pt:129
 msgid "conversation"
 msgstr "Conversación"
 
@@ -179,7 +179,7 @@ msgid "go_to_parent_url"
 msgstr "Ir a ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
 msgstr "Volver a ${name}"
 
@@ -272,7 +272,7 @@ msgid "label_body_text_posting"
 msgstr "Texto del mensaje"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:97
+#: ../skins/ploneboard_templates/forum_view.pt:154
 msgid "label_by_author"
 msgstr "escrito por ${author}"
 
@@ -311,6 +311,11 @@ msgstr "Creado con ${link}"
 #: ../skins/ploneboard_templates/conversation_view.pt:74
 msgid "label_quickreply"
 msgstr "Respuesta rápida"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -388,7 +393,7 @@ msgid "month_sep"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:74
+#: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
 msgstr "Comentario más reciente"
 
@@ -398,7 +403,7 @@ msgid "new_attachment"
 msgstr "Añadir otro archivo adjunto"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:60
+#: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
 msgstr "Las conversaciones marcadas con ${star} han tenido actividad desde la última vez que nos visitó"
 
@@ -413,12 +418,12 @@ msgid "no_conversations_started"
 msgstr "No se ha iniciado ninguna conversación"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
 msgstr "No hay conversaciones."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
+#: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
 msgstr "No hay comentarios"
 
@@ -428,7 +433,7 @@ msgid "not_conversations"
 msgstr "No hay mensajes en este foro"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view.pt:70
+#: ../skins/ploneboard_templates/board_view_global.pt:37
 msgid "not_forums"
 msgstr "Todavía no hay foros, utilice el menú para añadir uno."
 
@@ -470,13 +475,14 @@ msgstr "Enviado por"
 msgid "preview_message"
 msgstr "Previsualizar el mensaje"
 
-#. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Estas conversaciones están publicadas pero no tienen comentarios todavía."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:73
+#: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
 msgstr "Respuestas"
 
@@ -511,7 +517,7 @@ msgid "title_count"
 msgstr "Número de items a mostrar"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view.pt:152
+#: ../skins/ploneboard_templates/board_view_global.pt:61
 msgid "title_general_forums"
 msgstr "Foros generales"
 
@@ -550,54 +556,4 @@ msgstr ""
 
 msgid "weekday_wed"
 msgstr ""
-
-#~ msgid "Add"
-#~ msgstr "Añadir"
-#~ msgid "Remove"
-#~ msgstr "Eliminar"
-#~ msgid "action"
-#~ msgstr "Acción"
-#~ msgid "comments"
-#~ msgstr "Comentarios"
-#~ msgid "box_recent_conversations"
-#~ msgstr "Conversaciones recientes"
-#~ msgid "box_recent_conversations_no_items"
-#~ msgstr "No hay nuevas conversaciones."
-#~ msgid "description_ploneboard_config_transforms"
-#~ msgstr ""
-#~ "Aquí puede configurar las transformaciones activas para los comentarios "
-#~ "de Ploneboard"
-#~ msgid "description_pref_transforms"
-#~ msgstr ""
-#~ "Configuración de las transformaciones de los comentarios del Ploneboard"
-#~ msgid "description_pref_help_body_attachments_maxsizetransforms"
-#~ msgstr "Configurar las transformaciones de los textos de los comentarios."
-#~ msgid "enabled"
-#~ msgstr "¿Activado?"
-#~ msgid "heading_pref_transforms"
-#~ msgstr "Transformaciones de Ploneboard"
-#~ msgid "label_save"
-#~ msgstr "Guardar"
-#~ msgid "label_up_to_ploneboard_setup"
-#~ msgstr "Volver a la configuración de Ploneboard"
-#~ msgid "legend_add_transform"
-#~ msgstr "Añadir transformación"
-#~ msgid "legend_transforms"
-#~ msgstr "Transformaciones existentes"
-#~ msgid "manage"
-#~ msgstr "Gestionar"
-#~ msgid "manage_transforms"
-#~ msgstr "Gestionar las transformaciones del texto de los comentarios."
-#~ msgid "moderation_up"
-#~ msgstr "Volver"
-#~ msgid "module_name"
-#~ msgstr "Módulo"
-#~ msgid "no_comments_yet"
-#~ msgstr "No hay comentarios"
-#~ msgid "transform_name"
-#~ msgstr "Nombre de la transformación"
-#~ msgid "up_to_ploneboard_prefs"
-#~ msgstr "Volver a la configuración de Ploneboard"
-#~ msgid "up_to_site_setup"
-#~ msgstr "Ir a la configuración de Plone"
 

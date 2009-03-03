@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2008-08-05 13:44+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: H. Turgut Uyar <uyar@itu.edu.tr>\n"

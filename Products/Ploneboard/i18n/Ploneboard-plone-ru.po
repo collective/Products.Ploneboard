@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-plone-ru\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2009-03-03 11:35+0000\n"
 "PO-Revision-Date: 2009-02-02 13:53+0000\n"
 "Last-Translator: Alexander Vesnenok <alexvesna@ploner.ru>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -17,83 +17,93 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr "Активировать"
+
+msgid "Active"
+msgstr "Активный"
+
+msgid "Comment"
+msgstr "Сообщение"
+
+msgid "Conversation"
+msgstr "Обсуждение"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr "Открыто для всех"
+
+msgid "Hidden"
+msgstr "Скрытый"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Lock"
+msgstr "Заблокировать"
+
+msgid "Make free-for-all"
+msgstr "Сделать открытм для всех"
+
+msgid "Make member-posting"
+msgstr "Писать могут только зарегистрированные пользователи"
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Message Board"
+msgstr "Место общения"
+
+msgid "Moderate"
+msgstr "Модерация"
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr "Открыт(ь)"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Только для зарегистрированных пользователей"
+
+msgid "Public"
+msgstr "Публичный"
+
+msgid "Rejected"
+msgstr "Забраковано"
+
+msgid "Require membership to post"
+msgstr "Необходимо зарегистрироваться для участия"
+
+msgid "Retracted"
+msgstr "В обработке"
+
+msgid "Waiting for moderator"
+msgstr "Очередь модерации"
+
+#. Flat conversion view
+msgid "conversation_view"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr ""
 
-msgid "Comment"
-msgstr "Сообщение"
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
-msgid "Message Board"
-msgstr "Место общения"
-
-msgid "Conversation"
-msgstr "Обсуждение"
-
-msgid "Open"
-msgstr "Открыт(ь)"
-
-msgid "Hide"
-msgstr "Скрыть"
-
-msgid "Hidden"
-msgstr "Скрытый"
-
-msgid "Require membership to post"
-msgstr "Необходимо зарегистрироваться для участия"
-
-msgid "Make member-posting"
-msgstr "Писать могут только зарегистрированные пользователи"
-
-msgid "Free for all"
-msgstr "Открыто для всех"
-
-msgid "Make free-for-all"
-msgstr "Сделать открытм для всех"
-
-msgid "Private to members only"
-msgstr "Только для зарегистрированных пользователей"
-
-msgid "Active"
-msgstr "Активный"
-
-msgid "Activate"
-msgstr "Активировать"
-
-msgid "Lock"
-msgstr "Заблокировать"
-
-msgid "Locked"
-msgstr "Заблокированный"
-
-msgid "Flat conversion view"
-msgstr "Прямое представление обсуждений"
-
-msgid "Threaded conversion view"
-msgstr "Представление обсуждений ветками"
-
-msgid "Moderate"
-msgstr "Модерация"
-
-msgid "Waiting for moderator"
-msgstr "Очередь модерации"
-
-msgid "Rejected"
-msgstr "Забраковано"
-
-msgid "Public"
-msgstr "Публичный"
-
-msgid "Retracted"
-msgstr "В обработке"
-
-msgid "show_new_conversations_all"
-msgstr "Показать новые обсуждения"
-
-
-
-
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
 
