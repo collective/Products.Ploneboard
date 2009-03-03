@@ -1,113 +1,99 @@
-# translation of Ploneboard-plone-ru.po to Russian
 # Eugene Korenevsky <weiqist@gmail.com>, 2006.
 # Eugene V. Korenevsky <weiqist@gmail.com>, 2008.
-# Gettext File for Ploneboard
+# Alexander Vesnenok <alexvesna@ploner.ru>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ploneboard-plone-ru\n"
-"POT-Creation-Date: 2008-10-23 07:43+0000\n"
-"PO-Revision-Date: 2008-04-06 01:22+0800\n"
-"Last-Translator: Eugene V. Korenevsky <weiqist@gmail.com>\n"
-"Language-Team: Russian\n"
+"Project-Id-Version: ploneboard-plone-ru\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2009-02-02 13:53+0000\n"
+"Last-Translator: Alexander Vesnenok <alexvesna@ploner.ru>\n"
+"Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: ru\n"
 "Language-Name: Russian\n"
-"Preferred-Encodings: utf-8 latin1\n"
+"Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIA\n"
-"X-Generator: KBabel 1.11.4\n"
 
-msgid "A Forum contains conversations."
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
-msgid "A comment contains regular text body and metadata."
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr ""
-
-msgid "Activate"
-msgstr "Активировать"
-
-msgid "Active"
-msgstr "Активен"
 
 msgid "Comment"
-msgstr "Комментарий"
+msgstr "Сообщение"
+
+msgid "Message Board"
+msgstr "Место общения"
 
 msgid "Conversation"
-msgstr "Разговор"
+msgstr "Обсуждение"
 
-msgid "Conversation contains comments."
-msgstr ""
-
-msgid "Free for all"
-msgstr "Свободно для всех"
-
-msgid "Hidden"
-msgstr "Скрыт"
+msgid "Open"
+msgstr "Открыт(ь)"
 
 msgid "Hide"
 msgstr "Скрыть"
 
+msgid "Hidden"
+msgstr "Скрытый"
+
+msgid "Require membership to post"
+msgstr "Необходимо зарегистрироваться для участия"
+
+msgid "Make member-posting"
+msgstr "Писать могут только зарегистрированные пользователи"
+
+msgid "Free for all"
+msgstr "Открыто для всех"
+
+msgid "Make free-for-all"
+msgstr "Сделать открытм для всех"
+
+msgid "Private to members only"
+msgstr "Только для зарегистрированных пользователей"
+
+msgid "Active"
+msgstr "Активный"
+
+msgid "Activate"
+msgstr "Активировать"
+
 msgid "Lock"
 msgstr "Заблокировать"
 
-msgid "Make free-for-all"
-msgstr "Сделать свободным для всех"
+msgid "Locked"
+msgstr "Заблокированный"
 
-msgid "Make member-posting"
-msgstr "Сделать участие необходимым для публикации"
+msgid "Flat conversion view"
+msgstr "Прямое представление обсуждений"
 
-msgid "Make moderated"
-msgstr "Сделать модерируемым"
-
-msgid "Message Board"
-msgstr "Доска объявлений"
+msgid "Threaded conversion view"
+msgstr "Представление обсуждений ветками"
 
 msgid "Moderate"
-msgstr "Модерируется"
+msgstr "Модерация"
 
-msgid "Moderated forum"
-msgstr "Модерируемый форум"
+msgid "Waiting for moderator"
+msgstr "Очередь модерации"
 
-msgid "Open"
-msgstr "Открыт"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
-
-msgid "Private to members only"
-msgstr "Доступно только участникам"
+msgid "Rejected"
+msgstr "Забраковано"
 
 msgid "Public"
 msgstr "Публичный"
 
-msgid "Rejected"
-msgstr "Отказан"
-
-msgid "Require membership to post"
-msgstr "Требуется участие для публикации сообщения"
-
 msgid "Retracted"
-msgstr "Аннулирован"
+msgstr "В обработке"
 
-msgid "Waiting for moderator"
-msgstr "Ожидает одобрения"
+msgid "show_new_conversations_all"
+msgstr "Показать новые обсуждения"
 
-#. Flat conversion view
-msgid "conversation_view"
-msgstr "Плоский разговор"
 
-msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "${year} ${month} ${day} ${hours}:${minutes}"
 
-#. Threaded conversion view
-msgid "threaded_conversation_view"
-msgstr "Древовидный разговор"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
 
