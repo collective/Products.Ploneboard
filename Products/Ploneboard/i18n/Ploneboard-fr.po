@@ -321,7 +321,7 @@ msgstr "Réponse rapide"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "Précédemment ${author} a écrit : ${quote}"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -482,9 +482,8 @@ msgstr "Message d'aperçu"
 #. The following conversations have had recent activity.
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Les conversations suivantes ont récemment reçu des messages."
+msgstr "Les conversations suivantes ont été postées, mais n'ont pas encore reçu de réponses."
 
 #. Replies
 #. Default: "Replies"
