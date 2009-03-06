@@ -6,11 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
 "POT-Creation-Date: 2009-03-03 11:35+0000\n"
-"PO-Revision-Date: 2009-01-12 12:07-0200\n"
-"Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
-"Language-Team: <plone-i18n@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2009-03-06 16:21-0300\n"
+"Last-Translator: Thiago Tamosauskas <thiago@simplesconsultoria.com.br>\n"
+"Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: pt-br\n"
@@ -38,7 +38,7 @@ msgstr "Comentário apagado"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:45
 msgid "Comment is pending moderation"
-msgstr ""
+msgstr "Comentário aguardando moderação"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation added"
@@ -50,7 +50,7 @@ msgstr "Conversa apagada"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
 msgid "Conversation is pending moderation"
-msgstr ""
+msgstr "Conversa aguardando moderação"
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
 msgid "Data provider updated."
@@ -307,7 +307,7 @@ msgstr "Resposta rápida"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "citação"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -465,9 +465,8 @@ msgstr "Visualizar mensagem"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Os seguintes tópicos foram postados, mas ainda não possuem nenhuma resposta."
+msgstr "Conversas anteriores"
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
