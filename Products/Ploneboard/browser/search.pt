@@ -93,11 +93,14 @@
                                 &mdash;
                             </span>
 
-                           <tal:relevance i18n:translate="label_relevance_percentage">
-                           Relevance:
-                           <span tal:replace="info/relevance">13</span>%
-                           </tal:relevance>
-                       </span>
+                            <tal:relevance
+                               i18n:translate="label_relevance_percentage">
+                              Relevance:
+                              <span tal:content="info/relevance"
+                                    tal:omit-tag=""
+                                    i18n:name="percentage">23</span>%
+                            </tal:relevance>
+                        </span>
                     </dd>
                 </tal:info>
             </tal:repeat>
