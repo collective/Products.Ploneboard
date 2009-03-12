@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Fixed cosmetic bug (search results relevance percentage)
+  [glenfant]
+
 - Added Swedish translation, thanks to Martin Lundwall.
   [hannosch]
 
