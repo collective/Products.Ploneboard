@@ -16,6 +16,10 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr "Bijlage is te groot"
+
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
@@ -62,7 +66,11 @@ msgstr "Forum"
 msgid "Log in to add comments"
 msgstr "Log in om een reactie toe te voegen"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr "Geen tekst ingevoerd"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
 msgstr "Verbeter de aangegeven fouten."
 
