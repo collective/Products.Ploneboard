@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 2.1\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
-"PO-Revision-Date: 2009-03-19 12:19+0100\n"
+"POT-Creation-Date: 2009-03-19 15:07+0000\n"
+"PO-Revision-Date: 2009-03-19 16:10+0100\n"
 "Last-Translator: Mark van Lent <m.van.lent@zestsoftware.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
@@ -168,12 +168,12 @@ msgid "forum_name"
 msgstr "Forum naam"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "Terug naar ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:40
 msgid "go_to_view_url"
 msgstr "Ga terug naar ${name}"
 
@@ -262,7 +262,7 @@ msgid "label_body_text_posting"
 msgstr "Tekst"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/forum_view.pt:154
+#: ../skins/ploneboard_templates/board_view.pt:131
 msgid "label_by_author"
 msgstr "door ${author}"
 
@@ -382,7 +382,7 @@ msgid "month_sep"
 msgstr "september"
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/forum_view.pt:131
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "most_recent_comment"
 msgstr "Meest recente reacties"
 
@@ -407,7 +407,7 @@ msgid "no_conversations_started"
 msgstr "Nog geen discussies."
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
 msgid "no_recent_conversations"
 msgstr "Geen recente discussies gevonden"
 
@@ -422,7 +422,7 @@ msgid "not_conversations"
 msgstr "Er zijn nog geen discussies in dit forum."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt:37
+#: ../skins/ploneboard_templates/board_view.pt:70
 msgid "not_forums"
 msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via \"voeg forum toe\" optie."
 
@@ -461,10 +461,10 @@ msgstr "Geplaatst door"
 msgid "preview_message"
 msgstr "Bericht bekijken"
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 msgid "recent_conversations_description"
-msgstr "De volgende discussies zijn geplaatst, maar hebben nog geen reacties ontvangen."
+msgstr "Bij de volgende discussies is recent activiteit geweest."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
@@ -502,7 +502,7 @@ msgid "title_count"
 msgstr "Aantal dingen om te laten zien"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt:61
+#: ../skins/ploneboard_templates/board_view.pt:152
 msgid "title_general_forums"
 msgstr "Algemene fora"
 
@@ -520,6 +520,11 @@ msgstr "Titel van portlet"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
 msgid "title_unanswered_conversations"
 msgstr "Onbeantwoorde berichten in ${title}"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
+msgstr "De volgende discussies zijn geplaatst, maar hebben nog geen reacties ontvangen."
 
 msgid "weekday_fri"
 msgstr "vrijdag"
