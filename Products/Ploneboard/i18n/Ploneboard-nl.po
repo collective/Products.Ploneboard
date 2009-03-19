@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 2.1\n"
 "POT-Creation-Date: 2009-03-03 11:35+0000\n"
-"PO-Revision-Date: 2008-12-10 18:00+0100\n"
-"Last-Translator: Kees Hink <hink@gw20e.com>\n"
+"PO-Revision-Date: 2009-03-19 12:19+0100\n"
+"Last-Translator: Mark van Lent <m.van.lent@zestsoftware.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -150,7 +150,7 @@ msgstr "Onderwerpen"
 #. Default: "Forum"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
 msgid "conversation_forum"
-msgstr ""
+msgstr "Forum"
 
 #. Default: "Posted"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
@@ -284,7 +284,7 @@ msgstr "Beschrijving"
 #. Default: "in ${forum}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:102
 msgid "label_in_forum"
-msgstr ""
+msgstr "in ${forum}"
 
 msgid "label_maxattachments"
 msgstr "Maximaal aantal bijlagen"
@@ -305,7 +305,7 @@ msgstr "Snelle reactie"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "Eerder schreef ${author}: ${quote}"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -463,7 +463,6 @@ msgstr "Bericht bekijken"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
 msgstr "De volgende discussies zijn geplaatst, maar hebben nog geen reacties ontvangen."
 
@@ -475,7 +474,7 @@ msgstr "reacties"
 #. Default: "In ${forum} &rarr; ${conversation}."
 #: ../browser/search.pt:72
 msgid "search_result_location"
-msgstr ""
+msgstr "In ${forum} &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
 #: ../skins/ploneboard_templates/board_view.pt:47
