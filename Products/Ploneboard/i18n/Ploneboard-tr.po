@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
 "POT-Creation-Date: 2009-03-03 11:35+0000\n"
-"PO-Revision-Date: 2008-07-29 01:32+0200\n"
-"Last-Translator: M. Göktürk Yüksek <yuksekm@itu.edu.tr>\n"
-"Language-Team: M. Göktürk Yüksek <yuksekm@itu.edu.tr>\n"
+"PO-Revision-Date: 2009-03-24 18:01+0200\n"
+"Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
+"Language-Team: M. Göktürk Yüksek <uyar@itu.edu.tr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,40 +18,40 @@ msgstr ""
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
-msgstr ""
+msgstr "Vazgeç"
 
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
 msgid "Change"
-msgstr ""
+msgstr "Değiştir"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
-msgstr ""
+msgstr "Yorum eklendi"
 
 #: ../browser/comment.py:259
 msgid "Comment deleted"
-msgstr ""
+msgstr "Yorum silindi"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:45
 msgid "Comment is pending moderation"
-msgstr ""
+msgstr "Yorum gözden geçirilmeyi bekliyor"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation added"
-msgstr ""
+msgstr "Konuşma eklendi"
 
 #: ../browser/comment.py:254
 msgid "Conversation deleted"
-msgstr ""
+msgstr "Konuşma silindi"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
 msgid "Conversation is pending moderation"
-msgstr ""
+msgstr "Konuşma gözden geçirilmeyi bekliyor"
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
 msgid "Data provider updated."
-msgstr ""
+msgstr "Veri sağlayıcı güncellendi."
 
 msgid "Forum"
 msgstr "Forum"
@@ -63,12 +63,12 @@ msgstr "Yorum eklemek için siteye gir"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
 msgid "Please correct the indicated errors."
-msgstr ""
+msgstr "Lütfen belirtilen hataları düzeltin."
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr ""
+msgstr "Gönder"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
@@ -83,11 +83,11 @@ msgstr "Bunu yanıtla"
 #. Default: "Start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:78
 msgid "Start a new Conversation"
-msgstr "Yeni bir Konuşma başlat"
+msgstr "Yeni bir konuşma başlat"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
 msgid "Transform %s removed"
-msgstr ""
+msgstr "%s dönüşümü silindi"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:83
@@ -96,17 +96,17 @@ msgstr "Profile bak"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:36
 msgid "You can only add comments to conversations or comments."
-msgstr ""
+msgstr "Yalnızca konuşma ya da yorumlara yorum ekleyebilirsiniz."
 
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:32
 msgid "add_comment"
-msgstr ""
+msgstr "Yorum ekle"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:31
 msgid "add_conversation"
-msgstr ""
+msgstr "Konuşma ekle"
 
 #. Default: "Do you really want to delete this comment?"
 msgid "alert_delete_popup"
@@ -115,27 +115,27 @@ msgstr "Bu yorumu silmek istediğinizden emin misiniz?"
 #. Default: "Search"
 #: ../skins/ploneboard_templates/board_view.pt:41
 msgid "board_search_button"
-msgstr ""
+msgstr "Ara"
 
 #. Default: "Search Board"
 #: ../browser/search.pt:22
 msgid "board_search_label"
-msgstr ""
+msgstr "Panoda Ara"
 
 #. Default: "More…"
 #: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
-msgstr ""
+msgstr "Hepsi…"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
 msgid "by_author"
-msgstr ""
+msgstr "yazan: ${author}"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:173
 msgid "cancel_comment"
-msgstr ""
+msgstr "Vazgeç"
 
 #. Default: "Current state:"
 #: ../skins/ploneboard_templates/comment_view.pt:163
@@ -150,12 +150,12 @@ msgstr "Konuşma"
 #. Default: "Forum"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
 msgid "conversation_forum"
-msgstr ""
+msgstr "Forum"
 
 #. Default: "Posted"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
 msgid "conversation_posted"
-msgstr ""
+msgstr "Gönderildi"
 
 #. Default: "Here you can configure site settings for Ploneboard."
 #: ../browser/controlpanel.py:57
@@ -175,37 +175,37 @@ msgstr "${title} sayfasına çık"
 #. Default: "Return to ${name}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
-msgstr ""
+msgstr "${name} sayfasına dön"
 
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
-msgstr ""
+msgstr "Yorumu göndermeden önce bak"
 
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 msgid "help_add_portlet"
-msgstr ""
+msgstr "Bu portlet yakın tarihlerde yorum yapılmış konuşmaları gösterir."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr ""
+msgstr "İzin verilen en büyük ek boyu ${maxsize} KB'dir."
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
 msgid "help_body_attachments_posting"
-msgstr ""
+msgstr "Bu yoruma ek olarak iliştirilecek dosyayı seçin."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:105
 msgid "help_body_text_posting"
-msgstr ""
+msgstr "Basit HTML takılarını kullanabilirsiniz."
 
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting_linkify_enabled"
-msgstr ""
+msgstr "URL adresleri kendiliğinden bağlantı haline getirilecektir."
 
 #. Default: "Enter the categories you want to have available for forums, one category on each line."
 msgid "help_categories_board"
@@ -218,7 +218,7 @@ msgstr "Forumun hangi kategoride gösterileceğini seçin. Bir forum birden fazl
 #. Default: "How many items to list."
 #: ../portlet/recent.py:28
 msgid "help_count"
-msgstr ""
+msgstr "Kaç nesnenin listeleneceği."
 
 #. Default: "Enter a brief description of the board."
 msgid "help_description_board"
@@ -252,27 +252,27 @@ msgstr "Ploneboard konuşmalarına gönderilen yorumlarda kullanılacak metin d�
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:105
 msgid "label_add_portlet"
-msgstr ""
+msgstr "Yakın tarihli konuşmalar portleti ekle."
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
 msgid "label_back_to_board"
-msgstr ""
+msgstr "Tartışma panosuna geri dön"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:132
 msgid "label_body_files_posting"
-msgstr ""
+msgstr "Ekler"
 
 #. Default: "Body text"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:92
 msgid "label_body_text_posting"
-msgstr ""
+msgstr "Gövde metni"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/forum_view.pt:154
 msgid "label_by_author"
-msgstr "Yazan: ${author}"
+msgstr "yazan: ${author}"
 
 #. Default: "Categories"
 msgid "label_categories_board"
@@ -297,7 +297,7 @@ msgstr "Tanım"
 #. Default: "in ${forum}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:102
 msgid "label_in_forum"
-msgstr ""
+msgstr "${forum] forumunda"
 
 #. Default: "Maximum number of attachments"
 msgid "label_maxattachments"
@@ -320,12 +320,12 @@ msgstr "Hızlı yanıt"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "Daha önceden ${author} yazmıştı: ${quote}"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr ""
+msgstr "Zorunlu"
 
 #. Default: "Text"
 msgid "label_text"
@@ -334,7 +334,7 @@ msgstr "Metin"
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:64
 msgid "label_title_posting"
-msgstr ""
+msgstr "Başlık"
 
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
@@ -349,7 +349,7 @@ msgstr "Ekler"
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:90
 msgid "log_to_start_conversation"
-msgstr ""
+msgstr "Bir konuşma başlatmak üzere siteye gir"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:80
@@ -405,12 +405,12 @@ msgstr "Son yorum"
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:154
 msgid "new_attachment"
-msgstr ""
+msgstr "Bir ek daha iliştir"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
-msgstr ""
+msgstr "${star} ile işaretlenmiş konuşmalarda sizin siteye son girişinizden bu yana etkinlik görülmüş."
 
 #. Default: "There are no comments in the moderation queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:120
@@ -425,12 +425,12 @@ msgstr "Hiç konuşma başlatılmamış"
 #. Default: "No conversations found."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
-msgstr ""
+msgstr "Hiç bir konuşma bulunamadı."
 
 #. Default: "No replies yet"
 #: ../skins/ploneboard_templates/forum_view.pt:172
 msgid "no_replies_yet"
-msgstr ""
+msgstr "Henüz bir yanıt yok"
 
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt:67
@@ -445,7 +445,7 @@ msgstr "Bu panoda henüz hiçbir forum yok, ekleme menüsünü kullanarak forum 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:98
 msgid "not_permission_start_conversation"
-msgstr "Özür dileriz, yeni bir Konuşma başlatma yetkiniz yok"
+msgstr "Özür dileriz, yeni bir konuşma başlatma yetkiniz yok"
 
 #. Default: "Conversations"
 #: ../skins/ploneboard_templates/board_view.pt:93
@@ -455,17 +455,17 @@ msgstr "Konuşmalar"
 #. Default: "Ploneboard configuration"
 #: ../browser/controlpanel.py:55
 msgid "ploneboard_configuration"
-msgstr ""
+msgstr "Ploneboard ayarları"
 
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
 msgid "ploneboard_transform_panel"
-msgstr ""
+msgstr "Metin dönüşümleri"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
 msgid "post_comment"
-msgstr ""
+msgstr "Yorum gönder"
 
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:70
@@ -475,37 +475,37 @@ msgstr "Gönderen:"
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
-msgstr ""
+msgstr "Göndermeden önce bak"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "recent_conversations_description"
-msgstr ""
+msgstr "Aşağıdaki konuşmalar gönderilmiş ama henüz bir yanıt almamış."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
 msgid "replies"
-msgstr ""
+msgstr "Yanıtlar"
 
 #. Default: "In ${forum} &rarr; ${conversation}."
 #: ../browser/search.pt:72
 msgid "search_result_location"
-msgstr ""
+msgstr "${forum} forumunda &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
 #: ../skins/ploneboard_templates/board_view.pt:47
 msgid "show_new_conversations_all"
-msgstr ""
+msgstr "Yakın tarihli tüm etkinliği göster"
 
 #. Default: "Show only unanswered"
 #: ../skins/ploneboard_templates/forum_view.pt:42
 msgid "show_no_replies"
-msgstr ""
+msgstr "Yalnızca yanıtsız olanları göster"
 
 #. Default: "Show all unanswered"
 #: ../skins/ploneboard_templates/board_view.pt:54
 msgid "show_no_replies_all"
-msgstr ""
+msgstr "Yanıtsız olanların hepsini göster"
 
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt:75
@@ -515,7 +515,7 @@ msgstr "zamanı: "
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:26
 msgid "title_count"
-msgstr ""
+msgstr "Gösterilecek nesne sayısı"
 
 #. Default: "General forums"
 #: ../skins/ploneboard_templates/board_view_global.pt:61
@@ -525,17 +525,17 @@ msgstr "Genel forumlar"
 #. Default: "Recent conversations in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:31
 msgid "title_recent_conversations"
-msgstr ""
+msgstr "${title} forumundaki yakın tarihli konuşmalar"
 
 #. Default: "Portlet title"
 #: ../portlet/recent.py:21
 msgid "title_title"
-msgstr ""
+msgstr "Portlet başlığı"
 
 #. Default: "Unanswered posts in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
 msgid "title_unanswered_conversations"
-msgstr ""
+msgstr "${title} forumundaki yanıtsız gönderiler"
 
 msgid "weekday_fri"
 msgstr ""
