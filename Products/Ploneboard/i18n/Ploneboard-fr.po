@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "Fichier joint est trop grand"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -76,7 +76,7 @@ msgstr "S'identifier pour ajouter des messages"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Aucun contenu entré"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -454,9 +454,8 @@ msgstr "Message d'aperçu"
 #. The following conversations have had recent activity.
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Les conversations suivantes ont été postées, mais n'ont pas encore reçu de réponses."
+msgstr "Les conversations suivantes ont une activité récente."
 
 #. Replies
 #. Default: "Replies"
@@ -519,5 +518,5 @@ msgstr "${title} : messages sans réponse"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "unanswered_conversations"
-msgstr ""
+msgstr "Les conversations suivantes ont été postées, mais n'ont pas encore reçu de réponses."
 
