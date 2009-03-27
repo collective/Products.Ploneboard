@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2008-10-04 19:34+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 "Language-Name: Czech\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: ploneboard\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -61,7 +65,11 @@ msgstr "Fórum"
 msgid "Log in to add comments"
 msgstr "Pro přidávání komentářů je nutné se přihlásit"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
 msgstr "Opravte prosím vyznačené chyby"
 
@@ -344,42 +352,6 @@ msgstr "Ve frontě je ${count} komentářů."
 msgid "moderation_description"
 msgstr "Následující komentáře čekají na schválení. Rozhodněte a klikněte na 'Zveřejnit' nebo 'Zamítnout'. Klikněte na nadpis komentáře pro jeho zobrazení v kontextu jeho konverzace."
 
-msgid "month_apr"
-msgstr ""
-
-msgid "month_aug"
-msgstr ""
-
-msgid "month_dec"
-msgstr ""
-
-msgid "month_feb"
-msgstr ""
-
-msgid "month_jan"
-msgstr ""
-
-msgid "month_jul"
-msgstr ""
-
-msgid "month_jun"
-msgstr ""
-
-msgid "month_mar"
-msgstr ""
-
-msgid "month_may"
-msgstr ""
-
-msgid "month_nov"
-msgstr ""
-
-msgid "month_oct"
-msgstr ""
-
-msgid "month_sep"
-msgstr ""
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
@@ -460,8 +432,8 @@ msgstr "Autor"
 msgid "preview_message"
 msgstr ""
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "Poslední aktivita byla zaznamenána u následujících konverzací."
@@ -521,24 +493,8 @@ msgstr "Nadpis portletu"
 msgid "title_unanswered_conversations"
 msgstr "Nezodpovězené příspěvky v ${title}"
 
-msgid "weekday_fri"
-msgstr ""
-
-msgid "weekday_mon"
-msgstr ""
-
-msgid "weekday_sat"
-msgstr ""
-
-msgid "weekday_sun"
-msgstr ""
-
-msgid "weekday_thu"
-msgstr ""
-
-msgid "weekday_tue"
-msgstr ""
-
-msgid "weekday_wed"
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
 msgstr ""
 

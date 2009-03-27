@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ca\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2008-12-09 08:21+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: <en@li.org>\n"
@@ -14,6 +14,10 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -64,7 +68,11 @@ msgstr "Fòrum"
 msgid "Log in to add comments"
 msgstr "Posa comentaris"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
 msgstr "Si us plau, corregeixi els errors indicats."
 
@@ -353,42 +361,6 @@ msgstr "${count} comentaris encuats"
 msgid "moderation_description"
 msgstr "Els següents comentaris estan pendents de moderació. Faci clic en 'Publicar' o 'Rebutjar' segons sigui necessari. Faci clic en el títol d'un comentari per a veure el missatge en el context de la conversa. "
 
-msgid "month_apr"
-msgstr ""
-
-msgid "month_aug"
-msgstr ""
-
-msgid "month_dec"
-msgstr ""
-
-msgid "month_feb"
-msgstr ""
-
-msgid "month_jan"
-msgstr ""
-
-msgid "month_jul"
-msgstr ""
-
-msgid "month_jun"
-msgstr ""
-
-msgid "month_mar"
-msgstr ""
-
-msgid "month_may"
-msgstr ""
-
-msgid "month_nov"
-msgstr ""
-
-msgid "month_oct"
-msgstr ""
-
-msgid "month_sep"
-msgstr ""
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
@@ -472,8 +444,8 @@ msgstr "Enviat per"
 msgid "preview_message"
 msgstr "Previsualitza el missatge"
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "Les següents converses han estat publicades, però encara no han rebut cap resposta."
@@ -533,24 +505,8 @@ msgstr "Títol"
 msgid "title_unanswered_conversations"
 msgstr "Converses sense resposta"
 
-msgid "weekday_fri"
-msgstr ""
-
-msgid "weekday_mon"
-msgstr ""
-
-msgid "weekday_sat"
-msgstr ""
-
-msgid "weekday_sun"
-msgstr ""
-
-msgid "weekday_thu"
-msgstr ""
-
-msgid "weekday_tue"
-msgstr ""
-
-msgid "weekday_wed"
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
 msgstr ""
 

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone.pot\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2008-05-25 11:29+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"

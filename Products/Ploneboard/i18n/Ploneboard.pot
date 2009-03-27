@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -63,7 +67,11 @@ msgstr ""
 msgid "Log in to add comments"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
 msgstr ""
 
@@ -346,42 +354,6 @@ msgstr ""
 msgid "moderation_description"
 msgstr ""
 
-msgid "month_apr"
-msgstr ""
-
-msgid "month_aug"
-msgstr ""
-
-msgid "month_dec"
-msgstr ""
-
-msgid "month_feb"
-msgstr ""
-
-msgid "month_jan"
-msgstr ""
-
-msgid "month_jul"
-msgstr ""
-
-msgid "month_jun"
-msgstr ""
-
-msgid "month_mar"
-msgstr ""
-
-msgid "month_may"
-msgstr ""
-
-msgid "month_nov"
-msgstr ""
-
-msgid "month_oct"
-msgstr ""
-
-msgid "month_sep"
-msgstr ""
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
@@ -462,8 +434,8 @@ msgstr ""
 msgid "preview_message"
 msgstr ""
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 msgid "recent_conversations_description"
 msgstr ""
 
@@ -522,24 +494,8 @@ msgstr ""
 msgid "title_unanswered_conversations"
 msgstr ""
 
-msgid "weekday_fri"
-msgstr ""
-
-msgid "weekday_mon"
-msgstr ""
-
-msgid "weekday_sat"
-msgstr ""
-
-msgid "weekday_sun"
-msgstr ""
-
-msgid "weekday_thu"
-msgstr ""
-
-msgid "weekday_tue"
-msgstr ""
-
-msgid "weekday_wed"
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
 msgstr ""
 

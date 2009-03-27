@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: da-dk\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
 
 # "Content-Type: text/plain; charset=iso-8859-1\n"
 #. Default: "Cancel"
@@ -64,7 +68,11 @@ msgstr "Forum"
 msgid "Log in to add comments"
 msgstr "Login for kommentar"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:46
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
 msgstr "Ret venligst de markerede fejl"
 
@@ -347,42 +355,6 @@ msgstr "${count} kommentarer afventer."
 msgid "moderation_description"
 msgstr "Følgende kommentarer afventer godkendelse. Vælg 'Publicer' eller 'Afvis'. Klik på titlen, hvis du vil se indlægget i kontekst."
 
-msgid "month_apr"
-msgstr "apr"
-
-msgid "month_aug"
-msgstr "aug"
-
-msgid "month_dec"
-msgstr "dec"
-
-msgid "month_feb"
-msgstr "feb"
-
-msgid "month_jan"
-msgstr "jan"
-
-msgid "month_jul"
-msgstr "jul"
-
-msgid "month_jun"
-msgstr "jun"
-
-msgid "month_mar"
-msgstr "mar"
-
-msgid "month_may"
-msgstr "maj"
-
-msgid "month_nov"
-msgstr "nov"
-
-msgid "month_oct"
-msgstr "okt"
-
-msgid "month_sep"
-msgstr "sep"
-
 #. Default: "Most recent comment"
 #: ../skins/ploneboard_templates/forum_view.pt:131
 msgid "most_recent_comment"
@@ -463,8 +435,8 @@ msgstr "Skrevet af"
 msgid "preview_message"
 msgstr "Vis indlæg"
 
-#. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "De følgende debatter er oprettet, men har endnu ingen indlæg."
@@ -524,24 +496,8 @@ msgstr "Portlet titel"
 msgid "title_unanswered_conversations"
 msgstr "Ubesvarede indlæg i ${title}"
 
-msgid "weekday_fri"
-msgstr "fre"
-
-msgid "weekday_mon"
-msgstr "man"
-
-msgid "weekday_sat"
-msgstr "lør"
-
-msgid "weekday_sun"
-msgstr "søn"
-
-msgid "weekday_thu"
-msgstr "tor"
-
-msgid "weekday_tue"
-msgstr "tir"
-
-msgid "weekday_wed"
-msgstr "ons"
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
+msgstr ""
 

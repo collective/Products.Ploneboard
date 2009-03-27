@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2009-03-03 11:35+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2009-01-12 12:03-0200\n"
 "Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
 "Language-Team: <plone-i18n@lists.sourceforge.net>\n"
