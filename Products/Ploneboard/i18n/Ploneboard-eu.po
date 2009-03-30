@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
-"PO-Revision-Date: 2009-03-03 14:44+0100\n"
+"PO-Revision-Date: 2009-03-30 08:26+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "Fitxategia handiegia da"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -69,7 +69,7 @@ msgstr "Saioa hasi erantzunak gehitzeko"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Ez dutu testurik idatzi"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -436,9 +436,8 @@ msgstr "Aurreikusi"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Mezu hauek argitaratuta daude, baina ez dute oraindik erantzunik."
+msgstr "Hari hauetan mezuak egon dira orain dela gutxi."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
@@ -498,5 +497,5 @@ msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "unanswered_conversations"
-msgstr ""
+msgstr "Mezu hauek argitaratuta daude baina oraindik ez dute erantzunik."
 
