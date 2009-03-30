@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
-"PO-Revision-Date: 2008-10-28 10:15+0200\n"
+"PO-Revision-Date: 2009-03-30 20:47+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "Прикачения файл е прекалено голям"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -66,11 +66,11 @@ msgstr "Форум"
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:191
 msgid "Log in to add comments"
-msgstr "Влезте за добавяне на коментар"
+msgstr "Влезте, за добавяне на коментари"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Не е въведен текст"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -195,7 +195,7 @@ msgstr "Преглед на коментара"
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 msgid "help_add_portlet"
-msgstr "Този портлет показва разговорите с нови коментари"
+msgstr "Този портлет показва разговорите, които имат нови коментари."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
@@ -315,7 +315,7 @@ msgstr "Бърз отговор"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:75
 msgid "label_quote"
-msgstr ""
+msgstr "Преди това ${author} написа: ${quote}"
 
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
@@ -437,7 +437,6 @@ msgstr "Преглед на съобщението"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Следните разговори имат промяна наскоро."
 
@@ -499,5 +498,5 @@ msgstr "Разговори без отговор в ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "unanswered_conversations"
-msgstr ""
+msgstr "Следните разговори бяха добавени, но все още нямат отговори."
 
