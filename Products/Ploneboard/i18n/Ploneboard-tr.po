@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
-"PO-Revision-Date: 2009-03-24 18:01+0200\n"
+"PO-Revision-Date: 2009-03-29 21:37+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: M. Göktürk Yüksek <uyar@itu.edu.tr>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "İliştirilen ek çok büyük"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -67,7 +67,7 @@ msgstr "Yorum eklemek için siteye gir"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "İçerik yazılmadı"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -451,9 +451,8 @@ msgstr "Göndermeden önce bak"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Aşağıdaki konuşmalar gönderilmiş ama henüz bir yanıt almamış."
+msgstr "Aşağıdaki konuşmalara yakın zamanda mesaj gönderilmiş."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
@@ -513,5 +512,5 @@ msgstr "${title} forumundaki yanıtsız gönderiler"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "unanswered_conversations"
-msgstr ""
+msgstr "Aşağıdaki konuşmalar başlatılmış ama henüz bir yanıt almamış."
 
