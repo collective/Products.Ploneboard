@@ -87,14 +87,14 @@
               tal:define="error errors/name|nothing"
               tal:attributes="class python:test(error, 'field error', 'field')"
               tal:condition="isAnon">
-              <label for="name" i18n:translate="label_name">
+              <label for="name" i18n:translate="ploneboard_label_fullname">
                 Name
               </label>
               <span class="fieldRequired" title="Required"
                       i18n:attributes="title title_required;"
                       i18n:translate="label_required">(Required)</span>
             
-              <div class="formHelp" i18n:translate="help_name">
+              <div class="formHelp" i18n:translate="ploneboard_desc_fullname">
                 Please enter your full name
               </div>
             
@@ -118,14 +118,14 @@
               tal:define="error errors/email|nothing"
               tal:attributes="class python:test(error, 'field error', 'field')"
               tal:condition="isAnon">
-              <label for="email" i18n:translate="label_email">
+              <label for="email" i18n:translate="ploneboard_label_email">
                 E-Mail
               </label>
               <span class="fieldRequired" title="Required"
                       i18n:attributes="title title_required;"
                       i18n:translate="label_required">(Required)</span>
             
-              <div class="formHelp" i18n:translate="help_email">
+              <div class="formHelp" i18n:translate="ploneboard_desc_email">
                 Please enter your e-mail address
               </div>
             

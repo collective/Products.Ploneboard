@@ -548,3 +548,15 @@ msgstr "Mittwoch"
 
 msgid "label_quote"
 msgstr "${author} hat geschrieben: ${quote}"
+
+msgid "ploneboard_label_email"
+msgstr "E-Mail"
+msgid "ploneboard_desc_email"
+msgstr "Bitte geben Sie ihre E-Mail-Adresse ein"
+
+msgid "ploneboard_label_fullname"
+msgstr "Name"
+
+msgid "ploneboard_desc_fullname"
+msgstr "Bitte geben Sie Ihren Namen ein"
+
