@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
-"PO-Revision-Date: 2009-03-29 21:37+0200\n"
+"PO-Revision-Date: 2009-04-03 17:26+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: M. Göktürk Yüksek <uyar@itu.edu.tr>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Forum"
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:191
 msgid "Log in to add comments"
-msgstr "Yorum eklemek için siteye gir"
+msgstr "Yorum yazmak için siteye gir"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
