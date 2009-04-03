@@ -1,10 +1,11 @@
 # --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
 # SOME DESCRIPTIVE TITLE.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# never generate this file with i18ndude, it is managed manual
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,93 +18,99 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "A Forum contains conversations."
-msgstr ""
-
-msgid "A comment contains regular text body and metadata."
-msgstr ""
-
-msgid "Activate"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Comment"
-msgstr ""
-
-msgid "Conversation"
-msgstr ""
-
-msgid "Conversation contains comments."
-msgstr ""
-
-msgid "Free for all"
-msgstr ""
-
-msgid "Hidden"
-msgstr ""
-
-msgid "Hide"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Make free-for-all"
-msgstr ""
-
-msgid "Make member-posting"
-msgstr ""
-
-msgid "Make moderated"
-msgstr ""
-
-msgid "Message Board"
-msgstr ""
-
-msgid "Moderate"
-msgstr ""
-
-msgid "Moderated forum"
-msgstr ""
-
-msgid "Open"
-msgstr ""
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
-
-msgid "Private to members only"
-msgstr ""
-
-msgid "Public"
-msgstr ""
-
-msgid "Rejected"
-msgstr ""
-
-msgid "Require membership to post"
-msgstr ""
-
-msgid "Retracted"
-msgstr ""
-
-msgid "Waiting for moderator"
-msgstr ""
-
-#. Flat conversion view
-msgid "conversation_view"
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr ""
 
-#. Threaded conversion view
-msgid "threaded_conversation_view"
+msgid "Message Board"
 msgstr ""
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
-msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgid "Comment"
 msgstr ""
 
+msgid "Message Board"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Flat conversion view"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Search board"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Conversation added"
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Enter comment body."
+msgstr ""
+
+msgid "A Forum contains conversations."
+msgstr ""

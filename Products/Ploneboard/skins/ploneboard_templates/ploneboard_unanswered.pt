@@ -1,10 +1,8 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
-
+      
 <head>
    <metal:top fill-slot="top_slot">
       <tal:block condition="python:not user.has_permission('Ploneboard: Add Forum', here) and not user.has_permission('Ploneboard: Moderate Forum', here)">
@@ -49,8 +47,8 @@
         </p>
 
         <tal:haveConversations condition="python:numConversations > 0">
-
-          <p i18n:translate="unanswered_conversations">
+          
+          <p i18n:translate="unanswered_conversations_description">
             The following conversations have been posted, but have not yet
             received any replies.
           </p>
@@ -60,7 +58,7 @@
             <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
             have had activity since your last log-in.
           </p>
-
+          
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
                                      b_size python:20;b_start python:0;b_start request/b_start | b_start;
                                      batch python:Batch(view.results, numConversations, b_size, int(b_start), orphan=1);">
@@ -74,15 +72,15 @@
                          <th i18n:translate="conversation_posted">Posted</th>
                      </tr>
                 </thead>
-
+        
                 <tbody>
                     <tal:showconversations tal:repeat="conversation batch">
-
+                
                     <tr tal:define="oddrow repeat/conversation/odd;
                                     revstate conversation/review_state_normalized"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">
                         <td>
-                            <img tal:replace="structure context/new_conversation.gif"
+                            <img tal:replace="structure context/new_conversation.gif" 
                                  tal:condition="conversation/is_new" />
                             <a href=""
                                tal:attributes="href conversation/absolute_url;
@@ -106,22 +104,22 @@
                                 Thursday 13:21
                             </span>
                         </td>
-
+    
                     </tr>
-
+                
                     </tal:showconversations>
                 </tbody>
             </table>
-
+            
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
-
+            
           </tal:conversations>
         </tal:haveConversations>
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
-
+                     
 </body>
 </html>
