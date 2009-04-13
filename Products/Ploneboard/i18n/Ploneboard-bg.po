@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
-"PO-Revision-Date: 2009-03-30 20:47+0200\n"
+"PO-Revision-Date: 2009-04-14 01:58+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -343,7 +343,7 @@ msgstr "Прикачени"
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:90
 msgid "log_to_start_conversation"
-msgstr "Трябва да се впишете за започване на разговор"
+msgstr "Трябва да се влезете, за започване на разговор"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:80
@@ -368,7 +368,7 @@ msgstr "Прикачане на файл"
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/forum_view.pt:111
 msgid "new_conversations_marked_with"
-msgstr "Разговорите маркирани със ${star} имат промяна след вашето последно вписване."
+msgstr "Разговорите маркирани със ${star} имат промяна след вашето последно влизане."
 
 #. Default: "There are no comments in the moderation queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:120
