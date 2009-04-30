@@ -19,6 +19,9 @@ Changelog
 - Modified author retrieval to allow for blank fullnames on users, falling back to their user ID instead
   [rockdj]
 
+- Added event notifications for object creation with _createObjectByType for Conversation, Comment and Attachment objects
+  [daftdog]
+
 2.0 - March 14, 2008
 --------------------
 

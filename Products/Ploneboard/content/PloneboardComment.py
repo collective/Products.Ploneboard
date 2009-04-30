@@ -25,6 +25,9 @@ from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
+from Products.Archetypes.event import ObjectInitializedEvent
+from zope import event
+
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
 PBCommentBaseBTreeFolderSchema['title'].write_permission = EditComment
@@ -116,6 +119,7 @@ class PloneboardComment(BaseBTreeFolder):
                 title = 'Re: ' + title
 
         m = _createObjectByType(self.portal_type, conv, id)
+        event.notify(ObjectInitializedEvent(m))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
@@ -278,6 +282,8 @@ class PloneboardComment(BaseBTreeFolder):
             mutator = 'setFile'
         attachment = _createObjectByType(type_name, self, file.getId(),
                 title=file.title)
+        event.notify(ObjectInitializedEvent(attachment))
+
         getattr(attachment, mutator)(file)
         if title is not None:
             attachment.setTitle(title)

@@ -24,6 +24,9 @@ from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
+from Products.Archetypes.event import ObjectInitializedEvent
+from zope import event
+
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
 PBConversationBaseBTreeFolderSchema['title'].write_permission = EditComment
@@ -99,6 +102,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
 
         m = _createObjectByType('PloneboardComment', self, id)
+        event.notify(ObjectInitializedEvent(m))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
