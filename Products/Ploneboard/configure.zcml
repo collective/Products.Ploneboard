@@ -47,6 +47,14 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
+    <class class="Products.Ploneboard.content.Ploneboard.Ploneboard">
+        <implements interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+    </class>
+
+    <class class="Products.Ploneboard.content.PloneboardForum.PloneboardForum">
+        <implements interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+    </class>
+
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject
