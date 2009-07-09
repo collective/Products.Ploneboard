@@ -19,10 +19,10 @@ msgstr ""
 "Domain: plone\n"
 
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Un forum contenente discussioni"
 
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Un commento contenente testo e dati"
 
 msgid "Activate"
 msgstr "Attiva"
@@ -37,7 +37,7 @@ msgid "Conversation"
 msgstr "Discussione"
 
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Una discussione contenente commenti."
 
 msgid "Free for all"
 msgstr "Aperto a tutti"
@@ -58,7 +58,7 @@ msgid "Make member-posting"
 msgstr "Rendi riservato ai membri"
 
 msgid "Make moderated"
-msgstr ""
+msgstr "Rendi moderato"
 
 msgid "Message Board"
 msgstr "Area Forum"
@@ -67,13 +67,13 @@ msgid "Moderate"
 msgstr "Moderato"
 
 msgid "Moderated forum"
-msgstr ""
+msgstr "Forum moderato"
 
 msgid "Open"
 msgstr "Aperto"
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "L'area forum è l'oggetto più generale, che viene mostrato nel portale."
 
 msgid "Private to members only"
 msgstr "Riservato soli ai membri"
@@ -95,7 +95,7 @@ msgstr "In attesa del moderatore"
 
 #. Flat conversion view
 msgid "conversation_view"
-msgstr ""
+msgstr "Lista delle discussioni"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} ${month} ${year} alle ${hours}:${minutes}"
