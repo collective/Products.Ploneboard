@@ -1,0 +1,10 @@
+Products.Ploneboard Changelog
+=============================
+
+TBD
+---
+
+    - Make Conversation batch size configurable. Used to be 30 always. (changeset 96763)
+
+    - When adding comment, do not redirect to first page of conversation always.
+      Redirect to page anchored to comment (changeset 96764)

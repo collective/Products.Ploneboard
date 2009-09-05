@@ -39,6 +39,7 @@ else:
 
 if m:
     context.portal_ploneboard.clearUploadedFiles()
+    new_context = m
 
     status = wf.getInfoFor(m, 'review_state')
     if status == 'pending':
