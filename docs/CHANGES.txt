@@ -8,3 +8,5 @@ TBD
 
     - When adding comment, do not redirect to first page of conversation always.
       Redirect to page anchored to comment (changeset 96764)
+
+    - When viewing a forum, clicking on Most recent comment link should take you there (changeset 96765)

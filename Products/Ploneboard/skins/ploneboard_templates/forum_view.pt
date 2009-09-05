@@ -177,7 +177,7 @@
                                         canAccess python:mtool.checkPermission('View', lastComment)">
                           <tal:block condition="numComments">
                              <a href="#" tal:condition="canAccess" 
-                                         tal:attributes="href string:${conversation/absolute_url}#${lastComment/getId}">
+                                         tal:attributes="href string:${conversation/absolute_url}/${lastComment/getId}">
                                <div i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator lastComment/Creator;
