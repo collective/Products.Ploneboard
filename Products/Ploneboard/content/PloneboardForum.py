@@ -271,6 +271,17 @@ class PloneboardForum(BaseBTreeFolder):
 
         return voc
 
+    security.declarePublic('getConversationBatchSize')
+    def getConversationBatchSize(self):
+        pb_tool = getToolByName(self, 'portal_ploneboard')
+        prop_name = "%s_ConversationBatchSize" % self.getId()
+        if pb_tool.hasProperty(prop_name):
+            return pb_tool.getProperty(prop_name)
+        prop_name = "ConversationBatchSize"
+        if pb_tool.hasProperty(prop_name):
+            return pb_tool.getProperty(prop_name)
+        return 30
+
 
     ############################################################################
     # Folder methods, indexes and such

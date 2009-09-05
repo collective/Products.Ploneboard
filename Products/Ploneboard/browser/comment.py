@@ -96,9 +96,11 @@ class ConversationView(CommentView):
                 }
 
     def comments(self):
-        batchSize = 30
+        conv = self.context
+        forum = conv.getForum()
+        batchSize = forum.getConversationBatchSize()
         batchStart = int(self.request.get('b_start', 0))
-        numComments = self.context.getNumberOfComments()
+        numComments = conv.getNumberOfComments()
         return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
 
     def root_comments(self):
