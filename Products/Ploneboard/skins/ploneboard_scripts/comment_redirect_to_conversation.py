@@ -26,8 +26,7 @@ if anchor in res:
     offset = batchSize * int(pos / batchSize)
 else:
     offset = 0
-target_url = view + '?b_start=%s' % offset
-target_url += '#%s' % anchor
+target_url = '%s?b_start=%d#%s' % (view, offset, anchor)
 response = context.REQUEST.get('RESPONSE', None)
 if response is not None:
     response.redirect(target_url)

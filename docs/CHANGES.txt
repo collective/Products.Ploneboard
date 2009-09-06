@@ -10,3 +10,5 @@ TBD
       Redirect to page anchored to comment (changeset 96764)
 
     - When viewing a forum, clicking on Most recent comment link should take you there (changeset 96765)
+
+    - make sure all tests pass (changeset 96799)
