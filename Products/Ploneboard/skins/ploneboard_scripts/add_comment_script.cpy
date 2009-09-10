@@ -17,20 +17,18 @@ pm = getToolByName(context, 'portal_membership')
 wf = getToolByName(context, 'portal_workflow')
 putils = getToolByName(context, 'plone_utils')
 
-if pm.isAnonymousUser():
-    creator = 'Anonymous'
-else:
-    creator = pm.getAuthenticatedMember().getId()
+creator = str(pm.getAuthenticatedMember())
 
 # Get files from session etc instead of just request
 files = context.portal_ploneboard.getUploadedFiles()
 
 new_context = context
 
-if context.getTypeInfo().getId() == 'PloneboardComment':
+ptype = context.portal_type
+if ptype == 'PloneboardComment':
     m = context.addReply(title=title, text=text, creator=creator, files=files)
     new_context = context.getConversation()
-elif context.getTypeInfo().getId() == 'PloneboardConversation':
+elif ptype == 'PloneboardConversation':
     m = context.addComment(title=title, text=text, creator=creator, files=files)
 else:
     message = _(u"You can only add comments to conversations or comments.")
