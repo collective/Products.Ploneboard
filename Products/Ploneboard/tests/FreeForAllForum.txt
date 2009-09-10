@@ -93,7 +93,7 @@ Then add a full reply.
 
     >>> browser.getControl('Reply', index=0).click()
     >>> browser.getControl(name='text').value
-    '<p>Previously Member one wrote:</p><blockquote>Some <b>body</b> text</blockquote><p></p>'
+    '...Previously Member one wrote:...<blockquote>Some <b>body</b> text</blockquote>...'
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value = 'A full reply'
