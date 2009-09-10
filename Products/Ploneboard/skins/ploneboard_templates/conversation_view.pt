@@ -69,7 +69,7 @@
 
     <metal:block define-macro="quickreply">
       <tal:check define="firstcomment here/getFirstComment"
-                 condition="python:checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
+                 condition="python:firstcomment and checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
         <fieldset>
           <legend i18n:translate="label_quickreply">Quick reply</legend> 
           <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form" method="post" enctype="multipart/form-data">

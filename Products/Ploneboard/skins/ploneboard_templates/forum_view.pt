@@ -169,16 +169,16 @@
                         </td>
 
                         <td class="listingCheckbox"
-                            tal:condition="python:numComments &lt;= 1">
+                            tal:condition="python:numComments <= 1">
                             <span i18n:translate="no_replies_yet">
                             No replies yet
                             </span>
                         </td>
 
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                        <td tal:define="lastComment conversation/getLastComment;
-                                        canAccess python:mtool.checkPermission('View', lastComment)">
-                          <tal:block condition="numComments">
+                        <tal:block condition="numComments">
+                          <td tal:define="lastComment conversation/getLastComment;
+                                          canAccess python:mtool.checkPermission('View', lastComment)">
                              <a href="#" tal:condition="canAccess" 
                                          tal:attributes="href string:${conv_url}/${lastComment/getId}">
                                <span i18n:translate="label_by_author">
@@ -202,8 +202,8 @@
                                   tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
                                 Thursday 13:21
                             </span>
-                          </tal:block>
-                        </td>
+                          </td>
+                        </tal:block>
     
                     </tr>
                 
