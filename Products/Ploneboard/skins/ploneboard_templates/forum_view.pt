@@ -137,13 +137,14 @@
                 
                     <tr tal:define="oddrow repeat/conversation/odd;
                                     revstate python:wtool.getInfoFor(conversation, 'review_state', None);
+                                    conv_url conversation/absolute_url;
                                     numComments conversation/getNumberOfComments"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">
                         <td>
                             <img tal:replace="structure context/new_conversation.gif" 
                                  tal:condition="python:last_login and conversation.modified() > last_login" />
                             <a href=""
-                               tal:attributes="href conversation/absolute_url;
+                               tal:attributes="href conv_url;
                                                class string:state-${revstate}">
                               <img src="" tal:condition="python:revstate == 'locked'"
                                           tal:replace="structure here/lock_icon.gif" />
@@ -179,7 +180,7 @@
                                         canAccess python:mtool.checkPermission('View', lastComment)">
                           <tal:block condition="numComments">
                              <a href="#" tal:condition="canAccess" 
-                                         tal:attributes="href string:${conversation/absolute_url}/${lastComment/getId}">
+                                         tal:attributes="href string:${conv_url}/${lastComment/getId}">
                                <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator lastComment/Creator;
