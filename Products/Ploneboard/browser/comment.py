@@ -6,6 +6,7 @@ from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from Products import Five
 from Products.CMFCore import utils as cmf_utils
+from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard import permissions
 from Products.Ploneboard.batch import Batch
 from Products.Ploneboard.browser.interfaces import IConversationView
@@ -51,6 +52,52 @@ class CommentViewableView(Five.BrowserView):
                 'UID': comment.UID(),
             }
         return res
+
+    def toPloneboardTime(self, time_=None):
+        ploneboard_time=None
+        ts = getToolByName(self.context, 'translation_service')
+        utranslate = ts.utranslate
+
+        format = '%Y;%m;%d;%w;%H;%M;%S'
+
+        # fallback formats, english
+        young_format_en = '%A %H:%M' 
+        old_format_en = '%B %d. %Y'
+
+
+        if not time_:
+            return 'Unknown date'
+
+        try:
+            if not isinstance(time_, DateTime):
+                time_ = DateTime(str(_time))
+
+            (year, month, day, wday, hours, minutes, seconds) = time_.strftime(format).split(';')
+            translated_date_elements = { 'year'   : year
+                                       , 'month'  : utranslate(msgid=ts.month_msgid(month), domain="plonelocales")
+                                       , 'day'    : day
+                                       , 'wday'   : utranslate(msgid=ts.day_msgid(wday), domain="plonelocales")
+                                       , 'hours'  : hours
+                                       , 'minutes': minutes
+                                       , 'seconds': seconds
+                                       }
+ 
+            if time_.greaterThan(DateTime()-7):
+                ploneboard_time = utranslate( "young_date_format: ${wday} ${hours}:${minutes}"
+                                            , translated_date_elements
+                                            , default = time_.strftime(young_format_en)
+                                            )
+            else:
+                ploneboard_time = utranslate( "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+                                            , translated_date_elements
+                                            , default = time_.strftime(old_format_en)
+                                            )
+
+        except IndexError:
+            pass 
+
+        return ploneboard_time
+
 
 class CommentView(CommentViewableView):
     """A view for getting information about one specific comment.
