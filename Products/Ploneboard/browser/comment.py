@@ -2,9 +2,10 @@
 $Id$
 """
 from datetime import datetime
-from dateutil.parser import parse
+from dateutil.parser import parse as dateparse
 import time
 from zope import interface
+from zope.i18n import translate
 from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from Products import Five
@@ -15,6 +16,8 @@ from Products.Ploneboard.batch import Batch
 from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from Products.CMFPlone import PloneMessageFactory as _plone
+from Products.CMFPlone import PloneLocalesMessageFactory as _locales
 
 class defer(object):
     """Defer function call until actually used. Useful for date components in translations"""
@@ -70,7 +73,6 @@ class CommentViewableView(Five.BrowserView):
         """Return time formatted for Ploneboard"""
         ploneboard_time=None
         ts = getToolByName(self.context, 'translation_service')
-        utranslate = ts.utranslate
 
         format = '%Y;%m;%d;%w;%H;%M;%S'
 
@@ -86,31 +88,29 @@ class CommentViewableView(Five.BrowserView):
             if isinstance(time_, DateTime):
                 time_ = datetime.fromtimestamp(time_.timeTime())
             else:
-                time_ = parse(str(time_))
+                time_ = dateparse(str(time_))
 
             (year, month, day, hours, minutes, seconds, wday, _, dst) = time_.timetuple()
             translated_date_elements = { 'year'   : year
-                                       , 'month'  : defer(utranslate, 'plonelocales', ts.month_msgid(month), {}, context=self.context)
+                                       , 'month'  : defer(translate, _locales(ts.month_msgid(month)), context=self.request)
                                        , 'day'    : day
-                                       , 'wday'   : defer(utranslate, 'plonelocales', ts.day_msgid((wday+1)%7), {}, context=self.context)
+                                       , 'wday'   : defer(translate, _locales(ts.day_msgid((wday+1)%7)), context=self.request)
                                        , 'hours'  : hours
                                        , 'minutes': minutes
                                        , 'seconds': seconds
                                        }
  
             if time.time() - time.mktime(time_.timetuple()) < 604800: # 60*60*24*7
-                ploneboard_time = utranslate( 'plone'
-                                            , 'young_date_format: ${wday} ${hours}:${minutes}'
-                                            , translated_date_elements
-                                            , default = time_.strftime(young_format_en)
-                                            , context=self.context
+                ploneboard_time = translate(_plone( 'young_date_format: ${wday} ${hours}:${minutes}'
+                                                  , default = unicode(time_.strftime(young_format_en))
+                                                  , mapping=translated_date_elements)
+                                            , context=self.request
                                             )
             else:
-                ploneboard_time = utranslate( 'plone'
-                                            , 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
-                                            , translated_date_elements
-                                            , default = time_.strftime(old_format_en)
-                                            , context=self.context
+                ploneboard_time = translate( _plone( 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
+                                                   , default = unicode(time_.strftime(old_format_en))
+                                                   , mapping = translated_date_elements)
+                                            , context=self.request
                                             )
 
         except IndexError:
