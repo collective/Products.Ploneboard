@@ -13,6 +13,16 @@ from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
+class defer(object):
+    """Defer function call until actually used. Useful for date components in translations"""
+    def __init__(self, func, *args, **kwargs):
+        self.func = func
+        self.args = args
+        self.kwargs = kwargs
+
+    def __str__(self):
+        return self.func(*self.args, **self.kwargs)
+
 class CommentViewableView(Five.BrowserView):
     """Any view that might want to interact with comments should inherit
     from this base class.
@@ -37,7 +47,7 @@ class CommentViewableView(Five.BrowserView):
         res= {
                 'Title': comment.title_or_id(),
                 'Creator': comment.Creator(),
-                'creation_date': comment.CreationDate(),
+                'creation_date': self.toPloneboardTime(comment.CreationDate()),
                 'getId': comment.getId(),
                 'getText': comment.getText(),
                 'absolute_url': comment.absolute_url(),
@@ -54,6 +64,7 @@ class CommentViewableView(Five.BrowserView):
         return res
 
     def toPloneboardTime(self, time_=None):
+        """Return time formatted for Ploneboard"""
         ploneboard_time=None
         ts = getToolByName(self.context, 'translation_service')
         utranslate = ts.utranslate
@@ -70,27 +81,31 @@ class CommentViewableView(Five.BrowserView):
 
         try:
             if not isinstance(time_, DateTime):
-                time_ = DateTime(str(_time))
+                time_ = DateTime(str(time_))
 
             (year, month, day, wday, hours, minutes, seconds) = time_.strftime(format).split(';')
             translated_date_elements = { 'year'   : year
-                                       , 'month'  : utranslate(msgid=ts.month_msgid(month), domain="plonelocales")
+                                       , 'month'  : defer(utranslate, 'plonelocales', ts.month_msgid(month), {}, context=self.context)
                                        , 'day'    : day
-                                       , 'wday'   : utranslate(msgid=ts.day_msgid(wday), domain="plonelocales")
+                                       , 'wday'   : defer(utranslate, 'plonelocales', ts.day_msgid(wday), {}, context=self.context)
                                        , 'hours'  : hours
                                        , 'minutes': minutes
                                        , 'seconds': seconds
                                        }
  
             if time_.greaterThan(DateTime()-7):
-                ploneboard_time = utranslate( "young_date_format: ${wday} ${hours}:${minutes}"
+                ploneboard_time = utranslate( 'plone'
+                                            , 'young_date_format: ${wday} ${hours}:${minutes}'
                                             , translated_date_elements
                                             , default = time_.strftime(young_format_en)
+                                            , context=self.context
                                             )
             else:
-                ploneboard_time = utranslate( "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+                ploneboard_time = utranslate( 'plone'
+                                            , 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
                                             , translated_date_elements
                                             , default = time_.strftime(old_format_en)
+                                            , context=self.context
                                             )
 
         except IndexError:

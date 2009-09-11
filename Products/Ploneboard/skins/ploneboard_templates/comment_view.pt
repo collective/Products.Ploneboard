@@ -73,7 +73,7 @@
                    tal:omit-tag="not:creatorinfo"
                    tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
                 <span i18n:translate="text_at" tal:omit-tag="">at</span>
-                <span tal:replace="python:here.toPloneboardTime(creation_date)">Thursday 13:21</span>
+                <span tal:replace="creation_date">Thursday 13:21</span>
               </div>
             </div>
 

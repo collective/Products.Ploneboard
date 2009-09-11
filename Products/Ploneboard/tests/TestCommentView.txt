@@ -34,16 +34,22 @@ Create different datetimes and run them through toPloneboardTime.
 Recent dates get the weekday and time like 'Thursday 22:38'.
 
     >>> date = DateTime()
-    >>> conversationview.toPloneboardTime(date) == u'%s %s:%s' % (date.Day(), date.hour(), date.minute())
+    >>> conversationview.toPloneboardTime(date) == u'%s %02d:%02d' % (date.Day(), date.hour(), date.minute())
     True
 
-Older dates get the date of format like 'September 02. 2009'
+Input date as string as well
 
-    >>> date = date - 8
-    >>> conversationview.toPloneboardTime(date) == u'%s %02d. %s' % (date.Month(), date.day(), date.year())
-    True
+    >>> date = '2009/09/03 11:53'
+    >>> conversationview.toPloneboardTime(date)
+    u'September 03. 2009'
+
+Older dates get the date of format like 'September 03. 2009'
+
+    >>> date = DateTime(date)
+    >>> conversationview.toPloneboardTime(date)
+    u'September 03. 2009'
 
 No date returns 'Unknown date'
 
-    >>> conversationview.toPloneboardTime(None) == 'Unknown date'
-    True
+    >>> conversationview.toPloneboardTime(None)
+    'Unknown date'

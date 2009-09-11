@@ -105,5 +105,5 @@ msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr ""
+msgstr "${wday} ${hours}:${minutes}"
 
