@@ -22,6 +22,22 @@
      permission="zope2.View"/>
 
   <browser:page
+     for="..interfaces.IForum"
+     class=".forum.ForumView"
+     name="forum_browserview"
+     allowed_attributes="toPloneboardTime"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="..interfaces.IPloneboard"
+     class=".board.BoardView"
+     name="board_browserview"
+     allowed_attributes="toPloneboardTime"
+     permission="zope2.View"
+     />
+
+  <browser:page
      for="..interfaces.IConversation"
      class=".comment.ConversationView"
      name="conversation_browserview"

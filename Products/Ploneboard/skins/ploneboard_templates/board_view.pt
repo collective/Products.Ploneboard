@@ -16,7 +16,8 @@
   <div metal:fill-slot="main"
        tal:define="forums here/getForums;
                    keyedforums python:here.getKeyedForums(forums);
-                   categories here/getCategories|nothing;">
+                   categories here/getCategories|nothing;
+                   view context/@@board_browserview;">
                    
     <div tal:replace="structure provider:plone.abovecontenttitle" />
                    
@@ -137,7 +138,7 @@
                                                                                                                       
 
                   <span class="discreet"
-                        tal:content="python:here.toPloneboardTime(forum.getLastCommentDate())">
+                        tal:content="python:view.toPloneboardTime(forum.getLastCommentDate())">
                      Thursday 13:21
                   </span>
                 </td>

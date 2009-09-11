@@ -24,7 +24,8 @@
                      pss modules/Products/PythonScripts/standard;
                      DateTime nocall:modules/DateTime/DateTime;
                      last_login python:isAnon and None or member.getProperty('last_login_time', None);
-                     last_login python:last_login and DateTime(last_login) or None;">
+                     last_login python:last_login and DateTime(last_login) or None;
+                     view context/@@forum_browserview;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -199,7 +200,7 @@
 
                             <span
                                   class="discreet"
-                                  tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                                  tal:content="python:view.toPloneboardTime(conversation.getLastCommentDate())">
                                 Thursday 13:21
                             </span>
                           </td>
