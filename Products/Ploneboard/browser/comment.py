@@ -1,6 +1,9 @@
 """
 $Id$
 """
+from datetime import datetime
+from dateutil.parser import parse
+import time
 from zope import interface
 from Acquisition import aq_base
 from DateTime.DateTime import DateTime
@@ -80,20 +83,22 @@ class CommentViewableView(Five.BrowserView):
             return 'Unknown date'
 
         try:
-            if not isinstance(time_, DateTime):
-                time_ = DateTime(str(time_))
+            if isinstance(time_, DateTime):
+                time_ = datetime.fromtimestamp(time_.timeTime())
+            else:
+                time_ = parse(str(time_))
 
-            (year, month, day, wday, hours, minutes, seconds) = time_.strftime(format).split(';')
+            (year, month, day, hours, minutes, seconds, wday, _, dst) = time_.timetuple()
             translated_date_elements = { 'year'   : year
                                        , 'month'  : defer(utranslate, 'plonelocales', ts.month_msgid(month), {}, context=self.context)
                                        , 'day'    : day
-                                       , 'wday'   : defer(utranslate, 'plonelocales', ts.day_msgid(wday), {}, context=self.context)
+                                       , 'wday'   : defer(utranslate, 'plonelocales', ts.day_msgid((wday+1)%7), {}, context=self.context)
                                        , 'hours'  : hours
                                        , 'minutes': minutes
                                        , 'seconds': seconds
                                        }
  
-            if time_.greaterThan(DateTime()-7):
+            if time.time() - time.mktime(time_.timetuple()) < 604800: # 60*60*24*7
                 ploneboard_time = utranslate( 'plone'
                                             , 'young_date_format: ${wday} ${hours}:${minutes}'
                                             , translated_date_elements
