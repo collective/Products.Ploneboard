@@ -2,7 +2,9 @@ from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_chain
+from OFS.CopySupport import _cb_decode, _cb_encode, CopyContainer, CopyError
 from OFS.Image import File
+from OFS.Moniker import Moniker
 
 from Products.CMFCore.utils import getToolByName
 
@@ -15,8 +17,8 @@ from Products.CMFPlone.utils import _createObjectByType
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard.permissions import (
-    ViewBoard, AddComment, ManageConversation, EditComment)
-from Products.Ploneboard.interfaces import IForum, IConversation
+    ViewBoard, AddComment, ManageConversation, EditComment, MergeConversation)
+from Products.Ploneboard.interfaces import IForum, IConversation, IComment
 
 from Products.Ploneboard import utils
 
@@ -254,5 +256,34 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     # No setting of default page - makes no sense
     def canSetDefaultPage(self):
         return False
+
+    security.declareProtected(MergeConversation, 'manage_pasteObjects')
+    def manage_pasteObjects(self, cp): 
+        """ merge another conversation """ 
+        try: 
+            op, mdatas = _cb_decode(cp) 
+        except: 
+            raise CopyError, "Invalid content" 
+        if op == 0:
+            raise ValueError('Not allowed to copy content into conversation')
+        if op != 1: 
+            raise ValueError, "Invalid operation of content" 
+        obj = self.unrestrictedTraverse(mdatas[0]) 
+        if IConversation.providedBy(obj):
+            if obj.getParentNode() != self.getParentNode(): 
+                raise ValueError, "Invalid parent of content" 
+            forum = obj.getForum() 
+            obj_id = obj.getId() 
+            o_list = obj.objectValues() 
+            oblist=[Moniker(o1).dump() for o1 in o_list] 
+            cp = (1, oblist) 
+            cp = _cb_encode(cp) 
+            CopyContainer.manage_pasteObjects(self, cp) 
+            forum.manage_delObjects([obj_id])
+        elif IComment.providedBy(obj):
+            return CopyContainer.manage_pasteObjects(self, cp)
+        else:
+            raise ValueError('Invalid type of content')
+
 
 registerType(PloneboardConversation, PROJECTNAME)

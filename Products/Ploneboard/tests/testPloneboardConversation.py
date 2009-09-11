@@ -2,6 +2,7 @@
 # Conversation tests
 #
 
+import transaction
 import unittest
 from zope.interface.verify import verifyClass, verifyObject
 import PloneboardTestCase
@@ -161,7 +162,33 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.assertNotEqual(conv.getForum().owner_info()['id'], 'member2')
         reply = conv.addComment('reply1', 'body1')
         self.assertEqual(reply.owner_info()['id'], 'member2')
-        
+
+    def testDuplicateConversations(self):
+        conv2 = self.forum.addConversation('subject2', 'body2')
+        comment = conv2.addComment('subject2', 'body2')
+        transaction.savepoint(optimistic=True)
+        cp = self.forum.manage_copyObjects(conv2.getId())
+        self.failUnlessRaises(ValueError, self.conv.manage_pasteObjects, cp)
+
+    def testMergeConversations(self):
+        conv2 = self.forum.addConversation('subject2', 'body2')
+        comment = conv2.addComment('subject2', 'body2')
+        transaction.savepoint(optimistic=True)
+        self.conv.manage_pasteObjects(self.forum.manage_cutObjects(conv2.getId()))
+        self.failUnless(comment.getId() in self.conv.objectIds())
+        self.failUnless(len(self.conv.getComments()) == 2)
+        self.failIf(conv2.getId() in self.forum.objectIds())
+
+    def testMoveCommentToConversation(self):
+        conv2 = self.forum.addConversation('subject2', 'body2')
+        comment = conv2.addComment('subject2', 'body2')
+        transaction.savepoint(optimistic=True)
+        self.conv.manage_pasteObjects(conv2.manage_cutObjects(comment.getId()))
+        self.failUnless(comment.getId() in self.conv.objectIds())
+        self.failUnless(len(self.conv.getComments()) == 2)
+        self.failUnless(conv2.getId() in self.forum.objectIds()) # We only moved the comment
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestPloneboardConversation))

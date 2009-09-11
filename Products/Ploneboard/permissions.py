@@ -16,6 +16,8 @@ ManageForum = 'Ploneboard: Add Forum'
 
 AddConversation = AddPloneboardConversation = 'Ploneboard: Add Conversation'
 ManageConversation = 'Ploneboard: Manage Conversation'
+MoveConversation = 'Ploneboard: Move Conversation'
+MergeConversation = 'Ploneboard: Merge Conversation'
 
 AddComment = AddPloneboardComment = 'Ploneboard: Add Comment'
 EditComment = permissions.ModifyPortalContent
@@ -53,6 +55,12 @@ setDefaultRoles(AddAttachment,
                 ('Manager',))
 
 setDefaultRoles(ManageConversation,
+                ('Manager',))
+
+setDefaultRoles(MoveConversation,
+                ('Manager',))
+
+setDefaultRoles(MergeConversation,
                 ('Manager',))
 
 setDefaultRoles(ManageComment,

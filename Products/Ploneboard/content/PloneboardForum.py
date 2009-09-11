@@ -2,6 +2,7 @@ from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_chain, aq_inner
+from OFS.CopySupport import CopyContainer
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
@@ -14,7 +15,7 @@ from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, Int
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation
+from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation, MoveConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard import utils
 
@@ -289,6 +290,11 @@ class PloneboardForum(BaseBTreeFolder):
 
     ############################################################################
     # Folder methods, indexes and such
+
+    security.declareProtected(MoveConversation, 'manage_pasteObjects') 
+    def manage_pasteObjects(self, cp): 
+        """ move another conversation """ 
+        CopyContainer.manage_pasteObjects(self, cp) 
 
     def __nonzero__(self):
         return 1
