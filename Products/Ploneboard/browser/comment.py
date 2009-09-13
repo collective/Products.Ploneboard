@@ -109,9 +109,7 @@ class ConversationView(CommentView):
         batchSize = forum.getConversationBatchSize()
         batchStart = self.request.get('b_start', 0)
         if batchStart:
-            pos = batchStart.find('#')
-            if pos != -1: batchStart = batchStart[:pos]
-            batchStart = int(batchStart)
+            batchStart = int(batchStart.split('#')[0])
         numComments = conv.getNumberOfComments()
         return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
 
