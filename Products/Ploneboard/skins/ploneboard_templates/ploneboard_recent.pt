@@ -131,7 +131,7 @@
                               </div>
                             </a>                                                                                        
                             <span class="discreet"
-                                  tal:content="python:here.toPloneboardTime(conversation['last_comment_date'])">
+                                  tal:content="python:view.toPloneboardTime(conversation['last_comment_date'])">
                                 Thursday 13:21
                             </span>
                           </tal:block>

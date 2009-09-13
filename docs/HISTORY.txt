@@ -134,3 +134,6 @@ TBD
 
 - make sure all tests pass (changeset 96799)
   [sureshvv]
+
+- Make toPloneboardTime obsolete as a PythonScript. It is now a method in the view class.
+  [sureshvv]
