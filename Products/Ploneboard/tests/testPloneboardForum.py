@@ -123,18 +123,18 @@ class TestPloneboardForum(PloneboardTestCase.PloneboardTestCase):
         forum = self.forum
         self.failUnlessEqual(forum.getNumberOfComments(), 0)
         conv = forum.addConversation('subject', 'body')
-        self.failUnlessEqual(forum.getNumberOfComments(), 0)
-        conv2 = forum.addConversation('subject2', 'body2')
-        self.failUnlessEqual(forum.getNumberOfComments(), 0)
-        forum.removeConversation(conv.getId())
-        self.failUnlessEqual(forum.getNumberOfComments(), 0)
-        conv2.addComment('followup', 'text')
         self.failUnlessEqual(forum.getNumberOfComments(), 1)
+        conv2 = forum.addConversation('subject2', 'body2')
+        self.failUnlessEqual(forum.getNumberOfComments(), 2)
+        forum.removeConversation(conv.getId())
+        self.failUnlessEqual(forum.getNumberOfComments(), 1)
+        conv2.addComment('followup', 'text')
+        self.failUnlessEqual(forum.getNumberOfComments(), 2)
         # Check to make sure it doesn't count comments elsewhere
         forum2 = _createObjectByType('PloneboardForum', self.board, 'forum2')
         conv = forum2.addConversation('subject', 'body')
         conv.addComment("another", "another")
-        self.failUnlessEqual(forum.getNumberOfComments(), 1)
+        self.failUnlessEqual(forum.getNumberOfComments(), 2)
     
 class TestPloneboardForumRSSFeed(PloneboardTestCase.PloneboardTestCase):
 
@@ -171,7 +171,7 @@ class TestPloneboardForumRSSFeed(PloneboardTestCase.PloneboardTestCase):
         conv=self.forum.addConversation('Conversation one', 'Text one')
         conv.addComment("comment title", "comment body")
         self.view.update()
-        self.assertEqual(len(self.view.comments), 1)
+        self.assertEqual(len(self.view.comments), 2)
 
     def testCommentInfo(self):
         conv=self.forum.addConversation('Conversation one', 'Text one')

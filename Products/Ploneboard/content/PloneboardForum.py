@@ -140,7 +140,7 @@ class PloneboardForum(BaseBTreeFolder):
         if creator is not None:
             conv.setCreators([creator])
 
-        if files is not None or files:
+        if text is not None or files:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
             event.notify(ObjectInitializedEvent(m))
 

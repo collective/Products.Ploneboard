@@ -134,7 +134,7 @@ class TestPloneboardRSSFeed(PloneboardTestCase.PloneboardTestCase):
         conv=forum.addConversation('Conversation one', 'Text one')
         conv.addComment("comment title", "comment body")
         self.view.update()
-        self.assertEqual(len(self.view.comments), 1)
+        self.assertEqual(len(self.view.comments), 2) # original text is first comment
 
     def testCommentInfo(self):
         forum=self.board.addForum('forum1', 'Title one', 'Description one')

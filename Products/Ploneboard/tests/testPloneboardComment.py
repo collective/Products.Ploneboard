@@ -94,9 +94,9 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         conv = self.conv
 
         m = conv.objectValues()[0]
-        self.assertEqual(conv.getNumberOfComments(), 1)
-        r = m.addReply('reply1', 'body1')
         self.assertEqual(conv.getNumberOfComments(), 2)
+        r = m.addReply('reply1', 'body1')
+        self.assertEqual(conv.getNumberOfComments(), 3)
 
         m.deleteReply(r)
         self.assertEqual(len(m.getReplies()), 0)
@@ -108,12 +108,11 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         comment = conv.objectValues()[0]
         reply = comment.addReply('reply1', 'body1')
         reply1 = reply.addReply('reply2', 'body2')
-        self.assertEqual(conv.getNumberOfComments(), 3)
+        self.assertEqual(conv.getNumberOfComments(), 4)
         self.assertEqual(forum.getNumberOfConversations(), 1)
 
         branch = reply.makeBranch()
-
-        self.assertEqual(conv.getNumberOfComments(), 1)
+        self.assertEqual(conv.getNumberOfComments(), 2)
         self.assertEqual(forum.getNumberOfConversations(), 2)
 
         self.failIfEqual(branch, conv)

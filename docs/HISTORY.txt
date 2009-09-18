@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Create comment automatically in conversation if adding conversation
+  with text.
+  [tesdal]
+
 - Made profiles for funkload testing.
   [tesdal]
 

@@ -3,8 +3,9 @@ try:
 except ImportError:
     class markupgenerator(object):
         def __init__(self,sample,dictionary):pass
-        def generate_sentence(self):return 'sentence'
-        def generate_paragraph(self):return 'This is. A paragraph.'
+        def generate_sentence(self):return 'subject'
+        def generate_paragraph(self):return 'Please install lorem-ipsum-generator.'
+
 from random import betavariate
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE

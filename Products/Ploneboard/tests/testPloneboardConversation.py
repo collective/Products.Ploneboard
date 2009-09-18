@@ -19,7 +19,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         self.board = _createObjectByType('Ploneboard', self.folder, 'board')
         self.forum = _createObjectByType('PloneboardForum', self.board, 'forum')
         self.conv = self.forum.addConversation('subject', 'body')
-        self.comment = self.conv.addComment('subject', 'body')
+        self.comment = self.conv.getComments()[0]
 
     def testInterfaceVerification(self):
         self.failUnless(verifyClass(IConversation, PloneboardConversation))
@@ -146,7 +146,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
         convs = self.forum.getConversations()
 #        self.failUnless(id in [x.getId() for x in convs])
         comments = conv.getComments()
-        self.assertEqual(len(comments), 1)
+        self.assertEqual(len(comments), 2)
         
     def testAddCommentAsAnonymousTakesOwnerOfForumAndCreatorAnonymous(self):
         conv = self.conv
@@ -172,7 +172,7 @@ class TestPloneboardConversation(PloneboardTestCase.PloneboardTestCase):
 
     def testMergeConversations(self):
         conv2 = self.forum.addConversation('subject2', 'body2')
-        comment = conv2.addComment('subject2', 'body2')
+        comment = conv2.getComments()[0]
         transaction.savepoint(optimistic=True)
         self.conv.manage_pasteObjects(self.forum.manage_cutObjects(conv2.getId()))
         self.failUnless(comment.getId() in self.conv.objectIds())
