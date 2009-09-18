@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step
+     id="ploneboard-lotsofposts"
+     version="20081213-01"
+     handler="Products.Ploneboard.setuphandlers.lotsofposts"
+     title="Ploneboard: Add lots of posts">
+    <dependency step="content" />
+        Add lots of posts for performance testing
+  </import-step>
+
+</import-steps>

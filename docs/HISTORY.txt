@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Made profiles for funkload testing.
+  [tesdal]
+
 - Add the complete list of date elements when translating dates to allow
   customization of format by overriding the base translation string.
   [kdeldycke]

@@ -57,6 +57,24 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
+  <genericsetup:registerProfile
+     name="basicboard"
+     title="Ploneboard performance test forum structure"
+     directory="profiles/basicboard"
+     description="Set up a forum structure for performance testing"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:registerProfile
+     name="lotsofposts"
+     title="Ploneboard performance posts"
+     directory="profiles/lotsofposts"
+     description="Set up posts for load testing"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject
