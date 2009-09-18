@@ -144,6 +144,20 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.logout()
         comments = self.conv.getComments()
         self.failUnless(id in [x.getId() for x in comments])
+    
+    def testMemberWithNoFullname(self):
+        addMember(self, 'membernofullname', fullname='')
+        self.login('membernofullname')
+        comment = self.conv.addComment('subject3', 'body3')
+        commentview = comment.restrictedTraverse('@@singlecomment_view')
+        self.assertEqual(commentview.author(), 'membernofullname')
+
+    def testMemberWithFullname(self):
+        addMember(self, 'memberwithfullname', fullname='MemberName')
+        self.login('memberwithfullname')
+        comment = self.conv.addComment('subject4', 'body4')
+        commentview = comment.restrictedTraverse('@@singlecomment_view')
+        self.assertEqual(commentview.author(), 'MemberName')
 
 
 

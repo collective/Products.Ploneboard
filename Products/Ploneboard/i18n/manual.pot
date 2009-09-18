@@ -69,3 +69,4 @@ msgid "label_categories_board"
 msgstr ""
 
 msgid "alert_delete_popup"
+msgstr ""

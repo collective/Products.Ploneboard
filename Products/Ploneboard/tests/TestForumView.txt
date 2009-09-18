@@ -1,0 +1,29 @@
+ForumViews integration tests
+============================
+
+Set up a simple board and forum:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> self.setRoles(('Manager',))
+    >>> self.portal.invokeFactory('Ploneboard', 'board1')
+    'board1'
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum1')
+    'forum1'
+    >>> forum = self.portal.board1.forum1
+    >>> self.setRoles(('Member',))
+
+Add some content for listings etc
+
+    >>> self.portal.board1.forum1.addConversation('C1', 'Conversation 1')
+    <PloneboardConversation at ...>
+
+Try instantiating the view
+
+    >>> view = forum.unrestrictedTraverse('@@forum_browserview')
+    >>> view
+    <...ForumView...>
+
+toPloneboardTime is tested in TestCommentView

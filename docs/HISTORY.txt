@@ -4,6 +4,29 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Add the complete list of date elements when translating dates to allow
+  customization of format by overriding the base translation string.
+  [kdeldycke]
+
+- Fixed cosmetic bug (search results relevance percentage).
+  [glenfant]
+
+- Added Swedish translation, thanks to Martin Lundwall.
+  [hannosch]
+
+- Add Russian translation, courtesy of Eugene Korenevsky.
+  [wichert]
+
+- Add missing empty alt-text for content type icons in the search results.
+  [wichert]
+
+- Modified author retrieval to allow for blank fullnames on users, falling back
+  to their user ID instead.
+  [rockdj]
+
+- Added event notifications for object creation with _createObjectByType for
+  Conversation, Comment and Attachment objects.
+  [daftdog]
 
 2.0 - March 14, 2008
 --------------------
@@ -96,3 +119,21 @@ _ Update the Lithuanian translation. This fixes
 - Port to Plone 3.0
   [wichert, fschulze]
 
+TBD
+---
+
+- Make Conversation batch size configurable. Used to be 30 always. (changeset 96763)
+  [sureshvv]
+
+- When adding comment, do not redirect to first page of conversation always.
+  Redirect to page anchored to comment (changeset 96764)
+  [sureshvv]
+
+- When viewing a forum, clicking on Most recent comment link should take you there (changeset 96765)
+  [sureshvv]
+
+- make sure all tests pass (changeset 96799)
+  [sureshvv]
+
+- Make toPloneboardTime obsolete as a PythonScript. It is now a method in the view class.
+  [sureshvv]

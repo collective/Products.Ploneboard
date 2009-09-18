@@ -3,12 +3,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
-"Last-Translator: Sune Toft <sune@headnet.dk>\n"
+"Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: da\n"
@@ -16,6 +16,12 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
 "X-Is-Fallback-For: da-dk\n"
+
+msgid "A Forum contains conversations."
+msgstr "Et forum indeholder debatter."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "En kommentar indeholder en brÃ¸dtekst og metadata."
 
 msgid "Activate"
 msgstr "Aktiver"
@@ -27,13 +33,13 @@ msgid "Comment"
 msgstr "Kommentar"
 
 msgid "Conversation"
-msgstr "Indlæg"
+msgstr "IndlÃ¦g"
 
-msgid "Flat conversion view"
-msgstr "Enkel visning af indlæg"
+msgid "Conversation contains comments."
+msgstr "Debatter indeholder kommentarer."
 
 msgid "Free for all"
-msgstr "Åbent for alle"
+msgstr "Ã…bent for alle"
 
 msgid "Hidden"
 msgstr "Skjult"
@@ -42,16 +48,16 @@ msgid "Hide"
 msgstr "Skjul"
 
 msgid "Lock"
-msgstr "Lås"
-
-msgid "Locked"
-msgstr "Låst"
+msgstr "LÃ¥s"
 
 msgid "Make free-for-all"
-msgstr "Gør åbent for alle"
+msgstr "GÃ¸r Ã¥bent for alle"
 
 msgid "Make member-posting"
-msgstr "Opret medlemsindlæg"
+msgstr "Opret medlemsindlÃ¦g"
+
+msgid "Make moderated"
+msgstr "GÃ¸r modereret"
 
 msgid "Message Board"
 msgstr "Forum"
@@ -59,8 +65,14 @@ msgstr "Forum"
 msgid "Moderate"
 msgstr "Godkendelse"
 
+msgid "Moderated forum"
+msgstr "Moderet forum"
+
 msgid "Open"
-msgstr "Åben"
+msgstr "Ã…ben"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Indeholder fora"
 
 msgid "Private to members only"
 msgstr "Kun synligt for medlemmer"
@@ -72,21 +84,26 @@ msgid "Rejected"
 msgstr "Afvist"
 
 msgid "Require membership to post"
-msgstr "Medlemskab påkrævet"
+msgstr "Medlemskab pÃ¥krÃ¦vet"
 
 msgid "Retracted"
 msgstr "Trukket tilbage"
 
-msgid "Threaded conversion view"
-msgstr "Indlæg vist i tråde"
-
 msgid "Waiting for moderator"
 msgstr "Afventer godkendelse"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "debatvisning"
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
-msgstr "Gammelt datoformat: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "trÃ¥det debatvisning"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "Nyt datoformat: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
 

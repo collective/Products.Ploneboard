@@ -58,6 +58,9 @@ msgstr ""
 msgid "Make free-for-all"
 msgstr ""
 
+msgid "Make moderated"
+msgstr ""
+
 msgid "Private to members only"
 msgstr ""
 
@@ -94,7 +97,20 @@ msgstr ""
 msgid "Retracted"
 msgstr ""
 
+msgid "Search board"
+msgstr ""
 
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
 
+msgid "Conversation added"
+msgstr ""
 
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
+msgid "Enter comment body."
+msgstr ""
+
+msgid "A Forum contains conversations."
+msgstr ""

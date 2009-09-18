@@ -53,7 +53,7 @@
                 <tal:info define="info python:view.info(result);
                                 item_wf_state_class string:state-${info/review_state};">
                     <dt tal:attributes="class string:contenttype-${info/portal_type};">
-                        <img tal:condition="info/icon" tal:attributes="src info/icon"/>
+                        <img alt="" tal:condition="info/icon" tal:attributes="src info/icon"/>
                         <a tal:attributes="href info/url;
                                            title info/title;
                                            class item_wf_state_class"
@@ -93,11 +93,14 @@
                                 &mdash;
                             </span>
 
-                           <tal:relevance i18n:translate="label_relevance_percentage">
-                           Relevance:
-                           <span tal:replace="info/relevance">13</span>%
-                           </tal:relevance>
-                       </span>
+                            <tal:relevance
+                               i18n:translate="label_relevance_percentage">
+                              Relevance:
+                              <span tal:content="info/relevance"
+                                    tal:omit-tag=""
+                                    i18n:name="percentage">23</span>%
+                            </tal:relevance>
+                        </span>
                     </dd>
                 </tal:info>
             </tal:repeat>

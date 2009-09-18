@@ -1,11 +1,12 @@
 # Fabio Rizzo <fabiorizzo@threepointsweb.com>, 2005-2007.
 # LEANDRO ZANUZ <lzanuz@ucs.br>, 2006.
+# Érico Andrei <erico@simplesconsultoria.com.br>, 2008
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
-"PO-Revision-Date: 2007-03-22 10:32+000\n"
-"Last-Translator: Fabio Rizzo <fabiorizzo@threepointsweb.com>\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-01-12 12:03-0200\n"
+"Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
 "Language-Team: <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -16,11 +17,11 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "Ploneboard Setup"
-msgstr "Configurações do Ploneboard"
+msgid "A Forum contains conversations."
+msgstr "Um fórum contém conversas."
 
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Objeto do Ploneboard que irá conter fóruns no site."
+msgid "A comment contains regular text body and metadata."
+msgstr "Um comentário contém corpo de texto regular e metadata."
 
 msgid "Activate"
 msgstr "Ativar"
@@ -32,10 +33,10 @@ msgid "Comment"
 msgstr "Comentário"
 
 msgid "Conversation"
-msgstr "Conversação"
+msgstr "Tópico"
 
-msgid "Flat conversion view"
-msgstr ""
+msgid "Conversation contains comments."
+msgstr "Uma Conversa contém comentários."
 
 msgid "Free for all"
 msgstr "Liberado para Anônimos"
@@ -44,22 +45,19 @@ msgid "Hidden"
 msgstr "Fechado"
 
 msgid "Hide"
-msgstr "Hechar"
+msgstr "Ocultar"
 
 msgid "Lock"
 msgstr "Bloquear"
 
-msgid "Locked"
-msgstr "Bloqueado"
-
 msgid "Make free-for-all"
 msgstr "Liberar para Anônimos"
 
-msgid "Make moderated"
-msgstr "Tornar moderado"
-
 msgid "Make member-posting"
 msgstr "Só Membros Postam"
+
+msgid "Make moderated"
+msgstr "Tornar moderado"
 
 msgid "Message Board"
 msgstr "Pasta de Fóruns"
@@ -67,8 +65,14 @@ msgstr "Pasta de Fóruns"
 msgid "Moderate"
 msgstr "Moderar"
 
+msgid "Moderated forum"
+msgstr "Fórum Moderado"
+
 msgid "Open"
 msgstr "Aberto"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Uma pasta de fóruns, com os fóruns que aparecerão em seu site"
 
 msgid "Private to members only"
 msgstr "Privado somente para membros"
@@ -82,23 +86,24 @@ msgstr "Rejeitado"
 msgid "Require membership to post"
 msgstr "Só Membros Postam"
 
-msgid "Moderated forum"
-msgstr "Fórum Moderado"
-
 msgid "Retracted"
 msgstr "Retraído"
-
-msgid "Threaded conversion view"
-msgstr ""
 
 msgid "Waiting for moderator"
 msgstr "Aguardando moderação"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:32
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Visão de conversa"
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:36
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Visão de conversa threaded"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
 

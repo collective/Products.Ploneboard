@@ -6,11 +6,14 @@ from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from Products import Five
 from Products.CMFCore import utils as cmf_utils
+from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard import permissions
 from Products.Ploneboard.batch import Batch
 from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
+from Products.Ploneboard.browser.utils import toPloneboardTime
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+
 
 class CommentViewableView(Five.BrowserView):
     """Any view that might want to interact with comments should inherit
@@ -36,7 +39,7 @@ class CommentViewableView(Five.BrowserView):
         res= {
                 'Title': comment.title_or_id(),
                 'Creator': comment.Creator(),
-                'creation_date': comment.CreationDate(),
+                'creation_date': self.toPloneboardTime(comment.CreationDate()),
                 'getId': comment.getId(),
                 'getText': comment.getText(),
                 'absolute_url': comment.absolute_url(),
@@ -52,6 +55,11 @@ class CommentViewableView(Five.BrowserView):
             }
         return res
 
+    def toPloneboardTime(self, time_=None):
+        """Return time formatted for Ploneboard"""
+        return toPloneboardTime(self.context, self.request, time_)
+
+
 class CommentView(CommentViewableView):
     """A view for getting information about one specific comment.
     """
@@ -66,14 +74,14 @@ class CommentView(CommentViewableView):
         info = self.portal_membership.getMemberInfo(creator)
         if info is None:
             return creator
-        return info.get('fullname', creator)
+        fullname_or_id = info.get('fullname') or info.get('username') or creator
+        return fullname_or_id
 
     def quotedBody(self):
         text = self.context.getText()
         if text:
-            return '<p>Previously %s wrote:</p>' \
-                   '<blockquote>%s</blockquote><p></p>' % \
-                   (self.author(), self.context.getText())
+            return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": unicode(self.author(), 'utf-8'), 
+                     "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})
         else:
             return ''
 
@@ -101,9 +109,7 @@ class ConversationView(CommentView):
         batchSize = forum.getConversationBatchSize()
         batchStart = self.request.get('b_start', 0)
         if batchStart:
-            pos = batchStart.find('#')
-            if pos != -1: batchStart = batchStart[:pos]
-            batchStart = int(batchStart)
+            batchStart = int(batchStart.split('#')[0])
         numComments = conv.getNumberOfComments()
         return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
 

@@ -4,7 +4,8 @@
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title">Message Board</property>
  <property
-    name="description">Ploneboard is the outmost board object, what shows up in your site.</property>
+    name="description" 
+    i18n:translate="">Ploneboard is the outmost board object, what shows up in your site.</property>
  <property name="content_icon">ploneboard_icon.gif</property>
  <property name="content_meta_type">Ploneboard</property>
  <property name="product">Ploneboard</property>

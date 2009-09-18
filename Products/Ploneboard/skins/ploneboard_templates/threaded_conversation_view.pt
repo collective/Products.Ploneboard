@@ -30,7 +30,7 @@
     <div tal:replace="structure provider:plone.abovecontenttitle" />
 
     <h1 class="documentFirstHeading">
-      <img src="" tal:replace="structure here/ploneboard_conversation_icon.gif" />
+      <img tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" alt="" />
       <span tal:replace="here/Title">Conversation title</span>
     </h1>
 

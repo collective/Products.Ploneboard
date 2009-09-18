@@ -2,6 +2,7 @@ from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_chain, aq_inner
+from OFS.CopySupport import CopyContainer
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
@@ -14,13 +15,15 @@ from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, Int
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation
+from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation, MoveConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard import utils
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+from Products.Archetypes.event import ObjectInitializedEvent
+from zope import event
 
 
 schema = BaseBTreeFolderSchema + Schema((
@@ -128,6 +131,7 @@ class PloneboardForum(BaseBTreeFolder):
         id = self.generateId(prefix='')
 
         conv = _createObjectByType('PloneboardConversation', self, id)
+        event.notify(ObjectInitializedEvent(conv))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
@@ -138,6 +142,7 @@ class PloneboardForum(BaseBTreeFolder):
 
         if files is not None or files:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
+            event.notify(ObjectInitializedEvent(m))
 
             # XXX: There is some permission problem with AT write_permission
             # and using **kwargs in the _createObjectByType statement.
@@ -285,6 +290,11 @@ class PloneboardForum(BaseBTreeFolder):
 
     ############################################################################
     # Folder methods, indexes and such
+
+    security.declareProtected(MoveConversation, 'manage_pasteObjects') 
+    def manage_pasteObjects(self, cp): 
+        """ move another conversation """ 
+        CopyContainer.manage_pasteObjects(self, cp) 
 
     def __nonzero__(self):
         return 1

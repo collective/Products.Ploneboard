@@ -1,0 +1,55 @@
+CommentViews integration tests
+==============================
+
+Set up a simple board and forum:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> self.setRoles(('Manager',))
+    >>> self.portal.invokeFactory('Ploneboard', 'board1')
+    'board1'
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum1')
+    'forum1'
+    >>> self.setRoles(('Member',))
+
+Test toPloneboardTime
+
+First, add a conversation and traverse to its view. 
+We use the conversation view as that inherits from comment view 
+and provides toPloneboardTime
+
+    >>> self.portal.board1.forum1.addConversation('C1', 'Conversation 1')
+    <PloneboardConversation at ...>
+    >>> conversation = self.portal.board1.forum1.getConversations()[0]
+    >>> conversationview = conversation.unrestrictedTraverse('@@conversation_browserview')
+    >>> conversationview
+    <...ConversationView...>
+
+Create different datetimes and run them through toPloneboardTime.
+
+    >>> from DateTime import DateTime
+
+Recent dates get the weekday and time like 'Thursday 22:38'.
+
+    >>> date = DateTime()
+    >>> conversationview.toPloneboardTime(date) == u'%s %02d:%02d' % (date.Day(), date.hour(), date.minute())
+    True
+
+Input date as string as well
+
+    >>> date = '2009/09/03 11:53'
+    >>> conversationview.toPloneboardTime(date)
+    u'September 03. 2009'
+
+Older dates get the date of format like 'September 03. 2009'
+
+    >>> date = DateTime(date)
+    >>> conversationview.toPloneboardTime(date)
+    u'September 03. 2009'
+
+No date returns 'Unknown date'
+
+    >>> conversationview.toPloneboardTime(None)
+    'Unknown date'

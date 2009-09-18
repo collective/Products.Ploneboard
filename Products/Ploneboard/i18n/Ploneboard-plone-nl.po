@@ -17,6 +17,12 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: nl-be\n"
 
+msgid "A Forum contains conversations."
+msgstr "Een forum bevat discussies."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Een reactie bevat tekst en metadata."
+
 msgid "Activate"
 msgstr "Activeer"
 
@@ -28,6 +34,12 @@ msgstr "Reactie"
 
 msgid "Conversation"
 msgstr "Discussie"
+
+msgid "Conversation added"
+msgstr "Discussie toegevoegd"
+
+msgid "Enter comment body."
+msgstr "Vul hier de tekst in."
 
 msgid "Flat conversion view"
 msgstr "Platte discussie weergave"
@@ -51,10 +63,13 @@ msgid "Make free-for-all"
 msgstr "Maak openbaar voor iedereen"
 
 msgid "Make member-posting"
-msgstr ""
+msgstr "Maak alleen-leden-kunnen-insturen"
+
+msgid "Make moderated"
+msgstr "Maak moderatie vereist"
 
 msgid "Message Board"
-msgstr "Discussie Bord"
+msgstr "Discussiebord"
 
 msgid "Moderate"
 msgstr "Modereer"
@@ -62,20 +77,26 @@ msgstr "Modereer"
 msgid "Open"
 msgstr "Open"
 
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Discussiebord is de hoofdmap waarbinnen je fora en discussies kan toevoegen."
+
 msgid "Private to members only"
 msgstr "Alleen toegankelijk voor leden"
 
 msgid "Public"
-msgstr "Publiek"
+msgstr "Openbaar"
 
 msgid "Rejected"
-msgstr "Gewijgerd"
+msgstr "Geweigerd"
 
 msgid "Require membership to post"
 msgstr "Vereis lidmaatschap om te reageren"
 
 msgid "Retracted"
 msgstr "Teruggetrokken"
+
+msgid "Search board"
+msgstr "Zoek in alle fora"
 
 msgid "Threaded conversion view"
 msgstr "Geneste discussie weergave"
@@ -90,13 +111,3 @@ msgstr ""
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr ""
 
-
-#### My own findings
-msgid "Make moderated"
-msgstr "Maak gemodereerd"
-
-msgid "show_no_replies_all"
-msgstr "Toon alleen onbeantwoorde berichten"
-
-msgid "show_new_conversations_all"
-msgstr "Toon alle nieuwe berichten"

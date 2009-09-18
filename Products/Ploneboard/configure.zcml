@@ -13,9 +13,19 @@
           interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
   </class>
 
+  <class class=".content.Ploneboard.Ploneboard">
+      <implements
+          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+  </class>
+
   <class class=".content.PloneboardForum.PloneboardForum">
       <implements
           interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+  </class>
+
+  <class class=".content.PloneboardForum.PloneboardForum">
+      <implements
+          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
   </class>
 
   <permission

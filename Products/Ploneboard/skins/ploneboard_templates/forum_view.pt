@@ -1,5 +1,7 @@
-<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
@@ -22,7 +24,8 @@
                      pss modules/Products/PythonScripts/standard;
                      DateTime nocall:modules/DateTime/DateTime;
                      last_login python:isAnon and None or member.getProperty('last_login_time', None);
-                     last_login python:last_login and DateTime(last_login) or None;">
+                     last_login python:last_login and DateTime(last_login) or None;
+                     view context/@@forum_browserview;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -135,25 +138,26 @@
                 
                     <tr tal:define="oddrow repeat/conversation/odd;
                                     revstate python:wtool.getInfoFor(conversation, 'review_state', None);
+                                    conv_url conversation/absolute_url;
                                     numComments conversation/getNumberOfComments"
                         tal:attributes="class python:test(oddrow, 'even', 'odd')">
                         <td>
                             <img tal:replace="structure context/new_conversation.gif" 
                                  tal:condition="python:last_login and conversation.modified() > last_login" />
                             <a href=""
-                               tal:attributes="href conversation/absolute_url;
+                               tal:attributes="href conv_url;
                                                class string:state-${revstate}">
                               <img src="" tal:condition="python:revstate == 'locked'"
                                           tal:replace="structure here/lock_icon.gif" />
                                 <span tal:replace="conversation/Title">This is a title</span>
                               
 
-                                <div class="discreet" i18n:translate="label_by_author">
+                                <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
                                                define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                                </div>
+                                </span>
                             
                             </a>
                         </td>
@@ -166,41 +170,41 @@
                         </td>
 
                         <td class="listingCheckbox"
-                            tal:condition="python:numComments &lt;= 1">
+                            tal:condition="python:numComments <= 1">
                             <span i18n:translate="no_replies_yet">
                             No replies yet
                             </span>
                         </td>
 
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                        <td tal:define="lastComment conversation/getLastComment;
-                                        canAccess python:mtool.checkPermission('View', lastComment)">
-                          <tal:block condition="numComments">
+                        <tal:block condition="numComments">
+                          <td tal:define="lastComment conversation/getLastComment;
+                                          canAccess python:mtool.checkPermission('View', lastComment)">
                              <a href="#" tal:condition="canAccess" 
-                                         tal:attributes="href string:${conversation/absolute_url}/${lastComment/getId}">
-                               <div i18n:translate="label_by_author">
+                                         tal:attributes="href string:${conv_url}/${lastComment/getId}">
+                               <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator lastComment/Creator;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                              </div>
+                              </span>
                             </a>                                                                                        
                             <span tal:condition="not:canAccess">
-                              <div i18n:translate="label_by_author">
+                              <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          define="creator conversation/getLastCommentAuthor;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
-                              </div>
+                              </span>
                             </span>                               
 
                             <span
                                   class="discreet"
-                                  tal:content="python:here.toPloneboardTime(conversation.getLastCommentDate())">
+                                  tal:content="python:view.toPloneboardTime(conversation.getLastCommentDate())">
                                 Thursday 13:21
                             </span>
-                          </tal:block>
-                        </td>
+                          </td>
+                        </tal:block>
     
                     </tr>
                 

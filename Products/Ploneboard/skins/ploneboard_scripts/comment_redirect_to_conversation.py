@@ -10,7 +10,6 @@
 
 # XXX if we ever do batching, we need extra logic here.
 redirect_target = context.getConversation()
-view = redirect_target.restrictedTraverse("@@plone_context_state").view_url()
 anchor = context.getId()
   
 conv = context.getConversation()
@@ -26,7 +25,7 @@ if anchor in res:
     offset = batchSize * int(pos / batchSize)
 else:
     offset = 0
-target_url = '%s?b_start=%d#%s' % (view, offset, anchor)
+target_url = '%s?b_start=%d#%s' % (redirect_target.absolute_url(), offset, anchor)
 response = context.REQUEST.get('RESPONSE', None)
 if response is not None:
     response.redirect(target_url)
