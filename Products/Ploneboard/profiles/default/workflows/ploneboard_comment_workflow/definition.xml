@@ -61,6 +61,7 @@
                   acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
@@ -85,6 +86,7 @@
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="True">
@@ -110,6 +112,7 @@
   </permission-map>
   <permission-map name="Modify portal content"
                   acquired="False">
+   <permission-role>Owner</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
@@ -137,6 +140,7 @@
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">

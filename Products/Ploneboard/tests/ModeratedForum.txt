@@ -91,9 +91,8 @@ pending comment.
     <SubmitControl ... type='submit'>
 
     >>> browser.getControl('Edit')
-    Traceback (most recent call last):
-    ...
-    LookupError: label 'Edit'
+    <SubmitControl name=None type='submit'>
+
     >>> browser.getControl('Submit')
     Traceback (most recent call last):
     ...

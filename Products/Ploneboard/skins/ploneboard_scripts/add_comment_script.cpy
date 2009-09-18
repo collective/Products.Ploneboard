@@ -36,6 +36,9 @@ else:
     return state.set(status='failure')
 
 if m:
+    if creator != 'Anonymous User':
+        putils.acquireLocalRoles(m, 0)
+
     context.portal_ploneboard.clearUploadedFiles()
     new_context = m
 
