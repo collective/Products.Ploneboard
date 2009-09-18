@@ -39,6 +39,7 @@
      factory=".adapters.CommentTextContent"
      />
 
+  <adapter factory='.catalog.num_comments' name='num_comments' />
 
   <include package=".browser" />
   <include package=".portlet" />
