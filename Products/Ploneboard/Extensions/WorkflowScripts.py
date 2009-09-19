@@ -51,3 +51,12 @@ def reject_script(self, sci):
                     wftool.doActionFor(parent, 'reject')
             except:
                 pass
+
+def lock_or_unlock(self, sci):
+    """ locks or unlocks board """
+    obj = sci.object
+    if sci.old_state.id == 'locked':
+        obj.unlock_board()
+    elif sci.new_state.id == 'locked':
+        obj.lock_board()
+
