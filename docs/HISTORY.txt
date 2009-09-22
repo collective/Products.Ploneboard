@@ -137,3 +137,9 @@ TBD
 
 - Make toPloneboardTime obsolete as a PythonScript. It is now a method in the view class.
   [sureshvv]
+
+- User can edit thier and only their comments using PlacefulWorkflow
+  [sureshvv]
+
+- Added workflow to lock an entire message board (changeset 97822)
+  [sureshvv]

@@ -119,7 +119,9 @@ A member cannot edit his own comment - no changing of history! Verify that there
 is no 'Edit' button present.
 
     >>> browser.getControl('Edit', index=0)
-    <SubmitControl name=None type='submit'>
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Edit'
 
 Delete a comment
 ----------------

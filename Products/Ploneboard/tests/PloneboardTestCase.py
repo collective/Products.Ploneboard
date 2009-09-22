@@ -2,11 +2,12 @@ from Testing import ZopeTestCase
 
 # Make the boring stuff load quietly
 ZopeTestCase.installProduct('SimpleAttachment')
+ZopeTestCase.installProduct('CMFPlacefulWorkflow')
 ZopeTestCase.installProduct('Ploneboard')
 
 from Products.PloneTestCase import PloneTestCase
 
-PloneTestCase.setupPloneSite(products=('SimpleAttachment', 'Ploneboard'))
+PloneTestCase.setupPloneSite(products=('SimpleAttachment', 'CMFPlacefulWorkflow', 'Ploneboard'))
 
 
 class PloneboardTestCase(PloneTestCase.PloneTestCase):

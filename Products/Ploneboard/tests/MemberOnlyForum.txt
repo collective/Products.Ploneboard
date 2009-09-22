@@ -26,7 +26,7 @@ and the navtree.
     >>> self.portal.left_slots = self.portal.right_slots = []
     >>> workflow = self.portal.portal_workflow
 
-Verify that the forum is indeed a member-posting one by default and log in:
+Make the forum member-only
 
     >>> workflow.doActionFor(self.forum, 'make_private')
     >>> workflow.getInfoFor(self.forum, 'review_state')
@@ -120,7 +120,9 @@ A member cannot edit his own comment - no changing of history! Verify that there
 is no 'Edit' button present.
 
     >>> browser.getControl('Edit', index=0)
-    <SubmitControl name=None type='submit'>
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Edit'
 
 Delete a comment
 ----------------

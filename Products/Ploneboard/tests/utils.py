@@ -1,5 +1,6 @@
 import Products.Five
 import Products.ATContentTypes
+from Products.CMFPlacefulWorkflow.WorkflowPolicyConfig import manage_addWorkflowPolicyConfig
 
 from DateTime import DateTime
 
@@ -42,3 +43,12 @@ def logoutThenLoginAs(self, browser, userid):
     browser.getControl(name='__ac_password').value = 'secret'
     browser.getControl('Log in').click()
     return
+
+def setupEditableForum(self, forum):
+    self.setRoles(('Manager',))
+    manage_addWorkflowPolicyConfig(forum)
+    pw_tool = self.portal.portal_placeful_workflow
+    config = pw_tool.getWorkflowPolicyConfig(forum)
+    config.setPolicyIn(policy='EditableComment')
+    config.setPolicyBelow(policy='EditableComment', update_security=True)
+    self.setRoles(('Member',))
