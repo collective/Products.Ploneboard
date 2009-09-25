@@ -9,5 +9,14 @@
         addview=".recent.AddForm"
         editview=".recent.EditForm"
         />
-
+    
+	<plone:portlet
+        name="ploneboard.ActiveUsers"
+        interface=".active_users.IActiveUsersPortlet"
+        assignment=".active_users.Assignment"
+        renderer=".active_users.Renderer"
+        addview=".active_users.AddForm"
+        editview=".active_users.EditForm"
+        />
+		
 </configure>

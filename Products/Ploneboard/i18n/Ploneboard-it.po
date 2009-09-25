@@ -607,3 +607,28 @@ msgstr "Titolo della portlet"
 msgid "title_unanswered_conversations"
 msgstr "Messaggi senza risposta in ${title}"
 
+#. Default: "Portlet title"
+#: ./portlet/active_users.py:22
+msgid "header"
+msgstr "Titolo della portlet"
+
+#. Default: "Number of users to display"
+#: ./portlet/active_users.py:27
+msgid "num_users"
+msgstr "Numero degli utenti da mostrare"
+
+#. Default: "How many users to list."
+#: ./portlet/active_users.py:27
+msgid "help_num_users"
+msgstr "Quanti utenti mostrare."
+
+#. Default: "Number of day to count the comments"
+#: ./portlet/active_users.py:22
+msgid "start_date"
+msgstr "Numero di giorni da cui conteggiare i commenti"
+
+#. Default: "How many users to list."
+#: ./portlet/active_users.py:27
+msgid "help_start_date"
+msgstr "Inserisci un numero per contare i messaggi scritti da un utente negli ultimi x giorni."
+
