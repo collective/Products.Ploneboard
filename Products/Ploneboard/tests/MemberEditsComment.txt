@@ -25,12 +25,6 @@ and the navtree.
     >>> self.portal.left_slots = self.portal.right_slots = []
     >>> workflow = self.portal.portal_workflow
 
-Setup placeful workflow so comment is editable
-----------------------------------------------
-
-    >>> utils.setupEditableForum(self, self.board.forum1)
-
-
     >>> utils.logoutThenLoginAs(self, browser, 'member1')
 
 View forum
@@ -48,6 +42,11 @@ If we go to the forum, there are no conversations shown.
     >>> browser.contents
     '...No conversations in this forum yet...'
 
+Setup placeful workflow so comment is editable
+----------------------------------------------
+
+    >>> utils.setupEditableForum(self, self.board.forum1)
+
 Add a new conversation
 ----------------------
 
@@ -58,7 +57,7 @@ text can contain HTML as well.
     >>> browser.url
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'New title'
-    >>> browser.getControl('Body text').value = 'Some <b>body</b> text'
+    >>> browser.getControl(name='text').value = 'Some <b>body</b> text'
 
 We have attachment buttons, although we won't upload anything now.
 INFO: This test fails (LookupError: name 'files:list') if SimpleAttachment is not installed.
@@ -83,8 +82,19 @@ Edit own comment
 
 Now a member can edit his own comment
 
-    >>> browser.getControl('Edit', index=0)
-    <SubmitControl name=None type='submit'>
+    >>> browser.getControl('Edit', index=0).click()
+    >>> browser.getControl(name='text').value = 'Some <b>Other</b> text'
+
+    >>> browser.getControl(name='form_submit').click()
+    >>> browser.url.startswith(self.forum.absolute_url())
+    True
+    >>> conversation = self.forum.getConversations()[0]
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s.*$' % conversation.getId())).click()
+
+    >>> browser.contents
+    '...Some <b>Other</b> text...'
 
     >>> utils.logoutThenLoginAs(self, browser, 'member2')
 

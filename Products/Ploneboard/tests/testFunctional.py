@@ -25,7 +25,7 @@ OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
 def list_doctests():
     home = package_home(GLOBALS)
     return [filename for filename in
-            glob.glob(os.path.sep.join([home, 'tests', 'MemberEditsComment.txt']))]
+            glob.glob(os.path.sep.join([home, 'tests', '*.txt']))]
 
 def list_nontestbrowser_tests():
     return [filename for filename in list_doctests()
