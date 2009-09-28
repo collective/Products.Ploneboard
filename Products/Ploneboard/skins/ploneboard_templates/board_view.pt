@@ -151,7 +151,10 @@
 
       <table metal:use-macro="here/board_view/macros/forumdisplay" />
     </tal:category>
-
+	<div tal:condition="here/getText"
+		  tal:replace="structure here/getText">
+		some text
+	</div>
     <metal:footer use-macro="here/board_footer/macros/footer">
       Board footer
     </metal:footer>

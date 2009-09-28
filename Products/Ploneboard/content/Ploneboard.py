@@ -5,7 +5,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, LinesField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, LinesWidget
+from Products.Archetypes.public import TextAreaWidget, LinesWidget,RichWidget
 
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 
@@ -35,6 +35,18 @@ schema = BaseBTreeFolderSchema + Schema((
                    label = "Categories",
                    label_msgid = "label_categories_board",
                    i18n_domain = "ploneboard")),
+    TextField('text',
+              searchable = False,
+              default_content_type = 'text/html',
+              default_output_type = 'text/x-html-safe',
+              allowable_content_types=('text/html',
+                                       'text/plain'),
+              accessor='getText',
+              widget = RichWidget(label = "Text",
+                                  label_msgid = "label_text",
+                                  rows = 5,
+                                  helper_css = ('ploneboard.css',)
+                                  )),
     ))
 
 utils.finalizeSchema(schema)
