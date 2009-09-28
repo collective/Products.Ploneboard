@@ -4,6 +4,7 @@ Changelog
 2.0.2-branch_redturtle (2009-09-25)
 -------------------------------------
 * aggiunta portlet per visualizzare gli utenti con più commenti negli ultimi tot giorni [andrea]
+* aggiunto campo di testo nel forum, per mettere una descrizione più complessa [andrea]
 
 
 2.0.1 - Branch redturtle (????-??-??)
