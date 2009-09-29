@@ -13,6 +13,7 @@
             tal:define="oddrow repeat/item/odd"
             tal:attributes="class python:oddrow and  'portletItem odd' or 'portletItem even'">
             <div>
+            	<span tal:content="string:${repeat/item/number}. ">1</span>
             	<a href="" tal:attributes="href python:view.getSearchUrl(item[0])">
                 <span tal:content="python:view.getUserName(item[0])+' (%d)'%item[1]"/>
 				</a>
