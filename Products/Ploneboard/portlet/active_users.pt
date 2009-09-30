@@ -1,14 +1,14 @@
 <tal:block condition="view/available"
            i18n:domain="ploneboard">
-<dl class="portlet portletPloneboardRecent">
+<dl class="portlet portletPloneboardActiveUsers">
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
         <span tal:content="view/title">Recent conversations</span>
         <span class="portletTopRight"></span>
     </dt>
 
-    <tal:items tal:repeat="item view/results"
-				tal:condition="view/results">
+    <tal:items tal:repeat="item view/getUsers"
+				tal:condition="view/getUsers">
         <dd class="portletItem"
             tal:define="oddrow repeat/item/odd"
             tal:attributes="class python:oddrow and  'portletItem odd' or 'portletItem even'">
@@ -20,7 +20,6 @@
             </div>
         </dd>
     </tal:items>
-
     <dd class="portletFooter">
         <span class="portletBottomLeft"></span>
         <span class="portletBottomRight"></span>

@@ -58,7 +58,7 @@ class Assignment(base.Assignment):
 class Renderer(base.Renderer):
     
     @memoize
-    def results(self):
+    def getUsers(self):
         """return a list of users and the number of comments"""
         pc=getToolByName(self.context, "portal_catalog")
         now = DateTime()
