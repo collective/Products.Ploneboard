@@ -25,18 +25,21 @@ class SearchView(BrowserView):
 
 
     def update(self):
-        if "q" not in self.request.form:
-            self.results=[]
-            return
-
-        text=self.request.form["q"]
-        for char in [ "(", ")" ]:
-            text=text.replace(char, '"%s"' % char)
-
         ct=getToolByName(self.context, "portal_catalog")
-        self.results=ct(
-                object_provides="Products.Ploneboard.interfaces.IComment",
-               SearchableText=text)
+        if 'q' not in self.request.form:
+            self.results=ct(portal_type=self.request.form.get('portal_type'),
+                            sort_on=self.request.form.get('sort_on'),
+                            sort_order=self.request.form.get('sort_order'),
+                            Creator=self.request.form.get('Creator'))
+            return
+        else:
+            text=self.request.form["q"]
+            for char in [ "(", ")" ]:
+                text=text.replace(char, '"%s"' % char)
+    
+            self.results=ct(
+                    object_provides="Products.Ploneboard.interfaces.IComment",
+                   SearchableText=text)
 
 
     def info(self, brain):

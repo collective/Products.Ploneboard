@@ -82,11 +82,23 @@ class Renderer(base.Renderer):
             return user_info.get('fullname')
         else:
             return user
-       
+    
+    @memoize  
+    def getBoardName(self):
+        result = self.context.portal_catalog(portal_type='Ploneboard')
+        if result:
+            return result[0].Title
+        else:
+            return ""
+        
     def getSearchUrl(self,user):
         """return the url to make the search of all comments of an user"""
         root_url= '/'.join(self.context.portal_url.getPortalObject().getPhysicalPath())
-        url = root_url+'/search?Creator=%s&sort_on=created&sort_order=reverse&portal_type=PloneboardComment'%user
+        board_name= self.getBoardName()
+        if board_name:
+            url = root_url+'/%s/search?Creator=%s&sort_on=created&sort_order=reverse&portal_type=PloneboardComment'%(board_name,user)
+        else:
+            url = root_url+'/search?Creator=%s&sort_on=created&sort_order=reverse&portal_type=PloneboardComment'%user
         return url
 
 

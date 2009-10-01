@@ -6,7 +6,6 @@
         <span tal:content="view/title">Recent conversations</span>
         <span class="portletTopRight"></span>
     </dt>
-
     <tal:items tal:repeat="item view/getUsers"
 				tal:condition="view/getUsers">
         <dd class="portletItem"
