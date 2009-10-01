@@ -87,7 +87,7 @@ class Renderer(base.Renderer):
     def getBoardName(self):
         result = self.context.portal_catalog(portal_type='Ploneboard')
         if result:
-            return result[0].Title
+            return result[0].id
         else:
             return ""
         
