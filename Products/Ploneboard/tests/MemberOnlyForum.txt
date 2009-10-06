@@ -26,7 +26,7 @@ and the navtree.
     >>> self.portal.left_slots = self.portal.right_slots = []
     >>> workflow = self.portal.portal_workflow
 
-Verify that the forum is indeed a member-posting one by default and log in:
+Make the forum member-only
 
     >>> workflow.doActionFor(self.forum, 'make_private')
     >>> workflow.getInfoFor(self.forum, 'review_state')

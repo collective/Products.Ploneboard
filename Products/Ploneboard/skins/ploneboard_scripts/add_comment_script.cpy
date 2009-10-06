@@ -12,6 +12,7 @@
 from AccessControl import Unauthorized
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from Products.CMFCore import permissions
 
 pm = getToolByName(context, 'portal_membership')
 wf = getToolByName(context, 'portal_workflow')
@@ -36,6 +37,9 @@ else:
     return state.set(status='failure')
 
 if m:
+    if pm.checkPermission('Modify Portal Content', m):
+        putils.acquireLocalRoles(m, 0)
+
     context.portal_ploneboard.clearUploadedFiles()
     new_context = m
 
