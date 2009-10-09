@@ -16,6 +16,7 @@ from Products.Ploneboard.config import GLOBALS
 from Products.Ploneboard.tests.PloneboardTestCase import PloneboardFunctionalTestCase
 
 REQUIRE_TESTBROWSER = ['MemberPostingForum.txt', 'MemberOnlyForum.txt', 
+                        'MemberEditsComment.txt', 'AdminLocksBoard.txt',
                         'FreeForAllForum.txt', 'ModeratedForum.txt']
 
 OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |

@@ -1,4 +1,4 @@
-Member edits comment
+Admin locks board
 ====================
 
 Test starting conversations, replying and modifying comments in a default
@@ -42,11 +42,6 @@ If we go to the forum, there are no conversations shown.
     >>> browser.contents
     '...No conversations in this forum yet...'
 
-Setup placeful workflow so comment is editable
-----------------------------------------------
-
-    >>> utils.setupEditableForum(self, self.board.forum1)
-
 Add a new conversation
 ----------------------
 
@@ -77,47 +72,73 @@ should exist, and we should be able to view it.
     >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
 
 
-Edit own comment
+Lock the board
 ----------------
 
-Now a member can edit his own comment
+    >>> workflow.getInfoFor(self.board, 'review_state')
+    'published'
 
-    >>> browser.getControl('Edit', index=0).click()
-    >>> browser.getControl(name='text').value = 'Some <b>Other</b> text'
+    >>> utils.lockBoard(self, 'lock')
 
-    >>> browser.getControl(name='form.button.save').click()
-    >>> browser.url.startswith(self.forum.absolute_url())
-    True
+    >>> workflow.getInfoFor(self.board, 'review_state')
+    'locked'
+
+Now navigate to the forum. You will not be able to add a new conversation.
+
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getControl('Start a new Conversation')
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Start a new Conversation'
+
+Navigate to a conversation. You will not be able to add a reply.
+
     >>> conversation = self.forum.getConversations()[0]
 
     >>> import re
-    >>> browser.getLink(url=re.compile('\/%s.*$' % conversation.getId())).click()
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+    >>> browser.getControl(name='text')
+    Traceback (most recent call last):
+    ...
+    LookupError: name 'text'
 
-    >>> browser.contents
-    '...Some <b>Other</b> text...'
+Unlock the board
+----------------
 
-    >>> utils.logoutThenLoginAs(self, browser, 'member2')
+    >>> utils.lockBoard(self, 'unlock')
 
-View forum
-----------
+    >>> workflow.getInfoFor(self.board, 'review_state')
+    'published'
 
-The forum created behind the scenes should now be shown here.
+Now navigate to the forum. You should be able to add a new conversation.
 
-    >>> browser.open(self.board.absolute_url())
-    >>> browser.contents
-    '...Forum 1...'
-    >>> browser.getLink('Forum 1').click()
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.url
+    '.../add_conversation_form...'
+    >>> browser.getControl('Title').value = 'Unlocked'
+    >>> browser.getControl(name='text').value = 'Some <b>unlocked</b> text'
+
+Submit the form, and we should be returned to the forum view. The conversation
+should exist, and we should be able to view it.
+
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(self.forum.absolute_url())
+    True
+
+Navigate to a conversation. You should be able to add a reply.
+
+    >>> conversation = self.forum.getConversations()[0]
 
     >>> import re
     >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
 
+Add a comment to our own comment. Use the quick-reply field first.
 
-Cannot edit someone else's comment
------------------------------------
+    >>> browser.getControl(name='text').value = 'An unlocked reply'
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(conversation.absolute_url())
+    True
+    >>> browser.contents
+    '...An unlocked reply...'
 
-Now a member can edit his own comment
-
-    >>> browser.getControl('Edit', index=0)
-    Traceback (most recent call last):
-    ...
-    LookupError: label 'Edit'

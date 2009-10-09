@@ -52,3 +52,8 @@ def setupEditableForum(self, forum):
     config.setPolicyIn(policy='EditableComment')
     config.setPolicyBelow(policy='EditableComment', update_security=True)
     self.setRoles(('Member',))
+
+def lockBoard(self, state):
+    self.setRoles(('Manager',))
+    self.workflow.doActionFor(self.board, state)
+    self.setRoles(('Member',))
