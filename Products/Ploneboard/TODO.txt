@@ -46,3 +46,11 @@ Ploneboard to-do list
     -------------------
 
     - Mail/news gateway - possibility of integrating with 'listen'?
+
+    Performance
+    -----------
+
+    We can make more cache friendly data structures in views.
+
+    On creation, it starts out at 0.1s per comment, after 4000 comments
+    it's up to 0.13s per comment.

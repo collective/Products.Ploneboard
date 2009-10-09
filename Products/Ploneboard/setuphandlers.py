@@ -6,6 +6,8 @@ except ImportError:
         def generate_sentence(self):return 'subject'
         def generate_paragraph(self):return 'Please install lorem-ipsum-generator.'
 
+import transaction
+from time import time
 from random import betavariate
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE
@@ -30,31 +32,47 @@ def addTransforms(site):
     pb_tool.registerTransform('safe_html', SAFE_HTML_TRANSFORM_MODULE, 'Remove dangerous HTML')
 
 def lotsofposts(context):
+    debug = True
 
     if not context.readDataFile('ploneboard_lotsofposts.txt'):
         return
 
-    sample = 'This is an example text. It is simple text. Like in school'
-    dictionary = 'Python PHP Vignette Java Sun Guido time-travel machine state Lisp Prolog logic Plone release developer Budapest'
+    sample = context.readDataFile('rabbit.txt')
+    dictionary = context.readDataFile('vocab.txt')
     mg = markupgenerator(sample=sample, dictionary=dictionary)
 
     # XXX CREATE 1000 REAL USERS WITH AVATARS FOR POSTING
 
     # For every forum, create random content for a total of a configurable number
-    count = 100
+    totalgoal = 100000
     site=context.getSite()
     board = site.ploneboard # From the basicboard dependency
     forums = board.getForums()
     for forum in forums:
+        count = int(totalgoal * betavariate(1, len(forums)-1))
         i = 0
         while i < count:
+            start = time()
             conv = forum.addConversation(mg.generate_sentence(), mg.generate_paragraph())
             i+=1
+            if debug:
+                print "Creating conversation %s of %s in %s in %.5fs" % (i, count, forum.getId(), time()-start)
+            if i % 1000 == 0:
+                transaction.get().savepoint(optimistic=True)
+                if debug:
+                    print "\nSAVEPOINT\n"
             # XXX add arbitrary number of comments, which all count towards count
-            for j in range(0,int(betavariate(1, 5) * (count/10))):
+            for j in range(0,int(betavariate(1, 5) * max(300,(count/10)))):
                 if i < count:
+                    start = time()
                     conv.addComment(mg.generate_sentence(), mg.generate_paragraph())
                     i+=1
+                    if debug:
+                        print "Creating comment      %s of %s in %s in %.5fs" % (i, count, forum.getId(), time()-start)
+                    if i % 1000 == 0:
+                        transaction.get().savepoint(optimistic=True)
+                        if debug:
+                            print "\nSAVEPOINT\n"
                 else:
                     continue
 

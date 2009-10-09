@@ -7,8 +7,8 @@ import unittest
 from funkload.FunkLoadTestCase import FunkLoadTestCase
 from webunit.utility import Upload
 from funkload.utils import Data
-from BeautifulSoup import BeautifulSoup
 from StringIO import StringIO
+from utils import getPostUrlFromForum, getReplyUrlFromConversation, getForumUrlsFromBoard
 #from funkload.utils import xmlrpc_get_credential
 
 class Viewboard(FunkLoadTestCase):
@@ -37,57 +37,28 @@ class Viewboard(FunkLoadTestCase):
         # begin of test ---------------------------------------------
 
         self.setBasicAuth('admin', 'admin')
-        self.get(server_url + site + "/ploneboard",
+        res = self.get(server_url + site + "/ploneboard",
             description="Get /pb/ploneboard")
 
-        self.get(server_url + site + "/ploneboard/python",
-            description="Get /pb/ploneboard/python")
+        forumurls = getForumUrlsFromBoard(res)
 
-        self.get(server_url + site + "/ploneboard/python/add_conversation_form",
-            description="Get /pb/ploneboard/pyth...d_conversation_form")
+        for forumurl in forumurls:
 
-        res = self.post(server_url + site + "/ploneboard/python/add_conversation_form", params=[
-            ['form.submitted', '1'],
-            ['title', 'This is a test posting in the python forum'],
-            ['text_text_format:default', 'text/html'],
-            ['text', '\r\n<p>Guido rocks!</p>\r\n<p>Plone rocks!</p>\r\n<p>Ploneboard rocks!</p>\r\n'],
-            ['files:list', Upload("")],
-            ['form.button.Post', 'Post comment']],
-            description="Post /pb/ploneboard/pyth...d_conversation_form")
-        soup = BeautifulSoup(res.body)
-        posts = soup.findAll('a', attrs={'class':'state-active'})
-        url = posts[0].attrMap['href']
+            res = self.get(forumurl,
+                description="Get forum")
 
-        res = self.get(url,
-            description="Get latest posting")
-        soup = BeautifulSoup(res.body)
-        url = soup.findAll('input', value='Reply to this')[0].parent.attrs[0][1].split('#')[0]
+            url = getPostUrlFromForum(res, 0)
 
-        self.get(url + "?title=This+is+a+test+posting+in+the+python+forum",
-            description="Get add comment form")
+            self.get(url,
+                description="Get latest posting")
 
-        self.post(url, params=[
-            ['form.submitted', '1'],
-            ['title', 'Re: This is a test posting in the python forum'],
-            ['text_text_format:default', 'text/html'],
-            ['text', 'Previously admin wrote:\r\n<blockquote>\r\n<p>Guido rocks!</p>\r\n<p>Plone rocks!</p>\r\n<p>Ploneboard rocks!</p>\r\n</blockquote>\r\n<p>Zope rocks too!</p>\r\n'],
-            ['files:list', Upload("")],
-            ['form.button.Post', 'Post comment']],
-            description="Post comment")
+            url = getPostUrlFromForum(res, 1)
+            self.get(url,
+                description="Get second last post")
 
-        res = self.get(server_url + site + "/ploneboard/python",
-            description="Get /pb/ploneboard/python")
-        soup = BeautifulSoup(res.body)
-        posts = soup.findAll('a', attrs={'class':'state-active'})
-        url = posts[1].attrMap['href']
-        self.get(url,
-            description="Get second last post")
-
-        self.get(server_url + site + "/ploneboard/python",
-            description="Get /pb/ploneboard/python")
-
-        self.get(server_url + site + "/ploneboard",
-            description="Get /pb/ploneboard")
+            url = getPostUrlFromForum(res, 3)
+            self.get(url,
+                description="Get third last post")
 
         # end of test -----------------------------------------------
 
