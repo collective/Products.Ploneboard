@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Create conversations data structure in forum view as list of dicts.
+  This can be easily cached, although there is no support for it yet.
+  [tesdal]
+
 - Create comment automatically in conversation if adding conversation
   with text.
   [tesdal]

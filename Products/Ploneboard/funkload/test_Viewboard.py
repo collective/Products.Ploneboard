@@ -45,20 +45,20 @@ class Viewboard(FunkLoadTestCase):
         for forumurl in forumurls:
 
             res = self.get(forumurl,
-                description="Get forum")
+                description="Get forum %s" % forumurl.split('/')[-1])
 
             url = getPostUrlFromForum(res, 0)
 
             self.get(url,
-                description="Get latest posting")
+                description="Get latest posting in %s" % forumurl.split('/')[-1])
 
-            url = getPostUrlFromForum(res, 1)
-            self.get(url,
-                description="Get second last post")
-
-            url = getPostUrlFromForum(res, 3)
-            self.get(url,
-                description="Get third last post")
+            #url = getPostUrlFromForum(res, 1)
+            #self.get(url,
+            #    description="Get second last post")
+            #
+            #url = getPostUrlFromForum(res, 2)
+            #self.get(url,
+            #    description="Get third last post")
 
         # end of test -----------------------------------------------
 

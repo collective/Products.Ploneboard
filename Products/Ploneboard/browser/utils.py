@@ -5,6 +5,7 @@ from DateTime.DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import PloneMessageFactory as _plone
 from Products.CMFPlone import PloneLocalesMessageFactory as _locales
+from Products.Ploneboard.interfaces import IConversation, IComment
 import time
 
 
@@ -67,3 +68,19 @@ def toPloneboardTime(context, request, time_=None):
         pass 
 
     return ploneboard_time
+
+def getNumberOfComments(node, catalog=None):
+    """Returns the number of comments to this forum."""
+    if catalog is None:
+        catalog = getToolByName(node, 'portal_catalog')
+    return len(catalog(
+        object_provides=IComment.__identifier__,
+        path='/'.join(node.getPhysicalPath())))
+
+def getNumberOfConversations(node, catalog=None):
+    """Returns the number of conversations in this forum."""
+    if catalog is None:
+        catalog = getToolByName(node, 'portal_catalog')
+    return len(catalog(
+        object_provides=IConversation.__identifier__,
+        path='/'.join(node.getPhysicalPath())))

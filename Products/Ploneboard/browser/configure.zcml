@@ -24,8 +24,8 @@
   <browser:page
      for="..interfaces.IForum"
      class=".forum.ForumView"
-     name="forum_browserview"
-     allowed_attributes="toPloneboardTime"
+     name="view"
+     template="templates/forum.pt"
      permission="zope2.View"
      />
 

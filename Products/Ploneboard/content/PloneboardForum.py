@@ -7,7 +7,7 @@ from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
 
-from Products.CMFPlone.utils import _createObjectByType
+from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, LinesField, IntegerField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
@@ -187,6 +187,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getConversations')
     def getConversations(self, limit=20, offset=0):
         """Returns conversations."""
+        log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getConversations is deprecated in favor of Products.Ploneboard.browser.forum.ForumView.getConversations")
         catalog = self.getCatalog()
         return [f.getObject() for f in \
                 catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
@@ -198,6 +199,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):
         """Returns the number of conversations in this forum."""
+        log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getNumberOfConversations is deprecated in favor of Products.Ploneboard.browser.forum.ForumView.getNumberOfConversations")
         return len(self.getCatalog()(
             object_provides='Products.Ploneboard.interfaces.IConversation',
             path='/'.join(self.getPhysicalPath())))
@@ -205,6 +207,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
         """Returns the number of comments to this forum."""
+        log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getNumberOfComments is deprecated in favor of Products.Ploneboard.browser.utils.getNumberOfComments")
         return len(self.getCatalog()(
             object_provides='Products.Ploneboard.interfaces.IComment',
             path='/'.join(self.getPhysicalPath())))
