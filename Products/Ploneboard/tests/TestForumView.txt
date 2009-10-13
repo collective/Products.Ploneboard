@@ -60,7 +60,7 @@ List the conversations
       'absolute_url': 'http://nohost/plone/board1/forum1/...', 
       'Creator': 'test_user_1_', 
       'modified': DateTime('...'), 
-      'getLastCommentDate': DateTime('...'), 
+      'getLastCommentDate': u'...', 
       'review_state': 'active', 
       'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
       'getNumberOfComments': 2}, 
@@ -68,7 +68,7 @@ List the conversations
       'Title': 'C1', 
       'absolute_url': 'http://nohost/plone/board1/forum1/...', 
       'Creator': 'test_user_1_', 'modified': DateTime('...'), 
-      'getLastCommentDate': DateTime('...'), 
+      'getLastCommentDate': u'...', 
       'review_state': 'active', 
       'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
       'getNumberOfComments': 3}]

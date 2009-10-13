@@ -48,7 +48,7 @@ class ForumView(Five.BrowserView):
 
             data = dict(review_state=conversation.review_state,
                         absolute_url=conversation.getURL(),
-                        getNumberOfComments=None,
+                        getNumberOfComments=conversation.num_comments,
                         modified=conversation.modified,
                         Title=conversation.Title,
                         Creator=conversation.Creator,
@@ -68,11 +68,7 @@ class ForumView(Five.BrowserView):
                 lastcomment = tmp[0]
                 data['getLastCommentUrl'] =       lastcomment.getURL()
                 data['getLastCommentAuthor'] = lastcomment.Creator # Register member id for later lookup
-                data['getLastCommentDate']   = lastcomment.created
-
-            data['getNumberOfComments'] =len(self.catalog(
-                                             object_provides='Products.Ploneboard.interfaces.IComment',
-                                             path=conversation.getPath()))
+                data['getLastCommentDate']   = self.toPloneboardTime(lastcomment.created)
 
             res.append(data)
         return res

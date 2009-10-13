@@ -32,8 +32,8 @@
   <browser:page
      for="..interfaces.IPloneboard"
      class=".board.BoardView"
-     name="board_browserview"
-     allowed_attributes="toPloneboardTime"
+     name="ploneboard_view"
+     template="templates/board.pt"
      permission="zope2.View"
      />
 

@@ -188,7 +188,7 @@
                             </a>                                                                                        
                             <span
                                   class="discreet"
-                                  tal:content="python:view.toPloneboardTime(conversation['getLastCommentDate'])">
+                                  tal:content="conversation/getLastCommentDate">
                                 Thursday 13:21
                             </span>
                           </td>

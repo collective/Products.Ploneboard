@@ -17,6 +17,7 @@ from Products.Archetypes.public import DisplayList
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
 from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation, MoveConversation
 from Products.Ploneboard.interfaces import IPloneboard, IForum
+from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
 from Products.CMFPlone.interfaces.NonStructuralFolder \
@@ -171,7 +172,7 @@ class PloneboardForum(BaseBTreeFolder):
         #return self._getOb(conversation_id, default)
         catalog = self.getCatalog()
         conversations = catalog(
-                object_provides='Products.Ploneboard.interfaces.IConversation',
+                object_provides=IConversation.__identifier__,
                 getId=conversation_id,
                 path='/'.join(self.getPhysicalPath()))
         if conversations:
@@ -190,7 +191,7 @@ class PloneboardForum(BaseBTreeFolder):
         log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getConversations is deprecated in favor of Products.Ploneboard.browser.forum.ForumView.getConversations")
         catalog = self.getCatalog()
         return [f.getObject() for f in \
-                catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
+                catalog(object_provides=IConversation.__identifier__,
                         sort_on='modified',
                         sort_order='reverse',
                         sort_limit=(offset+limit),
@@ -201,13 +202,13 @@ class PloneboardForum(BaseBTreeFolder):
         """Returns the number of conversations in this forum."""
         log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getNumberOfConversations is deprecated in favor of Products.Ploneboard.browser.forum.ForumView.getNumberOfConversations")
         return len(self.getCatalog()(
-            object_provides='Products.Ploneboard.interfaces.IConversation',
+            object_provides=IConversation.__identifier__,
             path='/'.join(self.getPhysicalPath())))
 
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
         """Returns the number of comments to this forum."""
-        log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getNumberOfComments is deprecated in favor of Products.Ploneboard.browser.utils.getNumberOfComments")
+        log_deprecated("Products.Ploneboard.content.PloneboardForum.PloneboardForum.getNumberOfComments is deprecated in favor of Products.Ploneboard.browser.forum.ForumView.getNumberOfComments")
         return len(self.getCatalog()(
             object_provides='Products.Ploneboard.interfaces.IComment',
             path='/'.join(self.getPhysicalPath())))
@@ -219,7 +220,7 @@ class PloneboardForum(BaseBTreeFolder):
         """
         # XXX Is Created or Modified the most interesting part?
         res = self.getCatalog()(
-                object_provides='Products.Ploneboard.interfaces.IConversation',
+                object_provides=IConversation.__identifier__,
                 sort_on='created', sort_order='reverse', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
         if res:

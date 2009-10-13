@@ -10,16 +10,16 @@
  <property name="content_meta_type">Ploneboard</property>
  <property name="product">Ploneboard</property>
  <property name="factory">addPloneboard</property>
- <property name="immediate_view">board_view</property>
+ <property name="immediate_view">ploneboard_view</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
   <element value="PloneboardForum"/>
  </property>
  <property name="allow_discussion">False</property>
- <property name="default_view">board_view</property>
+ <property name="default_view">ploneboard_view</property>
  <property name="view_methods">
-  <element value="board_view"/>
+  <element value="ploneboard_view"/>
   <element value="board_view_global"/>
  </property>
  <alias from="(Default)" to="(dynamic view)"/>
