@@ -5,14 +5,14 @@
 <body>
     <div metal:define-macro="footer" tal:omit-tag="">
 
-    <div class="poweredBy"
+    <!--div class="poweredBy"
          i18n:translate="label_powered_by">
       Powered by 
       <span i18n:name="link">
         <a class="link-plain" 
            href="http://plone.org/products/ploneboard">Ploneboard</a>
       </span>
-    </div>
+    </div-->
                 
 
     </div>

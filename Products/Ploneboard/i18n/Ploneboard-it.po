@@ -160,7 +160,7 @@ msgstr "Anteprima commento"
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
 msgid "help_body_attachments_posting"
-msgstr "Seleziona un file da allegare al commento"
+msgstr "Seleziona un file da allegare al commento."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt
@@ -632,3 +632,7 @@ msgstr "Numero di giorni da cui conteggiare i commenti"
 msgid "help_start_date"
 msgstr "Inserisci un numero per contare i messaggi scritti da un utente negli ultimi x giorni."
 
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ./skins/ploneboard_templates/add_comment_form.cpt:134
+msgid "help_body_attachments_maxsize"
+msgstr "La dimenzione massima dell'allegato è di ${maxsize} kilobyte."
