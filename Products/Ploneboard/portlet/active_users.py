@@ -61,16 +61,19 @@ class Renderer(base.Renderer):
     def getUsers(self):
         """return a list of users and the number of comments"""
         pc=getToolByName(self.context, "portal_catalog")
+        mtool = getToolByName(self.context, "portal_membership")
         now = DateTime()
         start = now-self.data.start_date
         brains=pc(portal_type="PloneboardComment",created={'query':[start,now],'range':'minmax'})
         users={}
         for brain in brains:
             for creator in brain.listCreators:
-                if users.get(creator,None):
-                    users[creator] +=1
-                else:
-                    users[creator] = 1
+                # Check is user exits (manage deleted users)
+                if mtool.getMemberById(creator):
+                    if users.get(creator,None):
+                        users[creator] +=1
+                    else:
+                        users[creator] = 1
         users_sort = sorted([(x,y) for x,y in users.items()], lambda item1,item2: -2*cmp(item1[1], item2[1]) + cmp(item1[0], item2[0]))
         return users_sort[:self.data.num_users]
     
@@ -78,6 +81,8 @@ class Renderer(base.Renderer):
         """ return fullname of an user, or if it doesn't exist, the userid"""
         pm = getToolByName(self.context, 'portal_membership')
         user_info = pm.getMemberInfo(user)
+        if not user_info:
+            return user
         if user_info.get('fullname'):
             return user_info.get('fullname')
         else:
