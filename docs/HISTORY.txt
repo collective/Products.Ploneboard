@@ -4,6 +4,8 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Set up dependencies correctly.
+  [tesdal]
 
 2.1b1 - 20091019
 ----------------

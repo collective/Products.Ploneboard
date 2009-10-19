@@ -32,5 +32,6 @@ setup(name='Products.Ploneboard',
         'plone.memoize',
         'plone.i18n',
         'python-dateutil',
+        'Plone >= 3.3',
       ],
 )
