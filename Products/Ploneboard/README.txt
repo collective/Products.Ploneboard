@@ -1,6 +1,6 @@
 Overview
 
-  Ploneboard is an easy to use web board. It utilizes the proven Plone user
+  Ploneboard is an easy to use web board. It uses the proven Plone user
   interface, and is made for easy integration into Plone sites. The target
   audience is businesses and developers wanting a discussion board in their
   Plone site.
