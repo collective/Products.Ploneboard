@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+
+2.1b1 - 20091019
+----------------
+
 - Create forums data structure in board view as dict of dicts.
   [tesdal]
 
