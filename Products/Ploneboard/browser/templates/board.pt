@@ -8,7 +8,9 @@
 <body>
   <div metal:fill-slot="main"
        tal:define="categories here/getCategories|nothing;
-                   keyedforums view/getKeyedForums;">
+                   keyedforums view/getKeyedForums;
+                   portal context/@@plone_portal_state/portal;
+                   mtool context/@@plone_tools/membership">
                    
     <div tal:replace="structure provider:plone.abovecontenttitle" />
                    
@@ -35,14 +37,14 @@
             </form>
         </li>
         <li>
-          <!--plone4--img tal:replace="structure portal/new_conversation.gif" /-->
+          <img tal:replace="structure portal/new_conversation.gif" />
           <a i18n:translate="show_new_conversations_all"
              tal:attributes="href string:${context/absolute_url}/ploneboard_recent">
             Show all recent activity 
           </a>
         </li>
         <li>
-          <!--plone4--img tal:replace="structure portal/new_conversation.gif" /-->
+          <img tal:replace="structure portal/new_conversation.gif" />
           <a i18n:translate="show_no_replies_all"
              tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
             Show all unanswered 
@@ -121,10 +123,10 @@
                 <td tal:condition="author"
                     class="forumMostRecentCell">
                   <div i18n:translate="label_by_author">
-                    by <!--plone4--tal:author i18n:name="author"
+                    by <tal:author i18n:name="author"
                                    define="creator author;
-                                           creatorinfo python: tool.getMemberInfo(creator);"
-                                   content="python:creatorinfo and creatorinfo['fullname'] or creator" /-->
+                                           creatorinfo python: mtool.getMemberInfo(creator);"
+                                   content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                   </div>
                                                                                                                       
 

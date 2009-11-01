@@ -20,12 +20,14 @@
                      pss modules/Products/PythonScripts/standard;
                      DateTime nocall:modules/DateTime/DateTime;
                      last_login view/last_login;
-                     isAnon context/@@plone_portal_state/anonymous">
+                     isAnon context/@@plone_portal_state/anonymous;
+                     portal context/@@plone_portal_state/portal;
+                     mtool context/@@plone_tools/membership;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 class="documentFirstHeading">
-        <!--plone4--img src="" tal:replace="structure portal/ploneboard_forum_icon.gif" /-->
+        <img src="" tal:replace="structure portal/ploneboard_forum_icon.gif" />
         <span tal:replace="here/Title">Forum title</span>
         </h1>
 
@@ -143,16 +145,16 @@
                             <a href=""
                                tal:attributes="href conv_url;
                                                class string:state-${revstate}">
-                              <!--plone4--img src="" tal:condition="python:revstate == 'locked'"
-                                          tal:replace="structure portal/lock_icon.gif" /-->
+                              <img src="" tal:condition="python:revstate == 'locked'"
+                                          tal:replace="structure portal/lock_icon.gif" />
                                 <span tal:replace="conversation/Title">This is a title</span>
                               
 
                                 <span class="discreet" i18n:translate="label_by_author">
-                                       by <!--plone4--tal:author i18n:name="author"
+                                       by <tal:author i18n:name="author"
                                                define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
-                                               content="python:creatorinfo and creatorinfo['fullname'] or creator" /-->
+                                               content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                                 </span>
                             
                             </a>
@@ -177,10 +179,10 @@
                           <td>
                              <a href="#" tal:attributes="href string:${conversation/getLastCommentUrl}">
                                <span i18n:translate="label_by_author">
-                                 by <!--plone4--tal:author i18n:name="author"
+                                 by <tal:author i18n:name="author"
                                          define="creator conversation/getLastCommentAuthor;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
-                                         content="python:creatorinfo and creatorinfo['fullname'] or creator" /-->
+                                         content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                               </span>
                             </a>                                                                                        
                             <span

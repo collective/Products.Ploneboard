@@ -20,8 +20,7 @@ from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
-from Products.CMFPlone.interfaces \  #--plone4--
-    import INonStructuralFolder as ZopeTwoINonStructuralFolder
+from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.Archetypes.event import ObjectInitializedEvent
 from zope import event
