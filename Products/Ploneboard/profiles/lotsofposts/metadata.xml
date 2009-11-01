@@ -1,0 +1,7 @@
+<metadata>
+  <description>Ploneboard lotsofposts</description>
+  <version>0.0.1</version>
+  <dependencies>
+  	<dependency>profile-Products.Ploneboard:basicboard</dependency>
+  </dependencies>
+</metadata>

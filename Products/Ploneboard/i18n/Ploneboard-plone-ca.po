@@ -1,0 +1,114 @@
+# translation of Ploneboard-plone-ca.po to
+# Pilar Marinas Luis <pilar.marinas@upcnet.es>, 2008.
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# never generate this file with i18ndude, it is managed manual
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard-plone-ca\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2008-12-09 08:28+0100\n"
+"Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
+"Language-Team: <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: ca\n"
+"Language-Name: Catala\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Generator: KBabel 1.11.4\n"
+
+msgid "A Forum contains conversations."
+msgstr "Un fòrum conté converses."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Un comentari conté el text del cos i metadades. "
+
+msgid "Activate"
+msgstr "Activa"
+
+msgid "Active"
+msgstr "Actiu"
+
+msgid "Comment"
+msgstr "Comentari"
+
+msgid "Conversation"
+msgstr "Conversa"
+
+msgid "Conversation contains comments."
+msgstr "La conversa conté comentaris."
+
+msgid "Free for all"
+msgstr "Obert a tothom"
+
+msgid "Hidden"
+msgstr "Ocult"
+
+msgid "Hide"
+msgstr "Ocultar"
+
+msgid "Lock"
+msgstr "Bloqueja"
+
+msgid "Make free-for-all"
+msgstr "Obrir a tothom"
+
+msgid "Make member-posting"
+msgstr "Fer membre per respondre"
+
+msgid "Make moderated"
+msgstr "Fes moderat"
+
+msgid "Message Board"
+msgstr "Fòrum"
+
+msgid "Moderate"
+msgstr "Moderat"
+
+#, fuzzy
+msgid "Moderated forum"
+msgstr "Moderat"
+
+msgid "Open"
+msgstr "Obrir"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Ploneboard és l'objecte extrem del tauler, què apareix en el teu web."
+
+msgid "Private to members only"
+msgstr "Privat només pels membres"
+
+msgid "Public"
+msgstr "Públic"
+
+msgid "Rejected"
+msgstr "Rebutjat"
+
+msgid "Require membership to post"
+msgstr "Requereix ser membre per respondre"
+
+msgid "Retracted"
+msgstr "Retractat"
+
+msgid "Waiting for moderator"
+msgstr "A l'espera del moderador"
+
+#. Flat conversion view
+#, fuzzy
+msgid "conversation_view"
+msgstr "Conversa"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "data amb format antic: ${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+#, fuzzy
+msgid "threaded_conversation_view"
+msgstr "Mostrar fil de conversa"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "data: ${wday} ${hours}:${minutes}"
+

@@ -1,0 +1,109 @@
+# Swedish translation of Ploneboard-plone.pot.
+# Martin Lundwall <martin@webworks.se>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard-plone.pot\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2008-05-25 11:29+0200\n"
+"Last-Translator: Martin Lundwall <martin@webworks.se>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language-Code: sv\n"
+"Language-Name: Svenska\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: sv-fi\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr "Aktivera"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Conversation"
+msgstr "Konversation"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr "Öppen för alla"
+
+msgid "Hidden"
+msgstr "Gömd"
+
+msgid "Hide"
+msgstr "Göm"
+
+msgid "Lock"
+msgstr "Lås"
+
+msgid "Make free-for-all"
+msgstr "Gör öppen för alla"
+
+msgid "Make member-posting"
+msgstr "Gör endast för medlemmar"
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Message Board"
+msgstr "Forum"
+
+msgid "Moderate"
+msgstr "Moderera"
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr "Öppen"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Privat endast för medlemmar"
+
+msgid "Public"
+msgstr "Publik"
+
+msgid "Rejected"
+msgstr "Avslagen"
+
+msgid "Require membership to post"
+msgstr "Kräv medlemsskap för att posta"
+
+msgid "Retracted"
+msgstr "Tillbakadraget"
+
+msgid "Waiting for moderator"
+msgstr "Väntar på moderator"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

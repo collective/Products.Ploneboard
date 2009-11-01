@@ -1,0 +1,509 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2006-10-26 12:44+0300\n"
+"Last-Translator: Darius <darkius84@yahoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-13\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: lt\n"
+"Language-Name: Lithuanian\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: ploneboard\n"
+"X-Poedit-Language: Lithuanian\n"
+"X-Poedit-Country: LITHUANIA\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+msgid "Cancel"
+msgstr ""
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:78
+msgid "Change"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
+
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr ""
+
+msgid "Forum"
+msgstr "Forumas"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt:191
+msgid "Log in to add comments"
+msgstr "Tik registruoti vartotojai gali komentuoti"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+msgid "Please correct the indicated errors."
+msgstr ""
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:72
+msgid "Post"
+msgstr ""
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/conversation_view.pt:83
+msgid "Post comment"
+msgstr "iðsaugoti"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt:180
+msgid "Reply to this"
+msgstr "Atsakyti ..."
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:78
+msgid "Start a new Conversation"
+msgstr "Pradëti naujà temà"
+
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt:83
+msgid "View profile"
+msgstr "Þiûrëti profilá"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr ""
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+msgid "add_comment"
+msgstr ""
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+msgid "add_conversation"
+msgstr ""
+
+msgid "alert_delete_popup"
+msgstr "***"
+
+#. Default: "Search"
+#: ../skins/ploneboard_templates/board_view.pt:41
+msgid "board_search_button"
+msgstr ""
+
+#. Default: "Search Board"
+#: ../browser/search.pt:22
+msgid "board_search_label"
+msgstr ""
+
+#. Default: "Moreâ€¦"
+#: ../portlet/recent.pt:40
+msgid "box_more_recent_conversations"
+msgstr ""
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+#, fuzzy
+msgid "by_author"
+msgstr "paskelbë"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:173
+msgid "cancel_comment"
+msgstr ""
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:163
+msgid "comment_current_state"
+msgstr "Bûklë:"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:129
+msgid "conversation"
+msgstr "Tema"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+msgid "conversation_forum"
+msgstr "Forumas"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+msgid "conversation_posted"
+msgstr "paskelbta"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../browser/controlpanel.py:57
+msgid "description_ploneboard_config"
+msgstr "Èia galite nustatyti forumo parametrus"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt:92
+msgid "forum_name"
+msgstr "Forumo pavadinimas"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+msgid "go_to_parent_url"
+msgstr "Vienu lygiu aukðtyn"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#, fuzzy
+msgid "go_to_view_url"
+msgstr "Vienu lygiu aukðtyn"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
+msgid "heading_preview_comment"
+msgstr ""
+
+#. Default: "This portlet shows conversations with recent comments."
+#: ../portlet/recent.py:107
+msgid "help_add_portlet"
+msgstr ""
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+msgid "help_body_attachments_maxsize"
+msgstr ""
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+msgid "help_body_attachments_posting"
+msgstr ""
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+msgid "help_body_text_posting"
+msgstr ""
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+msgid "help_body_text_posting_linkify_enabled"
+msgstr ""
+
+msgid "help_categories_board"
+msgstr "kategorijos"
+
+#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.",
+msgid "help_category"
+msgstr "Pasirinkite forumo kategorijà. Forumas gali priklausyti kelioms kategorijos, taèiau rekomenduojama tik viena."
+
+#. Default: "How many items to list."
+#: ../portlet/recent.py:28
+msgid "help_count"
+msgstr ""
+
+msgid "help_description_board"
+msgstr "apibûdinimas"
+
+msgid "help_description_conversation"
+msgstr "temos apraðymas"
+
+msgid "help_description_forum"
+msgstr "Forumo apraðymas"
+
+msgid "help_maxattachments"
+msgstr "Pasirinkite kiek norite maksimaliai prikabintø failø prie forumo."
+
+msgid "help_maxattachmentsize"
+msgstr "Pasirinkite kokio maksimalaus dydþio failus bus galima prisegti prie forumo."
+
+msgid "help_text"
+msgstr "tekstas"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../browser/controlpanel.py:18
+msgid "help_transforms"
+msgstr "Pasirinkite teksto transformacijà, kuri bus naudojama forumo þinutëms. "
+
+#. Default: "Add recent conversations portlet."
+#: ../portlet/recent.py:105
+msgid "label_add_portlet"
+msgstr ""
+
+#. Default: "Back to discussion board"
+#: ../browser/search.pt:15
+msgid "label_back_to_board"
+msgstr ""
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+msgid "label_body_files_posting"
+msgstr ""
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+msgid "label_body_text_posting"
+msgstr ""
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/forum_view.pt:154
+msgid "label_by_author"
+msgstr "${author}"
+
+msgid "label_categories_board"
+msgstr "kategorijos"
+
+msgid "label_category"
+msgstr "Kategorija"
+
+msgid "label_description_board"
+msgstr "apibûdinimas"
+
+msgid "label_description_conversation"
+msgstr "temos apraðymas"
+
+msgid "label_description_forum"
+msgstr "Forumo apraðymas"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+msgid "label_in_forum"
+msgstr ""
+
+msgid "label_maxattachments"
+msgstr "Maksimalus prikabinamø failø skaièius"
+
+msgid "label_maxattachmentsize"
+msgstr "Maksimalus prikabinamo failo dydis"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:14
+msgid "label_powered_by"
+msgstr "Sukurta ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt:74
+msgid "label_quickreply"
+msgstr "Greitas atsakymas"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
+
+#. Default: "Required"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+msgid "label_required"
+msgstr ""
+
+msgid "label_text"
+msgstr "tekstas"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+msgid "label_title_posting"
+msgstr ""
+
+#. Default: "Transforms"
+#: ../browser/controlpanel.py:16
+msgid "label_transforms"
+msgstr "Transformacijos"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:204
+msgid "legend_attachments"
+msgstr "Priedai"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:90
+msgid "log_to_start_conversation"
+msgstr ""
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:80
+msgid "moderation_count"
+msgstr "Komentarai laukiantys patvirtinimo: ${count}."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:43
+msgid "moderation_description"
+msgstr "Ðie komentarai laukia moderatoriaus patvirtinimo. Pasirinkite 'Publikuoti' arba 'Atmesti'. Paspauskite ant komentaro norëdami pamatyti kur jis buvo paraðytas."
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/forum_view.pt:131
+msgid "most_recent_comment"
+msgstr "Pakutiniai komentarai"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+msgid "new_attachment"
+msgstr ""
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt:111
+#, fuzzy
+msgid "new_conversations_marked_with"
+msgstr "Temos paþymëtos þvaigþdute buvo aptarinëjamos nuo jûsø paskutinio prisijungimo"
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:120
+msgid "no_comments_queued"
+msgstr "Nëra komentarø, laukianèiø moderatoriaus patvirtinimo."
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt:123
+msgid "no_conversations_started"
+msgstr "nëra pradëtø diskusijø"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#, fuzzy
+msgid "no_recent_conversations"
+msgstr "Nëra sukurtø temø"
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt:172
+msgid "no_replies_yet"
+msgstr "Nëra atsakymø"
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt:67
+msgid "not_conversations"
+msgstr "Ðiame forume kol kas diskusijø nëra"
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt:37
+msgid "not_forums"
+msgstr "Kol kas nëra jokio sukurto forumo. Norëdami pridëti forumà pasinaudokite meniu juosta."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:98
+msgid "not_permission_start_conversation"
+msgstr "neturite teisiø pradëti diskusijà"
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt:93
+msgid "number_of_conversations"
+msgstr "Temos"
+
+#. Default: "Ploneboard configuration"
+#: ../browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr ""
+
+#. Default: "Text transformations"
+#: ../browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr ""
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:167
+msgid "post_comment"
+msgstr ""
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:70
+msgid "posted_by"
+msgstr "paraðë:"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
+msgid "preview_message"
+msgstr ""
+
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#, fuzzy
+msgid "recent_conversations_description"
+msgstr "Buvo sukurta tema, taèiau kol kas niekas á jà neatsakë"
+
+####
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt:130
+msgid "replies"
+msgstr "atsakymai"
+
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
+msgid "search_result_location"
+msgstr ""
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt:47
+msgid "show_new_conversations_all"
+msgstr ""
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/forum_view.pt:42
+#, fuzzy
+msgid "show_no_replies"
+msgstr "Rodyti tik temas be atsakymø"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt:54
+msgid "show_no_replies_all"
+msgstr ""
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:75
+msgid "text_at"
+msgstr "tekstas"
+
+#. Default: "Number of items to display"
+#: ../portlet/recent.py:26
+msgid "title_count"
+msgstr ""
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt:61
+msgid "title_general_forums"
+msgstr "Bendri forumai"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+msgid "title_recent_conversations"
+msgstr ""
+
+#. Default: "Portlet title"
+#: ../portlet/recent.py:21
+msgid "title_title"
+msgstr ""
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+#, fuzzy
+msgid "title_unanswered_conversations"
+msgstr "Temos neturinèios atsakymø"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
+msgstr ""
+

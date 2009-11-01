@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+  <object name="ploneboard_images" meta_type="Filesystem Directory View"
+    directory="Ploneboard/skins/ploneboard_images"/>
+  <object name="ploneboard_scripts" meta_type="Filesystem Directory View"
+    directory="Ploneboard/skins/ploneboard_scripts"/>
+  <object name="ploneboard_templates" meta_type="Filesystem Directory View"
+    directory="Ploneboard/skins/ploneboard_templates"/>
+  <skin-path name="*">
+    <layer name="ploneboard_images" insert-after="custom"/>
+    <layer name="ploneboard_scripts" insert-after="ploneboard_images"/>
+    <layer name="ploneboard_templates" insert-after="ploneboard_templates"/>
+  </skin-path>
+</object>
+

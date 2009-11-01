@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<object name="PloneboardComment" meta_type="Factory-based Type Information"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title">Comment</property>
+ <property
+    name="description" 
+    i18n:translate="">A comment contains regular text body and metadata.</property>
+ <property name="content_icon">ploneboard_comment_icon.gif</property>
+ <property name="content_meta_type">PloneboardComment</property>
+ <property name="product">Ploneboard</property>
+ <property name="factory">addPloneboardComment</property>
+ <property name="immediate_view">base_edit</property>
+ <property name="global_allow">False</property>
+ <property name="filter_content_types">True</property>
+ <property name="allowed_content_types"/>
+ <property name="allow_discussion">False</property>
+ <alias from="(Default)" to="comment_redirect_to_conversation"/>
+ <alias from="deleteDiscussion" to="delete_view"/>
+ <alias from="discussion_reply_form" to="add_comment_form"/>
+ <alias from="edit" to="base_edit"/>
+ <alias from="sharing" to="@@sharing"/>
+ <alias from="view" to="comment_redirect_to_conversation"/>
+ <action title="View" action_id="view" category="object" condition_expr=""
+    url_expr="string:$object_url" visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="Edit" action_id="edit" category="object" condition_expr=""
+    url_expr="string:$object_url/edit" visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="References" action_id="references" category="object"
+    condition_expr="object/archetype_tool/has_graphviz"
+    url_expr="string:${object_url}/reference_graph" visible="True">
+  <permission value="Modify portal content"/>
+  <permission value="Review portal content"/>
+ </action>
+ <action title="Folder Listing" action_id="folderlisting" category="folder"
+    condition_expr="object/isPrincipiaFolderish"
+    url_expr="string:${folder_url}/view" visible="False">
+  <permission value="View"/>
+ </action>
+</object>

@@ -1,0 +1,231 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+  <tal:comment replace="nothing">
+    ########################################
+    Common macros and main view for comments
+    ########################################
+  </tal:comment>
+
+  <body>
+
+    <metal:css fill-slot="css_slot">
+      <style type="text/css" media="all"
+             tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+
+    <div metal:fill-slot="main"
+         tal:define="view context/@@singlecomment_view">
+
+      <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+      <h2 tal:content="here/Title">Conversation title</h2>
+
+      <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+      <a href=""
+         class="link-parent"
+         tal:define="parent_url python:here.navigationParent(here, template.getId())"
+         tal:condition="parent_url"
+         tal:attributes="href parent_url"
+         i18n:translate="go_to_parent_url">
+        Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+      </a>
+
+      <div class="documentdescription" tal:content="here/Description"> 
+        description
+      </div>
+
+      <div tal:replace="structure provider:plone.abovecontentbody" />
+
+      <div class="boardComment visualIEFloatFix"
+           tal:define="comment python:view/comment">
+        
+        <metal:comment metal:define-macro="comment"
+                       tal:define="creator comment/Creator;
+                                   creatorinfo python: mtool.getMemberInfo(creator);
+                                   creation_date comment/creation_date;
+                                   state comment/review_state;
+                                   pss modules/Products/PythonScripts/standard">
+
+          <div class="visualGhosted" tal:omit-tag="python:state not in ('retracted', 'rejected')">
+
+            <a tal:attributes="name comment/getId"></a>
+            <div class="boardCommentDetails" tal:attributes="id comment/getId;">
+              
+              <div tal:attributes="class python:test(state == 'published', 'boardCommentHeaderTitleBlock', 'boardCommentHeaderTitleBlock state-%s' % state)">
+                
+                <h3 tal:content="comment/Title">Comment title</h3>
+
+                <a class="link-plain"
+                    tal:attributes="href string:${comment/absolute_url}">
+                   <img src="" 
+                        alt=""
+                        tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                </a>
+
+                <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
+                <a class="link-plain"
+                   tal:attributes="href string:${portal_url}/author/${creator}"
+                   tal:omit-tag="not:creatorinfo"
+                   tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
+                <span i18n:translate="text_at" tal:omit-tag="">at</span>
+                <span tal:replace="creation_date">Thursday 13:21</span>
+              </div>
+            </div>
+
+            <div class="boardCommentBody">
+              <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
+                <div class="commentPortrait">
+                  <a href="" title="View profile"                 
+                     tal:attributes="href string:${portal_url}/author/${creator}"
+                     i18n:attributes="title"
+                     tal:omit-tag="python:creator=='Anonymous'">
+                    <img class="portraitPhoto"
+                         src="defaultUser.gif" 
+                         alt="" 
+                         border="0" 
+                         width="75" 
+                         height="100" 
+                         tal:attributes="src portrait/absolute_url" />
+                  </a>
+                </div>
+              </tal:block>
+
+              <div class="boardCommentContent" 
+                   tal:content="structure comment/getText">
+                Comment text.
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <div class="visualClear"></div>
+
+          <div class="boardCommentActions">
+            
+            <form i18n:domain="plone"
+                  method="post"
+                  tal:condition="comment/canEdit"
+                  tal:attributes="action string:${comment/absolute_url}/edit">
+              <input i18n:attributes="value"
+                     class="context"
+                     type="submit"
+                     value="Edit"/>
+            </form>
+            <form  method="post"
+                   i18n:domain="plone"
+                   tal:condition="comment/canDelete"
+                   tal:attributes="action string:${comment/absolute_url}/delete_view">
+              <tal:comment content="default">
+                <!-- the translation should work - but it do not work -
+                     at least for german (includes non-ascii), well,
+                     better stick it to english only so long -->
+                <input tal:define="alert_msg python:context.translate('alert_delete_popup', default='Do you really want to delete this comment?', domain='ploneboard', escape_for_js=True)" 
+                       tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                       onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                       class="destructive"
+                       i18n:attributes="value" type="submit"
+                       value="Delete"/>
+              </tal:comment>
+              <tal:comment content="nothing">
+                <!-- here the fallback english-only popup -->
+                <input tal:define="alert_msg python:'Do you really want to delete this comment?'"
+                       tal:attributes="href string:${comment/absolute_url}/delete_view;
+                                       onclick string: confirmDelete = confirm('${alert_msg}');; event.returnValue = confirmDelete;; return confirmDelete;;"
+                       class="destructive"
+                       i18n:attributes="value"
+                       type="submit"
+                       value="Delete"/>
+                <!-- end of fallback-->
+              </tal:comment>
+            </form>
+
+            <form i18n:domain="plone"
+                  method="post"
+                  tal:repeat="action comment/workflowActions"
+                  tal:attributes="action string:${comment/absolute_url}/moderateComment">
+              <input type="hidden" name="action" tal:attributes="value action/id"/>
+              <input type="hidden" name="cameFrom" tal:attributes="value here/absolute_url"/>
+              <input tal:attributes="value action/title"
+                     i18n:attributes="value"
+                     class="standalone"
+                     type="submit"
+                     />
+            </form>
+            <small tal:attributes="class string:state-${state}"
+                   tal:condition="python:state != 'published'">
+              <span i18n:translate="comment_current_state">
+                Current state: 
+              </span>
+              <span i18n:domain="plone" 
+                    i18n:translate=""
+                    tal:content="comment/reviewStateTitle">
+                State here
+              </span>
+            </small>
+          </div>
+          <!-- bis hier-->
+
+          <div class="boardCommentReplyActions">
+            
+            <form tal:condition="comment/canReply"
+                  tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
+              <input type="hidden" name="title" value="" tal:attributes="value comment/Title"/>
+              <input class="standalone"
+                     type="submit" 
+                     value="Reply to this" 
+                     i18n:attributes="value"
+                     />
+            </form>
+
+            <form tal:condition="python:isAnon and not checkPermission('Ploneboard: Add Comment', here)"
+                  tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                  (here.portal_url(),
+                                  pss.url_quote(request['URL']))">
+              <input class="standalone" 
+                     type="submit" 
+                     value="Log in to add comments"
+                     i18n:attributes="value"
+                     />
+            </form>
+          </div>
+
+          <div class="visualClear"><!----></div>
+
+          <fieldset class="commentAttachments"
+                    tal:define="attachments comment/getAttachments"
+                    tal:condition="attachments">
+            <legend i18n:translate="legend_attachments">Attachments</legend>
+            <ul class="visualNoMarker">
+              <li tal:repeat="attachment attachments">
+                <a tal:attributes="href attachment/absolute_url">
+                  <span tal:define="pt attachment/portal_type;
+                                    size python:here.getObjSize(attachment)"
+                        tal:attributes="class python:'contenttype-'+normalizeString(pt)">
+                    <span class="visualIconPadding"
+                          tal:content="attachment/title_or_id">
+                      Attachment title
+                    </span>
+                    <span tal:condition="size" tal:omit-tag="">
+                      (<span tal:replace="size">257 kB</span>)
+                    </span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </fieldset>
+
+        </metal:comment>
+      </div>
+
+      <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,502 @@
+# Translation of Ploneboard.pot to Norwegian
+# Helge Tesdal <tesdal@plonesolutions.com>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2008-12-01 16:48+0100\n"
+"Last-Translator: Morten W. Petersen <morten@nidelven-it.no>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: no\n"
+"Language-Name: Norsk\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: ploneboard\n"
+"X-Is-Fallback-For: nb nb-no no-bok\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:78
+msgid "Change"
+msgstr "Endre"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Kommentar lagt til"
+
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Kommentar slettet"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Kommentar venter på godkjenning"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Samtale lagt til"
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Samtale slettet"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Samtale venter på godkjenning"
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr "Data-leverandør oppdatert"
+
+msgid "Forum"
+msgstr "Forum"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt:191
+msgid "Log in to add comments"
+msgstr "Logg inn for å legge til kommentarer"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+msgid "Please correct the indicated errors."
+msgstr "Vennligst rett de markerte feilene."
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:72
+msgid "Post"
+msgstr "Send inn"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/conversation_view.pt:83
+msgid "Post comment"
+msgstr "Send kommentar"
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt:180
+msgid "Reply to this"
+msgstr "Svar på"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:78
+msgid "Start a new Conversation"
+msgstr "Start en ny samtale"
+
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr "Transformasjon %s fjernet"
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt:83
+msgid "View profile"
+msgstr "Vis profil"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr "Du kan bare legge til kommentarer på samtaler eller kommentarer."
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+msgid "add_comment"
+msgstr "Legg til kommentar"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+msgid "add_conversation"
+msgstr "Legg til samtale"
+
+msgid "alert_delete_popup"
+msgstr "Vil du virkelig slette denne kommentaren?"
+
+#. Default: "Search"
+#: ../skins/ploneboard_templates/board_view.pt:41
+msgid "board_search_button"
+msgstr "Søk"
+
+#. Default: "Search Board"
+#: ../browser/search.pt:22
+msgid "board_search_label"
+msgstr "Søk"
+
+#. Default: "More…"
+#: ../portlet/recent.pt:40
+msgid "box_more_recent_conversations"
+msgstr "Nyere samtaler"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+msgid "by_author"
+msgstr "av ${author}"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:173
+msgid "cancel_comment"
+msgstr "Kanseller kommentar"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:163
+msgid "comment_current_state"
+msgstr "Nåværende status på kommentar"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:129
+msgid "conversation"
+msgstr "Diskusjon"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+msgid "conversation_forum"
+msgstr "Forum"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+msgid "conversation_posted"
+msgstr "Samtale postet"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../browser/controlpanel.py:57
+msgid "description_ploneboard_config"
+msgstr "Her kan du konfigurere instillinger for Ploneboard på nettsiden."
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt:92
+msgid "forum_name"
+msgstr "Forumnavn"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+msgid "go_to_parent_url"
+msgstr "Opp til ${title}"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+msgid "go_to_view_url"
+msgstr "Gå til ${name}"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
+msgid "heading_preview_comment"
+msgstr "Forhåndsvis kommentar"
+
+#. Default: "This portlet shows conversations with recent comments."
+#: ../portlet/recent.py:107
+msgid "help_add_portlet"
+msgstr "Dette portlet viser samtaler med ferske kommentarer."
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+msgid "help_body_attachments_maxsize"
+msgstr "Den høyest tillatte størrelsen på vedlegg er ${maxsize} kilobytes."
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+msgid "help_body_attachments_posting"
+msgstr "Velg en fil å laste opp som et vedlegg til denne kommentaren."
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+msgid "help_body_text_posting"
+msgstr "Enkel bruk av HTML-språket er OK."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "Nettadresser (URLs) vil automatisk bli gjort klikkbare."
+
+msgid "help_categories_board"
+msgstr "Kategorier"
+
+msgid "help_category"
+msgstr "Kategori"
+
+#. Default: "How many items to list."
+#: ../portlet/recent.py:28
+msgid "help_count"
+msgstr "Antall"
+
+msgid "help_description_board"
+msgstr "Beskrivelse"
+
+msgid "help_description_conversation"
+msgstr "Beskrivelse"
+
+msgid "help_description_forum"
+msgstr "Beskrivelse"
+
+msgid "help_maxattachments"
+msgstr "Maksimalt antall vedlegg"
+
+msgid "help_maxattachmentsize"
+msgstr "Maksimal størrelse på vedlegg"
+
+msgid "help_text"
+msgstr "Tekst"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../browser/controlpanel.py:18
+msgid "help_transforms"
+msgstr "Forvandlinger"
+
+#. Default: "Add recent conversations portlet."
+#: ../portlet/recent.py:105
+msgid "label_add_portlet"
+msgstr "Legg til portlet"
+
+#. Default: "Back to discussion board"
+#: ../browser/search.pt:15
+msgid "label_back_to_board"
+msgstr "Tilbake til board"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+msgid "label_body_files_posting"
+msgstr "Vedlegg"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+msgid "label_body_text_posting"
+msgstr "Brødtekst"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/forum_view.pt:154
+msgid "label_by_author"
+msgstr "av ${author}"
+
+msgid "label_categories_board"
+msgstr "Kategorier"
+
+msgid "label_category"
+msgstr "Kategori"
+
+msgid "label_description_board"
+msgstr "Beskrivelse"
+
+msgid "label_description_conversation"
+msgstr "Beskrivelse"
+
+msgid "label_description_forum"
+msgstr "Beskrivelse"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+msgid "label_in_forum"
+msgstr "i ${forum}"
+
+msgid "label_maxattachments"
+msgstr "Maks antall vedlegg"
+
+msgid "label_maxattachmentsize"
+msgstr "Maksimal størrelse på vedlegg"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:14
+msgid "label_powered_by"
+msgstr "Drevet av ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt:74
+msgid "label_quickreply"
+msgstr "Hurtigsvar"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr ""
+
+#. Default: "Required"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+msgid "label_required"
+msgstr "Påkrevd (*)"
+
+msgid "label_text"
+msgstr "Tekst"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+msgid "label_title_posting"
+msgstr "Tittel"
+
+#. Default: "Transforms"
+#: ../browser/controlpanel.py:16
+msgid "label_transforms"
+msgstr "Transformeringer"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:204
+msgid "legend_attachments"
+msgstr "Vedlegg"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:90
+msgid "log_to_start_conversation"
+msgstr "Logg inn for å starte en samtale"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:80
+msgid "moderation_count"
+msgstr "${count} kommentarer i køen"
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:43
+msgid "moderation_description"
+msgstr "De følgende kommentarene venter på moderering.  Vennligst klikk på \"Publiser' eller 'Avvis' som nødvendig.  Klikk på tittelen på en kommentar for å vise den i kontekst av samtalen."
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/forum_view.pt:131
+msgid "most_recent_comment"
+msgstr "Nyeste kommentar"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+msgid "new_attachment"
+msgstr "Legg til et ekstra vedlegg"
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt:111
+msgid "new_conversations_marked_with"
+msgstr "Samtaler merket med ${star} har hatt aktivitet siden din siste login."
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:120
+msgid "no_comments_queued"
+msgstr "Ingen kommentarer i køen"
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt:123
+msgid "no_conversations_started"
+msgstr "Ingen diskusjoner er startet"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+msgid "no_recent_conversations"
+msgstr "Ingen nylige samtaler."
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt:172
+msgid "no_replies_yet"
+msgstr "Ingen svar ennå."
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt:67
+msgid "not_conversations"
+msgstr "Ingen diskusjoner i dette forumet ennå"
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt:37
+msgid "not_forums"
+msgstr "Det finnes ingen fora ennå, men du kan bruke innholdsmenyen for å legge til innhold."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:98
+msgid "not_permission_start_conversation"
+msgstr "Du har ikke rettigheter til å starte en diskusjon."
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt:93
+msgid "number_of_conversations"
+msgstr "Diskusjoner"
+
+#. Default: "Ploneboard configuration"
+#: ../browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr "Ploneboard (forum) konfigurasjon"
+
+#. Default: "Text transformations"
+#: ../browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr "Tekst-forvandlinger"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:167
+msgid "post_comment"
+msgstr "Post kommentar"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:70
+msgid "posted_by"
+msgstr "Skrevet av"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
+msgid "preview_message"
+msgstr "Forhåndsvis melding"
+
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#, fuzzy
+msgid "recent_conversations_description"
+msgstr "De følgende samtalene har hatt aktivitet nylig."
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt:130
+msgid "replies"
+msgstr "Svar"
+
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
+msgid "search_result_location"
+msgstr "I ${forum} &rarr; ${conversation}."
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt:47
+msgid "show_new_conversations_all"
+msgstr "Vis alle nye samtaler"
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/forum_view.pt:42
+msgid "show_no_replies"
+msgstr "Vis ubesvarte"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt:54
+msgid "show_no_replies_all"
+msgstr "Vis alle ubesvarte"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:75
+msgid "text_at"
+msgstr "&mdash;"
+
+#. Default: "Number of items to display"
+#: ../portlet/recent.py:26
+msgid "title_count"
+msgstr "Antall som skal vises"
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt:61
+msgid "title_general_forums"
+msgstr "Generelle forum"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+msgid "title_recent_conversations"
+msgstr "Nylige samtaler i ${title}"
+
+#. Default: "Portlet title"
+#: ../portlet/recent.py:21
+msgid "title_title"
+msgstr "Tittel på portlet"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+msgid "title_unanswered_conversations"
+msgstr "Ubesvarter meldinger i ${title}s"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
+msgstr ""
+

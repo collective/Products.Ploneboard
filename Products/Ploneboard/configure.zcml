@@ -1,0 +1,101 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+   xmlns:five="http://namespaces.zope.org/five"
+   i18n_domain="ploneboard">
+
+  <include package="Products.SimpleAttachment" />
+  <include package="plone.app.portlets" />
+
+  <class class=".content.Ploneboard.Ploneboard">
+      <implements
+          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+  </class>
+
+  <class class=".content.Ploneboard.Ploneboard">
+      <implements
+          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+  </class>
+
+  <class class=".content.PloneboardForum.PloneboardForum">
+      <implements
+          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+  </class>
+
+  <class class=".content.PloneboardForum.PloneboardForum">
+      <implements
+          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+  </class>
+
+  <permission
+     id="Ploneboard.DeleteComment"
+     title="Delete objects"
+     />
+
+  <adapter
+     for=".interfaces.IComment"
+     provides="Products.ATContentTypes.interface.ITextContent"
+     factory=".adapters.CommentTextContent"
+     />
+
+  <adapter factory='.catalog.num_comments' name='num_comments' />
+
+  <include package=".browser" />
+  <include package=".portlet" />
+
+  <utility
+    component=".vocabulary.AvailableTransformsVocabularyFactory"
+    name="Products.Ploneboard.AvailableTransforms"
+    />
+
+  <genericsetup:registerProfile
+     name="ploneboard"
+     title="Ploneboard"
+     directory="profiles/default"
+     description="Install the Ploneboard forum product"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:registerProfile
+     name="basicboard"
+     title="Ploneboard performance test forum structure"
+     directory="profiles/basicboard"
+     description="Set up a forum structure for performance testing"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:registerProfile
+     name="lotsofposts"
+     title="Ploneboard performance posts"
+     directory="profiles/lotsofposts"
+     description="Set up posts for load testing"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+
+  <!--
+      As Archetypes doesn't use the events machinery on the BaseObject
+      we must mark the deprecated methods to avoid noisy warnings
+    -->
+
+  <five:deprecatedManageAddDelete
+     class=".content.Ploneboard.Ploneboard"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardForum.PloneboardForum"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardConversation.PloneboardConversation"
+     />
+
+  <five:deprecatedManageAddDelete
+     class=".content.PloneboardComment.PloneboardComment"
+     />
+
+</configure>

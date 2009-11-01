@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<object name="Ploneboard"
+   meta_type="Factory-based Type Information with dynamic views"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title">Message Board</property>
+ <property
+    name="description" 
+    i18n:translate="">Ploneboard is the outmost board object, what shows up in your site.</property>
+ <property name="content_icon">ploneboard_icon.gif</property>
+ <property name="content_meta_type">Ploneboard</property>
+ <property name="product">Ploneboard</property>
+ <property name="factory">addPloneboard</property>
+ <property name="immediate_view">ploneboard_view</property>
+ <property name="global_allow">True</property>
+ <property name="filter_content_types">True</property>
+ <property name="allowed_content_types">
+  <element value="PloneboardForum"/>
+ </property>
+ <property name="allow_discussion">False</property>
+ <property name="default_view">ploneboard_view</property>
+ <property name="view_methods">
+  <element value="ploneboard_view"/>
+  <element value="board_view_global"/>
+ </property>
+ <alias from="(Default)" to="(dynamic view)"/>
+ <alias from="edit" to="base_edit"/>
+ <alias from="index.html" to="(dynamic view)"/>
+ <alias from="moderate" to="moderation_form"/>
+ <alias from="rss-properties" to="synPropertiesForm"/>
+ <alias from="sharing" to="@@sharing"/>
+ <alias from="view" to="(selected layout)"/>
+ <action title="View" action_id="view" category="object" condition_expr=""
+    url_expr="string:$object_url" visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="Edit" action_id="edit" category="object" condition_expr=""
+    url_expr="string:$object_url/edit" visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="RSS Feed" action_id="rssfeed" category="object"
+    condition_expr="" url_expr="string:$object_url/rss-properties"
+    visible="True">
+  <permission value="Ploneboard: Add Ploneboard"/>
+ </action>
+ <action title="References" action_id="references" category="object"
+    condition_expr="object/archetype_tool/has_graphviz"
+    url_expr="string:${object_url}/reference_graph" visible="True">
+  <permission value="Modify portal content"/>
+  <permission value="Review portal content"/>
+ </action>
+ <action title="Folder Listing" action_id="folderlisting" category="folder"
+    condition_expr="object/isPrincipiaFolderish"
+    url_expr="string:${folder_url}/view" visible="False">
+  <permission value="View"/>
+ </action>
+ <action title="Moderate" action_id="moderate" category="object"
+    condition_expr="" url_expr="string:$object_url/moderate" visible="True">
+  <permission value="Ploneboard: Moderate Forum"/>
+ </action>
+</object>

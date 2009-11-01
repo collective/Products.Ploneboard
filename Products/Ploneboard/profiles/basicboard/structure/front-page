@@ -1,0 +1,22 @@
+id: front-page
+title: Ploneboard funkload testing
+description: This is a site for testing Ploneboard performance
+subject: 
+relatedItems: 
+location: 
+language: en
+effectiveDate: None
+expirationDate: None
+creation_date: 2007/04/02 14:28:30 US/Central
+modification_date: 2009/09/17 23:51:12.536 GMT+2
+creators: admin
+contributors: 
+rights: 
+allowDiscussion: False
+excludeFromNav: False
+presentation: True
+tableContents: False
+Content-Type: text/html
+
+
+<p>Please go to the <a href="ploneboard">board</a>.</p>

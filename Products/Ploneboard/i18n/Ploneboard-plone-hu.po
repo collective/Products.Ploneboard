@@ -1,0 +1,110 @@
+# Translation of Ploneboard-plone.pot to Hungarian
+# József Jároli <jaroli@yahoo.com>, innen.hu 2009
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-02-01 06:20+0100\n"
+"Last-Translator: József Jároli <jaroli@yahoo.com>\n"
+"Language-Team: József Jároli <jaroli@yahoo.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: hu\n"
+"Language-Name: Magyar\n"
+"Preferred-Encodings: utf-8 latin2\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: hu\n"
+
+msgid "A Forum contains conversations."
+msgstr "Egy fórum beszédtémákat tartalmaz."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Egy hozzászólás szokásos szövegtörzset és metaadatokat tartalmaz."
+
+msgid "Activate"
+msgstr "Aktivál"
+
+msgid "Active"
+msgstr "Aktív"
+
+msgid "Comment"
+msgstr "Hozzászólás"
+
+msgid "Conversation"
+msgstr "Téma"
+
+msgid "Conversation contains comments."
+msgstr "Egy Téma hozzászólásokat tartalmaz."
+
+msgid "Free for all"
+msgstr "Szabad mindenkinek"
+
+msgid "Hidden"
+msgstr "Rejtett"
+
+msgid "Hide"
+msgstr "Elrejt"
+
+msgid "Lock"
+msgstr "Zárol"
+
+msgid "Make free-for-all"
+msgstr "Tegye szabaddá mindenkinek"
+
+msgid "Make member-posting"
+msgstr "Kösse tagsághoz a hozzászólást"
+
+msgid "Make moderated"
+msgstr "Tegye moderálttá"
+
+msgid "Message Board"
+msgstr "Fórum gyűjtőoldal"
+
+msgid "Moderate"
+msgstr "Moderál"
+
+msgid "Moderated forum"
+msgstr "Moderált fórum"
+
+msgid "Open"
+msgstr "Nyílt"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "A Ploneboard gyűjtőoldal a legkülső fórum objektum, mely megjelenik az oldalon."
+
+msgid "Private to members only"
+msgstr "Privát, csak tagoknak"
+
+msgid "Public"
+msgstr "Publikus"
+
+msgid "Rejected"
+msgstr "Elutasítva"
+
+msgid "Require membership to post"
+msgstr "Hozzászólás csak tagoknak"
+
+msgid "Retracted"
+msgstr "Visszavonva"
+
+msgid "Waiting for moderator"
+msgstr "Moderálásra vár"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "lapos témanézet"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "felfűzött témanézet"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+
+

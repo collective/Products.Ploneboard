@@ -1,0 +1,110 @@
+# translation of Ploneboard to Italian
+# Gettext File for Ploneboard
+# Enzo Cesanelli <enzo at noiza dot com>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2006-05-08 11:50+0000\n"
+"Last-Translator: Bingkai Zhang <zhangbingkai at zopen dot cn>\n"
+"Language-Team: ZOpen <www.zopen.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: zh\n"
+"Language-Name: Chinese\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Conversation"
+msgstr "Discussione"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+#### Voci aggiunte manualmente.
+msgid "Message Board"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

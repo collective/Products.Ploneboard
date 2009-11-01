@@ -1,0 +1,109 @@
+# Translation of Ploneboard.pot to Norwegian
+# Helge Tesdal <tesdal@plonesolutions.com>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: no\n"
+"Language-Name: Norsk\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: nb nb-no no-bok\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

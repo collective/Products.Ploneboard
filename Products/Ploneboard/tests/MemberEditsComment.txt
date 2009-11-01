@@ -1,0 +1,123 @@
+Member edits comment
+====================
+
+Test starting conversations, replying and modifying comments in a default
+members-posting forum.
+
+First, some set-up:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> from Products.Ploneboard.tests import utils
+    >>> utils.setUpDefaultMembersBoardAndForum(self)
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+
+Let us log all exceptions, which is useful for debugging. Also, clear portlet
+slots, to make the test browser less confused by things like the recent portlet
+and the navtree.
+
+    >>> self.portal.error_log._ignored_exceptions = ()
+    >>> self.portal.left_slots = self.portal.right_slots = []
+    >>> workflow = self.portal.portal_workflow
+
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
+
+View forum
+----------
+
+The forum created behind the scenes should now be shown here.
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.contents
+    '...Forum 1...'
+
+If we go to the forum, there are no conversations shown.
+
+    >>> browser.getLink('Forum 1').click()
+    >>> browser.contents
+    '...No conversations in this forum yet...'
+
+Setup placeful workflow so comment is editable
+----------------------------------------------
+
+    >>> utils.setupEditableForum(self, self.board.forum1)
+
+Add a new conversation
+----------------------
+
+Now we can add a new conversation. We set a title and some body text. The body
+text can contain HTML as well.
+
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.url
+    '.../add_conversation_form...'
+    >>> browser.getControl('Title').value = 'New title'
+    >>> browser.getControl(name='text').value = 'Some <b>body</b> text'
+
+We have attachment buttons, although we won't upload anything now.
+INFO: This test fails (LookupError: name 'files:list') if SimpleAttachment is not installed.
+
+    >>> browser.getControl(name='files:list', index=0)
+    <Control name='files:list' type='file'>
+
+Submit the form, and we should be returned to the forum view. The conversation
+should exist, and we should be able to view it.
+
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> browser.url.startswith(self.forum.absolute_url())
+    True
+    >>> conversation = self.forum.getConversations()[0]
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+
+
+Edit own comment
+----------------
+
+Now a member can edit his own comment
+
+    >>> browser.getControl('Edit', index=0).click()
+    >>> browser.getControl(name='text').value = 'Some <b>Other</b> text'
+
+    >>> browser.getControl(name='form.button.save').click()
+    >>> browser.url.startswith(self.forum.absolute_url())
+    True
+    >>> conversation = self.forum.getConversations()[0]
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s.*$' % conversation.getId())).click()
+
+    >>> browser.contents
+    '...Some <b>Other</b> text...'
+
+    >>> utils.logoutThenLoginAs(self, browser, 'member2')
+
+View forum
+----------
+
+The forum created behind the scenes should now be shown here.
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.contents
+    '...Forum 1...'
+    >>> browser.getLink('Forum 1').click()
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+
+
+Cannot edit someone else's comment
+-----------------------------------
+
+Now a member can edit his own comment
+
+    >>> browser.getControl('Edit', index=0)
+    Traceback (most recent call last):
+    ...
+    LookupError: label 'Edit'
