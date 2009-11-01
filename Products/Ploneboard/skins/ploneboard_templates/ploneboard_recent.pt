@@ -11,10 +11,6 @@
         <tal:border define="dummy python:request.set('disable_border', True)" />
       </tal:block>
    </metal:top>
-    <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-    </metal:css>
 </head>
 
 <body>

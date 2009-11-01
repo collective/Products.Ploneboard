@@ -5,13 +5,6 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
-<head>
-  <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-  </metal:css>
-</head>
-      
 <body>
   <div metal:fill-slot="main"
        tal:define="categories here/getCategories|nothing;
@@ -128,10 +121,10 @@
                 <td tal:condition="author"
                     class="forumMostRecentCell">
                   <div i18n:translate="label_by_author">
-                    by <tal:author i18n:name="author"
+                    by <!--plone4--tal:author i18n:name="author"
                                    define="creator author;
-                                           creatorinfo python: mtool.getMemberInfo(creator);"
-                                   content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                                           creatorinfo python: tool.getMemberInfo(creator);"
+                                   content="python:creatorinfo and creatorinfo['fullname'] or creator" /-->
                   </div>
                                                                                                                       
 

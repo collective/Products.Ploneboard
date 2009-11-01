@@ -84,6 +84,11 @@
      class=".controlpanel.ControlPanel"
      permission="cmf.ManagePortal"
      />
+     
+   <browser:resource
+     name="ploneboard.css"
+     file="ploneboard.css"
 
+   />  
 </configure>
 

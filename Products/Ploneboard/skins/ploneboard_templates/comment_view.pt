@@ -19,7 +19,8 @@
 
     <div metal:fill-slot="main"
          tal:define="view context/@@singlecomment_view;
-                     isAnon context/@@plone_portal_state/anonymous">
+                     isAnon context/@@plone_portal_state/anonymous;
+                     ">
 
       <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -203,7 +204,8 @@
                     tal:define="attachments comment/getAttachments"
                     tal:condition="attachments">
             <legend i18n:translate="legend_attachments">Attachments</legend>
-            <ul class="visualNoMarker">
+            <ul class="visualNoMarker"
+                tal:define="normalizeString nocall: context/@@plone/normalizeString">
               <li tal:repeat="attachment attachments">
                 <a tal:attributes="href attachment/absolute_url">
                   <span tal:define="pt attachment/portal_type;

@@ -17,13 +17,6 @@
     </script>
   </metal:js>
 
-  <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-    <style type="text/css" media="all">
-           iframe.kupu-editor-iframe { height: 200px !important; }
-    </style>
-  </metal:css>
 </head>
 
 <body>
