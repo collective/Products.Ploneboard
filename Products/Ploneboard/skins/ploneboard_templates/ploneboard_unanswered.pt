@@ -16,7 +16,8 @@
     <div metal:fill-slot="main"
          tal:define="view context/@@ploneboard_unanswered_view;
                      numConversations view/num_conversations;
-                     pss modules/Products/PythonScripts/standard;">
+                     pss modules/Products/PythonScripts/standard;
+                     isAnon context/@@plone_portal_state/anonymous;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 

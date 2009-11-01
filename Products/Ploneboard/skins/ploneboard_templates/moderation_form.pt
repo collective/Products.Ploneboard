@@ -9,7 +9,8 @@
 
     <div metal:fill-slot="main"
          tal:define="results here/moderation_search;
-                     DateTime python:modules['DateTime'].DateTime;">
+                     DateTime python:modules['DateTime'].DateTime;
+                     atool context/@@plone_tools/actions">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
