@@ -18,7 +18,8 @@
     </metal:css>
 
     <div metal:fill-slot="main"
-         tal:define="view context/@@singlecomment_view">
+         tal:define="view context/@@singlecomment_view;
+                     isAnon context/@@plone_portal_state/anonymous">
 
       <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -46,7 +47,7 @@
         
         <metal:comment metal:define-macro="comment"
                        tal:define="creator comment/Creator;
-                                   creatorinfo python: mtool.getMemberInfo(creator);
+                                   creatorinfo python: '--plone4--mtool.getMemberInfo(creator)';
                                    creation_date comment/creation_date;
                                    state comment/review_state;
                                    pss modules/Products/PythonScripts/standard">
@@ -68,10 +69,10 @@
                 </a>
 
                 <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
-                <a class="link-plain"
+                <!--plone4--a class="link-plain"
                    tal:attributes="href string:${portal_url}/author/${creator}"
                    tal:omit-tag="not:creatorinfo"
-                   tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
+                   tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a--> 
                 <span i18n:translate="text_at" tal:omit-tag="">at</span>
                 <span tal:replace="creation_date">Thursday 13:21</span>
               </div>

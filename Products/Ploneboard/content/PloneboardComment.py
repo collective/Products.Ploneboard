@@ -21,7 +21,7 @@ from Products.Ploneboard.permissions import ViewBoard, AddComment, \
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
-from Products.CMFPlone.interfaces.NonStructuralFolder \
+from Products.CMFPlone.interfaces \  #--plone4--
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
@@ -69,7 +69,7 @@ class PloneboardComment(BaseBTreeFolder):
     # Don't inherit from btreefolder...
 
     implements(IComment, INonStructuralFolder)
-    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
+#--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardComment'
 

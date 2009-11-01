@@ -1,4 +1,7 @@
 from Products.PortalTransforms.interfaces import itransform
+from Products.PortalTransforms.interfaces import ITransform
+from zope.interface import implements
+
 import re
 
 hider = "##HIDE"
@@ -16,6 +19,7 @@ class URLToHyperlink:
     """transform which replaces urls and email into hyperlinks"""
 
     __implements__ = itransform
+    implements(ITransform) #--plone4--
 
     __name__ = "url_to_hyperlink"
     output = "text/plain"

@@ -90,6 +90,7 @@ def setupCommentLocalRoles(self):
     self.plone_log('setupCommentLocalRoles', 'Updated %d of total %d comments' % (count, len(comments)))
 
 def addPlacefulPolicy(self):
+    return  #--plone4--
     pw=getToolByName(self, 'portal_placeful_workflow')
     new_id = 'EditableComment'
     if new_id not in pw.objectIds():

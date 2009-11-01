@@ -43,7 +43,7 @@ utils.finalizeSchema(schema)
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
     implements(IPloneboard)
-    __implements__ = (BrowserDefaultMixin.__implements__, BaseBTreeFolder.__implements__,)
+#--plone4--    __implements__ = (BrowserDefaultMixin.__implements__, BaseBTreeFolder.__implements__,)
 
     meta_type = 'Ploneboard'
 

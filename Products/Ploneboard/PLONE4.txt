@@ -1,0 +1,4 @@
+Initial code modification for Plone 4 compatibility. The product so far starts and installs.
+All significant code modifications are marked with "--plone4--" for review.
+
+Pawel Lewicki

@@ -4,6 +4,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.utils import TransformDataProvider
 import re
 import copy
+from Products.PortalTransforms.interfaces import ITransform
+from zope.interface import implements
 
 class EmoticonDataProvider(TransformDataProvider):
     def __init__(self):
@@ -49,6 +51,7 @@ def registerDataProvider():
 class TextToEmoticons:
     """transform which replaces text emoticons into urls to emoticons images"""
 
+    implements(ITransform) #--plone4--
     __implements__ = itransform
 
     __name__ = "text_to_emoticons"
