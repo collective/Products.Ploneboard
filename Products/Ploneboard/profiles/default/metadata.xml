@@ -3,6 +3,7 @@
   <version>2.1</version>
   <dependencies>
     <dependency>profile-Products.SimpleAttachment:SimpleAttachment</dependency>
+    <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
   </dependencies>
 </metadata>
 
