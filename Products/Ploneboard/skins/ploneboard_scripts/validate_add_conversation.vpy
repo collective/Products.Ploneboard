@@ -32,7 +32,7 @@ def FileSize(file):
 title = context.REQUEST.get('title', '');
 
 if len(title) <= 0:
-    state.setError("title", "No title entered", new_status="failure")
+    state.setError("title", _(u"No title entered"), new_status="failure")
 
 files=context.REQUEST.get('files', [])
 maxsize=context.getMaxAttachmentSize()
@@ -40,7 +40,7 @@ maxsize=context.getMaxAttachmentSize()
 if maxsize!=-1:
     for file in files:
         if FileSize(file)>maxsize:
-            state.setError("files", "Attachment is too large", new_status="failure")
+            state.setError("files", _(u"Attachment is too large"), new_status="failure")
             break
 
 if state.getErrors():

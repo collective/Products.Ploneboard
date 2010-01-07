@@ -12,6 +12,8 @@ from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
+from Products.CMFCore.utils import getToolByName
+
 class CommentViewableView(Five.BrowserView):
     """Any view that might want to interact with comments should inherit
     from this base class.
@@ -71,9 +73,12 @@ class CommentView(CommentViewableView):
     def quotedBody(self):
         text = self.context.getText()
         if text:
-            return '<p>Previously %s wrote:</p>' \
-                   '<blockquote>%s</blockquote><p></p>' % \
-                   (self.author(), self.context.getText())
+            translation_service = getToolByName(self.context,'translation_service')
+            prev_wrote_str= translation_service.utranslate(domain='ploneboard', \
+                                                       msgid='prev_wrote', \
+                                                       default='previously wrote:</p>', \
+                                                       context=self.context).encode('utf-8')
+            return '<p>%s '%self.author() + prev_wrote_str +'<blockquote>%s</blockquote><p></p>' %self.context.getText()
         else:
             return ''
 

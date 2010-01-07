@@ -42,6 +42,7 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
               write_permission = EditComment,
               widget = RichWidget(description = "Enter comment body.",
                                       description_msgid = "help_text",
+                                      i18n_domain='ploneboard',
                                       label = "Text",
                                       label_msgid = "label_text",
                                       rows = 5,

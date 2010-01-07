@@ -147,3 +147,39 @@ msgstr "Sabato"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} alle ${hours}:${minutes}"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Commento aggiunto"
+
+#: ./browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Commento cancellato"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Commento in attesa di moderazione"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Discussione aggunta"
+
+#: ./browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Discussione cancellata"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Discussione in attesa di moderazione"
+
+#: ./skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr "Provider dei dati aggiornato"
+
+#: ./skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "No title entered"
+msgstr "Nessun titolo inserito"
+
+#: ./skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Attachment is too large"
+msgstr "L'allegato e' troppo grande"
