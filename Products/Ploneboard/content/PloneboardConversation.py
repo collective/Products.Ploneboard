@@ -22,8 +22,6 @@ from Products.Ploneboard.interfaces import IForum, IConversation, IComment
 
 from Products.Ploneboard import utils
 
-from Products.CMFPlone.interfaces.NonStructuralFolder \
-    import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
 from Products.Archetypes.event import ObjectInitializedEvent
@@ -54,7 +52,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
 
     implements(IConversation, INonStructuralFolder)
-    __implements__ = (BaseBTreeFolder.__implements__, BrowserDefaultMixin.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardConversation'
 

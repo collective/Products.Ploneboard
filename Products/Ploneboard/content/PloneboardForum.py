@@ -20,8 +20,6 @@ from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
-from Products.CMFPlone.interfaces.NonStructuralFolder \
-    import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.Archetypes.event import ObjectInitializedEvent
 from zope import event
@@ -86,7 +84,6 @@ if not HAS_SIMPLEATTACHMENT:
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
     implements(IForum, INonStructuralFolder)
-    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
 

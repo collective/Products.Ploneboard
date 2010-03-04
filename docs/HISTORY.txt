@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- No more Zope2 interfaces
+  [toutpt]
+
 2.1b2 - 20091019
 ----------------
 
