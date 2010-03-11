@@ -146,7 +146,8 @@
                   condition="forums">
       <h2 i18n:translate="title_general_forums">General forums</h2>
 
-      <table metal:use-macro="here/@@ploneboard_view/macros/forumdisplay" />
+      <table metal:use-macro="view/context/@@ploneboard_view/forumdisplay" />
+
     </tal:category>
 
     <metal:footer use-macro="here/board_footer/macros/footer">
