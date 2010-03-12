@@ -65,7 +65,7 @@
      name="ploneboard_recent_view"
      class=".comment.RecentConversationsView"
      permission="zope.Public"
-     allowed_attributes="results num_conversations"
+     allowed_attributes="results num_conversations toPloneboardTime"
      />
 
   <browser:page
