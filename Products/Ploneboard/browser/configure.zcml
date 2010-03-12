@@ -73,7 +73,7 @@
      name="ploneboard_unanswered_view"
      class=".comment.UnansweredConversationsView"
      permission="zope.Public"
-     allowed_attributes="results num_conversations"
+     allowed_attributes="results num_conversations toPloneboardTime"
      />
 
   <adapter factory=".controlpanel.ControlPanelAdapter" />
