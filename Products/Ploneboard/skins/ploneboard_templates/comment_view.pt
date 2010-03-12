@@ -18,10 +18,7 @@
     </metal:css>
 
     <div metal:fill-slot="main"
-         tal:define="view context/@@singlecomment_view;
-                     isAnon context/@@plone_portal_state/anonymous;
-                     mtool context/@@plone_tools/membership;
-                     ">
+         tal:define="view context/@@singlecomment_view">
 
       <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -49,6 +46,7 @@
         
         <metal:comment metal:define-macro="comment"
                        tal:define="creator comment/Creator;
+                                   mtool context/@@plone_tools/membership;
                                    creatorinfo python: mtool.getMemberInfo(creator);
                                    creation_date comment/creation_date;
                                    state comment/review_state;
@@ -64,10 +62,10 @@
                 <h3 tal:content="comment/Title">Comment title</h3>
 
                 <a class="link-plain"
-                    tal:attributes="href string:${comment/absolute_url}">
-                   <img src="" 
-                        alt=""
-                        tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                   tal:attributes="href string:${comment/absolute_url}">
+                  <img src="" 
+                       alt=""
+                       tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                 </a>
 
                 <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
@@ -175,7 +173,8 @@
           </div>
           <!-- bis hier-->
 
-          <div class="boardCommentReplyActions">
+          <div class="boardCommentReplyActions"
+               tal:define="isAnon context/@@plone_portal_state/anonymous">
             
             <form tal:condition="comment/canReply"
                   tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
