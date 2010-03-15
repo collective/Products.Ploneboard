@@ -114,3 +114,31 @@ msgstr ""
 
 msgid "A Forum contains conversations."
 msgstr ""
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
+
+#: ./browser/comment.py:259
+msgid "Comment deleted"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
+
+#: ./browser/comment.py:254
+msgid "Conversation deleted"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""

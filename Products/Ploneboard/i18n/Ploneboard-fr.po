@@ -207,7 +207,7 @@ msgstr "Cette boîte présente les conversations récemment commentées."
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr "La taille maximale autorisée est de  {maxsize} kilo-octets."
+msgstr "La taille maximale autorisée est de  ${maxsize} kilo-octets."
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135

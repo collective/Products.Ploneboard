@@ -112,3 +112,30 @@ msgstr "Vue en arbre"
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} à ${hours}:${minutes}"
 
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Commentaire ajouté"
+
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Commentaire supprimé"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Commentaire en attente de modération"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Conversation ajoutée"
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Conversation supprimée"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Conversation en attente de modération"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr "Fichier joint est trop grand"
