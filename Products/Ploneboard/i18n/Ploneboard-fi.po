@@ -1,0 +1,506 @@
+# Finnish translations for Products.Ploneboard
+# Contributors:
+# - Antti Moilanen (2008)
+# - Jukka Ojaniemi (2010)
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2009-04-03 22:24+0000\n"
+"PO-Revision-Date: 2010-03-25 12:50+0200\n"
+"Last-Translator: Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fi\n"
+"Language-Name: Finnish\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ploneboard\n"
+"X-Poedit-Language: Finnish\n"
+"X-Poedit-Country: FINLAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#. Default: "Browse"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:149
+msgid "Browse"
+msgstr "Selaa"
+
+#. Default: "Cancel"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt:82
+msgid "Cancel"
+msgstr "Peru"
+
+#. Default: "Change"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt:75
+msgid "Change"
+msgstr "Muuta"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Kommentti lisätty"
+
+#: ./browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Kommentti poistettu"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Kommentti odottaa tarkistusta"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Keskustelu lisätty"
+
+#: ./browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Keskustelu poistettu"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Keskustelu odottaa tarkistusta"
+
+#: ./skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr "Datan hankkija päivitetty."
+
+msgid "Forum"
+msgstr "Keskustelualue"
+
+#. Default: "Log in to add comments"
+#: ./skins/ploneboard_templates/comment_view.pt:191
+msgid "Log in to add comments"
+msgstr "Kirjaudu sisään vastataksesi tähän viestiin"
+
+#: ./skins/ploneboard_scripts/validate_add_comment.vpy:46
+msgid "Please correct the indicated errors."
+msgstr "Ole hyvä ja korjaa osoitetut virheet."
+
+#. Default: "Post"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt:69
+msgid "Post"
+msgstr "Lähetä"
+
+#. Default: "Post comment"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:168
+msgid "Post comment"
+msgstr "Lähetä viesti"
+
+#. Default: "Reply to this"
+#: ./skins/ploneboard_templates/comment_view.pt:180
+msgid "Reply to this"
+msgstr "Vastaa tähän viestiin"
+
+#. Default: "Start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt:76
+msgid "Start a new Conversation"
+msgstr "Aloita uusi keskustelu"
+
+#: ./skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr "Muuntaja %s poistettu"
+
+#. Default: "View profile"
+#: ./skins/ploneboard_templates/comment_view.pt:83
+msgid "View profile"
+msgstr "Näytä profiili"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr "Voit lisätä kommentteja vain keskusteluihin tai toisiin kommentteihin."
+
+#. Default: "Add comment"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:31
+msgid "add_comment"
+msgstr "Lisää viesti"
+
+#. Default: "Add conversation"
+#: ./skins/ploneboard_templates/add_conversation_form.cpt:28
+msgid "add_conversation"
+msgstr "Lisää keskustelu"
+
+#. Default: Do you really want to delete this comment?
+msgid "alert_delete_popup"
+msgstr "Haluatko varmasti poistaa tämän viestin?"
+
+#. Default: "Search"
+#: ./skins/ploneboard_templates/board_view.pt:39
+msgid "board_search_button"
+msgstr "Hae"
+
+#. Default: "Search Boards"
+#: ./skins/ploneboard_templates/board_view.pt:32
+msgid "board_search_label"
+msgstr "Etsi keskustelupalstalta"
+
+#. Default: "More…"
+#: ./portlet/recent.pt:39
+msgid "box_more_recent_conversations"
+msgstr "Lisää…"
+
+#. Default: "by ${author}"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:99
+msgid "by_author"
+msgstr "${author}:lta"
+
+#. Default: "Current state:"
+#: ./skins/ploneboard_templates/comment_view.pt:163
+msgid "comment_current_state"
+msgstr "Viestin tila:"
+
+#. Default: "Conversation"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:70
+msgid "conversation"
+msgstr "Keskustelu"
+
+#. Default: "Forum"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:71
+msgid "conversation_forum"
+msgstr "Keskustelupalsta"
+
+#. Default: "Posted"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:72
+msgid "conversation_posted"
+msgstr "Lähetetty"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ./browser/controlpanel.py:57
+msgid "description_ploneboard_config"
+msgstr "Täällä voit muuttaa Ploneboard sivuston asetuksia"
+
+#. Default: "Forum name"
+#: ./skins/ploneboard_templates/board_view.pt:90
+msgid "forum_name"
+msgstr "Keskustelualueen nimi"
+
+#. Default: "Up to ${title}"
+#: ./skins/ploneboard_templates/moderation_form.pt:32
+msgid "go_to_parent_url"
+msgstr "Palaa sivulle: ${title}"
+
+# NEW
+#. Default: "Return to ${name}"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:38
+msgid "go_to_view_url"
+msgstr "Palaa ${name} keskustelualueelle"
+
+#. Default: "Preview comment"
+#: ./skins/ploneboard_templates/add_comment_preview.cpt:16
+msgid "heading_preview_comment"
+msgstr "Esikatsele kommentti"
+
+#. Default: "This portlet shows conversations with recent comments."
+#: ./portlet/recent.py:107
+msgid "help_add_portlet"
+msgstr "Tämä portletti näyttää keskustelut joita on äskettäin kommentoitu"
+
+# NEW
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ./skins/ploneboard_templates/add_comment_form.cpt:140
+msgid "help_body_attachments_maxsize"
+msgstr "Isoin sallittu liitetiedoston koko on ${maxsize} kilotavua."
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ./skins/ploneboard_templates/add_comment_form.cpt:134
+msgid "help_body_attachments_posting"
+msgstr "Valitse viestin liittenä käytettävä tiedosto, joka lähetetään palvelimelle."
+
+#. Default: "Basic HTML tags are OK."
+#: ./skins/ploneboard_templates/add_comment_form.cpt:104
+msgid "help_body_text_posting"
+msgstr "Voit käyttää perus HTML merkkejä."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ./skins/ploneboard_templates/add_comment_form.cpt:99
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "WWW-osoitteet muutetaan automaattisesti hyperlinkeiksi."
+
+#. Default: "Enter the categories you want to have available for forums, one category on each line."
+msgid "help_categories_board"
+msgstr "Lisää kategoriat, joiden haluat olevan palstan käytettävissä. Kirjoita yksi kategoria riviä kohti."
+
+#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended."
+msgid "help_category"
+msgstr "Valitse minkä kategorian alla keskustelualue tulisi listata. Keskustelualue voi kuulua useampaan kategoriaan, mutta on suositeltavaa käyttää vain yhtä kategoriaa."
+
+#. Default: "How many items to list."
+#: ./portlet/recent.py:28
+msgid "help_count"
+msgstr "Miten monta kohdetta listataan."
+
+#. Default: "Enter a brief description of the board."
+msgid "help_description_board"
+msgstr "Lisää palstalle lyhyt kuvaus."
+
+#. Default: "Enter a brief description of the conversation."
+msgid "help_description_conversation"
+msgstr "Lisää keskustelulle lyhyt kuvaus."
+
+#. Default: "Brief description of the forum topic."
+msgid "help_description_forum"
+msgstr "Lisää lyhyt kuvaus keskustelualueen aiheesta."
+
+#. Default: "Select the maximum number of attachments per comment."
+msgid "help_maxattachments"
+msgstr "Valitse liitetiedostojen maksimimäärä yhtä viestiä kohti."
+
+#. Default: "Select the maximum size for attachments."
+msgid "help_maxattachmentsize"
+msgstr "Valitse liitetiedostojen maksimikoko."
+
+#. Default: "Enter comment body."
+msgid "help_text"
+msgstr "Lisää viestin sisältö."
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ./browser/controlpanel.py:18
+msgid "help_transforms"
+msgstr "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+
+#. Default: "Add recent conversations portlet."
+#: ./portlet/recent.py:105
+msgid "label_add_portlet"
+msgstr "Lisää viimeisimmät keskustelut portletti"
+
+# NEW
+#. Default: "Back to discussion board"
+#: ./browser/search.pt:15
+msgid "label_back_to_board"
+msgstr "Takaisin keskustelupalstalle"
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:131
+msgid "label_body_files_posting"
+msgstr "Liitetiedostot"
+
+#. Default: "Body text"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:91
+msgid "label_body_text_posting"
+msgstr "Viestin sisältö"
+
+#. Default: "by ${author}"
+#: ./skins/ploneboard_templates/board_view.pt:129
+msgid "label_by_author"
+msgstr "Lähettäjä: ${author}"
+
+#. Default: "Categories"
+msgid "label_categories_board"
+msgstr "Kategoriat"
+
+#. Default: "Category"
+msgid "label_category"
+msgstr "Kategoria"
+
+msgid "label_description_board"
+msgstr "Keskustelupalstan kuvaus"
+
+msgid "label_description_conversation"
+msgstr "Keskustelun kuvaus"
+
+msgid "label_description_forum"
+msgstr "Lyhyt kuvaus keskustelualueen aiheesta"
+
+#. Default: "in ${forum}"
+#: ./skins/ploneboard_templates/ploneboard_recent.pt:100
+msgid "label_in_forum"
+msgstr "Keskustelualue: ${forum}"
+
+msgid "label_maxattachments"
+msgstr "Liitetiedostojen maksimimäärä"
+
+msgid "label_maxattachmentsize"
+msgstr "Liitetiedostojen sallittu maksimikoko"
+
+#. Default: "Powered by ${link}"
+#: ./skins/ploneboard_templates/board_footer.pt:11
+msgid "label_powered_by"
+msgstr "Powered by ${link}"
+
+#. Default: "Quick reply"
+#: ./skins/ploneboard_templates/conversation_view.pt:74
+msgid "label_quickreply"
+msgstr "Nopea vastaus"
+
+#. Default: "(Required)"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:65
+msgid "label_required"
+msgstr "(Pakollinen)"
+
+#. Default: "Text"
+msgid "label_text"
+msgstr "Viesti"
+
+#. Default: "Title"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:63
+msgid "label_title_posting"
+msgstr "Otsikko"
+
+#. Default: "Transforms"
+#: ./browser/controlpanel.py:16
+msgid "label_transforms"
+msgstr "Transforms"
+
+#. Default: "Attachments"
+#: ./skins/ploneboard_templates/comment_view.pt:204
+msgid "legend_attachments"
+msgstr "Liitetiedostot"
+
+#. Default: "Log in to start a conversation"
+#: ./skins/ploneboard_templates/forum_view.pt:88
+msgid "log_to_start_conversation"
+msgstr "Kirjaudu sisään aloittaaksesi uusi keskustelu"
+
+#. Default: "${count} comments in queue."
+#: ./skins/ploneboard_templates/moderation_form.pt:78
+msgid "moderation_count"
+msgstr "${count} kommenttia jonossa."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ./skins/ploneboard_templates/moderation_form.pt:41
+msgid "moderation_description"
+msgstr "Seuraavat kommentit odottavat tarkistusta. Valitse joko 'Julkaise' tai 'Hylkää'. Klikkaa kommentin otsikkoa nähdäksesi siihen liittyvä keskustelu."
+
+#. Default: "Most recent comment"
+#: ./skins/ploneboard_templates/board_view.pt:92
+msgid "most_recent_comment"
+msgstr "Uusin viesti"
+
+#. Default: "Add another attachment"
+#: ./skins/ploneboard_templates/add_comment_form.cpt:155
+msgid "new_attachment"
+msgstr "Lisää seuraava liitetiedosto"
+
+# NEW
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:58
+msgid "new_conversations_marked_with"
+msgstr "Uusia viestejä sisältävät keskustelut on merkitty ${star} merkillä."
+
+#. Default: "There are no comments in the moderation queue."
+#: ./skins/ploneboard_templates/moderation_form.pt:118
+msgid "no_comments_queued"
+msgstr "Tarkistusta vaativia kommentteja ei ole."
+
+#. Default: "No conversations started"
+#: ./skins/ploneboard_templates/board_view.pt:121
+msgid "no_conversations_started"
+msgstr "Keskusteluja ei ole"
+
+#. Default: "No conversations found."
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:43
+msgid "no_recent_conversations"
+msgstr "Keskusteluja ei löytynyt."
+
+#. Default: "No replies yet"
+#: ./skins/ploneboard_templates/ploneboard_recent.pt:116
+msgid "no_replies_yet"
+msgstr "Vastauksia ei vielä ole"
+
+#. Default: "No conversations in this forum yet."
+#: ./skins/ploneboard_templates/forum_view.pt:65
+msgid "not_conversations"
+msgstr "Tällä keskustelualueella ei ole vielä yhtään keskustelua."
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ./skins/ploneboard_templates/board_view_global.pt:35
+msgid "not_forums"
+msgstr "Tällä keskustelupalstalla ei ole vielä keskustelualueita, käytä lisää valikkoa lisäteksäsi keskustelualueita."
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ./skins/ploneboard_templates/forum_view.pt:96
+msgid "not_permission_start_conversation"
+msgstr "Sinulla ei ole oikeuksia aloittaa uutta keskustelua"
+
+#. Default: "Conversations"
+#: ./skins/ploneboard_templates/board_view.pt:91
+msgid "number_of_conversations"
+msgstr "Keskustelut"
+
+#. Default: "Ploneboard configuration"
+#: ./browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr "Ploneboardin asetukset"
+
+#. Default: "Text transformations"
+#: ./browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr "Tekstien muunnokset"
+
+#. Default: "Posted by"
+#: ./skins/ploneboard_templates/comment_view.pt:70
+msgid "posted_by"
+msgstr "Lähettäjä:"
+
+#. Default: "Preview message"
+#: ./skins/ploneboard_templates/add_conversation_preview.cpt:11
+msgid "preview_message"
+msgstr "Viestin esikatselu"
+
+#. Default: "The following conversations have had recent activity."
+#: ./skins/ploneboard_templates/ploneboard_recent.pt:51
+msgid "recent_conversations_description"
+msgstr "Seuraavat keskustelut sisältävät uusia viestejä."
+
+#. Default: "Replies"
+#: ./skins/ploneboard_templates/ploneboard_recent.pt:71
+msgid "replies"
+msgstr "Vastaukset"
+
+# NEW
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ./browser/search.pt:72
+msgid "search_result_location"
+msgstr "Keskustelualue: ${forum} &rarr; ${conversation}."
+
+# NEW
+#. Default: "Show all recent activity"
+#: ./skins/ploneboard_templates/board_view.pt:45
+msgid "show_new_conversations_all"
+msgstr "Näytä keskustelut, joissa on uusia viestejä"
+
+#. Default: "Show only unanswered"
+#: ./skins/ploneboard_templates/forum_view.pt:40
+msgid "show_no_replies"
+msgstr "Näytä viestit joihin ei ole vastauksia"
+
+# NEW
+#. Default: "Show all unanswered"
+#: ./skins/ploneboard_templates/board_view.pt:52
+msgid "show_no_replies_all"
+msgstr "Näytä kaikki viestit, joihin ei ole vastattu"
+
+#. Default: "at"
+#: ./skins/ploneboard_templates/comment_view.pt:75
+msgid "text_at"
+msgstr "Lähetetty:"
+
+#. Default: "Number of items to display"
+#: ./portlet/recent.py:26
+msgid "title_count"
+msgstr "Näytettävien kohteiden määrä"
+
+#. Default: "General forums"
+#: ./skins/ploneboard_templates/board_view_global.pt:59
+msgid "title_general_forums"
+msgstr "Yleiset keskustelualueet"
+
+#. Default: "Recent conversations in ${title}"
+#: ./skins/ploneboard_templates/ploneboard_recent.pt:29
+msgid "title_recent_conversations"
+msgstr "Aiheen ${title} äskettäiset keskustelut"
+
+#. Default: "Portlet title"
+#: ./portlet/recent.py:21
+msgid "title_title"
+msgstr "Portletin otsikko"
+
+#. Default: "Unanswered posts in ${title}"
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:29
+msgid "title_unanswered_conversations"
+msgstr "${title}: Viestit joihin ei ole vastauksia"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:51
+msgid "unanswered_conversations_description"
+msgstr "Seuraaviin lähetettyihin keskusteluihin ei ole vielä yhtään vastausta."
+
