@@ -22,6 +22,7 @@ def setupVarious(context):
     site=context.getSite()
     addTransforms(site)
     setupCommentLocalRoles(site)
+    installDependentProducts(site)
     addPlacefulPolicy(site)
 
 
@@ -90,10 +91,13 @@ def setupCommentLocalRoles(self):
     self.plone_log('setupCommentLocalRoles', 'Updated %d of total %d comments' % (count, len(comments)))
 
 def addPlacefulPolicy(self):
-    return  #--plone4--
     pw=getToolByName(self, 'portal_placeful_workflow')
     new_id = 'EditableComment'
     if new_id not in pw.objectIds():
         pw.manage_addWorkflowPolicy(new_id)
         ob = pw[new_id]
         ob.setChain('PloneboardComment', 'ploneboard_editable_comment_workflow')
+
+def installDependentProducts(self):
+    qi=getToolByName(self, 'portal_quickinstaller')
+    qi.installProduct('CMFPlacefulWorkflow')
