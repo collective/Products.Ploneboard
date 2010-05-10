@@ -59,7 +59,7 @@
      />
 
   <genericsetup:registerProfile
-     name="basicboard"
+     name="zbasicboard"
      title="Ploneboard performance test forum structure"
      directory="profiles/basicboard"
      description="Set up a forum structure for performance testing"
@@ -68,7 +68,7 @@
      />
 
   <genericsetup:registerProfile
-     name="lotsofposts"
+     name="zlotsofposts"
      title="Ploneboard performance posts"
      directory="profiles/lotsofposts"
      description="Set up posts for load testing"
