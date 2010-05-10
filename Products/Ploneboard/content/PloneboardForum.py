@@ -20,6 +20,7 @@ from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard import utils
 
+from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.Archetypes.event import ObjectInitializedEvent
 from zope import event
@@ -84,6 +85,7 @@ if not HAS_SIMPLEATTACHMENT:
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
     implements(IForum, INonStructuralFolder)
+#--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
 
@@ -269,11 +271,11 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getAttachmentSizes')
     def getAttachmentSizes(self):
         voc = DisplayList()
-        voc.add(10, '10 kilobyte')
-        voc.add(100, '100 kilobyte')
-        voc.add(1000, '1 megabyte')
-        voc.add(10000, '10 megabyte')
-        voc.add(-1, 'unlimited')
+        voc.add('10', '10 kilobyte')
+        voc.add('100', '100 kilobyte')
+        voc.add('1000', '1 megabyte')
+        voc.add('10000', '10 megabyte')
+        voc.add('-1', 'unlimited')
 
         return voc
 
