@@ -1,31 +1,28 @@
-from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_chain
 from DateTime import DateTime
 from OFS.Image import File
 
-from Products.CMFCore.utils import getToolByName
-
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import RichWidget, ReferenceWidget
-from Products.Archetypes.utils import shasattr
-
-from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
-
-from Products.CMFPlone.utils import _createObjectByType
-
-from Products.Ploneboard.permissions import ViewBoard, AddComment, \
-        EditComment, AddAttachment, ManageComment, DeleteComment
-
-from Products.Ploneboard.interfaces import IConversation, IComment
-from Products.Ploneboard import utils
-
-from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStructuralFolder
-from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+from zope.interface import implements
+from zope import event
 
 from Products.Archetypes.event import ObjectInitializedEvent
-from zope import event
+from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
+from Products.Archetypes.public import RichWidget, ReferenceWidget
+from Products.Archetypes.utils import shasattr
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+from Products.CMFPlone.utils import _createObjectByType
+from Products.Ploneboard import utils
+from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
+from Products.Ploneboard.interfaces import IConversation, IComment
+from Products.Ploneboard.permissions import AddAttachment
+from Products.Ploneboard.permissions import AddComment
+from Products.Ploneboard.permissions import DeleteComment
+from Products.Ploneboard.permissions import EditComment
+from Products.Ploneboard.permissions import ManageComment
+from Products.Ploneboard.permissions import ViewBoard
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -68,7 +65,6 @@ class PloneboardComment(BaseBTreeFolder):
     # Don't inherit from btreefolder...
 
     implements(IComment, INonStructuralFolder)
-#--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardComment'
 

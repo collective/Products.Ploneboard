@@ -1,4 +1,5 @@
 from zope.interface import implements
+from zope import event
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_inner, aq_chain
@@ -6,45 +7,40 @@ from OFS.CopySupport import _cb_decode, _cb_encode, CopyContainer, CopyError
 from OFS.Image import File
 from OFS.Moniker import Moniker
 
-from Products.CMFCore.utils import getToolByName
-
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.event import ObjectInitializedEvent
 from Products.Archetypes.public import BaseBTreeFolder, registerType
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import TextAreaWidget
-from Products.Ploneboard.config import PROJECTNAME
-
-from Products.CMFPlone.utils import _createObjectByType
-
+from Products.CMFCore.utils import getToolByName
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
+from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+from Products.CMFPlone.utils import _createObjectByType
+from Products.Ploneboard import utils
+from Products.Ploneboard.config import PROJECTNAME
+from Products.Ploneboard.interfaces import IForum, IConversation, IComment
 from Products.Ploneboard.permissions import (
     ViewBoard, AddComment, ManageConversation, EditComment, MergeConversation)
-from Products.Ploneboard.interfaces import IForum, IConversation, IComment
-
-from Products.Ploneboard import utils
-
-from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStructuralFolder
-from Products.CMFPlone.interfaces.structure import INonStructuralFolder
-
-from Products.Archetypes.event import ObjectInitializedEvent
-from zope import event
 
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
 PBConversationBaseBTreeFolderSchema['title'].write_permission = EditComment
 
 schema = PBConversationBaseBTreeFolderSchema + Schema((
-    TextField('description',
-              searchable = 1,
-              read_permission = ViewBoard,
-              write_permission = EditComment,
-              default_content_type = 'text/plain',
-              default_output_type = 'text/plain',
-              widget = TextAreaWidget(description = "Enter a brief description of the conversation.",
-                                      description_msgid = "help_description_conversation",
-                                      label = "Description",
-                                      label_msgid = "label_description_conversation",
-                                      i18n_domain = "ploneboard",
-                                      rows = 5)),
+    TextField(
+            'description',
+            searchable = 1,
+            read_permission = ViewBoard,
+            write_permission = EditComment,
+            default_content_type = 'text/plain',
+            default_output_type = 'text/plain',
+            widget = TextAreaWidget(
+                description="Enter a brief description of the conversation.",
+                description_msgid="help_description_conversation",
+                label="Description",
+                label_msgid="label_description_conversation",
+                i18n_domain="ploneboard",
+                rows=5)
+        ),
     ))
 utils.finalizeSchema(schema)
 
@@ -53,14 +49,9 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
 
     implements(IConversation, INonStructuralFolder)
-#--plone4--    __implements__ = (BaseBTreeFolder.__implements__, BrowserDefaultMixin.__implements__, ZopeTwoINonStructuralFolder)
-
     meta_type = 'PloneboardConversation'
-
     schema = schema
-
     _at_rename_after_creation = True
-
 
     security = ClassSecurityInfo()
 
