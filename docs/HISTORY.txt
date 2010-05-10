@@ -4,6 +4,19 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Add some french translations in the plone domain and fix the translation of 
+  "help_body_attachments_maxsize" in Ploneboard-fr.po.
+  [sylvainb]
+
+- ploneboard_recent and ploneboard_unanswered views need access to the 
+  toPloneboardTime method. This fixes
+  http://plone.org/products/ploneboard/issues/207 as well as
+  http://plone.org/products/ploneboard/issues/208
+  [sylvainb]
+  
+- No more Zope2 interfaces
+  [toutpt]
+
 2.1b2 - 20091019
 ----------------
 
