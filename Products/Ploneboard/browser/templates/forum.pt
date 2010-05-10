@@ -11,10 +11,6 @@
         <tal:border define="dummy python:request.set('disable_border', True)" />
       </tal:block>
    </metal:top>
-    <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-    </metal:css>
 </head>
 
 <body>
@@ -23,7 +19,10 @@
          tal:define="numConversations view/getNumberOfConversations;
                      pss modules/Products/PythonScripts/standard;
                      DateTime nocall:modules/DateTime/DateTime;
-                     last_login view/last_login;">
+                     last_login view/last_login;
+                     isAnon isAnon | context/@@plone_portal_state/anonymous;
+                     portal portal | context/@@plone_portal_state/portal;
+                     mtool mtool | context/@@plone_tools/membership;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
