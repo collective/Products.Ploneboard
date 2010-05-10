@@ -46,7 +46,7 @@
         
         <metal:comment metal:define-macro="comment"
                        tal:define="creator comment/Creator;
-                                   mtool context/@@plone_tools/membership;
+                                   mtool mtool | context/@@plone_tools/membership;
                                    creatorinfo python: mtool.getMemberInfo(creator);
                                    creation_date comment/creation_date;
                                    state comment/review_state;
@@ -174,7 +174,7 @@
           <!-- bis hier-->
 
           <div class="boardCommentReplyActions"
-               tal:define="isAnon context/@@plone_portal_state/anonymous">
+               tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous">
             
             <form tal:condition="comment/canReply"
                   tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
@@ -205,7 +205,7 @@
                     tal:condition="attachments">
             <legend i18n:translate="legend_attachments">Attachments</legend>
             <ul class="visualNoMarker"
-                tal:define="normalizeString nocall: context/@@plone/normalizeString">
+                tal:define="normalizeString normalizeString | nocall:context/@@plone/normalizeString">
               <li tal:repeat="attachment attachments">
                 <a tal:attributes="href attachment/absolute_url">
                   <span tal:define="pt attachment/portal_type;

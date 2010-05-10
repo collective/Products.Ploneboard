@@ -19,7 +19,7 @@
          tal:define="view context/@@ploneboard_recent_view;
                      numConversations view/num_conversations;
                      pss modules/Products/PythonScripts/standard;
-                     isAnon context/@@plone_portal_state/anonymous;">
+                     isAnon isAnon | context/@@plone_portal_state/anonymous;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
