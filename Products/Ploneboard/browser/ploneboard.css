@@ -9,7 +9,6 @@
 **
 */
 
-
 /* Adjusting a few basic Plone classes */
 /*
 .listing {
@@ -151,5 +150,18 @@
 
 .boardCommentHeaderTitleBlock h3 { display: none; }
 .commentReplyTitle { display: none; }
-
+ 
+/* Stripping down Kupu to the bare essentials */
+.kupu-tb-styles,
+#kupu-bg-subsuper,
+#kupu-bg-definitionlist,
+#kupu-bg-undo,
+#kupu-zoom,
+#kupu-spellchecker,
+#kupu-logo-button,
+#kupu-imagelibdrawer-button,
+#kupu-tabledrawer-button,
+#kupu-source {
+    display: none;
+}
 
