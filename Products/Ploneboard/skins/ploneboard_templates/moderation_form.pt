@@ -5,19 +5,12 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
-<head>
-    <metal:css fill-slot="css_slot">
-    <style type="text/css" media="all"
-           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
-    </metal:css>
-
-</head>
-
 <body>
 
     <div metal:fill-slot="main"
          tal:define="results here/moderation_search;
-                     DateTime python:modules['DateTime'].DateTime;">
+                     DateTime python:modules['DateTime'].DateTime;
+                     atool context/@@plone_tools/actions">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 

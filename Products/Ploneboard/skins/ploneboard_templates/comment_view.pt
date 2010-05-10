@@ -46,6 +46,7 @@
         
         <metal:comment metal:define-macro="comment"
                        tal:define="creator comment/Creator;
+                                   mtool mtool | context/@@plone_tools/membership;
                                    creatorinfo python: mtool.getMemberInfo(creator);
                                    creation_date comment/creation_date;
                                    state comment/review_state;
@@ -61,10 +62,10 @@
                 <h3 tal:content="comment/Title">Comment title</h3>
 
                 <a class="link-plain"
-                    tal:attributes="href string:${comment/absolute_url}">
-                   <img src="" 
-                        alt=""
-                        tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
+                   tal:attributes="href string:${comment/absolute_url}">
+                  <img src="" 
+                       alt=""
+                       tal:attributes="src string:${portal_url}/ploneboard_comment_icon.gif"/>
                 </a>
 
                 <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
@@ -172,7 +173,8 @@
           </div>
           <!-- bis hier-->
 
-          <div class="boardCommentReplyActions">
+          <div class="boardCommentReplyActions"
+               tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous">
             
             <form tal:condition="comment/canReply"
                   tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
@@ -202,7 +204,8 @@
                     tal:define="attachments comment/getAttachments"
                     tal:condition="attachments">
             <legend i18n:translate="legend_attachments">Attachments</legend>
-            <ul class="visualNoMarker">
+            <ul class="visualNoMarker"
+                tal:define="normalizeString normalizeString | nocall:context/@@plone/normalizeString">
               <li tal:repeat="attachment attachments">
                 <a tal:attributes="href attachment/absolute_url">
                   <span tal:define="pt attachment/portal_type;
