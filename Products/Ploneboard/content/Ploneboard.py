@@ -19,22 +19,28 @@ from Products.Ploneboard import utils
 
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
-              searchable = 1,
-              default_content_type = 'text/html',
-              default_output_type = 'text/plain',
-              widget = TextAreaWidget(description = "Enter a brief description of the board.",
-                                      description_msgid = "help_description_board",
-                                      i18n_domain = "ploneboard",
-                                      label = "Description",
-                                      label_msgid = "label_description_board",
-                                      rows = 5)),
+        searchable = 1,
+        default_content_type = 'text/html',
+        default_output_type = 'text/plain',
+        widget = TextAreaWidget(
+                description = "Enter a brief description of the board.",
+                description_msgid = "help_description_board",
+                i18n_domain = "ploneboard",
+                label = "Description",
+                label_msgid = "label_description_board",
+                rows = 5
+                )
+            ),
+
     LinesField('categories',
-               widget = LinesWidget(
-                   description = "Enter the categories you want to have available for forums, one category on each line.",
-                   description_msgid = "help_categories_board",
-                   label = "Categories",
-                   label_msgid = "label_categories_board",
-                   i18n_domain = "ploneboard")),
+        widget = LinesWidget(
+            description = \
+                "Enter the categories you want to have available for "
+                "forums, one category on each line.",
+            description_msgid = "help_categories_board",
+            label = "Categories",
+            label_msgid = "label_categories_board",
+            i18n_domain = "ploneboard")),
     ))
 
 utils.finalizeSchema(schema)
@@ -43,11 +49,8 @@ utils.finalizeSchema(schema)
 class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
     implements(IPloneboard)
-
     meta_type = 'Ploneboard'
-
     schema = schema
-
     _at_rename_after_creation = True
 
     security = ClassSecurityInfo()
