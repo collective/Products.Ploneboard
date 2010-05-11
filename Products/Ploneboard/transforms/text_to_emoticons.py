@@ -1,11 +1,16 @@
-from Products.PortalTransforms.interfaces import itransform
+import copy
+import re
+
 from ZODB.PersistentMapping import PersistentMapping
+from zope.interface import implements
+
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.utils import TransformDataProvider
-import re
-import copy
-from Products.PortalTransforms.interfaces import ITransform
-from zope.interface import implements
+from Products.PortalTransforms.interfaces import itransform
+try:
+    from Products.PortalTransforms.interfaces import ITransform
+except ImportError:
+    ITransform = None
 
 class EmoticonDataProvider(TransformDataProvider):
     def __init__(self):
@@ -51,8 +56,9 @@ def registerDataProvider():
 class TextToEmoticons:
     """transform which replaces text emoticons into urls to emoticons images"""
 
-    implements(ITransform) 
     __implements__ = itransform
+    if ITransform:
+        implements(ITransform) 
 
     __name__ = "text_to_emoticons"
     output = "text/plain"

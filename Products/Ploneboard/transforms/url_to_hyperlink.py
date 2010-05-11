@@ -1,8 +1,10 @@
-from Products.PortalTransforms.interfaces import itransform
-from Products.PortalTransforms.interfaces import ITransform
-from zope.interface import implements
-
 import re
+from zope.interface import implements
+from Products.PortalTransforms.interfaces import itransform
+try:
+    from Products.PortalTransforms.interfaces import ITransform
+except ImportError:
+    ITransform = None
 
 hider = "##HIDE"
 schemematcher = re.compile ("(mailto|telnet|gopher|http|https|ftp)", re.I)
@@ -19,7 +21,9 @@ class URLToHyperlink:
     """transform which replaces urls and email into hyperlinks"""
 
     __implements__ = itransform
-    implements(ITransform) 
+
+    if ITransform:
+        implements(ITransform) 
 
     __name__ = "url_to_hyperlink"
     output = "text/plain"
