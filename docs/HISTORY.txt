@@ -17,6 +17,12 @@ Changelog
 - No more Zope2 interfaces
   [toutpt]
 
+- Merged changes from plone4-compatibility branch
+  [jcbrand]
+
+- Defined global variables for Plone4 compatibility
+  [jcbrand]
+
 2.1b2 - 20091019
 ----------------
 

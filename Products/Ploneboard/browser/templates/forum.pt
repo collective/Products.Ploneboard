@@ -20,9 +20,9 @@
                      pss modules/Products/PythonScripts/standard;
                      DateTime nocall:modules/DateTime/DateTime;
                      last_login view/last_login;
-                     isAnon nocall:isAnon | context/@@plone_portal_state/anonymous;
-                     portal nocall:portal | context/@@plone_portal_state/portal;
-                     mtool nocall:mtool | context/@@plone_tools/membership;">
+                     isAnon context/@@plone_portal_state/anonymous;
+                     portal context/@@plone_portal_state/portal | nocall:portal;
+                     mtool context/@@plone_tools/membership;">
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
