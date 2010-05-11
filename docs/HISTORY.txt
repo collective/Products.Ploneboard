@@ -20,7 +20,7 @@ Changelog
 - Merged changes from plone4-compatibility branch
   [jcbrand]
 
-- Defined global variables for Plone4 compatibility
+- Defined global variables in templates, for Plone4 compatibility
   [jcbrand]
 
 2.1b2 - 20091019
