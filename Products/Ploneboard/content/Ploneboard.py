@@ -1,23 +1,27 @@
 from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
+
+from Products.ATContentTypes.content.folder import ATBTreeFolder
+from Products.ATContentTypes.content.folder import ATBTreeFolderSchema
+from Products.Archetypes.public import Schema
+from Products.Archetypes.public import TextField
+from Products.Archetypes.public import LinesField
+from Products.Archetypes.public import TextAreaWidget
+from Products.Archetypes.public import LinesWidget
+from Products.Archetypes.public import registerType
 from Products.CMFCore.utils import getToolByName
-
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, LinesField
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, LinesWidget
-
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-
+from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
-from Products.Ploneboard.permissions import ViewBoard, SearchBoard, \
-    AddForum, ManageBoard
 from Products.Ploneboard.content.PloneboardForum import PloneboardForum
 from Products.Ploneboard.interfaces import IPloneboard
-from Products.Ploneboard import utils
+from Products.Ploneboard.permissions import AddForum
+from Products.Ploneboard.permissions import ManageBoard
+from Products.Ploneboard.permissions import SearchBoard
+from Products.Ploneboard.permissions import ViewBoard
 
-
-schema = BaseBTreeFolderSchema + Schema((
+schema = ATBTreeFolderSchema + Schema((
     TextField('description',
         searchable = 1,
         default_content_type = 'text/html',
@@ -46,7 +50,7 @@ schema = BaseBTreeFolderSchema + Schema((
 utils.finalizeSchema(schema)
 
 
-class Ploneboard(BrowserDefaultMixin, BaseBTreeFolder):
+class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
     implements(IPloneboard)
     meta_type = 'Ploneboard'
