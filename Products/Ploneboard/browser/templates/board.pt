@@ -9,8 +9,8 @@
   <div metal:fill-slot="main"
        tal:define="categories here/getCategories|nothing;
                    keyedforums view/getKeyedForums;
-                   portal portal | context/@@plone_portal_state/portal;
-                   mtool mtool | context/@@plone_tools/membership">
+                   portal nocall:portal | context/@@plone_portal_state/portal;
+                   mtool nocall:mtool | context/@@plone_tools/membership">
                    
     <div tal:replace="structure provider:plone.abovecontenttitle" />
                    
