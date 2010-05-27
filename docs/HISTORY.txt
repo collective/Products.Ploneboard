@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Fix a setuphandler step dependency.
+  [rossp]
+
 - Add some french translations in the plone domain and fix the translation of 
   "help_body_attachments_maxsize" in Ploneboard-fr.po.
   [sylvainb]

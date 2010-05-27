@@ -5,7 +5,7 @@
                handler="Products.Ploneboard.setuphandlers.setupVarious"
                title="Ploneboard: run non-GenericSetup setup steps">
     <dependency step="toolset" />
-    <dependency step="types" />
+    <dependency step="typeinfo" />
     Various import steps that are not handled by GS import/export
     handlers.
   </import-step>
