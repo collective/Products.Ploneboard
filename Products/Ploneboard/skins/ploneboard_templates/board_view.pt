@@ -17,7 +17,7 @@
        tal:define="forums here/getForums;
                    keyedforums python:here.getKeyedForums(forums);
                    categories here/getCategories|nothing;
-                   view context/@@board_browserview;">
+                   view context/@@ploneboard_view;">
                    
     <div tal:replace="structure provider:plone.abovecontenttitle" />
                    

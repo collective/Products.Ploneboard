@@ -20,7 +20,7 @@
  <alias from="moderate" to="moderation_form"/>
  <alias from="rss-properties" to="synPropertiesForm"/>
  <alias from="sharing" to="@@sharing"/>
- <alias from="view" to="forum_view"/>
+ <alias from="view" to="view"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:$object_url" visible="True">
   <permission value="View"/>

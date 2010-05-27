@@ -72,3 +72,18 @@ List the conversations
       'review_state': 'active', 
       'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
       'getNumberOfComments': 3}]
+
+Open the forum in a browser.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+    >>> browser.open(forum.absolute_url())
+    >>> print browser.contents
+    <...
+    ...forum1...
+    >>> browser.open(forum.absolute_url()+'/view')
+    >>> print browser.contents
+    <...
+    ...forum1...

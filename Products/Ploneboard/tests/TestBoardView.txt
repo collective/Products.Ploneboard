@@ -54,3 +54,18 @@ toPloneboardTime is tested in TestCommentView
              'absolute_url': 'http://nohost/plone/board1/forum2', 
              'getNumberOfConversations': 1, 
              'getLastCommentDate': u'...'}]}
+
+Open the board in a browser.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+    >>> browser.open(board.absolute_url())
+    >>> print browser.contents
+    <...
+    ...board1...
+    >>> browser.open(board.absolute_url()+'/view')
+    >>> print browser.contents
+    <...
+    ...board1...

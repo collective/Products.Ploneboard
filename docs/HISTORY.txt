@@ -4,6 +4,9 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Fix some references to the wrong the names of some browser views.
+  [rossp]
+
 - Fix a setuphandler step dependency.
   [rossp]
 
