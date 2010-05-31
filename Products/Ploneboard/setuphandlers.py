@@ -20,10 +20,22 @@ def setupVarious(context):
         return
     
     site=context.getSite()
+    addCatalogIndexesAndMetadata(site)
     addTransforms(site)
     setupCommentLocalRoles(site)
     addPlacefulPolicy(site)
 
+def addCatalogIndexesAndMetadata(site):
+    catalog = getToolByName(site, 'portal_catalog')
+    indexes = catalog.indexes()
+    schema = catalog.schema()
+
+    data = (('num_comments', 'FieldIndex', True),)
+    for name,indextype,metadata in data:
+        if indextype and name not in indexes:
+            catalog.addIndex(name, indextype)
+        if metadata and name not in schema:
+            catalog.addColumn(name)
 
 def addTransforms(site):
     pb_tool = getToolByName(site, 'portal_ploneboard')

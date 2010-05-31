@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Remove catalog.xml and set up catalog from code instead. This avoids nuking
+  index on update/reinstall.
+  [tesdal]
+
 - Fix some references to the wrong the names of some browser views.
   [rossp]
 
