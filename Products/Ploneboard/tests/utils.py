@@ -11,10 +11,10 @@ def addMember(self, username, fullname="", email="", roles=('Member',), last_log
                                 'last_login_time': DateTime(last_login_time),})
 
 def setUpDefaultMembersBoardAndForum(self):
-    addMember(self, 'member1', 'Member one', roles=('Member',))
-    addMember(self, 'member2', 'Member two', roles=('Member',))
-    addMember(self, 'manager1', 'Manager one', roles=('Manager',))
-    addMember(self, 'reviewer1', 'Manager one', roles=('Reviewer',))
+    addMember(self, 'member1', 'Member one', 'member1@example.com', roles=('Member',))
+    addMember(self, 'member2', 'Member two', 'member2@example.com', roles=('Member',))
+    addMember(self, 'manager1', 'Manager one', 'manager1@example.com', roles=('Manager',))
+    addMember(self, 'reviewer1', 'Reviewer one', 'reviewer1@example.com', roles=('Reviewer',))
 
     self.workflow = self.portal.portal_workflow
 
