@@ -51,3 +51,7 @@ def reject_script(self, sci):
                     wftool.doActionFor(parent, 'reject')
             except:
                 pass
+
+def lock_or_unlock(self, sci):
+    """PASS"""
+    pass
