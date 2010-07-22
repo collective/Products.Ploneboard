@@ -350,7 +350,6 @@ msgstr "Archivos adjuntos"
 
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:90
-#, fuzzy
 msgid "log_to_start_conversation"
 msgstr "Haga login para comenzar una nueva conversacion"
 

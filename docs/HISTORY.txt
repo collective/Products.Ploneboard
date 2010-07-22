@@ -32,6 +32,9 @@ Changelog
 
 - Defined global variables in templates, for Plone4 compatibility
   [jcbrand]
+  
+- Fix Spanish translation for "Log in to start a conversation".
+  [timo]
 
 2.1b2 - 20091019
 ----------------
