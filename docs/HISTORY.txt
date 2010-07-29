@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.4-branch_redturtle (2009-07-29)
+-------------------------------------
+* Aggiunta vista per la creazione di date nel formato di PloneBoard,
+  viene usata al posto dello script toPloneboardTime che aveva un errore di traduzione [fdelia]
+
 2.0.3-branch_redturtle (2009-01-07)
 -------------------------------------
 * modifica delle traduzioni [andrea]
