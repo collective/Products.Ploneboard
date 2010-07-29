@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.0.3-branch_redturtle'
+version = '2.0.4-branch_redturtle'
 
 setup(name='Products.Ploneboard',
       version=version,
