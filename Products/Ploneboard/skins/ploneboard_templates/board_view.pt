@@ -131,12 +131,13 @@
                                            creatorinfo python: mtool.getMemberInfo(creator);"
                                    content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                   </div>
-                                                                                                                      
-
-                  <span class="discreet"
-                        tal:content="python:here.toPloneboardTime(forum.getLastCommentDate())">
-                     Thursday 13:21
-                  </span>
+         		  
+         		  
+				  <span class="discreet"
+					tal:define="toploneboardtime_view nocall: context/@@toploneboardtime_view"
+					tal:content="python:toploneboardtime_view.toPloneboardTime(time_=forum.getLastCommentDate())">
+						Thursday 13:21
+				  </span>
                 </td>
               </tr>
             </tal:showforums>

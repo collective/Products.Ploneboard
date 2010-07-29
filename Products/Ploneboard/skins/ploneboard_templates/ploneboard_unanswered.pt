@@ -100,9 +100,10 @@
                                              content="conversation/creator" />
                             </div>
                             <span class="discreet"
-                                  tal:content="python:here.toPloneboardTime(conversation['created'])">
-                                Thursday 13:21
-                            </span>
+								tal:define="toploneboardtime_view nocall: context/@@toploneboardtime_view"
+								tal:content="python:toploneboardtime_view.toPloneboardTime(time_=conversation['created'])">
+									Thursday 13:21
+				  			</span>
                         </td>
     
                     </tr>
