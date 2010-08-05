@@ -35,6 +35,10 @@ Changelog
   
 - Fix Spanish translation for "Log in to start a conversation".
   [timo]
+  
+- Fix translation for "Post comment" and "Cancel" for the add_comment_form.
+  [timo]
+
 
 2.1b2 - 20091019
 ----------------

@@ -163,13 +163,13 @@
                          type="submit" 
                          name="form.button.Post" 
                          value="Post comment" 
-                         i18n:attributes="value post_comment"
+                         i18n:attributes="value"
                          /> 
                   <input class="destructive"
                          type="submit"
                          name="form.button.Cancel"
                          value="Cancel"
-                         i18n:attributes="value cancel_comment"
+                         i18n:attributes="value"
                          />
               </div>
             </div>
