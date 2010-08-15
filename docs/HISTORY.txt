@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Moved event notifications for object creation to later phase. Objects 
+  should be populated with data when firing ObjectInitializedEvent.
+  [naro]
+  
 - Remove catalog.xml and set up catalog from code instead. This avoids nuking
   index on update/reinstall.
   [tesdal]

@@ -131,7 +131,6 @@ class PloneboardForum(BaseBTreeFolder):
         id = self.generateId(prefix='')
 
         conv = _createObjectByType('PloneboardConversation', self, id)
-        event.notify(ObjectInitializedEvent(conv))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
@@ -140,9 +139,9 @@ class PloneboardForum(BaseBTreeFolder):
         if creator is not None:
             conv.setCreators([creator])
 
+        event.notify(ObjectInitializedEvent(conv))
         if text is not None or files:
             m = _createObjectByType('PloneboardComment', conv, conv.generateId(prefix=''))
-            event.notify(ObjectInitializedEvent(m))
 
             # XXX: There is some permission problem with AT write_permission
             # and using **kwargs in the _createObjectByType statement.
@@ -160,6 +159,7 @@ class PloneboardForum(BaseBTreeFolder):
                     attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
                     m.addAttachment(attachment)
 
+            event.notify(ObjectInitializedEvent(m))
             m.reindexObject()
 
         conv.reindexObject()

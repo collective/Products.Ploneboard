@@ -114,7 +114,6 @@ class PloneboardComment(BaseBTreeFolder):
                 title = 'Re: ' + title
 
         m = _createObjectByType(self.portal_type, conv, id)
-        event.notify(ObjectInitializedEvent(m))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
@@ -142,6 +141,7 @@ class PloneboardComment(BaseBTreeFolder):
             forum = self.getConversation().getForum()
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
 
+        event.notify(ObjectInitializedEvent(m))
         m.reindexObject()
         conv.reindexObject() # Sets modified
         return m

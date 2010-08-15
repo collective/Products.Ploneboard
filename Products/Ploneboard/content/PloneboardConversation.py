@@ -94,7 +94,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
 
         m = _createObjectByType('PloneboardComment', self, id)
-        event.notify(ObjectInitializedEvent(m))
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
@@ -119,6 +118,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             forum = self.getForum()
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
 
+        event.notify(ObjectInitializedEvent(m))
         m.indexObject()
 
         self.reindexObject() # Sets modified
