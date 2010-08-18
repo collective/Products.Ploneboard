@@ -10,4 +10,14 @@
         editview=".recent.EditForm"
         />
 
+    <plone:portlet
+        name="ploneboard.RecentConversationsLarge"
+        interface=".recent_large.IRecentConversationsLargePortlet"
+        assignment=".recent_large.Assignment"
+        renderer=".recent_large.Renderer"
+        addview=".recent_large.AddForm"
+        editview=".recent_large.EditForm"
+        />
+
+
 </configure>

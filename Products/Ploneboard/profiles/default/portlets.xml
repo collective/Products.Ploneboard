@@ -5,5 +5,10 @@
       title="Recent Ploneboard conversations"
       description="A portlet which shows an overview of all recently updated conversations"
       />
+  <portlet
+      addview="ploneboard.RecentConversationsLarge"
+      title="Recent Ploneboard conversations (large version)"
+      description="A portlet which shows a table with all recently updated conversations. Only suitable for wide portlet managers (e.g. collective.collage.portlets)."
+      />
         
 </portlets>

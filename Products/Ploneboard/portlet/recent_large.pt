@@ -1,0 +1,58 @@
+<tal:block condition="view/available"
+           i18n:domain="ploneboard">
+<div class="portlet portletPloneboardRecent">
+    <div class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span tal:content="view/title">Recent conversations</span>
+        <span class="portletTopRight"></span>
+    </div>
+
+    <table style="width:100%">
+      <tr class="portletItem">
+        <th></th>
+        <th i18n:translate="topic_header">Topic</th>
+        <th i18n:translate="replies_header">Replies</th>
+        <th i18n:translate="author_header">Author</th>
+        <th i18n:translate="date_header">Date</th>
+      </tr>
+    <tal:items tal:repeat="obj view/conversations">
+        <tr class="portletItem"
+            tal:define="oddrow repeat/obj/odd;
+                        item_wf_state_class string:state-${obj/review_state};
+                        item_type_class string:contenttype-${obj/portal_type};"
+            tal:attributes="class python:oddrow and 'portletItem odd' or 'portletItem even'">
+          <td>
+                <a href=""
+                   title="latest reply"
+                   i18n:attributes="title latest_reply"
+                    tal:attributes="href obj/last_comment/absolute_url">
+                    <img src="latest_reply_icon.gif" alt="latest reply" 
+                         i18n:attributes="alt latest_reply"/>
+                </a>
+          </td>
+          <td>
+                <a tal:attributes="href obj/url;
+                                  title obj/title">
+                <span tal:replace="obj/title">
+                  Title
+                </span>
+                </a>
+          </td>
+          <td tal:content="python: obj['num_comments'] - 1">N</td>
+          <td tal:content="obj/last_comment_creator">An user</td>
+          <td tal:content="obj/last_comment_date">13/04/2010</td>
+        </tr>
+    </tal:items>
+    </table>
+
+    <dd class="portletFooter">
+        <a class="title"
+           tal:attributes="href view/next_url"
+           i18n:translate="box_more_recent_conversations">
+            More&hellip;
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</div>
+</tal:block>
