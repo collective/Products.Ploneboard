@@ -18,7 +18,7 @@
             tal:attributes="class python:oddrow and  'portletItem odd' or 'portletItem even'">
             <div tal:attributes="class item_type_class">
                 <a href=""
-                    tal:attributes="href obj/last_comment/getURL;
+                    tal:attributes="href obj/last_comment/absolute_url;
                                     title obj/title;
                                     class string:$item_wf_state_class tile">
                     <img tal:condition="obj/icon" tal:attributes="src obj/icon" />

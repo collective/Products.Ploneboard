@@ -66,13 +66,8 @@ class Renderer(base.Renderer):
         def morph(brain):
             obj=brain.getObject()
             forum=obj.getForum()
-            last_comment = ct(
-                object_provides="Products.Ploneboard.interfaces.IComment",
-                sort_on="modified",
-                sort_order="reverse",
-                path=brain.getPath(),
-                sort_limit=1)[0]
-
+            last_comment = obj.getLastComment()
+ 
             return dict(
                     title = brain.Title,
                     description = brain.Description,
