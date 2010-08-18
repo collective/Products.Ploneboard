@@ -49,6 +49,7 @@ class Renderer(base.Renderer):
     def __init__(self, context, request, view, manager, data):
         base.Renderer.__init__(self, context, request, view, manager, data)
 
+    @memoize
     def results(self):
         ct=getToolByName(self.context, "portal_catalog")
         normalize=getUtility(IIDNormalizer).normalize
