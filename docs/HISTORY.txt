@@ -4,6 +4,14 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Create a large recent messages portlet, for use in Collage and
+  ContentWellPortlets.
+  [dukebody]
+
+- Point the conversation link from the recent messages portlet to the
+  last message in the conversation.
+  [dukebody]
+
 - Moved event notifications for object creation to later phase. Objects 
   should be populated with data when firing ObjectInitializedEvent.
   [naro]
