@@ -66,6 +66,12 @@ class Renderer(base.Renderer):
         def morph(brain):
             obj=brain.getObject()
             forum=obj.getForum()
+            last_comment = ct(
+                object_provides="Products.Ploneboard.interfaces.IComment",
+                sort_on="modified",
+                sort_order="reverse",
+                path=brain.getPath(),
+                sort_limit=1)[0]
 
             return dict(
                     title = brain.Title,
@@ -76,7 +82,8 @@ class Renderer(base.Renderer):
                     forum_title = forum.title_or_id(),
                     review_state = normalize(brain.review_state),
                     portal_type = normalize(brain.portal_type),
-                    date = brain.modified)
+                    date = brain.modified,
+                    last_comment = last_comment)
 
         return [morph(brain) for brain in brains]
 
