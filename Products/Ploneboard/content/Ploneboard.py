@@ -2,8 +2,8 @@ from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 
-from Products.ATContentTypes.content.folder import ATBTreeFolder
-from Products.ATContentTypes.content.folder import ATBTreeFolderSchema
+from Products.ATContentTypes.content.folder import ATFolder
+from Products.ATContentTypes.content.folder import ATFolderSchema
 from Products.Archetypes.public import Schema
 from Products.Archetypes.public import TextField
 from Products.Archetypes.public import LinesField
@@ -21,7 +21,7 @@ from Products.Ploneboard.permissions import ManageBoard
 from Products.Ploneboard.permissions import SearchBoard
 from Products.Ploneboard.permissions import ViewBoard
 
-schema = ATBTreeFolderSchema + Schema((
+schema = ATFolderSchema + Schema((
     TextField('description',
         searchable = 1,
         default_content_type = 'text/html',
@@ -50,7 +50,7 @@ schema = ATBTreeFolderSchema + Schema((
 utils.finalizeSchema(schema)
 
 
-class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
+class Ploneboard(BrowserDefaultMixin, ATFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
     implements(IPloneboard)
     meta_type = 'Ploneboard'
