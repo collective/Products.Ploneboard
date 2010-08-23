@@ -13,7 +13,9 @@ class BoardView(Five.BrowserView):
     def getKeyedForums(self, sitewide=False):
         """Return all the forums in a board."""
         catalog = getToolByName(self.context, 'portal_catalog')
-        query = {'object_provides':IForum.__identifier__}
+        query = {'object_provides':IForum.__identifier__,
+                 'sort_on':'getObjPositionInParent',
+                 }
         if not sitewide:
             query['path'] = '/'.join(self.context.getPhysicalPath())
 
