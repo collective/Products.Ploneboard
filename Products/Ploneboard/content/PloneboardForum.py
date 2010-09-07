@@ -3,7 +3,7 @@ from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_chain, aq_inner
 from OFS.Image import File
-
+from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.utils import _createObjectByType
@@ -21,6 +21,9 @@ from Products.Ploneboard import utils
 from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
+
+#def _no_conversations_cache(board):
+    
 
 
 schema = BaseBTreeFolderSchema + Schema((
@@ -193,9 +196,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):
         """Returns the number of conversations in this forum."""
-        return len(self.getCatalog()(
-            object_provides='Products.Ploneboard.interfaces.IConversation',
-            path='/'.join(self.getPhysicalPath())))
+        return len(self.objectIds('PloneboardConversation'))
 
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):

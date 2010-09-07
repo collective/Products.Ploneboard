@@ -159,9 +159,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         Returns the number of comments in this conversation.
         """
-        return len(self.getCatalog()(
-            object_provides='Products.Ploneboard.interfaces.IComment',
-            path='/'.join(self.getPhysicalPath())))
+        return len(self.objectIds('PloneboardComment'))
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
