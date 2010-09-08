@@ -43,9 +43,9 @@ def toPloneboardTime(context, request, time_=None):
 
         (year, month, day, hours, minutes, seconds, wday, _, dst) = time_.timetuple()
         translated_date_elements = { 'year'   : year
-                                   , 'month'  : defer(translate, _locales(ts.month_msgid(month)), context=request)
+                                   , 'month'  : unicode(defer(translate, _locales(ts.month_msgid(month)), context=request))
                                    , 'day'    : day
-                                   , 'wday'   : defer(translate, _locales(ts.day_msgid((wday+1)%7)), context=request)
+                                   , 'wday'   : unicode(defer(translate, _locales(ts.day_msgid((wday+1)%7)), context=request))
                                    , 'hours'  : hours
                                    , 'minutes': minutes
                                    , 'seconds': seconds
