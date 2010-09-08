@@ -1,9 +1,11 @@
 Changelog
 =========
 
-2.1 - Unreleased
-----------------
+2.0.1jarn1 - September 8, 2010
+------------------------------
 
+- Do not use catalog for getting the number of conversations and replies.
+  [stefan, ggozad]
 
 2.0 - March 14, 2008
 --------------------
