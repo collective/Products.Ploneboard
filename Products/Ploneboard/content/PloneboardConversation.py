@@ -1,4 +1,4 @@
-from zope.interface import implements
+from zope.interface import implements, providedBy
 from zope import event
 
 from AccessControl import ClassSecurityInfo
@@ -155,9 +155,18 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         Returns the number of comments in this conversation.
         """
-        return len(self.getCatalog()(
-            object_provides='Products.Ploneboard.interfaces.IComment',
-            path='/'.join(self.getPhysicalPath())))
+        #XXX this was a portal_catalog search but as this method is used
+        #by the index catalog.num_comments, there are problems when recataloging
+        #as the sub elements are not returned and so
+        #return len(self.getCatalog()(
+        #    object_provides='Products.Ploneboard.interfaces.IComment',
+        #    path='/'.join(self.getPhysicalPath())))
+        number = 0
+        for comment in self.objectValues():
+            if 'Products.Ploneboard.interfaces.IComment' in \
+               [i.__identifier__ for i in providedBy(comment).flattened()]:
+                number = number + 1
+        return number
 
     security.declareProtected(ViewBoard, 'getLastCommentDate')
     def getLastCommentDate(self):
