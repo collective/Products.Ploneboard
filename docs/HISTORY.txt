@@ -4,6 +4,11 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Point the conversation link from the recent messages portlet to the
+  last message in the conversation instead of to the conversation
+  itself.
+  [dukebody]
+
 - Moved event notifications for object creation to later phase. Objects 
   should be populated with data when firing ObjectInitializedEvent.
   [naro]
