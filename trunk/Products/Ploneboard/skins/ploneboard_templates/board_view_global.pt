@@ -9,7 +9,8 @@
   <div metal:fill-slot="main"
        tal:define="forums python:here.getForums(sitewide=True);
                    keyedforums python:here.getKeyedForums(forums);
-                   categories here/getCategories|nothing;">
+                   categories here/getCategories|nothing;
+                   mtool context/@@plone_tools/membership;">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -43,7 +44,7 @@
              no categories, it should not break (we don't depend on the board 
              container) -->
 
-        <table metal:use-macro="here/board_view/macros/forumdisplay"
+        <table metal:use-macro="here/@@ploneboard_view/macros/forumdisplay"
                class="listing"
                style="width: 100%;" />
       </tal:category>
@@ -53,7 +54,7 @@
                   condition="forums">
       <h2 i18n:translate="title_general_forums">General forums</h2>
 
-      <table metal:use-macro="here/board_view/macros/forumdisplay" />
+      <table metal:use-macro="here/@@ploneboard_view/macros/forumdisplay" />
     </tal:category>
 
     <metal:footer use-macro="here/board_footer/macros/footer">
