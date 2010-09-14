@@ -1,0 +1,109 @@
+# Eugene Korenevsky <weiqist@gmail.com>, 2006.
+# Eugene V. Korenevsky <weiqist@gmail.com>, 2008.
+# Alexander Vesnenok <info@ploner.ru>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: ploneboard-plone-ru\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-02-02 13:53+0000\n"
+"Last-Translator: Alexander Vesnenok <info@ploner.ru>\n"
+"Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: ru\n"
+"Language-Name: Russian\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr "Форум составляют обсуждения."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Сообщение состоит из текста и метаданных."
+
+msgid "Activate"
+msgstr "Активировать"
+
+msgid "Active"
+msgstr "Активный"
+
+msgid "Comment"
+msgstr "Сообщение"
+
+msgid "Conversation"
+msgstr "Обсуждение"
+
+msgid "Conversation contains comments."
+msgstr "Обсуждение состоит из сообщений."
+
+msgid "Free for all"
+msgstr "Открыто для всех"
+
+msgid "Hidden"
+msgstr "Скрытый"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Lock"
+msgstr "Заблокировать"
+
+msgid "Make free-for-all"
+msgstr "Сделать открытым для всех"
+
+msgid "Make member-posting"
+msgstr "Только для зарегистрированных пользователей."
+
+msgid "Make moderated"
+msgstr "Включить модерацию"
+
+msgid "Message Board"
+msgstr "Место общения"
+
+msgid "Moderate"
+msgstr "Модерация"
+
+msgid "Moderated forum"
+msgstr "Форум модерируется"
+
+msgid "Open"
+msgstr "Открыт(ь)"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Ploneboard - это внешний объект - форум, включенный в Ваш сайт."
+
+msgid "Private to members only"
+msgstr "Только для зарегистрированных пользователей"
+
+msgid "Public"
+msgstr "Публичный"
+
+msgid "Rejected"
+msgstr "Забраковано"
+
+msgid "Require membership to post"
+msgstr "Необходимо зарегистрироваться для участия"
+
+msgid "Retracted"
+msgstr "В обработке"
+
+msgid "Waiting for moderator"
+msgstr "Очередь модерации"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Плоский вид"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Вид по веткам"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

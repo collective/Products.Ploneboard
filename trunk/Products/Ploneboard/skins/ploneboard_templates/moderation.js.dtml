@@ -1,0 +1,31 @@
+x = XMLRPC;
+
+function sendModeration(path, state) {
+    var url = "&dtml-portal_url;";
+    var script = "moderate";
+    res = x.call(url, script, path, state);
+    if (res != 1) {
+        window.alert("Failed to moderate. res = " + res + "; path = " + path + "; state = " + state);
+    }
+    return res;
+}
+
+function moderate(path, state, elemId) {
+    res = sendModeration(path, state)
+    if (res == 1) {
+        document.getElementById(elemId).style.display = 'none';
+    }
+    else {
+        document.getElementById(elemId).style.background = 'red';
+    }
+    return res;
+}
+
+function moderateComment(path, state, inputnode, commentElemId) {
+    res = sendModeration(path, state);
+    inputnode.parentNode.innerHTML = 'Done';
+    var classname = "";
+    if (state == "retract") classname = "boardCommentHidden";
+    if (state == "publish") classname = "boardCommentVisible";
+    document.getElementById(commentElemId).className = classname;
+}

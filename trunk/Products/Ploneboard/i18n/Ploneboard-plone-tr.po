@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-03-24 17:47+0200\n"
+"Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
+"Language-Team: H. Turgut Uyar <uyar@itu.edu.tr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: tr\n"
+"Language-Name: Türkçe\n"
+"Preferred-Encodings: utf-8 latin5\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: tr-tr\n"
+
+msgid "A Forum contains conversations."
+msgstr "Bir forum konuşmalar barındırır."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Bir yorum düzgün bir metin gövdesi ile üstveri barındırır."
+
+msgid "Activate"
+msgstr "Etkinleştir"
+
+msgid "Active"
+msgstr "Etkin"
+
+msgid "Comment"
+msgstr "Yorum"
+
+msgid "Conversation"
+msgstr "Konuşma"
+
+msgid "Conversation contains comments."
+msgstr "Bir konuşmalar yorumlar barındırır."
+
+msgid "Free for all"
+msgstr "Herkese açık"
+
+msgid "Hidden"
+msgstr "Gizli"
+
+msgid "Hide"
+msgstr "Gizle"
+
+msgid "Lock"
+msgstr "Kilitle"
+
+msgid "Make free-for-all"
+msgstr "Herkese-açık hale getir"
+
+msgid "Make member-posting"
+msgstr "Üyeler-postalayabilir hale getir"
+
+msgid "Make moderated"
+msgstr "Hakemli hale getir"
+
+msgid "Message Board"
+msgstr "Mesaj Panosu"
+
+msgid "Moderate"
+msgstr "Gözden geçir"
+
+msgid "Moderated forum"
+msgstr "Hakemli forum"
+
+msgid "Open"
+msgstr "Açık"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Ploneboard sitede karşınıza çıkan en üst mesaj panosu nesnesidir."
+
+msgid "Private to members only"
+msgstr "Üyelere özel"
+
+msgid "Public"
+msgstr "Açık"
+
+msgid "Rejected"
+msgstr "Reddedildi"
+
+msgid "Require membership to post"
+msgstr "Yalnızca üyeler gönderebilsin"
+
+msgid "Retracted"
+msgstr "Çekilmiş"
+
+msgid "Waiting for moderator"
+msgstr "Hakemi bekliyor"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Düz konuşma görünümü"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${day} ${month} ${year} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Hiyerarşik konuşma görünümü"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

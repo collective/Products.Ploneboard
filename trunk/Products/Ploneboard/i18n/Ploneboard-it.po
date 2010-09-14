@@ -1,0 +1,502 @@
+# translation of Ploneboard to Italian
+# Gettext File for Ploneboard
+# Enzo Cesanelli <enzo at noiza dot com>, 2006
+# Paolo Melchiorre < paolo at advansis dot it>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2007-02-16 18:22+0100\n"
+"Last-Translator: Luca Fabbri <luca.fabbri@redturtle.net>\n"
+"Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: ploneboard\n"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr "L'allegato è troppo grande"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+msgid "Cancel"
+msgstr "Annulla"
+
+#. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:78
+msgid "Change"
+msgstr "Cambia"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Commento aggiunto"
+
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Commento eliminato"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Commento in attesa di approvazione"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Discussione aggiunta"
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Discussione eliminata"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Discussione in attesa di approvazione"
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+msgid "Data provider updated."
+msgstr "Dati aggiornati"
+
+msgid "Forum"
+msgstr "Forum"
+
+#. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt:191
+msgid "Log in to add comments"
+msgstr "Effettua il login per aggiungere commenti"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr "Nessun contenuto inserito"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+msgid "Please correct the indicated errors."
+msgstr "Prego correggi gli errori indicati"
+
+#. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:72
+msgid "Post"
+msgstr ""
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/conversation_view.pt:83
+msgid "Post comment"
+msgstr "Aggiunti un nuovo commento."
+
+#. Default: "Reply to this"
+#: ../skins/ploneboard_templates/comment_view.pt:180
+msgid "Reply to this"
+msgstr "Rispondi"
+
+#. Default: "Start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:78
+msgid "Start a new Conversation"
+msgstr "Nuova discussione"
+
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+msgid "Transform %s removed"
+msgstr ""
+
+#. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt:83
+msgid "View profile"
+msgstr "Visualizza profilo"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+msgid "You can only add comments to conversations or comments."
+msgstr "Puoi solo aggiungere commenti a discussioni o commenti"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+msgid "add_comment"
+msgstr "Aggiunti commento"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+msgid "add_conversation"
+msgstr "Aggiungi discussione"
+
+msgid "alert_delete_popup"
+msgstr ""
+
+#. Default: "Search"
+#: ../skins/ploneboard_templates/board_view.pt:41
+msgid "board_search_button"
+msgstr "Cerca"
+
+#. Default: "Search Board"
+#: ../browser/search.pt:22
+msgid "board_search_label"
+msgstr "Cerca del forum"
+
+#. Default: "More…"
+#: ../portlet/recent.pt:40
+msgid "box_more_recent_conversations"
+msgstr "Altro…"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+msgid "by_author"
+msgstr "di ${author}"
+
+#. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:173
+msgid "cancel_comment"
+msgstr "Annulla"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:163
+msgid "comment_current_state"
+msgstr "Stato:"
+
+#. Default: "Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:129
+msgid "conversation"
+msgstr "Argomento"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+msgid "conversation_forum"
+msgstr ""
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+msgid "conversation_posted"
+msgstr "Inviato"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../browser/controlpanel.py:57
+msgid "description_ploneboard_config"
+msgstr "Qui puoi configurare Ploneboard per questo sito"
+
+#. Default: "Forum name"
+#: ../skins/ploneboard_templates/board_view.pt:92
+msgid "forum_name"
+msgstr "Forum"
+
+#. Default: "Up to ${title}"
+#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+msgid "go_to_parent_url"
+msgstr "Vai al livello superiore"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+msgid "go_to_view_url"
+msgstr "Torna a ${name}"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
+msgid "heading_preview_comment"
+msgstr "Anteprima commento"
+
+#. Default: "This portlet shows conversations with recent comments."
+#: ../portlet/recent.py:107
+msgid "help_add_portlet"
+msgstr "Questo quadro mostra le discussioni con i commenti recenti"
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+msgid "help_body_attachments_maxsize"
+msgstr "La dimensione massima perfessa è ${maxsize} kilobytes"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+msgid "help_body_attachments_posting"
+msgstr "Seleziona un file da allegare a questo commento"
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+msgid "help_body_text_posting"
+msgstr "Elementi HTML di base sono permessi."
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "Gli URL saranno automaticamente resi come hyperlink"
+
+msgid "help_categories_board"
+msgstr ""
+
+msgid "help_category"
+msgstr ""
+
+#. Default: "How many items to list."
+#: ../portlet/recent.py:28
+msgid "help_count"
+msgstr "Quanti elementi mostrare."
+
+msgid "help_description_board"
+msgstr ""
+
+msgid "help_description_conversation"
+msgstr "Inserisci una breve descrizione riguardante la discussione"
+
+msgid "help_description_forum"
+msgstr "Inserisci una breve descrizione riguardante il forum"
+
+msgid "help_maxattachments"
+msgstr ""
+
+msgid "help_maxattachmentsize"
+msgstr ""
+
+msgid "help_text"
+msgstr "Inserisci il testo del commento"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../browser/controlpanel.py:18
+msgid "help_transforms"
+msgstr "Seleziona le trasformazioni automatiche del testo che verranno effettuate nei commenti inseriti nelle discussioni di Ploneboard. Le trasformazioni automatiche modificano il testo inserito dall'utente, sia per rimuovere il possibile codice html dannoso, sia per aggiungere altre funzionalità, come rendere i collegamenti cliccabili."
+
+#. Default: "Add recent conversations portlet."
+#: ../portlet/recent.py:105
+msgid "label_add_portlet"
+msgstr "Aggiunge quadro delle discussioni recenti"
+
+#. Default: "Back to discussion board"
+#: ../browser/search.pt:15
+msgid "label_back_to_board"
+msgstr "Torna al forum"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+msgid "label_body_files_posting"
+msgstr "Allegati"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+msgid "label_body_text_posting"
+msgstr "Testo"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/forum_view.pt:154
+msgid "label_by_author"
+msgstr "di ${author}"
+
+msgid "label_categories_board"
+msgstr ""
+
+msgid "label_category"
+msgstr ""
+
+msgid "label_description_board"
+msgstr ""
+
+msgid "label_description_conversation"
+msgstr "Descrizione della discussione"
+
+msgid "label_description_forum"
+msgstr "Descrizione del forum"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+msgid "label_in_forum"
+msgstr ""
+
+msgid "label_maxattachments"
+msgstr ""
+
+msgid "label_maxattachmentsize"
+msgstr ""
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:14
+msgid "label_powered_by"
+msgstr "Sviluppato da ${link}"
+
+#. Default: "Quick reply"
+#: ../skins/ploneboard_templates/conversation_view.pt:74
+msgid "label_quickreply"
+msgstr "Risposta immediata"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:75
+msgid "label_quote"
+msgstr "${author} ha scritto: ${quote}"
+
+#. Default: "Required"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+msgid "label_required"
+msgstr "Obbligatorio"
+
+msgid "label_text"
+msgstr "Testo"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+msgid "label_title_posting"
+msgstr "Titolo"
+
+#. Default: "Transforms"
+#: ../browser/controlpanel.py:16
+msgid "label_transforms"
+msgstr "Trasformazioni"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:204
+msgid "legend_attachments"
+msgstr "Allegati"
+
+#. Default: "Log in to start a conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:90
+msgid "log_to_start_conversation"
+msgstr "Accedi per iniziare una discussione"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:80
+msgid "moderation_count"
+msgstr "${count} commenti in coda."
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:43
+msgid "moderation_description"
+msgstr "I commenti seguenti sono in attesa di approvazione. Per favore fai click su 'Pubblica' or 'Rifiuta' come necessario. Fai click sul titolo del commento per vederlo nel contesto della propria conversazione."
+
+#. Default: "Most recent comment"
+#: ../skins/ploneboard_templates/forum_view.pt:131
+msgid "most_recent_comment"
+msgstr "Ultimo commento"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+msgid "new_attachment"
+msgstr "Aggiungi un nuovo allegato"
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../skins/ploneboard_templates/forum_view.pt:111
+msgid "new_conversations_marked_with"
+msgstr "Conversazioni marcate con ${star} hanno avuto attività dal tuo ultimo accesso."
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:120
+msgid "no_comments_queued"
+msgstr "Non ci sono commenti da moderare"
+
+#. Default: "No conversations started"
+#: ../skins/ploneboard_templates/board_view.pt:123
+msgid "no_conversations_started"
+msgstr "Nessuna discussione &egrave; stata avviata"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+msgid "no_recent_conversations"
+msgstr "Nessuna discussione trovata."
+
+#. Default: "No replies yet"
+#: ../skins/ploneboard_templates/forum_view.pt:172
+msgid "no_replies_yet"
+msgstr "Ancora nessuna risposta"
+
+#. Default: "No conversations in this forum yet."
+#: ../skins/ploneboard_templates/forum_view.pt:67
+msgid "not_conversations"
+msgstr "Non sono presenti discussioni in questo forum"
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../skins/ploneboard_templates/board_view_global.pt:37
+msgid "not_forums"
+msgstr "Non sono presenti forum in questa area, clicca su Aggiungi per creare nuovi forum"
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../skins/ploneboard_templates/forum_view.pt:98
+msgid "not_permission_start_conversation"
+msgstr "Spiacenti, non hai i permessi per avviare una nuova discussione"
+
+#. Default: "Conversations"
+#: ../skins/ploneboard_templates/board_view.pt:93
+msgid "number_of_conversations"
+msgstr "discussioni"
+
+#. Default: "Ploneboard configuration"
+#: ../browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr "Configurazione di Ploneboard"
+
+#. Default: "Text transformations"
+#: ../browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr "Trasformazioni del testo"
+
+#. Default: "Post comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:167
+msgid "post_comment"
+msgstr "Invia commento"
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:70
+msgid "posted_by"
+msgstr "Lasciato da"
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
+msgid "preview_message"
+msgstr "Anteprima messaggio"
+
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+msgid "recent_conversations_description"
+msgstr "Le seguenti discussioni hanno avuto attività di recente."
+
+#. Default: "Replies"
+#: ../skins/ploneboard_templates/forum_view.pt:130
+msgid "replies"
+msgstr "Risposte"
+
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
+msgid "search_result_location"
+msgstr ""
+
+#. Default: "Show all recent activity"
+#: ../skins/ploneboard_templates/board_view.pt:47
+msgid "show_new_conversations_all"
+msgstr "Mostra tutte le attività recenti"
+
+#. Default: "Show only unanswered"
+#: ../skins/ploneboard_templates/forum_view.pt:42
+msgid "show_no_replies"
+msgstr "Mostra solo senza risposte"
+
+#. Default: "Show all unanswered"
+#: ../skins/ploneboard_templates/board_view.pt:54
+msgid "show_no_replies_all"
+msgstr "Mostra tutti gli elementi senza risposta"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:75
+msgid "text_at"
+msgstr "il"
+
+#. Default: "Number of items to display"
+#: ../portlet/recent.py:26
+msgid "title_count"
+msgstr "Numero di elementi da mostrare"
+
+#. Default: "General forums"
+#: ../skins/ploneboard_templates/board_view_global.pt:61
+msgid "title_general_forums"
+msgstr "Forum Generali"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+msgid "title_recent_conversations"
+msgstr "Discussione recente in ${title}"
+
+#. Default: "Portlet title"
+#: ../portlet/recent.py:21
+msgid "title_title"
+msgstr "Titolo della portlet"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+msgid "title_unanswered_conversations"
+msgstr "Discussioni senza risposta in ${title}"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
+msgid "unanswered_conversations"
+msgstr "Le seguenti discussioni sono state aggiunte, ma ancora non hanno ricevuto risposte."
+

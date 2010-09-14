@@ -1,0 +1,144 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# never generate this file with i18ndude, it is managed manual
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Require membership to post"
+msgstr ""
+
+msgid "Make member-posting"
+msgstr ""
+
+msgid "Free for all"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr ""
+
+msgid "Make moderated"
+msgstr ""
+
+msgid "Private to members only"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Flat conversion view"
+msgstr ""
+
+msgid "Threaded conversion view"
+msgstr ""
+
+msgid "Moderate"
+msgstr ""
+
+msgid "Waiting for moderator"
+msgstr ""
+
+msgid "Rejected"
+msgstr ""
+
+msgid "Public"
+msgstr ""
+
+msgid "Retracted"
+msgstr ""
+
+msgid "Search board"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Conversation added"
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Enter comment body."
+msgstr ""
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr ""
+
+#: ./browser/comment.py:259
+msgid "Comment deleted"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr ""
+
+#: ./browser/comment.py:254
+msgid "Conversation deleted"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr ""

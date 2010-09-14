@@ -1,0 +1,95 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<head>
+  <metal:top fill-slot="top_slot">
+    <tal:block condition="python:not user.has_permission('Ploneboard: Manage Conversation', here)">
+      <tal:border define="dummy python:request.set('disable_border', True)" />
+    </tal:block>
+  </metal:top>
+
+  <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/pb_attachment.js">
+    </script>
+  </metal:js>
+
+</head>
+
+<body>
+  <div metal:fill-slot="main"
+       tal:define="view context/@@conversation_browserview;
+                   isAnon isAnon | context/@@plone_portal_state/anonymous;
+                   mtool mtool | context/@@plone_tools/membership;">
+
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+    <h1 class="documentFirstHeading">
+      <img tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" alt="" />
+      <span tal:replace="here/Title">Conversation title</span>
+    </h1>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+    <a href=""
+       class="link-parent"
+       tal:define="parent_url python:here.navigationParent(here, template.getId())"
+       tal:condition="parent_url"
+       tal:attributes="href parent_url"
+       i18n:translate="go_to_parent_url">
+        Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+    </a>
+
+    <div class="documentDescription"
+         tal:content="here/Description"> 
+      description
+    </div>
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+
+    <div class="boardConversation"
+         metal:define-macro="view_comments"
+         tal:define="batch view/comments">
+
+      <div class="boardComment visualIEFloatFix" tal:repeat="comment batch">
+        <metal:comment metal:use-macro="here/comment_view/macros/comment" />
+      </div>
+      
+      <!-- Navigation -->
+      <div metal:use-macro="here/batch_macros/macros/navigation" />
+    </div>
+
+    <metal:block define-macro="quickreply">
+      <tal:check define="firstcomment here/getFirstComment"
+                 condition="python:firstcomment and checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
+        <fieldset>
+          <legend i18n:translate="label_quickreply">Quick reply</legend> 
+          <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form" method="post" enctype="multipart/form-data">
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" /> 
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
+
+            <input type="hidden" name="form.submitted" value="1" />
+            <div class="formControls">
+              <input class="context"
+                     name="form.button.Post" 
+                     i18n:attributes="value"
+                     type="submit" value="Post comment" />
+            </div>
+          </form>
+        </fieldset>
+      </tal:check>
+    </metal:block>
+    <metal:footer use-macro="here/board_footer/macros/footer">
+      Board footer
+    </metal:footer>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
+  </div>
+</body>
+</html>

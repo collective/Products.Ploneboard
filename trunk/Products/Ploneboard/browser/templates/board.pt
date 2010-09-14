@@ -1,0 +1,161 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<body>
+  <div metal:fill-slot="main"
+       tal:define="categories here/getCategories|nothing;
+                   keyedforums view/getKeyedForums;
+                   portal context/@@plone_portal_state/portal | nocall:portal;
+                   mtool context/@@plone_tools/membership">
+                   
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+                   
+    <h1 class="documentFirstHeading">
+      <img src="" tal:replace="structure here/ploneboard_icon.gif" />
+      <span tal:replace="here/Title">Board title</span>
+    </h1>
+      
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+    <ul class="visualNoMarker discreet"
+        style="float:right; margin: 0 0 1em 1em;">
+        <li>
+            <form tal:attributes="action string:${context/absolute_url}/search">
+                <label class="hiddenStructure" for="boardSearch"
+                    i18n:domain="ploneboard" i18n:translate="board_search_label">
+                    Search Boards
+                </label>
+                <input type="text" name="q" class="inputLabel"
+                    title="Search Board"
+                    i18n:attributes="title board_search_label"/>
+                <input class="searchButton" type="submit" value="Search"
+                    i18n:attributes="value board_search_button"/>
+            </form>
+        </li>
+        <li>
+          <img tal:replace="structure portal/new_conversation.gif" />
+          <a i18n:translate="show_new_conversations_all"
+             tal:attributes="href string:${context/absolute_url}/ploneboard_recent">
+            Show all recent activity 
+          </a>
+        </li>
+        <li>
+          <img tal:replace="structure portal/new_conversation.gif" />
+          <a i18n:translate="show_no_replies_all"
+             tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+            Show all unanswered 
+          </a>
+        </li>
+    </ul>
+
+    <p class="documentDescription"
+       tal:content="here/Description">
+      Board Description
+    </p>
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+
+    <div class="visualClear"></div>
+
+    <div class="discreet"
+         tal:condition="not: keyedforums" i18n:translate="not_forums">
+      No forums exist in this board yet, use the add menu to add forums.
+    </div>
+      
+
+    <tal:categories repeat="category categories">
+      <tal:category define="forums keyedforums/?category|nothing"
+                    condition="forums">
+        <h2 tal:condition="category"
+            tal:content="category">Forum category 1</h2>
+        <!-- There should be categories available on the Board objects, 
+             and these should be iterated over in the board_view. If there are
+             no categories, it should not break (we don't depend on the board 
+             container) -->
+
+        <table metal:define-macro="forumdisplay"
+               class="listing nosort"
+               style="width: 100%;">
+
+          <thead>
+            <tr>
+              <th i18n:translate="forum_name">Forum name</th>
+              <th i18n:translate="number_of_conversations">Conversations</th>
+              <th i18n:translate="most_recent_comment">Most recent comment</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tal:showforums tal:repeat="forum forums">
+              <tr tal:define="oddrow repeat/forum/odd;
+                              author forum/getLastCommentAuthor;"
+                  tal:attributes="class python:oddrow and 'even' or 'odd'">
+
+                <td class="forumTitleCell">
+                  <a href=""
+                     class="listingForum"
+                     tal:attributes="href forum/absolute_url">
+                    <span tal:replace="forum/Title">This is a title</span>
+                    <span class="discreet" tal:content="forum/Description">
+                      This is the Forum Description
+                    </span>
+                  </a>
+                </td>
+
+                <td class="listingCheckbox forumConversationsCell"
+                    tal:content="forum/getNumberOfConversations">
+                  34
+                </td>
+
+                <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" 
+                     if older than this week. (limi) -->
+                <td tal:condition="not: author"
+                    class="forumMostRecentCell">
+                  <span i18n:translate="no_conversations_started" class="discreet">
+                    No conversations started
+                  </span>
+                </td>
+
+                <td tal:condition="author"
+                    class="forumMostRecentCell">
+                  <div i18n:translate="label_by_author">
+                    by <tal:author i18n:name="author"
+                                   define="creator author;
+                                           creatorinfo python: mtool.getMemberInfo(creator);"
+                                   content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                  </div>
+                                                                                                                      
+
+                  <span class="discreet"
+                        tal:content="forum/getLastCommentDate">
+                     Thursday 13:21
+                  </span>
+                </td>
+              </tr>
+            </tal:showforums>
+          </tbody>
+        </table>
+      </tal:category>
+    </tal:categories>
+
+    <tal:category define="forums python:keyedforums.get(None, None)"
+                  condition="forums">
+      <h2 i18n:translate="title_general_forums">General forums</h2>
+
+      <table metal:use-macro="view/context/@@ploneboard_view/forumdisplay" />
+
+    </tal:category>
+
+    <metal:footer use-macro="here/board_footer/macros/footer">
+      Board footer
+    </metal:footer>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
+  </div>
+</body>
+</html>

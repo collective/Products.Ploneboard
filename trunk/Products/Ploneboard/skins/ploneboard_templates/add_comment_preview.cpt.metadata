@@ -1,0 +1,16 @@
+[default]
+title=Preview post
+
+[validators]
+validators..Preview=validate_add_comment
+validators..Save=validate_add_comment
+validators=validate_add_comment
+validators..Cancel=
+
+[actions]
+action.success..Edit=traverse_to:string:add_comment_form
+action.success..Save=traverse_to:string:add_comment_script
+action.success..Cancel=redirect_to_action:string:view
+action.success=traverse_to:string:add_comment_script
+action.failure=traverse_to:string:add_comment_form
+

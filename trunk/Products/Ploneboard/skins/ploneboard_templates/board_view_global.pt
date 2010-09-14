@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<body>
+  <div metal:fill-slot="main"
+       tal:define="forums python:here.getForums(sitewide=True);
+                   keyedforums python:here.getKeyedForums(forums);
+                   categories here/getCategories|nothing;">
+
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+    <h1 class="documentFirstHeading">
+      <img src="" tal:replace="structure here/ploneboard_icon.gif" />
+      <span tal:replace="here/Title">Board title</span>
+    </h1>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+    <p class="documentDescription"
+       tal:content="here/Description">
+      Board Description
+    </p>
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+
+    <div class="discreet"
+         tal:condition="not: forums" i18n:translate="not_forums">
+      No forums exist in this board yet, use the add menu to add forums.
+    </div>
+      
+
+    <tal:categories repeat="category categories">
+      <tal:category define="forums keyedforums/?category|nothing"
+                    condition="forums">
+        <h2 tal:condition="category"
+            tal:content="category">Forum category 1</h2>
+        <!-- There should be categories available on the Board objects, 
+             and these should be iterated over in the board_view. If there are
+             no categories, it should not break (we don't depend on the board 
+             container) -->
+
+        <table metal:use-macro="here/board_view/macros/forumdisplay"
+               class="listing"
+               style="width: 100%;" />
+      </tal:category>
+    </tal:categories>
+
+    <tal:category define="forums python:keyedforums.get(None, None)"
+                  condition="forums">
+      <h2 i18n:translate="title_general_forums">General forums</h2>
+
+      <table metal:use-macro="here/board_view/macros/forumdisplay" />
+    </tal:category>
+
+    <metal:footer use-macro="here/board_footer/macros/footer">
+      Board footer
+    </metal:footer>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
+  </div>
+</body>
+</html>

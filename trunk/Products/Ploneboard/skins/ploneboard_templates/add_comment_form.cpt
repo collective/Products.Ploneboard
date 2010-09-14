@@ -1,0 +1,182 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en-US"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+  <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/pb_attachment.js">
+    </script>
+  </metal:js>
+
+  <metal:block fill-slot="top_slot"
+               tal:define="dummy python:request.set('disable_border',1);
+                           kdummy python:request.set('text_text_format', 'text/html');" />
+</head>
+
+<body>
+  <div metal:fill-slot="main" 
+       tal:define="errors options/state/getErrors;
+       view context/@@singlecomment_view;"
+       i18n:domain="ploneboard">
+
+    <h2 i18n:translate="add_comment">Add comment</h2>
+
+    <div class="documentDescription"></div>
+
+    <tal:defines define="comment view/comment;
+                         quotedBody view/quotedBody"
+                 metal:define-macro="view_comments">
+         
+      <div class="boardConversation">
+        <div class="boardComment visualIEFloatFix">
+          <metal:comment metal:use-macro="context/comment_view/macros/comment" />
+        </div>
+
+        <form name="edit_form"
+              action=""
+              method="post" 
+              enctype="multipart/form-data"
+              tal:define="title_required python:0;
+                          text_required python:1;"
+              tal:attributes="action template/getId">
+
+          <input type="hidden" name="form.submitted" value="1" />
+
+          <div metal:define-macro="comment_body_title" tal:omit-tag="">
+            <div class="commentReplyTitle" tal:omit-tag="title_required">
+            <div class="field"
+                 id="archetypes-fieldname-title"
+                 tal:define="error_title errors/title|nothing;
+                             Title request/title | nothing;
+                             Title python:Title and (Title.lower().startswith('re:') and Title or  'Re: '+Title) or None;"
+                     tal:attributes="class python:test(error_title, 'field error', 'field')"> 
+
+              <label for="title" i18n:translate="label_title_posting">Title</label>
+
+              <span tal:condition="title_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required" i18n:attributes="title label_required;">(Required)</span>
+
+              <div tal:replace="error_title">Validation error output</div>
+
+              <div class="formHelp">
+              </div>
+
+              <input type="text" 
+                     name="title"
+                     id="title"
+                     value="#" 
+                     size="40" 
+                     tal:attributes="value Title;"
+                     />
+              
+            </div>
+              </div>
+          </div>
+
+          <div metal:define-macro="comment_body_text" tal:omit-tag="">
+            <div class="field"
+                 tal:define="error_text errors/text|nothing;
+                             text quotedBody | string:;
+                             text python:request.get('text', text)"
+                 tal:attributes="class python:test(error_text, 'field error', 'field')"> 
+
+              <label for="text" i18n:translate="label_body_text_posting">Body text</label>
+
+
+              <span tal:condition="text_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required" i18n:attributes="title label_required;">(Required)</span>
+
+              <div tal:replace="error_text">Validation Error Comment</div>
+
+              <div class="formHelp">
+                <tal:p condition="python:'url_to_hyperlink' in context.portal_ploneboard.getEnabledTransforms()"
+                       i18n:translate="help_body_text_posting_linkify_enabled">
+                  URLs will be automatically hyperlinked.
+                </tal:p>
+
+                <tal:p i18n:translate="help_body_text_posting">
+                  Basic HTML tags are OK.
+                </tal:p>
+              </div>
+
+              <tal:editor define="inputname  string:text;
+                                  formname   string:add_comment_form;
+                                  inputvalue text;
+                                  cooked_inputvalue string:;
+                                  tabindex   nothing">
+                <div metal:use-macro="context/wysiwyg_support/macros/wysiwygEditorBox">
+                  The WYSIWYG code
+                </div>
+              </tal:editor>
+            </div>
+          </div>
+
+          <div metal:define-macro="comment_body_attachments"
+                 tal:omit-tag=""
+                 tal:define="attachments context/getMaxAttachments;
+                             maxsize context/getMaxAttachmentSize"
+                 tal:condition="python:attachments and checkPermission('Ploneboard: Add Comment Attachment', context)">
+
+            <div class="field"
+                tal:define="error_files errors/files|nothing"
+                tal:attributes="class python:test(error_files, 'field error', 'field')"> 
+
+              <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
+
+              <div class="formHelp">
+                <span tal:omit-tag="" i18n:translate="help_body_attachments_posting">
+                  Select a file to upload as an attachment to this comment.
+                </span>
+                <span tal:omit-tag="" tal:condition="python:maxsize&gt;0"
+                      i18n:translate="help_body_attachments_maxsize">
+                  The maximum allowed attachment size is
+                  <span tal:omit-tag="" i18n:name="maxsize"
+                        tal:content="maxsize">1024</span>
+                  kilobytes.
+                </span>
+              </div>
+
+              <div tal:replace="error_files">Validation Error Comment</div>
+
+              <div tal:attributes="attachments attachments">
+                <input name="files:list"
+                       type="file"
+                       size="30"
+                       /><br/>
+                <a tal:condition="python:attachments>1"
+                   i18n:translate="new_attachment"
+                   href=""
+                   onclick="return AddAttachmentField(this);">
+                  Add another attachment
+                </a>
+              </div>
+            </div>
+          </div>
+
+            <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
+              <div class="row">
+                <div class="field"> 
+                  <input class="context" 
+                         type="submit" 
+                         name="form.button.Post" 
+                         value="Post comment" 
+                         i18n:attributes="value"
+                         /> 
+                  <input class="destructive"
+                         type="submit"
+                         name="form.button.Cancel"
+                         value="Cancel"
+                         i18n:attributes="value"
+                         />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </tal:defines>
+  </div>
+</body>
+</html>

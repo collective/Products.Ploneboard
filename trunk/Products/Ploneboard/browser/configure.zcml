@@ -1,0 +1,94 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="ploneboard">
+
+  <browser:page
+    for="..interfaces.IPloneboard"
+    class=".rss.RSSView"
+    name="RSS"
+    permission="zope2.View"/>
+
+  <browser:page
+    for="..interfaces.IForum"
+    class=".rss.RSSView"
+    name="RSS"
+    permission="zope2.View"/>
+
+  <browser:page
+     for="..interfaces.IPloneboard"
+     class=".search.SearchView"
+     name="search"
+     permission="zope2.View"/>
+
+  <browser:page
+     for="..interfaces.IForum"
+     class=".forum.ForumView"
+     name="view"
+     template="templates/forum.pt"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="..interfaces.IPloneboard"
+     class=".board.BoardView"
+     name="ploneboard_view"
+     template="templates/board.pt"
+     permission="zope2.View"
+     />
+
+  <browser:page
+     for="..interfaces.IConversation"
+     class=".comment.ConversationView"
+     name="conversation_browserview"
+     allowed_interface=".interfaces.IConversationView"
+     permission="zope.Public"
+     />
+
+  <browser:page
+     for="..interfaces.IComment"
+     class=".comment.CommentView"
+     name="singlecomment_view"
+     allowed_interface=".interfaces.ICommentView"
+     permission="zope.Public"
+     />
+
+  <browser:page
+     for="..interfaces.IComment"
+     class=".comment.DeleteCommentView"
+     name="delete_view"
+     permission="Ploneboard.DeleteComment"
+     />
+
+  <browser:page
+     for="*"
+     name="ploneboard_recent_view"
+     class=".comment.RecentConversationsView"
+     permission="zope.Public"
+     allowed_attributes="results num_conversations toPloneboardTime"
+     />
+
+  <browser:page
+     for="*"
+     name="ploneboard_unanswered_view"
+     class=".comment.UnansweredConversationsView"
+     permission="zope.Public"
+     allowed_attributes="results num_conversations toPloneboardTime"
+     />
+
+  <adapter factory=".controlpanel.ControlPanelAdapter" />
+
+  <browser:page
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     name="ploneboard-controlpanel"
+     class=".controlpanel.ControlPanel"
+     permission="cmf.ManagePortal"
+     />
+     
+   <browser:resource
+     name="ploneboard.css"
+     file="ploneboard.css"
+
+   />  
+</configure>
+

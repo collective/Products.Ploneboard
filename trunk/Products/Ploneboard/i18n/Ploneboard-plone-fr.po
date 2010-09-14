@@ -1,0 +1,141 @@
+# translation of Ploneboard-plone-fr.po to french
+# Encolpe Degoute <encolpe.degoute@ingeniweb.com>, 2007.
+# Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>, 2008.
+# translation of Ploneboard-plone-fr.po to
+# Guillaume Lederer <glederer@cirb.irisnet.be>; 2007.
+# First translator : Guillaume Lederer <glederer@cirb.irisnet.be>; 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard-plone-fr\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2008-10-06 16:25+0200\n"
+"Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
+"Language-Team: french <support@ingeniweb.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
+
+msgid "A Forum contains conversations."
+msgstr "Un forum contient des conversations."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Un commentaire contient une zone principale de texte et des métadonnées."
+
+msgid "Activate"
+msgstr "Activer"
+
+msgid "Active"
+msgstr "Activé"
+
+msgid "Comment"
+msgstr "Message"
+
+msgid "Conversation"
+msgstr "Conversation"
+
+msgid "Conversation contains comments."
+msgstr "Une conversation contient des commentaires."
+
+msgid "Free for all"
+msgstr "Ouvert à tous"
+
+msgid "Hidden"
+msgstr "Masqué"
+
+msgid "Hide"
+msgstr "Masquer"
+
+msgid "Lock"
+msgstr "Verrouiller"
+
+msgid "Make free-for-all"
+msgstr "Rendre ouvert à tous"
+
+msgid "Make member-posting"
+msgstr "Restreindre aux seuls membres"
+
+msgid "Make moderated"
+msgstr "Rendre modéré"
+
+msgid "Message Board"
+msgstr "Forum"
+
+msgid "Moderate"
+msgstr "Modérer"
+
+msgid "Moderated forum"
+msgstr "Forum modérés"
+
+msgid "Open"
+msgstr "Ouvert"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Une zone Forum est l'élément de premier niveau qui s'affiche sur le site."
+
+msgid "Private to members only"
+msgstr "Restreint aux seuls membres"
+
+msgid "Public"
+msgstr "Public"
+
+msgid "Rejected"
+msgstr "Rejeté"
+
+msgid "Require membership to post"
+msgstr "Inscription requise pour écrire"
+
+msgid "Retracted"
+msgstr "Rétracté"
+
+msgid "Waiting for moderator"
+msgstr "En attente de modération"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Vue à plat"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${day} ${month} ${year} à ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Vue en arbre"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} à ${hours}:${minutes}"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Commentaire ajouté"
+
+#: ../browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Commentaire supprimé"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Commentaire en attente de modération"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Conversation ajoutée"
+
+#: ../browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Conversation supprimée"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Conversation en attente de modération"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr "Fichier joint est trop grand"

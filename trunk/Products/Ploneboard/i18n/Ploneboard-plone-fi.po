@@ -1,0 +1,142 @@
+# Finnish translations for Products.Ploneboard
+# Contributors:
+# - Antti Moilanen <antti.moilanen@twinapex.com>, 2008.
+# - Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2010-03-25 12:51+0200\n"
+"Last-Translator: Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>\n"
+"Language-Team: University of Jyväskylä <jukka.ojaniemi@jyu.fi>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fi\n"
+"Language-Name: Finnish\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Poedit-Language: Finnish\n"
+"X-Poedit-Country: FINLAND\n"
+
+msgid "A Forum contains conversations."
+msgstr "Keskustelualue sisältää viestejä."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Kommentti sisältää vakiomuotoisen tekstisisällön ja lisätiedot."
+
+msgid "Activate"
+msgstr "Aktivoi"
+
+msgid "Active"
+msgstr "Aktiivinen"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+msgid "Attachment is too large"
+msgstr "Liitetiedosto on liian iso"
+
+msgid "Comment"
+msgstr "Kommentti"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment added"
+msgstr "Kommentti lisätty"
+
+#: ./browser/comment.py:259
+msgid "Comment deleted"
+msgstr "Kommentti poistettu"
+
+#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
+msgid "Comment is pending moderation"
+msgstr "Kommentti odottaa tarkistusta"
+
+msgid "Conversation"
+msgstr "Keskustelu"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
+msgid "Conversation added"
+msgstr "Keskustelu lisätty"
+
+#: ./browser/comment.py:254
+msgid "Conversation deleted"
+msgstr "Keskustelu poistettu"
+
+#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
+msgid "Conversation is pending moderation"
+msgstr "Keskustelu odottaa tarkistusta"
+
+msgid "Enter comment body."
+msgstr "Lisää kommentin sisältö."
+
+msgid "Flat conversion view"
+msgstr "Näytä viestit aikajärjestyksessä"
+
+msgid "Free for all"
+msgstr "Avoin kaikille"
+
+msgid "Hidden"
+msgstr "Piilotettu"
+
+msgid "Hide"
+msgstr "Piilota"
+
+msgid "Lock"
+msgstr "Lukitse"
+
+msgid "Locked"
+msgstr "Lukittu"
+
+msgid "Make free-for-all"
+msgstr "Salli kaikille"
+
+msgid "Make member-posting"
+msgstr "Salli jäsenille"
+
+#. Default: "Make moderated"
+msgid "Make moderated"
+msgstr "Tee keskustelualueesta moderoitu"
+
+msgid "Message Board"
+msgstr "Keskustelupalsta"
+
+msgid "Moderate"
+msgstr "Hallitse"
+
+msgid "Open"
+msgstr "Avattu"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Ploneboard on keskustelupalstan ylin hallintataso."
+
+msgid "Private to members only"
+msgstr "Rajoitettu vain jäsenille"
+
+msgid "Public"
+msgstr "Yleinen"
+
+msgid "Rejected"
+msgstr "Hylätty"
+
+msgid "Require membership to post"
+msgstr "Viestin lähettäminen vaatii jäsenyyden"
+
+msgid "Retracted"
+msgstr "Peruttu"
+
+msgid "Search board"
+msgstr "Etsi palstalta"
+
+msgid "Threaded conversion view"
+msgstr "Näytä viestiketjut"
+
+msgid "Waiting for moderator"
+msgstr "Odottaa tarkastusta"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${hours}:${minutes} ${day} ${month} ${year}"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

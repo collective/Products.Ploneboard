@@ -1,0 +1,89 @@
+ForumViews integration tests
+============================
+
+Set up a simple board and forum:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> self.setRoles(('Manager',))
+    >>> self.portal.invokeFactory('Ploneboard', 'board1')
+    'board1'
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum1')
+    'forum1'
+    >>> forum = self.portal.board1.forum1
+
+Add some content for listings etc
+
+    >>> conversation = self.portal.board1.forum1.addConversation('C1', 'Conversation 1')
+    >>> conversation
+    <PloneboardConversation at ...>
+
+    >>> comment11 = conversation.addComment('comm1', 'This is first comment')
+    >>> comment12 = conversation.addComment('comm2', 'This is second comment')
+
+    >>> conversation2 = self.portal.board1.forum1.addConversation('C2', 'Conversation 2')
+    >>> comment21 = conversation2.addComment('comm1', 'This is first comment')
+
+    >>> self.setRoles(('Member',))
+
+Try instantiating the view
+
+    >>> view = forum.unrestrictedTraverse('@@view')
+    >>> view
+    <...browser/templates/forum.pt...>
+
+toPloneboardTime is tested in TestCommentView
+
+Check whether member can start conversation in the memberonly forum
+
+    >>> view.canStartConverstation()
+    1
+
+And call last_login without failure
+
+    >>> expected = self.portal.portal_membership.getAuthenticatedMember().getProperty('last_login_time',None)
+    >>> view.last_login() == expected
+    True
+
+Make sure the view reports 2 conversations
+
+    >>> view.getNumberOfConversations()
+    2
+
+List the conversations
+
+    >>> view.getConversations()
+    [{'getLastCommentAuthor': 'test_user_1_', 
+      'Title': 'C2', 
+      'absolute_url': 'http://nohost/plone/board1/forum1/...', 
+      'Creator': 'test_user_1_', 
+      'modified': DateTime('...'), 
+      'getLastCommentDate': u'...', 
+      'review_state': 'active', 
+      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
+      'getNumberOfComments': 2}, 
+     {'getLastCommentAuthor': 'test_user_1_', 
+      'Title': 'C1', 
+      'absolute_url': 'http://nohost/plone/board1/forum1/...', 
+      'Creator': 'test_user_1_', 'modified': DateTime('...'), 
+      'getLastCommentDate': u'...', 
+      'review_state': 'active', 
+      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
+      'getNumberOfComments': 3}]
+
+Open the forum in a browser.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+    >>> browser.open(forum.absolute_url())
+    >>> print browser.contents
+    <...
+    ...forum1...
+    >>> browser.open(forum.absolute_url()+'/view')
+    >>> print browser.contents
+    <...
+    ...forum1...

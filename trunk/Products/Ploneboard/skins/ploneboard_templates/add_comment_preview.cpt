@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+
+    <div metal:fill-slot="main" 
+         tal:define="errors options/state/getErrors;">
+
+        <h1 i18n:translate="heading_preview_comment">Preview comment</h1>
+   
+        <form class="group"
+              name="edit_form"
+              action=""
+              method="post" 
+              enctype="multipart/form-data"
+              tal:attributes="action template/getId" >
+
+            <input type="hidden" name="form.submitted" value="1" />
+    
+            <div metal:define-macro="comment_preview_hidden_vars" tal:omit-tag="">
+                <input type="hidden"
+                       name="title"
+                       tal:condition="request/title | nothing"
+                       tal:attributes="value request/title" 
+                       />
+                <input type="hidden"
+                       name="text"
+                       tal:attributes="value python:request.get('text', '')" 
+                       />
+                <tal:loop repeat="file here/portal_ploneboard/getUploadedFiles">
+                    <input name="files:list"
+                           type="hidden"
+                           size="30"
+                           tal:attributes="value file/getId;
+                                           id string:files-${repeat/file/number};"
+                           />
+                    <br />
+                </tal:loop>
+            </div>
+
+            <div metal:define-macro="comment_preview" tal:omit-tag="">
+
+                <h2 tal:condition="request/title | nothing"
+                    tal:content="request/title">
+                    Subject
+                </h2>
+
+                <div tal:define="nl2br python:modules['Products.PythonScripts.standard'].newline_to_br;
+                                 text python:request.get('text', '(no text)');
+                                 text python:here.portal_ploneboard.performCommentTransform(text, context=here);"
+                     tal:content="structure text">
+                    Cooked Body
+                </div>
+
+            </div>
+
+            <div metal:define-macro="comment_preview_buttons" tal:omit-tag="">
+
+                <div class="row">
+                    <div class="label"> </div>
+                    <div class="field"> 
+                        <input class="standalone" 
+                               type="submit" 
+                               name="form.button.Save" 
+                               value="Post" 
+                               i18n:attributes="value"/> 
+
+                        <input class="context" 
+                               type="submit" 
+                               name="form.button.Edit" 
+                               value="Change" 
+                               i18n:attributes="value" /> 
+
+
+                        <input class="destructive"
+                               type="submit"
+                               name="form.button.Cancel"
+                               value="Cancel"
+                               i18n:attributes="value"
+                               />
+                    </div>
+                </div>
+        
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

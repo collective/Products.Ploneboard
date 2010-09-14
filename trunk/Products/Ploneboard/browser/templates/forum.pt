@@ -1,0 +1,215 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<head>
+   <metal:top fill-slot="top_slot">
+      <tal:block condition="python:not user.has_permission('Ploneboard: Add Forum', here) and not user.has_permission('Ploneboard: Moderate Forum', here)">
+        <tal:border define="dummy python:request.set('disable_border', True)" />
+      </tal:block>
+   </metal:top>
+</head>
+
+<body>
+
+    <div metal:fill-slot="main"
+         tal:define="numConversations view/getNumberOfConversations;
+                     pss modules/Products/PythonScripts/standard;
+                     DateTime nocall:modules/DateTime/DateTime;
+                     last_login view/last_login;
+                     isAnon context/@@plone_portal_state/anonymous;
+                     portal context/@@plone_portal_state/portal | nocall:portal;
+                     mtool context/@@plone_tools/membership;">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 class="documentFirstHeading">
+        <img src="" tal:replace="structure portal/ploneboard_forum_icon.gif" />
+        <span tal:replace="here/Title">Forum title</span>
+        </h1>
+
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <ul class="visualNoMarker discreet"
+            style="float:right; margin: 0 0 1em 1em;">
+            <li>
+                <img tal:replace="structure context/new_conversation.gif" />
+                <a i18n:translate="show_no_replies"
+                   tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
+                   Show only unanswered 
+                </a>
+            </li>
+        </ul>
+
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+            Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+        </a>
+
+        <div class="documentDescription"
+             tal:content="here/Description">
+        Forum Description
+        </div>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <div class="visualClear"></div>
+        
+        <p class="discreet"
+             i18n:translate="not_conversations"
+             tal:condition="python:numConversations == 0">
+        No conversations in this forum yet.     
+        </p>
+
+       <tal:vars define="canStartConverstation view/canStartConverstation">
+
+        <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
+              tal:condition="canStartConverstation"
+              style="float: right">
+              <input i18n:attributes="value"
+                  class="standalone"
+                  type="submit" 
+                  value="Start a new Conversation" />
+        </form>
+
+        <tal:choice condition="not: canStartConverstation">
+        <form tal:condition="isAnon"
+              tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                            (here.portal_url(),
+                                            pss.url_quote(request['URL']))">
+
+            <input class="standalone" 
+                   type="submit" 
+                   value="Log in to start a conversation"
+                   i18n:attributes="value log_to_start_conversation"
+                   
+                   />
+        </form>
+
+        <p class="discreet"
+           style="text-align: center"
+           i18n:translate="not_permission_start_conversation"
+           tal:condition="not: isAnon">
+        Sorry, you do not have permission to start a new Conversation
+        </p>
+
+        </tal:choice>
+
+        <p tal:condition="python:not isAnon and numConversations > 0" 
+           class="discreet"
+           i18n:translate="new_conversations_marked_with">
+          Conversations marked with
+            <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
+            have had activity since your last log-in.
+        </p>
+
+        </tal:vars>
+
+        <div class="visualClear"></div>
+
+        <tal:haveConversations condition="python:numConversations > 0">
+                    
+          <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
+                                     b_size python:20;b_start python:0;b_start request/b_start | b_start;
+                                     batch python:Batch(view.getConversations, numConversations, b_size, int(b_start), orphan=1);">
+
+            <table class="listing nosort">
+
+                <thead>
+                    <tr>
+                         <th i18n:translate="conversation">Conversation</th>
+                         <th i18n:translate="replies">Replies</th>
+                         <th i18n:translate="most_recent_comment">Most recent comment</th>
+                     </tr>
+                </thead>
+        
+                <tbody>
+                    <tal:showconversations tal:repeat="conversation batch">
+                
+                    <tr tal:define="oddrow repeat/conversation/odd;
+                                    conv_url conversation/absolute_url;
+                                    conv_modified conversation/modified;
+                                    revstate conversation/review_state;
+                                    numComments conversation/getNumberOfComments"
+                        tal:attributes="class python:oddrow and 'even' or 'odd'">
+                        <td>
+                            <img tal:replace="structure context/new_conversation.gif" 
+                                 tal:condition="python:last_login and conv_modified > last_login" />
+                            <a href=""
+                               tal:attributes="href conv_url;
+                                               class string:state-${revstate}">
+                              <img src="" tal:condition="python:revstate == 'locked'"
+                                          tal:replace="structure portal/lock_icon.gif" />
+                                <span tal:replace="conversation/Title">This is a title</span>
+                              
+
+                                <span class="discreet" i18n:translate="label_by_author">
+                                       by <tal:author i18n:name="author"
+                                               define="creator conversation/Creator;
+                                                       creatorinfo python: mtool.getMemberInfo(creator);"
+                                               content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                                </span>
+                            
+                            </a>
+                        </td>
+                    
+                        <td class="listingCheckbox"
+                            tal:condition="python:numComments > 1">
+                            <span tal:content="python:numComments - 1">
+                                12 replies
+                            </span>
+                        </td>
+
+                        <td class="listingCheckbox"
+                            tal:condition="python:1 >= numComments">
+                            <span i18n:translate="no_replies_yet">
+                            No replies yet
+                            </span>
+                        </td>
+
+                        <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
+                        <tal:block condition="numComments">
+                          <td>
+                             <a href="#" tal:attributes="href string:${conversation/getLastCommentUrl}">
+                               <span i18n:translate="label_by_author">
+                                 by <tal:author i18n:name="author"
+                                         define="creator conversation/getLastCommentAuthor;
+                                                 creatorinfo python: mtool.getMemberInfo(creator);"
+                                         content="python:creatorinfo and creatorinfo['fullname'] or creator" />
+                              </span>
+                            </a>                                                                                        
+                            <span
+                                  class="discreet"
+                                  tal:content="conversation/getLastCommentDate">
+                                Thursday 13:21
+                            </span>
+                          </td>
+                        </tal:block>
+    
+                    </tr>
+                
+                    </tal:showconversations>
+                </tbody>
+            </table>
+            
+            <!-- Navigation -->
+            <div metal:use-macro="here/batch_macros/macros/navigation" />
+                        
+          </tal:conversations>
+        </tal:haveConversations>
+
+        <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </div>
+                     
+</body>
+</html>

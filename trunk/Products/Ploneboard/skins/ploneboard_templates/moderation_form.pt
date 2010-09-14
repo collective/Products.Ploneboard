@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<body>
+
+    <div metal:fill-slot="main"
+         tal:define="results here/moderation_search;
+                     DateTime python:modules['DateTime'].DateTime;
+                     atool context/@@plone_tools/actions">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 tal:content="here/Title">Context title</h1>
+        
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+            Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+        </a>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <!-- Search results -->
+        
+        <div tal:condition="results">
+        
+            <p i18n:translate="moderation_description">
+              The following comments are pending moderation. Please click
+              'Publish' or 'Reject' as necessary. Click the title of a comment
+              to view it in the context of its conversation.
+            </p>
+            
+            <p>
+                <a href="#"
+                   tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardComment')"
+                   tal:attributes="href string:${here/aq_inner/aq_parent/absolute_url}/${template/id}"
+                   tal:content="here/aq_inner/aq_parent/Title">Up</a>
+            </p>
+
+            <metal:block tal:repeat="result results">
+            <div class="moderationItem even"
+                 id="#"
+                 tal:define="oddrow repeat/result/odd;
+                             resultid string:seqno${repeat/result/number};
+                             resulturl string:${result/absolute_url}/${template/id};" 
+                 tal:attributes="class python:test(oddrow, 'moderationItem even', 'moderationItem odd');
+                                 id resultid;" >
+
+
+                <div tal:condition="python: result.portal_type in ['PloneboardConversation','PloneboardForum']">    
+                    <a href="#"
+                       tal:attributes="href resulturl">
+                        <img src="#" 
+                         height="16"
+                         width="16"
+                         alt=""
+                         tal:on-error="structure python:path('here/linkOpaque.gif')"
+                         tal:replace="structure python:path('here/%s' % result.getIcon())" 
+                         /></a>
+                    <a href="#"
+                       tal:attributes="href resulturl"
+                       tal:content="result/Title" /> -
+                    <span i18n:translate="moderation_count" tal:omit-tag="">
+                    <span i18n:name="count"
+                                 replace="python: here.moderation_count_search(result)" /> 
+                    comments in queue.</span>
+                </div>
+
+                <div tal:condition="python: result.portal_type == 'PloneboardComment'">
+                    <a href="#" 
+                       tal:attributes="href result/absolute_url">
+                        <img src="#" 
+                             height="16"
+                             width="16"
+                             alt=""
+                         tal:on-error="structure python:path('here/linkOpaque.gif')"
+                             tal:replace="structure python:path('here/%s' % result.getIcon())" /></a>
+                    <a href="#" tal:attributes="href result/absolute_url"
+                       tal:content="python:result.Title() or result.getId()" />
+
+                    <div tal:content="result/Creator">Author</div>
+                    <div tal:content="result/Description">Description</div>
+    
+                    <div class="moderationActions">
+                        <!-- Iterate over workflow transitions and make a button for each -->
+                        <form i18n:domain="plone"
+                              method="post"
+                              tal:repeat="action python:atool.listFilteredActionsFor(result)['workflow']"
+                              tal:attributes="action string:${result/absolute_url}/moderateComment">
+                          <input type="hidden" name="action" tal:attributes="value action/id"/>
+                          <input type="hidden" name="cameFrom" tal:attributes="value string:${here/absolute_url}/${template/getId}"/>
+                          <input i18n:attributes="value" tal:attributes="value action/title"
+                                 class="context"
+                                 type="submit"
+                                 />
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </metal:block>
+        </div>
+
+        <div tal:condition="not:results">
+            <p i18n:translate="no_comments_queued">
+                There are no comments in the moderation queue.
+            </p>
+        </div>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </div>
+
+</body>
+</html>

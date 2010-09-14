@@ -1,0 +1,56 @@
+Ploneboard to-do list
+=====================
+
+    Features
+    --------
+
+    - How/where/whether should threaded_conversation_view be enabled
+        - per user preference? per forum?
+        - does it cause confusion if different users have different views?
+
+    - Use title-to-id generation (with numerical suffixes to remove
+        collisions) on conversations, on comments?
+            - note: comment urls are rarely/never shown to the user
+
+    - New converstion stars should disappear when conversation has been viewed
+            - should be subject to a placeful cookie, and only disappear when
+                actually viewed (i.e. if you log in to a different part of the
+                site, it should not remove this info for all forums)
+            - should be possible to "mark all as viewed" manually
+
+    - Use KSS style edit widgets where possible
+
+    Missing tests
+    -------------
+
+    - Functional tests for threaded_conversation_view (see above)
+    - Functional tests for global board view template (see above)
+    - Coverage of PloneboardTool's transform management is sub-optimal
+
+    Code structure
+    --------------
+
+    - Use Plone 3 style views in view templates
+    - Split up posting macros, as entire template is evaluated each time a
+        macro is used.
+
+    Discussion tool integration
+    ----------------------------
+
+    - Should have an aggregate page which shows all discussions going on in the
+        portal
+    - Should be able to adapt Discussion Item to IComment, discussion
+        container to IConversation?
+
+    Future/nice-to-have
+    -------------------
+
+    - Mail/news gateway - possibility of integrating with 'listen'?
+
+    Performance
+    -----------
+
+    We can make more cache friendly data structures in views.
+
+    On creation, it starts out at 0.1s per comment, after 4000 comments
+    it's up to 0.13s per comment.

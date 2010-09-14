@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    xmlns:metal="http://xml.zope.org/namespaces/metal">
+
+    <channel rdf:about="http://localhost/ploneboard/RSS"
+             tal:attributes="rdf:about string:${view/url}/RSS">
+        <title tal:content="view/title">Futurama, FOX</title>
+        <link tal:attributes="href view/url" href="http://localhost/futurama/RSS" />
+
+        <description tal:content="view/description">
+        </description>
+
+        <syn:updatePeriod tal:content="view/updatePeriod">daily</syn:updatePeriod>
+        <syn:updateFrequency tal:content="view/updateFrequency">1</syn:updateFrequency>
+        <syn:updateBase tal:content="view/updateBase">2006-07-25T22:04:14Z</syn:updateBase>
+        <items>
+            <rdf:Seq>
+                <rdf:li tal:repeat="comment view/comments"
+                     rdf:resource="http://localhost/board/forum/conversation"
+                     tal:attributes="rdf:resource comment/url"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+
+    <item tal:repeat="comment view/comments"
+          rdf:about="http://localhost/board/forum/conversation"
+          tal:attributes="rdf:about comment/url">
+        <title tal:content="comment/title">Comment title</title>
+        <link tal:attributes="href comment/url" href="http://localhost/board/forum/conv/1" />
+        <description tal:content="comment/description">
+            The first part of the comment text goes here
+        </description>
+        <dc:date tal:content="comment/date">2007-11-27T11:20:00Z</dc:date>
+        <dc:type>Comment</dc:type>
+    </item>
+</rdf:RDF>

@@ -1,0 +1,88 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+      
+<head>
+  <metal:top fill-slot="top_slot">
+    <tal:block condition="python:not user.has_permission('Ploneboard: Manage Conversation', here)">
+      <tal:border define="dummy python:request.set('disable_border', True)" />
+    </tal:block>
+  </metal:top>
+
+  <metal:js fill-slot="javascript_head_slot">
+    <script type="text/javascript"
+            tal:attributes="src string:${portal_url}/pb_attachment.js">
+    </script>
+  </metal:js>
+
+</head>
+
+<body>
+  <div metal:fill-slot="main"
+        tal:define="view context/@@conversation_browserview;
+                    isAnon context/@@plone_portal_state/anonymous;
+                    mtool context/@@plone_tools/membership;">
+
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+    <h1 class="documentFirstHeading">
+      <img tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" alt="" />
+      <span tal:replace="here/Title">Conversation title</span>
+    </h1>
+
+    <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+    <a href=""
+       class="link-parent"
+       tal:define="parent_url python:here.navigationParent(here, template.getId())"
+       tal:condition="parent_url"
+       tal:attributes="href parent_url"
+       i18n:translate="go_to_parent_url">
+        Up to <span tal:content="here/aq_parent/title_or_id" i18n:name="title" />
+    </a>
+
+    <div class="documentDescription"
+         tal:content="here/Description"> 
+      description
+    </div>
+
+    <div tal:replace="structure provider:plone.abovecontentbody" />
+
+    <div class="boardConversation"
+         metal:define-macro="view_comments"
+         tal:define="comments view/root_comments;
+                     children comments">
+
+      <ul class="topLevelComment">
+        <tal:node metal:define-macro="displaynode">
+          <li tal:repeat="comment children">
+            <div class="boardComment visualIEFloatFix">
+              <metal:comment metal:use-macro="here/comment_view/macros/comment" />
+            </div>
+
+              <tal:children define="children python:view.children(comment)"
+                            condition="children">
+                <ul>
+                  <li metal:use-macro="here/threaded_conversation_view/macros/displaynode" />
+                </ul>
+              </tal:children>
+          </li>
+        </tal:node>
+      </ul>
+    </div>
+
+    <metal:block use-macro="here/conversation_view/macros/quickreply">
+      Quick reply form
+    </metal:block>
+
+    <metal:footer use-macro="here/board_footer/macros/footer">
+      Board footer
+    </metal:footer>
+
+    <div tal:replace="structure provider:plone.belowcontentbody" />
+
+  </div>
+</body>
+</html>

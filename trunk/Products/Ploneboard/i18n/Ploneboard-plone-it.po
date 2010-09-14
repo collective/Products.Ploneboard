@@ -1,0 +1,110 @@
+# translation of Ploneboard to Italian
+# Gettext File for Ploneboard
+# Enzo Cesanelli <enzo at noiza dot com>, 2006
+# Paolo Melchiorre < paolo at advansis dot it>, 2007
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2007-02-16 17:29+0100\n"
+"Last-Translator: Paolo Melchiorre < paolo at advansis dot it>\n"
+"Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: it\n"
+"Language-Name: Italian\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr "Un forum contenente discussioni"
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Un commento contenente testo e dati"
+
+msgid "Activate"
+msgstr "Attiva"
+
+msgid "Active"
+msgstr "Attivo"
+
+msgid "Comment"
+msgstr "Commento"
+
+msgid "Conversation"
+msgstr "Discussione"
+
+msgid "Conversation contains comments."
+msgstr "Una discussione contenente commenti."
+
+msgid "Free for all"
+msgstr "Aperto a tutti"
+
+msgid "Hidden"
+msgstr "Nascosto"
+
+msgid "Hide"
+msgstr "Nascondi"
+
+msgid "Lock"
+msgstr "Chiudi"
+
+msgid "Make free-for-all"
+msgstr "Rendi aperto a tutti"
+
+msgid "Make member-posting"
+msgstr "Rendi riservato ai membri"
+
+msgid "Make moderated"
+msgstr "Rendi moderato"
+
+msgid "Message Board"
+msgstr "Area Forum"
+
+msgid "Moderate"
+msgstr "Moderato"
+
+msgid "Moderated forum"
+msgstr "Forum moderato"
+
+msgid "Open"
+msgstr "Aperto"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "L'area forum è l'oggetto più generale, che viene mostrato nel portale."
+
+msgid "Private to members only"
+msgstr "Riservato soli ai membri"
+
+msgid "Public"
+msgstr "Pubblico"
+
+msgid "Rejected"
+msgstr "Rifiutato"
+
+msgid "Require membership to post"
+msgstr "Richiede la registrazione per scrivere"
+
+msgid "Retracted"
+msgstr "Ritirato"
+
+msgid "Waiting for moderator"
+msgstr "In attesa del moderatore"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Lista delle discussioni"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${day} ${month} ${year} alle ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} alle ${hours}:${minutes}"
+

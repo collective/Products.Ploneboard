@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<object name="portal_css" meta_type="Stylesheets Registry">
+ <stylesheet title="Ploneboard CSS"
+             cacheable="True"
+             compression="safe"
+             cookable="True"
+             enabled="1"
+             expression=""
+             id="ploneboard.css"
+             media="all"
+             rel="stylesheet"
+             rendering="import"/>
+</object>

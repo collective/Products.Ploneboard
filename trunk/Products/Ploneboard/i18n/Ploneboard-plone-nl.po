@@ -1,0 +1,113 @@
+# Gettext File for Ploneboard
+# Jean-Paul Ladage <j.ladage@zestsoftware.nl>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"PO-Revision-Date: 2006-04-21 22:15+0000\n"
+"Last-Translator: Wichert Akkerman <wichert@amaze.nl>\n"
+"Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: nl\n"
+"Language-Name: Nederlands\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: nl-be\n"
+
+msgid "A Forum contains conversations."
+msgstr "Een forum bevat discussies."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Een reactie bevat tekst en metadata."
+
+msgid "Activate"
+msgstr "Activeer"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Comment"
+msgstr "Reactie"
+
+msgid "Conversation"
+msgstr "Discussie"
+
+msgid "Conversation added"
+msgstr "Discussie toegevoegd"
+
+msgid "Enter comment body."
+msgstr "Vul hier de tekst in."
+
+msgid "Flat conversion view"
+msgstr "Platte discussie weergave"
+
+msgid "Free for all"
+msgstr "Openbaar voor iedereen"
+
+msgid "Hidden"
+msgstr "Verborgen"
+
+msgid "Hide"
+msgstr "Verberg"
+
+msgid "Lock"
+msgstr "Zet op slot"
+
+msgid "Locked"
+msgstr "Gesloten"
+
+msgid "Make free-for-all"
+msgstr "Maak openbaar voor iedereen"
+
+msgid "Make member-posting"
+msgstr "Maak alleen-leden-kunnen-insturen"
+
+msgid "Make moderated"
+msgstr "Maak moderatie vereist"
+
+msgid "Message Board"
+msgstr "Discussiebord"
+
+msgid "Moderate"
+msgstr "Modereer"
+
+msgid "Open"
+msgstr "Open"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Discussiebord is de hoofdmap waarbinnen je fora en discussies kan toevoegen."
+
+msgid "Private to members only"
+msgstr "Alleen toegankelijk voor leden"
+
+msgid "Public"
+msgstr "Openbaar"
+
+msgid "Rejected"
+msgstr "Geweigerd"
+
+msgid "Require membership to post"
+msgstr "Vereis lidmaatschap om te reageren"
+
+msgid "Retracted"
+msgstr "Teruggetrokken"
+
+msgid "Search board"
+msgstr "Zoek in alle fora"
+
+msgid "Threaded conversion view"
+msgstr "Geneste discussie weergave"
+
+msgid "Waiting for moderator"
+msgstr "Wacht op moderator"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

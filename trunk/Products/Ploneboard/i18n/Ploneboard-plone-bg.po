@@ -1,0 +1,110 @@
+# Gettext File for Ploneboard
+# Vladimir Iliev <vladimir.iliev@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-03-30 20:49+0200\n"
+"Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
+"Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: bg\n"
+"Language-Name: Bulgarian\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Poedit-Language: Bulgarian\n"
+"X-Poedit-Country: BULGARIA\n"
+
+msgid "A Forum contains conversations."
+msgstr "Форума съдържа разговори."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Коментара съдържа текст и общи данни."
+
+msgid "Activate"
+msgstr "Активиране"
+
+msgid "Active"
+msgstr "Активен"
+
+msgid "Comment"
+msgstr "Коментар"
+
+msgid "Conversation"
+msgstr "Разговор"
+
+msgid "Conversation contains comments."
+msgstr "Разговора съдържа кометари."
+
+msgid "Free for all"
+msgstr "Свободен за всички"
+
+msgid "Hidden"
+msgstr "Скрит"
+
+msgid "Hide"
+msgstr "Скриване"
+
+msgid "Lock"
+msgstr "Заключване"
+
+msgid "Make free-for-all"
+msgstr "Направи свободен за всички"
+
+msgid "Make member-posting"
+msgstr "Направи само за регистрирани потребители"
+
+msgid "Make moderated"
+msgstr "Направи модериран"
+
+msgid "Message Board"
+msgstr "Дискусионно табло"
+
+msgid "Moderate"
+msgstr "Модерация"
+
+msgid "Moderated forum"
+msgstr "Модериран форум"
+
+msgid "Open"
+msgstr "Отворен"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Само за регистрирани потребители"
+
+msgid "Public"
+msgstr "Публичен"
+
+msgid "Rejected"
+msgstr "Отказан"
+
+msgid "Require membership to post"
+msgstr "Изисква регистрация за изпращане"
+
+msgid "Retracted"
+msgstr "Анулиран"
+
+msgid "Waiting for moderator"
+msgstr "Чакащ модератора"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Плосък изглед на разговора"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${wday}, ${day} ${month} ${year} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Йерархичен изглед на разговора"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

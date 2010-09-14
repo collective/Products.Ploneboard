@@ -1,0 +1,110 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# never generate this file with i18ndude, it is managed manual
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2009-03-03 14:45+0100\n"
+"Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: eu\n"
+"Language-Name: Basque\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr "Foro batek hariak ditu barnean"
+
+msgid "A comment contains regular text body and metadata."
+msgstr "Erantzun batek testua eta metadatuak ditu."
+
+msgid "Activate"
+msgstr "Aktibatu"
+
+msgid "Active"
+msgstr "Aktibatuta"
+
+msgid "Comment"
+msgstr "Erantzun"
+
+msgid "Conversation"
+msgstr "Mezua"
+
+msgid "Conversation contains comments."
+msgstr "Hariak erantzunak ditu."
+
+msgid "Free for all"
+msgstr "Guztientzat irekita"
+
+msgid "Hidden"
+msgstr "Ezkutatuta"
+
+msgid "Hide"
+msgstr "Ezkutuan"
+
+msgid "Lock"
+msgstr "Itxi"
+
+msgid "Make free-for-all"
+msgstr "Guztiei ireki"
+
+msgid "Make member-posting"
+msgstr "Kideentzat bakarrik ireki"
+
+msgid "Make moderated"
+msgstr "Moderazioa aktibatu"
+
+msgid "Message Board"
+msgstr "Foroa"
+
+msgid "Moderate"
+msgstr "Moderatu"
+
+msgid "Moderated forum"
+msgstr "Moderatutako foroa"
+
+msgid "Open"
+msgstr "Irekita"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Ploneboard kanporengo objektua da."
+
+msgid "Private to members only"
+msgstr "Kideentzat bakarrik"
+
+msgid "Public"
+msgstr "Publikoa"
+
+msgid "Rejected"
+msgstr "Baztertuta"
+
+msgid "Require membership to post"
+msgstr "Argitaratzeko kide izatea eskatu"
+
+msgid "Retracted"
+msgstr "Baztertuta"
+
+msgid "Waiting for moderator"
+msgstr "Moderazioaren zain"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Elkarrizketen bista"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Haritutako elkarrizketen bista"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

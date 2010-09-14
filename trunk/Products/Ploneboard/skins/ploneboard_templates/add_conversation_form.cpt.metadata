@@ -1,0 +1,13 @@
+[default]
+title=Add conversation
+
+[validators]
+validators..Post=validate_add_conversation
+validators=validate_add_conversation
+validators..Cancel=
+
+[actions]
+action.success..Post=traverse_to:string:add_conversation_script
+action.success..Cancel=redirect_to_action:string:view
+action.success=traverse_to:string:add_conversation_preview
+action.failure=traverse_to:string:add_conversation_form

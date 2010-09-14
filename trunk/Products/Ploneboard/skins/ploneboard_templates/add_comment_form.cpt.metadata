@@ -1,0 +1,15 @@
+[default]
+title=Add comment
+
+[validators]
+validators..Preview=validate_add_comment
+validators..Post=validate_add_comment
+validators=validate_add_comment
+validators..Cancel=
+
+[actions]
+action.success..Preview=traverse_to:string:add_comment_preview
+action.success..Post=traverse_to:string:add_comment_script
+action.success..Cancel=redirect_to_action:string:view
+action.success=traverse_to:string:add_comment_script
+action.failure=traverse_to:string:add_comment_form

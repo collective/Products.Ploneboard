@@ -1,0 +1,107 @@
+# Gettext File for Ploneboard
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2008-10-04 19:31+0100\n"
+"Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
+"Language-Team: SureCase.org <info@surecase.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: cs\n"
+"Language-Name: Czech\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr "Aktivovat"
+
+msgid "Active"
+msgstr "Aktivní"
+
+msgid "Comment"
+msgstr "Komentář"
+
+msgid "Conversation"
+msgstr "Konverzace"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr "Přístupné všem"
+
+msgid "Hidden"
+msgstr "Skryté"
+
+msgid "Hide"
+msgstr "Skrýt"
+
+msgid "Lock"
+msgstr "Zamknout"
+
+msgid "Make free-for-all"
+msgstr "Povolit všem"
+
+msgid "Make member-posting"
+msgstr "Omezit přispívání pro členy"
+
+msgid "Make moderated"
+msgstr "Změnit na moderované"
+
+msgid "Message Board"
+msgstr "Diskusní fórum"
+
+msgid "Moderate"
+msgstr "Moderovat"
+
+msgid "Moderated forum"
+msgstr "Moderovaná konverzace"
+
+msgid "Open"
+msgstr "Otevřít"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Pouze pro členy"
+
+msgid "Public"
+msgstr "Veřejné"
+
+msgid "Rejected"
+msgstr "Zamítnuto"
+
+msgid "Require membership to post"
+msgstr "Přispívání vyžaduje registraci"
+
+msgid "Retracted"
+msgstr "Staženo"
+
+msgid "Waiting for moderator"
+msgstr "Čekající na moderátora"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "Jednoduché zobrazení"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "Stromové zobrazení"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

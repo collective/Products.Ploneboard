@@ -1,0 +1,109 @@
+# Translation of Ploneboard.pot to Danish
+# Sune Toft <sune@headnet.dk>, 2006
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 0.1\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: 2005-08-22 11:50+0000\n"
+"Last-Translator: jakob bruun <jakob@headnet.dk>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: da\n"
+"Language-Name: danish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: da-dk\n"
+
+msgid "A Forum contains conversations."
+msgstr "Et forum indeholder debatter."
+
+msgid "A comment contains regular text body and metadata."
+msgstr "En kommentar indeholder en brødtekst og metadata."
+
+msgid "Activate"
+msgstr "Aktiver"
+
+msgid "Active"
+msgstr "Aktivt"
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Conversation"
+msgstr "Indlæg"
+
+msgid "Conversation contains comments."
+msgstr "Debatter indeholder kommentarer."
+
+msgid "Free for all"
+msgstr "Åbent for alle"
+
+msgid "Hidden"
+msgstr "Skjult"
+
+msgid "Hide"
+msgstr "Skjul"
+
+msgid "Lock"
+msgstr "Lås"
+
+msgid "Make free-for-all"
+msgstr "Gør åbent for alle"
+
+msgid "Make member-posting"
+msgstr "Opret medlemsindlæg"
+
+msgid "Make moderated"
+msgstr "Gør modereret"
+
+msgid "Message Board"
+msgstr "Forum"
+
+msgid "Moderate"
+msgstr "Godkendelse"
+
+msgid "Moderated forum"
+msgstr "Moderet forum"
+
+msgid "Open"
+msgstr "Åben"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "Indeholder fora"
+
+msgid "Private to members only"
+msgstr "Kun synligt for medlemmer"
+
+msgid "Public"
+msgstr "Publiceret"
+
+msgid "Rejected"
+msgstr "Afvist"
+
+msgid "Require membership to post"
+msgstr "Medlemskab påkrævet"
+
+msgid "Retracted"
+msgstr "Trukket tilbage"
+
+msgid "Waiting for moderator"
+msgstr "Afventer godkendelse"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "debatvisning"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "trådet debatvisning"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+

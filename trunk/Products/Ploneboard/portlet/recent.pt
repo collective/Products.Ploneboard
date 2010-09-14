@@ -1,0 +1,49 @@
+<tal:block condition="view/available"
+           i18n:domain="ploneboard">
+<dl class="portlet portletPloneboardRecent">
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="#" 
+           class="tile"
+           tal:attributes="href view/next_url"
+           tal:content="view/title">Recent conversations</a>
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <tal:items tal:repeat="obj view/conversations">
+        <dd class="portletItem"
+            tal:define="oddrow repeat/obj/odd;
+                        item_wf_state_class string:state-${obj/review_state};
+                        item_type_class string:contenttype-${obj/portal_type};"
+            tal:attributes="class python:oddrow and  'portletItem odd' or 'portletItem even'">
+            <div tal:attributes="class item_type_class">
+                <a href=""
+                    tal:attributes="href obj/url;
+                                    title obj/title;
+                                    class string:$item_wf_state_class tile">
+                    <img tal:condition="obj/icon" tal:attributes="src obj/icon" />
+                    <span tal:replace="obj/title">
+                        Title
+                    </span>
+                </a>
+                    <a class="portletItemDetails"
+                       tal:attributes="href obj/forum_url"
+                       tal:content="obj/forum_title">
+                        Some forum
+                    </a>
+
+            </div>
+        </dd>
+    </tal:items>
+
+    <dd class="portletFooter">
+        <a class="title"
+           tal:attributes="href view/next_url"
+           i18n:translate="box_more_recent_conversations">
+            More&hellip;
+        </a>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+</tal:block>

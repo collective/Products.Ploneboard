@@ -1,0 +1,114 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+<body>
+<div metal:fill-slot="main"
+    tal:define="results view/results">
+    <a class="link-parent"
+        tal:attributes="href view/board_url"
+        i18n:domain="ploneboard" i18n:translate="label_back_to_board">
+        Back to discussion board
+    </a>
+
+    <form action="search" class="searchPage">
+        <input class="searchPage" name="q" type="text" size="25"
+               title="Search Board"
+               i18n:domain="ploneboard"
+               i18n:attributes="title board_search_label"
+               tal:attributes="value request/q|nothing"/>
+        <input class="searchPage searchButton" type="submit"
+               value="Search" i18n:attributes="value label_search;"/>
+    </form>
+
+    <h1 class="documentFirstHeading">
+        <span i18n:translate="heading_search_results">
+            Search results
+        </span>
+        <span class="discreet">
+            &mdash;
+        </span>
+        <span i18n:translate="batch_x_items_matching_your_criteria">
+            <span i18n:name="number" tal:replace="python:len(results)">234</span>
+            items matching your search terms
+        </span>
+    </h1>
+
+
+    <tal:block tal:condition="results"
+               tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                           b_size python:30;
+                           b_start python:0;
+                           b_start request/b_start | b_start;
+                           batch python:Batch(results, b_size, int(b_start), orphan=1);">
+        <dl class="searchResults">
+            <tal:repeat repeat="result batch">
+                <tal:info define="info python:view.info(result);
+                                item_wf_state_class string:state-${info/review_state};">
+                    <dt tal:attributes="class string:contenttype-${info/portal_type};">
+                        <img alt="" tal:condition="info/icon" tal:attributes="src info/icon"/>
+                        <a tal:attributes="href info/url;
+                                           title info/title;
+                                           class item_wf_state_class"
+                           tal:content="info/title">
+                            Item title
+                        </a>
+                    </dt>
+
+                    <dd>
+                        <p class="discreet"
+                            i18n:domain="ploneboard" i18n:translate="search_result_location">
+                           In <a i18n:name="forum" tal:content="info/forum_title"
+                                 tal:attributes="href info/forum_url;
+                                                 title info/forum_title">Forum</a>
+                                &rarr;
+                           <a i18n:name="conversation" tal:content="info/conv_title"
+                                 tal:attributes="href info/conv_url;
+                                                 title info/conv_title">Conversation</a>.
+                        </p>
+
+                        <span tal:replace="info/description">
+                            Description (cropped)
+                        </span>
+
+                        <span class="documentByLine">
+
+                            <span class="documentAuthor"
+                                i18n:translate="label_by_author">
+                                by
+                                <a href="#"
+                                    tal:attributes="href string:${portal_url}/author/${info/author}"
+                                    tal:content="info/author"
+                                    tal:omit-tag="not:info/author"
+                                    i18n:name="author">
+                                    Bob Dobalina
+                                </a>
+                                &mdash;
+                            </span>
+
+                            <tal:relevance
+                               i18n:translate="label_relevance_percentage">
+                              Relevance:
+                              <span tal:content="info/relevance"
+                                    tal:omit-tag=""
+                                    i18n:name="percentage">23</span>%
+                            </tal:relevance>
+                        </span>
+                    </dd>
+                </tal:info>
+            </tal:repeat>
+        </dl>
+
+        <div metal:use-macro="here/batch_macros/macros/navigation" />
+    </tal:block>
+</div>
+</body>
+</html>
+

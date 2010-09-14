@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="ploneboard-various"
+               version="20070702-01"
+               handler="Products.Ploneboard.setuphandlers.setupVarious"
+               title="Ploneboard: run non-GenericSetup setup steps">
+    <dependency step="toolset" />
+    <dependency step="typeinfo" />
+    <dependency step="placeful_workflow" />
+    Various import steps that are not handled by GS import/export
+    handlers.
+  </import-step>
+</import-steps>

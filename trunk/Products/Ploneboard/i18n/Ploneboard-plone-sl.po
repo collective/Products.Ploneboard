@@ -1,0 +1,110 @@
+# translation of Ploneboard to Slovenian
+# Gettext File for Ploneboard
+# Matej Barič <matej.baric@hruska.si>, 2006.
+# never generate this file with i18ndude, it is managed manual
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard 1.0\n"
+"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: Matej Barič <matej.baric@hruska.si>\n"
+"Language-Team: Slovenian <matej.baric@hruska.si>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: sl\n"
+"Language-Name: Slovenian\n"
+"Preferred-Encodings: utf-8 iso-8859-1\n"
+"Domain: plone\n"
+
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Activate"
+msgstr "Aktiviraj"
+
+msgid "Active"
+msgstr "Aktivno"
+
+msgid "Comment"
+msgstr "Komentar"
+
+msgid "Conversation"
+msgstr "temo"
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Free for all"
+msgstr "Odprto za vse"
+
+msgid "Hidden"
+msgstr "Skrito"
+
+msgid "Hide"
+msgstr "Skrij"
+
+msgid "Lock"
+msgstr "Zakleni"
+
+msgid "Make free-for-all"
+msgstr "Odpri za vse"
+
+msgid "Make member-posting"
+msgstr "Odpri samo za člane"
+
+msgid "Make moderated"
+msgstr "Moderirano"
+
+msgid "Message Board"
+msgstr "Forum"
+
+msgid "Moderate"
+msgstr "Moderiraj"
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr "Odpri"
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Private to members only"
+msgstr "Skrij - samo za člane"
+
+msgid "Public"
+msgstr "Javno"
+
+msgid "Rejected"
+msgstr "Zavrnjeno"
+
+msgid "Require membership to post"
+msgstr "Za pošiljanje potrebuje članstvo"
+
+msgid "Retracted"
+msgstr "Umaknjeno"
+
+msgid "Waiting for moderator"
+msgstr "Čakanje na moderatorja"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr ""
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr ""
+

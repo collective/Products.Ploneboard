@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="ploneboard">
+
+<body>
+    <div metal:define-macro="footer" tal:omit-tag="">
+
+    <div class="poweredBy"
+         i18n:translate="label_powered_by">
+      Powered by 
+      <span i18n:name="link">
+        <a class="link-plain" 
+           href="http://plone.org/products/ploneboard">Ploneboard</a>
+      </span>
+    </div>
+                
+
+    </div>
+</body>
+</html>
+
+    
+

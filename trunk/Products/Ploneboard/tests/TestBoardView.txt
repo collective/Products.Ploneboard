@@ -1,0 +1,71 @@
+BoardViews integration tests
+============================
+
+Set up a simple board and forum:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> self.setRoles(('Manager',))
+    >>> self.portal.invokeFactory('Ploneboard', 'board1')
+    'board1'
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum1', title='Forum 1')
+    'forum1'
+    >>> board = self.portal.board1
+
+Add some content for listings etc
+
+    >>> self.portal.board1.invokeFactory('PloneboardForum', 'forum2', title='Forum 2')
+    'forum2'
+
+    >>> conversation = self.portal.board1.forum1.addConversation('C1', 'Conversation 1')
+    >>> conversation
+    <PloneboardConversation at ...>
+
+    >>> comment11 = conversation.addComment('comm1', 'This is first comment')
+    >>> comment12 = conversation.addComment('comm2', 'This is second comment')
+
+    >>> conversation2 = self.portal.board1.forum1.addConversation('C2', 'Conversation 2')
+    >>> comment21 = conversation2.addComment('comm1', 'This is first comment')
+
+    >>> conversation3 = self.portal.board1.forum2.addConversation('C3', 'Conversation 3')
+
+    >>> self.setRoles(('Member',))
+
+Try instantiating the view
+
+    >>> view = board.unrestrictedTraverse('@@ploneboard_view')
+    >>> view
+    <...Ploneboard/browser/templates/board.pt...>
+
+toPloneboardTime is tested in TestCommentView
+
+    >>> view.getKeyedForums()
+    {None: [{'getLastCommentAuthor': 'test_user_1_', 
+             'Description': '', 
+             'Title': 'Forum 1', 
+             'absolute_url': 'http://nohost/plone/board1/forum1', 
+             'getNumberOfConversations': 2, 
+             'getLastCommentDate': u'...'}, 
+             {'getLastCommentAuthor': 'test_user_1_', 
+             'Description': '', 
+             'Title': 'Forum 2', 
+             'absolute_url': 'http://nohost/plone/board1/forum2', 
+             'getNumberOfConversations': 1, 
+             'getLastCommentDate': u'...'}]}
+
+Open the board in a browser.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+    >>> browser.open(board.absolute_url())
+    >>> print browser.contents
+    <...
+    ...board1...
+    >>> browser.open(board.absolute_url()+'/view')
+    >>> print browser.contents
+    <...
+    ...board1...

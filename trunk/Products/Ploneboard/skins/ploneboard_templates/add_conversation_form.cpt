@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+    <metal:top fill-slot="top_slot">
+        <tal:block define="dummy python:request.set('disable_border', True)" />
+    </metal:top>
+
+    <metal:js fill-slot="javascript_head_slot">
+      <script type="text/javascript"
+              tal:attributes="src string:${portal_url}/pb_attachment.js">
+      </script>
+    </metal:js>
+
+</head>
+
+<body>
+
+    <div metal:fill-slot="main" 
+         tal:define="errors options/state/getErrors">
+
+       <h1 class="documentFirstHeading"
+           i18n:translate="add_conversation">Add conversation</h1>
+   
+        <form name="edit_form"
+              action=""
+              method="post" 
+              enctype="multipart/form-data"
+              tal:define="title_required python:1;
+                          text_required python:0;
+                          forum  context;"
+              tal:attributes="action template/getId">
+
+            <input type="hidden" name="form.submitted" value="1" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_title" tal:omit-tag="" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_buttons" tal:omit-tag="" />
+
+        </form>
+
+    </div>
+
+</body>
+</html>

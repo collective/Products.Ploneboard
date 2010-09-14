@@ -1,0 +1,6 @@
+[validators]
+validators=validate_add_conversation
+
+[actions]
+action.failure=redirect_to:string:add_conversation_form
+action.success=redirect_to_action:string:view
