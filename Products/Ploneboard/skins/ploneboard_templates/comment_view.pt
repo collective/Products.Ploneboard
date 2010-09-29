@@ -205,7 +205,7 @@
                     tal:condition="attachments">
             <legend i18n:translate="legend_attachments">Attachments</legend>
             <ul class="visualNoMarker"
-                tal:define="normalizeString normalizeString | nocall:context/@@plone/normalizeString">
+                tal:define="normalizeString nocall:normalizeString | nocall:context/@@plone/normalizeString">
               <li tal:repeat="attachment attachments">
                 <a tal:attributes="href attachment/absolute_url">
                   <span tal:define="pt attachment/portal_type;
