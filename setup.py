@@ -16,7 +16,7 @@ setup(name='Products.Ploneboard',
       keywords='Zope CMF Plone board forum',
       author='Jarn, Wichert Akkerman, Martin Aspeli',
       author_email='plone-developers@lists.sourceforge.net',
-      url='http://svn.plone.org/svn/collective/Ploneboard/trunk',
+      url='http://svn.plone.org/svn/collective/Products.Ploneboard/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],
@@ -34,4 +34,9 @@ setup(name='Products.Ploneboard',
         'python-dateutil',
         'Plone >= 3.3',
       ],
+      entry_points="""
+      # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = plone
+      """,
 )
