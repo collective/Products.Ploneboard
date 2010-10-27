@@ -132,13 +132,12 @@
                   <div i18n:translate="label_by_author">
                     by <tal:author i18n:name="author"
                                    define="creator author;
-                                           creatorinfo python: mtool.getMemberInfo(creator);"
+                                           creatorinfo python: here.portal_membership.getMemberInfo(creator);"
                                    content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                   </div>
                                                                                                                       
-
                   <span class="discreet"
-                        tal:content="python:view.toPloneboardTime(forum.getLastCommentDate())">
+                        tal:content="python:here.restrictedTraverse('@@ploneboard_recent_view').toPloneboardTime(forum.getLastCommentDate())">
                      Thursday 13:21
                   </span>
                 </td>
