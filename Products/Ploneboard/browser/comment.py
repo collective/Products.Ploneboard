@@ -78,7 +78,7 @@ class CommentView(CommentViewableView):
                                                        msgid='prev_wrote', \
                                                        default='previously wrote:</p>', \
                                                        context=self.context).encode('utf-8')
-            return '<p>%s '%self.author() + prev_wrote_str +'<blockquote>%s</blockquote><p>&nbsp;</p>' %self.context.getText()
+            return '<p>%s '%self.author() + prev_wrote_str +'</p><blockquote>%s</blockquote>\n<p><br/></p>' %self.context.getText()
         else:
             return ''
 
