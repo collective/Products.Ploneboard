@@ -11,6 +11,15 @@
         />
     
 	<plone:portlet
+        name="ploneboard.RecentConversationsContextual"
+        interface=".recent_contextual.IRecentConversationsContextualPortlet"
+        assignment=".recent_contextual.Assignment"
+        renderer=".recent_contextual.Renderer"
+        addview=".recent_contextual.AddForm"
+        editview=".recent_contextual.EditForm"
+        />
+		
+	<plone:portlet
         name="ploneboard.ActiveUsers"
         interface=".active_users.IActiveUsersPortlet"
         assignment=".active_users.Assignment"

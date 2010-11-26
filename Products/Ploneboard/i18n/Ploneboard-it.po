@@ -615,3 +615,11 @@ msgstr "La dimenzione massima dell'allegato è di ${maxsize} kilobyte."
 #: ./browser/comment.py:77
 msgid "prev_wrote"
 msgstr "precedentemente ha scritto:</p>"
+
+#: ./portlet/recent_contextual.pt:22
+msgid "Forum path"
+msgstr "Percorso del forum"
+
+#: ./portlet/recent_contextual.pt:22
+msgid "help_forumpath"
+msgstr "Scegli il forum dove cercare gli ultimi post."

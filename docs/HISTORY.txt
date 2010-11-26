@@ -1,6 +1,10 @@
 Changelog
 =========
 
+2.0.5-branch_redturtle (2009-11-26)
+-------------------------------------
+* aggiunta portlet per i messaggi contestuale [andrea]
+
 2.0.4-branch_redturtle (2009-07-29)
 -------------------------------------
 * Aggiunta vista per la creazione di date nel formato di PloneBoard,

@@ -5,7 +5,13 @@
       title="Recent Ploneboard conversations"
       description="A portlet which shows an overview of all recently updated conversations"
       />
-	  
+   
+   <portlet
+      addview="ploneboard.RecentConversationsContextual"
+      title="Recent Ploneboard contextual conversations"
+      description="A portlet which shows an overview of all recently updated conversations in one selected forum"
+      />
+     
    <portlet
       addview="ploneboard.ActiveUsers"
       title="Most Ploneboard active users"
