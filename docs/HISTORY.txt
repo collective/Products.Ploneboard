@@ -4,6 +4,10 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Added profile for a Ploneboard intranet workflow. Note that currently there
+  are not transitions to publish selected content outside the intranet.
+  [thet]
+
 - Moved event notifications for object creation to later phase. Objects 
   should be populated with data when firing ObjectInitializedEvent.
   [naro]
