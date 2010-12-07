@@ -59,6 +59,15 @@
      />
 
   <genericsetup:registerProfile
+     name="intranet"
+     title="Ploneboard for intranets"
+     directory="profiles/intranet"
+     description="Install the intranet workflow definitions for Ploneboard"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:registerProfile
      name="zbasicboard"
      title="Ploneboard performance test forum structure"
      directory="profiles/basicboard"
