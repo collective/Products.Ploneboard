@@ -12,7 +12,7 @@ from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, LinesField, IntegerField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
-from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import DisplayList, IntDisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
 from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation, MoveConversation
@@ -25,6 +25,13 @@ from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.Archetypes.event import ObjectInitializedEvent
 from zope import event
 
+AttachmentSizes = IntDisplayList((
+        (10,    u'10 kilobyte'),
+        (100,   u'100 kilobyte'),
+        (1000,  u'1 megabyte'),
+        (10000, u'10 megabyte'),
+        (-1,    u'unlimited'),
+   ))
 
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
@@ -62,7 +69,7 @@ schema = BaseBTreeFolderSchema + Schema((
                 )),
     IntegerField('maxAttachmentSize',
                 write_permission = ManageForum,
-                vocabulary = 'getAttachmentSizes',
+                vocabulary = AttachmentSizes,
                 default = 100,
                 widget = SelectionWidget(
                          description = "Select the maximum size for attachments.",

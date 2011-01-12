@@ -1,0 +1,74 @@
+Admin locks board
+====================
+
+Test starting conversations, replying and modifying comments in a default
+members-posting forum.
+
+First, some set-up:
+
+    >>> from Products.Five import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> from Products.Ploneboard.tests import utils
+    >>> utils.setUpDefaultMembersBoardAndForum(self)
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+
+Let us log all exceptions, which is useful for debugging. Also, clear portlet
+slots, to make the test browser less confused by things like the recent portlet
+and the navtree.
+
+    >>> self.portal.error_log._ignored_exceptions = ()
+    >>> self.portal.left_slots = self.portal.right_slots = []
+    >>> workflow = self.portal.portal_workflow
+
+    >>> utils.logoutThenLoginAs(self, browser, 'manager1')
+
+View forum
+----------
+
+The forum created behind the scenes should now be shown here.
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.contents
+    '...Forum 1...'
+
+If we go to the forum, there are no conversations shown.
+
+    >>> browser.getLink('Forum 1').click()
+    >>> browser.contents
+    '...No conversations in this forum yet...'
+
+Edit the forum
+--------------
+
+    >>> browser.getLink('Edit').click()
+    >>> browser.url
+    '.../edit'
+
+    >>> browser.getControl('Maximum attachment size').value
+    ['100']
+
+Submit the form, and we should be returned to the forum view. The conversation
+should exist, and we should be able to view it.
+
+    >>> browser.getControl('Maximum attachment size').value = ['1000']
+
+    >>> browser.getControl('Save').click()
+
+    >>> browser.url == self.forum.absolute_url()
+    True
+
+Check the forum
+---------------
+
+    >>> browser.getLink('Edit').click()
+    >>> browser.url
+    '.../edit'
+
+    >>> browser.getControl('Maximum attachment size').value
+    ['1000']
+
