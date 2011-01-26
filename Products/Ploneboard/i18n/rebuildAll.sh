@@ -9,7 +9,9 @@ i18ndude rebuild-pot --pot plone-generated.pot --create plone --merge plone-manu
 # then filter what we don't want, ie doubles
 cp ploneboard-generated.pot Ploneboard.pot
 i18ndude filter plone-generated.pot ploneboard-generated.pot > plone-generated2.pot
-## plone-plone.pot is a symbolic link (or whatever is openable on the fs) that points to PloneTranslation/i18n/plone.pot
+## plone-plone.pot is a symbolic link (or whatever is openable on the fs) that
+## points to PloneTranslation/i18n/plone.pot (Pre Plone4)
+## or plone/app/locales/locales/plone.pot (Plone4)
 i18ndude filter plone-generated2.pot plone-plone.pot > Ploneboard-plone.pot
 
 # some cleaning
