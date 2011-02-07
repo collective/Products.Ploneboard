@@ -12,6 +12,10 @@ Changelog
   are not transitions to publish selected content outside the intranet.
   [thet]
 
+- Fixed bug where you could not change Maximum Attachment Size while editing a
+  Forum. Added test.
+  [sureshvv]
+
 - Moved event notifications for object creation to later phase. Objects 
   should be populated with data when firing ObjectInitializedEvent.
   [naro]
