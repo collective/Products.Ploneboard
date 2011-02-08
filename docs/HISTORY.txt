@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1 - Unreleased
+2.2 (2011-02-08)
 ----------------
 
 - Minor updates to German translation. "Message Board" is now "Foren" instead of
