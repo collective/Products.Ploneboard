@@ -200,7 +200,7 @@ msgstr "Questo quadro mostra le discussioni con i commenti recenti"
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr "La dimensione massima perfessa è ${maxsize} kilobytes"
+msgstr "La dimensione massima permessa è ${maxsize} kilobytes"
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
