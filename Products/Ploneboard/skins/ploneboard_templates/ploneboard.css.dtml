@@ -155,16 +155,16 @@
 
 /* Stripping down Kupu to the bare essentials */
 
-.kupu-tb-styles,
-#kupu-bg-subsuper,
-#kupu-bg-definitionlist,
-#kupu-bg-undo,
-#kupu-zoom,
-#kupu-spellchecker,
-#kupu-logo-button,
-#kupu-imagelibdrawer-button,
-#kupu-tabledrawer-button,
-#kupu-source {
+.portaltype-ploneboardconversation .kupu-tb-styles,             .portaltype-ploneboardforum .kupu-tb-styles,             .portaltype-ploneboardcomment .kupu-tb-styles,
+.portaltype-ploneboardconversation #kupu-bg-subsuper,           .portaltype-ploneboardforum #kupu-bg-subsuper,           .portaltype-ploneboardcomment #kupu-bg-subsuper,
+.portaltype-ploneboardconversation #kupu-bg-definitionlist,     .portaltype-ploneboardforum #kupu-bg-definitionlist,     .portaltype-ploneboardcomment #kupu-bg-definitionlist,
+.portaltype-ploneboardconversation #kupu-bg-undo,               .portaltype-ploneboardforum #kupu-bg-undo,               .portaltype-ploneboardcomment #kupu-bg-undo,
+.portaltype-ploneboardconversation #kupu-zoom,                  .portaltype-ploneboardforum #kupu-zoom,                  .portaltype-ploneboardcomment #kupu-zoom,
+.portaltype-ploneboardconversation #kupu-spellchecker,          .portaltype-ploneboardforum #kupu-spellchecker,          .portaltype-ploneboardcomment #kupu-spellchecker,
+.portaltype-ploneboardconversation #kupu-logo-button,           .portaltype-ploneboardforum #kupu-logo-button,           .portaltype-ploneboardcomment #kupu-logo-button,
+.portaltype-ploneboardconversation #kupu-imagelibdrawer-button, .portaltype-ploneboardforum #kupu-imagelibdrawer-button, .portaltype-ploneboardcomment #kupu-imagelibdrawer-button,
+.portaltype-ploneboardconversation #kupu-tabledrawer-button,    .portaltype-ploneboardforum #kupu-tabledrawer-button,    .portaltype-ploneboardcomment #kupu-tabledrawer-button, 
+.portaltype-ploneboardconversation #kupu-source,                .portaltype-ploneboardforum #kupu-source,                .portaltype-ploneboardcomment #kupu-source {
     display: none;
 }
 
