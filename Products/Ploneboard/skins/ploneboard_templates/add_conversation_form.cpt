@@ -33,7 +33,7 @@
               enctype="multipart/form-data"
               tal:define="title_required python:1;
                           text_required python:0;
-                          forum  context;"
+                          forum  python:context;"
               tal:attributes="action template/getId">
 
             <input type="hidden" name="form.submitted" value="1" />
