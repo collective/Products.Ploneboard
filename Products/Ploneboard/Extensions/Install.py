@@ -14,3 +14,7 @@ def install(self, reinstall=False):
         tool.setImportContext("profile-Products.Ploneboard:default")
         tool.runAllImportSteps(purge_old=False)
         tool.setImportContext(plone_base_profileid)
+
+def uninstall(self):
+    portal_setup = getToolByName(self, 'portal_setup')
+    portal_setup.runAllImportStepsFromProfile('profile-Products.Ploneboard:uninstall', purge_old=False)

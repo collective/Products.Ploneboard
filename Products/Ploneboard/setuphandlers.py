@@ -108,3 +108,22 @@ def addPlacefulPolicy(self):
         pw.manage_addWorkflowPolicy(new_id)
         ob = pw[new_id]
         ob.setChain('PloneboardComment', 'ploneboard_editable_comment_workflow')
+
+def cleanupKupuResources(site):
+    #cleanup types from kupu resources
+    kupuTool = getToolByName(site, 'kupu_library_tool', None)
+    if kupuTool:
+        resource = 'linkable' 
+        ploneboard_types = ["Ploneboard", "PloneboardForum", "PloneboardComment", "PloneboardConversation"]
+        resitems = list(kupuTool.getPortalTypesForResourceType(resource))
+        items = [ri for ri in resitems if not ri in ploneboard_types]
+        kupuTool.updateResourceTypes((
+            {'resource_type' : resource,
+             'old_type'      : resource,
+             'portal_types'  : items},))
+
+def uninstallVarious(self):
+    if self.readDataFile('Products.Ploneboard-uninstall.txt') is None:
+        return
+    site = self.getSite()
+    cleanupKupuResources(site)

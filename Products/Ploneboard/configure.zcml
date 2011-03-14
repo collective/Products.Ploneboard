@@ -85,6 +85,21 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
+  <genericsetup:registerProfile
+     name="uninstall"
+     title="Uninstall Ploneboard"
+     directory="profiles/uninstall"
+     description="Uninstall Ploneboard product"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
+  <genericsetup:importStep
+     name="Products.Ploneboard.uninstallVarious"
+     title="Products.Ploneboard: Additional uninstall steps"
+     description="Additional uninstallation Products.Ploneboard steps."
+     handler="Products.Ploneboard.setuphandlers.uninstallVarious"
+     />
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject

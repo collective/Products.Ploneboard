@@ -1,0 +1,1 @@
+This file is here to run uninstall steps for Products.Ploneboard product.
