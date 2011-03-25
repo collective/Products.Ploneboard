@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+from os.path import join
+
 name='Products.Ploneboard'
 path = name.split('.') + ['version.txt']
 version = open(join(*path)).read().strip()
