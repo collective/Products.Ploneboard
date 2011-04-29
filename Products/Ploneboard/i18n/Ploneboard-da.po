@@ -185,7 +185,7 @@ msgstr "Op til ${title}"
 #. Default: "Return to ${name}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
-msgstr "Tilbage til ${title}"
+msgstr "Tilbage til ${name}"
 
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
@@ -437,9 +437,8 @@ msgstr "Vis indlæg"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "De følgende debatter er oprettet, men har endnu ingen indlæg."
+msgstr "Følgende samtaler har haft de seneste aktiviteter."
 
 #. Default: "Replies"
 #: ../skins/ploneboard_templates/forum_view.pt:130
@@ -501,3 +500,7 @@ msgstr "Ubesvarede indlæg i ${title}"
 msgid "unanswered_conversations"
 msgstr ""
 
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ./skins/ploneboard_templates/ploneboard_unanswered.pt:51
+msgid "unanswered_conversations_description"
+msgstr "Følgende samtale(r) er blevet oprettet, men har endnu ikke modtaget nogen svar."
