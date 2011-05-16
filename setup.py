@@ -35,7 +35,7 @@ setup(name='Products.Ploneboard',
         'plone.portlets',
         'plone.memoize',
         'plone.i18n',
-        'python-dateutil',
+        'python-dateutil<2.0dev',
         'Plone >= 3.3',
       ],
       entry_points="""
