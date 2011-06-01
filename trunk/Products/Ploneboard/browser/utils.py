@@ -3,6 +3,7 @@ from dateutil.parser import parse as dateparse
 from zope.i18n import translate
 from DateTime.DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.CMFPlone import PloneMessageFactory as _plone
 from Products.CMFPlone import PloneLocalesMessageFactory as _locales
 from Products.Ploneboard.interfaces import IConversation, IComment
@@ -52,14 +53,16 @@ def toPloneboardTime(context, request, time_=None):
                                    }
 
         if time.time() - time.mktime(time_.timetuple()) < 604800: # 60*60*24*7
+	    default = safe_unicode(time_.strftime(young_format_en))
             ploneboard_time = translate(_plone( 'young_date_format: ${wday} ${hours}:${minutes}'
-                                              , default = unicode(time_.strftime(young_format_en))
+                                              , default = default
                                               , mapping=translated_date_elements)
                                         , context=request
                                         )
         else:
+	    default = safe_unicode(time_.strftime(old_format_en))
             ploneboard_time = translate( _plone( 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
-                                               , default = unicode(time_.strftime(old_format_en))
+                                               , default = default
                                                , mapping = translated_date_elements)
                                         , context=request
                                         )
