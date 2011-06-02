@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "Der Anhang ist zu gross"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -30,7 +30,7 @@ msgstr "Abbrechen"
 #. Default: "Change"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:78
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment added"
@@ -70,7 +70,7 @@ msgstr "Zum Kommentieren einloggen"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Kein Text eingegeben"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -79,7 +79,7 @@ msgstr "Bitte korrigieren sie die angezeigten Fehler"
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr ""
+msgstr "Abschicken"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/conversation_view.pt:83
@@ -165,7 +165,7 @@ msgstr "Forum"
 #. Default: "Posted"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
 msgid "conversation_posted"
-msgstr ""
+msgstr "Begonnen"
 
 #. Default: "Here you can configure site settings for Ploneboard."
 #: ../browser/controlpanel.py:57
@@ -326,7 +326,7 @@ msgstr "${author} hat geschrieben: ${quote}"
 #. Default: "Required"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:66
 msgid "label_required"
-msgstr ""
+msgstr "Erforderlich"
 
 msgid "label_text"
 msgstr "Inhalt"
@@ -353,7 +353,6 @@ msgstr "Melden sie sich an um ein Gespräch zu beginnen"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:80
-#, fuzzy
 msgid "moderation_count"
 msgstr "${count} Beiträge in der Moderationswarteschlange."
 
@@ -370,7 +369,7 @@ msgstr "Neuester Kommentar"
 #. Default: "Add another attachment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:154
 msgid "new_attachment"
-msgstr "Ein weiterer Anhang hinzufügen"
+msgstr "Einen weiteren Anhang hinzufügen"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
 #: ../skins/ploneboard_templates/forum_view.pt:111
@@ -444,7 +443,6 @@ msgstr "Vorschau"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Die folgenden Gespräche waren zuletzt aktiv."
 
@@ -505,6 +503,6 @@ msgstr "Unbeantwortete Kommentare in ${title}"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-msgid "unanswered_conversations"
-msgstr ""
+msgid "unanswered_conversations_description"
+msgstr "Die folgenden Gespräche wurden begonnen, haben aber noch keine Antwort erhalten."
 
