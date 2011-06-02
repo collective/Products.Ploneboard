@@ -46,9 +46,9 @@ def toPloneboardTime(context, request, time_=None):
                                    , 'month'  : unicode(defer(translate, _locales(ts.month_msgid(month)), context=request))
                                    , 'day'    : day
                                    , 'wday'   : unicode(defer(translate, _locales(ts.day_msgid((wday+1)%7)), context=request))
-                                   , 'hours'  : hours
-                                   , 'minutes': minutes
-                                   , 'seconds': seconds
+                                   , 'hours'  : "%02i" % hours
+                                   , 'minutes': "%02i" % minutes
+                                   , 'seconds': "%02i" % seconds
                                    }
 
         if time.time() - time.mktime(time_.timetuple()) < 604800: # 60*60*24*7
