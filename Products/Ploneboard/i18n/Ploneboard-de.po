@@ -491,7 +491,7 @@ msgstr "Allgemeine Themen"
 #. Default: "Recent conversations in ${title}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:31
 msgid "title_recent_conversations"
-msgstr "Letze Gespräche in ${title}"
+msgstr "Letzte Gespräche in ${title}"
 
 #. Default: "Portlet title"
 #: ../portlet/recent.py:21
