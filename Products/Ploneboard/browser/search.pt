@@ -74,7 +74,7 @@
                                                  title info/conv_title">Conversation</a>.
                         </p>
 
-                        <span tal:replace="info/description">
+                        <span tal:replace="structure info/description">
                             Description (cropped)
                         </span>
 
