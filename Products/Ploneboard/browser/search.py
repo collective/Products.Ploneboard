@@ -45,7 +45,8 @@ class SearchView(BrowserView):
         obj=brain.getObject()
         conv=obj.getConversation()
         forum=obj.getForum()
-        text=obj.Schema()["text"].get(obj, mimetype="text/plain").strip()
+        # text=obj.Schema()["text"].get(obj, mimetype="text/plain").strip()
+        text=obj.getText()
 
         return dict(
                 author = brain.Creator,

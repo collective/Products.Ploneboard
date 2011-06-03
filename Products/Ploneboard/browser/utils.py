@@ -59,7 +59,7 @@ def toPloneboardTime(context, request, time_=None):
                                         )
         else:
             ploneboard_time = translate( _plone( 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
-                                               , default = unicode(time_.strftime(old_format_en))
+                                               , default = unicode(time_.strftime(old_format_en).decode('utf-8'))
                                                , mapping = translated_date_elements)
                                         , context=request
                                         )
