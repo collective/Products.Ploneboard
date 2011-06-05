@@ -8,12 +8,14 @@ from zope import event
 
 from Products.Archetypes.event import ObjectInitializedEvent
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField
+from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField, BooleanField
 from Products.Archetypes.public import RichWidget, ReferenceWidget
 from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
+
+from Products.SimpleAttachment.widget import AttachmentsManagerWidget, ImagesManagerWidget
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
 from Products.Ploneboard.interfaces import IConversation, IComment
@@ -54,6 +56,28 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         relationship=REPLY_RELATIONSHIP,
         widget=ReferenceWidget(visible=False),
         ),
+
+    BooleanField('displayAttachments',
+        mode="w",
+        default=True,
+        languageIndependent=0,
+        widget=AttachmentsManagerWidget(
+            label = u"Attachments",
+            label_msgid = "label_displayAttachments",
+            expanded = True
+        ),
+    ),            
+
+    BooleanField('displayImages',
+        mode="w",
+        default=True,
+        languageIndependent=0,
+        widget=ImagesManagerWidget(
+            label = u"Images",
+            label_msgid = "label_displayImages",
+            expanded = True
+        ),
+    ),
     ))
 utils.finalizeSchema(schema)
 

@@ -12,7 +12,10 @@
  <property name="immediate_view">base_edit</property>
  <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
- <property name="allowed_content_types"/>
+ <property name="allowed_content_types">
+    <element value="FileAttachment"/>
+    <element value="ImageAttachment"/>
+ </property>
  <property name="allow_discussion">False</property>
  <alias from="(Default)" to="comment_redirect_to_conversation"/>
  <alias from="deleteDiscussion" to="delete_view"/>

@@ -10,6 +10,9 @@ import transaction
 from time import time
 from random import betavariate
 from Products.CMFCore.utils import getToolByName
+
+from Products.SimpleAttachment.setuphandlers import registerAttachmentsFormControllerActions, registerImagesFormControllerActions
+
 from Products.Ploneboard.config import EMOTICON_TRANSFORM_MODULE
 from Products.Ploneboard.config import URL_TRANSFORM_MODULE
 from Products.Ploneboard.config import SAFE_HTML_TRANSFORM_MODULE
@@ -24,6 +27,7 @@ def setupVarious(context):
     addTransforms(site)
     setupCommentLocalRoles(site)
     addPlacefulPolicy(site)
+    setupComment(site)
 
 def addCatalogIndexesAndMetadata(site):
     catalog = getToolByName(site, 'portal_catalog')
@@ -121,6 +125,15 @@ def cleanupKupuResources(site):
             {'resource_type' : resource,
              'old_type'      : resource,
              'portal_types'  : items},))
+
+def setupComment(site):
+    # Set up form controller actions for the widgets to work
+    registerAttachmentsFormControllerActions(site, contentType = 'PloneboardComment', template = 'base_edit')
+    registerImagesFormControllerActions(site, contentType = 'PloneboardComment', template = 'base_edit')
+    # Register form controller actions for LinguaPlone translate_item
+    registerAttachmentsFormControllerActions(site, contentType = 'PloneboardComment', template = 'translate_item')
+    registerImagesFormControllerActions(site, contentType = 'PloneboardComment', template = 'translate_item')
+    site.plone_log('setupComment', 'Updated Widget Attachment Management')
 
 def uninstallVarious(self):
     if self.readDataFile('Products.Ploneboard-uninstall.txt') is None:

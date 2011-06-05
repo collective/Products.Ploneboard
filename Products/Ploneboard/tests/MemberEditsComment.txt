@@ -88,13 +88,14 @@ Now a member can edit his own comment
     >>> browser.getControl(name='form.button.save').click()
     >>> browser.url.startswith(self.forum.absolute_url())
     True
-    >>> conversation = self.forum.getConversations()[0]
-
-    >>> import re
-    >>> browser.getLink(url=re.compile('\/%s.*$' % conversation.getId())).click()
-
     >>> browser.contents
     '...Some <b>Other</b> text...'
+    
+    >>> browser.getControl('Edit', index=0).click()
+    >>> browser.getControl(name='form.button.UploadAttachment', index=0)
+    <SubmitControl name='form.button.UploadAttachment' type='submit'>
+    >>> browser.getControl(name='form.button.UploadImage', index=0)
+    <SubmitControl name='form.button.UploadImage' type='submit'>    
 
     >>> utils.logoutThenLoginAs(self, browser, 'member2')
 
