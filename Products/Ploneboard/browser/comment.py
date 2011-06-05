@@ -80,8 +80,12 @@ class CommentView(CommentViewableView):
     def quotedBody(self):
         text = self.context.getText()
         if text:
-            return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": unicode(self.author(), 'utf-8'), 
-                     "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})
+            try:
+                return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": unicode(self.author(), 'utf-8'),
+                    "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})
+            except TypeError:
+                return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": self.author(), 
+                    "quote":  "<blockquote>%s</blockquote></br>" % (self.context.getText())})
         else:
             return ''
 
