@@ -85,7 +85,7 @@ class CommentView(CommentViewableView):
                     "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})
             except TypeError:
                 return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": self.author(), 
-                    "quote":  "<blockquote>%s</blockquote></br>" % (self.context.getText())})
+                    "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})            
         else:
             return ''
 
