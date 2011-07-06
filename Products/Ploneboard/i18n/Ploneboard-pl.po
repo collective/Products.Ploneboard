@@ -286,10 +286,10 @@ msgid "label_category"
 msgstr "Kategoria"
 
 msgid "label_description_board"
-msgstr "Beschreibung"
+msgstr "Opis"
 
 msgid "label_description_conversation"
-msgstr "Beschreibung"
+msgstr "Opis"
 
 msgid "label_description_forum"
 msgstr "Opis"
