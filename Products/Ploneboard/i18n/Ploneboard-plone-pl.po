@@ -34,7 +34,7 @@ msgid "Conversation contains comments."
 msgstr "Temat zawiera posty"
 
 msgid "Free for all"
-msgstr "Dla wszystkich"
+msgstr "Otwarte dla wszystkich"
 
 msgid "Hidden"
 msgstr "Versteckt"
