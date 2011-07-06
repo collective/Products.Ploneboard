@@ -43,7 +43,8 @@
      name="conversation_browserview"
      allowed_interface=".interfaces.IConversationView"
      permission="zope.Public"
-     />
+     template="templates/conversation_view.pt"
+	 />
 
   <browser:page
      for="..interfaces.IComment"

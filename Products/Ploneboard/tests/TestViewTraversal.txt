@@ -22,7 +22,7 @@ Add a conversation and traverse to its view
     >>> conversation.restrictedTraverse('@@plone')
     <...Plone...>
     >>> conversation.unrestrictedTraverse('@@conversation_browserview')
-    <...ConversationView...>
+    <...Products.Five.metaclass.SimpleViewClass...conversation_view.pt...>
     >>> conversation.restrictedTraverse('@@conversation_browserview')
-    <...ConversationView...>
+    <...Products.Five.metaclass.SimpleViewClass...conversation_view.pt...>
 

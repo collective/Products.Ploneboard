@@ -25,7 +25,7 @@ and provides toPloneboardTime
     >>> conversation = self.portal.board1.forum1.getConversations()[0]
     >>> conversationview = conversation.unrestrictedTraverse('@@conversation_browserview')
     >>> conversationview
-    <...ConversationView...>
+    <...Products.Five.metaclass.SimpleViewClass...conversation_view.pt...>
 
 Create different datetimes and run them through toPloneboardTime.
 

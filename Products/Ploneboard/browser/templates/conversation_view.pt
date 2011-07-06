@@ -21,8 +21,7 @@
 
 <body>
   <div metal:fill-slot="main"
-       tal:define="view context/@@conversation_browserview;
-                   isAnon isAnon | context/@@plone_portal_state/anonymous;
+       tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous;
                    mtool mtool | context/@@plone_tools/membership;">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
