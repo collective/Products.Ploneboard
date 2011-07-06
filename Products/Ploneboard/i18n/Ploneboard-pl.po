@@ -302,8 +302,8 @@ msgstr "w ${forum}"
 msgid "label_maxattachments"
 msgstr "Liczba załączników"
 
-msgid "Rozmiar załącznika"
-msgstr "Maximale Größe der Anhänge"
+msgid "label_maxattachmentsize"
+msgstr "Rozmiar załącznika"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:14
