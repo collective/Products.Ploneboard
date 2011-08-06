@@ -54,9 +54,7 @@ class Renderer(base.Renderer):
         normalize=getUtility(IIDNormalizer).normalize
         icons=getMultiAdapter((self.context, self.request),
                                 name="plone").icons_visible()
-        if icons:
-            portal=getMultiAdapter((self.context, self.request),
-                                    name="plone_portal_state").portal_url()+"/"
+        
         brains=ct(
                 object_provides="Products.Ploneboard.interfaces.IConversation",
                 sort_on="modified",
@@ -71,7 +69,7 @@ class Renderer(base.Renderer):
                     title = brain.Title,
                     description = brain.Description,
                     url = brain.getURL()+"/view",
-                    icon = icons and portal+brain.getIcon or None,
+                    icon = icons and obj.getIconURL() or None,
                     forum_url = forum.absolute_url(),
                     forum_title = forum.title_or_id(),
                     review_state = normalize(brain.review_state),
