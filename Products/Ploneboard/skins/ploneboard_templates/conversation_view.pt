@@ -10,12 +10,6 @@
     </tal:block>
   </metal:top>
 
-  <metal:js fill-slot="javascript_head_slot">
-    <script type="text/javascript"
-            tal:attributes="src string:${portal_url}/pb_attachment.js">
-    </script>
-  </metal:js>
-
   <div metal:fill-slot="content-title">
     <h1 class="documentFirstHeading">
       <img tal:attributes="src string:${portal_url}/ploneboard_conversation_icon.gif" alt="" />

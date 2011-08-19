@@ -7,12 +7,6 @@
       i18n:domain="ploneboard">
 
 <head>
-  <metal:js fill-slot="javascript_head_slot">
-    <script type="text/javascript"
-            tal:attributes="src string:${portal_url}/pb_attachment.js">
-    </script>
-  </metal:js>
-
   <metal:block fill-slot="top_slot"
                tal:define="dummy python:request.set('disable_border',1);
                            kdummy python:request.set('text_text_format', 'text/html');" />

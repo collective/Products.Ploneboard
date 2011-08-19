@@ -10,13 +10,6 @@
     <metal:top fill-slot="top_slot">
         <tal:block define="dummy python:request.set('disable_border', True)" />
     </metal:top>
-
-    <metal:js fill-slot="javascript_head_slot">
-      <script type="text/javascript"
-              tal:attributes="src string:${portal_url}/pb_attachment.js">
-      </script>
-    </metal:js>
-
 </head>
 
 <body>

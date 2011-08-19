@@ -88,7 +88,10 @@
    <browser:resource
      name="ploneboard.css"
      file="ploneboard.css"
-
+   />  
+   <browser:resource
+     name="pb_attachment.js"
+     file="pb_attachment.js"
    />  
 </configure>
 
