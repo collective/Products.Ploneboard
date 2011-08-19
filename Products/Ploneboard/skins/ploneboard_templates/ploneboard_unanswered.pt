@@ -3,52 +3,46 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
-<head>
    <metal:top fill-slot="top_slot">
       <tal:block condition="python:not user.has_permission('Ploneboard: Add Forum', here) and not user.has_permission('Ploneboard: Moderate Forum', here)">
         <tal:border define="dummy python:request.set('disable_border', True)" />
       </tal:block>
    </metal:top>
-</head>
 
-<body>
 
-    <div metal:fill-slot="main"
-         tal:define="view context/@@ploneboard_unanswered_view;
-                     numConversations view/num_conversations;
-                     pss modules/Products/PythonScripts/standard;
-                     isAnon nocall:isAnon | context/@@plone_portal_state/anonymous;">
-
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
-
+  <div metal:fill-slot="content-title">
         <h1 class="documentFirstHeading" i18n:translate="title_unanswered_conversations">
           Unanswered posts in
           <span i18n:name="title" tal:replace="here/Title">title</span>
         </h1>
-
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
-
+  </div>
+  <div metal:fill-slot="content-description"
+         tal:define="view context/@@ploneboard_unanswered_view;
+                     numConversations view/num_conversations;">
         <a href=""
            class="link-parent"
            tal:attributes="href context/absolute_url"
            i18n:translate="go_to_view_url">
            Return to <span i18n:name="name" tal:content="context/Title" />
         </a>
-
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-
         <p class="discreet"
              i18n:translate="no_recent_conversations"
              tal:condition="python:numConversations == 0">
         No conversations found.
         </p>
-
-        <tal:haveConversations condition="python:numConversations > 0">
-          
-          <p i18n:translate="unanswered_conversations_description">
+          <p i18n:translate="unanswered_conversations_description"
+             tal:condition="python:numConversations > 0">
             The following conversations have been posted, but have not yet
             received any replies.
           </p>
+  </div>
+    <div metal:fill-slot="content-core"
+         tal:define="view context/@@ploneboard_unanswered_view;
+                     numConversations view/num_conversations;
+                     isAnon nocall:isAnon | context/@@plone_portal_state/anonymous;"
+         tal:condition="python:numConversations > 0">
+
+          
           <p class="discreet" tal:condition="not:isAnon"
              i18n:translate="new_conversations_marked_with">
             Conversations marked with
@@ -112,11 +106,7 @@
             <div metal:use-macro="here/batch_macros/macros/navigation" />
             
           </tal:conversations>
-        </tal:haveConversations>
-
-        <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
                      
-</body>
 </html>

@@ -10,22 +10,12 @@
     ########################################
   </tal:comment>
 
-  <body>
-
     <metal:css fill-slot="css_slot">
       <style type="text/css" media="all"
              tal:content="string: @import url($portal_url/ploneboard.css);"></style>
     </metal:css>
 
-    <div metal:fill-slot="main"
-         tal:define="view context/@@singlecomment_view">
-
-      <div tal:replace="structure provider:plone.abovecontenttitle" />
-
-      <h2 tal:content="here/Title">Conversation title</h2>
-
-      <div tal:replace="structure provider:plone.belowcontenttitle" />
-
+  <div metal:fill-slot="content-description">
       <a href=""
          class="link-parent"
          tal:define="parent_url python:here.navigationParent(here, template.getId())"
@@ -38,15 +28,17 @@
       <div class="documentdescription" tal:content="here/Description"> 
         description
       </div>
+  </div>
 
-      <div tal:replace="structure provider:plone.abovecontentbody" />
+    <div metal:fill-slot="content-core"
+         tal:define="view context/@@singlecomment_view">
 
       <div class="boardComment visualIEFloatFix"
            tal:define="comment python:view/comment">
         
         <metal:comment metal:define-macro="comment"
                        tal:define="creator comment/Creator;
-                                   mtool mtool | context/@@plone_tools/membership;
+                                   mtool context/@@plone_tools/membership;
                                    creatorinfo python: mtool.getMemberInfo(creator);
                                    creation_date comment/creation_date;
                                    state comment/review_state;
@@ -58,7 +50,7 @@
             <div class="boardCommentDetails" tal:attributes="id comment/getId;">
               
               <div tal:attributes="class python:test(state == 'published', 'boardCommentHeaderTitleBlock', 'boardCommentHeaderTitleBlock state-%s' % state)">
-                
+               
                 <h3 tal:content="comment/Title">Comment title</h3>
 
                 <a class="link-plain"
@@ -96,10 +88,25 @@
                 </div>
               </tal:block>
 
-              <div class="boardCommentContent" 
+             <div class="boardCommentContent" 
                    tal:content="structure comment/getText">
                 Comment text.
               </div>
+            <div tal:define="attachments comment/getAttachments"
+                 tal:condition="attachments">
+            <tal:block tal:repeat="attachment attachments">
+              <div tal:define="pt attachment/portal_type;
+                               width attachment/getWidth | string:400;
+                               good_width python:width > 400 and 400 or width">
+               <a tal:attributes="href attachment/absolute_url">
+                <img style="cursor: -moz-zoom-in;" tal:attributes="src attachment/absolute_url;
+                                     width good_width" />
+               </a>
+              </div>
+              &nbsp;<br />
+            </tal:block>
+            </div>
+
             </div>
 
 
@@ -174,7 +181,7 @@
           <!-- bis hier-->
 
           <div class="boardCommentReplyActions"
-               tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous">
+               tal:define="isAnon context/@@plone_portal_state/anonymous">
             
             <form tal:condition="comment/canReply"
                   tal:attributes="action string:${comment/absolute_url}/add_comment_form#${comment/getId}">
@@ -205,7 +212,7 @@
                     tal:condition="attachments">
             <legend i18n:translate="legend_attachments">Attachments</legend>
             <ul class="visualNoMarker"
-                tal:define="normalizeString nocall:normalizeString | nocall:context/@@plone/normalizeString">
+                tal:define="normalizeString nocall: context/@@plone/normalizeString">
               <li tal:repeat="attachment attachments">
                 <a tal:attributes="href attachment/absolute_url">
                   <span tal:define="pt attachment/portal_type;
@@ -227,8 +234,6 @@
         </metal:comment>
       </div>
 
-      <div tal:replace="structure provider:plone.belowcontentbody" />
-
     </div>
-  </body>
 </html>
+
