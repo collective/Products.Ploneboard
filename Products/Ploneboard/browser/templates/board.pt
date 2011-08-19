@@ -5,22 +5,20 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
 
-<body>
-  <div metal:fill-slot="main"
-       tal:define="categories here/getCategories|nothing;
-                   keyedforums view/getKeyedForums;
-                   portal context/@@plone_portal_state/portal | nocall:portal;
-                   mtool context/@@plone_tools/membership">
-                   
-    <div tal:replace="structure provider:plone.abovecontenttitle" />
-                   
+  <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+  </metal:css>
+
+  <div metal:fill-slot="content-title">
     <h1 class="documentFirstHeading">
       <img src="" tal:replace="structure here/ploneboard_icon.gif" />
       <span tal:replace="here/Title">Board title</span>
     </h1>
-      
-    <div tal:replace="structure provider:plone.belowcontenttitle" />
+  </div>
 
+  <div metal:fill-slot="content-description"
+       tal:define="portal context/@@plone_portal_state/portal | nocall:portal">
     <ul class="visualNoMarker discreet"
         style="float:right; margin: 0 0 1em 1em;">
         <li>
@@ -57,15 +55,19 @@
       Board Description
     </p>
 
-    <div tal:replace="structure provider:plone.abovecontentbody" />
-
     <div class="visualClear"></div>
+  </div>
 
+ <div metal:fill-slot="content-core"
+       tal:define="categories here/getCategories|nothing;
+                   keyedforums view/getKeyedForums;
+                   portal context/@@plone_portal_state/portal | nocall:portal;
+                   mtool context/@@plone_tools/membership">
+                   
     <div class="discreet"
          tal:condition="not: keyedforums" i18n:translate="not_forums">
       No forums exist in this board yet, use the add menu to add forums.
     </div>
-      
 
     <tal:categories repeat="category categories">
       <tal:category define="forums keyedforums/?category|nothing"
@@ -154,8 +156,6 @@
       Board footer
     </metal:footer>
 
-    <div tal:replace="structure provider:plone.belowcontentbody" />
 
   </div>
-</body>
 </html>

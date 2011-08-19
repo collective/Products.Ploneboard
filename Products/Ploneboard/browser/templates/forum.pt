@@ -5,34 +5,21 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
       
-<head>
    <metal:top fill-slot="top_slot">
       <tal:block condition="python:not user.has_permission('Ploneboard: Add Forum', here) and not user.has_permission('Ploneboard: Moderate Forum', here)">
         <tal:border define="dummy python:request.set('disable_border', True)" />
       </tal:block>
    </metal:top>
-</head>
 
-<body>
-
-    <div metal:fill-slot="main"
-         tal:define="numConversations view/getNumberOfConversations;
-                     pss modules/Products/PythonScripts/standard;
-                     DateTime nocall:modules/DateTime/DateTime;
-                     last_login view/last_login;
-                     isAnon context/@@plone_portal_state/anonymous;
-                     portal context/@@plone_portal_state/portal | nocall:portal;
-                     mtool context/@@plone_tools/membership;">
-
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
-
+  <div metal:fill-slot="content-title"
+         tal:define="portal context/@@plone_portal_state/portal | nocall:portal;">
         <h1 class="documentFirstHeading">
         <img src="" tal:replace="structure portal/ploneboard_forum_icon.gif" />
         <span tal:replace="here/Title">Forum title</span>
         </h1>
+  </div>
 
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
-
+  <div metal:fill-slot="content-description">
         <ul class="visualNoMarker discreet"
             style="float:right; margin: 0 0 1em 1em;">
             <li>
@@ -58,10 +45,18 @@
         Forum Description
         </div>
 
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-
         <div class="visualClear"></div>
+  </div>
         
+ <div metal:fill-slot="content-core"
+         tal:define="numConversations view/getNumberOfConversations;
+                     pss modules/Products/PythonScripts/standard;
+                     DateTime nocall:modules/DateTime/DateTime;
+                     last_login view/last_login;
+                     isAnon context/@@plone_portal_state/anonymous;
+                     portal context/@@plone_portal_state/portal | nocall:portal;
+                     mtool context/@@plone_tools/membership;">
+
         <p class="discreet"
              i18n:translate="not_conversations"
              tal:condition="python:numConversations == 0">
@@ -207,9 +202,6 @@
 
         <metal:footer use-macro="here/board_footer/macros/footer">Board footer</metal:footer>
 
-        <div tal:replace="structure provider:plone.belowcontentbody" />
-
     </div>
                      
-</body>
 </html>
