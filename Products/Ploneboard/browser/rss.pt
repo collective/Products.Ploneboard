@@ -11,7 +11,7 @@
     <channel rdf:about="http://localhost/ploneboard/RSS"
              tal:attributes="rdf:about string:${view/url}/RSS">
         <title tal:content="view/title">Futurama, FOX</title>
-        <link tal:attributes="href view/url" href="http://localhost/futurama/RSS" />
+        <link tal:content="view/url" />
 
         <description tal:content="view/description">
         </description>
@@ -32,7 +32,7 @@
           rdf:about="http://localhost/board/forum/conversation"
           tal:attributes="rdf:about comment/url">
         <title tal:content="comment/title">Comment title</title>
-        <link tal:attributes="href comment/url" href="http://localhost/board/forum/conv/1" />
+        <link tal:content="comment/url" />
         <description tal:content="comment/description">
             The first part of the comment text goes here
         </description>
