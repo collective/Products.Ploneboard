@@ -4,6 +4,12 @@ Changelog
 2.1 - Unreleased
 ----------------
 
+- Make pb_attachment.js a browser resource to facilitate caching/merging
+  [sureshvv]
+
+- Use new plone4 slots like content-core, content-title etc.
+  [sureshvv]
+
 - Minor updates to German translation. "Message Board" is now "Foren" instead of
   "Forum".
   [thet]
