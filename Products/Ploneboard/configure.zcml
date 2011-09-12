@@ -7,6 +7,7 @@
 
   <include package="Products.SimpleAttachment" />
   <include package="plone.app.portlets" />
+  <include package="Products.CMFCore" file="permissions.zcml" />
 
   <class class=".content.Ploneboard.Ploneboard">
       <implements
