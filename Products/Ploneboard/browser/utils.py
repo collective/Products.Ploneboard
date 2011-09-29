@@ -52,11 +52,10 @@ def toPloneboardTime(context, request, time_=None):
                                    }
 
         if time.time() - time.mktime(time_.timetuple()) < 604800: # 60*60*24*7
-            ploneboard_time = translate(_plone( 'young_date_format: ${wday} ${hours}:${minutes}'
-                                              , default = unicode(time_.strftime(young_format_en))
-                                              , mapping=translated_date_elements)
-                                        , context=request
-                                        )
+            ploneboard_time = translate('${wday} ${hours}:${minutes}',
+                                        mapping=translated_date_elements,
+                                        context=request)
+
         else:
             ploneboard_time = translate( _plone( 'old_date_format: ${year} ${month} ${day} ${hours}:${minutes}'
                                                , default = unicode(time_.strftime(old_format_en).decode('utf-8'))
