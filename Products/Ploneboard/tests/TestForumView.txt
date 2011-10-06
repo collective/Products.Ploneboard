@@ -75,7 +75,7 @@ List the conversations
 
 Open the forum in a browser.
 
-    >>> from Products.Five.testbrowser import Browser
+    >>> from Testing.testbrowser import Browser
     >>> from Products.PloneTestCase import ptc
     >>> browser = Browser()
     >>> browser.handleErrors = False

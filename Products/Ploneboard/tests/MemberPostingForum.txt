@@ -13,7 +13,7 @@ First, some set-up:
     >>> from Products.Ploneboard.tests import utils
     >>> utils.setUpDefaultMembersBoardAndForum(self)
 
-    >>> from Products.Five.testbrowser import Browser
+    >>> from Testing.testbrowser import Browser
     >>> browser = Browser()
     >>> browser.handleErrors = False
 
