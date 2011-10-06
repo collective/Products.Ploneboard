@@ -257,27 +257,27 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         return False
 
     security.declareProtected(MergeConversation, 'manage_pasteObjects')
-    def manage_pasteObjects(self, cp): 
-        """ merge another conversation """ 
-        try: 
-            op, mdatas = _cb_decode(cp) 
-        except: 
-            raise CopyError, "Invalid content" 
+    def manage_pasteObjects(self, cp):
+        """ merge another conversation """
+        try:
+            op, mdatas = _cb_decode(cp)
+        except:
+            raise CopyError, "Invalid content"
         if op == 0:
             raise ValueError('Not allowed to copy content into conversation')
-        if op != 1: 
-            raise ValueError, "Invalid operation of content" 
-        obj = self.unrestrictedTraverse(mdatas[0]) 
+        if op != 1:
+            raise ValueError, "Invalid operation of content"
+        obj = self.unrestrictedTraverse(mdatas[0])
         if IConversation.providedBy(obj):
-            if obj.getParentNode() != self.getParentNode(): 
-                raise ValueError, "Invalid parent of content" 
-            forum = obj.getForum() 
-            obj_id = obj.getId() 
-            o_list = obj.objectValues() 
-            oblist=[Moniker(o1).dump() for o1 in o_list] 
-            cp = (1, oblist) 
-            cp = _cb_encode(cp) 
-            CopyContainer.manage_pasteObjects(self, cp) 
+            if obj.getParentNode() != self.getParentNode():
+                raise ValueError, "Invalid parent of content"
+            forum = obj.getForum()
+            obj_id = obj.getId()
+            o_list = obj.objectValues()
+            oblist=[Moniker(o1).dump() for o1 in o_list]
+            cp = (1, oblist)
+            cp = _cb_encode(cp)
+            CopyContainer.manage_pasteObjects(self, cp)
             forum.manage_delObjects([obj_id])
         elif IComment.providedBy(obj):
             return CopyContainer.manage_pasteObjects(self, cp)
