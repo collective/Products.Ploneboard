@@ -1,5 +1,5 @@
-import Globals
 from AccessControl import ClassSecurityInfo
+from AccessControl.class_init import InitializeClass
 from OFS.Image import File
 from OFS.Folder import Folder
 from ZPublisher.HTTPRequest import FileUpload
@@ -170,5 +170,5 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                     del request.SESSION['ploneboard_uploads']
 
 
-Globals.InitializeClass(PloneboardTool)
+InitializeClass(PloneboardTool)
 registerToolInterface(PLONEBOARD_TOOL, IPloneboardTool)

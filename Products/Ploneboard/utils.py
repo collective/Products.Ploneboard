@@ -1,12 +1,12 @@
-from ZODB.PersistentMapping import PersistentMapping
-
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo
+from AccessControl.class_init import InitializeClass
 from Acquisition import Implicit, aq_inner, aq_parent
-import Globals
+from Products.CMFCore.utils import getToolByName
+from ZODB.PersistentMapping import PersistentMapping
 from zope.i18nmessageid import MessageFactory
 
-from Products.CMFCore.utils import getToolByName
 import config
+
 
 def importModuleFromName(module_name):
     """ import and return a module by its name """
@@ -102,7 +102,8 @@ class TransformDataProvider(Implicit):
         """ Returns config metadata """
         return self.config_metadata['inputs']
 
-Globals.InitializeClass(TransformDataProvider)
+InitializeClass(TransformDataProvider)
+
 
 def finalizeSchema(schema):
     # Categorization

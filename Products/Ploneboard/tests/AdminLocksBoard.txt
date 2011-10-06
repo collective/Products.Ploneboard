@@ -6,7 +6,7 @@ members-posting forum.
 
 First, some set-up:
 
-    >>> from Products.Five import zcml
+    >>> from Zope2.App import zcml
     >>> import Products
     >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
 
