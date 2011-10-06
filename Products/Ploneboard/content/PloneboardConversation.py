@@ -261,16 +261,16 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """ merge another conversation """
         try:
             op, mdatas = _cb_decode(cp)
-        except:
-            raise CopyError, "Invalid content"
+        except Exception:
+            raise CopyError("Invalid content")
         if op == 0:
             raise ValueError('Not allowed to copy content into conversation')
         if op != 1:
-            raise ValueError, "Invalid operation of content"
+            raise ValueError("Invalid operation of content")
         obj = self.unrestrictedTraverse(mdatas[0])
         if IConversation.providedBy(obj):
             if obj.getParentNode() != self.getParentNode():
-                raise ValueError, "Invalid parent of content"
+                raise ValueError("Invalid parent of content")
             forum = obj.getForum()
             obj_id = obj.getId()
             o_list = obj.objectValues()

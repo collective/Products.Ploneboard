@@ -27,7 +27,7 @@ for m in modules:
         print "Problem importing module %s : %s" % (m, e)
     except MissingBinary, e:
         print e
-    except:
+    except Exception:
         import traceback
         traceback.print_exc()
 

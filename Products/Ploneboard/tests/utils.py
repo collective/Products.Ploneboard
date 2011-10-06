@@ -32,7 +32,7 @@ def disableScriptValidators(portal):
             if v.id in scripts:
                 v.manage_doCustomize('custom')
                 portal.portal_form_controller.addFormValidators(v.id, ANY_CONTEXT, ANY_BUTTON, [])
-    except:
+    except Exception:
         pass
 
 def logoutThenLoginAs(self, browser, userid):
