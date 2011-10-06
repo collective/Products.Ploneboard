@@ -33,7 +33,7 @@ Changelog
 
 - Plone 4 and 4.1 compatible.
   [thomasdesvenain, rochecompaan, jaroel, vmaksymiv, ksuess, radekj,
-   maciej.zieba, jensens, maartenkling]
+  maciej.zieba, jensens, maartenkling]
 
 
 2.2 (2011-02-08)
