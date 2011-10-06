@@ -7,7 +7,7 @@ setup(name='Products.Ploneboard',
       version=version,
       description="A discussion board for Plone.",
       long_description=open("README.txt").read() + \
-                        open("CHANGES.txt").read(),
+                       open("CHANGES.txt").read(),
       classifiers=[
         "Framework :: Plone",
         "Framework :: Zope2",
@@ -24,6 +24,7 @@ setup(name='Products.Ploneboard',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'Products.CMFPlone >= 4.1',
         'Products.SimpleAttachment',
         'plone.app.controlpanel',
         'plone.app.portlets',
@@ -31,7 +32,6 @@ setup(name='Products.Ploneboard',
         'plone.memoize',
         'plone.i18n',
         'python-dateutil<2.0dev',
-        'Plone >= 3.3',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
