@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0 (unreleased)
+3.0 (2011-10-06)
 ----------------
 
 - Use the base profile from CMFPlacefulWorkflow to avoid nuking the default
