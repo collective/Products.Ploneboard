@@ -1,8 +1,6 @@
-import Products.Five
-import Products.ATContentTypes
+from DateTime import DateTime
 from Products.CMFPlacefulWorkflow.WorkflowPolicyConfig import manage_addWorkflowPolicyConfig
 
-from DateTime import DateTime
 
 def addMember(self, username, fullname="", email="", roles=('Member',), last_login_time=None):
     self.portal.portal_membership.addMember(username, 'secret', roles, [])

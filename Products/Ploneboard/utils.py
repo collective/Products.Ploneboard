@@ -23,8 +23,6 @@ def changeOwnershipOf(object, userid, recursive=0):
     """Changes the ownership of an object. Stolen from Plone and CMFCore, but
     be less restrictive about where the owner is found.
     """
-    membership = getToolByName(object, 'portal_membership')
-
     user = None
     uf = object.acl_users
     while uf is not None:
