@@ -79,7 +79,7 @@ class RSSView(BrowserView):
 
     def __call__(self):
         if not self.syndication.isSyndicationAllowed(aq_inner(self.context)):
-            raise Unauthorized, "Syndication is not enabled"
+            raise Unauthorized("Syndication is not enabled")
         self.update()
         self.response.setHeader("Content-Type", "text/xml;charset=utf-8")
         return self.template()

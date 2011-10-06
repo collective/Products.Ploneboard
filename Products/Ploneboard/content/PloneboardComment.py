@@ -289,7 +289,7 @@ class PloneboardComment(BaseBTreeFolder):
     def addAttachment(self, file, title=None):
         """ """
         if not self.validateAddAttachment(file):
-            raise ValueError, "Attachment could not be added"
+            raise ValueError("Attachment could not be added")
 
         content_type = file.getContentType()
         if content_type.startswith('image/'):

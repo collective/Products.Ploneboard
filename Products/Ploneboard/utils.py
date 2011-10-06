@@ -36,7 +36,7 @@ def changeOwnershipOf(object, userid, recursive=0):
         uf = getattr(parent, 'acl_users', None)
 
     if user is None:
-        raise KeyError, "User %s cannot be found." % userid
+        raise KeyError("User %s cannot be found." % userid)
 
     object.changeOwnership(user, recursive)
 
