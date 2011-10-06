@@ -1,6 +1,3 @@
-"""
-$Id$
-"""
 PROJECTNAME = "Ploneboard"
 SKINS_DIR = 'skins'
 I18N_DOMAIN = PROJECTNAME.lower()

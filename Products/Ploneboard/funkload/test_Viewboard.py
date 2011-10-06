@@ -1,8 +1,4 @@
 # -*- coding: iso-8859-15 -*-
-"""viewboard FunkLoad test
-
-$Id: $
-"""
 import unittest
 from funkload.FunkLoadTestCase import FunkLoadTestCase
 from webunit.utility import Upload

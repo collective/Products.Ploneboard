@@ -1,7 +1,3 @@
-"""
-$Id$
-"""
-
 from Products.Archetypes.public import process_types, listTypes
 from Products.CMFCore.DirectoryView import registerDirectory
 from Products.Ploneboard.PloneboardTool import PloneboardTool

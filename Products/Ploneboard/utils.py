@@ -1,6 +1,3 @@
-"""
-$Id$
-"""
 from ZODB.PersistentMapping import PersistentMapping
 
 from AccessControl import ClassSecurityInfo, ModuleSecurityInfo

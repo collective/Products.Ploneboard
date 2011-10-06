@@ -7,7 +7,6 @@
 ##bind subpath=traverse_subpath
 ##parameters=
 ##title=Validates a forum_edit_form submit
-# $Id$
 
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone import PloneMessageFactory as _

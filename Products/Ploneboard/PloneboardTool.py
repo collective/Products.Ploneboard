@@ -1,6 +1,3 @@
-"""
-$Id$
-"""
 import Globals
 from AccessControl import ClassSecurityInfo
 from OFS.Image import File

@@ -1,8 +1,5 @@
-"""
-$Id$
-"""
-# Dependency on Zope 2.8.x (or greater) or Five
 from zope.interface import Interface, Attribute
+
 
 class IPloneboard(Interface):
     """

@@ -7,7 +7,6 @@
 ##bind subpath=traverse_subpath
 ##parameters=title, text='', files=None
 ##title=Add a conversation
-# $Id$
 
 from AccessControl import Unauthorized
 from Products.CMFCore.utils import getToolByName

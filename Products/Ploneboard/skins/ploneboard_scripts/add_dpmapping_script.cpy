@@ -7,7 +7,6 @@
 ##bind subpath=traverse_subpath
 ##parameters=key, value, transform_name
 ##title=
-# $Id$
 
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.utils import PloneboardMessageFactory as _

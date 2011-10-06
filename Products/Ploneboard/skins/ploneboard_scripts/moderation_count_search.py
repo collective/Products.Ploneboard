@@ -6,7 +6,6 @@
 ##bind subpath=traverse_subpath
 ##parameters=obj=None
 ##title=Searches for pending comments in moderated boards
-# $Id$
 
 if obj is None:
     obj = context
