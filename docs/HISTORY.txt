@@ -8,8 +8,28 @@ Changelog
   workflow chain settings by installing unused workflows.
   [tesdal]
 
-- Plone 4.1 compatible.
-  [thomasdesvenain]
+- Pinned `python-dateutil` to be less than version 2.0, as this a Python 3 only
+  release.
+  [keul]
+
+- Synchronized French po from pot and completed translations.
+  [sgeulette]
+
+- Polish translations added.
+  [radekj]
+
+- German translation updated.
+  [ksuess]
+
+- Updated Danish translations.
+  [kroman0]
+
+- Synced with pot and updated Swedish translations.
+  [svincic]
+
+- Plone 4 and 4.1 compatible.
+  [thomasdesvenain, rochecompaan, jaroel, vmaksymiv, ksuess, radekj,
+   maciej.zieba, jensens, maartenkling]
 
 
 2.2 (2011-02-08)
