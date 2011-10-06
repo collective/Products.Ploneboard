@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 name = 'Products.Ploneboard'
-version = '2.3dev'
+version = '3.0dev'
 
 setup(name='Products.Ploneboard',
       version=version,
