@@ -1,10 +1,7 @@
 from setuptools import setup, find_packages
 
-from os.path import join
-
-name='Products.Ploneboard'
-path = name.split('.') + ['version.txt']
-version = open(join(*path)).read().strip()
+name = 'Products.Ploneboard'
+version = '2.3dev'
 
 setup(name='Products.Ploneboard',
       version=version,
@@ -38,7 +35,6 @@ setup(name='Products.Ploneboard',
         'Plone >= 3.3',
       ],
       entry_points="""
-      # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
       target = plone
       """,
