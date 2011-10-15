@@ -153,10 +153,17 @@ class PloneboardComment(BaseBTreeFolder):
         comment.deleteReference(self, REPLY_RELATIONSHIP)
 
     security.declareProtected(ViewBoard, 'getReplies')
-    def getReplies(self):
-        """Returns the comments that were replies to this one."""
+    def getReplies(self, restricted=False):
+        """Returns the comments that were replies to this one.
+        
+        If restricted == True, only include replies that the current user has permission to view.
+        """
         # Return backreferences
-        return self.getBRefs(REPLY_RELATIONSHIP)
+        replies = self.getBRefs(REPLY_RELATIONSHIP)
+        if restricted:
+            membership = getToolByName(self, 'portal_membership')
+            replies = [r for r in replies if membership.checkPermission('View', r)]
+        return replies
 
     security.declareProtected(ViewBoard, 'getTitle')
     def getTitle(self):

@@ -4,6 +4,11 @@ Changelog
 2.0.2 - Unreleased
 ------------------
 
+- In the threaded conversation view, only return children that the user has
+  permission to view. This fixes a bug where an Unauthorized error was hit
+  while trying to render such comments, causing siblings that the user did
+  have permission to view to not show up.
+  [davisagli]
 
 2.0.1jarn1 - September 8, 2010
 ------------------------------

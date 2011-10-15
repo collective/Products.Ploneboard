@@ -75,6 +75,12 @@ class TestPloneboardComment(PloneboardTestCase.PloneboardTestCase):
         self.failUnlessEqual(len(self.comment.getReplies()), 2)
         self.failUnless(reply in self.comment.getReplies())
         self.failUnless(reply2 in self.comment.getReplies())
+    
+    def testGetRepliesRestricted(self):
+        reply = self.comment.addReply('reply1', 'body1')
+        reply2 = self.comment.addReply('reply2', 'body2')
+        reply2._View_Permission = ('Manager',)
+        self.assertEqual(1, len(self.comment.getReplies(restricted=True)))
 
     def testGetTitle(self):
         self.failUnlessEqual(self.comment.getTitle(), 'comment1')

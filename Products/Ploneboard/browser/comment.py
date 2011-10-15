@@ -110,7 +110,7 @@ class ConversationView(CommentView):
         if type(comment) is dict:
             comment = comment['getObject']
 
-        for ob in comment.getReplies():
+        for ob in comment.getReplies(restricted=True):
             yield self._buildDict(ob)
 
     def _getComments(self, limit, offset):
