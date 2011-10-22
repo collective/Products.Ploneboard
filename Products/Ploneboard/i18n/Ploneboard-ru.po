@@ -1,12 +1,13 @@
 # Eugene Korenevsky <weiqist@gmail.com>, 2008.
 # Eugene V. Korenevsky <weiqist@gmail.com>, 2008.
 # Alexander Vesnenok <alexvesna@ploner.ru>, 2009.
+# Michael Krishtopa <theo@heddex.biz>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-ru\n"
 "POT-Creation-Date: 2009-03-27 21:46+0000\n"
 "PO-Revision-Date: 2009-02-02 13:55+0000\n"
-"Last-Translator: Alexander Vesnenok <alexvesna@ploner.ru>\n"
+"Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "Вложение слишком большое"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
@@ -69,7 +70,7 @@ msgstr "Войдите в систему, чтобы оставить сообщ
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Не введено содержание"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 msgid "Please correct the indicated errors."
@@ -118,8 +119,9 @@ msgstr "Добавить сообщение"
 msgid "add_conversation"
 msgstr "Добавить обсуждение"
 
+#. Default: "Do you really want to delete this comment?"
 msgid "alert_delete_popup"
-msgstr ""
+msgstr "Вы действительно хотите удалить этот комментарий?"
 
 #. Default: "Search"
 #: ../skins/ploneboard_templates/board_view.pt:41
@@ -134,7 +136,7 @@ msgstr "Поиск по форумам"
 #. Default: "More…"
 #: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
-msgstr "Еще..."
+msgstr "Еще…"
 
 #. Default: "by ${author}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
@@ -184,7 +186,7 @@ msgstr "Вверх к ${title}"
 #. Default: "Return to ${name}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "go_to_view_url"
-msgstr "вернуться к форуму ${name}"
+msgstr "Вернуться к форуму ${name}"
 
 #. Default: "Preview comment"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:19
@@ -194,17 +196,17 @@ msgstr "Просмотр сообщения"
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:107
 msgid "help_add_portlet"
-msgstr "Этот портлет показывает ссылки на текущие обсуждения."
+msgstr "Этот портлет показывает последние комментарии."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:141
 msgid "help_body_attachments_maxsize"
-msgstr "Максимальный размер приложения ${maxsize} килобайт."
+msgstr "Максимальный размер вложения ${maxsize} килобайт."
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:135
 msgid "help_body_attachments_posting"
-msgstr "Загрузить файл-приложение к сообщению."
+msgstr "Загрузить файл-вложение к сообщению."
 
 #. Default: "Basic HTML tags are OK."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:105
@@ -216,11 +218,13 @@ msgstr "Основные тэги HTML в порядке"
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Адреса автоматически превратятся в ссылки."
 
+#. Default: "Enter the categories you want to have available for forums, one category on each line."
 msgid "help_categories_board"
-msgstr ""
+msgstr "Введите категории, которые вы хотите использовать для форумов, по одной категории в строке."
 
+#. Default: "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended."
 msgid "help_category"
-msgstr ""
+msgstr "Выберите категории, в которых будет отображён форум. Форум может быть в нескольких категориях, но рекомендуется использовать только одну."
 
 #. Default: "How many items to list."
 #: ../portlet/recent.py:28
@@ -228,27 +232,30 @@ msgid "help_count"
 msgstr "Сколько показывать пунктов в списке."
 
 msgid "help_description_board"
-msgstr ""
+msgstr "Введите краткое описание для форума Ploneboard."
 
+#. Default: "Enter a brief description of the conversation."
 msgid "help_description_conversation"
-msgstr ""
+msgstr "Введите краткое описание для этого обсуждения."
 
 msgid "help_description_forum"
-msgstr ""
+msgstr "Краткое описание темы форума"
 
+#. Default: "Select the maximum number of attachments per comment."
 msgid "help_maxattachments"
-msgstr ""
+msgstr "Выберите максимальное количество вложений для одного комментария."
 
+#. Default: "Select the maximum size for attachments."
 msgid "help_maxattachmentsize"
-msgstr ""
+msgstr "Выберите максимальный размер для вложений."
 
 msgid "help_text"
-msgstr ""
+msgstr "Введите текст комментария."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../browser/controlpanel.py:18
 msgid "help_transforms"
-msgstr "Определите, как необходимо ограничивать редактирование текста сообщений. Наложите запрет на определенные тэги, которые может ввести пользователь или разрешите их использование. Например, чтобы сделать интернет-адреса активными для перехода. "
+msgstr "Выберите трансформации для текста, которые будут применяться для сообщений на форуме. Текстовые трансформации изменяют текст, введённый пользователем, убирая потенциально опасные HTML-тэги, или добавляя дополнительную функциональность, например делая ссылки кликабельными."
 
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:105
@@ -276,19 +283,19 @@ msgid "label_by_author"
 msgstr "${author}"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Категории"
 
 msgid "label_category"
-msgstr ""
+msgstr "Категория"
 
 msgid "label_description_board"
-msgstr ""
+msgstr "Описание"
 
 msgid "label_description_conversation"
-msgstr ""
+msgstr "Описание"
 
 msgid "label_description_forum"
-msgstr ""
+msgstr "Описание"
 
 #. Default: "in ${forum}"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:102
@@ -296,10 +303,10 @@ msgid "label_in_forum"
 msgstr "на ${forum}"
 
 msgid "label_maxattachments"
-msgstr ""
+msgstr "Максимальное количество вложений"
 
 msgid "label_maxattachmentsize"
-msgstr ""
+msgstr "Максимальный размер вложения"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:14
@@ -323,7 +330,7 @@ msgid "label_required"
 msgstr "Обязательное поле"
 
 msgid "label_text"
-msgstr ""
+msgstr "Текст"
 
 #. Default: "Title"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:64
@@ -333,7 +340,7 @@ msgstr "Название"
 #. Default: "Transforms"
 #: ../browser/controlpanel.py:16
 msgid "label_transforms"
-msgstr "Внешние изменения"
+msgstr "Трансформации"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/comment_view.pt:204
@@ -343,12 +350,12 @@ msgstr "Приложения"
 #. Default: "Log in to start a conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:90
 msgid "log_to_start_conversation"
-msgstr "войдите в систему, чтобы начать обсуждение."
+msgstr "Войдите в систему, чтобы начать обсуждение"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:80
 msgid "moderation_count"
-msgstr "В очереди ${count} сообщение(й)"
+msgstr "В очереди ${count} сообщение(й)."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
 #: ../skins/ploneboard_templates/moderation_form.pt:43
@@ -378,12 +385,12 @@ msgstr "Для модерации нет сообщений."
 #. Default: "No conversations started"
 #: ../skins/ploneboard_templates/board_view.pt:123
 msgid "no_conversations_started"
-msgstr "Обсуждений пока нет."
+msgstr "Обсуждений пока нет"
 
 #. Default: "No conversations found."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
 msgid "no_recent_conversations"
-msgstr "Обсуждений не обнаружено :("
+msgstr "Обсуждений не обнаружено."
 
 #. Default: "No replies yet"
 #: ../skins/ploneboard_templates/forum_view.pt:172
@@ -393,12 +400,12 @@ msgstr "Ответов пока нет"
 #. Default: "No conversations in this forum yet."
 #: ../skins/ploneboard_templates/forum_view.pt:67
 msgid "not_conversations"
-msgstr "На этом форуме пока нет обсуждений"
+msgstr "На этом форуме пока нет обсуждений."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
 #: ../skins/ploneboard_templates/board_view_global.pt:37
 msgid "not_forums"
-msgstr "Здесь пока не начато ни одного форума. Нажмите 'Добавить', чтобы его создать"
+msgstr "Здесь пока небыло добавлено ни одного форума. Нажмите 'Добавить', чтобы его создать"
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../skins/ploneboard_templates/forum_view.pt:98
@@ -413,12 +420,12 @@ msgstr "Обсуждения"
 #. Default: "Ploneboard configuration"
 #: ../browser/controlpanel.py:55
 msgid "ploneboard_configuration"
-msgstr "Настройки Форумов Ploneboard"
+msgstr "Настройки форумов Ploneboard"
 
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
 msgid "ploneboard_transform_panel"
-msgstr "Внешние изменения текста"
+msgstr "Трансформации текста"
 
 #. Default: "Post comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:167
@@ -437,7 +444,6 @@ msgstr "Просмотр сообщения"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:53
-#, fuzzy
 msgid "recent_conversations_description"
 msgstr "Это список обсуждений, где недавно обменивались мнениями"
 
@@ -474,7 +480,7 @@ msgstr "в"
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:26
 msgid "title_count"
-msgstr "Количество пунктов для показа."
+msgstr "Количество пунктов для показа"
 
 #. Default: "General forums"
 #: ../skins/ploneboard_templates/board_view_global.pt:61
@@ -499,5 +505,4 @@ msgstr "Обсуждения без ответов на форуме ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
 msgid "unanswered_conversations"
-msgstr ""
-
+msgstr "На эти обсуждения небыло дано ни одного ответа."
