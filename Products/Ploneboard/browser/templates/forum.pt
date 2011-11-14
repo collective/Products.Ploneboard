@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
-      
+
 <head>
    <metal:top fill-slot="top_slot">
       <tal:block condition="python:not user.has_permission('Ploneboard: Add Forum', here) and not user.has_permission('Ploneboard: Moderate Forum', here)">
@@ -39,7 +39,7 @@
                 <img tal:replace="structure context/new_conversation.gif" />
                 <a i18n:translate="show_no_replies"
                    tal:attributes="href string:${context/absolute_url}/ploneboard_unanswered">
-                   Show only unanswered 
+                   Show only unanswered
                 </a>
             </li>
         </ul>
@@ -61,11 +61,11 @@
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
         <div class="visualClear"></div>
-        
+
         <p class="discreet"
              i18n:translate="not_conversations"
              tal:condition="python:numConversations == 0">
-        No conversations in this forum yet.     
+        No conversations in this forum yet.
         </p>
 
        <tal:vars define="canStartConverstation view/canStartConverstation">
@@ -115,7 +115,7 @@
         <div class="visualClear"></div>
 
         <tal:haveConversations condition="python:numConversations > 0">
-                    
+
           <tal:conversations define="Batch python:modules['Products.Ploneboard'].Batch;
                                      b_size python:20;b_start python:0;b_start request/b_start | b_start;
                                      batch python:Batch(view.getConversations, numConversations, b_size, int(b_start), orphan=1);">
@@ -129,10 +129,10 @@
                          <th i18n:translate="most_recent_comment">Most recent comment</th>
                      </tr>
                 </thead>
-        
+
                 <tbody>
                     <tal:showconversations tal:repeat="conversation batch">
-                
+
                     <tr tal:define="oddrow repeat/conversation/odd;
                                     conv_url conversation/absolute_url;
                                     conv_modified conversation/modified;
@@ -140,7 +140,7 @@
                                     numComments conversation/getNumberOfComments"
                         tal:attributes="class python:oddrow and 'even' or 'odd'">
                         <td>
-                            <img tal:replace="structure context/new_conversation.gif" 
+                            <img tal:replace="structure context/new_conversation.gif"
                                  tal:condition="python:last_login and conv_modified > last_login" />
                             <a href=""
                                tal:attributes="href conv_url;
@@ -148,7 +148,7 @@
                               <img src="" tal:condition="python:revstate == 'locked'"
                                           tal:replace="structure portal/lock_icon.gif" />
                                 <span tal:replace="conversation/Title">This is a title</span>
-                              
+
 
                                 <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
@@ -156,10 +156,10 @@
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                                 </span>
-                            
+
                             </a>
                         </td>
-                    
+
                         <td class="listingCheckbox"
                             tal:condition="python:numComments > 1">
                             <span tal:content="python:numComments - 1">
@@ -184,7 +184,7 @@
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
                               </span>
-                            </a>                                                                                        
+                            </a>
                             <span
                                   class="discreet"
                                   tal:content="conversation/getLastCommentDate">
@@ -192,16 +192,16 @@
                             </span>
                           </td>
                         </tal:block>
-    
+
                     </tr>
-                
+
                     </tal:showconversations>
                 </tbody>
             </table>
-            
+
             <!-- Navigation -->
             <div metal:use-macro="here/batch_macros/macros/navigation" />
-                        
+
           </tal:conversations>
         </tal:haveConversations>
 
@@ -210,6 +210,6 @@
         <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </div>
-                     
+
 </body>
 </html>
