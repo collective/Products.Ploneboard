@@ -17,10 +17,8 @@
 
     <div metal:fill-slot="main"
          tal:define="numConversations view/getNumberOfConversations;
-                     pss modules/Products/PythonScripts/standard;
-                     DateTime nocall:modules/DateTime/DateTime;
                      last_login view/last_login;
-                     isAnon context/@@plone_portal_state/anonymous;
+                     isAnon isAnon | context/@@plone_portal_state/anonymous;
                      portal context/@@plone_portal_state/portal | nocall:portal;
                      mtool context/@@plone_tools/membership;">
 
@@ -60,57 +58,13 @@
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
-        <div class="visualClear"></div>
-
-        <p class="discreet"
-             i18n:translate="not_conversations"
-             tal:condition="python:numConversations == 0">
-        No conversations in this forum yet.
-        </p>
-
-       <tal:vars define="canStartConverstation view/canStartConverstation">
-
-        <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
-              tal:condition="canStartConverstation"
-              style="float: right">
-              <input i18n:attributes="value"
-                  class="standalone"
-                  type="submit" 
-                  value="Start a new Conversation" />
-        </form>
-
-        <tal:choice condition="not: canStartConverstation">
-        <form tal:condition="isAnon"
-              tal:attributes="action python:'%s/login_form?came_from=%s' %
-                                            (here.portal_url(),
-                                            pss.url_quote(request['URL']))">
-
-            <input class="standalone" 
-                   type="submit" 
-                   value="Log in to start a conversation"
-                   i18n:attributes="value log_to_start_conversation"
-                   
-                   />
-        </form>
-
-        <p class="discreet"
-           style="text-align: center"
-           i18n:translate="not_permission_start_conversation"
-           tal:condition="not: isAnon">
-        Sorry, you do not have permission to start a new Conversation
-        </p>
-
-        </tal:choice>
-
-        <p tal:condition="python:not isAnon and numConversations > 0" 
+        <p tal:condition="python:not isAnon and numConversations > 0"
            class="discreet"
            i18n:translate="new_conversations_marked_with">
           Conversations marked with
             <img i18n:name="star" tal:replace="structure context/new_conversation.gif" />
             have had activity since your last log-in.
         </p>
-
-        </tal:vars>
 
         <div class="visualClear"></div>
 

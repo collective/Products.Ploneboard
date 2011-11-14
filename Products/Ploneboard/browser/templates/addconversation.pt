@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+     xmlns:tal="http://xml.zope.org/namespaces/tal"
+     xmlns:metal="http://xml.zope.org/namespaces/metal"
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     i18n:domain="ploneboard">
+
+ <tal:vars define="canStartConversation view/view/canStartConversation;
+                   pss modules/Products/PythonScripts/standard;
+                   numConversations view/view/getNumberOfConversations;
+                   isAnon isAnon | context/@@plone_portal_state/anonymous;">
+
+  <div class="visualClear"><!--  --></div>
+
+  <p class="discreet"
+       i18n:translate="not_conversations"
+       tal:condition="python:numConversations == 0">
+  No conversations in this forum yet.
+  </p>
+
+  <form tal:attributes="action string:${here/absolute_url}/add_conversation_form"
+        tal:condition="canStartConversation"
+        style="float: right">
+        <input i18n:attributes="value"
+            class="standalone"
+            type="submit"
+            value="Start a new Conversation" />
+  </form>
+
+  <tal:choice condition="not: canStartConversation">
+  <form tal:condition="isAnon"
+        tal:attributes="action python:'%s/login_form?came_from=%s' %
+                                      (here.portal_url(),
+                                      pss.url_quote(request['URL']))">
+      <input class="standalone"
+             type="submit"
+             value="Log in to start a conversation"
+             i18n:attributes="value log_to_start_conversation"
+             />
+  </form>
+
+  <p class="discreet"
+     style="text-align: center"
+     i18n:translate="not_permission_start_conversation"
+     tal:condition="not: isAnon">
+  Sorry, you do not have permission to start a new Conversation
+  </p>
+
+  </tal:choice>
+ </tal:vars>
+
+</html>

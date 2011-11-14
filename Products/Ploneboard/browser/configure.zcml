@@ -85,11 +85,20 @@
      class=".controlpanel.ControlPanel"
      permission="cmf.ManagePortal"
      />
-     
+
    <browser:resource
      name="ploneboard.css"
      file="ploneboard.css"
+   />
 
-   />  
+   <browser:viewlet
+        name="Products.Ploneboard.addconversation"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
+        view=".forum.IForumView"
+        class=".forum.AddConversationViewlet"
+        template="templates/addconversation.pt"
+        permission="zope2.View"
+     />
+
 </configure>
 

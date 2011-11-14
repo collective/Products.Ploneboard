@@ -1,14 +1,32 @@
 from DateTime import DateTime
+from zope.interface import Interface, implements
+
 from Products import Five
 from plone.memoize.view import memoize
 from Products.CMFCore.utils import getToolByName
+from plone.app.layout.viewlets.interfaces import IAboveContentTitle
+from plone.app.layout.viewlets.common import ViewletBase
+
 from Products.Ploneboard.batch import Batch
 from Products.Ploneboard.browser.utils import toPloneboardTime, getNumberOfComments, getNumberOfConversations
 from Products.Ploneboard.interfaces import IConversation, IComment
 
+
+class IForumView(Interface):
+
+    def canStartConversation(self):
+        """Check if user can start conversation
+        """
+
+    def getNumberOfConversations(self):
+        """Returns the number of conversations in this forum."""
+
+
 class ForumView(Five.BrowserView):
     """View methods for forum type
     """
+
+    implements(IForumView)
 
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
@@ -16,7 +34,9 @@ class ForumView(Five.BrowserView):
         self.mt = getToolByName(context,'portal_membership')
 
     @memoize
-    def canStartConverstation(self):
+    def canStartConversation(self):
+        """Check if user can start conversation
+        """
         return self.mt.checkPermission('Ploneboard: Add Comment', self.context) \
           and self.mt.checkPermission('Add portal content', self.context)
 
@@ -76,3 +96,8 @@ class ForumView(Five.BrowserView):
     def toPloneboardTime(self, time_=None):
         """Return time formatted for Ploneboard"""
         return toPloneboardTime(self.context, self.request, time_)
+
+
+class AddConversationViewlet(ViewletBase):
+
+    pass

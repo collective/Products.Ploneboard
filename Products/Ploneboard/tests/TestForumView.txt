@@ -38,7 +38,7 @@ toPloneboardTime is tested in TestCommentView
 
 Check whether member can start conversation in the memberonly forum
 
-    >>> view.canStartConverstation()
+    >>> view.canStartConversation()
     1
 
 And call last_login without failure
@@ -55,22 +55,22 @@ Make sure the view reports 2 conversations
 List the conversations
 
     >>> view.getConversations()
-    [{'getLastCommentAuthor': 'test_user_1_', 
-      'Title': 'C2', 
-      'absolute_url': 'http://nohost/plone/board1/forum1/...', 
-      'Creator': 'test_user_1_', 
-      'modified': DateTime('...'), 
-      'getLastCommentDate': u'...', 
-      'review_state': 'active', 
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
-      'getNumberOfComments': 2}, 
-     {'getLastCommentAuthor': 'test_user_1_', 
-      'Title': 'C1', 
-      'absolute_url': 'http://nohost/plone/board1/forum1/...', 
-      'Creator': 'test_user_1_', 'modified': DateTime('...'), 
-      'getLastCommentDate': u'...', 
-      'review_state': 'active', 
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...', 
+    [{'getLastCommentAuthor': 'test_user_1_',
+      'Title': 'C2',
+      'absolute_url': 'http://nohost/plone/board1/forum1/...',
+      'Creator': 'test_user_1_',
+      'modified': DateTime('...'),
+      'getLastCommentDate': u'...',
+      'review_state': 'active',
+      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
+      'getNumberOfComments': 2},
+     {'getLastCommentAuthor': 'test_user_1_',
+      'Title': 'C1',
+      'absolute_url': 'http://nohost/plone/board1/forum1/...',
+      'Creator': 'test_user_1_', 'modified': DateTime('...'),
+      'getLastCommentDate': u'...',
+      'review_state': 'active',
+      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
       'getNumberOfComments': 3}]
 
 Open the forum in a browser.
