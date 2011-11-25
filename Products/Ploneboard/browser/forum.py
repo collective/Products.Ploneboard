@@ -14,10 +14,6 @@ from Products.Ploneboard.interfaces import IConversation, IComment
 
 class IForumView(Interface):
 
-    def canStartConversation(self):
-        """Check if user can start conversation
-        """
-
     def getNumberOfConversations(self):
         """Returns the number of conversations in this forum."""
 
@@ -32,13 +28,6 @@ class ForumView(Five.BrowserView):
         Five.BrowserView.__init__(self, context, request)
         self.catalog = getToolByName(context, 'portal_catalog')
         self.mt = getToolByName(context,'portal_membership')
-
-    @memoize
-    def canStartConversation(self):
-        """Check if user can start conversation
-        """
-        return self.mt.checkPermission('Ploneboard: Add Comment', self.context) \
-          and self.mt.checkPermission('Add portal content', self.context)
 
     @memoize
     def last_login(self):
@@ -99,5 +88,13 @@ class ForumView(Five.BrowserView):
 
 
 class AddConversationViewlet(ViewletBase):
+
+    @memoize
+    def canStartConversation(self):
+        """Check if user can start conversation
+        """
+        mt = getToolByName(self.context,'portal_membership')
+        return mt.checkPermission('Ploneboard: Add Comment', self.context) \
+          and mt.checkPermission('Add portal content', self.context)
 
     pass

@@ -4,7 +4,7 @@
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
      i18n:domain="ploneboard">
 
- <tal:vars define="canStartConversation view/view/canStartConversation;
+ <tal:vars define="canStartConversation view/canStartConversation;
                    pss modules/Products/PythonScripts/standard;
                    numConversations view/view/getNumberOfConversations;
                    isAnon isAnon | context/@@plone_portal_state/anonymous;">
