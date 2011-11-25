@@ -4,6 +4,9 @@ Changelog
 3.1 (unreleased)
 ----------------
 
+- Refactor: make it easier to use another type of conversation.
+  [thomasdesvenain]
+
 - Refactor: add conversation form and messages comes in a viewlet.
   [thomasdesvenain]
 
