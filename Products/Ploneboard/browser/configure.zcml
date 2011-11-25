@@ -47,6 +47,15 @@
 	 />
 
   <browser:page
+     for="..interfaces.IConversation"
+     class=".comment.ConversationView"
+     name="conversation_browserview"
+     allowed_interface=".interfaces.IConversationView"
+     permission="zope.Public"
+     template="templates/conversation_view.pt"
+     />
+
+  <browser:page
      for="..interfaces.IComment"
      class=".comment.CommentView"
      name="singlecomment_view"
@@ -90,6 +99,15 @@
      name="ploneboard.css"
      file="ploneboard.css"
    />
+
+   <browser:viewlet
+        name="Products.Ploneboard.addconversation"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
+        view=".forum.IForumView"
+        class=".forum.AddConversationViewlet"
+        template="templates/addconversation.pt"
+        permission="zope2.View"
+     />
 
    <browser:viewlet
         name="Products.Ploneboard.addconversation"
