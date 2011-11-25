@@ -128,7 +128,9 @@ class PloneboardForum(BaseBTreeFolder):
         return None
 
     security.declareProtected(AddConversation, 'addConversation')
-    def addConversation(self, title, text=None, creator=None, files=None, **kwargs):
+    def addConversation(self, title, text=None, creator=None, files=None,
+                        conversation_type='PloneboardConversation',
+                        **kwargs):
         """Adds a new conversation to the forum.
 
         XXX should be possible to parameterise the exact type that is being
@@ -137,11 +139,13 @@ class PloneboardForum(BaseBTreeFolder):
 
         id = self.generateId(prefix='')
 
-        conv = _createObjectByType('PloneboardConversation', self, id)
+        conv = _createObjectByType(conversation_type, self, id)
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
         conv.setTitle(title)
+        for fieldname, value in kwargs.items():
+            conv.getField(fieldname).getMutator(conv)(value)
 
         if creator is not None:
             conv.setCreators([creator])
@@ -301,10 +305,10 @@ class PloneboardForum(BaseBTreeFolder):
     ############################################################################
     # Folder methods, indexes and such
 
-    security.declareProtected(MoveConversation, 'manage_pasteObjects') 
-    def manage_pasteObjects(self, cp): 
-        """ move another conversation """ 
-        CopyContainer.manage_pasteObjects(self, cp) 
+    security.declareProtected(MoveConversation, 'manage_pasteObjects')
+    def manage_pasteObjects(self, cp):
+        """ move another conversation """
+        CopyContainer.manage_pasteObjects(self, cp)
 
     def __nonzero__(self):
         return 1
