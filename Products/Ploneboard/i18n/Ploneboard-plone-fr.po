@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-fr\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2008-10-06 16:25+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -32,44 +32,10 @@ msgstr "Activer"
 msgid "Active"
 msgstr "Activé"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
-msgid "Attachment is too large"
-msgstr "Fichier joint est trop grand"
-
-msgid "Comment"
-msgstr "Message"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
-msgid "Comment added"
-msgstr "Commentaire ajouté"
-
-#: ./browser/comment.py:259
-msgid "Comment deleted"
-msgstr "Commentaire supprimé"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
-msgid "Comment is pending moderation"
-msgstr "Commentaire en attente de modération"
-
 msgid "Conversation"
 msgstr "Conversation"
 
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
-msgid "Conversation added"
-msgstr "Conversation ajoutée"
-
-#: ./browser/comment.py:254
-msgid "Conversation deleted"
-msgstr "Conversation supprimée"
-
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
-msgid "Conversation is pending moderation"
-msgstr "Conversation en attente de modération"
-
-msgid "Enter comment body."
-msgstr "Entrez votre commentaire ci-dessous."
-
-msgid "Flat conversion view"
+msgid "Conversation contains comments."
 msgstr ""
 
 msgid "Free for all"
@@ -83,9 +49,6 @@ msgstr "Masquer"
 
 msgid "Lock"
 msgstr "Verrouiller"
-
-msgid "Locked"
-msgstr "Verrouillé"
 
 msgid "Make free-for-all"
 msgstr "Rendre ouvert à tous"
@@ -101,6 +64,9 @@ msgstr "Forum"
 
 msgid "Moderate"
 msgstr "Modérer"
+
+msgid "Moderated forum"
+msgstr "Forum modéré"
 
 msgid "Open"
 msgstr "Ouvert"
@@ -123,17 +89,24 @@ msgstr "Inscription requise pour écrire"
 msgid "Retracted"
 msgstr "Rétracté"
 
-msgid "Search board"
-msgstr "Chercher dans les forums"
-
-msgid "Threaded conversion view"
-msgstr ""
-
 msgid "Waiting for moderator"
 msgstr "En attente de modération"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} ${month} ${year} à ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"

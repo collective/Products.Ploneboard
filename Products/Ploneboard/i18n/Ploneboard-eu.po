@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2009-03-30 08:26+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,12 @@ msgstr ""
 "Domain: ploneboard\n"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr "Fitxategia handiegia da"
 
 #. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:168
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
 msgstr "Utzi"
@@ -31,31 +33,31 @@ msgstr "Utzi"
 msgid "Change"
 msgstr "Aldatu"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Erantzuna gehituta"
 
-#: ../browser/comment.py:259
+#: ../browser/comment.py:272
 msgid "Comment deleted"
 msgstr "Erantzuna ezabatuta"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment is pending moderation"
 msgstr "Erantzuna moderazio kolan dago"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Elkarrizketa-haria gehituta"
 
-#: ../browser/comment.py:254
+#: ../browser/comment.py:267
 msgid "Conversation deleted"
 msgstr "Elkarrizketa-haria ezabatuta"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
 msgid "Conversation is pending moderation"
 msgstr "Elkarrizketa-haria moderazio kolan dago"
 
-#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:21
 msgid "Data provider updated."
 msgstr "Datu emalea eguneratuta."
 
@@ -63,7 +65,7 @@ msgid "Forum"
 msgstr "Foroa"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:191
+#: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Saioa hasi erantzunak gehitzeko"
 
@@ -71,7 +73,12 @@ msgstr "Saioa hasi erantzunak gehitzeko"
 msgid "No content entered"
 msgstr "Ez dutu testurik idatzi"
 
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
+msgid "No title entered"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Zuzendu adierazitako erroreak"
 
@@ -81,40 +88,41 @@ msgid "Post"
 msgstr "Argitaratu"
 
 #. Default: "Post comment"
-#: ../skins/ploneboard_templates/conversation_view.pt:83
+#: ../browser/templates/conversation_view.pt:77
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Erantzuna argitaratu"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:180
+#: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Honi erantzun"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:78
+#: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Hari berria hasi"
 
-#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "%s eraldaketa eguneratu da"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:83
+#: ../skins/ploneboard_templates/comment_view.pt:84
 msgid "View profile"
 msgstr "Profila ikusi"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
 msgstr "Erantzunak elkarrizketetan edo beste erantzunetan bakarrik gehitu daitezke"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+#: ../skins/ploneboard_templates/add_comment_form.cpt:27
 msgid "add_comment"
 msgstr "Erantzuna gehitu"
 
 #. Default: "Add conversation"
-#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:27
 msgid "add_conversation"
 msgstr "Haria hasi"
 
@@ -122,12 +130,16 @@ msgid "alert_delete_popup"
 msgstr "Ziur al zaude hau ezabatu nahi duzula?"
 
 #. Default: "Search"
-#: ../skins/ploneboard_templates/board_view.pt:41
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
 msgid "board_search_button"
 msgstr "Bilatu"
 
-#. Default: "Search Board"
+#. Default: "Search Boards"
 #: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
+#, fuzzy
 msgid "board_search_label"
 msgstr "Foroan bilatu"
 
@@ -137,32 +149,29 @@ msgid "box_more_recent_conversations"
 msgstr "Gehiago..."
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
 msgid "by_author"
 msgstr "${author}"
 
-#. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:173
-msgid "cancel_comment"
-msgstr "Utzi"
-
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:163
+#: ../skins/ploneboard_templates/comment_view.pt:164
 msgid "comment_current_state"
 msgstr "Egoera:"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:129
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
 msgid "conversation"
 msgstr "Mezua"
 
 #. Default: "Forum"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
 msgid "conversation_forum"
 msgstr "Foroa"
 
 #. Default: "Posted"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
 msgid "conversation_posted"
 msgstr "Argitaratuta"
 
@@ -172,17 +181,21 @@ msgid "description_ploneboard_config"
 msgstr "Ploneboarden konfigurazioa aldatu dezakezu hemen."
 
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt:92
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "forum_name"
 msgstr "Foroaren izena"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+#: ../browser/templates/conversation_view.pt:42
+#: ../browser/templates/forum.pt:51
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "${title}-(e)ra joan"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
 msgid "go_to_view_url"
 msgstr "${name}-(e)ra itzuli"
 
@@ -192,27 +205,27 @@ msgid "heading_preview_comment"
 msgstr "Erantzuna aurreikusi"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:107
+#: ../portlet/recent.py:105
 msgid "help_add_portlet"
 msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakusten ditu"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+#: ../skins/ploneboard_templates/add_comment_form.cpt:136
 msgid "help_body_attachments_maxsize"
 msgstr "Fitxategiaren gehienezko tamaina ${maxsize} kilobytekoa da"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
 msgid "help_body_attachments_posting"
 msgstr "Mezu honekin batera argitaratuko den fitxategia kargatu"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting"
 msgstr "Oinarrizko HTML etiketak idatz daitezke"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:95
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLak automatikoki lotura bihurtuko dira"
 
@@ -251,7 +264,7 @@ msgid "help_transforms"
 msgstr "Ploneboardeko erantzunei aplikatu behar zaizkien transformazioak aukeratu. Testuzko transformazioek, erabiltzaileek sarturiko testua eraldatzen dute, adibidez behar ez den HTMLa ezabatu edo funtzionalitate gehigarriak eskeintzeko, loturak klikagarri egiteko adibidez."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:103
 msgid "label_add_portlet"
 msgstr "Azken elkarrizketen portleta gehitu"
 
@@ -261,17 +274,19 @@ msgid "label_back_to_board"
 msgstr "Forora itzuli"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+#: ../skins/ploneboard_templates/add_comment_form.cpt:127
 msgid "label_body_files_posting"
 msgstr "Fitxategiak"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+#: ../skins/ploneboard_templates/add_comment_form.cpt:87
 msgid "label_body_text_posting"
 msgstr "Testua"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/forum_view.pt:154
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author}"
 
@@ -291,7 +306,7 @@ msgid "label_description_forum"
 msgstr "Deskribapena"
 
 #. Default: "in ${forum}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
 msgid "label_in_forum"
 msgstr "${forum}-(e)n"
 
@@ -302,22 +317,23 @@ msgid "label_maxattachmentsize"
 msgstr "Gehienezko tamaina"
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt:14
+#: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "${link}ekin egina"
 
 #. Default: "Quick reply"
-#: ../skins/ploneboard_templates/conversation_view.pt:74
+#: ../browser/templates/conversation_view.pt:68
 msgid "label_quickreply"
 msgstr "Erantzun azkarra"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:75
+#: ../browser/comment.py:81
 msgid "label_quote"
 msgstr "${author}(e)k zera idatzi zuen: ${quote}"
 
-#. Default: "Required"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#, fuzzy
 msgid "label_required"
 msgstr "Beharrezkoa"
 
@@ -325,7 +341,7 @@ msgid "label_text"
 msgstr "Testua"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
 msgid "label_title_posting"
 msgstr "Izenburua"
 
@@ -335,77 +351,87 @@ msgid "label_transforms"
 msgstr "Transformazioak"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:204
+#: ../skins/ploneboard_templates/comment_view.pt:206
 msgid "legend_attachments"
 msgstr "Gehitutako fitxategiak"
 
 #. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:90
+#: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
 msgstr "Egin login elkarrizketa-hari berri bat sortzeko"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:80
+#: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
 msgstr "${count} mezu moderazio kolan."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt:43
+#: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
 msgstr "Mezu hauek moderazio kolan daude. Egin klik 'Argitaratu' edo 'Atzera bota' botoietan, behar bezala. Egin klik erantzunaren izenburuan mezua bere kontestuan ikusteko."
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/forum_view.pt:131
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Azken erantzuna"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+#: ../skins/ploneboard_templates/add_comment_form.cpt:149
 msgid "new_attachment"
 msgstr "Beste fitxategi bat gehitu"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/forum_view.pt:111
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
 msgstr "${star} ikurrarekin markatutako mezuetan, azken aldiz etorri zinenetik aldaketak egon dira."
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:120
+#: ../skins/ploneboard_templates/moderation_form.pt:113
 msgid "no_comments_queued"
 msgstr "Ez dago erantzunik moderazio kolan."
 
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt:123
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
 msgid "no_conversations_started"
 msgstr "Ez dago mezurik."
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "no_recent_conversations"
 msgstr "Ez dago mezurik."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../browser/templates/forum.pt:126
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Ez dago erantzunik."
 
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt:67
+#: ../browser/templates/addconversation.pt:14
 msgid "not_conversations"
 msgstr "Ez dago mezurik."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt:37
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
 msgstr "Ez dago fororik oraindik. Erabili menua foro berri bat gehitzeko."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:98
+#: ../browser/templates/addconversation.pt:41
 msgid "not_permission_start_conversation"
 msgstr "Ez duzu mezu berri bat argitaratzeko baimenik."
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt:93
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
 msgid "number_of_conversations"
 msgstr "Elkarrizketak"
 
@@ -419,13 +445,8 @@ msgstr "Ploneboarden konfigurazioa"
 msgid "ploneboard_transform_panel"
 msgstr "Testu eraldaketak"
 
-#. Default: "Post comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:167
-msgid "post_comment"
-msgstr "Erantzuna bidali"
-
 #. Default: "Posted by"
-#: ../skins/ploneboard_templates/comment_view.pt:70
+#: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
 msgstr "-k idatzita"
 
@@ -435,12 +456,13 @@ msgid "preview_message"
 msgstr "Aurreikusi"
 
 #. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
 msgid "recent_conversations_description"
 msgstr "Hari hauetan mezuak egon dira orain dela gutxi."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
 msgid "replies"
 msgstr "Erantzunak"
 
@@ -450,22 +472,24 @@ msgid "search_result_location"
 msgstr "${forum} &rarr; ${conversation}.\""
 
 #. Default: "Show all recent activity"
-#: ../skins/ploneboard_templates/board_view.pt:47
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Azken aldaketak ikusi"
 
 #. Default: "Show only unanswered"
-#: ../skins/ploneboard_templates/forum_view.pt:42
+#: ../browser/templates/forum.pt:38
 msgid "show_no_replies"
 msgstr "Erantzunik ez dutenak erakutsi"
 
 #. Default: "Show all unanswered"
-#: ../skins/ploneboard_templates/board_view.pt:54
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Erantzunik ez duten guztiak erakutsi"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:75
+#: ../skins/ploneboard_templates/comment_view.pt:76
 msgid "text_at"
 msgstr "noiz:"
 
@@ -475,12 +499,14 @@ msgid "title_count"
 msgstr "Zenbat elementu erakutsi"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt:61
+#: ../browser/templates/board.pt:147
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
 msgstr "Foro orokorrak"
 
 #. Default: "Recent conversations in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
 msgid "title_recent_conversations"
 msgstr "${title}-(e)n dauden azken mezuak"
 
@@ -490,12 +516,12 @@ msgid "title_title"
 msgstr "Portletaren izenburua"
 
 #. Default: "Unanswered posts in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
 msgid "title_unanswered_conversations"
 msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-msgid "unanswered_conversations"
-msgstr "Mezu hauek argitaratuta daude baina oraindik ez dute erantzunik."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
+msgid "unanswered_conversations_description"
+msgstr ""
 

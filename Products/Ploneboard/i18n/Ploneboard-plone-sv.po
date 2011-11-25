@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone.pot\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2008-05-25 11:29+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -29,44 +29,10 @@ msgstr "Aktivera"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
-msgid "Attachment is too large"
-msgstr ""
-
-msgid "Comment"
-msgstr "Kommentar"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
-msgid "Comment added"
-msgstr "Kommentaren lades till"
-
-#: ./browser/comment.py:259
-msgid "Comment deleted"
-msgstr "Kommentaren togs bort"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
-msgid "Comment is pending moderation"
-msgstr ""
-
 msgid "Conversation"
 msgstr "Konversation"
 
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
-msgid "Conversation added"
-msgstr ""
-
-#: ./browser/comment.py:254
-msgid "Conversation deleted"
-msgstr ""
-
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
-msgid "Conversation is pending moderation"
-msgstr ""
-
-msgid "Enter comment body."
-msgstr "Ange kommentaren"
-
-msgid "Flat conversion view"
+msgid "Conversation contains comments."
 msgstr ""
 
 msgid "Free for all"
@@ -80,9 +46,6 @@ msgstr "Göm"
 
 msgid "Lock"
 msgstr "Lås"
-
-msgid "Locked"
-msgstr ""
 
 msgid "Make free-for-all"
 msgstr "Gör öppen för alla"
@@ -98,6 +61,9 @@ msgstr "Forum"
 
 msgid "Moderate"
 msgstr "Moderera"
+
+msgid "Moderated forum"
+msgstr ""
 
 msgid "Open"
 msgstr "Öppen"
@@ -120,17 +86,24 @@ msgstr "Kräv medlemsskap för att posta"
 msgid "Retracted"
 msgstr "Tillbakadraget"
 
-msgid "Search board"
-msgstr "Sök i forumet"
-
-msgid "Threaded conversion view"
-msgstr ""
-
 msgid "Waiting for moderator"
 msgstr "Väntar på moderator"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"

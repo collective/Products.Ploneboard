@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2008-12-09 08:41+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: \n"
@@ -29,9 +29,6 @@ msgstr "Activar"
 
 msgid "Active"
 msgstr "Activo"
-
-msgid "Comment"
-msgstr "Comentario"
 
 msgid "Conversation"
 msgstr "Conversación"
@@ -99,6 +96,11 @@ msgstr "Pendientes de moderación"
 #, fuzzy
 msgid "conversation_view"
 msgstr "Conversación"
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"

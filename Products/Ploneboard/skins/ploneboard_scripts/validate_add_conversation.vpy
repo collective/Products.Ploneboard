@@ -9,7 +9,8 @@
 ##title=Validates a posting
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
+from Products.CMFPlone import PloneMessageFactory as PMF
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
 putils = getToolByName(context, 'plone_utils')
 
@@ -31,7 +32,7 @@ def FileSize(file):
 title = context.REQUEST.get('title', '');
 
 if len(title) <= 0:
-    state.setError("title", "No title entered", new_status="failure")
+    state.setError("title", _("No title entered"), new_status="failure")
 
 files=context.REQUEST.get('files', [])
 maxsize=context.getMaxAttachmentSize()
@@ -39,11 +40,12 @@ maxsize=context.getMaxAttachmentSize()
 if maxsize!=-1:
     for file in files:
         if FileSize(file)>maxsize:
-            state.setError("files", "Attachment is too large", new_status="failure")
+            state.setError("files", _("Attachment is too large"),
+                           new_status="failure")
             break
 
 if state.getErrors():
-    message = _(u'Please correct the indicated errors.')
+    message = PMF(u'Please correct the indicated errors.')
     putils.addPortalMessage(message)
 
 return state

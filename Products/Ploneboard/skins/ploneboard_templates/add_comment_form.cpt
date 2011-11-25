@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <div metal:fill-slot="main" 
+  <div metal:fill-slot="main"
        tal:define="errors options/state/getErrors;
        view context/@@singlecomment_view;"
        i18n:domain="ploneboard">
@@ -31,7 +31,7 @@
     <tal:defines define="comment view/comment;
                          quotedBody view/quotedBody"
                  metal:define-macro="view_comments">
-         
+
       <div class="boardConversation">
         <div class="boardComment visualIEFloatFix">
           <metal:comment metal:use-macro="context/comment_view/macros/comment" />
@@ -39,7 +39,7 @@
 
         <form name="edit_form"
               action=""
-              method="post" 
+              method="post"
               enctype="multipart/form-data"
               tal:define="title_required python:0;
                           text_required python:1;"
@@ -54,25 +54,25 @@
                  tal:define="error_title errors/title|nothing;
                              Title request/title | nothing;
                              Title python:Title and (Title.lower().startswith('re:') and Title or  'Re: '+Title) or None;"
-                     tal:attributes="class python:test(error_title, 'field error', 'field')"> 
+                     tal:attributes="class python:test(error_title, 'field error', 'field')">
 
               <label for="title" i18n:translate="label_title_posting">Title</label>
 
-              <span tal:condition="title_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required" i18n:attributes="title label_required;">(Required)</span>
+              <span tal:condition="title_required | nothing" class="fieldRequired" i18n:translate="label_required">(Required)</span>
 
               <div tal:replace="error_title">Validation error output</div>
 
               <div class="formHelp">
               </div>
 
-              <input type="text" 
+              <input type="text"
                      name="title"
                      id="title"
-                     value="#" 
-                     size="40" 
+                     value="#"
+                     size="40"
                      tal:attributes="value Title;"
                      />
-              
+
             </div>
               </div>
           </div>
@@ -82,12 +82,12 @@
                  tal:define="error_text errors/text|nothing;
                              text quotedBody | string:;
                              text python:request.get('text', text)"
-                 tal:attributes="class python:test(error_text, 'field error', 'field')"> 
+                 tal:attributes="class python:test(error_text, 'field error', 'field')">
 
               <label for="text" i18n:translate="label_body_text_posting">Body text</label>
 
 
-              <span tal:condition="text_required | nothing" class="fieldRequired" title="Required" i18n:translate="label_required" i18n:attributes="title label_required;">(Required)</span>
+              <span tal:condition="text_required | nothing" class="fieldRequired" i18n:translate="label_required">(Required)</span>
 
               <div tal:replace="error_text">Validation Error Comment</div>
 
@@ -122,7 +122,7 @@
 
             <div class="field"
                 tal:define="error_files errors/files|nothing"
-                tal:attributes="class python:test(error_files, 'field error', 'field')"> 
+                tal:attributes="class python:test(error_files, 'field error', 'field')">
 
               <label for="text" i18n:translate="label_body_files_posting">Attachments</label>
 
@@ -158,13 +158,13 @@
 
             <div metal:define-macro="comment_body_buttons" tal:omit-tag="">
               <div class="row">
-                <div class="field"> 
-                  <input class="context" 
-                         type="submit" 
-                         name="form.button.Post" 
-                         value="Post comment" 
+                <div class="field">
+                  <input class="context"
+                         type="submit"
+                         name="form.button.Post"
+                         value="Post comment"
                          i18n:attributes="value"
-                         /> 
+                         />
                   <input class="destructive"
                          type="submit"
                          name="form.button.Cancel"

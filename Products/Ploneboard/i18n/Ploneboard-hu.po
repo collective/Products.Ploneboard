@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -18,10 +18,12 @@ msgstr ""
 "X-Is-Fallback-For: hu\n"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr "A csatolt fájl túl nagy"
 
 #. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:168
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
 msgstr "Mégsem"
@@ -31,31 +33,31 @@ msgstr "Mégsem"
 msgid "Change"
 msgstr "Mégsem"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Hozzászólás hozzáadva"
 
-#: ../browser/comment.py:259
+#: ../browser/comment.py:272
 msgid "Comment deleted"
 msgstr "Hozzászólás törölve"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment is pending moderation"
 msgstr "Hozzászólás moderálás alatt"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Téma hozáadva"
 
-#: ../browser/comment.py:254
+#: ../browser/comment.py:267
 msgid "Conversation deleted"
 msgstr "Téma törölve"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
 msgid "Conversation is pending moderation"
 msgstr "Téma moderálás alatt"
 
-#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:21
 msgid "Data provider updated."
 msgstr "Adatszolgáltató frissítve."
 
@@ -63,7 +65,7 @@ msgid "Forum"
 msgstr "Fórum"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:191
+#: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Lépjen be, hogy hozzászólhasson"
 
@@ -71,7 +73,12 @@ msgstr "Lépjen be, hogy hozzászólhasson"
 msgid "No content entered"
 msgstr "Nincs tartalom"
 
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
+msgid "No title entered"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Kérjük, javítsa a jelzett hibákat!"
 
@@ -81,40 +88,41 @@ msgid "Post"
 msgstr "Beküld"
 
 #. Default: "Post comment"
-#: ../skins/ploneboard_templates/conversation_view.pt:83
+#: ../browser/templates/conversation_view.pt:77
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Hozzászólás beküldése"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:180
+#: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Válasz erre"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:78
+#: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Új téma indítása"
 
-#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "%s átalakító törölve"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:83
+#: ../skins/ploneboard_templates/comment_view.pt:84
 msgid "View profile"
 msgstr "Profil megtekintése"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
 msgstr "Hozzászólást csak témákhoz vagy hozzászólásokhoz adhat hozzá"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+#: ../skins/ploneboard_templates/add_comment_form.cpt:27
 msgid "add_comment"
 msgstr "Hozzászólás hozzáadása"
 
 #. Default: "Add conversation"
-#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:27
 msgid "add_conversation"
 msgstr "Téma hozzáadása"
 
@@ -122,12 +130,16 @@ msgid "alert_delete_popup"
 msgstr "Valóban törölni szeretné?"
 
 #. Default: "Search"
-#: ../skins/ploneboard_templates/board_view.pt:41
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
 msgid "board_search_button"
 msgstr "Keresés"
 
-#. Default: "Search Board"
+#. Default: "Search Boards"
 #: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
+#, fuzzy
 msgid "board_search_label"
 msgstr "Keresés a fórumokban"
 
@@ -137,32 +149,29 @@ msgid "box_more_recent_conversations"
 msgstr "Tovább…"
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
 msgid "by_author"
 msgstr "${author} által"
 
-#. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:173
-msgid "cancel_comment"
-msgstr "Mégsem"
-
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:163
+#: ../skins/ploneboard_templates/comment_view.pt:164
 msgid "comment_current_state"
 msgstr "Aktuális állapot"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:129
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
 msgid "conversation"
 msgstr "Téma"
 
 #. Default: "Forum"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
 msgid "conversation_forum"
 msgstr "Fórum"
 
 #. Default: "Posted"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
 msgid "conversation_posted"
 msgstr "Beküldve"
 
@@ -172,17 +181,21 @@ msgid "description_ploneboard_config"
 msgstr "Itt állíthatja be a Ploneboard oldaltulajdonságait."
 
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt:92
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "forum_name"
 msgstr "Fórum elnevezése"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+#: ../browser/templates/conversation_view.pt:42
+#: ../browser/templates/forum.pt:51
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "Menj fel ide: ${title} "
 
 #. Default: "Return to ${name}"
-#:  ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
 msgid "go_to_view_url"
 msgstr "Menj vissza ide: ${name}"
 
@@ -192,27 +205,27 @@ msgid "heading_preview_comment"
 msgstr "Hozzászólás előnézete"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:107
+#: ../portlet/recent.py:105
 msgid "help_add_portlet"
 msgstr "Ez a portlet a friss hozzászólásokkal rendelkező témákat listázza ki."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+#: ../skins/ploneboard_templates/add_comment_form.cpt:136
 msgid "help_body_attachments_maxsize"
 msgstr "Legfeljebb ${maxsize} kilobájt méretű fájl csatolható."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
 msgid "help_body_attachments_posting"
 msgstr "A hozzászóláshoz csatolmányként feltölteni kívánt fájl kiválasztása."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting"
 msgstr "Alapvető HTML elemek használhatóak."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:95
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Az URL-ek automatikusan kattintható linkekké alakulnak át."
 
@@ -257,7 +270,7 @@ msgid "help_transforms"
 msgstr "Válassza ki a Ploneboard Témákban beküldött hozzászólások esetén használható szövegtranszformációkat. A szövegtranszformációk megváltoztatják a felhasználók által megadott szövegeket, akár eltávolítva a potenciálisan ártalmas HTML elemeket, akár kiegészítő funkciójuk is lehet, mint például a linkek kattinthatóvá tétele."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:103
 msgid "label_add_portlet"
 msgstr "Friss Témák portlet hozzáadása"
 
@@ -267,17 +280,19 @@ msgid "label_back_to_board"
 msgstr "Vissza a fórumba"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+#: ../skins/ploneboard_templates/add_comment_form.cpt:127
 msgid "label_body_files_posting"
 msgstr "Csatolmányok"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+#: ../skins/ploneboard_templates/add_comment_form.cpt:87
 msgid "label_body_text_posting"
 msgstr "Szövegtörzs"
 
 #. Default: "by ${author}"
-#:  ../skins/ploneboard_templates/forum_view.pt:154
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author} által"
 
@@ -297,7 +312,7 @@ msgid "label_description_forum"
 msgstr "Leírás"
 
 #. Default: "in ${forum}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
 msgid "label_in_forum"
 msgstr "a ${forum} fórumban"
 
@@ -308,22 +323,23 @@ msgid "label_maxattachmentsize"
 msgstr "Csatolmányok maximális mérete"
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt:14
+#: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Fórummotor: ${link}"
 
 #. Default: "Quick reply"
-#: ../skins/ploneboard_templates/conversation_view.pt:74
+#: ../browser/templates/conversation_view.pt:68
 msgid "label_quickreply"
 msgstr "Gyorsválasz"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:75
+#: ../browser/comment.py:81
 msgid "label_quote"
 msgstr "${author} korábban ezt írta: ${quote}"
 
-#. Default: "Required"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#, fuzzy
 msgid "label_required"
 msgstr "Kötelező"
 
@@ -331,7 +347,7 @@ msgid "label_text"
 msgstr "Tartalom"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
 msgid "label_title_posting"
 msgstr "Cím"
 
@@ -341,77 +357,87 @@ msgid "label_transforms"
 msgstr "Transzformációk"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:204
+#: ../skins/ploneboard_templates/comment_view.pt:206
 msgid "legend_attachments"
 msgstr "Csatolmányok"
 
 #. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:90
+#: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
 msgstr "Lépjen be, hogy témát indíthasson"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:80
+#: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
 msgstr "${count} hozzászólás vár moderálásra."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt:43
+#: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
 msgstr "A következő hozzászólások várnak moderálásr. Kattintson vagy a 'Publikál' vagy a 'Visszavon' lehetőségre. A hozzászólás címére kattintva megtekintheti azt a Téma szövegkörnyezetében"
 
 #. Default: "Most recent comment"
-#:  ../skins/ploneboard_templates/forum_view.pt:131
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Friss hozzászólások"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+#: ../skins/ploneboard_templates/add_comment_form.cpt:149
 msgid "new_attachment"
 msgstr "Mégegy csatolmány hozzáadása"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/forum_view.pt:111
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
 msgstr "${star} ikonnal jelölt témákhoz szóltak hozzá legutóbbi belépése óta."
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:120
+#: ../skins/ploneboard_templates/moderation_form.pt:113
 msgid "no_comments_queued"
 msgstr "Egy hozzászólás sem vár moderálásra."
 
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt:123
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
 msgid "no_conversations_started"
 msgstr "Nem indítottak még témát."
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "no_recent_conversations"
 msgstr "Nincsenek ilyen témák."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:118
+#: ../browser/templates/forum.pt:126
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Nincsenek még válaszok"
 
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt:67
+#: ../browser/templates/addconversation.pt:14
 msgid "not_conversations"
 msgstr "Nincsenek még témák ebben a fórumban."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt:37
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
 msgstr "Nincsenek még fórumok itt, használja a menüt új fórumok létrehozásához."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:98
+#: ../browser/templates/addconversation.pt:41
 msgid "not_permission_start_conversation"
 msgstr "Sajnos nincsen jogosultsága új Téma indításához."
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt:93
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
 msgid "number_of_conversations"
 msgstr "Témák"
 
@@ -425,13 +451,8 @@ msgstr "Ploneboard beállítása"
 msgid "ploneboard_transform_panel"
 msgstr "Szövegtranszformációk"
 
-#. Default: "Post comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:167
-msgid "post_comment"
-msgstr "Hozzászólás beküldése"
-
 #. Default: "Posted by"
-#: ../skins/ploneboard_templates/comment_view.pt:70
+#: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
 msgstr "Beküldte:"
 
@@ -441,12 +462,13 @@ msgid "preview_message"
 msgstr "Üzenet előnézete"
 
 #. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
 msgid "recent_conversations_description"
 msgstr "A következő témákban történt változás mostanában."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
 msgid "replies"
 msgstr "Válaszok"
 
@@ -456,22 +478,24 @@ msgid "search_result_location"
 msgstr "A ${forum} fórumban &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
-#: ../skins/ploneboard_templates/board_view.pt:47
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Összes friss fejlemény"
 
 #. Default: "Show only unanswered"
-#: ../skins/ploneboard_templates/forum_view.pt:42
+#: ../browser/templates/forum.pt:38
 msgid "show_no_replies"
 msgstr "Csak a megválaszolatlan témák"
 
 #. Default: "Show all unanswered"
-#: ../skins/ploneboard_templates/board_view.pt:54
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Összes megválaszolatlan téma"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:75
+#: ../skins/ploneboard_templates/comment_view.pt:76
 msgid "text_at"
 msgstr "&mdash;"
 
@@ -481,12 +505,14 @@ msgid "title_count"
 msgstr "Megjelenítendő elemek száma"
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt:61
+#: ../browser/templates/board.pt:147
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
 msgstr "Általános fórumok"
 
 #. Default: "Recent conversations in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
 msgid "title_recent_conversations"
 msgstr "A ${title} friss témái"
 
@@ -496,11 +522,12 @@ msgid "title_title"
 msgstr "Portlet címe"
 
 #. Default: "Unanswered posts in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
 msgid "title_unanswered_conversations"
 msgstr "Megválaszolatlan témák a ${title} fórumban"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-msgid "unanswered_conversations"
-msgstr "A következő témákra nem érkezett még válasz."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
+msgid "unanswered_conversations_description"
+msgstr ""
+

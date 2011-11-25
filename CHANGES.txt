@@ -4,6 +4,10 @@ Changelog
 3.1 (unreleased)
 ----------------
 
+- I18n fixes on add conversation form.
+  Updated translation files.
+  [thomasdesvenain]
+
 - Refactor: make it easier to use another type of conversation.
   [thomasdesvenain]
 

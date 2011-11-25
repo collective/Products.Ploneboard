@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2008-01-10 16:56+0200\n"
 "Last-Translator: Jaroslav Ðatkeviè <jaro@akl.lt>\n"
 "Language-Team: Lithuanian Plone Translation Team <kristiina@akl.lt>\n"
@@ -27,9 +27,6 @@ msgstr "Aktyvuoti"
 
 msgid "Active"
 msgstr "Aktyvu"
-
-msgid "Comment"
-msgstr "Komentaras"
 
 msgid "Conversation"
 msgstr "Pokalbis"
@@ -93,6 +90,11 @@ msgstr "Laukiama moderatoriaus"
 
 #. Flat conversion view
 msgid "conversation_view"
+msgstr ""
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
 msgstr ""
 
 #, fuzzy

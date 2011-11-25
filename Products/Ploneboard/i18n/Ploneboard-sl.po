@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Matej Barič <matej.baric@gmail.com>\n"
 "Language-Team: Slovenian <matej.baric@gmail.com>\n"
@@ -18,10 +18,12 @@ msgstr ""
 "Domain: ploneboard\n"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr ""
 
 #. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:168
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 msgid "Cancel"
 msgstr ""
@@ -31,31 +33,31 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr ""
 
-#: ../browser/comment.py:259
+#: ../browser/comment.py:272
 msgid "Comment deleted"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:45
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
 msgid "Comment is pending moderation"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr ""
 
-#: ../browser/comment.py:254
+#: ../browser/comment.py:267
 msgid "Conversation deleted"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:41
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
 msgid "Conversation is pending moderation"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:22
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:21
 msgid "Data provider updated."
 msgstr ""
 
@@ -63,7 +65,7 @@ msgid "Forum"
 msgstr ""
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:191
+#: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Prijavite se za dodajanje sporočil"
 
@@ -71,7 +73,12 @@ msgstr "Prijavite se za dodajanje sporočil"
 msgid "No content entered"
 msgstr ""
 
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
+msgid "No title entered"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr ""
 
@@ -81,40 +88,41 @@ msgid "Post"
 msgstr ""
 
 #. Default: "Post comment"
-#: ../skins/ploneboard_templates/conversation_view.pt:83
+#: ../browser/templates/conversation_view.pt:77
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Pošlji odgovor"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:180
+#: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Odgovori"
 
 #. Default: "Start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:78
+#: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Ustvari novo temo"
 
-#: ../skins/ploneboard_scripts/remove_transform_script.cpy:23
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr ""
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:83
+#: ../skins/ploneboard_templates/comment_view.pt:84
 msgid "View profile"
 msgstr "Poglej profil"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:36
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
 msgstr ""
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:32
+#: ../skins/ploneboard_templates/add_comment_form.cpt:27
 msgid "add_comment"
 msgstr ""
 
 #. Default: "Add conversation"
-#: ../skins/ploneboard_templates/add_conversation_form.cpt:31
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:27
 msgid "add_conversation"
 msgstr ""
 
@@ -123,12 +131,15 @@ msgid "alert_delete_popup"
 msgstr "Ste prepričani, da želite izbrisati sporočilo?"
 
 #. Default: "Search"
-#: ../skins/ploneboard_templates/board_view.pt:41
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
 msgid "board_search_button"
 msgstr ""
 
-#. Default: "Search Board"
+#. Default: "Search Boards"
 #: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
 msgid "board_search_label"
 msgstr ""
 
@@ -138,32 +149,29 @@ msgid "box_more_recent_conversations"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:101
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
 msgid "by_author"
 msgstr "Avtor: $author"
 
-#. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:173
-msgid "cancel_comment"
-msgstr ""
-
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:163
+#: ../skins/ploneboard_templates/comment_view.pt:164
 msgid "comment_current_state"
 msgstr "Trenutno stanje"
 
 #. Default: "Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:129
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
 msgid "conversation"
 msgstr "Tema"
 
 #. Default: "Forum"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:73
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
 msgid "conversation_forum"
 msgstr ""
 
 #. Default: "Posted"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:74
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
 msgid "conversation_posted"
 msgstr "Poslano"
 
@@ -173,17 +181,21 @@ msgid "description_ploneboard_config"
 msgstr "Tukaj lahko spremenite nastavitve foruma."
 
 #. Default: "Forum name"
-#: ../skins/ploneboard_templates/board_view.pt:92
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "forum_name"
 msgstr "Forum"
 
 #. Default: "Up to ${title}"
-#: ../skins/ploneboard_templates/threaded_conversation_view.pt:45
+#: ../browser/templates/conversation_view.pt:42
+#: ../browser/templates/forum.pt:51
+#: ../skins/ploneboard_templates/comment_view.pt:35
 msgid "go_to_parent_url"
 msgstr "Navzgor na ${title}"
 
 #. Default: "Return to ${name}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
 msgid "go_to_view_url"
 msgstr "Nazaj na $name"
 
@@ -193,27 +205,27 @@ msgid "heading_preview_comment"
 msgstr ""
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:107
+#: ../portlet/recent.py:105
 msgid "help_add_portlet"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:141
+#: ../skins/ploneboard_templates/add_comment_form.cpt:136
 msgid "help_body_attachments_maxsize"
 msgstr ""
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:135
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
 msgid "help_body_attachments_posting"
 msgstr ""
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:105
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
 msgid "help_body_text_posting"
 msgstr ""
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:95
 msgid "help_body_text_posting_linkify_enabled"
 msgstr ""
 
@@ -253,7 +265,7 @@ msgid "help_transforms"
 msgstr ""
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:103
 msgid "label_add_portlet"
 msgstr ""
 
@@ -263,17 +275,19 @@ msgid "label_back_to_board"
 msgstr ""
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:132
+#: ../skins/ploneboard_templates/add_comment_form.cpt:127
 msgid "label_body_files_posting"
 msgstr ""
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:92
+#: ../skins/ploneboard_templates/add_comment_form.cpt:87
 msgid "label_body_text_posting"
 msgstr ""
 
 #. Default: "by ${author}"
-#: ../skins/ploneboard_templates/forum_view.pt:154
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "Avtor: ${author}"
 
@@ -293,7 +307,7 @@ msgid "label_description_forum"
 msgstr ""
 
 #. Default: "in ${forum}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:102
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
 msgid "label_in_forum"
 msgstr "Forum: $forum"
 
@@ -304,22 +318,22 @@ msgid "label_maxattachmentsize"
 msgstr "Izberite največjo velikost priponke."
 
 #. Default: "Powered by ${link}"
-#: ../skins/ploneboard_templates/board_footer.pt:14
+#: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Narejeno s $link"
 
 #. Default: "Quick reply"
-#: ../skins/ploneboard_templates/conversation_view.pt:74
+#: ../browser/templates/conversation_view.pt:68
 msgid "label_quickreply"
 msgstr "Hitri odgovor"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:75
+#: ../browser/comment.py:81
 msgid "label_quote"
 msgstr ""
 
-#. Default: "Required"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:66
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:61
 msgid "label_required"
 msgstr ""
 
@@ -327,7 +341,7 @@ msgid "label_text"
 msgstr ""
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:64
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
 msgid "label_title_posting"
 msgstr ""
 
@@ -337,77 +351,87 @@ msgid "label_transforms"
 msgstr ""
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:204
+#: ../skins/ploneboard_templates/comment_view.pt:206
 msgid "legend_attachments"
 msgstr "Priponke"
 
 #. Default: "Log in to start a conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:90
+#: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
 msgstr ""
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:80
+#: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
 msgstr "${count} sporočil v čakalni vrsti."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
-#: ../skins/ploneboard_templates/moderation_form.pt:43
+#: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
 msgstr ""
 
 #. Default: "Most recent comment"
-#: ../skins/ploneboard_templates/forum_view.pt:131
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Zadnje sporočilo"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:154
+#: ../skins/ploneboard_templates/add_comment_form.cpt:149
 msgid "new_attachment"
 msgstr ""
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
-#: ../skins/ploneboard_templates/forum_view.pt:111
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
 msgstr "Teme, označene z $star, so bile aktivne od vaše zadnje prijave."
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:120
+#: ../skins/ploneboard_templates/moderation_form.pt:113
 msgid "no_comments_queued"
 msgstr "Ni sporočil v čakalni vrsti."
 
 #. Default: "No conversations started"
-#: ../skins/ploneboard_templates/board_view.pt:123
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
 msgid "no_conversations_started"
 msgstr "Trenutno ni odprtih tem"
 
 #. Default: "No conversations found."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:45
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "no_recent_conversations"
 msgstr "Ni najdenih tem."
 
 #. Default: "No replies yet"
-#: ../skins/ploneboard_templates/forum_view.pt:172
+#: ../browser/templates/forum.pt:126
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Trenutno še ni odogovorov"
 
 #. Default: "No conversations in this forum yet."
-#: ../skins/ploneboard_templates/forum_view.pt:67
+#: ../browser/templates/addconversation.pt:14
 msgid "not_conversations"
 msgstr "Trenutno ni odprtih tem na tem forumu"
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
-#: ../skins/ploneboard_templates/board_view_global.pt:37
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
 msgstr "Trenutno ni forumov, uporabite menu 'dodaj' za nov forum."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
-#: ../skins/ploneboard_templates/forum_view.pt:98
+#: ../browser/templates/addconversation.pt:41
 msgid "not_permission_start_conversation"
 msgstr "Oprostite, nimate pravic za odprtje teme"
 
 #. Default: "Conversations"
-#: ../skins/ploneboard_templates/board_view.pt:93
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
 msgid "number_of_conversations"
 msgstr "Teme"
 
@@ -421,13 +445,8 @@ msgstr ""
 msgid "ploneboard_transform_panel"
 msgstr ""
 
-#. Default: "Post comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:167
-msgid "post_comment"
-msgstr ""
-
 #. Default: "Posted by"
-#: ../skins/ploneboard_templates/comment_view.pt:70
+#: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
 msgstr "Avtor:"
 
@@ -437,13 +456,14 @@ msgid "preview_message"
 msgstr ""
 
 #. Default: "The following conversations have had recent activity."
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:53
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
 #, fuzzy
 msgid "recent_conversations_description"
 msgstr "Spodnje teme so bile nazadnje aktivne."
 
 #. Default: "Replies"
-#: ../skins/ploneboard_templates/forum_view.pt:130
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
 msgid "replies"
 msgstr "Odgovori"
 
@@ -453,22 +473,24 @@ msgid "search_result_location"
 msgstr ""
 
 #. Default: "Show all recent activity"
-#: ../skins/ploneboard_templates/board_view.pt:47
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Prikaži zadnje teme"
 
 #. Default: "Show only unanswered"
-#: ../skins/ploneboard_templates/forum_view.pt:42
+#: ../browser/templates/forum.pt:38
 msgid "show_no_replies"
 msgstr "Prikaži samo neodgovorjene"
 
 #. Default: "Show all unanswered"
-#: ../skins/ploneboard_templates/board_view.pt:54
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Prikaži vse neodgovorjene"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:75
+#: ../skins/ploneboard_templates/comment_view.pt:76
 msgid "text_at"
 msgstr ""
 
@@ -478,12 +500,14 @@ msgid "title_count"
 msgstr ""
 
 #. Default: "General forums"
-#: ../skins/ploneboard_templates/board_view_global.pt:61
+#: ../browser/templates/board.pt:147
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
 msgstr "Splošni forumi"
 
 #. Default: "Recent conversations in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_recent.pt:31
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
 msgid "title_recent_conversations"
 msgstr "Zadnje teme: $title"
 
@@ -493,12 +517,12 @@ msgid "title_title"
 msgstr ""
 
 #. Default: "Unanswered posts in ${title}"
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:31
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
 msgid "title_unanswered_conversations"
 msgstr "Neodgovorjene teme: $title"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
-#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:53
-msgid "unanswered_conversations"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
+msgid "unanswered_conversations_description"
 msgstr ""
 

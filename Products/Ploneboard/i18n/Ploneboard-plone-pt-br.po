@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2009-01-12 12:03-0200\n"
 "Last-Translator: Danielle Pessanha <danielle@simplesconsultoria.com.br>\n"
 "Language-Team: <plone-i18n@lists.sourceforge.net>\n"
@@ -28,9 +28,6 @@ msgstr "Ativar"
 
 msgid "Active"
 msgstr "Ativo"
-
-msgid "Comment"
-msgstr "Comentário"
 
 msgid "Conversation"
 msgstr "Tópico"
@@ -95,6 +92,11 @@ msgstr "Aguardando moderação"
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Visão de conversa"
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"

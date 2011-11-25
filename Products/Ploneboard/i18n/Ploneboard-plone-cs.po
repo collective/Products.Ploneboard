@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2009-03-27 21:46+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2008-10-04 19:31+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -26,9 +26,6 @@ msgstr "Aktivovat"
 
 msgid "Active"
 msgstr "Aktivní"
-
-msgid "Comment"
-msgstr "Komentář"
 
 msgid "Conversation"
 msgstr "Konverzace"
@@ -93,6 +90,11 @@ msgstr "Čekající na moderátora"
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Jednoduché zobrazení"
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"

@@ -34,7 +34,7 @@
                     Search Boards
                 </label>
                 <input type="text" name="q" class="inputLabel"
-                    title="Search Board"
+                    title="Search Boards"
                     i18n:attributes="title board_search_label"/>
                 <input class="searchButton" type="submit" value="Search"
                     i18n:attributes="value board_search_button"/>

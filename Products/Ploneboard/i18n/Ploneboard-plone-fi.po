@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2006-06-06 13:53+0000\n"
+"POT-Creation-Date: 2011-11-25 11:38+0000\n"
 "PO-Revision-Date: 2010-03-25 12:51+0200\n"
 "Last-Translator: Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>\n"
 "Language-Team: University of Jyväskylä <jukka.ojaniemi@jyu.fi>\n"
@@ -32,45 +32,11 @@ msgstr "Aktivoi"
 msgid "Active"
 msgstr "Aktiivinen"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
-msgid "Attachment is too large"
-msgstr "Liitetiedosto on liian iso"
-
-msgid "Comment"
-msgstr "Kommentti"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:47
-msgid "Comment added"
-msgstr "Kommentti lisätty"
-
-#: ./browser/comment.py:259
-msgid "Comment deleted"
-msgstr "Kommentti poistettu"
-
-#: ./skins/ploneboard_scripts/add_comment_script.cpy:45
-msgid "Comment is pending moderation"
-msgstr "Kommentti odottaa tarkistusta"
-
 msgid "Conversation"
 msgstr "Keskustelu"
 
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:43
-msgid "Conversation added"
-msgstr "Keskustelu lisätty"
-
-#: ./browser/comment.py:254
-msgid "Conversation deleted"
-msgstr "Keskustelu poistettu"
-
-#: ./skins/ploneboard_scripts/add_conversation_script.cpy:41
-msgid "Conversation is pending moderation"
-msgstr "Keskustelu odottaa tarkistusta"
-
-msgid "Enter comment body."
-msgstr "Lisää kommentin sisältö."
-
-msgid "Flat conversion view"
-msgstr "Näytä viestit aikajärjestyksessä"
+msgid "Conversation contains comments."
+msgstr ""
 
 msgid "Free for all"
 msgstr "Avoin kaikille"
@@ -83,9 +49,6 @@ msgstr "Piilota"
 
 msgid "Lock"
 msgstr "Lukitse"
-
-msgid "Locked"
-msgstr "Lukittu"
 
 msgid "Make free-for-all"
 msgstr "Salli kaikille"
@@ -102,6 +65,9 @@ msgstr "Keskustelupalsta"
 
 msgid "Moderate"
 msgstr "Hallitse"
+
+msgid "Moderated forum"
+msgstr ""
 
 msgid "Open"
 msgstr "Avattu"
@@ -124,17 +90,24 @@ msgstr "Viestin lähettäminen vaatii jäsenyyden"
 msgid "Retracted"
 msgstr "Peruttu"
 
-msgid "Search board"
-msgstr "Etsi palstalta"
-
-msgid "Threaded conversion view"
-msgstr "Näytä viestiketjut"
-
 msgid "Waiting for moderator"
 msgstr "Odottaa tarkastusta"
 
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
+
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${hours}:${minutes} ${day} ${month} ${year}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
