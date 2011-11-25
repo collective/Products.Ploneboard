@@ -17,6 +17,10 @@
     </script>
   </metal:js>
 
+  <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+  </metal:css>
 </head>
 
 <body>
