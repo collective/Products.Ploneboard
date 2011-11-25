@@ -3,7 +3,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
-      
+
 <head>
   <metal:top fill-slot="top_slot">
     <tal:block condition="python:not user.has_permission('Ploneboard: Manage Conversation', here)">
@@ -20,10 +20,7 @@
 </head>
 
 <body>
-  <div metal:fill-slot="main"
-        tal:define="view context/@@conversation_browserview;
-                    isAnon context/@@plone_portal_state/anonymous;
-                    mtool context/@@plone_tools/membership;">
+  <div metal:fill-slot="main">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -44,7 +41,7 @@
     </a>
 
     <div class="documentDescription"
-         tal:content="here/Description"> 
+         tal:content="here/Description">
       description
     </div>
 

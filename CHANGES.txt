@@ -4,6 +4,9 @@ Changelog
 3.1 (unreleased)
 ----------------
 
+- Fix threaded conversation view using a browser view instead of template.
+  [thomasdesvenain]
+
 - I18n fixes on add conversation form.
   Updated translation files.
   [thomasdesvenain]

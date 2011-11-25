@@ -47,6 +47,15 @@
 	 />
 
   <browser:page
+     for="..interfaces.IConversation"
+     class=".comment.ConversationView"
+     name="threaded_conversation_view"
+     allowed_interface=".interfaces.IConversationView"
+     permission="zope.Public"
+     template="templates/threaded_conversation_view.pt"
+     />
+
+  <browser:page
      for="..interfaces.IComment"
      class=".comment.CommentView"
      name="singlecomment_view"
