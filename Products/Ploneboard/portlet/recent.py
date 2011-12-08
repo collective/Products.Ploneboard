@@ -2,6 +2,7 @@ from zope.interface import implements
 from zope import schema
 from zope.component import getUtility
 from zope.component import getMultiAdapter
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.formlib.form import Fields
 from plone.memoize.view import memoize
 from Products.CMFCore.utils import getToolByName
@@ -31,17 +32,28 @@ class IRecentConversationsPortlet(IPortletDataProvider):
                        default=5)
 
 
+    forum = schema.Choice(title=_(u"title_forum",
+                                 default = u"Limit to specific board or forum"),
+                          description=_(u"help_forum", default=u"Limit recent conversations to a specific forum"),
+                          vocabulary="ploneboard.BoardsAndForumVocabulary",
+                          required=False,
+                          default="")                    
+
+
 class Assignment(base.Assignment):
     implements(IRecentConversationsPortlet)
 
     title = u"Recent messages"
     count = 5
+    forum = ""
 
-    def __init__(self, title=None, count=None):
+    def __init__(self, title=None, count=None, forum=None):
         if title is not None:
             self.title=title
         if count is not None:
             self.count=count
+        if forum is not None:
+            self.forum=forum
 
 
 class Renderer(base.Renderer):
@@ -57,11 +69,19 @@ class Renderer(base.Renderer):
         if icons:
             portal=getMultiAdapter((self.context, self.request),
                                     name="plone_portal_state").portal_url()+"/"
-        brains=ct(
-                object_provides="Products.Ploneboard.interfaces.IConversation",
-                sort_on="modified",
-                sort_order="reverse",
-                sort_limit=self.data.count)[:self.data.count]
+        query = dict(object_provides="Products.Ploneboard.interfaces.IConversation",
+                        sort_on="modified",
+                        sort_order="reverse",
+                        sort_limit=self.data.count)
+        
+        if self.data.forum !="":
+        
+            result = ct(UID=self.data.forum)
+            if len(result)==1:
+                #limit to specific forum
+                query["path"] = result[0].getPath()
+
+        brains=ct(query)[:self.data.count]
 
         def morph(brain):
             obj=brain.getObject()
@@ -93,6 +113,14 @@ class Renderer(base.Renderer):
 
     @property
     def next_url(self):
+
+        if self.data.forum !="":
+            ct=getToolByName(self.context, "portal_catalog")
+            result = ct(UID=self.data.forum)
+            if len(result)==1:
+                #limit to specific forum
+                return result[0].getURL()
+
         state=getMultiAdapter((self.context, self.request),
                                 name="plone_portal_state")
         return state.portal_url()+"/ploneboard_recent"
@@ -118,3 +146,8 @@ class EditForm(base.EditForm):
     description = _(u"help_add_portlet",
             default=u"This portlet shows conversations with recent comments.")
 
+def BoardsAndForumVocabularyFactory(context):
+    """Vocabulary factory for supplying a vocabulary of users in the site for the injected responsible person field"""
+    tool = getToolByName(context, 'uid_catalog')
+    items = [SimpleTerm(r.UID, r.UID, r.Title) for r in tool(portal_type=["PloneboardForum","Ploneboard"])]
+    return SimpleVocabulary(items)

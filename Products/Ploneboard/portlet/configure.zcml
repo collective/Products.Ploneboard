@@ -9,5 +9,12 @@
         addview=".recent.AddForm"
         editview=".recent.EditForm"
         />
+        
+    <utility 
+        component=".recent.BoardsAndForumVocabularyFactory" 
+        name="ploneboard.BoardsAndForumVocabulary"
+        provides="zope.schema.interfaces.IVocabularyFactory"
+        />
+    
 
 </configure>

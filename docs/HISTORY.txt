@@ -1,8 +1,9 @@
 Changelog
 =========
 
-2.1 - Unreleased
-----------------
+2.0.1 jarn2 - December 8, 2011
+--------------------
+- Backport changes from 3.1 that allows user to pick what board to show in portlet
 
 
 2.0 - March 14, 2008
