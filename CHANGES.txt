@@ -4,6 +4,8 @@ Changelog
 3.2 (Unreleased)
 ----------------
 
+- Fixed threaded conversation view after conversation_view template removed.
+  [thomasdesvenain]
 
 3.1 (2011-12-07)
 ----------------
@@ -20,7 +22,7 @@ Changelog
 
 - Refactor: add conversation form and messages comes in a viewlet.
   [thomasdesvenain]
-  
+
 - Enable choice of what board or forum to show in recent portlet
   [martior]
 
