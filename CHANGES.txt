@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2 (Unreleased)
+3.2 (2011-12-22)
 ----------------
 
 - Added odd/even class on conversation view comments.
