@@ -3,7 +3,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
-      
+
 <head>
   <metal:top fill-slot="top_slot">
     <tal:block condition="python:not user.has_permission('Ploneboard: Manage Conversation', here)">
@@ -43,7 +43,7 @@
     </a>
 
     <div class="documentDescription"
-         tal:content="here/Description"> 
+         tal:content="here/Description">
       description
     </div>
 
@@ -53,10 +53,13 @@
          metal:define-macro="view_comments"
          tal:define="batch view/comments">
 
-      <div class="boardComment visualIEFloatFix" tal:repeat="comment batch">
+      <div tal:repeat="comment batch">
+        <div tal:define="odd repeat/comment/odd"
+             tal:attributes="class python:(odd and 'odd' or 'even') + ' boardComment visualIEFloatFix'">
         <metal:comment metal:use-macro="here/comment_view/macros/comment" />
+        </div>
       </div>
-      
+
       <!-- Navigation -->
       <div metal:use-macro="here/batch_macros/macros/navigation" />
     </div>
@@ -65,17 +68,17 @@
       <tal:check define="firstcomment here/getFirstComment"
                  condition="python:firstcomment and checkPermission('Ploneboard: Add Comment', firstcomment) and checkPermission('Add portal content', here)">
         <fieldset>
-          <legend i18n:translate="label_quickreply">Quick reply</legend> 
+          <legend i18n:translate="label_quickreply">Quick reply</legend>
           <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form" method="post" enctype="multipart/form-data">
 
-            <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" /> 
+            <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
 
             <input type="hidden" name="form.submitted" value="1" />
             <div class="formControls">
               <input class="context"
-                     name="form.button.Post" 
+                     name="form.button.Post"
                      i18n:attributes="value"
                      type="submit" value="Post comment" />
             </div>

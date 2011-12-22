@@ -4,6 +4,9 @@ Changelog
 3.2 (Unreleased)
 ----------------
 
+- Added odd/even class on conversation view comments.
+  [thomasdesvenain]
+
 - Conversation views are restricted to View permission (not public),
   so if it is visible to authenticated members only,
   anonymous are redirected to login form.
