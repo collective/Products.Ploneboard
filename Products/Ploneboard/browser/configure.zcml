@@ -42,7 +42,7 @@
      class=".comment.ConversationView"
      name="conversation_browserview"
      allowed_interface=".interfaces.IConversationView"
-     permission="zope.Public"
+     permission="zope2.View"
      template="templates/conversation_view.pt"
 	 />
 
@@ -51,7 +51,7 @@
      class=".comment.ConversationView"
      name="threaded_conversation_view"
      allowed_interface=".interfaces.IConversationView"
-     permission="zope.Public"
+     permission="zope2.View"
      template="templates/threaded_conversation_view.pt"
      />
 
@@ -74,7 +74,7 @@
      for="*"
      name="ploneboard_recent_view"
      class=".comment.RecentConversationsView"
-     permission="zope.Public"
+     permission="zope2.View"
      allowed_attributes="results num_conversations toPloneboardTime"
      />
 

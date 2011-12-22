@@ -4,6 +4,11 @@ Changelog
 3.2 (Unreleased)
 ----------------
 
+- Conversation views are restricted to View permission (not public),
+  so if it is visible to authenticated members only,
+  anonymous are redirected to login form.
+  [thomasdesvenain]
+
 - Fixed threaded conversation view after conversation_view template removed.
   [thomasdesvenain]
 
