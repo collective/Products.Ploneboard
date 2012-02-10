@@ -104,9 +104,11 @@ class Renderer(base.Renderer):
 
     @property
     def next_url(self):
-        state=getMultiAdapter((self.context, self.request),
-                                name="plone_portal_state")
-        return state.portal_url()+"/ploneboard_recent"
+        site_id=self.context.portal_url.getPortalObject().getId()
+        forum_folder=self.context.restrictedTraverse("%s%s" %(site_id,self.data.forumPath),None)
+        if not forum_folder:
+            return self.context.portal_url()+"/ploneboard_recent"
+        return forum_folder.absolute_url()+"/ploneboard_recent"
 
     render = ViewPageTemplateFile("recent_contextual.pt")
 
