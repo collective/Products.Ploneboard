@@ -60,11 +60,20 @@ msgstr "Area Forum"
 msgid "Moderate"
 msgstr "Moderato"
 
+msgid "Make moderated"
+msgstr "Rendi moderato"
+
+msgid "Moderated forum"
+msgstr "Moderato"
+
+msgid "Make private"
+msgstr "Rendi privato"
+
 msgid "Open"
 msgstr "Aperto"
 
 msgid "Private to members only"
-msgstr "Riservato soli ai membri"
+msgstr "Privato"
 
 msgid "Public"
 msgstr "Pubblico"
@@ -73,7 +82,7 @@ msgid "Rejected"
 msgstr "Rifiutato"
 
 msgid "Require membership to post"
-msgstr "Richiede la registrazione per scrivere"
+msgstr "Riservato ai membri"
 
 msgid "Retracted"
 msgstr "Ritirato"
