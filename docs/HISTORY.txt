@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.7-branch_redturtle (2012-02-??)
+-------------------------------------
+* Permessa la modifica da parte del creatore nello stato rejected [andrea]
+* Solo l'owner vede il bottone per sottomettere di nuovo la pubblicazione [andrea]
+* Fissate traduzioni [andrea]
+
 2.0.6-branch_redturtle (2012-02-10)
 -------------------------------------
 * fissati link in portlet per i messaggi contestuale [andrea]

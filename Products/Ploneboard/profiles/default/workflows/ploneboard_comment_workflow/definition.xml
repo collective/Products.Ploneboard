@@ -94,7 +94,7 @@
   </permission-map>
  </state>
  <state state_id="rejected" title="Rejected">
-  <exit-transition transition_id="submit"/>
+  <exit-transition transition_id="re-submit"/>
   <permission-map name="Access contents information"
                   acquired="False">
    <permission-role>Manager</permission-role>
@@ -111,6 +111,7 @@
   <permission-map name="Modify portal content"
                   acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Add Comment"
                   acquired="False">
@@ -213,6 +214,16 @@
           category="workflow">Submit</action>
   <guard>
    <guard-permission>Request review</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="re-submit"
+             title="Member requests publishing"
+             new_state="pending" trigger="USER"
+             before_script="" after_script="">
+  <action url="%(content_url)s/content_submit_form"
+          category="workflow">Submit</action>
+  <guard>
+   <guard-role>Owner</guard-role>
   </guard>
  </transition>
  <variable variable_id="action" for_catalog="False"
