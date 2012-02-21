@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.7-branch_redturtle (2012-02-??)
+2.0.7-branch_redturtle (2012-02-22)
 -------------------------------------
 * Permessa la modifica da parte del creatore nello stato rejected [andrea]
 * Solo l'owner vede il bottone per sottomettere di nuovo la pubblicazione [andrea]
