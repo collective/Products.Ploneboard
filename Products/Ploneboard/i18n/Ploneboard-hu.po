@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin2\n"
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: hu\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -33,6 +41,10 @@ msgstr "Mégsem"
 msgid "Change"
 msgstr "Mégsem"
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Hozzászólás hozzáadva"
@@ -45,9 +57,17 @@ msgstr "Hozzászólás törölve"
 msgid "Comment is pending moderation"
 msgstr "Hozzászólás moderálás alatt"
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Téma hozáadva"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr ""
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -61,6 +81,7 @@ msgstr "Téma moderálás alatt"
 msgid "Data provider updated."
 msgstr "Adatszolgáltató frissítve."
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Fórum"
 
@@ -68,6 +89,10 @@ msgstr "Fórum"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Lépjen be, hogy hozzászólhasson"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -82,13 +107,17 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Kérjük, javítsa a jelzett hibákat!"
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr "Beküld"
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Hozzászólás beküldése"
@@ -189,7 +218,7 @@ msgstr "Fórum elnevezése"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Menj fel ide: ${title} "
 
@@ -205,7 +234,7 @@ msgid "heading_preview_comment"
 msgstr "Hozzászólás előnézete"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 msgid "help_add_portlet"
 msgstr "Ez a portlet a friss hozzászólásokkal rendelkező témákat listázza ki."
 
@@ -238,7 +267,7 @@ msgid "help_category"
 msgstr "Adja meg, hogy a fórum mely kategóriák alá legyen besorolva. Egy fórum akár több kategóriában is szerepelhet, azonban egyszerre csak egy kategóra használata ajánlott."
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 msgid "help_count"
 msgstr "Hány elem kerüljön kilistázásra."
 
@@ -253,6 +282,11 @@ msgstr "Adja meg a téma rövid leírását"
 #. Default: "Brief description of the forum topic."
 msgid "help_description_forum"
 msgstr "Adja meg a topik rövid leírását"
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr "Adja meg a lehetséges csatományok számát."
@@ -270,7 +304,7 @@ msgid "help_transforms"
 msgstr "Válassza ki a Ploneboard Témákban beküldött hozzászólások esetén használható szövegtranszformációkat. A szövegtranszformációk megváltoztatják a felhasználók által megadott szövegeket, akár eltávolítva a potenciálisan ártalmas HTML elemeket, akár kiegészítő funkciójuk is lehet, mint például a linkek kattinthatóvá tétele."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Friss Témák portlet hozzáadása"
 
@@ -328,7 +362,7 @@ msgid "label_powered_by"
 msgstr "Fórummotor: ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Gyorsválasz"
 
@@ -500,9 +534,14 @@ msgid "text_at"
 msgstr "&mdash;"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
 msgstr "Megjelenítendő elemek száma"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr ""
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -517,7 +556,7 @@ msgid "title_recent_conversations"
 msgstr "A ${title} friss témái"
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr "Portlet címe"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2009-03-03 14:45+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,15 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "A Forum contains conversations."
-msgstr "Foro batek hariak ditu barnean"
-
-msgid "A comment contains regular text body and metadata."
-msgstr "Erantzun batek testua eta metadatuak ditu."
-
 msgid "Activate"
 msgstr "Aktibatu"
 
 msgid "Active"
 msgstr "Aktibatuta"
 
-msgid "Conversation"
-msgstr "Mezua"
-
-msgid "Conversation contains comments."
-msgstr "Hariak erantzunak ditu."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr ""
 
 msgid "Free for all"
 msgstr "Guztientzat irekita"
@@ -48,6 +40,9 @@ msgstr "Ezkutuan"
 msgid "Lock"
 msgstr "Itxi"
 
+msgid "Locked"
+msgstr ""
+
 msgid "Make free-for-all"
 msgstr "Guztiei ireki"
 
@@ -57,8 +52,8 @@ msgstr "Kideentzat bakarrik ireki"
 msgid "Make moderated"
 msgstr "Moderazioa aktibatu"
 
-msgid "Message Board"
-msgstr "Foroa"
+msgid "Make private"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Moderatu"
@@ -68,9 +63,6 @@ msgstr "Moderatutako foroa"
 
 msgid "Open"
 msgstr "Irekita"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Ploneboard kanporengo objektua da."
 
 msgid "Private to members only"
 msgstr "Kideentzat bakarrik"
@@ -90,13 +82,28 @@ msgstr "Baztertuta"
 msgid "Waiting for moderator"
 msgstr "Moderazioaren zain"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Elkarrizketen bista"
 
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr ""
+
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"

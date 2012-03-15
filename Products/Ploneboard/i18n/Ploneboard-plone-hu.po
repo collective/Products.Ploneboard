@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -17,23 +17,15 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: hu\n"
 
-msgid "A Forum contains conversations."
-msgstr "Egy fórum beszédtémákat tartalmaz."
-
-msgid "A comment contains regular text body and metadata."
-msgstr "Egy hozzászólás szokásos szövegtörzset és metaadatokat tartalmaz."
-
 msgid "Activate"
 msgstr "Aktivál"
 
 msgid "Active"
 msgstr "Aktív"
 
-msgid "Conversation"
-msgstr "Téma"
-
-msgid "Conversation contains comments."
-msgstr "Egy Téma hozzászólásokat tartalmaz."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr ""
 
 msgid "Free for all"
 msgstr "Szabad mindenkinek"
@@ -47,6 +39,9 @@ msgstr "Elrejt"
 msgid "Lock"
 msgstr "Zárol"
 
+msgid "Locked"
+msgstr ""
+
 msgid "Make free-for-all"
 msgstr "Tegye szabaddá mindenkinek"
 
@@ -56,8 +51,8 @@ msgstr "Kösse tagsághoz a hozzászólást"
 msgid "Make moderated"
 msgstr "Tegye moderálttá"
 
-msgid "Message Board"
-msgstr "Fórum gyűjtőoldal"
+msgid "Make private"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Moderál"
@@ -67,9 +62,6 @@ msgstr "Moderált fórum"
 
 msgid "Open"
 msgstr "Nyílt"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "A Ploneboard gyűjtőoldal a legkülső fórum objektum, mely megjelenik az oldalon."
 
 msgid "Private to members only"
 msgstr "Privát, csak tagoknak"
@@ -89,13 +81,28 @@ msgstr "Visszavonva"
 msgid "Waiting for moderator"
 msgstr "Moderálásra vár"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "lapos témanézet"
 
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr ""
+
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"

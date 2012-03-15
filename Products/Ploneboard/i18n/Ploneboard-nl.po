@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2007-07-26 20:35+0100\n"
 "Last-Translator: THijs <THijs@pareto.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -15,6 +15,14 @@ msgstr ""
 "Language-Name: Nederlands\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -32,6 +40,10 @@ msgstr "Annuleren"
 msgid "Change"
 msgstr "Bewerken"
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Reactie toegevoegd"
@@ -44,9 +56,17 @@ msgstr "Reactie verwijderd"
 msgid "Comment is pending moderation"
 msgstr "Reactie ingezonden voor goedkeuring"
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Discussie toegevoegd"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr ""
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -60,6 +80,7 @@ msgstr "Discussie ingezonden voor goedkeuring"
 msgid "Data provider updated."
 msgstr "Data provider bijgewerkt."
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Forum"
 
@@ -67,6 +88,10 @@ msgstr "Forum"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Log in om een reactie toe te voegen"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -81,13 +106,17 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Verbeter de aangegeven fouten."
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr "Plaatsen"
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Plaatsen"
@@ -187,7 +216,7 @@ msgstr "Forumnaam"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Terug naar ${title}"
 
@@ -203,7 +232,7 @@ msgid "heading_preview_comment"
 msgstr "Voorbeeld van reactie bekijken"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 msgid "help_add_portlet"
 msgstr "Toont discussies met recente reacties."
 
@@ -234,7 +263,7 @@ msgid "help_category"
 msgstr "Kies onder welk onderwerp het forum geplaatst moet worden. Aan een forum kunnen meerdere onderwerpen worden toegekend, maar &eacute;&eacute;n enkel onderwerp wordt aangeraden."
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 msgid "help_count"
 msgstr "Aantal te tonen items."
 
@@ -246,6 +275,11 @@ msgstr "Voeg een korte beschrijving van de discussie toe."
 
 msgid "help_description_forum"
 msgstr "Voeg een korte beschrijving van het forumthema toe."
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr "Selecteer het maximale aantal bijlagen per reactie."
@@ -262,7 +296,7 @@ msgid "help_transforms"
 msgstr "Kies de tekstfilters die gebruikt worden voor geplaatste reacties in discussies. Tekstfilters passen de door de gebruiker geplaatste tekst aan. Dit  om ofwel mogelijk schadelijke HTML tags te verwijderen, ofwel extra functionaliteit te bieden, zoals aanklikbare links."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Voeg portlet met recente discussielijst toe."
 
@@ -320,7 +354,7 @@ msgid "label_powered_by"
 msgstr "Op basis van ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Snelle reactie"
 
@@ -491,9 +525,14 @@ msgid "text_at"
 msgstr "op"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
 msgstr "Aantal te tonen items"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr ""
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -508,7 +547,7 @@ msgid "title_recent_conversations"
 msgstr "Recent actieve discussies in ${title}"
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr "Titel van het portlet"
 

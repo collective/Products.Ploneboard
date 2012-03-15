@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2008-01-10 16:56+0200\n"
 "Last-Translator: Jaroslav Ðatkeviè <jaro@akl.lt>\n"
 "Language-Team: Lithuanian Plone Translation Team <kristiina@akl.lt>\n"
@@ -16,22 +16,14 @@ msgstr ""
 "X-Poedit-Language: Lithuanian\n"
 "X-Poedit-Country: LITHUANIA\n"
 
-msgid "A Forum contains conversations."
-msgstr ""
-
-msgid "A comment contains regular text body and metadata."
-msgstr ""
-
 msgid "Activate"
 msgstr "Aktyvuoti"
 
 msgid "Active"
 msgstr "Aktyvu"
 
-msgid "Conversation"
-msgstr "Pokalbis"
-
-msgid "Conversation contains comments."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
 msgstr ""
 
 msgid "Free for all"
@@ -46,6 +38,9 @@ msgstr "Paslëpti"
 msgid "Lock"
 msgstr "Uþrakinti"
 
+msgid "Locked"
+msgstr ""
+
 msgid "Make free-for-all"
 msgstr "Padaryti laisvu visiems"
 
@@ -55,8 +50,8 @@ msgstr "Padaryti nario paskelbimà"
 msgid "Make moderated"
 msgstr ""
 
-msgid "Message Board"
-msgstr "Þinuèiø lenta"
+msgid "Make private"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Moderuoti"
@@ -66,9 +61,6 @@ msgstr ""
 
 msgid "Open"
 msgstr "Atverti"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
 
 msgid "Private to members only"
 msgstr "Privatu tik nariams"
@@ -88,13 +80,28 @@ msgstr "Atsisakyta"
 msgid "Waiting for moderator"
 msgstr "Laukiama moderatoriaus"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
+msgstr ""
+
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
 msgstr ""
 
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
 msgstr ""
 
 #, fuzzy

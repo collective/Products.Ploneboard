@@ -1,27 +1,22 @@
 # Fabio Rizzo <fabiorizzo@threepointsweb.com>, 2005-2007.
 # LEANDRO ZANUZ <lzanuz@ucs.br>, 2006.
-# Érico Andrei <erico@simplesconsultoria.com.br>, 2008
+# Érico Andrei <erico@simplesconsultoria.com.br>, 2008.
+# Andre Nogueira <andre@simplesconsultoria.com.br>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
-"PO-Revision-Date: 2012-02-15 14:57-0300\n"
-"Last-Translator: Andre Nogueira <andre@simplesconsultoria.com.br>\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
+"PO-Revision-Date: 2012-03-15 17:07-0300\n"
+"Last-Translator: Gustavo Lepri <lepri@simplesconsultoria.com.br>\n"
 "Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: pt-br\n"
-"Language-Name: Português do Brasil\n"
+"Language-Name: Brazilian Portuguese\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
-
-msgid "A Forum contains conversations."
-msgstr "Um fórum contém conversas."
-
-msgid "A comment contains regular text body and metadata."
-msgstr "Um comentário contém corpo de texto regular e metadata."
 
 msgid "Activate"
 msgstr "Ativar"
@@ -29,11 +24,9 @@ msgstr "Ativar"
 msgid "Active"
 msgstr "Ativo"
 
-msgid "Conversation"
-msgstr "Tópico"
-
-msgid "Conversation contains comments."
-msgstr "Uma Conversa contém comentários."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr "Editar"
 
 msgid "Free for all"
 msgstr "Liberado para Anônimos"
@@ -47,6 +40,9 @@ msgstr "Ocultar"
 msgid "Lock"
 msgstr "Bloquear"
 
+msgid "Locked"
+msgstr "Bloqueado"
+
 msgid "Make free-for-all"
 msgstr "Liberar para Anônimos"
 
@@ -56,8 +52,8 @@ msgstr "Só Membros Postam"
 msgid "Make moderated"
 msgstr "Tornar moderado"
 
-msgid "Message Board"
-msgstr "Pasta de Fóruns"
+msgid "Make private"
+msgstr "Tornar privado"
 
 msgid "Moderate"
 msgstr "Moderar"
@@ -67,9 +63,6 @@ msgstr "Fórum Moderado"
 
 msgid "Open"
 msgstr "Aberto"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Uma pasta de fóruns, com os fóruns que aparecerão em seu site"
 
 msgid "Private to members only"
 msgstr "Privado somente para membros"
@@ -89,14 +82,29 @@ msgstr "Retraído"
 msgid "Waiting for moderator"
 msgstr "Aguardando moderação"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr "${number} itens que satisfazem os termos da sua pesquisa"
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Visão de conversa"
+
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr "Resultado da busca"
 
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
 msgstr "Relevância: ${percentage}%"
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
+msgstr "Procurar"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard.pot VERSION\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2008-05-25 11:08+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: sv-fi\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -33,6 +41,10 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr ""
@@ -45,8 +57,16 @@ msgstr ""
 msgid "Comment is pending moderation"
 msgstr ""
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
+msgstr ""
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
 msgstr ""
 
 #: ../browser/comment.py:267
@@ -61,6 +81,7 @@ msgstr ""
 msgid "Data provider updated."
 msgstr ""
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Forum"
 
@@ -68,6 +89,10 @@ msgstr "Forum"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Logga in för att kommentera"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -82,13 +107,17 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr ""
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr ""
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Skicka kommentar"
@@ -188,7 +217,7 @@ msgstr "Namn på forum"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Upp till ${title}"
 
@@ -204,7 +233,7 @@ msgid "heading_preview_comment"
 msgstr ""
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 msgid "help_add_portlet"
 msgstr ""
 
@@ -237,7 +266,7 @@ msgid "help_category"
 msgstr "Välj vilka kategorier detta forum ska vara listad under. Ett forum kan finnas under flera kategorier, det är däremot rekommenderat att bara använda en."
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 msgid "help_count"
 msgstr ""
 
@@ -252,6 +281,11 @@ msgstr "Skriv en kort beskrivning av konversationen."
 #. Default: "Brief description of the forum topic."
 msgid "help_description_forum"
 msgstr "Kort beskrivning av ämnet."
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr "Ange hur många filer som går att bifoga."
@@ -269,7 +303,7 @@ msgid "help_transforms"
 msgstr "Välj de text transformeringar som ska användas för kommentarer i Ploneboard trådar. Text transformeringar ändrar texten från användaren, antingen för att ta bort HTML taggar som kan vara farliga, eller för att lägga till funktionalitet tex. göra länkar klickbara."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr ""
 
@@ -327,7 +361,7 @@ msgid "label_powered_by"
 msgstr "Baserad på ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Snabbsvara"
 
@@ -498,8 +532,13 @@ msgid "text_at"
 msgstr "&mdash;"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
+msgstr ""
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
 msgstr ""
 
 #. Default: "General forums"
@@ -515,7 +554,7 @@ msgid "title_recent_conversations"
 msgstr ""
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr ""
 

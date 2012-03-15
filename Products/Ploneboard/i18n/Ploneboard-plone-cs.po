@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2008-10-04 19:31+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -15,22 +15,14 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
-msgid "A Forum contains conversations."
-msgstr ""
-
-msgid "A comment contains regular text body and metadata."
-msgstr ""
-
 msgid "Activate"
 msgstr "Aktivovat"
 
 msgid "Active"
 msgstr "Aktivní"
 
-msgid "Conversation"
-msgstr "Konverzace"
-
-msgid "Conversation contains comments."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
 msgstr ""
 
 msgid "Free for all"
@@ -45,6 +37,9 @@ msgstr "Skrýt"
 msgid "Lock"
 msgstr "Zamknout"
 
+msgid "Locked"
+msgstr ""
+
 msgid "Make free-for-all"
 msgstr "Povolit všem"
 
@@ -54,8 +49,8 @@ msgstr "Omezit přispívání pro členy"
 msgid "Make moderated"
 msgstr "Změnit na moderované"
 
-msgid "Message Board"
-msgstr "Diskusní fórum"
+msgid "Make private"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Moderovat"
@@ -65,9 +60,6 @@ msgstr "Moderovaná konverzace"
 
 msgid "Open"
 msgstr "Otevřít"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
 
 msgid "Private to members only"
 msgstr "Pouze pro členy"
@@ -87,13 +79,28 @@ msgstr "Staženo"
 msgid "Waiting for moderator"
 msgstr "Čekající na moderátora"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Jednoduché zobrazení"
 
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr ""
+
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"

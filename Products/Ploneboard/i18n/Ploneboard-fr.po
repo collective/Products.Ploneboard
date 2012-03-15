@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2008-10-21 17:36+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -20,6 +20,14 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Generator: KBabel 1.11.4\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -37,6 +45,10 @@ msgstr "Annuler"
 msgid "Change"
 msgstr "Modifier"
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Commentaire ajouté"
@@ -49,9 +61,17 @@ msgstr "Commentaire supprimé"
 msgid "Comment is pending moderation"
 msgstr "Commentaire en attente de modération"
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Conversation ajoutée"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr ""
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -66,6 +86,7 @@ msgstr "Conversation en attente de modération"
 msgid "Data provider updated."
 msgstr "Data provider mis à jour"
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Forum"
 
@@ -73,6 +94,10 @@ msgstr "Forum"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "S'identifier pour ajouter des messages"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -87,13 +112,17 @@ msgstr "Veuillez saisir un titre"
 msgid "Please correct the indicated errors."
 msgstr "Veuillez corriger les erreurs indiquées"
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr "Poster"
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Envoyer un message"
@@ -193,7 +222,7 @@ msgstr "Nom du forum"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Remonter à ${title}"
 
@@ -210,7 +239,7 @@ msgid "heading_preview_comment"
 msgstr "Aperçu du commentaire"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 msgid "help_add_portlet"
 msgstr "Cette boîte présente les conversations récemment commentées."
 
@@ -243,7 +272,7 @@ msgid "help_category"
 msgstr "Sélectionnez dans quelle catégorie ce forum sera placé. Un forum peut être placé dans plusieurs catégories, bien qu'il soit recommandé de n'utiliser qu'une catégorie."
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 msgid "help_count"
 msgstr "Nombre d'éléments à lister."
 
@@ -256,6 +285,11 @@ msgstr "Entrez le résumé de cette conversation."
 
 msgid "help_description_forum"
 msgstr "Entrez une brève description de ce forum."
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr "Nombre maximum de pièces jointes par intervention (message ou réponse)."
@@ -272,7 +306,7 @@ msgid "help_transforms"
 msgstr "Sélectionnez la transformation de test qui doit être utilisée pour les contributions envoyées dans les conversations Ploneboard. Les transformations textuelles modifient le texte entré par l'utilisateur, soit en retirant des balises HTML potentiellement dangereuses, soit en rajoutant des fonctionnalités, comme rendre les liens cliquables."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Ajouter une boîte de conversation récemment commentées."
 
@@ -334,7 +368,7 @@ msgid "label_powered_by"
 msgstr "Rendu par ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Réponse rapide"
 
@@ -509,9 +543,14 @@ msgid "text_at"
 msgstr "le"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
 msgstr "Nombre d'éléments à afficher"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr ""
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -527,7 +566,7 @@ msgid "title_recent_conversations"
 msgstr "${title} : messages récents"
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr "Titre de la boîte"
 

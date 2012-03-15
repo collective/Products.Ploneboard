@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2008-12-09 08:36+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: \n"
@@ -17,6 +17,14 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 "X-Poedit-Language: Spanish\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -34,6 +42,10 @@ msgstr "Cancelar"
 msgid "Change"
 msgstr "Modificar"
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Comentario añadido"
@@ -46,10 +58,18 @@ msgstr "Comentario borrado"
 msgid "Comment is pending moderation"
 msgstr "Comentario pendiente de moderación"
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 #, fuzzy
 msgid "Conversation added"
 msgstr "Conversación"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr ""
 
 #: ../browser/comment.py:267
 #, fuzzy
@@ -65,6 +85,7 @@ msgstr "Conversación pendiente de moderación"
 msgid "Data provider updated."
 msgstr "Proveedor de datos"
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Foro"
 
@@ -72,6 +93,10 @@ msgstr "Foro"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Haga login para añadir comentarios"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -86,13 +111,17 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Por favor, corrige los errores indicados."
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr "Publicar"
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Publicar"
@@ -193,7 +222,7 @@ msgstr "Nombre del foro"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Ir a ${title}"
 
@@ -209,7 +238,7 @@ msgid "heading_preview_comment"
 msgstr "Previsualizar comentario"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 #, fuzzy
 msgid "help_add_portlet"
 msgstr "Introduzca el texto"
@@ -241,7 +270,7 @@ msgid "help_category"
 msgstr "Seleccione a qué categoría(s) corresponde este foro"
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 #, fuzzy
 msgid "help_count"
 msgstr "Introduzca el texto"
@@ -254,6 +283,11 @@ msgstr "Descripción"
 
 msgid "help_description_forum"
 msgstr "Una descripción del foro"
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 msgid "help_maxattachments"
 msgstr "Seleccione el número máximo de archivos adjuntos permitidos por comentario"
@@ -270,7 +304,7 @@ msgid "help_transforms"
 msgstr "Selecciones las transformaciones que se aplicarán a los textos de los comentarios en Ploneboard. Las transformaciones alteran el texto introducido el usuario, tanto para eliminar HTML malicioso, como para añadir alguna funcionalidad como hacer los enlaces clicables."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 #, fuzzy
 msgid "label_add_portlet"
 msgstr "Texto"
@@ -330,7 +364,7 @@ msgid "label_powered_by"
 msgstr "Creado con ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Respuesta rápida"
 
@@ -505,9 +539,14 @@ msgid "text_at"
 msgstr "el"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
 msgstr "Número de items a mostrar"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr ""
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -522,7 +561,7 @@ msgid "title_recent_conversations"
 msgstr "Conversaciones recientes en ${title}"
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr "Título"
 

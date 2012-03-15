@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <object name="Ploneboard"
    meta_type="Factory-based Type Information with dynamic views"
+   i18n:domain="ploneboard"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">Message Board</property>
+ <property name="title" i18n:translate="">Message Board</property>
  <property
     name="description" 
     i18n:translate="">Ploneboard is the outmost board object, what shows up in your site.</property>

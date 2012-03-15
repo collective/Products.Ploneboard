@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2009-03-24 17:47+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: H. Turgut Uyar <uyar@itu.edu.tr>\n"
@@ -15,23 +15,15 @@ msgstr ""
 "Domain: plone\n"
 "X-Is-Fallback-For: tr-tr\n"
 
-msgid "A Forum contains conversations."
-msgstr "Bir forum konuşmalar barındırır."
-
-msgid "A comment contains regular text body and metadata."
-msgstr "Bir yorum düzgün bir metin gövdesi ile üstveri barındırır."
-
 msgid "Activate"
 msgstr "Etkinleştir"
 
 msgid "Active"
 msgstr "Etkin"
 
-msgid "Conversation"
-msgstr "Konuşma"
-
-msgid "Conversation contains comments."
-msgstr "Bir konuşmalar yorumlar barındırır."
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr ""
 
 msgid "Free for all"
 msgstr "Herkese açık"
@@ -45,6 +37,9 @@ msgstr "Gizle"
 msgid "Lock"
 msgstr "Kilitle"
 
+msgid "Locked"
+msgstr ""
+
 msgid "Make free-for-all"
 msgstr "Herkese-açık hale getir"
 
@@ -54,8 +49,8 @@ msgstr "Üyeler-postalayabilir hale getir"
 msgid "Make moderated"
 msgstr "Hakemli hale getir"
 
-msgid "Message Board"
-msgstr "Mesaj Panosu"
+msgid "Make private"
+msgstr ""
 
 msgid "Moderate"
 msgstr "Gözden geçir"
@@ -65,9 +60,6 @@ msgstr "Hakemli forum"
 
 msgid "Open"
 msgstr "Açık"
-
-msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr "Ploneboard sitede karşınıza çıkan en üst mesaj panosu nesnesidir."
 
 msgid "Private to members only"
 msgstr "Üyelere özel"
@@ -87,13 +79,28 @@ msgstr "Çekilmiş"
 msgid "Waiting for moderator"
 msgstr "Hakemi bekliyor"
 
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Düz konuşma görünümü"
 
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr ""
+
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
 msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"

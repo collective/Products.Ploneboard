@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2011-11-25 11:38+0000\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2011-10-22 17:40+0300\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Language-Name: Ukrainian\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: ploneboard\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr ""
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -34,6 +42,10 @@ msgstr "Скасувати"
 msgid "Change"
 msgstr "Змінити"
 
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
 msgstr "Повідомлення додано"
@@ -46,9 +58,17 @@ msgstr "Повідомлення видалено"
 msgid "Comment is pending moderation"
 msgstr "Повідомлення чекає модерації"
 
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Обговорення додано"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr ""
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -62,6 +82,7 @@ msgstr "Обговорення чекає модерації"
 msgid "Data provider updated."
 msgstr "Джерело даних оновлено"
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Форум"
 
@@ -69,6 +90,10 @@ msgstr "Форум"
 #: ../skins/ploneboard_templates/comment_view.pt:193
 msgid "Log in to add comments"
 msgstr "Увійдіть в систему, щоб залишити повідомлення"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -83,13 +108,17 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Виправте, будь ласка, вказані помилки."
 
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
 msgstr "Відправити"
 
 #. Default: "Post comment"
-#: ../browser/templates/conversation_view.pt:77
+#: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "Post comment"
 msgstr "Надіслати повідомлення"
@@ -191,7 +220,7 @@ msgstr "Назва форуму"
 #. Default: "Up to ${title}"
 #: ../browser/templates/conversation_view.pt:42
 #: ../browser/templates/forum.pt:51
-#: ../skins/ploneboard_templates/comment_view.pt:35
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Вверх до ${title}"
 
@@ -207,7 +236,7 @@ msgid "heading_preview_comment"
 msgstr "Перегляд повідомлення"
 
 #. Default: "This portlet shows conversations with recent comments."
-#: ../portlet/recent.py:105
+#: ../portlet/recent.py:133
 msgid "help_add_portlet"
 msgstr "Цей портлет показує останні коментарі."
 
@@ -240,7 +269,7 @@ msgid "help_category"
 msgstr "Виберіть категорії, в яких буде відображено форум. Форум може бути в декількох категоріях, але рекомендується використовувати тільки одну."
 
 #. Default: "How many items to list."
-#: ../portlet/recent.py:28
+#: ../portlet/recent.py:29
 msgid "help_count"
 msgstr "Скільки показувати пунктів у списку."
 
@@ -253,6 +282,11 @@ msgstr "Введіть короткий опис для цього обгово�
 
 msgid "help_description_forum"
 msgstr "Короткий опис теми форуму"
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr ""
 
 #. Default: "Select the maximum number of attachments per comment."
 msgid "help_maxattachments"
@@ -271,7 +305,7 @@ msgid "help_transforms"
 msgstr "Виберіть трансформації для тексту, які будуть застосовуватися для повідомлень на форумі. Текстові трансформації змінюють текст, введений користувачем, прибираючи потенційно небезпечні HTML-теги, або додаючи додаткову функціональність, наприклад перетворюючи текст з адресою сайту на активне посилання."
 
 #. Default: "Add recent conversations portlet."
-#: ../portlet/recent.py:103
+#: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Додати портлет для поточних обговорень."
 
@@ -329,7 +363,7 @@ msgid "label_powered_by"
 msgstr "Розроблено ${link}"
 
 #. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:68
+#: ../browser/templates/conversation_view.pt:71
 msgid "label_quickreply"
 msgstr "Швидка відповідь"
 
@@ -501,9 +535,14 @@ msgid "text_at"
 msgstr "в"
 
 #. Default: "Number of items to display"
-#: ../portlet/recent.py:26
+#: ../portlet/recent.py:27
 msgid "title_count"
 msgstr "Кількість пунктів для відображення"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr ""
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -518,7 +557,7 @@ msgid "title_recent_conversations"
 msgstr "Останні обговорення на форумі ${title}"
 
 #. Default: "Portlet title"
-#: ../portlet/recent.py:21
+#: ../portlet/recent.py:22
 msgid "title_title"
 msgstr "Назва портлету"
 
