@@ -5,6 +5,7 @@ Changelog
 -------------------------------------
 * modificato wf per lo stato "aperto a tutti": adesso anche gli anonimi possono aggiungere allegati [andrea]
 * modifcata dimensione max di default per gli allegati [andrea]
+* rimosso portrait se c'è quello di default [andrea]
 
 2.0.7-branch_redturtle (2012-02-22)
 -------------------------------------
