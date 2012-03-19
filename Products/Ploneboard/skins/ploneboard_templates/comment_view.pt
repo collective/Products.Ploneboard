@@ -81,7 +81,8 @@
             </div>
 
             <div class="boardCommentBody">
-              <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"> 
+              <tal:block define="portrait python:here.portal_membership.getPersonalPortrait(creator);"
+                         condition="python: portrait.id != 'defaultUser.gif'"> 
                 <div class="commentPortrait">
                   <a href="" title="View profile"                 
                      tal:attributes="href string:${portal_url}/author/${creator}"

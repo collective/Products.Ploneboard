@@ -60,7 +60,7 @@ schema = BaseBTreeFolderSchema + Schema((
     IntegerField('maxAttachmentSize',
                 write_permission = ManageForum,
                 vocabulary = 'getAttachmentSizes',
-                default = 100,
+                default = 10000,
                 widget = SelectionWidget(
                          description = "Select the maximum size for attachments.",
                          description_msgid = "help_maxattachmentsize",

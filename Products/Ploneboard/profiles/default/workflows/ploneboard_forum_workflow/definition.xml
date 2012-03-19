@@ -10,6 +10,7 @@
  <permission>Ploneboard: Add Comment</permission>
  <permission>Add portal content</permission>
  <permission>Ploneboard: Approve Comment</permission>
+ <permission>Ploneboard: Add Comment Attachment</permission>
  <permission>Ploneboard: Retract Comment</permission>
  <permission>Ploneboard: Moderate Forum</permission>
  <state state_id="freeforall" title="Free for all">
@@ -70,6 +71,9 @@
    <permission-role>Member</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
+  <permission-map name="Ploneboard: Add Comment Attachment" acquired="True">
+   <permission-role>Anonymous</permission-role>
+  </permission-map>  
  </state>
  <state state_id="memberposting"
         title="Require membership to post">
