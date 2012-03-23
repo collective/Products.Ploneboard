@@ -25,6 +25,7 @@ from Products.CMFPlone.interfaces.NonStructuralFolder \
     import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 
+
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
 PBCommentBaseBTreeFolderSchema['title'].write_permission = EditComment
