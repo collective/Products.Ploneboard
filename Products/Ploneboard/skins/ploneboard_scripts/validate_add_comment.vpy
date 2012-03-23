@@ -13,6 +13,9 @@ from Products.CMFPlone import PloneMessageFactory as _
 
 putils = getToolByName(context, 'plone_utils')
 
+#Hardening enable mimetypes validation with a list of allowed types
+hardening_tool = getToolByName(context, 'rer_hardening_tool', None)
+
 def FileSize(file):
     if hasattr(file, 'size'):
         size=file.size
@@ -36,11 +39,16 @@ if len(text) <= 0:
 files=context.REQUEST.get('files', [])
 maxsize=context.getConversation().getMaxAttachmentSize()
 
-if maxsize!=-1:
+if maxsize!=-1 or hardening_tool:
     for file in files:
         if FileSize(file)>maxsize:
             state.setError("files", "Attachment is too large", new_status="failure")
             break
+        if hardening_tool:
+            validation_report = hardening_tool.validateInputFile(file)
+            if not validation_report.get('is_valid', False):
+                state.setError("files", validation_report.get('message', "Attachment type not allowed"), new_status="failure")
+                break
 
 if state.getErrors():
     message = _(u'Please correct the indicated errors.')
