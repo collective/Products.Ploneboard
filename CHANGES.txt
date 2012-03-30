@@ -4,8 +4,9 @@ Changelog
 3.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Add default permission mappings for the Plone 'Reader', 'Contributor',
+  'Editor', and 'Reviewer' roles used on the sharing tab.
+  [rossp]
 
 3.2 (2011-12-22)
 ----------------

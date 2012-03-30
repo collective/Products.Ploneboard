@@ -102,6 +102,18 @@
      handler="Products.Ploneboard.setuphandlers.uninstallVarious"
      />
 
+  <genericsetup:upgradeSteps
+      profile="Products.Ploneboard:ploneboard"
+      source="2.1"
+      destination="3300">
+    <genericsetup:upgradeDepends
+        title="Assign Plone role permissions"
+        description="Add default permission mappings for the Plone
+                     'Reader', 'Contributor', 'Editor', and 'Reviewer'
+                     roles used on the sharing tab."
+        import_steps="typeinfo" />
+  </genericsetup:upgradeSteps>
+
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject
       we must mark the deprecated methods to avoid noisy warnings
