@@ -33,9 +33,6 @@ DeleteComment = permissions.DeleteObjects
 
 # Set up default roles for permissions
 
-setDefaultRoles(ViewBoard,
-                ('Anonymous', 'Member', 'Manager'))
-
 setDefaultRoles(SearchBoard,
                 ('Anonymous', 'Member', 'Manager'))
 
