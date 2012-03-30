@@ -2,8 +2,7 @@
 <rolemap>
   <permissions>
     <permission name="Ploneboard: Add Comment Attachment"
-                acquire="False">
-      <role name="Manager"/>
+                acquire="True">
       <role name="Member"/>
     </permission>
   </permissions>
