@@ -96,5 +96,3 @@ class AddConversationViewlet(ViewletBase):
         mt = getToolByName(self.context,'portal_membership')
         return mt.checkPermission('Ploneboard: Add Comment', self.context) \
           and mt.checkPermission('Add portal content', self.context)
-
-    pass
