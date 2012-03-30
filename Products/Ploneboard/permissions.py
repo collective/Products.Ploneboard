@@ -7,12 +7,12 @@ from Products.CMFCore.permissions import setDefaultRoles
 ViewBoard = permissions.View
 SearchBoard = 'Ploneboard: Search'
 AddBoard = AddPloneboard = 'Ploneboard: Add Ploneboard'
-ManageBoard = 'Ploneboard: Add Ploneboard'
+ManageBoard = 'Ploneboard: Manage Ploneboard'
 
 RequestReview = permissions.RequestReview
 
 AddForum = AddPloneboardForum = 'Ploneboard: Add Forum'
-ManageForum = 'Ploneboard: Add Forum'
+ManageForum = 'Ploneboard: Manage Forum'
 
 AddConversation = AddPloneboardConversation = 'Ploneboard: Add Conversation'
 ManageConversation = 'Ploneboard: Manage Conversation'
