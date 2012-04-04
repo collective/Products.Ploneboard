@@ -47,6 +47,14 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
+  <genericsetup:registerProfile
+     name="ploneboard-tinyjs"
+     title="Ploneboard Tiny configuration"
+     directory="profiles/tiny_js"
+     description="Override TinyMCE javascript registry"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
 
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject

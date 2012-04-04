@@ -41,14 +41,16 @@ maxsize=context.getConversation().getMaxAttachmentSize()
 
 if maxsize!=-1 or hardening_tool:
     for file in files:
-        if FileSize(file)>maxsize:
-            state.setError("files", "Attachment is too large", new_status="failure")
-            break
-        if hardening_tool:
-            validation_report = hardening_tool.validateInputFile(file)
-            if not validation_report.get('is_valid', False):
-                state.setError("files", validation_report.get('message', "Attachment type not allowed"), new_status="failure")
+        filesize = FileSize(file)
+        if filesize:
+            if filesize>maxsize:
+                state.setError("files", "Attachment is too large", new_status="failure")
                 break
+            if hardening_tool:
+                validation_report = hardening_tool.validateInputFile(file)
+                if not validation_report.get('is_valid', False):
+                    state.setError("files", validation_report.get('message', "Attachment type not allowed"), new_status="failure")
+                    break
 
 if state.getErrors():
     message = _(u'Please correct the indicated errors.')
