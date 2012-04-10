@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool" purge="False">
+ <object name="site_properties" meta_type="Plone Property Sheet" purge="False">
+  <property name="default_editor" type="string">TinyMCE</property>
+ </object>
+</object>

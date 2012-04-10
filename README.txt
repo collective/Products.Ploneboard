@@ -21,3 +21,8 @@ Ploneboard is sponsored by `the Consumer Council of Norway`_,
 .. _the Consumer Council of Norway: http://www.forbrukerradet.no
 .. _Marshall Mayer, LiveModern: http://livemodern.com
 
+Tiny Configuration
+==================
+C'è un nuovo profilo "tiny_js" che abilita i js di tiny anche agli anonimi nei forum, e imposta tiny come editor di default nel sito (mediante la property nelle site properties).
+Bisogna lanciare i 2 profili manualmente da portal_setup.
+
