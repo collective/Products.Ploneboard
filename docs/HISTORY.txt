@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.8-branch_redturtle (2012-03-??)
+2.0.8-branch_redturtle (2012-04-10)
 -------------------------------------
 * modificato wf per lo stato "aperto a tutti": adesso anche gli anonimi possono aggiungere allegati [andrea]
 * modifcata dimensione max di default per gli allegati [andrea]
