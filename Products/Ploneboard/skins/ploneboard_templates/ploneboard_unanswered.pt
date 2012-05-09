@@ -95,8 +95,9 @@
                                tal:content="conversation/forum_title" />
                         </td>
                         <td>
-                            <div i18n:translate="by_author">
-                              by <tal:author i18n:name="author"
+                            <div>
+                              <tal:by i18n:translate="by_author">by </tal:by>
+                              <tal:author i18n:translate=""
                                              content="conversation/creator" />
                             </div>
                             <span class="discreet"

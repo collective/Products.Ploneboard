@@ -71,6 +71,7 @@
                 <a class="link-plain"
                    tal:attributes="href string:${portal_url}/author/${creator}"
                    tal:omit-tag="not:creatorinfo"
+                   i18n:translate=""
                    tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
                 <span i18n:translate="text_at" tal:omit-tag="">at</span>
                 <span tal:define="toploneboardtime_view nocall: context/@@toploneboardtime_view"

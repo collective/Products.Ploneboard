@@ -125,8 +125,9 @@
 
                 <td tal:condition="forum/getLastCommentAuthor"
                     class="forumMostRecentCell">
-                  <div i18n:translate="label_by_author">
-                    by <tal:author i18n:name="author"
+                  <div>
+                   <tal:by i18n:translate="label_by">by </tal:by>
+                   <tal:author i18n:translate=""
                                    define="creator forum/getLastCommentAuthor;
                                            creatorinfo python: mtool.getMemberInfo(creator);"
                                    content="python:creatorinfo and creatorinfo['fullname'] or creator" />

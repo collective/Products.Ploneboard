@@ -92,7 +92,7 @@
                     <a href="#" tal:attributes="href result/absolute_url"
                        tal:content="python:result.Title() or result.getId()" />
 
-                    <div tal:content="result/Creator">Author</div>
+                    <div i18n:translate="" tal:content="result/Creator">Author</div>
                     <div tal:content="result/Description">Description</div>
     
                     <div class="moderationActions">

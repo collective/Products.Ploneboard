@@ -217,6 +217,12 @@ msgstr "Testo del messaggio"
 msgid "label_by_author"
 msgstr "di ${author}"
 
+#. Default: "by "
+#: ../skins/ploneboard_templates/board_view.pt
+#: ../skins/ploneboard_templates/forum_view.pt
+msgid "label_by"
+msgstr "di "
+
 msgid "label_categories_board"
 msgstr "Argomenti del forum"
 
@@ -623,3 +629,6 @@ msgstr "Percorso del forum"
 #: ./portlet/recent_contextual.pt:22
 msgid "help_forumpath"
 msgstr "Scegli il forum dove cercare gli ultimi post."
+
+msgid "Anonymous"
+msgstr "Anonimo"

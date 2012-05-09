@@ -91,8 +91,8 @@
                                 <span tal:replace="conversation/Title">This is a title</span>
                             </a>
 
-                            <div class="discreet" i18n:translate="label_by_author">
-                                   by <tal:author i18n:name="author"
+                            <div class="discreet"><tal:by i18n:translate="label_by">by </tal:by>
+                                <tal:author i18n:translate=""
                                            content="conversation/creator" />
                             </div>
                             
