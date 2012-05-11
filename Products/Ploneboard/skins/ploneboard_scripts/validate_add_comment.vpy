@@ -52,6 +52,14 @@ if maxsize!=-1 or hardening_tool:
                     state.setError("files", validation_report.get('message', "Attachment type not allowed"), new_status="failure")
                     break
 
+#Captcha validation
+captcha = context.REQUEST.get('recaptcha_response_field')
+view = context.restrictedTraverse('@@captcha')
+
+if not view.verify(captcha):
+    state.setError('captcha', 'Are you a bot? Try again...')
+    state.set(status='failure')
+
 if state.getErrors():
     message = _(u'Please correct the indicated errors.')
     putils.addPortalMessage(message)

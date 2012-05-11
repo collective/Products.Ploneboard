@@ -632,3 +632,11 @@ msgstr "Scegli il forum dove cercare gli ultimi post."
 
 msgid "Anonymous"
 msgstr "Anonimo"
+
+#Default "Show Captcha"
+msgid "label_show_captcha"
+msgstr "Mostra captcha"
+
+#Default: "Select if show or not captcha for anonymous."
+msgid "help_showcaptcha"
+msgstr "Seleziona se mostrare o no il captcha per gli anonimi."

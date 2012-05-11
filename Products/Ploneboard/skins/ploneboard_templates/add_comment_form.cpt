@@ -115,6 +115,25 @@
                   The WYSIWYG code
                 </div>
               </tal:editor>
+
+              <!-- Captcha Control -->
+              <div class="field"
+                   tal:define="error errors/captcha|nothing;
+                               captcha_view nocall:here/@@captcha"
+                   tal:attributes="class python:test(error, 'field error', 'field')">
+                <label for="captcha" i18n:translate="label_captcha">Captcha</label>
+
+                <span class="fieldRequired" title="Required"
+                      i18n:attributes="title"
+                      i18n:domain="plone"
+                      i18n:translate="label_required">(Required)</span>  
+
+                <div class="formHelp" i18n:translate="help_captcha">
+                  Provide the text in the image. Just to avoid spambots
+                </div>
+                <p tal:replace="structure captcha_view/image_tag" />
+              </div>
+
             </div>
           </div>
 

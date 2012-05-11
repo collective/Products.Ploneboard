@@ -1,6 +1,11 @@
 Changelog
 =========
 
+2.0.9-branch_redturtle (unreleased)
+-------------------------------------
+* rimosso via css il link "Edit without visual editor" di Tiny nei vari template [andrea]
+* tradotto "Anonymous" in "Anonimo" nei vari template [andrea]
+
 2.0.8-branch_redturtle (2012-04-10)
 -------------------------------------
 * modificato wf per lo stato "aperto a tutti": adesso anche gli anonimi possono aggiungere allegati [andrea]

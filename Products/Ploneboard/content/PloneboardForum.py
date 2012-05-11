@@ -8,9 +8,9 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, LinesField, IntegerField
+from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
+from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget, BooleanWidget
 from Products.Archetypes.public import DisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
@@ -66,6 +66,16 @@ schema = BaseBTreeFolderSchema + Schema((
                          description_msgid = "help_maxattachmentsize",
                          label = "Maximum attachment size",
                          label_msgid = "label_maxattachmentsize",
+                         i18n_domain = "ploneboard",
+                )),
+    BooleanField('showCaptcha',
+                write_permission = ManageForum,
+                default = False,
+                widget = BooleanWidget(
+                         description = "Select if show or not captcha for anonymous.",
+                         description_msgid = "help_showcaptcha",
+                         label = "Show Captcha",
+                         label_msgid = "label_show_captcha",
                          i18n_domain = "ploneboard",
                 )),
     ))

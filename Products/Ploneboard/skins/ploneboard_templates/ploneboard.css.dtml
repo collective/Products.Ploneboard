@@ -168,4 +168,11 @@
     display: none;
 }
 
+/** Hide "Edit without visual editor" **/
+.template-conversation_view .suppressVisualEditor,
+.template-add_comment_form .suppressVisualEditor,
+.template-add_conversation_form .suppressVisualEditor {
+   display:none
+}
+
 /* </dtml-with> */
