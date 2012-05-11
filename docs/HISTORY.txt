@@ -5,6 +5,7 @@ Changelog
 -------------------------------------
 * rimosso via css il link "Edit without visual editor" di Tiny nei vari template [andrea]
 * tradotto "Anonymous" in "Anonimo" nei vari template [andrea]
+* aggiunto supporto a recaptcha per l'inserimento di discussioni e commenti da parte degli anonimi [andrea]
 
 2.0.8-branch_redturtle (2012-04-10)
 -------------------------------------

@@ -9,7 +9,8 @@
 ##title=Validates a posting
 # $Id$
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone import PloneMessageFactory as _
+#from Products.Ploneboard import PloneMessageFactory as _
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
 putils = getToolByName(context, 'plone_utils')
 
@@ -34,7 +35,7 @@ def FileSize(file):
 text = context.REQUEST.get('text', '');
 
 if len(text) <= 0:
-    state.setError("text", "No content entered", new_status="failure")
+    state.setError("text", _(u"No content entered"), new_status="failure")
 
 files=context.REQUEST.get('files', [])
 maxsize=context.getConversation().getMaxAttachmentSize()
@@ -53,15 +54,16 @@ if maxsize!=-1 or hardening_tool:
                     break
 
 #Captcha validation
-captcha = context.REQUEST.get('recaptcha_response_field')
-view = context.restrictedTraverse('@@captcha')
+captcha_view = context.restrictedTraverse('@@captcha', None)
+captcha_control = context.REQUEST.get('captcha_control', '')
+if captcha_view and captcha_control:
+    captcha = context.REQUEST.get('recaptcha_response_field', '')
+    if not captcha_view.verify(captcha):
+        state.setError('captcha', _('Wrong captcha. Try again'))
+        state.set(status='failure')
 
-if not view.verify(captcha):
-    state.setError('captcha', 'Are you a bot? Try again...')
-    state.set(status='failure')
-
-if state.getErrors():
-    message = _(u'Please correct the indicated errors.')
-    putils.addPortalMessage(message)
+    if state.getErrors():
+        message = _(u'Please correct the indicated errors.')
+        putils.addPortalMessage(message)
 
 return state

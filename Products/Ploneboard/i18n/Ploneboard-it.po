@@ -637,6 +637,18 @@ msgstr "Anonimo"
 msgid "label_show_captcha"
 msgstr "Mostra captcha"
 
-#Default: "Select if show or not captcha for anonymous."
+#Default: "Select if show or not captcha for anonymous (if recaptcha installed e configured)."
 msgid "help_showcaptcha"
-msgstr "Seleziona se mostrare o no il captcha per gli anonimi."
+msgstr "Seleziona se mostrare o no il captcha per gli anonimi (se recaptcha installato e configurato)."
+
+#Default: "Provide the text in the image. Just to avoid spambots"
+msgid "help_captcha"
+msgstr "Inserisci il testo che vedi nell'immagine. Per evitare lo spam"
+
+#Default "No content entered"
+msgid "No content entered"
+msgstr "Nessun testo inserito"
+
+#Default "Wrong captcha. Try again"
+msgid "Wrong captcha. Try again"
+msgstr "Captcha sbagliato. Riprova"
