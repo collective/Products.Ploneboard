@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2012-03-15 19:55+0000\n"
+"PO-Revision-Date: 2012-07-16 10:59+0800\n"
+"Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: zh-tw\n"
+"Language-Name: Traditional Chinese\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+msgid "Activate"
+msgstr "啟用"
+
+msgid "Active"
+msgstr "啟用"
+
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr "編輯"
+
+msgid "Free for all"
+msgstr "所有人都能留言"
+
+msgid "Hidden"
+msgstr "隱藏"
+
+msgid "Hide"
+msgstr "隱藏"
+
+msgid "Lock"
+msgstr "鎖定"
+
+msgid "Locked"
+msgstr "鎖定"
+
+msgid "Make free-for-all"
+msgstr "所有人都能留言"
+
+msgid "Make member-posting"
+msgstr "會員才能留言"
+
+msgid "Make moderated"
+msgstr "留言要被審核"
+
+msgid "Make private"
+msgstr "設為私有"
+
+msgid "Moderate"
+msgstr "審核"
+
+msgid "Moderated forum"
+msgstr "審核制的討論區"
+
+msgid "Open"
+msgstr "公開"
+
+msgid "Private to members only"
+msgstr "會員才能使用"
+
+msgid "Public"
+msgstr "公開"
+
+msgid "Rejected"
+msgstr "退回"
+
+msgid "Require membership to post"
+msgstr "會員才能留言"
+
+msgid "Retracted"
+msgstr "收回"
+
+msgid "Waiting for moderator"
+msgstr "等待審核"
+
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr "${number} 項目符合搜尋條件"
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr "展開式瀏覽"
+
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr "搜尋結果"
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr "相關度：${percentage}%"
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
+msgstr "搜尋"
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "傳統日期格式：${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr "串列式瀏覽"
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "簡易日期格式：${wday} ${hours}:${minutes}"
+
