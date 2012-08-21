@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Форум містить обговорення."
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Повідомлення містить основний текст і метадані."
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -44,7 +44,7 @@ msgstr "Змінити"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
-msgstr ""
+msgstr "Повідомлення"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
@@ -60,7 +60,7 @@ msgstr "Повідомлення чекає модерації"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
-msgstr ""
+msgstr "Обговорення"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
@@ -68,7 +68,7 @@ msgstr "Обговорення додано"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Обговорення містить повідомлення"
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -93,7 +93,7 @@ msgstr "Увійдіть в систему, щоб залишити повідо
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
-msgstr ""
+msgstr "Форум"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -101,7 +101,7 @@ msgstr "Не введено зміст"
 
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
 msgid "No title entered"
-msgstr ""
+msgstr "Заголовок не введено"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
@@ -286,7 +286,7 @@ msgstr "Короткий опис теми форуму"
 #. Default: "Limit recent conversations to a specific forum"
 #: ../portlet/recent.py:37
 msgid "help_forum"
-msgstr ""
+msgstr "Ліміт останніх розмов на певному форумі"
 
 #. Default: "Select the maximum number of attachments per comment."
 msgid "help_maxattachments"
@@ -374,9 +374,8 @@ msgstr "Попередній ${author} писав: ${quote}"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:61
-#, fuzzy
 msgid "label_required"
-msgstr "Обов'язкове поле"
+msgstr "(Обов'язкове поле)"
 
 msgid "label_text"
 msgstr "Текст"
@@ -542,7 +541,7 @@ msgstr "Кількість пунктів для відображення"
 #. Default: "Limit to specific board or forum"
 #: ../portlet/recent.py:35
 msgid "title_forum"
-msgstr ""
+msgstr "Обмеження до певного обговорення або форуму"
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -569,5 +568,4 @@ msgstr "Обговорення без відповідей на форумі ${t
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
-msgstr ""
-
+msgstr "Наступні обговорення були розміщені, але ще не отримали жодної відповіді."
