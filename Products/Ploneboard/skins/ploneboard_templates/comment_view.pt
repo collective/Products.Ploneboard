@@ -108,7 +108,7 @@
 
           <div class="visualClear"></div>
 
-          <div class="boardCommentActions">
+          <div class="boardCommentActions" tal:condition="show_comment_actions|True">
             
             <form i18n:domain="plone"
                   method="post"
@@ -174,6 +174,7 @@
           <!-- bis hier-->
 
           <div class="boardCommentReplyActions"
+	       tal:condition="show_comment_actions|True"
                tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous">
             
             <form tal:condition="comment/canReply"

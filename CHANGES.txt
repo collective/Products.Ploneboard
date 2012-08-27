@@ -11,6 +11,9 @@ Changelog
   label.
   [gaudenz]
 
+- Don't show workflow actions and reply button while composing a reply.
+  [gaudenz]
+
 3.3 (2012-09-08)
 ----------------
 
