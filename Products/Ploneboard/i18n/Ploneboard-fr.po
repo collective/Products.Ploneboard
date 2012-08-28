@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:29+0000\n"
 "PO-Revision-Date: 2008-10-21 17:36+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -136,6 +136,10 @@ msgstr "Répondre"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Démarrer une nouvelle conversation"
+
+#: Ploneboard/skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:29+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -132,6 +132,10 @@ msgstr "Svar på"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Opret ny debat"
+
+#: Ploneboard/skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"

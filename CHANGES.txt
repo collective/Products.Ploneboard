@@ -7,6 +7,10 @@ Changelog
 - Fixed i18n headers, added locales folder and updated pt-br translations
   [davilima6]
 
+- Add button label to start a new conversation instead of reusing the "add comment"
+  label.
+  [gaudenz]
+
 3.3 (2012-09-08)
 ----------------
 
