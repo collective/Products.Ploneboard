@@ -59,6 +59,17 @@
      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
      />
 
+  <!-- This profile is only here for not breaking (policy) packages depending on this
+       It should not be used any longer. -->
+  <genericsetup:registerProfile
+     name="ploneboard"
+     title="Ploneboard (backward compatible version, please use default profile)"
+     directory="profiles/default"
+     description="Install the Ploneboard forum product"
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     />
+
   <genericsetup:registerProfile
      name="intranet"
      title="Ploneboard for intranets"
