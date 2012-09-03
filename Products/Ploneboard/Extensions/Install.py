@@ -4,7 +4,7 @@ from Products.CMFCore.utils import getToolByName
 def install(self, reinstall=False):
     tool = getToolByName(self, "portal_setup")
     tool.runAllImportStepsFromProfile(
-            "profile-Products.Ploneboard:ploneboard",
+            "profile-Products.Ploneboard:default",
             purge_old=False)
 
 

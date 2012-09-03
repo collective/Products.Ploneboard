@@ -51,7 +51,7 @@
     />
 
   <genericsetup:registerProfile
-     name="ploneboard"
+     name="default"
      title="Ploneboard"
      directory="profiles/default"
      description="Install the Ploneboard forum product"
@@ -103,7 +103,7 @@
      />
 
   <genericsetup:upgradeSteps
-      profile="Products.Ploneboard:ploneboard"
+      profile="Products.Ploneboard:default"
       source="2.1"
       destination="3300">
     <genericsetup:upgradeDepends
