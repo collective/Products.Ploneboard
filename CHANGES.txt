@@ -7,10 +7,15 @@ Changelog
 - Add default permission mappings for the Plone 'Reader', 'Contributor',
   'Editor', and 'Reviewer' roles used on the sharing tab.
   [rossp]
+
 - Rename default GS profile to "default" and keep "ploneboard" as a
   backwards compatibility alias only.
   [gaudenz]
+
 - Add upgrade step to register form controller actions for comments.
+  [gaudenz]
+
+- Add upgrade step to register ploneboard.css in portal_css.
   [gaudenz]
 
 3.2 (2011-12-22)

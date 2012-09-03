@@ -127,6 +127,10 @@
                      'Reader', 'Contributor', 'Editor', and 'Reviewer'
                      roles used on the sharing tab."
         import_steps="typeinfo" />
+    <genericsetup:upgradeDepends
+        title="Import CSS resource registrations"
+        description="Add the ploneboard.css resource"
+        import_steps="cssregistry" />
   </genericsetup:upgradeSteps>
 
   <!--
