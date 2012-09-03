@@ -117,6 +117,10 @@
       profile="Products.Ploneboard:default"
       source="2.1"
       destination="3300">
+    <genericsetup:upgradeStep
+        title="Setup form controllers for comment attachments and images"
+	description="Register additional form controller actions to be able to edit and add attachments to existing posts."
+	handler=".setuphandlers.setupComment" />
     <genericsetup:upgradeDepends
         title="Assign Plone role permissions"
         description="Add default permission mappings for the Plone
