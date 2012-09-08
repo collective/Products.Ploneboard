@@ -1,5 +1,6 @@
+# Gettext File for Ploneboard
 # Fabio Rizzo <fabiorizzo@threepointsweb.com>, 2005-2007.
-# LEANDRO ZANUZ <lzanuz@ucs.br>, 2006.
+# Leandro Zanuz <lzanuz@ucs.br>, 2006.
 # Érico Andrei <erico@simplesconsultoria.com.br>, 2008.
 # Andre Nogueira <andre@simplesconsultoria.com.br>, 2012.
 msgid ""
@@ -7,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Ploneboard\n"
 "POT-Creation-Date: 2012-03-15 19:55+0000\n"
 "PO-Revision-Date: 2012-03-15 17:07-0300\n"
-"Last-Translator: Gustavo Lepri <lepri@simplesconsultoria.com.br>\n"
-"Language-Team:  <plone-i18n@lists.sourceforge.net>\n"
+"Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
+"Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"Language-Code: pt-br\n"
-"Language-Name: Brazilian Portuguese\n"
+"Language-Code: pt_BR\n"
+"Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
@@ -29,7 +30,7 @@ msgid "Edit"
 msgstr "Editar"
 
 msgid "Free for all"
-msgstr "Liberado para Anônimos"
+msgstr "Liberado para anônimos"
 
 msgid "Hidden"
 msgstr "Fechado"
@@ -44,10 +45,10 @@ msgid "Locked"
 msgstr "Bloqueado"
 
 msgid "Make free-for-all"
-msgstr "Liberar para Anônimos"
+msgstr "Liberar para anônimos"
 
 msgid "Make member-posting"
-msgstr "Só Membros Postam"
+msgstr "Apenas membros do portal podem publicar"
 
 msgid "Make moderated"
 msgstr "Tornar moderado"
@@ -59,13 +60,13 @@ msgid "Moderate"
 msgstr "Moderar"
 
 msgid "Moderated forum"
-msgstr "Fórum Moderado"
+msgstr "Fórum moderado"
 
 msgid "Open"
 msgstr "Aberto"
 
 msgid "Private to members only"
-msgstr "Privado somente para membros"
+msgstr "Privado, somente para membros."
 
 msgid "Public"
 msgstr "Público"
@@ -74,7 +75,7 @@ msgid "Rejected"
 msgstr "Rejeitado"
 
 msgid "Require membership to post"
-msgstr "Só Membros Postam"
+msgstr "Apenas membros do portal podem publicar"
 
 msgid "Retracted"
 msgstr "Retraído"
@@ -85,16 +86,16 @@ msgstr "Aguardando moderação"
 #. Default: "${number} items matching your search terms"
 #: ../browser/search.pt:39
 msgid "batch_x_items_matching_your_criteria"
-msgstr "${number} itens que satisfazem os termos da sua pesquisa"
+msgstr "${number} itens satisfazem os termos da sua pesquisa"
 
 #. Flat conversion view
 msgid "conversation_view"
-msgstr "Visão de conversa"
+msgstr "Visão de tópico"
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
 msgid "heading_search_results"
-msgstr "Resultado da busca"
+msgstr "Resultados da busca"
 
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
@@ -111,9 +112,8 @@ msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
-msgstr "Visão de conversa threaded"
+msgstr "Visão de tópicos, por threads"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
-

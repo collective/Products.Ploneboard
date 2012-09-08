@@ -4,6 +4,8 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Fixed and updated pt-br translations [davilima6]
+
 3.3 (2012-09-08)
 ----------------
 
