@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.3 (unreleased)
+3.3 (2012-09-08)
 ----------------
 
 - Add default permission mappings for the Plone 'Reader', 'Contributor',
@@ -17,6 +17,8 @@ Changelog
 
 - Add upgrade step to register ploneboard.css in portal_css.
   [gaudenz]
+
+- Add manifest [aclark4life]
 
 3.2 (2011-12-22)
 ----------------
