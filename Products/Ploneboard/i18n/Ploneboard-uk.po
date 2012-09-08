@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2012-03-15 19:55+0000\n"
+"POT-Creation-Date: 2012-09-07 20:29+0000\n"
 "PO-Revision-Date: 2011-10-22 17:40+0300\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -569,3 +569,4 @@ msgstr "Обговорення без відповідей на форумі ${t
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
 msgstr "Наступні обговорення були розміщені, але ще не отримали жодної відповіді."
+

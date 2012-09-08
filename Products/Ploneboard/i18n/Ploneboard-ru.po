@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-ru\n"
-"POT-Creation-Date: 2012-03-15 19:55+0000\n"
+"POT-Creation-Date: 2012-09-07 20:29+0000\n"
 "PO-Revision-Date: 2009-02-02 13:55+0000\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
