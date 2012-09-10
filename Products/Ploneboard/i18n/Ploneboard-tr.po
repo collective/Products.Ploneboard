@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2009-04-06 18:15+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: M. Göktürk Yüksek <uyar@itu.edu.tr>\n"
@@ -121,6 +121,7 @@ msgid "Post comment"
 msgstr "Yorumu gönder"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Bunu yanıtla"
@@ -372,11 +373,6 @@ msgstr "Ek boyutu sınırı"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "${link} üzerinde çalışıyor"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Hızlı yanıt"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

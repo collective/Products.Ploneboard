@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2006-10-26 12:44+0300\n"
 "Last-Translator: Darius <darkius84@yahoo.com>\n"
 "Language-Team: \n"
@@ -122,6 +122,7 @@ msgid "Post comment"
 msgstr "iðsaugoti"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Atsakyti ..."
@@ -359,11 +360,6 @@ msgstr "Maksimalus prikabinamo failo dydis"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Sukurta ${link}"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Greitas atsakymas"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

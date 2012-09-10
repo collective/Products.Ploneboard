@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -114,6 +114,7 @@ msgstr "張貼留言"
 msgid "Post comment"
 msgstr "張貼留言"
 
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "回覆"
@@ -346,11 +347,6 @@ msgstr "附件容量限制"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "以 ${link} 建立"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "直接回覆"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

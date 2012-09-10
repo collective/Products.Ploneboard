@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2008-10-04 19:34+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -121,6 +121,7 @@ msgid "Post comment"
 msgstr "Odeslat komentář"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Reagovat na tento příspěvek"
@@ -356,11 +357,6 @@ msgstr "Dovolená velikost přílohy"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Provozováno na"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Rychlá reakce"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ca\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2008-12-09 08:21+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: <en@li.org>\n"
@@ -124,6 +124,7 @@ msgid "Post comment"
 msgstr "Respon comentari"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Respondre"
@@ -363,11 +364,6 @@ msgstr "Grandària màxima dels arxius adjunts"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Amb el suport de ${link}"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Resposta ràpida"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

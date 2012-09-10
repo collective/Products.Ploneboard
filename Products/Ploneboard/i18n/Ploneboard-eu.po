@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2009-03-30 08:26+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,6 +123,7 @@ msgid "Post comment"
 msgstr "Erantzuna argitaratu"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Honi erantzun"
@@ -358,11 +359,6 @@ msgstr "Gehienezko tamaina"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "${link}ekin egina"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Erantzun azkarra"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

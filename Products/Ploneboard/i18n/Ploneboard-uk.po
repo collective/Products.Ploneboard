@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2011-10-22 17:40+0300\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -124,6 +124,7 @@ msgid "Post comment"
 msgstr "Надіслати повідомлення"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Відповісти на це"
@@ -365,11 +366,6 @@ msgstr "Максимальний розмір вкладення"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Розроблено ${link}"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Швидка відповідь"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

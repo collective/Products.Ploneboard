@@ -17,6 +17,10 @@ Changelog
 - Fix compatibility with classic (non Chameleon) Zope template engine
   [gaudenz]
 
+- Remove "Quick Reply" label. From the users point of view this is just
+  a normal reply.
+  [gaudenz]
+
 3.3 (2012-09-08)
 ----------------
 

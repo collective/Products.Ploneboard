@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-ru\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2009-02-02 13:55+0000\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -124,6 +124,7 @@ msgid "Post comment"
 msgstr "Отправить сообщение"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Ответить на это"
@@ -365,11 +366,6 @@ msgstr "Максимальный размер вложения"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Разработано ${link}"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Быстрый ответ"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81

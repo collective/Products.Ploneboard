@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard.pot VERSION\n"
-"POT-Creation-Date: 2013-01-07 11:29+0000\n"
+"POT-Creation-Date: 2013-01-07 11:46+0000\n"
 "PO-Revision-Date: 2008-05-25 11:08+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -123,6 +123,7 @@ msgid "Post comment"
 msgstr "Skicka kommentar"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:71
 #: ../skins/ploneboard_templates/comment_view.pt:182
 msgid "Reply to this"
 msgstr "Svara på"
@@ -363,11 +364,6 @@ msgstr "Maximal storlek på bifogade filer"
 #: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Baserad på ${link}"
-
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Snabbsvara"
 
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:81
