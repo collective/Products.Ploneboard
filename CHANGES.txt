@@ -14,6 +14,9 @@ Changelog
 - Don't show workflow actions and reply button while composing a reply.
   [gaudenz]
 
+- Fix compatibility with classic (non Chameleon) Zope template engine
+  [gaudenz]
+
 3.3 (2012-09-08)
 ----------------
 

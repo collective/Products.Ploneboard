@@ -22,7 +22,7 @@
   <div metal:fill-slot="main"
        tal:define="errors options/state/getErrors;
        view context/@@singlecomment_view;
-       show_comment_actions False;"
+       show_comment_actions python:False;"
        i18n:domain="ploneboard">
 
     <h2 i18n:translate="add_comment">Add comment</h2>
