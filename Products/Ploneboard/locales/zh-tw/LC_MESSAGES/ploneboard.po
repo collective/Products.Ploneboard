@@ -1,0 +1,553 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"PO-Revision-Date: 2012-08-06 11:50+0800\n"
+"Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
+"Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: zh-tw\n"
+"Language-Name: Traditional Chinese\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: ploneboard\n"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "A Forum contains conversations."
+msgstr "討論板用來包含討論文章。"
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "A comment contains regular text body and metadata."
+msgstr "留言"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
+msgid "Attachment is too large"
+msgstr "附件檔案過大"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+msgid "Cancel"
+msgstr "取消"
+
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:78
+msgid "Change"
+msgstr "更改"
+
+#: ../profiles/default/types/PloneboardComment.xml
+msgid "Comment"
+msgstr "留言"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+msgid "Comment added"
+msgstr "留言已新增"
+
+#: ../browser/comment.py:272
+msgid "Comment deleted"
+msgstr "留言已刪除"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+msgid "Comment is pending moderation"
+msgstr "留言等待審核中"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation"
+msgstr "留言"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+msgid "Conversation added"
+msgstr "留言已新增"
+
+#: ../profiles/default/types/PloneboardConversation.xml
+msgid "Conversation contains comments."
+msgstr "留言已有回覆。"
+
+#: ../browser/comment.py:267
+msgid "Conversation deleted"
+msgstr "留言已刪除"
+
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+msgid "Conversation is pending moderation"
+msgstr "留言等待審核中"
+
+#: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:21
+msgid "Data provider updated."
+msgstr "Data Provider 已更新。"
+
+#: ../profiles/default/types/PloneboardForum.xml
+msgid "Forum"
+msgstr "討論板"
+
+#: ../skins/ploneboard_templates/comment_view.pt:193
+msgid "Log in to add comments"
+msgstr "登入帳號後可以留言"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Message Board"
+msgstr "討論區"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
+msgid "No content entered"
+msgstr "沒有留言"
+
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
+msgid "No title entered"
+msgstr "沒有標題"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
+msgid "Please correct the indicated errors."
+msgstr "請修訂錯誤。"
+
+#: ../profiles/default/types/Ploneboard.xml
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr "討論區是最外層的目錄。"
+
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:72
+msgid "Post"
+msgstr "張貼留言"
+
+#: ../browser/templates/conversation_view.pt:80
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+msgid "Post comment"
+msgstr "張貼留言"
+
+#: ../skins/ploneboard_templates/comment_view.pt:182
+msgid "Reply to this"
+msgstr "回覆"
+
+#: ../browser/templates/addconversation.pt:23
+msgid "Start a new Conversation"
+msgstr "張貼新的討論"
+
+#: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
+msgid "Transform %s removed"
+msgstr "Transform %s 已移除"
+
+#: ../skins/ploneboard_templates/comment_view.pt:84
+msgid "View profile"
+msgstr "檢視作者資訊"
+
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+msgid "You can only add comments to conversations or comments."
+msgstr "只能回覆既有的討論或留言。"
+
+#. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+msgid "add_comment"
+msgstr "新增留言"
+
+#. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:27
+msgid "add_conversation"
+msgstr "新增討論"
+
+msgid "alert_delete_popup"
+msgstr "確認要刪除?"
+
+#. Default: "Search"
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
+msgid "board_search_button"
+msgstr "搜尋"
+
+#. Default: "Search Boards"
+#: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
+msgid "board_search_label"
+msgstr "輸入搜尋字詞"
+
+#. Default: "More…"
+#: ../portlet/recent.pt:40
+msgid "box_more_recent_conversations"
+msgstr "更多…"
+
+#. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
+msgid "by_author"
+msgstr "作者：${author}"
+
+#. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:164
+msgid "comment_current_state"
+msgstr "狀態："
+
+#. Default: "Conversation"
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
+msgid "conversation"
+msgstr "留言"
+
+#. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
+msgid "conversation_forum"
+msgstr "討論板"
+
+#. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
+msgid "conversation_posted"
+msgstr "討論已張貼"
+
+#. Default: "Here you can configure site settings for Ploneboard."
+#: ../browser/controlpanel.py:57
+msgid "description_ploneboard_config"
+msgstr "Ploneboard 的設定值"
+
+#. Default: "Forum name"
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
+msgid "forum_name"
+msgstr "討論板名稱"
+
+#. Default: "Up to ${title}"
+#: ../browser/templates/conversation_view.pt:42
+#: ../browser/templates/forum.pt:51
+#: ../browser/templates/threaded_conversation_view.pt:44
+msgid "go_to_parent_url"
+msgstr "回到 ${title}"
+
+#. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
+msgid "go_to_view_url"
+msgstr "回到 ${name}"
+
+#. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
+msgid "heading_preview_comment"
+msgstr "預覽"
+
+#. Default: "This portlet shows conversations with recent comments."
+#: ../portlet/recent.py:133
+msgid "help_add_portlet"
+msgstr "用來顯示最新的留言。"
+
+#. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+msgid "help_body_attachments_maxsize"
+msgstr "附件檔案最大限制是 ${maxsize} KB。"
+
+#. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_body_attachments_posting"
+msgstr "上傳留言的附件檔案。"
+
+#. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+msgid "help_body_text_posting"
+msgstr "可以使用基本的 HTML 標籤。"
+
+#. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+msgid "help_body_text_posting_linkify_enabled"
+msgstr "URL 會自動轉換成可連結網址。"
+
+msgid "help_categories_board"
+msgstr "請逐行填寫討論板的分類。"
+
+msgid "help_category"
+msgstr "選擇討論板的分類。"
+
+#. Default: "How many items to list."
+#: ../portlet/recent.py:29
+msgid "help_count"
+msgstr "要顯示的項目數量。"
+
+msgid "help_description_board"
+msgstr "討論區的摘要說明。"
+
+msgid "help_description_conversation"
+msgstr "留言的摘要說明。"
+
+msgid "help_description_forum"
+msgstr "討論板的摘要說明。"
+
+#. Default: "Limit recent conversations to a specific forum"
+#: ../portlet/recent.py:37
+msgid "help_forum"
+msgstr "只顯示特定討論板的最新留言"
+
+msgid "help_maxattachments"
+msgstr "指定每則留言的附件數量限制。"
+
+msgid "help_maxattachmentsize"
+msgstr "指定附件檔案的最大容量限制。"
+
+msgid "help_text"
+msgstr "輸入留言內文。"
+
+#. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
+#: ../browser/controlpanel.py:18
+msgid "help_transforms"
+msgstr ""
+
+#. Default: "Add recent conversations portlet."
+#: ../portlet/recent.py:131
+msgid "label_add_portlet"
+msgstr "新增最新留言方框。"
+
+#. Default: "Back to discussion board"
+#: ../browser/search.pt:15
+msgid "label_back_to_board"
+msgstr "回到討論區"
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+msgid "label_body_files_posting"
+msgstr "附件"
+
+#. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+msgid "label_body_text_posting"
+msgstr "內文"
+
+#. Default: "by ${author}"
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
+msgid "label_by_author"
+msgstr "作者：${author}"
+
+msgid "label_categories_board"
+msgstr "討論區分類"
+
+msgid "label_category"
+msgstr "分類標籤"
+
+msgid "label_description_board"
+msgstr "摘要說明"
+
+msgid "label_description_conversation"
+msgstr "摘要說明"
+
+msgid "label_description_forum"
+msgstr "摘要說明"
+
+#. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
+msgid "label_in_forum"
+msgstr "在 ${forum}"
+
+msgid "label_maxattachments"
+msgstr "附件數量限制"
+
+msgid "label_maxattachmentsize"
+msgstr "附件容量限制"
+
+#. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:13
+msgid "label_powered_by"
+msgstr "以 ${link} 建立"
+
+#. Default: "Quick reply"
+#: ../browser/templates/conversation_view.pt:71
+msgid "label_quickreply"
+msgstr "直接回覆"
+
+#. Default: "Previously ${author} wrote: ${quote}"
+#: ../browser/comment.py:81
+msgid "label_quote"
+msgstr "前文中 ${author} 寫到: ${quote}"
+
+#. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+msgid "label_required"
+msgstr "(必填)"
+
+msgid "label_text"
+msgstr "內文"
+
+#. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+msgid "label_title_posting"
+msgstr "標題"
+
+#. Default: "Transforms"
+#: ../browser/controlpanel.py:16
+msgid "label_transforms"
+msgstr ""
+
+#. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:206
+msgid "legend_attachments"
+msgstr "附件"
+
+#. Default: "Log in to start a conversation"
+#: ../browser/templates/addconversation.pt:34
+msgid "log_to_start_conversation"
+msgstr "登入帳號後可以留言"
+
+#. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:73
+msgid "moderation_count"
+msgstr "${count} 留言等待審核。"
+
+#. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:36
+msgid "moderation_description"
+msgstr "下列留言等待審核，請選擇「發佈」或「"
+
+#. Default: "Most recent comment"
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
+msgid "most_recent_comment"
+msgstr "最新留言"
+
+#. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+msgid "new_attachment"
+msgstr "新增其他附件"
+
+#. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
+msgid "new_conversations_marked_with"
+msgstr "標記 ${star} 符號的留言有新的回覆。"
+
+#. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:113
+msgid "no_comments_queued"
+msgstr "沒有留言待審。"
+
+#. Default: "No conversations started"
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
+msgid "no_conversations_started"
+msgstr "沒有討論"
+
+#. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
+msgid "no_recent_conversations"
+msgstr "沒有討論"
+
+#. Default: "No replies yet"
+#: ../browser/templates/forum.pt:126
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
+msgid "no_replies_yet"
+msgstr "沒有回覆"
+
+#. Default: "No conversations in this forum yet."
+#: ../browser/templates/addconversation.pt:14
+msgid "not_conversations"
+msgstr "沒有討論。"
+
+#. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
+msgid "not_forums"
+msgstr "沒有討論板，請由選單裡新增。"
+
+#. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../browser/templates/addconversation.pt:41
+msgid "not_permission_start_conversation"
+msgstr "沒有權限新增留言。"
+
+#. Default: "Conversations"
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
+msgid "number_of_conversations"
+msgstr "留言數"
+
+#. Default: "Ploneboard configuration"
+#: ../browser/controlpanel.py:55
+msgid "ploneboard_configuration"
+msgstr "討論區設定"
+
+#. Default: "Text transformations"
+#: ../browser/controlpanel.py:60
+msgid "ploneboard_transform_panel"
+msgstr ""
+
+#. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:71
+msgid "posted_by"
+msgstr "作者："
+
+#. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
+msgid "preview_message"
+msgstr "預覽結果"
+
+#. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
+msgid "recent_conversations_description"
+msgstr "下列留言已有回覆。"
+
+#. Default: "Replies"
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
+msgid "replies"
+msgstr "回覆"
+
+#. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
+msgid "search_result_location"
+msgstr "在 ${forum} &rarr; ${conversation}。"
+
+#. Default: "Show all recent activity"
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
+msgid "show_new_conversations_all"
+msgstr "顯示最新的討論"
+
+#. Default: "Show only unanswered"
+#: ../browser/templates/forum.pt:38
+msgid "show_no_replies"
+msgstr "顯示未被回覆的討論"
+
+#. Default: "Show all unanswered"
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
+msgid "show_no_replies_all"
+msgstr "顯示未被回覆的討論"
+
+#. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:76
+msgid "text_at"
+msgstr "在"
+
+#. Default: "Number of items to display"
+#: ../portlet/recent.py:27
+msgid "title_count"
+msgstr "每頁顯示的標題數量"
+
+#. Default: "Limit to specific board or forum"
+#: ../portlet/recent.py:35
+msgid "title_forum"
+msgstr "限定顯示"
+
+#. Default: "General forums"
+#: ../browser/templates/board.pt:147
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
+msgid "title_general_forums"
+msgstr "一般討論板"
+
+#. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
+msgid "title_recent_conversations"
+msgstr "在 ${title} 的最新留言"
+
+#. Default: "Portlet title"
+#: ../portlet/recent.py:22
+msgid "title_title"
+msgstr "方框標題"
+
+#. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
+msgid "title_unanswered_conversations"
+msgstr "在 ${title} 未被回覆的留言"
+
+#. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
+msgid "unanswered_conversations_description"
+msgstr "下列留言尚未被回覆。"
+

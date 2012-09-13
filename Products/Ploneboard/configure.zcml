@@ -3,115 +3,122 @@
    xmlns:browser="http://namespaces.zope.org/browser"
    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
    xmlns:five="http://namespaces.zope.org/five"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
    i18n_domain="ploneboard">
 
   <include package="Products.SimpleAttachment" />
   <include package="plone.app.portlets" />
   <include package="Products.CMFCore" file="permissions.zcml" />
 
+  <five:registerPackage package="." initialize=".initialize" />
+  <i18n:registerTranslations directory="locales" />
+
   <class class=".content.Ploneboard.Ploneboard">
-      <implements
-          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+    <implements
+        interface="plone.portlets.interfaces.ILocalPortletAssignable" />
   </class>
 
   <class class=".content.Ploneboard.Ploneboard">
-      <implements
-          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+    <implements
+        interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
   </class>
 
   <class class=".content.PloneboardForum.PloneboardForum">
-      <implements
-          interface="plone.portlets.interfaces.ILocalPortletAssignable"/>
+    <implements
+        interface="plone.portlets.interfaces.ILocalPortletAssignable" />
   </class>
 
   <class class=".content.PloneboardForum.PloneboardForum">
-      <implements
-          interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
+    <implements
+        interface="plone.contentrules.engine.interfaces.IRuleAssignable" />
   </class>
 
   <permission
-     id="Ploneboard.DeleteComment"
-     title="Delete objects"
-     />
+      id="Ploneboard.DeleteComment"
+      title="Delete objects"
+      />
 
   <adapter
-     for=".interfaces.IComment"
-     provides="Products.ATContentTypes.interface.ITextContent"
-     factory=".adapters.CommentTextContent"
-     />
+      for=".interfaces.IComment"
+      provides="Products.ATContentTypes.interface.ITextContent"
+      factory=".adapters.CommentTextContent"
+      />
 
-  <adapter factory='.catalog.num_comments' name='num_comments' />
+  <adapter
+      factory=".catalog.num_comments"
+      name="num_comments"
+      />
 
   <include package=".browser" />
   <include package=".portlet" />
 
   <utility
-    component=".vocabulary.AvailableTransformsVocabularyFactory"
-    name="Products.Ploneboard.AvailableTransforms"
-    />
+      component=".vocabulary.AvailableTransformsVocabularyFactory"
+      name="Products.Ploneboard.AvailableTransforms"
+      />
 
   <genericsetup:registerProfile
-     name="default"
-     title="Ploneboard"
-     directory="profiles/default"
-     description="Install the Ploneboard forum product"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="default"
+      title="Ploneboard"
+      directory="profiles/default"
+      description="Install the Ploneboard forum product"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <!-- This profile is only here for not breaking (policy) packages depending on this
        It should not be used any longer. -->
   <genericsetup:registerProfile
-     name="ploneboard"
-     title="Ploneboard (backward compatible version, please use default profile)"
-     directory="profiles/default"
-     description="Install the Ploneboard forum product"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="ploneboard"
+      title="Ploneboard (backward compatible version, please use default profile)"
+      directory="profiles/default"
+      description="Install the Ploneboard forum product"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <genericsetup:registerProfile
-     name="intranet"
-     title="Ploneboard for intranets"
-     directory="profiles/intranet"
-     description="Install the intranet workflow definitions for Ploneboard"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="intranet"
+      title="Ploneboard for intranets"
+      directory="profiles/intranet"
+      description="Install the intranet workflow definitions for Ploneboard"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <genericsetup:registerProfile
-     name="zbasicboard"
-     title="Ploneboard performance test forum structure"
-     directory="profiles/basicboard"
-     description="Set up a forum structure for performance testing"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="zbasicboard"
+      title="Ploneboard performance test forum structure"
+      directory="profiles/basicboard"
+      description="Set up a forum structure for performance testing"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <genericsetup:registerProfile
-     name="zlotsofposts"
-     title="Ploneboard performance posts"
-     directory="profiles/lotsofposts"
-     description="Set up posts for load testing"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="zlotsofposts"
+      title="Ploneboard performance posts"
+      directory="profiles/lotsofposts"
+      description="Set up posts for load testing"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <genericsetup:registerProfile
-     name="uninstall"
-     title="Uninstall Ploneboard"
-     directory="profiles/uninstall"
-     description="Uninstall Ploneboard product"
-     provides="Products.GenericSetup.interfaces.EXTENSION"
-     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-     />
+      name="uninstall"
+      title="Uninstall Ploneboard"
+      directory="profiles/uninstall"
+      description="Uninstall Ploneboard product"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
 
   <genericsetup:importStep
-     name="Products.Ploneboard.uninstallVarious"
-     title="Products.Ploneboard: Additional uninstall steps"
-     description="Additional uninstallation Products.Ploneboard steps."
-     handler="Products.Ploneboard.setuphandlers.uninstallVarious"
-     />
+      name="Products.Ploneboard.uninstallVarious"
+      title="Products.Ploneboard: Additional uninstall steps"
+      description="Additional uninstallation Products.Ploneboard steps."
+      handler="Products.Ploneboard.setuphandlers.uninstallVarious"
+      />
 
   <genericsetup:upgradeSteps
       profile="Products.Ploneboard:default"
@@ -119,18 +126,22 @@
       destination="3300">
     <genericsetup:upgradeStep
         title="Setup form controllers for comment attachments and images"
-	description="Register additional form controller actions to be able to edit and add attachments to existing posts."
-	handler=".setuphandlers.setupComment" />
+        description="Register additional form controller actions to be able to
+                     edit and add attachments to existing posts."
+        handler=".setuphandlers.setupComment"
+        />
     <genericsetup:upgradeDepends
         title="Assign Plone role permissions"
         description="Add default permission mappings for the Plone
                      'Reader', 'Contributor', 'Editor', and 'Reviewer'
                      roles used on the sharing tab."
-        import_steps="typeinfo" />
+        import_steps="typeinfo"
+        />
     <genericsetup:upgradeDepends
         title="Import CSS resource registrations"
         description="Add the ploneboard.css resource"
-        import_steps="cssregistry" />
+        import_steps="cssregistry"
+        />
   </genericsetup:upgradeSteps>
 
   <!--
@@ -139,19 +150,19 @@
     -->
 
   <five:deprecatedManageAddDelete
-     class=".content.Ploneboard.Ploneboard"
-     />
+      class=".content.Ploneboard.Ploneboard"
+      />
 
   <five:deprecatedManageAddDelete
-     class=".content.PloneboardForum.PloneboardForum"
-     />
+      class=".content.PloneboardForum.PloneboardForum"
+      />
 
   <five:deprecatedManageAddDelete
-     class=".content.PloneboardConversation.PloneboardConversation"
-     />
+      class=".content.PloneboardConversation.PloneboardConversation"
+      />
 
   <five:deprecatedManageAddDelete
-     class=".content.PloneboardComment.PloneboardComment"
-     />
+      class=".content.PloneboardComment.PloneboardComment"
+      />
 
 </configure>

@@ -1,0 +1,122 @@
+# Finnish translations for Products.Ploneboard
+# Contributors:
+# - Antti Moilanen <antti.moilanen@twinapex.com>, 2008.
+# - Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ploneboard\n"
+"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"PO-Revision-Date: 2010-03-25 12:51+0200\n"
+"Last-Translator: Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>\n"
+"Language-Team: University of Jyväskylä <jukka.ojaniemi@jyu.fi>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fi\n"
+"Language-Name: Finnish\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+"X-Poedit-Language: Finnish\n"
+"X-Poedit-Country: FINLAND\n"
+
+msgid "Activate"
+msgstr "Aktivoi"
+
+msgid "Active"
+msgstr "Aktiivinen"
+
+#: ../skins/ploneboard_templates/comment_view.pt:117
+msgid "Edit"
+msgstr ""
+
+msgid "Free for all"
+msgstr "Avoin kaikille"
+
+msgid "Hidden"
+msgstr "Piilotettu"
+
+msgid "Hide"
+msgstr "Piilota"
+
+msgid "Lock"
+msgstr "Lukitse"
+
+msgid "Locked"
+msgstr ""
+
+msgid "Make free-for-all"
+msgstr "Salli kaikille"
+
+msgid "Make member-posting"
+msgstr "Salli jäsenille"
+
+#. Default: "Make moderated"
+msgid "Make moderated"
+msgstr "Tee keskustelualueesta moderoitu"
+
+msgid "Make private"
+msgstr ""
+
+msgid "Moderate"
+msgstr "Hallitse"
+
+msgid "Moderated forum"
+msgstr ""
+
+msgid "Open"
+msgstr "Avattu"
+
+msgid "Private to members only"
+msgstr "Rajoitettu vain jäsenille"
+
+msgid "Public"
+msgstr "Yleinen"
+
+msgid "Rejected"
+msgstr "Hylätty"
+
+msgid "Require membership to post"
+msgstr "Viestin lähettäminen vaatii jäsenyyden"
+
+msgid "Retracted"
+msgstr "Peruttu"
+
+msgid "Waiting for moderator"
+msgstr "Odottaa tarkastusta"
+
+#. Default: "${number} items matching your search terms"
+#: ../browser/search.pt:39
+msgid "batch_x_items_matching_your_criteria"
+msgstr ""
+
+#. Flat conversion view
+msgid "conversation_view"
+msgstr ""
+
+#. Default: "Search results"
+#: ../browser/search.pt:32
+msgid "heading_search_results"
+msgstr ""
+
+#. Default: "Relevance: ${percentage}%"
+#: ../browser/search.pt:99
+msgid "label_relevance_percentage"
+msgstr ""
+
+#. Default: "Search"
+#: ../browser/search.pt:27
+msgid "label_search"
+msgstr ""
+
+msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
+msgstr "${hours}:${minutes} ${day} ${month} ${year}"
+
+#. Threaded conversion view
+msgid "threaded_conversation_view"
+msgstr ""
+
+#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+msgid "young_date_format: ${wday} ${hours}:${minutes}"
+msgstr "${wday} ${hours}:${minutes}"
+
