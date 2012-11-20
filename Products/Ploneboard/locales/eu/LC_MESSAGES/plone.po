@@ -4,11 +4,11 @@
 # never generate this file with i18ndude, it is managed manual
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Ploneboard-Plone\n"
 "POT-Creation-Date: 2012-09-07 20:29+0000\n"
-"PO-Revision-Date: 2009-03-03 14:45+0100\n"
+"PO-Revision-Date: 2012-11-20 11:27+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Language-Name: Basque\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
+"X-Poedit-Language: Basque\n"
 
 msgid "Activate"
 msgstr "Aktibatu"
@@ -26,7 +27,7 @@ msgstr "Aktibatuta"
 
 #: ../skins/ploneboard_templates/comment_view.pt:117
 msgid "Edit"
-msgstr ""
+msgstr "Editatu"
 
 msgid "Free for all"
 msgstr "Guztientzat irekita"
@@ -41,7 +42,7 @@ msgid "Lock"
 msgstr "Itxi"
 
 msgid "Locked"
-msgstr ""
+msgstr "Itxita"
 
 msgid "Make free-for-all"
 msgstr "Guztiei ireki"
@@ -53,7 +54,7 @@ msgid "Make moderated"
 msgstr "Moderazioa aktibatu"
 
 msgid "Make private"
-msgstr ""
+msgstr "Pribatu egin"
 
 msgid "Moderate"
 msgstr "Moderatu"
@@ -85,7 +86,7 @@ msgstr "Moderazioaren zain"
 #. Default: "${number} items matching your search terms"
 #: ../browser/search.pt:39
 msgid "batch_x_items_matching_your_criteria"
-msgstr ""
+msgstr "${number} elementu datoz bat zure bilaketarekin"
 
 #. Flat conversion view
 msgid "conversation_view"
@@ -94,17 +95,17 @@ msgstr "Elkarrizketen bista"
 #. Default: "Search results"
 #: ../browser/search.pt:32
 msgid "heading_search_results"
-msgstr ""
+msgstr "Bilaketaren emaitzak"
 
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
-msgstr ""
+msgstr "Errelebantzia: %${percentaje}"
 
 #. Default: "Search"
 #: ../browser/search.pt:27
 msgid "label_search"
-msgstr ""
+msgstr "Bilatu"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
@@ -115,5 +116,5 @@ msgstr "Haritutako elkarrizketen bista"
 
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
-msgstr "${wday} ${hours}:${minutes}"
+msgstr "${wday}, ${hours}:${minutes}"
 

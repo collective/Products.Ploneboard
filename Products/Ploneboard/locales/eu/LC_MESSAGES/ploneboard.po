@@ -3,11 +3,11 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Products.Ploneboard\n"
 "POT-Creation-Date: 2012-09-07 20:29+0000\n"
-"PO-Revision-Date: 2009-03-30 08:26+0100\n"
+"PO-Revision-Date: 2012-11-20 11:25+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,14 +16,15 @@ msgstr ""
 "Language-Name: Basque\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
+"X-Poedit-Language: Basque\n"
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Foroak elkarrizketa-hariak ditu"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Erantzunak testua eta metadatuak ditu"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -43,7 +44,7 @@ msgstr "Aldatu"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
-msgstr ""
+msgstr "Erantzuna"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
@@ -59,7 +60,7 @@ msgstr "Erantzuna moderazio kolan dago"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
-msgstr ""
+msgstr "Elkarrizketa-haria"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
@@ -67,7 +68,7 @@ msgstr "Elkarrizketa-haria gehituta"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Hariak erantzunak ditu"
 
 #: ../browser/comment.py:267
 msgid "Conversation deleted"
@@ -92,7 +93,7 @@ msgstr "Saioa hasi erantzunak gehitzeko"
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
-msgstr ""
+msgstr "Foroa"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -100,7 +101,7 @@ msgstr "Ez dutu testurik idatzi"
 
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
 msgid "No title entered"
-msgstr ""
+msgstr "Ez duzu izenbururik sartu"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
@@ -109,7 +110,7 @@ msgstr "Zuzendu adierazitako erroreak"
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "Ploneboard foro ezberdinak dituen kanporengo elementua da"
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
@@ -168,7 +169,6 @@ msgstr "Bilatu"
 #: ../browser/search.pt:22
 #: ../browser/templates/board.pt:28
 #: ../skins/ploneboard_templates/board_view.pt:32
-#, fuzzy
 msgid "board_search_label"
 msgstr "Foroan bilatu"
 
@@ -281,7 +281,7 @@ msgstr "Foroaren inguruko deskribapen laburra"
 #. Default: "Limit recent conversations to a specific forum"
 #: ../portlet/recent.py:37
 msgid "help_forum"
-msgstr ""
+msgstr "Azken konbertsazio-hariak foro jakin batera murriztu"
 
 msgid "help_maxattachments"
 msgstr "Aukeratu mezuetan onartuko den gehitutako fitxategi kopurua"
@@ -367,7 +367,6 @@ msgstr "${author}(e)k zera idatzi zuen: ${quote}"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:61
-#, fuzzy
 msgid "label_required"
 msgstr "Beharrezkoa"
 
@@ -482,7 +481,7 @@ msgstr "Testu eraldaketak"
 #. Default: "Posted by"
 #: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
-msgstr "-k idatzita"
+msgstr "Egilea:"
 
 #. Default: "Preview message"
 #: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
@@ -535,7 +534,7 @@ msgstr "Zenbat elementu erakutsi"
 #. Default: "Limit to specific board or forum"
 #: ../portlet/recent.py:35
 msgid "title_forum"
-msgstr ""
+msgstr "Foro jakin batera mugatu"
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:147
@@ -562,5 +561,5 @@ msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
-msgstr ""
+msgstr "Elkarrizketa-hari hauek oraindik ez dute erantzunik."
 
