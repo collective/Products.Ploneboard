@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Un forum che contiene discussioni"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Un commento che contiene testo."
 
 msgid "Anonymous"
 msgstr "Anonimo"
@@ -51,7 +51,7 @@ msgstr "Cambia"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
-msgstr ""
+msgstr "Commento"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
@@ -67,7 +67,7 @@ msgstr "Commento in attesa di approvazione"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
-msgstr ""
+msgstr "Discussioni"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
@@ -75,7 +75,7 @@ msgstr "Discussione aggiunta"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Una discussione con commenti."
 
 #: ../browser/comment.py:268
 msgid "Conversation deleted"
@@ -108,27 +108,27 @@ msgstr "Nessun contenuto inserito"
 
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
 msgid "No title entered"
-msgstr ""
+msgstr "Nessun titolo inserito"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
-msgstr "Prego correggi gli errori indicati"
+msgstr "Prego correggi gli errori indicati."
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "Ploneboard è una bacheca di forum."
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
-msgstr ""
+msgstr "Invia"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
-msgstr "Aggiunti un nuovo commento."
+msgstr "Aggiunti un nuovo commento"
 
 #. Default: "Reply to this"
 #: ../browser/templates/conversation_view.pt:71
@@ -139,11 +139,11 @@ msgstr "Rispondi"
 #. Default: "Start a new Conversation"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
-msgstr "Nuova discussione"
+msgstr "Inizia una nuova discussione"
 
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:49
 msgid "Start conversation"
-msgstr ""
+msgstr "Inizia discussione"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
@@ -186,7 +186,6 @@ msgstr "Cerca"
 #: ../browser/search.pt:22
 #: ../browser/templates/board.pt:28
 #: ../skins/ploneboard_templates/board_view.pt:32
-#, fuzzy
 msgid "board_search_label"
 msgstr "Cerca del forum"
 
@@ -282,10 +281,10 @@ msgid "help_captcha"
 msgstr "Inserisci il testo che vedi nell'immagine. Per evitare lo spam"
 
 msgid "help_categories_board"
-msgstr ""
+msgstr "Inserisci le categorie che vuoi rendere disponibili nei vai forum. Una per riga."
 
 msgid "help_category"
-msgstr ""
+msgstr "Selezione in quale categoria inserire il forum. Un forum può essere inserito in più categorie, ma è consigliato usarne solo una."
 
 #. Default: "How many items to list."
 #: ../portlet/recent.py:29
@@ -293,7 +292,7 @@ msgid "help_count"
 msgstr "Quanti elementi mostrare."
 
 msgid "help_description_board"
-msgstr ""
+msgstr "Inserisci una breve descrizione riguardante il forum"
 
 msgid "help_description_conversation"
 msgstr "Inserisci una breve descrizione riguardante la discussione"
@@ -304,13 +303,13 @@ msgstr "Inserisci una breve descrizione riguardante il forum"
 #. Default: "Limit recent conversations to a specific forum"
 #: ../portlet/recent.py:37
 msgid "help_forum"
-msgstr ""
+msgstr "Limita le ultime discussioni di un forum specifico"
 
 msgid "help_maxattachments"
-msgstr ""
+msgstr "Inserisci il numero massimo di allegati disponibili."
 
 msgid "help_maxattachmentsize"
-msgstr ""
+msgstr "Seleziona la dimensione massima per un allegato."
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
 #: ../content/PloneboardForum.py:86
@@ -358,13 +357,13 @@ msgid "label_captcha"
 msgstr "Captcha"
 
 msgid "label_categories_board"
-msgstr ""
+msgstr "Categorie"
 
 msgid "label_category"
-msgstr ""
+msgstr "Categorie"
 
 msgid "label_description_board"
-msgstr ""
+msgstr "Inserisci una breve descrizione del forum."
 
 msgid "label_description_conversation"
 msgstr "Descrizione della discussione"
@@ -378,10 +377,10 @@ msgid "label_in_forum"
 msgstr ""
 
 msgid "label_maxattachments"
-msgstr ""
+msgstr "Numero massimo di allegati"
 
 msgid "label_maxattachmentsize"
-msgstr ""
+msgstr "Dimensione massima degli allegati"
 
 #. Default: "Powered by ${link}"
 #: ../skins/ploneboard_templates/board_footer.pt:13
@@ -395,7 +394,6 @@ msgstr "${author} ha scritto: ${quote}"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:62
-#, fuzzy
 msgid "label_required"
 msgstr "Obbligatorio"
 
@@ -558,7 +556,7 @@ msgstr "Mostra tutti gli elementi senza risposta"
 #. Default: "at"
 #: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
-msgstr "il"
+msgstr " "
 
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:27
@@ -568,7 +566,7 @@ msgstr "Numero di elementi da mostrare"
 #. Default: "Limit to specific board or forum"
 #: ../portlet/recent.py:35
 msgid "title_forum"
-msgstr ""
+msgstr "Limita ad una specifica area o forum"
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:148
@@ -595,5 +593,5 @@ msgstr "Discussioni senza risposta in ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
-msgstr ""
+msgstr "Le seguenti discussioni sono state postate, ma non hanno ancora ricevuto nessuna risposta."
 

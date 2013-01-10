@@ -41,7 +41,7 @@ msgid "Lock"
 msgstr "Chiudi"
 
 msgid "Locked"
-msgstr ""
+msgstr "Chiuso"
 
 msgid "Make free-for-all"
 msgstr "Rendi aperto a tutti"
@@ -53,7 +53,7 @@ msgid "Make moderated"
 msgstr "Rendi moderato"
 
 msgid "Make private"
-msgstr ""
+msgstr "Rendi privato"
 
 msgid "Moderate"
 msgstr "Moderato"
@@ -78,7 +78,7 @@ msgstr "Richiede la registrazione per scrivere"
 
 #: ../skins/ploneboard_templates/add_comment_form.cpt:125
 msgid "Required"
-msgstr ""
+msgstr "Obbligatorio"
 
 msgid "Retracted"
 msgstr "Ritirato"
@@ -89,7 +89,7 @@ msgstr "In attesa del moderatore"
 #. Default: "${number} items matching your search terms"
 #: ../browser/search.pt:39
 msgid "batch_x_items_matching_your_criteria"
-msgstr ""
+msgstr "${number} elementi corrispondono alla tua ricerca"
 
 #. Flat conversion view
 msgid "conversation_view"
@@ -98,17 +98,17 @@ msgstr "Lista delle discussioni"
 #. Default: "Search results"
 #: ../browser/search.pt:32
 msgid "heading_search_results"
-msgstr ""
+msgstr "Risultati della ricerca"
 
 #. Default: "Relevance: ${percentage}%"
 #: ../browser/search.pt:99
 msgid "label_relevance_percentage"
-msgstr ""
+msgstr "Rilevanza: ${percentage}"
 
 #. Default: "Search"
 #: ../browser/search.pt:27
 msgid "label_search"
-msgstr ""
+msgstr "Ricerca"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} ${month} ${year} alle ${hours}:${minutes}"
