@@ -36,6 +36,10 @@ Changelog
 - Added support for "Site Administrator" role
   [keul]
 
+- Forum area is not visible to users (even if published) if inside private
+  folders
+  [keul]
+
 3.3 (2012-09-08)
 ----------------
 
