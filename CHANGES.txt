@@ -25,7 +25,10 @@ Changelog
 
 - Update number of comments looking at the current users permissions
   (before this the number were updated even if a comment was not published)
-  [cekk] 
+  [cekk]
+
+- Fixed forum view: always display the third column in forum view
+  [keul]
 
 3.3 (2012-09-08)
 ----------------
