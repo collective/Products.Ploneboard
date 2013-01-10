@@ -100,7 +100,7 @@ msgstr "Effettua il login per aggiungere commenti"
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
-msgstr ""
+msgstr "Area Forum"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -128,7 +128,7 @@ msgstr "Invia"
 #: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
-msgstr "Aggiunti un nuovo commento"
+msgstr "Aggiungi un nuovo commento"
 
 #. Default: "Reply to this"
 #: ../browser/templates/conversation_view.pt:71
