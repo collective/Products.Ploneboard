@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Attachment is too large"
 msgstr ""
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -106,7 +106,7 @@ msgstr ""
 msgid "No title entered"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr ""
@@ -120,7 +120,7 @@ msgid "Post"
 msgstr ""
 
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr ""
 
@@ -143,6 +143,11 @@ msgstr ""
 
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
+msgstr ""
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
 msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
@@ -242,12 +247,12 @@ msgid "help_add_portlet"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr ""
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr ""
 
@@ -259,6 +264,11 @@ msgstr ""
 #. Default: "URLs will be automatically hyperlinked."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
+msgstr ""
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
 msgstr ""
 
 msgid "help_categories_board"
@@ -292,6 +302,11 @@ msgstr ""
 msgid "help_maxattachmentsize"
 msgstr ""
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr ""
 
@@ -311,7 +326,7 @@ msgid "label_back_to_board"
 msgstr ""
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr ""
 
@@ -325,6 +340,11 @@ msgstr ""
 #: ../browser/templates/forum.pt:108
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
+msgstr ""
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
 msgstr ""
 
 msgid "label_categories_board"
@@ -368,6 +388,11 @@ msgstr ""
 msgid "label_required"
 msgstr ""
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr ""
 
@@ -409,7 +434,7 @@ msgid "most_recent_comment"
 msgstr ""
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr ""
 

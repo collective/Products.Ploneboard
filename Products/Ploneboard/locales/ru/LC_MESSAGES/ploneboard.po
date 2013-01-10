@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-ru\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2009-02-02 13:55+0000\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -38,7 +38,7 @@ msgid "Attachment is too large"
 msgstr "Вложение слишком большое"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -110,7 +110,7 @@ msgstr "Не введено содержание"
 msgid "No title entered"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Исправьте, пожалуйста, указанные ошибки."
@@ -126,7 +126,7 @@ msgstr "Отправить"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "Отправить сообщение"
 
@@ -153,6 +153,11 @@ msgstr "Изменения %s сняты"
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Просмотреть профиль"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -253,12 +258,12 @@ msgid "help_add_portlet"
 msgstr "Этот портлет показывает последние комментарии."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "Максимальный размер вложения ${maxsize} килобайт."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "Загрузить файл-вложение к сообщению."
 
@@ -271,6 +276,11 @@ msgstr "Основные тэги HTML в порядке"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Адреса автоматически превратятся в ссылки."
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 #. Default: "Enter the categories you want to have available for forums, one category on each line."
 msgid "help_categories_board"
@@ -308,6 +318,11 @@ msgstr "Выберите максимальное количество влож�
 msgid "help_maxattachmentsize"
 msgstr "Выберите максимальный размер для вложений."
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr "Введите текст комментария."
 
@@ -327,7 +342,7 @@ msgid "label_back_to_board"
 msgstr "Назад к доске обсуждений."
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "Приложения"
 
@@ -342,6 +357,11 @@ msgstr "Основной текст"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author}"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "Категории"
@@ -385,6 +405,11 @@ msgstr "Предыдущий ${author} писал: ${quote}"
 msgid "label_required"
 msgstr "Обязательное поле"
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr "Текст"
 
@@ -426,7 +451,7 @@ msgid "most_recent_comment"
 msgstr "Последние сообщения"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "Добавить еще одно вложение"
 

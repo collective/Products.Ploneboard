@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-Plone\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2012-11-20 11:27+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
@@ -76,6 +76,10 @@ msgstr "Baztertuta"
 
 msgid "Require membership to post"
 msgstr "Argitaratzeko kide izatea eskatu"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Baztertuta"

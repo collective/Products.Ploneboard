@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -74,6 +74,10 @@ msgstr "Elutasítva"
 
 msgid "Require membership to post"
 msgstr "Hozzászólás csak tagoknak"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Visszavonva"

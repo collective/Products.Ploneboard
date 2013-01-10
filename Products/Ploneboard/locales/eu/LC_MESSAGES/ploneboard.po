@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Products.Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2012-11-20 11:25+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
@@ -38,7 +38,7 @@ msgid "Attachment is too large"
 msgstr "Fitxategia handiegia da"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -110,7 +110,7 @@ msgstr "Ez dutu testurik idatzi"
 msgid "No title entered"
 msgstr "Ez duzu izenbururik sartu"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Zuzendu adierazitako erroreak"
@@ -126,7 +126,7 @@ msgstr "Argitaratu"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "Erantzuna argitaratu"
 
@@ -153,6 +153,11 @@ msgstr "%s eraldaketa eguneratu da"
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Profila ikusi"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -251,12 +256,12 @@ msgid "help_add_portlet"
 msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakusten ditu"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "Fitxategiaren gehienezko tamaina ${maxsize} kilobytekoa da"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "Mezu honekin batera argitaratuko den fitxategia kargatu"
 
@@ -269,6 +274,11 @@ msgstr "Oinarrizko HTML etiketak idatz daitezke"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLak automatikoki lotura bihurtuko dira"
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 msgid "help_categories_board"
 msgstr "Foroak sailkatzeko erabiliko diren kategorien izenak. Bat lerro bakoitzeko."
@@ -301,6 +311,11 @@ msgstr "Aukeratu mezuetan onartuko den gehitutako fitxategi kopurua"
 msgid "help_maxattachmentsize"
 msgstr "Aukeratu gehitutako fitxategien tamaina maximoa"
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr "Testua idatzi"
 
@@ -320,7 +335,7 @@ msgid "label_back_to_board"
 msgstr "Forora itzuli"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "Fitxategiak"
 
@@ -335,6 +350,11 @@ msgstr "Testua"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author}"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "Kategoriak"
@@ -377,6 +397,11 @@ msgstr "${author}(e)k zera idatzi zuen: ${quote}"
 msgid "label_required"
 msgstr "Beharrezkoa"
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr "Testua"
 
@@ -418,7 +443,7 @@ msgid "most_recent_comment"
 msgstr "Azken erantzuna"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "Beste fitxategi bat gehitu"
 

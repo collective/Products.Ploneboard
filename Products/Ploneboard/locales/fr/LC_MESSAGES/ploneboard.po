@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-fr\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2008-10-21 17:36+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -41,7 +41,7 @@ msgid "Attachment is too large"
 msgstr "La pièce jointe est trop volumineuse"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -114,7 +114,7 @@ msgstr "Aucun contenu saisi"
 msgid "No title entered"
 msgstr "Veuillez saisir un titre"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Veuillez corriger les erreurs indiquées"
@@ -130,7 +130,7 @@ msgstr "Poster"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "Envoyer un message"
 
@@ -157,6 +157,11 @@ msgstr "Transformation %s supprimée"
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Voir le profil"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -256,12 +261,12 @@ msgid "help_add_portlet"
 msgstr "Cette boîte présente les conversations récemment commentées."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "La taille maximale autorisée est de  ${maxsize} kilo-octets."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "Sélectionnez un fichier à envoyer en pièce jointe à ce commentaire."
 
@@ -274,6 +279,11 @@ msgstr "Les balises HTML simples sont acceptées."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Les URLs seront automatiquement formatées."
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 #. Enter the categories you want to have available for forums, one category on each line.
 msgid "help_categories_board"
@@ -309,6 +319,11 @@ msgstr "Nombre maximum de pièces jointes par intervention (message ou réponse)
 msgid "help_maxattachmentsize"
 msgstr "Taille maximum autorisée pour les pièces jointes (en Ko)."
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr "Entrez le texte de votre commentaire."
 
@@ -328,7 +343,7 @@ msgid "label_back_to_board"
 msgstr "Retour aux forums"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "Pièces jointes"
 
@@ -343,6 +358,11 @@ msgstr "Corps de texte"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "par ${author}"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "Catégories"
@@ -389,6 +409,11 @@ msgstr "${author} a écrit : ${quote}"
 msgid "label_required"
 msgstr "Requis"
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr "Votre commentaire"
 
@@ -430,7 +455,7 @@ msgid "most_recent_comment"
 msgstr "Message le plus récent"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "Ajouter une nouvelle pièce jointe"
 

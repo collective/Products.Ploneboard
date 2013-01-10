@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-plone-ru\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2009-02-02 13:53+0000\n"
 "Last-Translator: Alexander Vesnenok <info@ploner.ru>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -74,6 +74,10 @@ msgstr "Забраковано"
 
 msgid "Require membership to post"
 msgstr "Необходимо зарегистрироваться для участия"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Возвращён на доработку"

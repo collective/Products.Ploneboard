@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,6 +73,10 @@ msgid "Rejected"
 msgstr ""
 
 msgid "Require membership to post"
+msgstr ""
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
 msgstr ""
 
 msgid "Retracted"

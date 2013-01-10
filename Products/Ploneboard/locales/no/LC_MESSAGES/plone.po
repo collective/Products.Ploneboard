@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: Helge Tesdal <tesdal@plonesolutions.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -73,6 +73,10 @@ msgid "Rejected"
 msgstr ""
 
 msgid "Require membership to post"
+msgstr ""
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
 msgstr ""
 
 msgid "Retracted"

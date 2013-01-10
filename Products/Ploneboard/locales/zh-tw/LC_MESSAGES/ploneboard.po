@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Attachment is too large"
 msgstr "附件檔案過大"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -103,7 +103,7 @@ msgstr "沒有留言"
 msgid "No title entered"
 msgstr "沒有標題"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "請修訂錯誤。"
@@ -117,7 +117,7 @@ msgid "Post"
 msgstr "張貼留言"
 
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "張貼留言"
 
@@ -141,6 +141,11 @@ msgstr "Transform %s 已移除"
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "檢視作者資訊"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -239,12 +244,12 @@ msgid "help_add_portlet"
 msgstr "用來顯示最新的留言。"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "附件檔案最大限制是 ${maxsize} KB。"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "上傳留言的附件檔案。"
 
@@ -257,6 +262,11 @@ msgstr "可以使用基本的 HTML 標籤。"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URL 會自動轉換成可連結網址。"
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 msgid "help_categories_board"
 msgstr "請逐行填寫討論板的分類。"
@@ -289,6 +299,11 @@ msgstr "指定每則留言的附件數量限制。"
 msgid "help_maxattachmentsize"
 msgstr "指定附件檔案的最大容量限制。"
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr "輸入留言內文。"
 
@@ -308,7 +323,7 @@ msgid "label_back_to_board"
 msgstr "回到討論區"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "附件"
 
@@ -323,6 +338,11 @@ msgstr "內文"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "作者：${author}"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "討論區分類"
@@ -365,6 +385,11 @@ msgstr "前文中 ${author} 寫到: ${quote}"
 msgid "label_required"
 msgstr "(必填)"
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr "內文"
 
@@ -406,7 +431,7 @@ msgid "most_recent_comment"
 msgstr "最新留言"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "新增其他附件"
 

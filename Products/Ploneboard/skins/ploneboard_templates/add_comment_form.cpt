@@ -112,6 +112,26 @@
                   The WYSIWYG code
                 </div>
               </tal:editor>
+              <!-- Captcha Control -->    
+               <div class="field"          
+                    tal:define="isAnon context/@@plone_portal_state/anonymous;
+                                 error errors/captcha|nothing;
+                                 captcha_view nocall:here/@@captcha|nothing;
+                                 show_captcha here/getShowCaptcha|nothing;"
+                    tal:condition="python:isAnon and captcha_view and show_captcha"
+                    tal:attributes="class python:test(error, 'field error', 'field')">
+                 <input name="captcha_control" type="hidden" value="1" />
+                 <label for="captcha" i18n:translate="label_captcha">Captcha</label>
+                 <span class="fieldRequired" title="Required"
+                       i18n:attributes="title"
+                       i18n:domain="plone" 
+                       i18n:translate="label_required">(Required)</span>  
+                                           
+                 <div class="formHelp" i18n:translate="help_captcha">
+                   Provide the text in the image. Just to avoid spambots
+                 </div>                    
+                 <p tal:replace="structure captcha_view/image_tag" />
+               </div>
             </div>
           </div>
 

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -37,7 +37,7 @@ msgid "Attachment is too large"
 msgstr "A csatolt fájl túl nagy"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:169
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
@@ -109,7 +109,7 @@ msgstr "Nincs tartalom"
 msgid "No title entered"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Kérjük, javítsa a jelzett hibákat!"
@@ -125,7 +125,7 @@ msgstr "Beküld"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:163
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "Hozzászólás beküldése"
 
@@ -152,6 +152,11 @@ msgstr "%s átalakító törölve"
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Profil megtekintése"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -251,12 +256,12 @@ msgid "help_add_portlet"
 msgstr "Ez a portlet a friss hozzászólásokkal rendelkező témákat listázza ki."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:137
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "Legfeljebb ${maxsize} kilobájt méretű fájl csatolható."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:131
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "A hozzászóláshoz csatolmányként feltölteni kívánt fájl kiválasztása."
 
@@ -269,6 +274,11 @@ msgstr "Alapvető HTML elemek használhatóak."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Az URL-ek automatikusan kattintható linkekké alakulnak át."
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 #. Default: "Enter the categories you want to have available for forums, one category on each line."
 msgid "help_categories_board"
@@ -306,6 +316,11 @@ msgstr "Adja meg a lehetséges csatományok számát."
 msgid "help_maxattachmentsize"
 msgstr "Adja meg a csatolmányok maximális méretét."
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 #. Default: "Enter comment body."
 msgid "help_text"
 msgstr "Adja meg a hozzászólás szövegét."
@@ -326,7 +341,7 @@ msgid "label_back_to_board"
 msgstr "Vissza a fórumba"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:128
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "Csatolmányok"
 
@@ -341,6 +356,11 @@ msgstr "Szövegtörzs"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author} által"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "Kategóriák"
@@ -384,6 +404,11 @@ msgstr "${author} korábban ezt írta: ${quote}"
 msgid "label_required"
 msgstr "Kötelező"
 
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "label_text"
 msgstr "Tartalom"
 
@@ -425,7 +450,7 @@ msgid "most_recent_comment"
 msgstr "Friss hozzászólások"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:150
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "Mégegy csatolmány hozzáadása"
 

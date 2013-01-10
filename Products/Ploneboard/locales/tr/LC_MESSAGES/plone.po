@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2009-03-24 17:47+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: H. Turgut Uyar <uyar@itu.edu.tr>\n"
@@ -72,6 +72,10 @@ msgstr "Reddedildi"
 
 msgid "Require membership to post"
 msgstr "Yalnızca üyeler gönderebilsin"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Çekilmiş"

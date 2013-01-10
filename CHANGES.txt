@@ -42,6 +42,8 @@ Changelog
 
 - Allowed translations for "Anonymous" comment in ploneboard views [cekk]
 
+- Added Captcha support for anonymous. If recaptcha is installed and configured. [cekk]
+
 3.3 (2012-09-08)
 ----------------
 

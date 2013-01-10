@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-01-10 14:10+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Matej Barič <matej.baric@hruska.si>\n"
 "Language-Team: Slovenian <matej.baric@hruska.si>\n"
@@ -75,6 +75,10 @@ msgstr "Zavrnjeno"
 
 msgid "Require membership to post"
 msgstr "Za pošiljanje potrebuje članstvo"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Umaknjeno"

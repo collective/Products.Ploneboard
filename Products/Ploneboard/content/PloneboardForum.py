@@ -9,9 +9,9 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, LinesField, IntegerField
+from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField
 from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
+from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget, BooleanWidget
 from Products.Archetypes.public import DisplayList, IntDisplayList
 
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
@@ -24,6 +24,7 @@ from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStru
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.Archetypes.event import ObjectInitializedEvent
 from zope import event
+_ = utils.PloneboardMessageFactory
 
 AttachmentSizes = IntDisplayList((
         (10,    u'10 kilobyte'),
@@ -78,6 +79,13 @@ schema = BaseBTreeFolderSchema + Schema((
                          label_msgid = "label_maxattachmentsize",
                          i18n_domain = "ploneboard",
                 )),
+    BooleanField('showCaptcha',
+                 write_permission = ManageForum,
+                 default = False,
+                 widget = BooleanWidget(
+                         description = _(u'help_showcaptcha', default=u'Select if show or not captcha for anonymous (if recaptcha installed and configured).'),
+                         label = _(u'label_show_captcha', default=u"Show Captcha"),
+     )),
     ))
 utils.finalizeSchema(schema)
 
