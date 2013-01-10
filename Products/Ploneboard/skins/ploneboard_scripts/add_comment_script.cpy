@@ -48,6 +48,10 @@ if m:
     else:
         message = _(u'Comment added')
     putils.addPortalMessage(message)
-    state.set(context=new_context)
+    #if the user can't access to the comment, the context will be set as the conversation
+    if pm.checkPermission("View", new_context):
+        state.set(context=new_context)
+    else:
+        state.set(context=context.getConversation())
 
 return state

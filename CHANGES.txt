@@ -46,6 +46,11 @@ Changelog
 
 - Fixed italian translations [cekk]
 
+- Fixed add_comment_script. After adding a new comment, if the user
+  (logged or anonymous) can't access to the comment (for example if it's moderated),
+  he will be redirected to the discussion
+  [cekk]
+ 
 3.3 (2012-09-08)
 ----------------
 
