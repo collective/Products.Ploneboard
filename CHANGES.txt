@@ -33,6 +33,9 @@ Changelog
 - Rejected comments can now be modified from owners before submitting again
   [keul]
 
+- Added support for "Site Administrator" role
+  [keul]
+
 3.3 (2012-09-08)
 ----------------
 

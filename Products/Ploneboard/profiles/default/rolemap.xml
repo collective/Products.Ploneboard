@@ -3,57 +3,70 @@
   <permissions>
     <permission name="Ploneboard: Search"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Member"/>
       <role name="Reader"/>
     </permission>
     <permission name="Ploneboard: Add Ploneboard"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Contributor"/>
     </permission>
     <permission name="Ploneboard: Add Forum"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Contributor"/>
     </permission>
     <permission name="Ploneboard: Add Conversation"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Contributor"/>
     </permission>
     <permission name="Ploneboard: Move Conversation"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Editor"/>
     </permission>
     <permission name="Ploneboard: Merge Conversation"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Editor"/>
     </permission>
     <permission name="Ploneboard: Add Comment"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Contributor"/>
     </permission>
     <permission name="Ploneboard: Add Comment Attachment"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Member"/>
       <role name="Reader"/>
       <role name="Contributor"/>
     </permission>
     <permission name="Ploneboard: Approve Comment"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Reviewer"/>
     </permission>
     <permission name="Ploneboard: Retract Comment"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Reviewer"/>
     </permission>
     <permission name="Ploneboard: Moderate Forum"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Reviewer"/>
     </permission>
     <permission name="Ploneboard: Manage Ploneboard"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Editor"/>
     </permission>
     <permission name="Ploneboard: Manage Forum"
                 acquire="True">
+      <role name="Site Administrator"/>
       <role name="Editor"/>
     </permission>
   </permissions>
