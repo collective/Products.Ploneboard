@@ -30,6 +30,9 @@ Changelog
 - Fixed forum view: always display the third column in forum view
   [keul]
 
+- Rejected comments can now be modified from owners before submitting again
+  [keul]
+
 3.3 (2012-09-08)
 ----------------
 

@@ -1,19 +1,15 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="ploneboard_comment_workflow"
-             title="Comment Workflow [Ploneboard]"
-             state_variable="review_state"
-             initial_state="initial">
+<dc-workflow workflow_id="ploneboard_comment_workflow" title="Comment Workflow [Ploneboard]" description="" state_variable="review_state" initial_state="initial" manager_bypass="False">
  <permission>Access contents information</permission>
- <permission>View</permission>
- <permission>Modify portal content</permission>
- <permission>Ploneboard: Add Comment</permission>
  <permission>Add portal content</permission>
  <permission>Delete objects</permission>
+ <permission>Modify portal content</permission>
+ <permission>Ploneboard: Add Comment</permission>
+ <permission>View</permission>
  <state state_id="initial" title="Being created">
   <exit-transition transition_id="submit"/>
   <exit-transition transition_id="autosubmit"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
+  <permission-map name="Access contents information" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
@@ -25,14 +21,12 @@
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -44,8 +38,7 @@
   <exit-transition transition_id="publish"/>
   <exit-transition transition_id="reject"/>
   <exit-transition transition_id="autopublish"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
+  <permission-map name="Access contents information" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
@@ -57,13 +50,11 @@
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -73,8 +64,7 @@
  </state>
  <state state_id="published" title="Public">
   <exit-transition transition_id="retract"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
+  <permission-map name="Access contents information" acquired="True">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Add portal content" acquired="True">
@@ -82,12 +72,10 @@
   <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="True">
+  <permission-map name="Ploneboard: Add Comment" acquired="True">
   </permission-map>
   <permission-map name="View" acquired="True">
    <permission-role>Manager</permission-role>
@@ -95,8 +83,7 @@
  </state>
  <state state_id="rejected" title="Rejected">
   <exit-transition transition_id="submit"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
@@ -108,12 +95,11 @@
    <permission-role>Owner</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -123,8 +109,7 @@
  </state>
  <state state_id="retracted" title="Retracted">
   <exit-transition transition_id="re-publish"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
+  <permission-map name="Access contents information" acquired="True">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
    <permission-role>Owner</permission-role>
@@ -134,12 +119,10 @@
   <permission-map name="Delete objects" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Manager</permission-role>
@@ -147,76 +130,49 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
- <transition transition_id="autopublish"
-             title="Automatic publishing in unmoderated boards"
-             new_state="published" trigger="AUTOMATIC"
-             before_script=""
-             after_script="autopublish_script">
+ <transition transition_id="autopublish" title="Automatic publishing in unmoderated boards" new_state="published" trigger="AUTOMATIC" before_script="" after_script="autopublish_script">
   
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </transition>
- <transition transition_id="autosubmit"
-             title="Automatic publishing request"
-             new_state="pending" trigger="AUTOMATIC"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_submit_form"
-          category="workflow">Submit</action>
+ <transition transition_id="autosubmit" title="Automatic publishing request" new_state="pending" trigger="AUTOMATIC" before_script="" after_script="">
+  <action url="%(content_url)s/content_submit_form" category="workflow" icon="">Submit</action>
   <guard>
    <guard-permission>Request review</guard-permission>
   </guard>
  </transition>
- <transition transition_id="publish"
-             title="Reviewer publishes content"
-             new_state="published" trigger="USER"
-             before_script="" after_script="publish_script">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Publish</action>
+ <transition transition_id="publish" title="Reviewer publishes content" new_state="published" trigger="USER" before_script="" after_script="publish_script">
+  <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Publish</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </transition>
- <transition transition_id="re-publish"
-             title="Re-publish a retracted comment"
-             new_state="published" trigger="USER"
-             before_script="" after_script="">
-  <action url="" category="workflow">Publish</action>
+ <transition transition_id="re-publish" title="Re-publish a retracted comment" new_state="published" trigger="USER" before_script="" after_script="">
+  <action url="" category="workflow" icon="">Publish</action>
   <guard>
    <guard-permission>Ploneboard: Retract Comment</guard-permission>
   </guard>
  </transition>
- <transition transition_id="reject"
-             title="Reviewer rejects submission"
-             new_state="rejected" trigger="USER"
-             before_script="" after_script="reject_script">
-  <action url="%(content_url)s/content_reject_form"
-          category="workflow">Reject</action>
+ <transition transition_id="reject" title="Reviewer rejects submission" new_state="rejected" trigger="USER" before_script="" after_script="reject_script">
+  <action url="%(content_url)s/content_reject_form" category="workflow" icon="">Reject</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </transition>
- <transition transition_id="retract"
-             title="Retract a published comment"
-             new_state="retracted" trigger="USER"
-             before_script="" after_script="">
-  <action url="" category="workflow">Retract</action>
+ <transition transition_id="retract" title="Retract a published comment" new_state="retracted" trigger="USER" before_script="" after_script="">
+  <action url="" category="workflow" icon="">Retract</action>
   <guard>
    <guard-permission>Ploneboard: Retract Comment</guard-permission>
   </guard>
  </transition>
- <transition transition_id="submit"
-             title="Member requests publishing"
-             new_state="pending" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_submit_form"
-          category="workflow">Submit</action>
+ <transition transition_id="submit" title="Member requests publishing" new_state="pending" trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_submit_form" category="workflow" icon="">Submit</action>
   <guard>
    <guard-permission>Request review</guard-permission>
   </guard>
  </transition>
- <variable variable_id="action" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
   <description>The last transition</description>
   <default>
    
@@ -225,8 +181,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="actor" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
   <description>The ID of the user who performed the last transition</description>
   <default>
    
@@ -235,8 +190,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="comments" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
   <description>Comments about the last transition</description>
   <default>
    
@@ -245,8 +199,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="review_history" for_catalog="False"
-           for_status="False" update_always="False">
+ <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
   <description>Provides access to workflow history</description>
   <default>
    
@@ -257,8 +210,7 @@
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </variable>
- <variable variable_id="time" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
   <description>Time of the last transition</description>
   <default>
    
@@ -267,14 +219,7 @@
   <guard>
   </guard>
  </variable>
- <script script_id="autopublish_script"
-         type="External Method" filename=""
-         module="Ploneboard.WorkflowScripts"
-         function="autopublish_script"/>
- <script script_id="publish_script" type="External Method"
-         filename="" module="Ploneboard.WorkflowScripts"
-         function="publish_script"/>
- <script script_id="reject_script" type="External Method"
-         filename="" module="Ploneboard.WorkflowScripts"
-         function="reject_script"/>
+ <script script_id="autopublish_script" type="External Method" filename="" module="Ploneboard.WorkflowScripts" function="autopublish_script"/>
+ <script script_id="publish_script" type="External Method" filename="" module="Ploneboard.WorkflowScripts" function="publish_script"/>
+ <script script_id="reject_script" type="External Method" filename="" module="Ploneboard.WorkflowScripts" function="reject_script"/>
 </dc-workflow>
