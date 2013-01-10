@@ -21,6 +21,12 @@ Changelog
   a normal reply.
   [gaudenz]
 
+- Do no swallow ConflictError anymore [keul]
+
+- Update number of comments looking at the current users permissions
+  (before this the number were updated even if a comment was not published)
+  [cekk] 
+
 3.3 (2012-09-08)
 ----------------
 
