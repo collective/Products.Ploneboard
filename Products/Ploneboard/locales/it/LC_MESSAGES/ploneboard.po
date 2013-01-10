@@ -166,7 +166,7 @@ msgstr "Puoi solo aggiungere commenti a discussioni o commenti"
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
-msgstr "Aggiunti commento"
+msgstr "Aggiungi commento"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:27

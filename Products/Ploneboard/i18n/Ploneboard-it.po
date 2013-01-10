@@ -122,7 +122,7 @@ msgstr ""
 #: ../browser/templates/conversation_view.pt:80
 #: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
-msgstr "Aggiunti un nuovo commento."
+msgstr "Aggiungi un nuovo commento."
 
 #. Default: "Reply to this"
 #: ../browser/templates/conversation_view.pt:71
@@ -155,7 +155,7 @@ msgstr "Puoi solo aggiungere commenti a discussioni o commenti"
 #. Default: "Add comment"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
-msgstr "Aggiunti commento"
+msgstr "Aggiungi commento"
 
 #. Default: "Add conversation"
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:27
