@@ -10,6 +10,7 @@ from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.browser.utils import toPloneboardTime
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from zope.i18n import translate
 
 
 class CommentViewableView(Five.BrowserView):
@@ -70,7 +71,7 @@ class CommentView(CommentViewableView):
         creator = self.context.Creator()
         info = self.portal_membership.getMemberInfo(creator)
         if info is None:
-            return creator
+            return translate(_(creator), context=self.context.REQUEST)
         fullname_or_id = info.get('fullname') or info.get('username') or creator
         return fullname_or_id
 

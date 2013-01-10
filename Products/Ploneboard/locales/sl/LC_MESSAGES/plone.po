@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Matej Barič <matej.baric@hruska.si>\n"
 "Language-Team: Slovenian <matej.baric@hruska.si>\n"
@@ -24,7 +24,7 @@ msgstr "Aktiviraj"
 msgid "Active"
 msgstr "Aktivno"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 

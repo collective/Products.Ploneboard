@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: 2012-03-15 17:03-0300\n"
 "Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
@@ -26,14 +26,21 @@ msgstr "Um fórum contém tópicos."
 msgid "A comment contains regular text body and metadata."
 msgstr "Um comentário contém corpo de texto padrão e metadados."
 
+msgid "Anonymous"
+msgstr ""
+
+msgid "Anonymous User"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr "O anexo é muito grande"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:169
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -50,7 +57,7 @@ msgstr "Comentário"
 msgid "Comment added"
 msgstr "Comentário adicionado"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "Comentário removido"
 
@@ -70,7 +77,7 @@ msgstr "Tópico adicionado"
 msgid "Conversation contains comments."
 msgstr "Um tópico contém comentários."
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 msgid "Conversation deleted"
 msgstr "Tópico apagado"
 
@@ -87,7 +94,7 @@ msgid "Forum"
 msgstr "Fórum"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Autentique-se para adicionar comentários"
 
@@ -119,12 +126,13 @@ msgstr "Publicar"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
 msgstr "Publicar comentário"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../browser/templates/conversation_view.pt:71
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Responder"
 
@@ -133,12 +141,16 @@ msgstr "Responder"
 msgid "Start a new Conversation"
 msgstr "Iniciar um novo tópico"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transformações %s removidas"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Ver perfil"
 
@@ -147,7 +159,7 @@ msgid "You can only add comments to conversations or comments."
 msgstr "Você só pode adicionar comentários a tópicos ou comentários"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "Adicionar comentário"
 
@@ -183,7 +195,7 @@ msgid "by_author"
 msgstr "por ${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Estado atual:"
 
@@ -239,22 +251,22 @@ msgid "help_add_portlet"
 msgstr "Este portlet mostra tópicos com comentários recentes."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:137
 msgid "help_body_attachments_maxsize"
 msgstr "O tamanho máximo de um anexo é ${maxsize} kilobytes."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "help_body_attachments_posting"
 msgstr "Selecione um arquivo para anexar a este comentário."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "Tags HTML básicas são permitidas."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLs serão automaticamente linkadas."
 
@@ -308,12 +320,12 @@ msgid "label_back_to_board"
 msgstr "Voltar para a discussão"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:128
 msgid "label_body_files_posting"
 msgstr "Anexos"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "Corpo do texto"
 
@@ -355,18 +367,13 @@ msgstr "Limite do tamanho de anexo"
 msgid "label_powered_by"
 msgstr "Tecnologia ${link}"
 
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Resposta rápida"
-
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr "citação"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 msgid "label_required"
 msgstr "(Obrigatório)"
 
@@ -374,7 +381,7 @@ msgid "label_text"
 msgstr "Corpo do texto"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "Título"
 
@@ -384,7 +391,7 @@ msgid "label_transforms"
 msgstr "Transformações"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Anexos"
 
@@ -411,7 +418,7 @@ msgid "most_recent_comment"
 msgstr "Comentários recentes"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:150
 msgid "new_attachment"
 msgstr "Adicionar outro anexo"
 
@@ -440,7 +447,7 @@ msgid "no_recent_conversations"
 msgstr "Nenhum tópico encontrado."
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Nenhuma resposta ainda."
@@ -522,7 +529,7 @@ msgid "show_no_replies_all"
 msgstr "Exibir tópicos não respondidos"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "em"
 
@@ -537,7 +544,7 @@ msgid "title_forum"
 msgstr "Limitar a um fórum específico"
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
@@ -562,3 +569,4 @@ msgstr "Tópicos não respondidos em ${title}"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
 msgstr "Os tópicos a seguir foram publicados, mas ainda não receberam nenhuma resposta."
+

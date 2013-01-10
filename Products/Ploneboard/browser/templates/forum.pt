@@ -106,6 +106,7 @@
 
                                 <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
+                                               i18n:translate=""
                                                define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
@@ -134,6 +135,7 @@
                              <a href="#" tal:attributes="href string:${conversation/getLastCommentUrl}">
                                <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
+                                         i18n:translate=""
                                          define="creator conversation/getLastCommentAuthor;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />

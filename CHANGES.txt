@@ -40,6 +40,8 @@ Changelog
   folders
   [keul]
 
+- Allowed translations for "Anonymous" comment in ploneboard views [cekk]
+
 3.3 (2012-09-08)
 ----------------
 

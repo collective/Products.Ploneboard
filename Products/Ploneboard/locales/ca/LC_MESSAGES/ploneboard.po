@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ca\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: 2008-12-09 08:21+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: <en@li.org>\n"
@@ -23,14 +23,21 @@ msgstr ""
 msgid "A comment contains regular text body and metadata."
 msgstr ""
 
+msgid "Anonymous"
+msgstr ""
+
+msgid "Anonymous User"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr ""
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:169
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "Cancel.la"
 
@@ -47,7 +54,7 @@ msgstr ""
 msgid "Comment added"
 msgstr "Comentari afegit"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "Comentari esborrat"
 
@@ -68,7 +75,7 @@ msgstr "Conversa"
 msgid "Conversation contains comments."
 msgstr ""
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 #, fuzzy
 msgid "Conversation deleted"
 msgstr "Publicat"
@@ -87,7 +94,7 @@ msgid "Forum"
 msgstr "Fòrum"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Posa comentaris"
 
@@ -119,12 +126,13 @@ msgstr "Respon"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
 msgstr "Respon comentari"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../browser/templates/conversation_view.pt:71
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Respondre"
 
@@ -133,12 +141,16 @@ msgstr "Respondre"
 msgid "Start a new Conversation"
 msgstr "Comença una nova conversa"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transforma %s esborrats"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Veure el perfil"
 
@@ -147,7 +159,7 @@ msgid "You can only add comments to conversations or comments."
 msgstr "Només pots afegir comentaris a les converses o a altres comentaris."
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "Afegir comentari"
 
@@ -184,7 +196,7 @@ msgid "by_author"
 msgstr "per ${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Estat actual:"
 
@@ -241,22 +253,22 @@ msgid "help_add_portlet"
 msgstr "Introdueixi el cos del comentari"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:137
 msgid "help_body_attachments_maxsize"
 msgstr "La grandària màxima de l'arxiu adjunt és de ${maxsize} kilobytes"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "help_body_attachments_posting"
 msgstr "Seleccioni un fitxer per posar com a annex a aquest comentari"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "Els tags HTML estan OK."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Les URLS seran automaticament enllaçades"
 
@@ -313,12 +325,12 @@ msgid "label_back_to_board"
 msgstr "Categories"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:128
 msgid "label_body_files_posting"
 msgstr "Annexes"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "Cos del missatge"
 
@@ -360,18 +372,13 @@ msgstr "Grandària màxima dels arxius adjunts"
 msgid "label_powered_by"
 msgstr "Amb el suport de ${link}"
 
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Resposta ràpida"
-
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr ""
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 #, fuzzy
 msgid "label_required"
 msgstr "(Requerit)"
@@ -380,7 +387,7 @@ msgid "label_text"
 msgstr "Text"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "Títol"
 
@@ -390,7 +397,7 @@ msgid "label_transforms"
 msgstr "Transformacions"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Annexes"
 
@@ -418,7 +425,7 @@ msgid "most_recent_comment"
 msgstr "Comentari més recent"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:150
 msgid "new_attachment"
 msgstr "Afegir annexe"
 
@@ -447,7 +454,7 @@ msgid "no_recent_conversations"
 msgstr "No hi ha converses."
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Sense respostes encara"
@@ -532,7 +539,7 @@ msgid "show_no_replies_all"
 msgstr "Veure tots els no resposts"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "A"
 
@@ -547,7 +554,7 @@ msgid "title_forum"
 msgstr ""
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"

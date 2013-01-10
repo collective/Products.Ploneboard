@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-fr\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: 2008-10-06 16:25+0200\n"
 "Last-Translator: Emmanuel Coirier <emmanuel.coirier@ingeniweb.com>\n"
 "Language-Team: french <support@ingeniweb.com>\n"
@@ -26,7 +26,7 @@ msgstr "Activer"
 msgid "Active"
 msgstr "Activé"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 

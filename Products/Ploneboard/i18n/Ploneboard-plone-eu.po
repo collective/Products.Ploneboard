@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2009-03-03 14:45+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Aktibatu"
 msgid "Active"
 msgstr "Aktibatuta"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 

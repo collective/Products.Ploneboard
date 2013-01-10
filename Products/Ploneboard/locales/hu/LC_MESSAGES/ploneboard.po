@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: 2009-02-01 06:20+0100\n"
 "Last-Translator: József Jároli <jaroli@yahoo.com>\n"
 "Language-Team: József Jároli <jaroli@yahoo.com>\n"
@@ -25,14 +25,21 @@ msgstr ""
 msgid "A comment contains regular text body and metadata."
 msgstr ""
 
+msgid "Anonymous"
+msgstr ""
+
+msgid "Anonymous User"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr "A csatolt fájl túl nagy"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:169
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "Mégsem"
 
@@ -49,7 +56,7 @@ msgstr ""
 msgid "Comment added"
 msgstr "Hozzászólás hozzáadva"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "Hozzászólás törölve"
 
@@ -69,7 +76,7 @@ msgstr "Téma hozáadva"
 msgid "Conversation contains comments."
 msgstr ""
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 msgid "Conversation deleted"
 msgstr "Téma törölve"
 
@@ -86,7 +93,7 @@ msgid "Forum"
 msgstr "Fórum"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Lépjen be, hogy hozzászólhasson"
 
@@ -118,12 +125,13 @@ msgstr "Beküld"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
 msgstr "Hozzászólás beküldése"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../browser/templates/conversation_view.pt:71
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Válasz erre"
 
@@ -132,12 +140,16 @@ msgstr "Válasz erre"
 msgid "Start a new Conversation"
 msgstr "Új téma indítása"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "%s átalakító törölve"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Profil megtekintése"
 
@@ -146,7 +158,7 @@ msgid "You can only add comments to conversations or comments."
 msgstr "Hozzászólást csak témákhoz vagy hozzászólásokhoz adhat hozzá"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "Hozzászólás hozzáadása"
 
@@ -183,7 +195,7 @@ msgid "by_author"
 msgstr "${author} által"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Aktuális állapot"
 
@@ -239,22 +251,22 @@ msgid "help_add_portlet"
 msgstr "Ez a portlet a friss hozzászólásokkal rendelkező témákat listázza ki."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:137
 msgid "help_body_attachments_maxsize"
 msgstr "Legfeljebb ${maxsize} kilobájt méretű fájl csatolható."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "help_body_attachments_posting"
 msgstr "A hozzászóláshoz csatolmányként feltölteni kívánt fájl kiválasztása."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "Alapvető HTML elemek használhatóak."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Az URL-ek automatikusan kattintható linkekké alakulnak át."
 
@@ -314,12 +326,12 @@ msgid "label_back_to_board"
 msgstr "Vissza a fórumba"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:128
 msgid "label_body_files_posting"
 msgstr "Csatolmányok"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "Szövegtörzs"
 
@@ -361,18 +373,13 @@ msgstr "Csatolmányok maximális mérete"
 msgid "label_powered_by"
 msgstr "Fórummotor: ${link}"
 
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Gyorsválasz"
-
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr "${author} korábban ezt írta: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 #, fuzzy
 msgid "label_required"
 msgstr "Kötelező"
@@ -381,7 +388,7 @@ msgid "label_text"
 msgstr "Tartalom"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "Cím"
 
@@ -391,7 +398,7 @@ msgid "label_transforms"
 msgstr "Transzformációk"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Csatolmányok"
 
@@ -418,7 +425,7 @@ msgid "most_recent_comment"
 msgstr "Friss hozzászólások"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:150
 msgid "new_attachment"
 msgstr "Mégegy csatolmány hozzáadása"
 
@@ -447,7 +454,7 @@ msgid "no_recent_conversations"
 msgstr "Nincsenek ilyen témák."
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Nincsenek még válaszok"
@@ -529,7 +536,7 @@ msgid "show_no_replies_all"
 msgstr "Összes megválaszolatlan téma"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "&mdash;"
 
@@ -544,7 +551,7 @@ msgid "title_forum"
 msgstr ""
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"

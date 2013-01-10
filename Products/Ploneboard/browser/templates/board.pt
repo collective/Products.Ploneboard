@@ -124,6 +124,7 @@
                     class="forumMostRecentCell">
                   <div i18n:translate="label_by_author">
                     by <tal:author i18n:name="author"
+                                   i18n:translate=""
                                    define="creator author;
                                            creatorinfo python: mtool.getMemberInfo(creator);"
                                    content="python:creatorinfo and creatorinfo['fullname'] or creator" />

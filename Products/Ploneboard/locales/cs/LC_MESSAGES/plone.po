@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:10+0000\n"
 "PO-Revision-Date: 2008-10-04 19:31+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -21,7 +21,7 @@ msgstr "Aktivovat"
 msgid "Active"
 msgstr "Aktivní"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 
