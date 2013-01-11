@@ -50,7 +50,9 @@ Changelog
   (logged or anonymous) can't access to the comment (for example if it's moderated),
   he will be redirected to the discussion
   [cekk]
- 
+
+- Added text field to Ploneboard AT [cekk]
+
 3.3 (2012-09-08)
 ----------------
 

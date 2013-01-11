@@ -8,6 +8,7 @@ from Products.Archetypes.public import Schema
 from Products.Archetypes.public import TextField
 from Products.Archetypes.public import LinesField
 from Products.Archetypes.public import TextAreaWidget
+from Products.Archetypes.public import RichWidget
 from Products.Archetypes.public import LinesWidget
 from Products.Archetypes.public import registerType
 from Products.CMFCore.utils import getToolByName
@@ -20,22 +21,37 @@ from Products.Ploneboard.permissions import AddForum
 from Products.Ploneboard.permissions import ManageBoard
 from Products.Ploneboard.permissions import SearchBoard
 from Products.Ploneboard.permissions import ViewBoard
+from Products.Archetypes.atapi import AnnotationStorage
+
 
 schema = ATBTreeFolderSchema + Schema((
     TextField('description',
-        searchable = 1,
-        default_content_type = 'text/html',
-        default_output_type = 'text/plain',
-        widget = TextAreaWidget(
-                description = "Enter a brief description of the board.",
-                description_msgid = "help_description_board",
-                i18n_domain = "ploneboard",
-                label = "Description",
-                label_msgid = "label_description_board",
-                rows = 5
+        searchable=1,
+        default_content_type='text/html',
+        default_output_type='text/plain',
+        widget=TextAreaWidget(
+                description="Enter a brief description of the board.",
+                description_msgid="help_description_board",
+                i18n_domain="ploneboard",
+                label="Description",
+                label_msgid="label_description_board",
+                rows=5
                 )
             ),
-
+    TextField('text',
+              required=False,
+              searchable=True,
+              storage=AnnotationStorage(migrate=True),
+              validators=('isTidyHtmlWithCleanup',),
+              default_output_type='text/x-html-safe',
+              widget=RichWidget(
+                        description="Enter some text.",
+                        description_msgid="help_text_board",
+                        i18n_domain="ploneboard",
+                        label="Text",
+                        label_msgid="label_text_board",
+                        rows=25),
+    ),
     LinesField('categories',
         widget = LinesWidget(
             description = \
@@ -46,7 +62,7 @@ schema = ATBTreeFolderSchema + Schema((
             label_msgid = "label_categories_board",
             i18n_domain = "ploneboard")),
     ))
-
+    
 utils.finalizeSchema(schema)
 
 
