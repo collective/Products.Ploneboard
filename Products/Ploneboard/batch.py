@@ -1,9 +1,16 @@
 from ExtensionClass import Base
-from Products.CMFPlone.PloneBatch import Batch as PloneBatch,        \
-                                         calculate_pagenumber,       \
-                                         calculate_pagerange,        \
-                                         calculate_leapback,         \
-                                         calculate_leapforward
+try:
+    from Products.CMFPlone.PloneBatch import Batch as PloneBatch,    \
+                                             calculate_pagenumber,   \
+                                             calculate_pagerange,    \
+                                             calculate_leapback,     \
+                                             calculate_leapforward
+except ImportError:
+    from Products.CMFPlone.PloneBatch import Batch as PloneBatch
+    from plone.batching.utils import calculate_pagenumber,           \
+                                     calculate_pagerange,            \
+                                     calculate_leapback,             \
+                                     calculate_leapforward
                                          
 class LazyPrevBatch(Base):
     def __of__(self, parent):
