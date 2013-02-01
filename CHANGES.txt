@@ -4,6 +4,9 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Fixed imports for Plone 4.3
+  [kroman0]
+
 - Fixed i18n headers, added locales folder and updated pt-br translations
   [davilima6]
 
