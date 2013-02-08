@@ -109,5 +109,16 @@
         permission="zope2.View"
      />
 
+    <!-- Forum creation event handler -->
+    <subscriber
+       for="..interfaces.IForum
+            Products.Archetypes.interfaces.IObjectInitializedEvent"
+       handler=".events.onForumCreated"
+    />
+    <subscriber
+       for="..interfaces.IForum
+            Products.Archetypes.interfaces.IObjectEditedEvent"
+       handler=".events.onForumCreated"
+    />
 </configure>
 

@@ -116,9 +116,39 @@ The forum created behind the scenes should now be shown here.
 Cannot edit someone else's comment
 -----------------------------------
 
-Now a member can edit his own comment
+member cannot edit previous comment
 
-    >>> browser.getControl('Edit', index=0)
+    >>> browser.getControl('Edit', index=0).click()
     Traceback (most recent call last):
     ...
     LookupError: label 'Edit'
+
+Add a reply
+-----------
+
+    >>> browser.getControl(name='text').value = 'My <b>breply</b> text'
+    >>> browser.getControl(name='form.button.Post').click()
+
+Must be able to edit own comment
+--------------------------------
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.getLink('Forum 1').click()
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+    >>> browser.getControl('Edit', index=0).click()
+
+Originator of conversation cannot edit this comment
+---------------------------------------------------
+
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
+
+    >>> browser.open(self.board.absolute_url())
+    >>> browser.getLink('Forum 1').click()
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+    >>> browser.getControl('Edit')
+    <SubmitControl name=None type='submit'>
+

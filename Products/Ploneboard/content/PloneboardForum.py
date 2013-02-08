@@ -9,7 +9,7 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, LinesField, IntegerField
+from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField, BooleanWidget
 from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget
 from Products.Archetypes.public import DisplayList, IntDisplayList
@@ -78,6 +78,18 @@ schema = BaseBTreeFolderSchema + Schema((
                          label_msgid = "label_maxattachmentsize",
                          i18n_domain = "ploneboard",
                 )),
+    BooleanField('allowEditComment',
+        default=False,
+        languageIndependent=0,
+        widget = BooleanWidget(
+            label = u'Allow users to edit their comments',
+            description = u'If selected, this will give users the ability to edit their own comments.',
+            label_msgid = 'label_allow_edit_comment',
+            description_msgid = 'help_allow_edit_comment',
+            # Only show when no conversations exist
+            condition = "not:object/getNumberOfConversations|nothing",
+            ),
+    ),            
     ))
 utils.finalizeSchema(schema)
 

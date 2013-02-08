@@ -97,6 +97,7 @@ class PloneboardComment(BaseBTreeFolder):
     _replies = None       # OIBTree: { id -> 1 }
     _reply_count = None   # A BTrees.Length
     _in_reply_to = None   # Id to comment this is a reply to
+    __ac_local_roles_block__ = True
 
     security = ClassSecurityInfo()
 

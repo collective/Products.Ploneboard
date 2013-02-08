@@ -260,10 +260,11 @@ The reviewer cannot edit or delete any comments.
 
 However, a reviewer can retract a comment:
 
+    >>> comment1 = conversation.getComments()[0]
     >>> browser.getControl('Retract', index=0).click()
     >>> browser.contents
     '...retracted...'
-    >>> workflow.getInfoFor(conversation.getComments()[0], 'review_state')
+    >>> workflow.getInfoFor(comment1, 'review_state')
     'retracted'
 
 Logging in as another member, the retracted comment cannot be viewed:
