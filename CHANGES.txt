@@ -4,6 +4,9 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Add forum property that will enable members to edit their own comments
+  [sureshvv]
+
 - Fixed imports for Plone 4.3
   [kroman0]
 
