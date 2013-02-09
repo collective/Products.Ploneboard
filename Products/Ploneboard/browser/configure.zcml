@@ -100,6 +100,11 @@
      file="ploneboard.css"
    />
 
+   <browser:resource
+     name="pb_attachment.js"
+     file="pb_attachment.js"
+   />  
+
    <browser:viewlet
         name="Products.Ploneboard.addconversation"
         manager="plone.app.layout.viewlets.interfaces.IAboveContentBody"
