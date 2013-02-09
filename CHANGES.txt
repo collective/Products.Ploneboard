@@ -4,6 +4,9 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Make pb_attachment a resource js file rather than dtml
+  [sureshvv]
+
 - Add forum property that will enable members to edit their own comments
   [sureshvv]
 
