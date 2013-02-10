@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-07 11:46+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -27,8 +27,9 @@ msgstr "留言"
 msgid "Attachment is too large"
 msgstr "附件檔案過大"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:169
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "取消"
 
@@ -44,7 +45,7 @@ msgstr "留言"
 msgid "Comment added"
 msgstr "留言已新增"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "留言已刪除"
 
@@ -64,7 +65,7 @@ msgstr "留言已新增"
 msgid "Conversation contains comments."
 msgstr "留言已有回覆。"
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 msgid "Conversation deleted"
 msgstr "留言已刪除"
 
@@ -80,7 +81,7 @@ msgstr "Data Provider 已更新。"
 msgid "Forum"
 msgstr "討論板"
 
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "登入帳號後可以留言"
 
@@ -110,12 +111,12 @@ msgid "Post"
 msgstr "張貼留言"
 
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
 msgstr "張貼留言"
 
 #: ../browser/templates/conversation_view.pt:71
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "回覆"
 
@@ -123,7 +124,7 @@ msgstr "回覆"
 msgid "Start a new Conversation"
 msgstr "張貼新的討論"
 
-#: Ploneboard/skins/ploneboard_templates/add_conversation_form.cpt:49
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
 msgid "Start conversation"
 msgstr ""
 
@@ -131,7 +132,7 @@ msgstr ""
 msgid "Transform %s removed"
 msgstr "Transform %s 已移除"
 
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "檢視作者資訊"
 
@@ -140,7 +141,7 @@ msgid "You can only add comments to conversations or comments."
 msgstr "只能回覆既有的討論或留言。"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "新增留言"
 
@@ -176,7 +177,7 @@ msgid "by_author"
 msgstr "作者：${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "狀態："
 
@@ -232,22 +233,22 @@ msgid "help_add_portlet"
 msgstr "用來顯示最新的留言。"
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:137
 msgid "help_body_attachments_maxsize"
 msgstr "附件檔案最大限制是 ${maxsize} KB。"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "help_body_attachments_posting"
 msgstr "上傳留言的附件檔案。"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "可以使用基本的 HTML 標籤。"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URL 會自動轉換成可連結網址。"
 
@@ -301,12 +302,12 @@ msgid "label_back_to_board"
 msgstr "回到討論區"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:128
 msgid "label_body_files_posting"
 msgstr "附件"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "內文"
 
@@ -349,12 +350,12 @@ msgid "label_powered_by"
 msgstr "以 ${link} 建立"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr "前文中 ${author} 寫到: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 msgid "label_required"
 msgstr "(必填)"
 
@@ -362,7 +363,7 @@ msgid "label_text"
 msgstr "內文"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "標題"
 
@@ -372,7 +373,7 @@ msgid "label_transforms"
 msgstr ""
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "附件"
 
@@ -399,7 +400,7 @@ msgid "most_recent_comment"
 msgstr "最新留言"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:150
 msgid "new_attachment"
 msgstr "新增其他附件"
 
@@ -428,7 +429,7 @@ msgid "no_recent_conversations"
 msgstr "沒有討論"
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "沒有回覆"
@@ -510,7 +511,7 @@ msgid "show_no_replies_all"
 msgstr "顯示未被回覆的討論"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "在"
 
@@ -525,7 +526,7 @@ msgid "title_forum"
 msgstr "限定顯示"
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"

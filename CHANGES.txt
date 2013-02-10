@@ -30,6 +30,38 @@ Changelog
   a normal reply.
   [gaudenz]
 
+- Do no swallow ConflictError anymore [keul]
+
+- Update number of comments looking at the current users permissions
+  (before this the number were updated even if a comment was not published)
+  [cekk]
+
+- Fixed forum view: always display the third column in forum view
+  [keul]
+
+- Rejected comments can now be modified from owners before submitting again
+  [keul]
+
+- Added support for "Site Administrator" role
+  [keul]
+
+- Forum area is not visible to users (even if published) if inside private
+  folders
+  [keul]
+
+- Allowed translations for "Anonymous" comment in ploneboard views [cekk]
+
+- Added Captcha support for anonymous. If recaptcha is installed and configured. [cekk]
+
+- Fixed italian translations [cekk]
+
+- Fixed add_comment_script. After adding a new comment, if the user
+  (logged or anonymous) can't access to the comment (for example if it's moderated),
+  he will be redirected to the discussion
+  [cekk]
+
+- Added text field to Ploneboard AT [cekk]
+
 3.3 (2012-09-08)
 ----------------
 

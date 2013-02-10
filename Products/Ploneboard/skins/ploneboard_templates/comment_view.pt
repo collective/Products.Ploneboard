@@ -70,6 +70,7 @@
 
                 <span i18n:translate="posted_by" tal:omit-tag="">Posted by</span>
                 <a class="link-plain"
+                   i18n:translate=""
                    tal:attributes="href string:${portal_url}/author/${creator}"
                    tal:omit-tag="not:creatorinfo"
                    tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 

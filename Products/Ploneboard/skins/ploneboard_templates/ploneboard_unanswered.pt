@@ -94,6 +94,7 @@
                         <td>
                             <div i18n:translate="by_author">
                               by <tal:author i18n:name="author"
+                                             i18n:translate=""
                                              content="conversation/creator" />
                             </div>
                             <span class="discreet"

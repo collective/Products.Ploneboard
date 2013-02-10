@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2008-12-09 08:41+0100\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr "Activar"
 msgid "Active"
 msgstr "Activo"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 

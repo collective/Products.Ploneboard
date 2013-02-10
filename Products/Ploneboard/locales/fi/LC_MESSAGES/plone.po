@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2010-03-25 12:51+0200\n"
 "Last-Translator: Jukka Ojaniemi <jukka.ojaniemi@jyu.fi>\n"
 "Language-Team: University of Jyväskylä <jukka.ojaniemi@jyu.fi>\n"
@@ -26,7 +26,7 @@ msgstr "Aktivoi"
 msgid "Active"
 msgstr "Aktiivinen"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 
@@ -78,6 +78,10 @@ msgstr "Hylätty"
 
 msgid "Require membership to post"
 msgstr "Viestin lähettäminen vaatii jäsenyyden"
+
+#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+msgid "Required"
+msgstr ""
 
 msgid "Retracted"
 msgstr "Peruttu"

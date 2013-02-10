@@ -1,24 +1,53 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="ploneboard_workflow"
-             title="Ploneboard Workflow [Ploneboard]"
-             state_variable="review_state"
-             initial_state="published">
+<dc-workflow workflow_id="ploneboard_workflow" title="Ploneboard Workflow [Ploneboard]" description="" state_variable="review_state" initial_state="published" manager_bypass="False">
  <permission>Access contents information</permission>
- <permission>Modify portal content</permission>
  <permission>Add portal content</permission>
- <permission>View</permission>
- <permission>Ploneboard: Search</permission>
- <permission>Ploneboard: Add Ploneboard</permission>
- <permission>Ploneboard: Add Forum</permission>
- <permission>Ploneboard: Add Conversation</permission>
+ <permission>Modify portal content</permission>
  <permission>Ploneboard: Add Comment</permission>
- <permission>Ploneboard: Manage Conversation</permission>
- <permission>Ploneboard: Manage Comment</permission>
+ <permission>Ploneboard: Add Conversation</permission>
+ <permission>Ploneboard: Add Forum</permission>
+ <permission>Ploneboard: Add Ploneboard</permission>
  <permission>Ploneboard: Approve Comment</permission>
+ <permission>Ploneboard: Manage Comment</permission>
+ <permission>Ploneboard: Manage Conversation</permission>
+ <permission>Ploneboard: Search</permission>
+ <permission>View</permission>
+ <state state_id="locked" title="Locked">
+  <exit-transition transition_id="unlock"/>
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+  </permission-map>
+  <permission-map name="Add portal content" acquired="False">
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Add Conversation" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Add Forum" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Add Ploneboard" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Approve Comment" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Manage Comment" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Manage Conversation" acquired="False">
+  </permission-map>
+  <permission-map name="Ploneboard: Search" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="True">
+   <permission-role>Manager</permission-role>
+   <permission-role>Anonymous</permission-role>
+  </permission-map>
+ </state>
  <state state_id="private" title="Hidden">
   <exit-transition transition_id="open"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
@@ -26,43 +55,35 @@
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Conversation"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Conversation" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Forum"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Forum" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Ploneboard"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Ploneboard" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Approve Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Approve Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Manage Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Manage Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Manage Conversation"
-                  acquired="False">
+  <permission-map name="Ploneboard: Manage Conversation" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Search" acquired="False">
@@ -74,97 +95,45 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
- <state state_id="locked" title="Locked">
-  <exit-transition transition_id="unlock"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
-   <permission-role>Manager</permission-role>
-   <permission-role>Owner</permission-role>
-  </permission-map>
-  <permission-map name="Add portal content" acquired="False">
-  </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Add Conversation"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Add Forum"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Add Ploneboard"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Approve Comment"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Comment"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Manage Conversation"
-                  acquired="False">
-  </permission-map>
-  <permission-map name="Ploneboard: Search" acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Anonymous</permission-role>
-  </permission-map>
-  <permission-map name="View" acquired="True">
-   <permission-role>Manager</permission-role>
-   <permission-role>Anonymous</permission-role>
-  </permission-map>
- </state>
  <state state_id="published" title="Open">
   <exit-transition transition_id="hide"/>
   <exit-transition transition_id="lock"/>
-  <permission-map name="Access contents information"
-                  acquired="True">
-   <permission-role>Anonymous</permission-role>
+  <permission-map name="Access contents information" acquired="True">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Add portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Conversation"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Conversation" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Forum"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Forum" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Add Ploneboard"
-                  acquired="False">
+  <permission-map name="Ploneboard: Add Ploneboard" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Approve Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Approve Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Manage Comment"
-                  acquired="False">
+  <permission-map name="Ploneboard: Manage Comment" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
   </permission-map>
-  <permission-map name="Ploneboard: Manage Conversation"
-                  acquired="False">
+  <permission-map name="Ploneboard: Manage Conversation" acquired="False">
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="Ploneboard: Search" acquired="True">
@@ -172,48 +141,34 @@
    <permission-role>Manager</permission-role>
   </permission-map>
   <permission-map name="View" acquired="True">
-   <permission-role>Anonymous</permission-role>
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <transition transition_id="hide" title="Hide message board"
-             new_state="private" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Hide</action>
+ <transition transition_id="hide" title="Hide message board" new_state="private" trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Hide</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="open" title="Open message board"
-             new_state="published" trigger="USER"
-             before_script="" after_script="">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Open</action>
+ <transition transition_id="lock" title="Lock message board" new_state="locked" trigger="USER" before_script="" after_script="lock_or_unlock">
+  <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Lock</action>
+  <guard>
+   <guard-permission>Ploneboard: Manage Forum</guard-permission>
+  </guard>
+ </transition>
+ <transition transition_id="open" title="Open message board" new_state="published" trigger="USER" before_script="" after_script="">
+  <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Open</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="lock" title="Lock message board"
-             new_state="locked" trigger="USER"
-             before_script="" after_script="lock_or_unlock">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Lock</action>
+ <transition transition_id="unlock" title="Unlock message board" new_state="published" trigger="USER" before_script="" after_script="lock_or_unlock">
+  <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Unlock</action>
   <guard>
    <guard-permission>Ploneboard: Manage Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="unlock" title="Unlock message board"
-             new_state="published" trigger="USER"
-             before_script="" after_script="lock_or_unlock">
-  <action url="%(content_url)s/content_publish_form"
-          category="workflow">Unlock</action>
-  <guard>
-   <guard-permission>Ploneboard: Manage Forum</guard-permission>
-  </guard>
- </transition>
- <variable variable_id="action" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
   <description>The last transition</description>
   <default>
    
@@ -222,8 +177,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="actor" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
   <description>The ID of the user who performed the last transition</description>
   <default>
    
@@ -232,8 +186,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="comments" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
   <description>Comments about the last transition</description>
   <default>
    
@@ -242,8 +195,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="review_history" for_catalog="False"
-           for_status="False" update_always="False">
+ <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
   <description>Provides access to workflow history</description>
   <default>
    
@@ -254,8 +206,7 @@
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </variable>
- <variable variable_id="time" for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
   <description>Time of the last transition</description>
   <default>
    
@@ -264,7 +215,5 @@
   <guard>
   </guard>
  </variable>
- <script script_id="lock_or_unlock" type="External Method"
-         filename="" module="Ploneboard.WorkflowScripts"
-         function="lock_or_unlock"/>
+ <script script_id="lock_or_unlock" type="External Method" filename="" module="Ploneboard.WorkflowScripts" function="lock_or_unlock"/>
 </dc-workflow>

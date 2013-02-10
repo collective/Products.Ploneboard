@@ -106,6 +106,7 @@
 
                                 <span class="discreet" i18n:translate="label_by_author">
                                        by <tal:author i18n:name="author"
+                                               i18n:translate=""
                                                define="creator conversation/Creator;
                                                        creatorinfo python: mtool.getMemberInfo(creator);"
                                                content="python:creatorinfo and creatorinfo['fullname'] or creator" />
@@ -129,11 +130,12 @@
                         </td>
 
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
-                        <tal:block condition="numComments">
-                          <td>
+                        <td>
+                          <tal:block condition="numComments">
                              <a href="#" tal:attributes="href string:${conversation/getLastCommentUrl}">
                                <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
+                                         i18n:translate=""
                                          define="creator conversation/getLastCommentAuthor;
                                                  creatorinfo python: mtool.getMemberInfo(creator);"
                                          content="python:creatorinfo and creatorinfo['fullname'] or creator" />
@@ -144,8 +146,10 @@
                                   tal:content="conversation/getLastCommentDate">
                                 Thursday 13:21
                             </span>
-                          </td>
-                        </tal:block>
+                          </tal:block>
+                          <span tal:condition="not:numComments">&nbsp;</span>
+                        </td>
+
 
                     </tr>
 

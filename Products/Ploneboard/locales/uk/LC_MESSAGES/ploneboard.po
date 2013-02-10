@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 14:29+0000\n"
 "PO-Revision-Date: 2011-10-22 17:40+0300\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -26,14 +26,21 @@ msgstr "Форум містить обговорення."
 msgid "A comment contains regular text body and metadata."
 msgstr "Повідомлення містить основний текст і метадані."
 
+msgid "Anonymous"
+msgstr ""
+
+msgid "Anonymous User"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
 msgstr "Вкладення занадто велике"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:189
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -50,7 +57,7 @@ msgstr "Повідомлення"
 msgid "Comment added"
 msgstr "Повідомлення додано"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "Повідомлення видалено"
 
@@ -70,7 +77,7 @@ msgstr "Обговорення додано"
 msgid "Conversation contains comments."
 msgstr "Обговорення містить повідомлення"
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 msgid "Conversation deleted"
 msgstr "Обговорення видалено"
 
@@ -87,7 +94,7 @@ msgid "Forum"
 msgstr "Форум"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Увійдіть в систему, щоб залишити повідомлення"
 
@@ -103,7 +110,7 @@ msgstr "Не введено зміст"
 msgid "No title entered"
 msgstr "Заголовок не введено"
 
-#: ../skins/ploneboard_scripts/validate_add_comment.vpy:48
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Виправте, будь ласка, вказані помилки."
@@ -119,12 +126,13 @@ msgstr "Відправити"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:183
 msgid "Post comment"
 msgstr "Надіслати повідомлення"
 
 #. Default: "Reply to this"
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../browser/templates/conversation_view.pt:71
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Відповісти на це"
 
@@ -133,21 +141,30 @@ msgstr "Відповісти на це"
 msgid "Start a new Conversation"
 msgstr "Почати нову тему"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
+msgid "Start conversation"
+msgstr ""
+
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Зміни %s зняті"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Переглянути профіль"
+
+#: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
+#: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
+msgid "Wrong captcha. Try again"
+msgstr ""
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
 msgstr "Ви можете додавати тільки обговорення або повідомлення."
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "Додати повідомлення"
 
@@ -185,7 +202,7 @@ msgid "by_author"
 msgstr "${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Поточний стан:"
 
@@ -241,24 +258,29 @@ msgid "help_add_portlet"
 msgstr "Цей портлет показує останні коментарі."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
 msgstr "Максимальний розмір вкладення ${maxsize} кілобайт."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:151
 msgid "help_body_attachments_posting"
 msgstr "Завантажити файл-вкладення до повідомлення."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "Основні теги HTML в нормі"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Адреси автоматично перетворяться у посилання."
+
+#. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+msgid "help_captcha"
+msgstr ""
 
 #. Default: "Enter the categories you want to have available for forums, one category on each line."
 msgid "help_categories_board"
@@ -296,6 +318,11 @@ msgstr "Виберіть максимальну кількість вкладе�
 msgid "help_maxattachmentsize"
 msgstr "Виберіть максимальний розмір для вкладень."
 
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+#: ../content/PloneboardForum.py:86
+msgid "help_showcaptcha"
+msgstr ""
+
 msgid "help_text"
 msgstr "Введіть текст коментаря."
 
@@ -315,12 +342,12 @@ msgid "label_back_to_board"
 msgstr "Назад до дошки обговорень."
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:148
 msgid "label_body_files_posting"
 msgstr "Вкладення"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "Основний текст"
 
@@ -330,6 +357,11 @@ msgstr "Основний текст"
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author}"
+
+#. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:124
+msgid "label_captcha"
+msgstr ""
 
 msgid "label_categories_board"
 msgstr "Категорії"
@@ -362,26 +394,26 @@ msgstr "Максимальний розмір вкладення"
 msgid "label_powered_by"
 msgstr "Розроблено ${link}"
 
-#. Default: "Quick reply"
-#: ../browser/templates/conversation_view.pt:71
-msgid "label_quickreply"
-msgstr "Швидка відповідь"
-
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr "Попередній ${author} писав: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 msgid "label_required"
 msgstr "(Обов'язкове поле)"
+
+#. Default: "Show Captcha"
+#: ../content/PloneboardForum.py:87
+msgid "label_show_captcha"
+msgstr ""
 
 msgid "label_text"
 msgstr "Текст"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "Назва"
 
@@ -391,7 +423,7 @@ msgid "label_transforms"
 msgstr "Трансформації"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Вкладення"
 
@@ -418,7 +450,7 @@ msgid "most_recent_comment"
 msgstr "Останні повідомлення"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:170
 msgid "new_attachment"
 msgstr "Додати ще одне вкладення"
 
@@ -447,7 +479,7 @@ msgid "no_recent_conversations"
 msgstr "Обговорень не знайдено."
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Відповідей поки що немає"
@@ -529,7 +561,7 @@ msgid "show_no_replies_all"
 msgstr "Показати всі обговорення без відповідей"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "в"
 
@@ -544,7 +576,7 @@ msgid "title_forum"
 msgstr "Обмеження до певного обговорення або форуму"
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"

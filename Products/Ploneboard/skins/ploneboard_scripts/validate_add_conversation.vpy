@@ -44,6 +44,15 @@ if maxsize!=-1:
                            new_status="failure")
             break
 
+#Captcha validation
+captcha_view = context.restrictedTraverse('@@captcha', None)
+captcha_control = context.REQUEST.get('captcha_control', '')
+if captcha_view and captcha_control:
+    captcha = context.REQUEST.get('recaptcha_response_field', '')
+    if not captcha_view.verify(captcha):
+        state.setError('captcha', _('Wrong captcha. Try again'))
+        state.set(status='failure')
+
 if state.getErrors():
     message = PMF(u'Please correct the indicated errors.')
     putils.addPortalMessage(message)

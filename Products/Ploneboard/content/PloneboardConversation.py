@@ -12,6 +12,7 @@ from Products.Archetypes.public import BaseBTreeFolder, registerType
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
 from Products.Archetypes.public import TextAreaWidget
 from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.permissions import View
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
@@ -161,10 +162,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         #return len(self.getCatalog()(
         #    object_provides='Products.Ploneboard.interfaces.IComment',
         #    path='/'.join(self.getPhysicalPath())))
+        mtool = getToolByName(self, 'portal_membership')
         number = 0
         for comment in self.objectValues():
             if 'Products.Ploneboard.interfaces.IComment' in \
-               [i.__identifier__ for i in providedBy(comment).flattened()]:
+               [i.__identifier__ for i in providedBy(comment).flattened()] \
+               and mtool.checkPermission(View, comment):
                 number = number + 1
         return number
 

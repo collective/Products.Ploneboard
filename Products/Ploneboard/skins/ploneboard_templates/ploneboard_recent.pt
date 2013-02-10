@@ -91,7 +91,7 @@
                             </a>
 
                             <div class="discreet" i18n:translate="label_by_author">
-                                   by <tal:author i18n:name="author"
+                                   by <tal:author i18n:name="author" i18n:translate=""
                                            content="conversation/creator" />
                             </div>
                             
@@ -124,6 +124,7 @@
                                          tal:attributes="href string:${conversation/absolute_url}#${conversation/last_comment_id}">
                                <div i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
+                                         i18n:translate=""
                                          content="conversation/last_comment_creator" />
                               </div>
                             </a>                                                                                        

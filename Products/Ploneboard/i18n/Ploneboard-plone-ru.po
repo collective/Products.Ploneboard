@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-plone-ru\n"
-"POT-Creation-Date: 2012-09-07 20:29+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2009-02-02 13:53+0000\n"
 "Last-Translator: Alexander Vesnenok <info@ploner.ru>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -23,7 +23,7 @@ msgstr "Активировать"
 msgid "Active"
 msgstr "Активный"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 

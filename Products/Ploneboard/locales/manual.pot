@@ -70,3 +70,9 @@ msgstr ""
 
 msgid "alert_delete_popup"
 msgstr ""
+
+msgid "Anonymous"
+msgstr ""
+
+msgid "Anonymous User"
+msgstr ""

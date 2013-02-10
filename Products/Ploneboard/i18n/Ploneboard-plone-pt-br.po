@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2012-03-15 19:55+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2012-03-15 17:07-0300\n"
 "Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
@@ -25,7 +25,7 @@ msgstr "Ativar"
 msgid "Active"
 msgstr "Ativo"
 
-#: ../skins/ploneboard_templates/comment_view.pt:117
+#: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr "Editar"
 
@@ -117,3 +117,4 @@ msgstr "Visão de tópicos, por threads"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
+

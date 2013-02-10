@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-ru\n"
-"POT-Creation-Date: 2013-01-07 11:46+0000\n"
+"POT-Creation-Date: 2013-01-10 13:52+0000\n"
 "PO-Revision-Date: 2009-02-02 13:55+0000\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Russian <plone-i18n@lists.sourceforge.net>\n"
@@ -32,8 +32,9 @@ msgid "Attachment is too large"
 msgstr "Вложение слишком большое"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:168
+#: ../skins/ploneboard_templates/add_comment_form.cpt:169
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:85
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:55
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -50,7 +51,7 @@ msgstr ""
 msgid "Comment added"
 msgstr "Сообщение добавлено"
 
-#: ../browser/comment.py:272
+#: ../browser/comment.py:273
 msgid "Comment deleted"
 msgstr "Сообщение удалено"
 
@@ -70,7 +71,7 @@ msgstr "Обсуждение добавлено"
 msgid "Conversation contains comments."
 msgstr ""
 
-#: ../browser/comment.py:267
+#: ../browser/comment.py:268
 msgid "Conversation deleted"
 msgstr "Обсуждение удалено"
 
@@ -87,7 +88,7 @@ msgid "Forum"
 msgstr "Форум"
 
 #. Default: "Log in to add comments"
-#: ../skins/ploneboard_templates/comment_view.pt:193
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Войдите в систему, чтобы оставить сообщение"
 
@@ -119,13 +120,13 @@ msgstr "Отправить"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "Post comment"
 msgstr "Отправить сообщение"
 
 #. Default: "Reply to this"
 #: ../browser/templates/conversation_view.pt:71
-#: ../skins/ploneboard_templates/comment_view.pt:182
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Ответить на это"
 
@@ -134,7 +135,7 @@ msgstr "Ответить на это"
 msgid "Start a new Conversation"
 msgstr "Начать новое обсуждение"
 
-#: Ploneboard/skins/ploneboard_templates/add_conversation_form.cpt:49
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:49
 msgid "Start conversation"
 msgstr ""
 
@@ -143,7 +144,7 @@ msgid "Transform %s removed"
 msgstr "Изменения %s сняты"
 
 #. Default: "View profile"
-#: ../skins/ploneboard_templates/comment_view.pt:84
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Просмотреть профиль"
 
@@ -152,7 +153,7 @@ msgid "You can only add comments to conversations or comments."
 msgstr "Вы можете добавлять только обсуждения или сообщения"
 
 #. Default: "Add comment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:27
+#: ../skins/ploneboard_templates/add_comment_form.cpt:28
 msgid "add_comment"
 msgstr "Добавить сообщение"
 
@@ -190,7 +191,7 @@ msgid "by_author"
 msgstr "${author}"
 
 #. Default: "Current state:"
-#: ../skins/ploneboard_templates/comment_view.pt:164
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Текущее состояние:"
 
@@ -246,22 +247,22 @@ msgid "help_add_portlet"
 msgstr "Этот портлет показывает последние комментарии."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:136
+#: ../skins/ploneboard_templates/add_comment_form.cpt:137
 msgid "help_body_attachments_maxsize"
 msgstr "Максимальный размер вложения ${maxsize} килобайт."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:130
+#: ../skins/ploneboard_templates/add_comment_form.cpt:131
 msgid "help_body_attachments_posting"
 msgstr "Загрузить файл-вложение к сообщению."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:100
+#: ../skins/ploneboard_templates/add_comment_form.cpt:101
 msgid "help_body_text_posting"
 msgstr "Основные тэги HTML в порядке"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:95
+#: ../skins/ploneboard_templates/add_comment_form.cpt:96
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Адреса автоматически превратятся в ссылки."
 
@@ -320,12 +321,12 @@ msgid "label_back_to_board"
 msgstr "Назад к доске обсуждений."
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:127
+#: ../skins/ploneboard_templates/add_comment_form.cpt:128
 msgid "label_body_files_posting"
 msgstr "Приложения"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:87
+#: ../skins/ploneboard_templates/add_comment_form.cpt:88
 msgid "label_body_text_posting"
 msgstr "Основной текст"
 
@@ -368,12 +369,12 @@ msgid "label_powered_by"
 msgstr "Разработано ${link}"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:81
+#: ../browser/comment.py:82
 msgid "label_quote"
 msgstr "Предыдущий ${author} писал: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:61
+#: ../skins/ploneboard_templates/add_comment_form.cpt:62
 #, fuzzy
 msgid "label_required"
 msgstr "Обязательное поле"
@@ -382,7 +383,7 @@ msgid "label_text"
 msgstr "Текст"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "label_title_posting"
 msgstr "Название"
 
@@ -392,7 +393,7 @@ msgid "label_transforms"
 msgstr "Трансформации"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/comment_view.pt:206
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Приложения"
 
@@ -419,7 +420,7 @@ msgid "most_recent_comment"
 msgstr "Последние сообщения"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:149
+#: ../skins/ploneboard_templates/add_comment_form.cpt:150
 msgid "new_attachment"
 msgstr "Добавить еще одно вложение"
 
@@ -448,7 +449,7 @@ msgid "no_recent_conversations"
 msgstr "Обсуждений не обнаружено."
 
 #. Default: "No replies yet"
-#: ../browser/templates/forum.pt:126
+#: ../browser/templates/forum.pt:127
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Ответов пока нет"
@@ -530,7 +531,7 @@ msgid "show_no_replies_all"
 msgstr "Показать все обсуждения без ответов"
 
 #. Default: "at"
-#: ../skins/ploneboard_templates/comment_view.pt:76
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "в"
 
@@ -545,7 +546,7 @@ msgid "title_forum"
 msgstr ""
 
 #. Default: "General forums"
-#: ../browser/templates/board.pt:147
+#: ../browser/templates/board.pt:148
 #: ../skins/ploneboard_templates/board_view.pt:154
 #: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"

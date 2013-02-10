@@ -20,6 +20,6 @@ rm -f plone-generated.pot
 rm -f plone-generated2.pot
 
 # finally, update the po files
-i18ndude sync --pot Ploneboard-plone.pot `find . -iregex '.*plone-.*\.po$'`
-i18ndude sync --pot Ploneboard.pot  `find . -iregex '.*\.po$'|grep -v plone`
+i18ndude sync --pot Ploneboard-plone.pot */LC_MESSAGES/plone.po
+i18ndude sync --pot Ploneboard.pot */LC_MESSAGES/ploneboard.po
 

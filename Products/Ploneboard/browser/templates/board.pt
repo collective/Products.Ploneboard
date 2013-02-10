@@ -124,6 +124,7 @@
                     class="forumMostRecentCell">
                   <div i18n:translate="label_by_author">
                     by <tal:author i18n:name="author"
+                                   i18n:translate=""
                                    define="creator author;
                                            creatorinfo python: mtool.getMemberInfo(creator);"
                                    content="python:creatorinfo and creatorinfo['fullname'] or creator" />
@@ -149,7 +150,10 @@
       <table metal:use-macro="view/context/@@ploneboard_view/forumdisplay" />
 
     </tal:category>
-
+    <div tal:condition="here/getText"
+          tal:replace="structure here/getText">
+        some text
+    </div>
     <metal:footer use-macro="here/board_footer/macros/footer">
       Board footer
     </metal:footer>
