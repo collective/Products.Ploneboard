@@ -4,6 +4,9 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Fix issue #9 at https://github.com/collective/Products.Ploneboard/issues/9
+  [sureshvv]
+
 - Make pb_attachment a resource js file rather than dtml
   [sureshvv]
 

@@ -58,7 +58,12 @@ class URLToHyperlink:
             return '<a href="mailto:%s">%s</a>' % (url, url)
 
         buf=elementmatcher.sub(hidescheme, input)
+        add_period=buf.endswith('.')
+        if add_period:
+            buf = buf.rstrip('.')
         buf=urlmatcher.sub(r'<a href="\1">\1</a>', buf)
+        if add_period:
+            buf = buf + '.'
         buf=emailRegexp.subn(replaceEmail, buf)[0]
         buf=buf.replace(hider, "")
         return buf

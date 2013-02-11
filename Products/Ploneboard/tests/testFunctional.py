@@ -13,7 +13,8 @@ from Products.Ploneboard.tests.PloneboardTestCase import PloneboardFunctionalTes
 
 REQUIRE_TESTBROWSER = ['MemberPostingForum.txt', 'MemberOnlyForum.txt', 
                         'MemberEditsComment.txt', 'AdminLocksBoard.txt',
-                        'FreeForAllForum.txt', 'ModeratedForum.txt']
+                        'FreeForAllForum.txt', 'ModeratedForum.txt',
+                        'TestCommentUrl.txt' ]
 
 OPTIONFLAGS = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE)
 
