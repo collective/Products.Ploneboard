@@ -1,0 +1,71 @@
+Using a member-posting forum
+============================
+
+Test starting conversations, replying and modifying comments in a default
+member-posting forum.
+
+First, some set-up:
+
+    >>> from Zope2.App import zcml
+    >>> import Products
+    >>> zcml.load_config('configure.zcml', package=Products.Ploneboard)
+
+    >>> from Products.Ploneboard.tests import utils
+    >>> utils.setUpDefaultMembersBoardAndForum(self)
+
+    >>> from Testing.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+
+Let us log all exceptions, which is useful for debugging. Also, clear portlet
+slots, to make the test browser less confused by things like the recent portlet
+and the navtree.
+
+    >>> self.portal.error_log._ignored_exceptions = ()
+    >>> self.portal.left_slots = self.portal.right_slots = []
+    >>> workflow = self.portal.portal_workflow
+
+    >>> utils.logoutThenLoginAs(self, browser, 'member1')
+
+View forum
+----------
+
+The forum created behind the scenes should now be shown here.
+
+    >>> browser.open(self.board.absolute_url())
+
+If we go to the forum, there are no conversations shown.
+
+    >>> browser.getLink('Forum 1').click()
+
+Add a new conversation
+----------------------
+
+Now we can add a new conversation. We set a title and some body text. The body
+text can contain HTML as well.
+
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.getControl('Title').value = 'New title'
+    >>> browser.getControl('Body text').value = 'Go to http://plone.org. If you go to http://plone.org, You will love http://plone.org a lot'
+
+
+Submit the form, and we should be returned to the forum view. The conversation
+should exist, and we should be able to view it.
+
+    >>> browser.getControl(name='form.button.Post').click()
+    >>> conversation = self.forum.getConversations()[0]
+
+    >>> import re
+    >>> browser.getLink(url=re.compile('\/%s$' % conversation.getId())).click()
+    >>> browser.getLink(url='plone.org').text
+    'http://plone.org'
+    >>> browser.getLink(url='plone.org').url
+    'http://plone.org'
+    >>> browser.getLink(url='plone.org', index=1).text
+    'http://plone.org'
+    >>> browser.getLink(url='plone.org', index=1).url
+    'http://plone.org'
+    >>> browser.getLink(url='plone.org', index=2).text
+    'http://plone.org'
+    >>> browser.getLink(url='plone.org', index=2).url
+    'http://plone.org'
