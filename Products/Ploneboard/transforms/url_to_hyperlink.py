@@ -15,7 +15,7 @@ urlmatcher = re.compile(
                     r"\b(?P<url>(?P<scheme>http|https|ftp|telnet|mailto|gopher):(?P<interfix>//)"
                     r"(?:(?P<login>(?P<username>[a-zA-Z0-9]+)(?::(?P<password>[A-Za-z0-9]+))?)@)?"
                     r"(?P<hostname>[A-Za-z0-9.-]+(?::(?P<port>[0-9]+))?)"
-                    r"(?P<path>[A-Za-z0-9@~_=?/.&;%#+-]*))", re.I)
+                    r"(?P<path>[A-Za-z0-9@~_=?/.&;%#+-]*[^\.,\s]+))", re.I)
 
 class URLToHyperlink:
     """transform which replaces urls and email into hyperlinks"""
@@ -58,12 +58,7 @@ class URLToHyperlink:
             return '<a href="mailto:%s">%s</a>' % (url, url)
 
         buf=elementmatcher.sub(hidescheme, input)
-        add_period=buf.endswith('.')
-        if add_period:
-            buf = buf.rstrip('.')
         buf=urlmatcher.sub(r'<a href="\1">\1</a>', buf)
-        if add_period:
-            buf = buf + '.'
         buf=emailRegexp.subn(replaceEmail, buf)[0]
         buf=buf.replace(hider, "")
         return buf
