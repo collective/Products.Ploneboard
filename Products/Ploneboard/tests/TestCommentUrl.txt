@@ -46,7 +46,7 @@ text can contain HTML as well.
 
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.getControl('Title').value = 'New title'
-    >>> browser.getControl('Body text').value = 'Go to http://plone.org. If you go to http://plone.org, You will love http://plone.org a lot'
+    >>> browser.getControl('Body text').value = 'Go to http://plone.org. If you go to http://plone.org, You will love http://plone.org a lot. See <a target="_blank" href="http://plone.org">http://plone.org</a> in a new browser window.'
 
 
 Submit the form, and we should be returned to the forum view. The conversation
@@ -69,3 +69,6 @@ should exist, and we should be able to view it.
     'http://plone.org'
     >>> browser.getLink(url='plone.org', index=2).url
     'http://plone.org'
+    >>> browser.contents
+    '...<a target="_blank" href="http://plone.org">http://plone.org</a>...'
+    
