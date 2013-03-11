@@ -4,6 +4,16 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Updated Spanish translations
+  [macagua]
+
+- Updated i18n support, adding i18n sentences for translation strings, synced 
+  the pot files and updated the po files.
+  [macagua]
+
+- Fix issue #11 at https://github.com/collective/Products.Ploneboard/issues/11
+  [macagua]
+
 - Fix issue #9 at https://github.com/collective/Products.Ploneboard/issues/9
   [sureshvv]
 
