@@ -32,6 +32,8 @@ permission
 
     **Rafahela Garcia Bazzanella** -- i18n improvements
 
+    **Leonardo J. Caballero G.** -- i18n improvements, Updated Spanish translations.
+
     **Rocky Burt**, "ServerZen Software":http//www.serverzen.com -- Small
 fixes and updates on behalf of Zest Software
 
