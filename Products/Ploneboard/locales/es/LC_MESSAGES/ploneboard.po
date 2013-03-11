@@ -1,41 +1,61 @@
 # translation of Ploneboard to Spanish
 # Gettext File for Ploneboard
-# Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006
+# Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006.
+# Pilar Marinas Luis <pilar.marinas@upcnet.es>, 2008.
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
-"PO-Revision-Date: 2008-12-09 08:36+0100\n"
-"Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
+"PO-Revision-Date: 2013-03-10 10:54-0430\n"
+"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
+"Language-Team: Leonardo J. Caballero G.\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language-Code: es\n"
 "Language-Name: Spanish\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
-"X-Poedit-Language: Spanish\n"
+"Language: es\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#: ../content/PloneboardForum.py:32
+msgid "1 megabyte"
+msgstr "1 megabyte"
+
+#: ../content/PloneboardForum.py:30
+msgid "10 kilobyte"
+msgstr "10 kilobyte"
+
+#: ../content/PloneboardForum.py:33
+msgid "10 megabyte"
+msgstr "10 megabyte"
+
+#: ../content/PloneboardForum.py:31
+msgid "100 kilobyte"
+msgstr "100 kilobyte"
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Un Foro contiene conversaciones."
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
-msgstr ""
+msgstr "Un comentario contiene el cuerpo de texto normal y los metadatos."
 
 msgid "Anonymous"
-msgstr ""
+msgstr "Anónimo"
 
 msgid "Anonymous User"
-msgstr ""
+msgstr "Usuario anónimo"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
 msgid "Attachment is too large"
-msgstr ""
+msgstr "El adjunto es demasiado grande"
 
 #. Default: "Cancel"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:189
@@ -51,7 +71,7 @@ msgstr "Modificar"
 
 #: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
-msgstr ""
+msgstr "Comentario"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
@@ -67,34 +87,39 @@ msgstr "Comentario pendiente de moderación"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
-msgstr ""
+msgstr "Conversación"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
-#, fuzzy
 msgid "Conversation added"
 msgstr "Conversación"
 
 #: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Conversación contiene comentarios."
 
 #: ../browser/comment.py:268
-#, fuzzy
 msgid "Conversation deleted"
-msgstr "Publicado"
+msgstr "Conversación eliminada"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
 msgid "Conversation is pending moderation"
 msgstr "Conversación pendiente de moderación"
 
 #: ../skins/ploneboard_scripts/add_dpmapping_script.cpy:21
-#, fuzzy
 msgid "Data provider updated."
-msgstr "Proveedor de datos"
+msgstr "Proveedor de datos actualizado."
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Foro"
+
+#: ploneboard genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr "Instala el producto de foros Ploneboard"
+
+#: intranet genericsetup profile description in configure.zcml
+msgid "Install the intranet workflow definitions for Ploneboard"
+msgstr "Instala las definiciones de flujo de trabajo de intranet para Ploneboard"
 
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:195
@@ -103,24 +128,44 @@ msgstr "Haga login para añadir comentarios"
 
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
-msgstr ""
+msgstr "Tablero de mensajes"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
-msgstr ""
+msgstr "Sin contenido ingresado"
 
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
 msgid "No title entered"
-msgstr ""
+msgstr "Sin titulo ingresado"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
 msgid "Please correct the indicated errors."
 msgstr "Por favor, corrige los errores indicados."
 
+#: default genericsetup profile title in configure.zcml
+msgid "Ploneboard"
+msgstr "Ploneboard - foros de discusión"
+
+#: ploneboard genericsetup profile title in configure.zcml
+msgid "Ploneboard (backward compatible version, please use default profile)"
+msgstr "Ploneboard - (compatible con versiones anteriores, NO USAR)"
+
+#: intranet genericsetup profile title in configure.zcml
+msgid "Ploneboard for intranets"
+msgstr "Ploneboard - flujo de trabajo para intranet"
+
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr "El tablero de mensajes, es el objeto más externo, el cual aparece en su sitio conteniendo foro(s) y sus comentario(s)."
+
+#: lotsofposts genericsetup profile title in configure.zcml
+msgid "Ploneboard performance posts"
+msgstr "Ploneboard - mensajes para probar el rendimiento del producto"
+
+#: basicboard genericsetup profile title in configure.zcml
+msgid "Ploneboard performance test forum structure"
+msgstr "Ploneboard - estructura de foros para pruebas de rendimiento"
 
 #. Default: "Post"
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
@@ -139,6 +184,14 @@ msgstr "Publicar"
 msgid "Reply to this"
 msgstr "Responder a esto"
 
+#: basicboard genericsetup profile description in configure.zcml
+msgid "Set up a forum structure for performance testing"
+msgstr "Instala una estructura de foros para las pruebas de rendimiento"
+
+#: lotsofposts genericsetup profile description in configure.zcml
+msgid "Set up posts for load testing"
+msgstr "Instala mensajes Ploneboard para las pruebas de estrés"
+
 #. Default: "Start a new Conversation"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
@@ -146,11 +199,19 @@ msgstr "Nueva conversación"
 
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:49
 msgid "Start conversation"
-msgstr ""
+msgstr "Iniciar conversación"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transforma %s borrados"
+
+#: uninstall genericsetup profile title in configure.zcml
+msgid "Uninstall Ploneboard"
+msgstr "Ploneboard - desinstalación del producto"
+
+#: uninstall genericsetup profile description in configure.zcml
+msgid "Uninstall Ploneboard product"
+msgstr "Desinstala el producto Ploneboard"
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:85
@@ -160,7 +221,7 @@ msgstr "Ver perfil"
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
 msgid "Wrong captcha. Try again"
-msgstr ""
+msgstr "Captcha erróneo. Inténtelo de nuevo"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -189,9 +250,8 @@ msgstr "Búsqueda"
 #: ../browser/search.pt:22
 #: ../browser/templates/board.pt:28
 #: ../skins/ploneboard_templates/board_view.pt:32
-#, fuzzy
 msgid "board_search_label"
-msgstr "Tablero búsqueda"
+msgstr "Búsqueda en Tablero"
 
 #. Default: "More…"
 #: ../portlet/recent.pt:40
@@ -256,14 +316,17 @@ msgstr "Previsualizar comentario"
 
 #. Default: "This portlet shows conversations with recent comments."
 #: ../portlet/recent.py:133
-#, fuzzy
 msgid "help_add_portlet"
-msgstr "Introduzca el texto"
+msgstr "Este portlet muestra conversaciones con comentario recientes."
+
+#. Default: "If selected, this will give users the ability to edit their own comments."
+msgid "help_allow_edit_comment"
+msgstr "Si se selecciona, esto le dará a los usuarios la posibilidad de editar sus propios comentarios."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
-msgstr "El tamaño máximo del archivo adjunto es de ${maxsize} kilobytes"
+msgstr "El tamaño máximo del archivo adjunto es de ${maxsize} kilobytes."
 
 #. Default: "Select a file to upload as an attachment to this comment."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:151
@@ -283,7 +346,7 @@ msgstr "Las URLs crearán automáticamente enlaces en HTML"
 #. Default: "Provide the text in the image. Just to avoid spambots"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:130
 msgid "help_captcha"
-msgstr ""
+msgstr "Proporcionar el texto en la imagen. Sólo para evitar bots de spam"
 
 msgid "help_categories_board"
 msgstr "Introduzca las categorías en las que quiera clasificar los foros, una categoría por línea."
@@ -293,9 +356,8 @@ msgstr "Seleccione a qué categoría(s) corresponde este foro"
 
 #. Default: "How many items to list."
 #: ../portlet/recent.py:29
-#, fuzzy
 msgid "help_count"
-msgstr "Introduzca el texto"
+msgstr "¿Cuántos elementos a listar?."
 
 msgid "help_description_board"
 msgstr "Descripción del foro"
@@ -309,7 +371,7 @@ msgstr "Una descripción del foro"
 #. Default: "Limit recent conversations to a specific forum"
 #: ../portlet/recent.py:37
 msgid "help_forum"
-msgstr ""
+msgstr "Limite las conversaciones recientes a un foro específico"
 
 msgid "help_maxattachments"
 msgstr "Seleccione el número máximo de archivos adjuntos permitidos por comentario"
@@ -318,9 +380,9 @@ msgid "help_maxattachmentsize"
 msgstr "Seleccione el tamaño máximo de cada archivo adjunto"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:86
+#: ../content/PloneboardForum.py:98
 msgid "help_showcaptcha"
-msgstr ""
+msgstr "Seleccionar si mostrar o no captcha para el usuario anónimo (si tiene el producto recaptcha instalado y configurado correctamente)."
 
 msgid "help_text"
 msgstr "Introduzca el texto"
@@ -328,19 +390,21 @@ msgstr "Introduzca el texto"
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../browser/controlpanel.py:18
 msgid "help_transforms"
-msgstr "Selecciones las transformaciones que se aplicarán a los textos de los comentarios en Ploneboard. Las transformaciones alteran el texto introducido el usuario, tanto para eliminar HTML malicioso, como para añadir alguna funcionalidad como hacer los enlaces clicables."
+msgstr "Selecciones las transformaciones que se aplicarán a los textos de los comentarios en Ploneboard. Las transformaciones alteran el texto introducido el usuario, tanto para eliminar HTML malicioso, como para añadir alguna funcionalidad como hacer los enlaces a los cuales se puede hacer clic."
 
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:131
-#, fuzzy
 msgid "label_add_portlet"
-msgstr "Texto"
+msgstr "Agregar portlet conversaciones recientes."
+
+#. Default: "Allow users to edit their comments"
+msgid "label_allow_edit_comment"
+msgstr "Permitir a los usuarios editar sus comentarios"
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
-#, fuzzy
 msgid "label_back_to_board"
-msgstr "Categorías"
+msgstr "Volver al panel de discusión"
 
 #. Default: "Attachments"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:148
@@ -362,7 +426,7 @@ msgstr "escrito por ${author}"
 #. Default: "Captcha"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:124
 msgid "label_captcha"
-msgstr ""
+msgstr "Captcha"
 
 msgid "label_categories_board"
 msgstr "Categorías"
@@ -398,18 +462,17 @@ msgstr "Creado con ${link}"
 #. Default: "Previously ${author} wrote: ${quote}"
 #: ../browser/comment.py:82
 msgid "label_quote"
-msgstr ""
+msgstr "Previamente ${author} escribió: ${quote}"
 
 #. Default: "(Required)"
 #: ../skins/ploneboard_templates/add_comment_form.cpt:62
-#, fuzzy
 msgid "label_required"
-msgstr "(Obligatorio)"
+msgstr "(Requerido)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:87
+#: ../content/PloneboardForum.py:99
 msgid "label_show_captcha"
-msgstr ""
+msgstr "Mostrar Captcha"
 
 msgid "label_text"
 msgstr "Texto"
@@ -432,17 +495,17 @@ msgstr "Archivos adjuntos"
 #. Default: "Log in to start a conversation"
 #: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
-msgstr "Haga login para comenzar una nueva conversacion"
+msgstr "Haga login para comenzar una nueva conversación"
 
 #. Default: "${count} comments in queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
-msgstr "${count} comentarios en cola de moderación"
+msgstr "${count} comentarios en cola de moderación."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
 #: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
-msgstr "Los siguientes comentarios están pendientes de moderación. Haga clic en 'Publicar' o 'Rechazar' según sea necesario. Haga clic en el título de un comentario para ver el mensaje en el contexto de la conversación."
+msgstr "Los siguientes comentarios están pendientes de moderación. Por favor, haga clic en 'Publicar' o 'Rechazar' según sea necesario. Haga clic en el título de un comentario para ver el mensaje en el contexto de la conversación."
 
 #. Default: "Most recent comment"
 #: ../browser/templates/board.pt:88
@@ -461,7 +524,7 @@ msgstr "Añadir otro archivo adjunto"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:57
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
-msgstr "Las conversaciones marcadas con ${star} han tenido actividad desde la última vez que nos visitó"
+msgstr "Las conversaciones marcadas con ${star} han tenido actividad desde la última vez que nos visitó."
 
 #. Default: "There are no comments in the moderation queue."
 #: ../skins/ploneboard_templates/moderation_form.pt:113
@@ -511,13 +574,11 @@ msgstr "Conversaciones"
 
 #. Default: "Ploneboard configuration"
 #: ../browser/controlpanel.py:55
-#, fuzzy
 msgid "ploneboard_configuration"
-msgstr "Aquí puede configurar Ploneboard"
+msgstr "Configuración de Ploneboard"
 
 #. Default: "Text transformations"
 #: ../browser/controlpanel.py:60
-#, fuzzy
 msgid "ploneboard_transform_panel"
 msgstr "Transformaciones del texto"
 
@@ -533,9 +594,8 @@ msgstr "Previsualizar el mensaje"
 
 #. Default: "The following conversations have had recent activity."
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:50
-#, fuzzy
 msgid "recent_conversations_description"
-msgstr "Estas conversaciones están publicadas pero no tienen comentarios todavía."
+msgstr "Las siguientes conversaciones han tenido actividad reciente."
 
 #. Default: "Replies"
 #: ../browser/templates/forum.pt:82
@@ -573,12 +633,12 @@ msgstr "el"
 #. Default: "Number of items to display"
 #: ../portlet/recent.py:27
 msgid "title_count"
-msgstr "Número de items a mostrar"
+msgstr "Número de elementos a mostrar"
 
 #. Default: "Limit to specific board or forum"
 #: ../portlet/recent.py:35
 msgid "title_forum"
-msgstr ""
+msgstr "Limitar a un tablero específico o foro"
 
 #. Default: "General forums"
 #: ../browser/templates/board.pt:148
@@ -605,5 +665,9 @@ msgstr "Mensajes sin respuesta en ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
-msgstr ""
+msgstr "Las conversaciones siguientes se han publicado, pero aún no han recibido ninguna respuesta."
+
+#: ../content/PloneboardForum.py:34
+msgid "unlimited"
+msgstr "ilimitado"
 

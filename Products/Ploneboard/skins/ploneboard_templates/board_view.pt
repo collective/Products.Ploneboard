@@ -58,7 +58,7 @@
 
     <p class="documentDescription"
        tal:content="here/Description">
-      Board Description
+      <tal:comment replace="nothing">Board Description</tal:comment>
     </p>
     </metal:description>
 
@@ -109,7 +109,7 @@
                      tal:attributes="href forum/absolute_url">
                     <span tal:replace="forum/Title">This is a title</span>
                     <span class="discreet" tal:content="forum/Description">
-                      This is the Forum Description
+                      <tal:comment replace="nothing">This is the Forum Description</tal:comment>
                     </span>
                   </a>
                 </td>
@@ -139,7 +139,7 @@
 
                   <span class="discreet"
                         tal:content="python:here.restrictedTraverse('@@ploneboard_recent_view').toPloneboardTime(forum.getLastCommentDate())">
-                     Thursday 13:21
+                     <tal:comment replace="nothing">Thursday 13:21</tal:comment>
                   </span>
                 </td>
               </tr>

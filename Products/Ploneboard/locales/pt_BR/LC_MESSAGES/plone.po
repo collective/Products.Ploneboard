@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2012-03-15 17:07-0300\n"
 "Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
@@ -92,9 +92,18 @@ msgstr "Aguardando moderação"
 msgid "batch_x_items_matching_your_criteria"
 msgstr "${number} itens satisfazem os termos da sua pesquisa"
 
+#. Default: "Global forum listing"
+msgid "board_view_global"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Visão de tópico"
+
+#. Default: "A portlet which shows an overview of all recently updated conversations"
+#: ../profiles/default/portlets.xml
+msgid "description_recent_conversations"
+msgstr ""
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -113,6 +122,10 @@ msgstr "Procurar"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
+
+#. Default: "Ploneboard view"
+msgid "ploneboard_view"
+msgstr ""
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"

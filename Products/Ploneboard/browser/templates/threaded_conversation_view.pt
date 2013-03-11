@@ -46,7 +46,7 @@
 
     <div class="documentDescription"
          tal:content="here/Description">
-      description
+      <tal:comment replace="nothing">description</tal:comment>
     </div>
 
     <div tal:replace="structure provider:plone.abovecontentbody" />

@@ -22,7 +22,7 @@
 
       <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-      <h2 tal:content="here/Title">Conversation title</h2>
+      <h2 tal:content="here/Title"><tal:comment replace="nothing">Conversation title</tal:comment></h2>
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
 
@@ -36,7 +36,7 @@
       </a>
 
       <div class="documentdescription" tal:content="here/Description"> 
-        description
+        <tal:comment replace="nothing">description</tal:comment>
       </div>
 
       <div tal:replace="structure provider:plone.abovecontentbody" />
@@ -59,7 +59,7 @@
               
               <div tal:attributes="class python:test(state == 'published', 'boardCommentHeaderTitleBlock', 'boardCommentHeaderTitleBlock state-%s' % state)">
                 
-                <h3 tal:content="comment/Title">Comment title</h3>
+                <h3 tal:content="comment/Title"><tal:comment replace="nothing">Comment title</tal:comment></h3>
 
                 <a class="link-plain"
                    tal:attributes="href string:${comment/absolute_url}">
@@ -73,7 +73,7 @@
                    i18n:translate=""
                    tal:attributes="href string:${portal_url}/author/${creator}"
                    tal:omit-tag="not:creatorinfo"
-                   tal:content="python:creatorinfo and creatorinfo['fullname'] or creator">author</a> 
+                   tal:content="python:creatorinfo and creatorinfo['fullname'] or creator"><tal:comment replace="nothing">author</tal:comment></a> 
                 <span i18n:translate="text_at" tal:omit-tag="">at</span>
                 <span tal:replace="creation_date">Thursday 13:21</span>
               </div>
@@ -99,7 +99,7 @@
 
               <div class="boardCommentContent" 
                    tal:content="structure comment/getText">
-                Comment text.
+                <tal:comment replace="nothing">Comment text.</tal:comment>
               </div>
             </div>
 
@@ -168,7 +168,7 @@
               <span i18n:domain="plone" 
                     i18n:translate=""
                     tal:content="comment/reviewStateTitle">
-                State here
+                <tal:comment replace="nothing">State here</tal:comment>
               </span>
             </small>
           </div>
@@ -215,7 +215,7 @@
                         tal:attributes="class python:'contenttype-'+normalizeString(pt)">
                     <span class="visualIconPadding"
                           tal:content="attachment/title_or_id">
-                      Attachment title
+                      <tal:comment replace="nothing">Attachment title</tal:comment>
                     </span>
                     <span tal:condition="size" tal:omit-tag="">
                       (<span tal:replace="size">257 kB</span>)

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -87,9 +87,18 @@ msgstr "等待審核"
 msgid "batch_x_items_matching_your_criteria"
 msgstr "${number} 項目符合搜尋條件"
 
+#. Default: "Global forum listing"
+msgid "board_view_global"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "展開式瀏覽"
+
+#. Default: "A portlet which shows an overview of all recently updated conversations"
+#: ../profiles/default/portlets.xml
+msgid "description_recent_conversations"
+msgstr ""
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -108,6 +117,10 @@ msgstr "搜尋"
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "傳統日期格式：${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Default: "Ploneboard view"
+msgid "ploneboard_view"
+msgstr ""
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"

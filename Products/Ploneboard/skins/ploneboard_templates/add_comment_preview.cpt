@@ -59,7 +59,7 @@
                                  text python:request.get('text', '(no text)');
                                  text python:here.portal_ploneboard.performCommentTransform(text, context=here);"
                      tal:content="structure text">
-                    Cooked Body
+                    <tal:comment replace="nothing">Cooked Body</tal:comment>
                 </div>
 
             </div>

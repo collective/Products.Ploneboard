@@ -27,11 +27,11 @@ from zope import event
 _ = utils.PloneboardMessageFactory
 
 AttachmentSizes = IntDisplayList((
-        (10,    u'10 kilobyte'),
-        (100,   u'100 kilobyte'),
-        (1000,  u'1 megabyte'),
-        (10000, u'10 megabyte'),
-        (-1,    u'unlimited'),
+        (10,    _(u'10 kilobyte')),
+        (100,   _(u'100 kilobyte')),
+        (1000,  _(u'1 megabyte')),
+        (10000, _(u'10 megabyte')),
+        (-1,    _(u'unlimited')),
    ))
 
 schema = BaseBTreeFolderSchema + Schema((

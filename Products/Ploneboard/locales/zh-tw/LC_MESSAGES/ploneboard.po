@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -13,6 +13,22 @@ msgstr ""
 "Language-Name: Traditional Chinese\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
+
+#: ../content/PloneboardForum.py:32
+msgid "1 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:30
+msgid "10 kilobyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:33
+msgid "10 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:31
+msgid "100 kilobyte"
+msgstr ""
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
@@ -87,6 +103,14 @@ msgstr "Data Provider 已更新。"
 msgid "Forum"
 msgstr "討論板"
 
+#: ploneboard genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr ""
+
+#: intranet genericsetup profile description in configure.zcml
+msgid "Install the intranet workflow definitions for Ploneboard"
+msgstr ""
+
 #: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "登入帳號後可以留言"
@@ -108,9 +132,29 @@ msgstr "沒有標題"
 msgid "Please correct the indicated errors."
 msgstr "請修訂錯誤。"
 
+#: default genericsetup profile title in configure.zcml
+msgid "Ploneboard"
+msgstr ""
+
+#: ploneboard genericsetup profile title in configure.zcml
+msgid "Ploneboard (backward compatible version, please use default profile)"
+msgstr ""
+
+#: intranet genericsetup profile title in configure.zcml
+msgid "Ploneboard for intranets"
+msgstr ""
+
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
 msgstr "討論區是最外層的目錄。"
+
+#: lotsofposts genericsetup profile title in configure.zcml
+msgid "Ploneboard performance posts"
+msgstr ""
+
+#: basicboard genericsetup profile title in configure.zcml
+msgid "Ploneboard performance test forum structure"
+msgstr ""
 
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:72
 msgid "Post"
@@ -126,6 +170,14 @@ msgstr "張貼留言"
 msgid "Reply to this"
 msgstr "回覆"
 
+#: basicboard genericsetup profile description in configure.zcml
+msgid "Set up a forum structure for performance testing"
+msgstr ""
+
+#: lotsofposts genericsetup profile description in configure.zcml
+msgid "Set up posts for load testing"
+msgstr ""
+
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "張貼新的討論"
@@ -137,6 +189,14 @@ msgstr ""
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transform %s 已移除"
+
+#: uninstall genericsetup profile title in configure.zcml
+msgid "Uninstall Ploneboard"
+msgstr ""
+
+#: uninstall genericsetup profile description in configure.zcml
+msgid "Uninstall Ploneboard product"
+msgstr ""
 
 #: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
@@ -243,6 +303,10 @@ msgstr "預覽"
 msgid "help_add_portlet"
 msgstr "用來顯示最新的留言。"
 
+#. Default: "If selected, this will give users the ability to edit their own comments."
+msgid "help_allow_edit_comment"
+msgstr ""
+
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
@@ -300,7 +364,7 @@ msgid "help_maxattachmentsize"
 msgstr "指定附件檔案的最大容量限制。"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:86
+#: ../content/PloneboardForum.py:98
 msgid "help_showcaptcha"
 msgstr ""
 
@@ -316,6 +380,10 @@ msgstr ""
 #: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "新增最新留言方框。"
+
+#. Default: "Allow users to edit their comments"
+msgid "label_allow_edit_comment"
+msgstr ""
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
@@ -386,7 +454,7 @@ msgid "label_required"
 msgstr "(必填)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:87
+#: ../content/PloneboardForum.py:99
 msgid "label_show_captcha"
 msgstr ""
 
@@ -582,4 +650,8 @@ msgstr "在 ${title} 未被回覆的留言"
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
 msgstr "下列留言尚未被回覆。"
+
+#: ../content/PloneboardForum.py:34
+msgid "unlimited"
+msgstr ""
 

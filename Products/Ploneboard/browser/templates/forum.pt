@@ -53,7 +53,7 @@
 
         <div class="documentDescription"
              tal:content="here/Description">
-        Forum Description
+        <tal:comment replace="nothing">Forum Description</tal:comment>
         </div>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
@@ -118,7 +118,7 @@
                         <td class="listingCheckbox"
                             tal:condition="python:numComments > 1">
                             <span tal:content="python:numComments - 1">
-                                12 replies
+                                <tal:comment replace="nothing">12 replies</tal:comment>
                             </span>
                         </td>
 
@@ -144,7 +144,7 @@
                             <span
                                   class="discreet"
                                   tal:content="conversation/getLastCommentDate">
-                                Thursday 13:21
+                                <tal:comment replace="nothing">Thursday 13:21</tal:comment>
                             </span>
                           </tal:block>
                           <span tal:condition="not:numComments">&nbsp;</span>

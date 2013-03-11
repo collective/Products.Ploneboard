@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2008-10-04 19:34+0100\n"
 "Last-Translator: Radim Novotny <novotny.radim@gmail.com>\n"
 "Language-Team: SureCase.org <info@surecase.org>\n"
@@ -14,6 +14,22 @@ msgstr ""
 "Language-Name: Czech\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: ploneboard\n"
+
+#: ../content/PloneboardForum.py:32
+msgid "1 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:30
+msgid "10 kilobyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:33
+msgid "10 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:31
+msgid "100 kilobyte"
+msgstr ""
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
@@ -90,6 +106,14 @@ msgstr "Poskytovatel dat byl aktualizován"
 msgid "Forum"
 msgstr "Fórum"
 
+#: ploneboard genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr ""
+
+#: intranet genericsetup profile description in configure.zcml
+msgid "Install the intranet workflow definitions for Ploneboard"
+msgstr ""
+
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
@@ -112,8 +136,28 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Opravte prosím vyznačené chyby"
 
+#: default genericsetup profile title in configure.zcml
+msgid "Ploneboard"
+msgstr ""
+
+#: ploneboard genericsetup profile title in configure.zcml
+msgid "Ploneboard (backward compatible version, please use default profile)"
+msgstr ""
+
+#: intranet genericsetup profile title in configure.zcml
+msgid "Ploneboard for intranets"
+msgstr ""
+
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+#: lotsofposts genericsetup profile title in configure.zcml
+msgid "Ploneboard performance posts"
+msgstr ""
+
+#: basicboard genericsetup profile title in configure.zcml
+msgid "Ploneboard performance test forum structure"
 msgstr ""
 
 #. Default: "Post"
@@ -133,6 +177,14 @@ msgstr "Odeslat komentář"
 msgid "Reply to this"
 msgstr "Reagovat na tento příspěvek"
 
+#: basicboard genericsetup profile description in configure.zcml
+msgid "Set up a forum structure for performance testing"
+msgstr ""
+
+#: lotsofposts genericsetup profile description in configure.zcml
+msgid "Set up posts for load testing"
+msgstr ""
+
 #. Default: "Start a new Conversation"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
@@ -145,6 +197,14 @@ msgstr ""
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transformace %s byla smazána"
+
+#: uninstall genericsetup profile title in configure.zcml
+msgid "Uninstall Ploneboard"
+msgstr ""
+
+#: uninstall genericsetup profile description in configure.zcml
+msgid "Uninstall Ploneboard product"
+msgstr ""
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:85
@@ -253,6 +313,10 @@ msgstr ""
 msgid "help_add_portlet"
 msgstr "Tento portlet zobrazuje konverzace s nejnovějšími odpověďmi."
 
+#. Default: "If selected, this will give users the ability to edit their own comments."
+msgid "help_allow_edit_comment"
+msgstr ""
+
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
@@ -310,7 +374,7 @@ msgid "help_maxattachmentsize"
 msgstr "Zadejte povolenou velikost příloh komentáře."
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:86
+#: ../content/PloneboardForum.py:98
 msgid "help_showcaptcha"
 msgstr ""
 
@@ -326,6 +390,10 @@ msgstr "Vyberte transformace textu, které mají být použity v komentářích 
 #: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Přidat portlet nejnovějších konverzací."
+
+#. Default: "Allow users to edit their comments"
+msgid "label_allow_edit_comment"
+msgstr ""
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
@@ -396,7 +464,7 @@ msgid "label_required"
 msgstr ""
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:87
+#: ../content/PloneboardForum.py:99
 msgid "label_show_captcha"
 msgstr ""
 
@@ -592,5 +660,9 @@ msgstr "Nezodpovězené příspěvky v ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
+msgstr ""
+
+#: ../content/PloneboardForum.py:34
+msgid "unlimited"
 msgstr ""
 

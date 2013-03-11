@@ -99,7 +99,7 @@
                             </div>
                             <span class="discreet"
                                   tal:content="python:view.toPloneboardTime(conversation['created'])">
-                                Thursday 13:21
+                                <tal:comment replace="nothing">Thursday 13:21</tal:comment>
                             </span>
                         </td>
     

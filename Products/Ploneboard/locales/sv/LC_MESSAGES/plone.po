@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone.pot\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2008-05-25 11:29+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -90,8 +90,17 @@ msgstr "Väntar på moderator"
 msgid "batch_x_items_matching_your_criteria"
 msgstr ""
 
+#. Default: "Global forum listing"
+msgid "board_view_global"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
+msgstr ""
+
+#. Default: "A portlet which shows an overview of all recently updated conversations"
+#: ../profiles/default/portlets.xml
+msgid "description_recent_conversations"
 msgstr ""
 
 #. Default: "Search results"
@@ -111,6 +120,10 @@ msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${year} ${month} ${day} ${hours}:${minutes}"
+
+#. Default: "Ploneboard view"
+msgid "ploneboard_view"
+msgstr ""
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"

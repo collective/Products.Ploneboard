@@ -22,7 +22,7 @@
 
     <p class="documentDescription"
        tal:content="here/Description">
-      Board Description
+      <tal:comment replace="nothing">Board Description</tal:comment>
     </p>
 
     <div tal:replace="structure provider:plone.abovecontentbody" />

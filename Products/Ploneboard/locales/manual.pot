@@ -56,6 +56,22 @@ msgstr ""
 msgid "label_maxattachmentsize"
 msgstr ""
 
+#. Default: "If selected, this will give users the ability to edit their own comments."
+msgid "help_allow_edit_comment"
+msgstr ""
+
+#. Default: "Allow users to edit their comments"
+msgid "label_allow_edit_comment"
+msgstr ""
+
+#. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
+msgid "help_showcaptcha"
+msgstr ""
+
+#. Default: "Show Captcha"
+msgid "label_show_captcha"
+msgstr ""
+
 msgid "help_description_board"
 msgstr ""
 
@@ -76,3 +92,52 @@ msgstr ""
 
 msgid "Anonymous User"
 msgstr ""
+
+#: default genericsetup profile title in configure.zcml
+msgid "Ploneboard"
+msgstr ""
+
+#: default genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr ""
+
+#: ploneboard genericsetup profile title in configure.zcml
+msgid "Ploneboard (backward compatible version, please use default profile)"
+msgstr ""
+
+#: ploneboard genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr ""
+
+#: intranet genericsetup profile title in configure.zcml
+msgid "Ploneboard for intranets"
+msgstr ""
+
+#: intranet genericsetup profile description in configure.zcml
+msgid "Install the intranet workflow definitions for Ploneboard"
+msgstr ""
+
+#: basicboard genericsetup profile title in configure.zcml
+msgid "Ploneboard performance test forum structure"
+msgstr ""
+
+#: basicboard genericsetup profile description in configure.zcml
+msgid "Set up a forum structure for performance testing"
+msgstr ""
+
+#: lotsofposts genericsetup profile title in configure.zcml
+msgid "Ploneboard performance posts"
+msgstr ""
+
+#: lotsofposts genericsetup profile description in configure.zcml
+msgid "Set up posts for load testing"
+msgstr ""
+
+#: uninstall genericsetup profile title in configure.zcml
+msgid "Uninstall Ploneboard"
+msgstr ""
+
+#: uninstall genericsetup profile description in configure.zcml
+msgid "Uninstall Ploneboard product"
+msgstr ""
+

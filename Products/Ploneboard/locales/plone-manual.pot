@@ -81,6 +81,14 @@ msgstr ""
 msgid "Locked"
 msgstr ""
 
+#. Default: "Ploneboard view"
+msgid "ploneboard_view"
+msgstr ""
+
+#. Default: "Global forum listing"
+msgid "board_view_global"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr ""
@@ -117,6 +125,16 @@ msgid "A comment contains regular text body and metadata."
 msgstr ""
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+#. Default: "Recent Ploneboard conversations"
+#: ../profiles/default/portlets.xml
+msgid "title_recent_conversations"
+msgstr ""
+
+#. Default: "A portlet which shows an overview of all recently updated conversations"
+#: ../profiles/default/portlets.xml
+msgid "description_recent_conversations"
 msgstr ""
 
 

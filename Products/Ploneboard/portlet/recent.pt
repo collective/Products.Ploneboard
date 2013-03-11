@@ -6,7 +6,7 @@
         <a href="#" 
            class="tile"
            tal:attributes="href view/next_url"
-           tal:content="view/title">Recent conversations</a>
+           tal:content="view/title"><tal:comment replace="nothing">Recent conversations</tal:comment></a>
         <span class="portletTopRight"></span>
     </dt>
 
@@ -29,7 +29,7 @@
                     <a class="portletItemDetails"
                        tal:attributes="href obj/forum_url"
                        tal:content="obj/forum_title">
-                        Some forum
+                        <tal:comment replace="nothing">Some forum</tal:comment>
                     </a>
 
             </div>

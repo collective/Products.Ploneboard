@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-plone-uk\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2011-10-22 17:55+0300\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -91,9 +91,18 @@ msgstr "Черга на модерацію"
 msgid "batch_x_items_matching_your_criteria"
 msgstr ""
 
+#. Default: "Global forum listing"
+msgid "board_view_global"
+msgstr ""
+
 #. Flat conversion view
 msgid "conversation_view"
 msgstr "Плоский вигляд"
+
+#. Default: "A portlet which shows an overview of all recently updated conversations"
+#: ../profiles/default/portlets.xml
+msgid "description_recent_conversations"
+msgstr ""
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -112,6 +121,10 @@ msgstr ""
 
 msgid "old_date_format: ${year} ${month} ${day} ${hours}:${minutes}"
 msgstr "${day}.${month}.${year} ${hours}:${minutes}"
+
+#. Default: "Ploneboard view"
+msgid "ploneboard_view"
+msgstr ""
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"

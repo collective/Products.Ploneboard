@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-01-10 14:29+0000\n"
+"POT-Creation-Date: 2013-03-11 05:13+0000\n"
 "PO-Revision-Date: 2008-12-01 16:48+0100\n"
 "Last-Translator: Morten W. Petersen <morten@nidelven-it.no>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -16,6 +16,22 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: ploneboard\n"
 "X-Is-Fallback-For: nb nb-no no-bok\n"
+
+#: ../content/PloneboardForum.py:32
+msgid "1 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:30
+msgid "10 kilobyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:33
+msgid "10 megabyte"
+msgstr ""
+
+#: ../content/PloneboardForum.py:31
+msgid "100 kilobyte"
+msgstr ""
 
 #: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
@@ -92,6 +108,14 @@ msgstr "Data-leverandør oppdatert"
 msgid "Forum"
 msgstr "Forum"
 
+#: ploneboard genericsetup profile description in configure.zcml
+msgid "Install the Ploneboard forum product"
+msgstr ""
+
+#: intranet genericsetup profile description in configure.zcml
+msgid "Install the intranet workflow definitions for Ploneboard"
+msgstr ""
+
 #. Default: "Log in to add comments"
 #: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
@@ -114,8 +138,28 @@ msgstr ""
 msgid "Please correct the indicated errors."
 msgstr "Vennligst rett de markerte feilene."
 
+#: default genericsetup profile title in configure.zcml
+msgid "Ploneboard"
+msgstr ""
+
+#: ploneboard genericsetup profile title in configure.zcml
+msgid "Ploneboard (backward compatible version, please use default profile)"
+msgstr ""
+
+#: intranet genericsetup profile title in configure.zcml
+msgid "Ploneboard for intranets"
+msgstr ""
+
 #: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+#: lotsofposts genericsetup profile title in configure.zcml
+msgid "Ploneboard performance posts"
+msgstr ""
+
+#: basicboard genericsetup profile title in configure.zcml
+msgid "Ploneboard performance test forum structure"
 msgstr ""
 
 #. Default: "Post"
@@ -135,6 +179,14 @@ msgstr "Send kommentar"
 msgid "Reply to this"
 msgstr "Svar på"
 
+#: basicboard genericsetup profile description in configure.zcml
+msgid "Set up a forum structure for performance testing"
+msgstr ""
+
+#: lotsofposts genericsetup profile description in configure.zcml
+msgid "Set up posts for load testing"
+msgstr ""
+
 #. Default: "Start a new Conversation"
 #: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
@@ -147,6 +199,14 @@ msgstr ""
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
 msgstr "Transformasjon %s fjernet"
+
+#: uninstall genericsetup profile title in configure.zcml
+msgid "Uninstall Ploneboard"
+msgstr ""
+
+#: uninstall genericsetup profile description in configure.zcml
+msgid "Uninstall Ploneboard product"
+msgstr ""
 
 #. Default: "View profile"
 #: ../skins/ploneboard_templates/comment_view.pt:85
@@ -255,6 +315,10 @@ msgstr "Forhåndsvis kommentar"
 msgid "help_add_portlet"
 msgstr "Dette portlet viser samtaler med ferske kommentarer."
 
+#. Default: "If selected, this will give users the ability to edit their own comments."
+msgid "help_allow_edit_comment"
+msgstr ""
+
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 #: ../skins/ploneboard_templates/add_comment_form.cpt:157
 msgid "help_body_attachments_maxsize"
@@ -312,7 +376,7 @@ msgid "help_maxattachmentsize"
 msgstr "Maksimal størrelse på vedlegg"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:86
+#: ../content/PloneboardForum.py:98
 msgid "help_showcaptcha"
 msgstr ""
 
@@ -328,6 +392,10 @@ msgstr "Forvandlinger"
 #: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Legg til portlet"
+
+#. Default: "Allow users to edit their comments"
+msgid "label_allow_edit_comment"
+msgstr ""
 
 #. Default: "Back to discussion board"
 #: ../browser/search.pt:15
@@ -399,7 +467,7 @@ msgid "label_required"
 msgstr "Påkrevd (*)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:87
+#: ../content/PloneboardForum.py:99
 msgid "label_show_captcha"
 msgstr ""
 
@@ -595,5 +663,9 @@ msgstr "Ubesvarter meldinger i ${title}s"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
+msgstr ""
+
+#: ../content/PloneboardForum.py:34
+msgid "unlimited"
 msgstr ""
 

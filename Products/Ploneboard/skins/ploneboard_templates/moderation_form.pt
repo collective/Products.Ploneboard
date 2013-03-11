@@ -14,7 +14,7 @@
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-        <h1 tal:content="here/Title">Context title</h1>
+        <h1 tal:content="here/Title"><tal:comment replace="nothing">Context title</tal:comment></h1>
         
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
@@ -88,7 +88,7 @@
                        tal:content="python:result.Title() or result.getId()" />
 
                     <div tal:content="result/Creator" i18n:translate="">Author</div>
-                    <div tal:content="result/Description">Description</div>
+                    <div tal:content="result/Description"><tal:comment replace="nothing">Description</tal:comment></div>
     
                     <div class="moderationActions">
                         <!-- Iterate over workflow transitions and make a button for each -->

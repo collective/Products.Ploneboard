@@ -106,7 +106,7 @@
                         <td class="listingCheckbox"
                             tal:condition="python:numComments > 1">
                             <span tal:content="python:numComments - 1">
-                                12 replies
+                                <tal:comment replace="nothing">12 replies</tal:comment>
                             </span>
                         </td>
 
@@ -130,7 +130,7 @@
                             </a>                                                                                        
                             <span class="discreet"
                                   tal:content="python:view.toPloneboardTime(conversation['last_comment_date'])">
-                                Thursday 13:21
+                                <tal:comment replace="nothing">Thursday 13:21</tal:comment>
                             </span>
                           </tal:block>
                         </td>
