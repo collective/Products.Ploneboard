@@ -9,7 +9,7 @@ except ImportError:
 hider = "##HIDE"
 schemematcher = re.compile ("(mailto|telnet|gopher|http|https|ftp)", re.I)
 hiddenschemematcher = re.compile ("(mailto|telnet|gopher|http|https|ftp)" + hider, re.I)
-elementmatcher = re.compile("<[^>]+>")
+elementmatcher = re.compile("<a.+<\/a>|<[^>]+>")
 emailRegexp = re.compile(r'["=]?(\b[A-Z0-9._%+=?\*^-]+@[A-Z0-9._%-]+\.[A-Z]{2,4}\b)', re.I|re.S|re.U)
 urlmatcher = re.compile(
                     r"\b(?P<url>(?P<scheme>http|https|ftp|telnet|mailto|gopher):(?P<interfix>//)"
