@@ -4,6 +4,11 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Preserve Link with URL as text instead of creating nesting "a" nodes. 
+  Issue #10 at https://github.com/collective/Products.Ploneboard/issues/10
+  Allow URI with round brackets. Issue #7
+  [ksuess]
+
 - Updated Spanish translations
   [macagua]
 
