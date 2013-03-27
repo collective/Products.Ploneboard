@@ -4,6 +4,10 @@ Changelog
 3.4 (Unreleased)
 ----------------
 
+- Preserve Link with URL as text instead of creating nesting "a" nodes. 
+  Issue #10 at https://github.com/collective/Products.Ploneboard/issues/10
+  [ksuess]
+
 - Updated Spanish translations
   [macagua]
 
