@@ -3,6 +3,7 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+- Compatilbity with new plone.batching [kiorky]
 
 - Preserve Link with URL as text instead of creating nesting "a" nodes. 
   Issue #10 at https://github.com/collective/Products.Ploneboard/issues/10
@@ -12,7 +13,7 @@ Changelog
 - Updated Spanish translations
   [macagua]
 
-- Updated i18n support, adding i18n sentences for translation strings, synced 
+- Updated i18n support, adding i18n sentences for translation strings, synced
   the pot files and updated the po files.
   [macagua]
 
