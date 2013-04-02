@@ -1,17 +1,24 @@
 from ExtensionClass import Base
+from Products.CMFPlone.PloneBatch import Batch as PloneBatch
 try:
-    from Products.CMFPlone.PloneBatch import Batch as PloneBatch,    \
-                                             calculate_pagenumber,   \
-                                             calculate_pagerange,    \
-                                             calculate_leapback,     \
-                                             calculate_leapforward
+    from Products.CMFPlone.PloneBatch import (
+        calculate_pagenumber,
+        calculate_pagerange,
+        calculate_leapback,
+        calculate_leapforward
+    )
 except ImportError:
-    from Products.CMFPlone.PloneBatch import Batch as PloneBatch
-    from plone.batching.utils import calculate_pagenumber,           \
-                                     calculate_pagerange,            \
-                                     calculate_leapback,             \
-                                     calculate_leapforward
-                                         
+    from plone.batching.utils import (
+        calculate_pagenumber,
+        calculate_pagerange,
+        calculate_leapback,
+        calculate_leapforward,
+    )
+
+
+""" Keep the LazyPrevBatch/LazyNextBatch  for compatibility """
+
+
 class LazyPrevBatch(Base):
     def __of__(self, parent):
         start = parent.first - parent._size + parent.overlap
@@ -28,31 +35,53 @@ class LazyNextBatch(Base):
         return Batch(parent._method, parent.sequence_length, parent._size,
                      start, 0, parent.orphan, parent.overlap)
 
+
 class Batch(PloneBatch):
     """A custom batch implementation to enable batching over forums and
     conversations. This is identical to PloneBatch's implementation except:
-    
+
      - The sequence length is explicitly given to the constructor
      - Instead of operating on a sequence, the batch is given a method to call.
        This method needs to have a signature
-       
+
             def getItems(self, limit, offset)
-       
+
        limit is the number of items to return (the batch size) and offset is
        the number of items to skip at the beginning of the sequence.
     """
     __allow_access_to_unprotected_subobjects__ = 1
-    
-    # Needs first, length, 
-    
-    previous = LazyPrevBatch()
-    next = LazyNextBatch()
+
+    # Needs first, length,
+    @property
+    def next(parent):
+        try:
+            start = parent.first - parent._size + parent.overlap
+            if start < 0 or start >= parent.sequence_length:
+                return None
+            return Batch(parent._method, parent.sequence_length, parent._size,
+                         start, 0, parent.orphan, parent.overlap)
+        except:
+            return None
+
+    @property
+    def previous(parent):
+        try:
+            if parent.first == 0:
+                return None
+            start = parent.end - parent.overlap
+            if start < 0 or start >= parent.sequence_length:
+                return None
+            return Batch(parent._method, parent.sequence_length, parent._size,
+                         start, 0, parent.orphan, parent.overlap)
+        except:
+            return None
+
     sequence_length = None
-    
-    size = first= start = end = orphan = overlap = navlist = None
+
+    nextlist = prevlist = size = first= start = end = orphan = overlap = navlist = None
     numpages = pagenumber = pagerange = pagerangeend = pagerangestart = pagenumber = quantumleap = None
-    
-    
+
+
     def __init__( self, method, sequence_length, size, start=0, end=0, orphan=0, overlap=0, pagerange=7, quantumleap=0, b_start_str='b_start'):
         """ Encapsulate sequence in batches of size
         method          - the method to call to get the correct part of the batch
@@ -67,12 +96,10 @@ class Batch(PloneBatch):
         b_start_str     - the request variable used for start, default 'b_start'
         """
         start = start + 1
-
         self.sequence_length = sequence_length
         self._method = method
 
         start,end,sz = opt(start,end,size,orphan,sequence_length)
-        
         self.size = sz
         self._size = size
         self.start = start
@@ -81,14 +108,11 @@ class Batch(PloneBatch):
         self.overlap = overlap
         self.first = max(start - 1, 0)
         self.length = self.end - self.first
-        
+
         self.b_start_str = b_start_str
 
         self.last = sequence_length - size
 
-        # Set up next and previous
-        if self.first == 0:
-            self.previous = None
 
         # Set up the total number of pages
         self.numpages = calculate_pagenumber(self.sequence_length - self.orphan, self.size, self.overlap)
@@ -112,9 +136,19 @@ class Batch(PloneBatch):
         # QuantumLeap - faster navigation for big result sets
         self.quantumleap = quantumleap
         self.leapback = self.leapforward = []
+        # not having plone.batching enought new
         if self.quantumleap:
             self.leapback = calculate_leapback(self.pagenumber, self.numpages, self.pagerange)
             self.leapforward = calculate_leapforward(self.pagenumber, self.numpages, self.pagerange)
+
+
+    def _get_pagesize(self):
+        return self._size
+
+    def _set_pagesize(self, value):
+        self._size = value
+
+    pagesize = property(_get_pagesize, _set_pagesize) # Backward compatible API
 
     def __getitem__(self, index):
         """ Pull an item out of the partial sequence that is this batch """
@@ -136,8 +170,8 @@ def opt(start, end, size, orphan, sequence_length):
         if start > 0 and end > 0 and end >= start:
             size = end + 1 - start
         else: size = 25
-    if start > 0: 
-        if start>length: 
+    if start > 0:
+        if start>length:
             start = length
         if end > 0:
             if end < start: end = start
