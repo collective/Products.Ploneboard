@@ -3,6 +3,8 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+- Fix genericsetup import steps declaration [kiorky]
+
 - Compatilbity with new plone.batching [kiorky]
 
 - Preserve Link with URL as text instead of creating nesting "a" nodes. 

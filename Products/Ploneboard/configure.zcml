@@ -163,6 +163,15 @@
 
   <five:deprecatedManageAddDelete
       class=".content.PloneboardComment.PloneboardComment"
-      />
+    />
+  <genericsetup:importStep
+      name="ploneboard-various"
+      description="Various import steps that are not handled by GS import/export handlers."
+      handler="Products.Ploneboard.setuphandlers.setupVarious"
+      title="Ploneboard: run non-GenericSetup setup steps">
+    <depends name="archetypes-various"/>
+    <depends name="toolset" />
+    <depends name="workflow" />
+  </genericsetup:importStep>
 
 </configure>
