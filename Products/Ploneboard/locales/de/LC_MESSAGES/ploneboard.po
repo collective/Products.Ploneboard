@@ -195,7 +195,7 @@ msgstr "Ein neues Gespräch beginnen"
 
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:49
 msgid "Start conversation"
-msgstr ""
+msgstr "Ein neues Gespräch beginnen"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
@@ -217,7 +217,7 @@ msgstr "Profil ansehen"
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
 msgid "Wrong captcha. Try again"
-msgstr ""
+msgstr "Falsche Eingabe. Bitte versuchen Sie es erneut."
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
