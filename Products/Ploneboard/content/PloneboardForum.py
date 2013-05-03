@@ -6,6 +6,7 @@ from OFS.CopySupport import CopyContainer
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces.syndication import ISyndicatable
 
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
@@ -111,7 +112,7 @@ if not HAS_SIMPLEATTACHMENT:
 
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    implements(IForum, INonStructuralFolder)
+    implements(IForum, INonStructuralFolder, ISyndicatable)
 #--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
