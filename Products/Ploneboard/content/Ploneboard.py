@@ -12,6 +12,7 @@ from Products.Archetypes.public import RichWidget
 from Products.Archetypes.public import LinesWidget
 from Products.Archetypes.public import registerType
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.interfaces.syndication import ISyndicatable
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
@@ -66,7 +67,7 @@ utils.finalizeSchema(schema)
 
 class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
-    implements(IPloneboard)
+    implements(IPloneboard, ISyndicatable)
     meta_type = 'Ploneboard'
     schema = schema
     _at_rename_after_creation = True
