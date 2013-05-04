@@ -55,8 +55,8 @@ class Batch(PloneBatch):
     @property
     def next(parent):
         try:
-            start = parent.first - parent._size + parent.overlap
-            if start < 0 or start >= parent.sequence_length:
+            start = parent.first + parent._size - parent.overlap
+            if start >= parent.sequence_length - parent.orphan:
                 return None
             return Batch(parent._method, parent.sequence_length, parent._size,
                          start, 0, parent.orphan, parent.overlap)
@@ -66,10 +66,8 @@ class Batch(PloneBatch):
     @property
     def previous(parent):
         try:
-            if parent.first == 0:
-                return None
-            start = parent.end - parent.overlap
-            if start < 0 or start >= parent.sequence_length:
+            start = parent.first - parent._size + parent.overlap
+            if start < 0:
                 return None
             return Batch(parent._method, parent.sequence_length, parent._size,
                          start, 0, parent.orphan, parent.overlap)
