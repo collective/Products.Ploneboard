@@ -18,6 +18,9 @@ First, some set-up:
     >>> browser = Browser()
     >>> browser.handleErrors = False
 
+    >>> from time import sleep
+    >>> SLEEP_INTERVAL = 60
+
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
 and the navtree.
@@ -84,6 +87,7 @@ Add comment to own comment
 Add a comment to our own comment. Use the quick-reply field first.
 
     >>> browser.getControl(name='text').value = 'A quick reply'
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
@@ -96,7 +100,7 @@ Then add a full reply.
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value
-    '...Previously Member one wrote:...<blockquote>Some <b>body</b> text</blockquote>...'
+    'Previously Member one wrote:...'
     >>> browser.getControl(name='text').value = 'A full reply'
 
 Although we won't add attachments in this test, at least make sure the button
@@ -107,6 +111,7 @@ is there:
 
 Submit and make sure we go back to the conversation
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
@@ -186,6 +191,7 @@ Add reply to other member's comment
 Add a new comment. Use the quick-reply field first.
 
     >>> browser.getControl(name='text').value = 'Another quick reply'
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
@@ -207,6 +213,7 @@ is there:
 
 Submit and make sure we go back to the conversation
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True

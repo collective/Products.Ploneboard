@@ -17,6 +17,9 @@ First, some set-up:
     >>> browser = Browser()
     >>> browser.handleErrors = False
 
+    >>> from time import sleep
+    >>> SLEEP_INTERVAL = 60
+
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
 and the navtree.
@@ -25,7 +28,7 @@ and the navtree.
     >>> self.portal.left_slots = self.portal.right_slots = []
     >>> workflow = self.portal.portal_workflow
 
-Verify that the forum is indeed a member-posting one by default and log in:
+Verify that the forum is a free for all posting one by default and log in:
 
     >>> workflow.doActionFor(self.forum, 'make_freeforall')
     >>> workflow.getInfoFor(self.forum, 'review_state')
@@ -82,6 +85,7 @@ Add comment to own comment
 
 Add a comment to our own comment. Use the quick-reply field first.
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='text').value = 'A quick reply'
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
@@ -106,6 +110,7 @@ is there:
 
 Submit and make sure we go back to the conversation
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
@@ -185,6 +190,7 @@ Add reply to other member's comment
 
 Add a new comment. Use the quick-reply field first.
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='text').value = 'Another quick reply'
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
@@ -194,6 +200,7 @@ Add a new comment. Use the quick-reply field first.
 
 Then add a full reply.
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl('Reply', index=0).click()
     >>> browser.url
     '.../add_comment_form...'

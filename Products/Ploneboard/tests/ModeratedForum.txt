@@ -18,6 +18,9 @@ First, some set-up:
     >>> browser = Browser()
     >>> browser.handleErrors = False
 
+    >>> from time import sleep
+    >>> SLEEP_INTERVAL = 60
+
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
 and the navtree.
@@ -139,6 +142,7 @@ the moderation queue and one will be published in-line.
 
     >>> conversation = self.forum.getConversations()[0]
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
@@ -146,6 +150,7 @@ the moderation queue and one will be published in-line.
     >>> browser.getControl('Body text').value = 'Publish inline <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
@@ -153,6 +158,7 @@ the moderation queue and one will be published in-line.
     >>> browser.getControl('Body text').value = 'Reject queue <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
 
+    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
