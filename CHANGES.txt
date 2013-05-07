@@ -3,6 +3,9 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+- Made tests pass.
+  [sureshvv]
+
 - Fix genericsetup import steps declaration [kiorky]
 
 - Compatilbity with new plone.batching [kiorky]
