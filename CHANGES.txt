@@ -3,6 +3,9 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+
+- Refresh buildout infra
+- Better setup  for TravisCI tests
 - Made tests pass. Added Travis support.
   [sureshvv]
 
