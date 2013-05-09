@@ -1,4 +1,4 @@
-from zope.interface import implements, Interface
+from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from Acquisition import aq_chain, aq_inner
@@ -6,11 +6,6 @@ from OFS.CopySupport import CopyContainer
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
-try:
-    from Products.CMFPlone.interfaces.syndication import ISyndicatable
-except ImportError:
-    class ISyndicatable(Interface):
-        pass
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField, BooleanWidget
@@ -115,7 +110,13 @@ if not HAS_SIMPLEATTACHMENT:
 
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    implements(IForum, INonStructuralFolder, ISyndicatable)
+    try:
+        from Products.CMFPlone.interfaces.syndication import ISyndicatable
+        implements(IForum, INonStructuralFolder, ISyndicatable)
+    except ImportError:
+        implements(IForum, INonStructuralFolder)
+        pass
+
 #--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
