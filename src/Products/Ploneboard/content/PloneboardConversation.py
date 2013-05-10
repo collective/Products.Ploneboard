@@ -16,11 +16,6 @@ from Products.CMFCore.permissions import View
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
-try:
-    from Products.CMFPlone.interfaces.syndication import ISyndicatable
-except ImportError:
-    class ISyndicatable(Interface):
-        pass
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.interfaces import IForum, IConversation, IComment
@@ -54,7 +49,7 @@ utils.finalizeSchema(schema)
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
 
-    implements(IConversation, INonStructuralFolder, ISyndicatable)
+    implements(IConversation, INonStructuralFolder)
     meta_type = 'PloneboardConversation'
     schema = schema
     _at_rename_after_creation = True

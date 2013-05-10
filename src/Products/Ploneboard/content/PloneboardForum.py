@@ -6,11 +6,6 @@ from OFS.CopySupport import CopyContainer
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
-try:
-    from Products.CMFPlone.interfaces.syndication import ISyndicatable
-except ImportError:
-    class ISyndicatable(Interface):
-        pass
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
 from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField, BooleanWidget
@@ -94,7 +89,7 @@ schema = BaseBTreeFolderSchema + Schema((
             # Only show when no conversations exist
             condition = "not:object/getNumberOfConversations|nothing",
             ),
-    ),            
+    ),
     BooleanField('showCaptcha',
                  write_permission = ManageForum,
                  default = False,
@@ -115,7 +110,7 @@ if not HAS_SIMPLEATTACHMENT:
 
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    implements(IForum, INonStructuralFolder, ISyndicatable)
+    implements(IForum, INonStructuralFolder)
 #--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
