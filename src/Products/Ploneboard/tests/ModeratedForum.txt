@@ -19,7 +19,7 @@ First, some set-up:
     >>> browser.handleErrors = False
 
     >>> from time import sleep
-    >>> SLEEP_INTERVAL = 60
+    >>> SLEEP_INTERVAL = 0.1
 
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
@@ -139,18 +139,18 @@ the moderation queue and one will be published in-line.
     >>> browser.getControl('Title').value = 'New title'
     >>> browser.getControl('Body text').value = 'Some <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
+    >>> sleep(SLEEP_INTERVAL)
 
     >>> conversation = self.forum.getConversations()[0]
 
-    >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
     >>> browser.getControl('Title').value = 'Publish inline'
     >>> browser.getControl('Body text').value = 'Publish inline <b>body</b> text'
     >>> browser.getControl(name='form.button.Post').click()
-
     >>> sleep(SLEEP_INTERVAL)
+
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.url
     '.../add_conversation_form...'
@@ -188,6 +188,10 @@ it. Moderation can also happen inline.
 
 The moderation tab should appear.
 
+    >>> NT = 'New title'
+    >>> PI = 'Publish inline'
+    >>> RQ = 'Reject queue'
+    >>> RI = 'Reject inline'
     >>> browser.getLink('Moderate').click()
     >>> 'New title' in browser.contents
     True
@@ -200,10 +204,21 @@ The moderation tab should appear.
 
 Publish one, reject one from the queue.
 
-    >>> browser.getControl('Publish', index=0).click()
+    >>> from lxml import html
+    >>> def GI(browser, k, default=None):
+    ...     tree = html.fromstring(browser.contents)
+    ...     d = dict([(b, i)
+    ...         for i, b in enumerate(
+    ...             [a.xpath('text()')[0].strip()
+    ...                 for a in tree.cssselect('.moderationItem div > a')
+    ...                 if a.xpath('text()')[0].strip()])])
+    ...     return d.get(k, default)
+    >>> browser.getControl('Publish', index=GI(browser, NT)).click()
+    >>> browser.getControl('Reject', index=GI(browser, RQ)).click()
+    >>> browser.open(self.forum.absolute_url())
+    >>> browser.getLink('Moderate').click()
     >>> 'New title' in browser.contents
     False
-    >>> browser.getControl('Reject', index=1).click()
     >>> 'Reject queue' in browser.contents
     False
 
@@ -253,8 +268,8 @@ The original member should see all four conversations.
 However, another member can only see the published ones.
 
     >>> utils.logoutThenLoginAs(self, browser, 'member2')
-    >>> browser.open(self.forum.absolute_url())
 
+    >>> browser.open(self.forum.absolute_url())
     >>> 'New title' in browser.contents
     True
     >>> 'Publish inline' in browser.contents
@@ -270,15 +285,17 @@ Add comment to own comment
 Now that we have a published comment, add a reply. Use the quick-reply field
 first.
 
+    >>> QuickT = 'A quick reply1'
+    >>> FullT = 'A full reply1'
     >>> utils.logoutThenLoginAs(self, browser, 'member1')
     >>> browser.open(conversation.absolute_url())
 
-    >>> browser.getControl(name='text').value = 'A quick reply'
+    >>> browser.getControl(name='text').value = QuickT
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
     >>> browser.contents
-    '...A quick reply...'
+    '...A quick reply1...'
 
 Then add a full reply.
 
@@ -286,8 +303,8 @@ Then add a full reply.
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value
-    '...Previously Member one wrote:...<blockquote>Some <b>body</b> text</blockquote>...'
-    >>> browser.getControl(name='text').value = 'A full reply'
+    '...Previously Member ... wrote:...<blockquote>...</blockquote>...'
+    >>> browser.getControl(name='text').value = FullT
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
@@ -301,7 +318,7 @@ Submit and make sure we go back to the conversation
     >>> browser.url.startswith(conversation.absolute_url())
     True
     >>> browser.contents
-    '...A full reply...'
+    '...A full reply1...'
 
 Both of these comments are now pending. Check that they appear in the moderation
 queue and publish them.
@@ -384,19 +401,21 @@ Add reply to other member's comment
 
 Add a new comment. Use the quick-reply field first.
 
-    >>> browser.getControl(name='text').value = 'Another quick reply'
+    >>> QuickT2 = 'Another quick reply2'
+    >>> FullT2 = 'Another full reply2'
+    >>> browser.getControl(name='text').value = QuickT2
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
     True
     >>> browser.contents
-    '...Another quick reply...'
+    '...Another quick reply2...'
 
 Then add a full reply.
 
     >>> browser.getControl('Reply', index=0).click()
     >>> browser.url
     '.../add_comment_form...'
-    >>> browser.getControl(name='text').value = 'Another full reply'
+    >>> browser.getControl(name='text').value = FullT2
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
@@ -410,7 +429,7 @@ Submit and make sure we go back to the conversation
     >>> browser.url.startswith(conversation.absolute_url())
     True
     >>> browser.contents
-    '...Another full reply...'
+    '...Another full reply2...'
 
 Again, these comments are pending - publish them, using the board-level
 moderation queue this time.
@@ -450,8 +469,9 @@ The reviewer cannot edit or delete any comments.
 
 However, a reviewer can retract a comment:
 
-    >>> comment1 = conversation.getComments()[0]
-    >>> browser.getControl('Retract', index=0).click()
+    >>> i1, comment1 = [(i, a) for i, a in enumerate(conversation.getComments()) if a.getText() == QuickT][0]
+    >>> i2, comment2 = [(i, a) for i, a in enumerate(conversation.getComments()) if a.getText() == FullT][0]
+    >>> browser.getControl('Retract', index=i1).click()
     >>> browser.contents
     '...retracted...'
     >>> workflow.getInfoFor(comment1, 'review_state')
@@ -463,8 +483,10 @@ Logging in as another member, the retracted comment cannot be viewed:
 
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> 'retracted' in browser.contents
+    >>> comment1.getText() in browser.contents
     False
+    >>> comment2.getText() in browser.contents
+    True
 
 However, the owner can see it, but cannot publish.
 
@@ -567,7 +589,7 @@ Log out, and ensure the post can be viewed by anonymous.
     >>> browser.getLink('Forum one').click()
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
     >>> browser.contents
-    '...Another full reply...'
+    '...Another full reply2...'
 
 Anonymous can also submit replies and new threads for moderation.
 

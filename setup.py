@@ -42,6 +42,7 @@ setup(
     ],
     extras_require=dict(
         test=['plone.app.testing',
+              'lxml',
               'Products.PloneTestCase',],
     ),
     entry_points="""

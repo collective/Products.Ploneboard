@@ -18,7 +18,7 @@ First, some set-up:
     >>> browser.handleErrors = False
 
     >>> from time import sleep
-    >>> SLEEP_INTERVAL = 60
+    >>> SLEEP_INTERVAL = 0.1
 
 Let us log all exceptions, which is useful for debugging. Also, clear portlet
 slots, to make the test browser less confused by things like the recent portlet
@@ -84,7 +84,9 @@ Add comment to own comment
 
 Add a comment to our own comment. Use the quick-reply field first.
 
-    >>> browser.getControl(name='text').value = 'A quick reply'
+    >>> QuickT =  'A quick reply'
+    >>> FullT = 'A full reply'
+    >>> browser.getControl(name='text').value = QuickT
     >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
@@ -98,8 +100,8 @@ Then add a full reply.
     >>> browser.url
     '.../add_comment_form...'
     >>> browser.getControl(name='text').value
-    '...Previously Member one wrote:...<blockquote>Some <b>body</b> text</blockquote>...'
-    >>> browser.getControl(name='text').value = 'A full reply'
+    '...Previously Member ... wrote:...<blockquote>...</blockquote>...'
+    >>> browser.getControl(name='text').value = FullT
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
@@ -188,7 +190,9 @@ Add reply to other member's comment
 
 Add a new comment. Use the quick-reply field first.
 
-    >>> browser.getControl(name='text').value = 'Another quick reply'
+    >>> QuickT2 = 'Another quick reply'
+    >>> FullT2 = 'Another full reply'
+    >>> browser.getControl(name='text').value = QuickT2
     >>> sleep(SLEEP_INTERVAL)
     >>> browser.getControl(name='form.button.Post').click()
     >>> browser.url.startswith(conversation.absolute_url())
@@ -201,7 +205,7 @@ Then add a full reply.
     >>> browser.getControl('Reply', index=0).click()
     >>> browser.url
     '.../add_comment_form...'
-    >>> browser.getControl(name='text').value = 'Another full reply'
+    >>> browser.getControl(name='text').value = FullT2
 
 Although we won't add attachments in this test, at least make sure the button
 is there:
@@ -267,8 +271,9 @@ The reviewer cannot edit or delete any comments.
 
 However, a reviewer can retract a comment:
 
-    >>> comment1 = conversation.getComments()[0]
-    >>> browser.getControl('Retract', index=0).click()
+    >>> i1, comment1 = [(i, a) for i, a in enumerate(conversation.getComments()) if a.getText() == QuickT][0]
+    >>> i2, comment2 = [(i, a) for i, a in enumerate(conversation.getComments()) if a.getText() == FullT][0]
+    >>> browser.getControl('Retract', index=i1).click()
     >>> browser.contents
     '...retracted...'
     >>> workflow.getInfoFor(comment1, 'review_state')
@@ -280,8 +285,10 @@ Logging in as another member, the retracted comment cannot be viewed:
 
     >>> browser.open(self.forum.absolute_url())
     >>> browser.getLink(url='/%s' % conversation.getId()).click()
-    >>> 'retracted' in browser.contents
+    >>> comment1.getText() in browser.contents
     False
+    >>> comment2.getText() in browser.contents
+    True
 
 However, the owner can see it, but cannot publish.
 
