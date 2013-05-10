@@ -3,6 +3,9 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+
+- Updated i18n machinery [kiorky]
+
 - More robust & quickier functionnal tests
   [kiorky]
 
