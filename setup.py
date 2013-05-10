@@ -7,8 +7,8 @@ setup(
     name='Products.Ploneboard',
     version=version,
     description="A discussion board for Plone.",
-    long_description=open("README.txt").read() + \
-    open("CHANGES.txt").read(),
+    long_description=open("README.rst").read() + \
+    open("CHANGES.rst").read(),
     classifiers=[
         "Framework :: Plone",
         "Framework :: Plone :: 4.1",

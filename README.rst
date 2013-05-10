@@ -1,6 +1,11 @@
 Introduction
 ============
 
+.. image:: https://secure.travis-ci.org/collective/Products.Ploneboard.png
+    :target: http://travis-ci.org/collective/Products.Ploneboard
+
+.. contents::
+
 Ploneboard is an easy to use web board. It uses the proven Plone user
 interface, and is made for easy integration into Plone sites. The target
 audience is businesses and developers wanting a discussion board in their
