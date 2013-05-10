@@ -3,17 +3,25 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
+- More robust & quickier functionnal tests
+  [kiorky]
 
 - Refresh buildout infra
-- Better setup  for TravisCI tests
+  [kiorky]
+
+- Better setup for TravisCI tests
+  [kiorky]
+
 - Made tests pass. Added Travis support.
   [sureshvv]
 
-- Fix genericsetup import steps declaration [kiorky]
+- Fix genericsetup import steps declaration
+  [kiorky]
 
-- Compatilbity with new plone.batching [kiorky]
+- Compatilbity with new plone.batching
+  [kiorky]
 
-- Preserve Link with URL as text instead of creating nesting "a" nodes. 
+- Preserve Link with URL as text instead of creating nesting "a" nodes.
   Issue #10 at https://github.com/collective/Products.Ploneboard/issues/10
   Allow URI with round brackets. Issue #7
   [ksuess]
