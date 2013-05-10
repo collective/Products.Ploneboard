@@ -141,3 +141,218 @@ msgstr ""
 msgid "Uninstall Ploneboard product"
 msgstr ""
 
+msgid "A Forum contains conversations."
+msgstr ""
+
+msgid "A comment contains regular text body and metadata."
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Conversation contains comments."
+msgstr ""
+
+msgid "Log in to add comments"
+msgstr ""
+
+msgid "Message Board"
+msgstr ""
+
+msgid "Ploneboard is the outmost board object, what shows up in your site."
+msgstr ""
+
+msgid "Post"
+msgstr ""
+
+msgid "Post comment"
+msgstr ""
+
+msgid "Reply to this"
+msgstr ""
+
+msgid "Start a new Conversation"
+msgstr ""
+
+msgid "Start conversation"
+msgstr ""
+
+msgid "View profile"
+msgstr ""
+
+msgid "add_comment"
+msgstr ""
+
+msgid "add_conversation"
+msgstr ""
+
+msgid "board_search_button"
+msgstr ""
+
+msgid "board_search_label"
+msgstr ""
+
+msgid "box_more_recent_conversations"
+msgstr ""
+
+msgid "by_author"
+msgstr ""
+
+msgid "comment_current_state"
+msgstr ""
+
+msgid "conversation"
+msgstr ""
+
+msgid "conversation_forum"
+msgstr ""
+
+msgid "conversation_posted"
+msgstr ""
+
+msgid "forum_name"
+msgstr ""
+
+msgid "go_to_parent_url"
+msgstr ""
+
+msgid "go_to_view_url"
+msgstr ""
+
+msgid "heading_preview_comment"
+msgstr ""
+
+msgid "help_body_attachments_maxsize"
+msgstr ""
+
+msgid "help_body_attachments_posting"
+msgstr ""
+
+msgid "help_body_text_posting"
+msgstr ""
+
+msgid "help_body_text_posting_linkify_enabled"
+msgstr ""
+
+msgid "help_captcha"
+msgstr ""
+
+msgid "label_back_to_board"
+msgstr ""
+
+msgid "label_body_files_posting"
+msgstr ""
+
+msgid "label_body_text_posting"
+msgstr ""
+
+msgid "label_by_author"
+msgstr ""
+
+msgid "label_captcha"
+msgstr ""
+
+msgid "label_in_forum"
+msgstr ""
+
+msgid "label_powered_by"
+msgstr ""
+
+msgid "label_required"
+msgstr ""
+
+msgid "label_title_posting"
+msgstr ""
+
+msgid "legend_attachments"
+msgstr ""
+
+msgid "log_to_start_conversation"
+msgstr ""
+
+msgid "moderation_count"
+msgstr ""
+
+msgid "moderation_description"
+msgstr ""
+
+msgid "most_recent_comment"
+msgstr ""
+
+msgid "new_attachment"
+msgstr ""
+
+msgid "new_conversations_marked_with"
+msgstr ""
+
+msgid "no_comments_queued"
+msgstr ""
+
+msgid "no_conversations_started"
+msgstr ""
+
+msgid "no_recent_conversations"
+msgstr ""
+
+msgid "no_replies_yet"
+msgstr ""
+
+msgid "not_conversations"
+msgstr ""
+
+msgid "not_forums"
+msgstr ""
+
+msgid "not_permission_start_conversation"
+msgstr ""
+
+msgid "number_of_conversations"
+msgstr ""
+
+msgid "posted_by"
+msgstr ""
+
+msgid "preview_message"
+msgstr ""
+
+msgid "recent_conversations_description"
+msgstr ""
+
+msgid "replies"
+msgstr ""
+
+msgid "search_result_location"
+msgstr ""
+
+msgid "show_new_conversations_all"
+msgstr ""
+
+msgid "show_no_replies"
+msgstr ""
+
+msgid "show_no_replies_all"
+msgstr ""
+
+msgid "text_at"
+msgstr ""
+
+msgid "title_general_forums"
+msgstr ""
+
+msgid "title_recent_conversations"
+msgstr ""
+
+msgid "title_unanswered_conversations"
+msgstr ""
+
+msgid "unanswered_conversations_description"
+msgstr ""

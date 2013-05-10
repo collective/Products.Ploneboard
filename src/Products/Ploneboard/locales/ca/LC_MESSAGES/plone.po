@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-ca\n"
-"POT-Creation-Date: 2013-03-11 05:13+0000\n"
-"PO-Revision-Date: 2008-12-09 08:28+0100\n"
+"POT-Creation-Date: 2013-05-10 17:19+0000\n"
+"PO-Revision-Date: 2013-05-10 19:17+0200\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,6 @@ msgstr ""
 msgid "Moderate"
 msgstr "Moderat"
 
-#, fuzzy
 msgid "Moderated forum"
 msgstr "Moderat"
 
@@ -98,7 +97,6 @@ msgid "board_view_global"
 msgstr ""
 
 #. Flat conversion view
-#, fuzzy
 msgid "conversation_view"
 msgstr "Conversa"
 
@@ -130,7 +128,6 @@ msgid "ploneboard_view"
 msgstr ""
 
 #. Threaded conversion view
-#, fuzzy
 msgid "threaded_conversation_view"
 msgstr "Mostrar fil de conversa"
 

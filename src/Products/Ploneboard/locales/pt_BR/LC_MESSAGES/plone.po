@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-03-11 05:13+0000\n"
+"POT-Creation-Date: 2013-05-10 17:19+0000\n"
 "PO-Revision-Date: 2012-03-15 17:07-0300\n"
 "Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"

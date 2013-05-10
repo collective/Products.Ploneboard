@@ -1,8 +1,9 @@
 #!/bin/bash
+cd $(dirname $0)/locales
 # ensure that when something is wrong, nothing is broken more than it should...
 set -e
 
-PRODUCTNAME='ploneboard'
+PRODUCTNAME='Products.Ploneboard'
 I18NDOMAIN=$PRODUCTNAME
 
 # first, create some pot containing anything

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone-fr\n"
-"POT-Creation-Date: 2013-03-11 05:13+0000\n"
+"POT-Creation-Date: 2013-05-10 17:19+0000\n"
 "PO-Revision-Date: 2013-04-29 16:29+0200\n"
 "Last-Translator: Bitouzé Denis <dbitouze@wanadoo.fr>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -106,9 +106,7 @@ msgstr "Vue à plat des conversations"
 #. Default: "A portlet which shows an overview of all recently updated conversations"
 #: ../profiles/default/portlets.xml
 msgid "description_recent_conversations"
-msgstr ""
-"Une portlet qui affiche une vue d'ensemble de toutes les conversations "
-"récemment mises à jour"
+msgstr "Une portlet qui affiche une vue d'ensemble de toutes les conversations récemment mises à jour"
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -139,5 +137,4 @@ msgstr "Vue en enfilade des conversations"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} à ${hours}:${minutes}"
-
 
