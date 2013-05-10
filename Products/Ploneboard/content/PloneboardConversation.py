@@ -1,4 +1,4 @@
-from zope.interface import implements, providedBy
+from zope.interface import implements, providedBy, Interface
 from zope import event
 
 from AccessControl import ClassSecurityInfo
@@ -16,6 +16,11 @@ from Products.CMFCore.permissions import View
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
+try:
+    from Products.CMFPlone.interfaces.syndication import ISyndicatable
+except ImportError:
+    class ISyndicatable(Interface):
+        pass
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
 from Products.Ploneboard.interfaces import IForum, IConversation, IComment
@@ -48,12 +53,8 @@ utils.finalizeSchema(schema)
 
 class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     """Conversation contains comments."""
-    try:
-        from Products.CMFPlone.interfaces.syndication import ISyndicatable
-        implements(IConversation, INonStructuralFolder, ISyndicatable)
-    except ImportError:
-        implements(IConversation, INonStructuralFolder)
 
+    implements(IConversation, INonStructuralFolder, ISyndicatable)
     meta_type = 'PloneboardConversation'
     schema = schema
     _at_rename_after_creation = True

@@ -1,4 +1,4 @@
-from zope.interface import implements
+from zope.interface import implements, Interface
 
 from AccessControl import ClassSecurityInfo
 
@@ -12,6 +12,11 @@ from Products.Archetypes.public import RichWidget
 from Products.Archetypes.public import LinesWidget
 from Products.Archetypes.public import registerType
 from Products.CMFCore.utils import getToolByName
+try:
+    from Products.CMFPlone.interfaces.syndication import ISyndicatable
+except ImportError:
+    class ISyndicatable(Interface):
+        pass
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
@@ -66,12 +71,7 @@ utils.finalizeSchema(schema)
 
 class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
     """Ploneboard is the outmost board object, what shows up in your site."""
-    try:
-        from Products.CMFPlone.interfaces.syndication import ISyndicatable
-        implements(IPloneboard, ISyndicatable)
-    except ImportError:
-        implements(IPloneboard)
-
+    implements(IPloneboard, ISyndicatable)
     meta_type = 'Ploneboard'
     schema = schema
     _at_rename_after_creation = True

@@ -3,7 +3,7 @@ Changelog
 
 3.4 (Unreleased)
 ----------------
-- Made tests pass. Added Travis support. Support for Plone 4.3 changes.
+- Made tests pass. Added Travis support.
   [sureshvv]
 
 - Fix genericsetup import steps declaration [kiorky]
