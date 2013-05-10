@@ -53,14 +53,17 @@ if context.portal_type == 'PloneboardForum':
     # conversation is prohibitively expensive
     forumid = context.getId()
     conversations = {} # {id, [commentbrains, ]}
+    # keep order as dict is an unordered mapping
+    conversation_ids = []
     for item in catalogresult:
         pathlist = item.getPath().split('/')
         conversationid = pathlist[pathlist.index(forumid)+1]
+        conversation_ids.append(conversationid)
         if conversations.has_key(conversationid):
             conversations[conversationid].append(item)
         else:
             conversations[conversationid] = [item]
-    for key in conversations.keys():
+    for key in conversation_ids:
         if len(conversations[key]) > 10:
             # Could use a wrapper to store the conversation + length of pending comment
             # queue to avoid catalog calls in the moderation_form template
