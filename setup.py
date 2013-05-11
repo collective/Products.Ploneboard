@@ -14,7 +14,6 @@ setup(
         "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
-        "Framework :: Plone :: 4.4",
         "Framework :: Zope2",
         "Programming Language :: Python",
     ],
