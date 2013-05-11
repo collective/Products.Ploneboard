@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.4 (Unreleased)
+3.4 (2013-05-11)
 ----------------
 
 - Updated i18n machinery [kiorky]
