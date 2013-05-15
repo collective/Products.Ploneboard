@@ -1,3 +1,4 @@
+from DateTime import DateTime
 from Acquisition import aq_inner
 from zExceptions import Unauthorized
 from zope.component import getMultiAdapter
@@ -25,15 +26,27 @@ class RSSView(BrowserView):
 
 
     def updatePeriod(self):
-        return self.syndication.getUpdatePeriod(aq_inner(self.context))
+        try:
+            value = self.syndication.getUpdatePeriod(aq_inner(self.context))
+        except AttributeError:
+            value = "hourly"
+        return value
 
 
     def updateFrequency(self):
-        return self.syndication.getUpdateFrequency(aq_inner(self.context))
+        try:
+            value = self.syndication.getUpdateFrequency(aq_inner(self.context))
+        except AttributeError:
+            value = 1
+        return value
 
 
     def updateBase(self):
-        return self.syndication.getHTML4UpdateBase(aq_inner(self.context))
+        try:
+            value = self.syndication.getHTML4UpdateBase(aq_inner(self.context))
+        except AttributeError:
+            value = DateTime().HTML4()
+        return value
 
 
     def title(self):
