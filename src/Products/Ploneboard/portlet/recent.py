@@ -147,5 +147,5 @@ class EditForm(base.EditForm):
 def BoardsAndForumVocabularyFactory(context):
     """Vocabulary factory for supplying a vocabulary of users in the site for the injected responsible person field"""
     tool = getToolByName(context, 'uid_catalog')
-    items = [SimpleTerm(r.UID, r.UID, r.Title) for r in tool(portal_type=["PloneboardForum","Ploneboard"])]
+    items = [SimpleTerm(r.UID, r.UID, r.Title.decode('utf-8')) for r in tool(portal_type=["PloneboardForum","Ploneboard"])]
     return SimpleVocabulary(items)
