@@ -20,22 +20,22 @@ msgstr ""
 
 #: ../content/PloneboardForum.py:31
 msgid "1 megabyte"
-msgstr ""
+msgstr "1 MB"
 
 #: ../content/PloneboardForum.py:29
 msgid "10 kilobyte"
-msgstr ""
+msgstr "19 kb"
 
 #: ../content/PloneboardForum.py:32
 msgid "10 megabyte"
-msgstr ""
+msgstr "10 MB"
 
 #: ../content/PloneboardForum.py:30
 msgid "100 kilobyte"
-msgstr ""
+msgstr "100 kb"
 
 msgid "A Forum contains conversations."
-msgstr ""
+msgstr "Ein Diskussionsforum"
 
 msgid "A comment contains regular text body and metadata."
 msgstr ""
@@ -60,7 +60,7 @@ msgid "Change"
 msgstr "Ändern"
 
 msgid "Comment"
-msgstr ""
+msgstr "Kommentar"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:49
 msgid "Comment added"
@@ -75,14 +75,14 @@ msgid "Comment is pending moderation"
 msgstr "Kommentar ist zur Moderation eingereicht"
 
 msgid "Conversation"
-msgstr ""
+msgstr "Gespräch"
 
 #: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
 msgid "Conversation added"
 msgstr "Gespräch hinzugefügt"
 
 msgid "Conversation contains comments."
-msgstr ""
+msgstr "Gespräch enthält Kommentare"
 
 #: ../browser/comment.py:268
 msgid "Conversation deleted"
@@ -101,7 +101,7 @@ msgstr "Thema"
 
 #: ploneboard genericsetup profile description in configure.zcml
 msgid "Install the Ploneboard forum product"
-msgstr ""
+msgstr "Ploneboard installieren"
 
 #: intranet genericsetup profile description in configure.zcml
 msgid "Install the intranet workflow definitions for Ploneboard"
@@ -112,7 +112,7 @@ msgid "Log in to add comments"
 msgstr "Zum Kommentieren einloggen"
 
 msgid "Message Board"
-msgstr ""
+msgstr "Diskussionsforum"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:35
 msgid "No content entered"
@@ -120,7 +120,7 @@ msgstr "Kein Text eingegeben"
 
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:35
 msgid "No title entered"
-msgstr ""
+msgstr "Kein Titel eingegeben"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:57
 #: ../skins/ploneboard_scripts/validate_forum_edit.vpy:22
@@ -140,7 +140,7 @@ msgid "Ploneboard for intranets"
 msgstr ""
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
-msgstr ""
+msgstr " "
 
 #: lotsofposts genericsetup profile title in configure.zcml
 msgid "Ploneboard performance posts"
