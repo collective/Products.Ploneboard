@@ -4,12 +4,10 @@ from zope.interface import Interface, implements
 from Products import Five
 from plone.memoize.view import memoize
 from Products.CMFCore.utils import getToolByName
-from plone.app.layout.viewlets.interfaces import IAboveContentTitle
 from plone.app.layout.viewlets.common import ViewletBase
 
-from Products.Ploneboard.batch import Batch
-from Products.Ploneboard.browser.utils import toPloneboardTime, getNumberOfComments, getNumberOfConversations
-from Products.Ploneboard.interfaces import IConversation, IComment
+from Products.Ploneboard.browser.utils import toPloneboardTime, getNumberOfConversations
+from Products.Ploneboard.interfaces import IConversation
 
 
 class IForumView(Interface):
@@ -61,24 +59,10 @@ class ForumView(Five.BrowserView):
                         modified=conversation.modified,
                         Title=conversation.Title,
                         Creator=conversation.Creator,
-                        getLastCommentAuthor=None,# Depending on view rights to last comment
-                        getLastCommentDate=None,
-                        getLastCommentUrl=None,
+                        getLastCommentAuthor=conversation.getLastCommentAuthor,# Depending on view rights to last comment
+                        getLastCommentDate=self.toPloneboardTime(conversation.getLastCommentDate),
+                        getLastCommentUrl=conversation.getLastCommentUrl,
                         )
-
-            # Get last comment
-            # THIS IS RATHER EXPENSIVE, AS WE DO CATALOG SEARCH FOR EVERY CONVERSATION
-            # Investigate improved caching or something...
-            tmp = self.catalog(
-                object_provides=IComment.__identifier__,
-                sort_on='created', sort_order='reverse', sort_limit=1,
-                path=conversation.getPath())
-            if tmp:
-                lastcomment = tmp[0]
-                data['getLastCommentUrl'] =       lastcomment.getURL()
-                data['getLastCommentAuthor'] = lastcomment.Creator # Register member id for later lookup
-                data['getLastCommentDate']   = self.toPloneboardTime(lastcomment.created)
-
             res.append(data)
         return res
 
