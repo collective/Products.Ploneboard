@@ -1,20 +1,8 @@
 language: python
 python: "2.7"
-env:
-  - PLONE_VERSION=4.2 TARGET=test
-  - PLONE_VERSION=4.3 TARGET=test
-before_install:
-  - sudo locale-gen en_US.UTF-8
-  - sudo update-locale LANG=en_US.UTF-8 LC_MESSAGES=POSIX
-  - sudo locale -a
-  - sudo locale
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
   - mkdir -p buildout-cache/eggs
   - mkdir -p buildout-cache/downloads
   - python bootstrap.py -c travis.cfg
   - bin/buildout -N -t 3 -c travis.cfg
-  - bin/buildout -N -t 3 -c travis.cfg install omelette
-  - for po in $(find -L parts/omelette -path '*/LC_MESSAGES/*.po');do msgfmt -o ${po/%po/mo} $po;done
-
-script: bin/$TARGET
+script: bin/test
