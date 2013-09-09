@@ -4,6 +4,9 @@ Changelog
 3.5 (unreleased)
 ----------------
 
+- Check if toPloneboardTime gets a callable and call it to get a Datetime
+  [jensens]
+
 - Fixed visual issue with HTML lists when WISIWYG editor is enabled 
   [keul]
 
