@@ -125,5 +125,10 @@
             Products.Archetypes.interfaces.IObjectEditedEvent"
        handler=".events.onForumCreated"
     />
+    <subscriber
+       for="..interfaces.IComment
+            Products.Archetypes.interfaces.IObjectInitializedEvent"
+       handler=".events.onCommentCreated"
+    />
 </configure>
 

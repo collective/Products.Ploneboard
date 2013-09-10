@@ -21,3 +21,7 @@ def onForumCreated(forum, event):
         LOG.info('Deleted workflow polify for forum %s', '/'.join(forum.getPhysicalPath()))
 
 
+def onCommentCreated(comment, event):
+    """Subscriber for ObjectModifiedEvent"""
+    if comment.getConversation().getForum().getAllowEditComment():
+        comment.__ac_local_roles_block__ = True

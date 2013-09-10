@@ -126,6 +126,8 @@ member cannot edit previous comment
 Add a reply
 -----------
 
+    >>> from time import sleep
+    >>> sleep(60)
     >>> browser.getControl(name='text').value = 'My <b>breply</b> text'
     >>> browser.getControl(name='form.button.Post').click()
 

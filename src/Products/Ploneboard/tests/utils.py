@@ -1,5 +1,6 @@
 from DateTime import DateTime
 from Products.CMFPlacefulWorkflow.WorkflowPolicyConfig import manage_addWorkflowPolicyConfig
+from Products.Ploneboard.browser.events import onForumCreated
 
 
 def addMember(self, username, fullname="", email="", roles=('Member',), last_login_time=None):
@@ -44,11 +45,8 @@ def logoutThenLoginAs(self, browser, userid):
 
 def setupEditableForum(self, forum):
     self.setRoles(('Manager',))
-    manage_addWorkflowPolicyConfig(forum)
-    pw_tool = self.portal.portal_placeful_workflow
-    config = pw_tool.getWorkflowPolicyConfig(forum)
-    config.setPolicyIn(policy='EditableComment')
-    config.setPolicyBelow(policy='EditableComment', update_security=True)
+    forum.setAllowEditComment(True)
+    onForumCreated(forum, None)
     self.setRoles(('Member',))
 
 def lockBoard(self, state):
