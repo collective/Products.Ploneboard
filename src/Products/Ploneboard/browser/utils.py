@@ -35,6 +35,9 @@ def toPloneboardTime(context, request, time_=None):
     if not time_:
         return 'Unknown date'
 
+    if callable(time_):
+        time_ = time_()
+
     try:
         if isinstance(time_, DateTime):
             time_ = datetime.fromtimestamp(time_.timeTime())
