@@ -4,6 +4,9 @@ Changelog
 3.5 (unreleased)
 ----------------
 
+- Fix wrong permission check in add conversation viewlet. Fixes #29.
+  [jensens]
+
 - Check if toPloneboardTime gets a callable and call it to get a Datetime
   [jensens]
 

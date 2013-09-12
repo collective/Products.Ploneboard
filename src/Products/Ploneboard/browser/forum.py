@@ -78,5 +78,5 @@ class AddConversationViewlet(ViewletBase):
         """Check if user can start conversation
         """
         mt = getToolByName(self.context,'portal_membership')
-        return mt.checkPermission('Ploneboard: Add Comment', self.context) \
+        return mt.checkPermission('Ploneboard: Add Conversation', self.context) \
           and mt.checkPermission('Add portal content', self.context)
