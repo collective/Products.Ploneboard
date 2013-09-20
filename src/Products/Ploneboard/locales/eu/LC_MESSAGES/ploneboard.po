@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Products.Ploneboard\n"
 "POT-Creation-Date: 2013-05-10 17:19+0000\n"
-"PO-Revision-Date: 2012-11-20 11:25+0100\n"
+"PO-Revision-Date: 2013-09-20 07:54+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,19 @@ msgstr ""
 
 #: ../content/PloneboardForum.py:31
 msgid "1 megabyte"
-msgstr ""
+msgstr "Megabyte 1"
 
 #: ../content/PloneboardForum.py:29
 msgid "10 kilobyte"
-msgstr ""
+msgstr "10 kilobyte"
 
 #: ../content/PloneboardForum.py:32
 msgid "10 megabyte"
-msgstr ""
+msgstr "10 megabyte"
 
 #: ../content/PloneboardForum.py:30
 msgid "100 kilobyte"
-msgstr ""
+msgstr "100 kilobyte"
 
 msgid "A Forum contains conversations."
 msgstr "Foroak elkarrizketa-hariak ditu"
@@ -41,10 +41,10 @@ msgid "A comment contains regular text body and metadata."
 msgstr "Erantzunak testua eta metadatuak ditu"
 
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonimoa"
 
 msgid "Anonymous User"
-msgstr ""
+msgstr "Erabiltzaile anonimoa"
 
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:43
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:43
@@ -101,11 +101,11 @@ msgstr "Foroa"
 
 #: ploneboard genericsetup profile description in configure.zcml
 msgid "Install the Ploneboard forum product"
-msgstr ""
+msgstr "Ploneboard foro produktua instalatu"
 
 #: intranet genericsetup profile description in configure.zcml
 msgid "Install the intranet workflow definitions for Ploneboard"
-msgstr ""
+msgstr "Ploneboardentzako intranet workflowa instalatu"
 
 #. Default: "Log in to add comments"
 msgid "Log in to add comments"
@@ -129,26 +129,26 @@ msgstr "Zuzendu adierazitako erroreak"
 
 #: default genericsetup profile title in configure.zcml
 msgid "Ploneboard"
-msgstr ""
+msgstr "Ploneboard"
 
 #: ploneboard genericsetup profile title in configure.zcml
 msgid "Ploneboard (backward compatible version, please use default profile)"
-msgstr ""
+msgstr "Ploneboard (atzerako bateragarritasuna du, erabili defektuzko profila mesedez)"
 
 #: intranet genericsetup profile title in configure.zcml
 msgid "Ploneboard for intranets"
-msgstr ""
+msgstr "Ploneboard intranetetarako"
 
 msgid "Ploneboard is the outmost board object, what shows up in your site."
 msgstr "Ploneboard foro ezberdinak dituen kanporengo elementua da"
 
 #: lotsofposts genericsetup profile title in configure.zcml
 msgid "Ploneboard performance posts"
-msgstr ""
+msgstr "Errendimendua neurtzeko artikuluak"
 
 #: basicboard genericsetup profile title in configure.zcml
 msgid "Ploneboard performance test forum structure"
-msgstr ""
+msgstr "Errendimendua neurtzeko foroaren egiterua"
 
 #. Default: "Post"
 msgid "Post"
@@ -164,18 +164,18 @@ msgstr "Honi erantzun"
 
 #: basicboard genericsetup profile description in configure.zcml
 msgid "Set up a forum structure for performance testing"
-msgstr ""
+msgstr "Errendimendu probak egiteko foroaren egitura sortu"
 
 #: lotsofposts genericsetup profile description in configure.zcml
 msgid "Set up posts for load testing"
-msgstr ""
+msgstr "Errendimendu probak egiteko mezuak sortu"
 
 #. Default: "Start a new Conversation"
 msgid "Start a new Conversation"
 msgstr "Hari berria hasi"
 
 msgid "Start conversation"
-msgstr ""
+msgstr "Hari berria"
 
 #: ../skins/ploneboard_scripts/remove_transform_script.cpy:22
 msgid "Transform %s removed"
@@ -183,11 +183,11 @@ msgstr "%s eraldaketa eguneratu da"
 
 #: uninstall genericsetup profile title in configure.zcml
 msgid "Uninstall Ploneboard"
-msgstr ""
+msgstr "Ploneboard desinstalatu"
 
 #: uninstall genericsetup profile description in configure.zcml
 msgid "Uninstall Ploneboard product"
-msgstr ""
+msgstr "Ploneboard desinstalatu"
 
 #. Default: "View profile"
 msgid "View profile"
@@ -196,7 +196,7 @@ msgstr "Profila ikusi"
 #: ../skins/ploneboard_scripts/validate_add_comment.vpy:52
 #: ../skins/ploneboard_scripts/validate_add_conversation.vpy:53
 msgid "Wrong captcha. Try again"
-msgstr ""
+msgstr "Erantzuna ez da zuzena. Saiatu berriz mesedez"
 
 #: ../skins/ploneboard_scripts/add_comment_script.cpy:34
 msgid "You can only add comments to conversations or comments."
@@ -273,7 +273,7 @@ msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakust
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
 msgid "help_allow_edit_comment"
-msgstr ""
+msgstr "Aukeratuta badago, erabiltzaileei beren erantzunak aldatzeko aukera agertuko zaie."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 msgid "help_body_attachments_maxsize"
@@ -293,7 +293,7 @@ msgstr "URLak automatikoki lotura bihurtuko dira"
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
 msgid "help_captcha"
-msgstr ""
+msgstr "Irudiko testua idatzi. Spama ekiditeko metodoa da hau."
 
 msgid "help_categories_board"
 msgstr "Foroak sailkatzeko erabiliko diren kategorien izenak. Bat lerro bakoitzeko."
@@ -329,7 +329,7 @@ msgstr "Aukeratu gehitutako fitxategien tamaina maximoa"
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
 #: ../content/PloneboardForum.py:97
 msgid "help_showcaptcha"
-msgstr ""
+msgstr "Aukeratu erabiltzaile anonimoentzat captcha irudi bat erakutsi nahi baduzu (recaptcha instalatuta eta konfiguratuta badago)."
 
 msgid "help_text"
 msgstr "Testua idatzi"
@@ -346,7 +346,7 @@ msgstr "Azken elkarrizketen portleta gehitu"
 
 #. Default: "Allow users to edit their comments"
 msgid "label_allow_edit_comment"
-msgstr ""
+msgstr "Erabiltzaileei beren erantzunak aldatzea utzi"
 
 #. Default: "Back to discussion board"
 msgid "label_back_to_board"
@@ -366,7 +366,7 @@ msgstr "${author}"
 
 #. Default: "Captcha"
 msgid "label_captcha"
-msgstr ""
+msgstr "Captcha"
 
 msgid "label_categories_board"
 msgstr "Kategoriak"
@@ -409,7 +409,7 @@ msgstr "Beharrezkoa"
 #. Default: "Show Captcha"
 #: ../content/PloneboardForum.py:98
 msgid "label_show_captcha"
-msgstr ""
+msgstr "Captcha erakutsi"
 
 msgid "label_text"
 msgstr "Testua"
@@ -562,5 +562,5 @@ msgstr "Elkarrizketa-hari hauek oraindik ez dute erantzunik."
 
 #: ../content/PloneboardForum.py:33
 msgid "unlimited"
-msgstr ""
+msgstr "mugarik gabe"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-Plone\n"
 "POT-Creation-Date: 2013-05-10 17:19+0000\n"
-"PO-Revision-Date: 2012-11-20 11:27+0100\n"
+"PO-Revision-Date: 2013-09-20 07:50+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgstr "Argitaratzeko kide izatea eskatu"
 
 #: ../skins/ploneboard_templates/add_comment_form.cpt:125
 msgid "Required"
-msgstr ""
+msgstr "Beharrezkoa"
 
 msgid "Retracted"
 msgstr "Baztertuta"
@@ -94,7 +94,7 @@ msgstr "${number} elementu datoz bat zure bilaketarekin"
 
 #. Default: "Global forum listing"
 msgid "board_view_global"
-msgstr ""
+msgstr "Foroko zerrenda globala"
 
 #. Flat conversion view
 msgid "conversation_view"
@@ -103,7 +103,7 @@ msgstr "Elkarrizketen bista"
 #. Default: "A portlet which shows an overview of all recently updated conversations"
 #: ../profiles/default/portlets.xml
 msgid "description_recent_conversations"
-msgstr ""
+msgstr "Azkenaldian eguneratu diren harien zerrenda erakusten duen portleta"
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -125,7 +125,7 @@ msgstr "${year} ${month} ${day} ${hours}:${minutes}"
 
 #. Default: "Ploneboard view"
 msgid "ploneboard_view"
-msgstr ""
+msgstr "Ploneboard bista"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
