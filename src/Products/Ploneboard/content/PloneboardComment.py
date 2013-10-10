@@ -166,6 +166,7 @@ class PloneboardComment(BaseBTreeFolder):
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
 
         event.notify(ObjectInitializedEvent(m))
+        m.unmarkCreationFlag()
         m.reindexObject()
         conv.reindexObject() # Sets modified
         return m
