@@ -191,7 +191,7 @@ class PloneboardForum(BaseBTreeFolder):
 
             event.notify(ObjectInitializedEvent(m))
             m.reindexObject()
-
+            m.unmarkCreationFlag()
         conv.reindexObject()
         return conv
 

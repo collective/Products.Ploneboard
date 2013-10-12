@@ -13,6 +13,9 @@ Changelog
 - Fixed visual issue with HTML lists when WISIWYG editor is enabled 
   [keul]
 
+- Call unmarkCreationFlag method after comment creation, to remove creation flag
+  [cekk]
+
 3.4 (2013-05-11)
 ----------------
 

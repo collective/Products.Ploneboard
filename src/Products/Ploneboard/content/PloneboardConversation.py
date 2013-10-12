@@ -121,7 +121,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
         event.notify(ObjectInitializedEvent(m))
         m.indexObject()
-
+        m.unmarkCreationFlag()
         self.reindexObject() # Sets modified
         return m
 
