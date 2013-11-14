@@ -25,6 +25,7 @@ from Products.Ploneboard.permissions import DeleteComment
 from Products.Ploneboard.permissions import EditComment
 from Products.Ploneboard.permissions import ManageComment
 from Products.Ploneboard.permissions import ViewBoard
+from Products.Ploneboard.utils import PloneboardMessageFactory as _
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -45,6 +46,7 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
                                       description_msgid = "help_text",
                                       label = "Text",
                                       label_msgid = "label_text",
+                                      i18n_domain='ploneboard',
                                       rows = 5,
                                       helper_css = ('ploneboard.css',)
                                       )),
@@ -62,19 +64,19 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         default=True,
         languageIndependent=0,
         widget=AttachmentsManagerWidget(
-            label = u"Attachments",
-            label_msgid = "label_displayAttachments",
+            label = _("label_displayAttachments",
+                      default=u"Attachments"),
             expanded = True
         ),
-    ),            
+    ),
 
     BooleanField('displayImages',
         mode="w",
         default=True,
         languageIndependent=0,
         widget=ImagesManagerWidget(
-            label = u"Images",
-            label_msgid = "label_displayImages",
+            label = _("label_displayImages",
+                      default=u"Images"),
             expanded = True
         ),
     ),

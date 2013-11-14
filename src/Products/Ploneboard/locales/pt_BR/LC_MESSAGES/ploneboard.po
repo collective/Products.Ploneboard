@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-05-10 17:19+0000\n"
+"POT-Creation-Date: 2013-11-14 16:16+0000\n"
 "PO-Revision-Date: 2012-03-15 17:03-0300\n"
 "Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
@@ -382,6 +382,16 @@ msgstr "Descrição"
 
 msgid "label_description_forum"
 msgstr "Descrição"
+
+#. Default: "Attachments"
+#: ../content/PloneboardComment.py:67
+msgid "label_displayAttachments"
+msgstr ""
+
+#. Default: "Images"
+#: ../content/PloneboardComment.py:78
+msgid "label_displayImages"
+msgstr ""
 
 #. Default: "in ${forum}"
 msgid "label_in_forum"
