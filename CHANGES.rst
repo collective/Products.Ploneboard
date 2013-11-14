@@ -16,6 +16,8 @@ Changelog
 - Call unmarkCreationFlag method after comment creation, to remove creation flag
   [cekk]
 
+- Fixed attachment translations [cekk]
+
 3.4 (2013-05-11)
 ----------------
 
