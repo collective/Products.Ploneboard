@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-05-10 17:19+0000\n"
+"POT-Creation-Date: 2013-11-14 16:16+0000\n"
 "PO-Revision-Date: 2007-02-16 18:22+0100\n"
 "Last-Translator: Luca Fabbri <luca.fabbri@redturtle.net>\n"
 "Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"
@@ -332,7 +332,7 @@ msgid "help_showcaptcha"
 msgstr "Seleziona se mostrare o no il captcha per gli utenti anonimi (se recaptcha è installato e configurato)."
 
 msgid "help_text"
-msgstr "Inserisci il testo del commento"
+msgstr "Inserisci il testo del commento."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../browser/controlpanel.py:18
@@ -382,6 +382,16 @@ msgstr "Descrizione della discussione"
 
 msgid "label_description_forum"
 msgstr "Descrizione del forum"
+
+#. Default: "Attachments"
+#: ../content/PloneboardComment.py:67
+msgid "label_displayAttachments"
+msgstr "Allegati"
+
+#. Default: "Images"
+#: ../content/PloneboardComment.py:78
+msgid "label_displayImages"
+msgstr "Immagini"
 
 #. Default: "in ${forum}"
 msgid "label_in_forum"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2013-05-10 17:19+0000\n"
+"POT-Creation-Date: 2013-11-14 16:16+0000\n"
 "PO-Revision-Date: 2006-09-04 06:20+0100\n"
 "Last-Translator: Jens Klein <jens@bluedynamics.com>\n"
 "Language-Team: Ploneboard DE <arno.gross@brmtec.de>\n"

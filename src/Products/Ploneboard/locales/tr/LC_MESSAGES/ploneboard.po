@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2013-05-10 17:19+0000\n"
+"POT-Creation-Date: 2013-11-14 16:16+0000\n"
 "PO-Revision-Date: 2013-05-10 19:17+0200\n"
 "Last-Translator: H. Turgut Uyar <uyar@itu.edu.tr>\n"
 "Language-Team: M. Göktürk Yüksek <uyar@itu.edu.tr>\n"
@@ -393,6 +393,16 @@ msgstr "Tanım"
 #. Default: "Description"
 msgid "label_description_forum"
 msgstr "Tanım"
+
+#. Default: "Attachments"
+#: ../content/PloneboardComment.py:67
+msgid "label_displayAttachments"
+msgstr ""
+
+#. Default: "Images"
+#: ../content/PloneboardComment.py:78
+msgid "label_displayImages"
+msgstr ""
 
 #. Default: "in ${forum}"
 msgid "label_in_forum"
