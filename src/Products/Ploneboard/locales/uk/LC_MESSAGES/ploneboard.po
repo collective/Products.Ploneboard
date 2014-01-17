@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2014-01-17 11:21+0000\n"
+"POT-Creation-Date: 2014-01-17 16:25+0000\n"
 "PO-Revision-Date: 2013-05-10 19:17+0200\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -34,9 +34,11 @@ msgstr ""
 msgid "100 kilobyte"
 msgstr ""
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
 msgstr "Форум містить обговорення."
 
+#: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
 msgstr "Повідомлення містить основний текст і метадані."
 
@@ -52,13 +54,18 @@ msgid "Attachment is too large"
 msgstr "Вкладення занадто велике"
 
 #. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:90
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
 msgstr "Скасувати"
 
 #. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:83
 msgid "Change"
 msgstr "Змінити"
 
+#: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
 msgstr "Повідомлення"
 
@@ -74,6 +81,7 @@ msgstr "Повідомлення видалено"
 msgid "Comment is pending moderation"
 msgstr "Повідомлення чекає модерації"
 
+#: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
 msgstr "Обговорення"
 
@@ -81,6 +89,7 @@ msgstr "Обговорення"
 msgid "Conversation added"
 msgstr "Обговорення додано"
 
+#: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
 msgstr "Обговорення містить повідомлення"
 
@@ -96,6 +105,7 @@ msgstr "Обговорення чекає модерації"
 msgid "Data provider updated."
 msgstr "Джерело даних оновлено"
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Форум"
 
@@ -108,9 +118,11 @@ msgid "Install the intranet workflow definitions for Ploneboard"
 msgstr ""
 
 #. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Увійдіть в систему, щоб залишити повідомлення"
 
+#: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
 msgstr "Форум"
 
@@ -139,6 +151,7 @@ msgstr ""
 msgid "Ploneboard for intranets"
 msgstr ""
 
+#: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
 msgstr ""
 
@@ -151,14 +164,19 @@ msgid "Ploneboard performance test forum structure"
 msgstr ""
 
 #. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:77
 msgid "Post"
 msgstr "Відправити"
 
 #. Default: "Post comment"
+#: ../browser/templates/conversation_view.pt:80
+#: ../skins/ploneboard_templates/add_comment_form.cpt:197
 msgid "Post comment"
 msgstr "Надіслати повідомлення"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:72
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Відповісти на це"
 
@@ -171,9 +189,11 @@ msgid "Set up posts for load testing"
 msgstr ""
 
 #. Default: "Start a new Conversation"
+#: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Почати нову тему"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:53
 msgid "Start conversation"
 msgstr ""
 
@@ -190,6 +210,7 @@ msgid "Uninstall Ploneboard product"
 msgstr ""
 
 #. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Переглянути профіль"
 
@@ -203,10 +224,12 @@ msgid "You can only add comments to conversations or comments."
 msgstr "Ви можете додавати тільки обговорення або повідомлення."
 
 #. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:30
 msgid "add_comment"
 msgstr "Додати повідомлення"
 
 #. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:29
 msgid "add_conversation"
 msgstr "Додати обговорення"
 
@@ -215,34 +238,47 @@ msgid "alert_delete_popup"
 msgstr "Ви дійсно хочете видалити цей коментар?"
 
 #. Default: "Search"
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
 msgid "board_search_button"
 msgstr "Пошук"
 
 #. Default: "Search Boards"
+#: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
 msgid "board_search_label"
 msgstr "Пошук по форумам"
 
 #. Default: "More…"
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Більше…"
 
 #. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
 msgid "by_author"
 msgstr "${author}"
 
 #. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Поточний стан:"
 
 #. Default: "Conversation"
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
 msgid "conversation"
 msgstr "Обговорення"
 
 #. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
 msgid "conversation_forum"
 msgstr "Форум"
 
 #. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
 msgid "conversation_posted"
 msgstr "Відправлені"
 
@@ -252,18 +288,26 @@ msgid "description_ploneboard_config"
 msgstr "Налаштування сайту для використання форуму Ploneboard"
 
 #. Default: "Forum name"
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "forum_name"
 msgstr "Назва форуму"
 
 #. Default: "Up to ${title}"
+#: ../browser/templates/conversation_view.pt:43
+#: ../browser/templates/forum.pt:51
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Вверх до ${title}"
 
 #. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
 msgid "go_to_view_url"
 msgstr "Повернутися до форуму ${name}"
 
 #. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
 msgstr "Перегляд повідомлення"
 
@@ -277,28 +321,38 @@ msgstr "Цей портлет показує останні коментарі."
 msgid "help_allow_edit_comment"
 msgstr ""
 
+#. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+msgid "help_anon_name"
+msgstr ""
+
 #. Default: "If selected, anonymous users can insert a name in their comments."
 #: ../browser/controlpanel.py:35
 msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:171
 msgid "help_body_attachments_maxsize"
 msgstr "Максимальний розмір вкладення ${maxsize} кілобайт."
 
 #. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:165
 msgid "help_body_attachments_posting"
 msgstr "Завантажити файл-вкладення до повідомлення."
 
 #. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:115
 msgid "help_body_text_posting"
 msgstr "Основні теги HTML в нормі"
 
 #. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:110
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Адреси автоматично перетворяться у посилання."
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:144
 msgid "help_captcha"
 msgstr ""
 
@@ -361,28 +415,40 @@ msgstr "Додати портлет для поточних обговорень
 msgid "label_allow_edit_comment"
 msgstr ""
 
+#. Default: "Name"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+msgid "label_anon_name"
+msgstr ""
+
 #. Default: "Anonymous name"
 #: ../browser/controlpanel.py:33
 msgid "label_anon_nick"
 msgstr ""
 
 #. Default: "Back to discussion board"
+#: ../browser/search.pt:15
 msgid "label_back_to_board"
 msgstr "Назад до дошки обговорень."
 
 #. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "label_body_files_posting"
 msgstr "Вкладення"
 
 #. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:102
 msgid "label_body_text_posting"
 msgstr "Основний текст"
 
 #. Default: "by ${author}"
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "${author}"
 
 #. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:138
 msgid "label_captcha"
 msgstr ""
 
@@ -412,6 +478,7 @@ msgid "label_displayImages"
 msgstr ""
 
 #. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
 msgid "label_in_forum"
 msgstr "на ${forum}"
 
@@ -422,6 +489,7 @@ msgid "label_maxattachmentsize"
 msgstr "Максимальний розмір вкладення"
 
 #. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Розроблено ${link}"
 
@@ -431,6 +499,7 @@ msgid "label_quote"
 msgstr "Попередній ${author} писав: ${quote}"
 
 #. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:76
 msgid "label_required"
 msgstr "(Обов'язкове поле)"
 
@@ -443,6 +512,7 @@ msgid "label_text"
 msgstr "Текст"
 
 #. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:74
 msgid "label_title_posting"
 msgstr "Назва"
 
@@ -452,62 +522,87 @@ msgid "label_transforms"
 msgstr "Трансформації"
 
 #. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Вкладення"
 
 #. Default: "Log in to start a conversation"
+#: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
 msgstr "Увійдіть в систему, щоб почати обговорення"
 
 #. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
 msgstr "У черзі ${count} повідомлень(ня)"
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
 msgstr "Наступні повідомлення очікують модерації. За необхідності натисніть 'Опублікувати' або 'Забракувати'. Натисніть на заголовок повідомлення, щоб переглянути його в контексті всього обговорення."
 
 #. Default: "Most recent comment"
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Останні повідомлення"
 
 #. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:184
 msgid "new_attachment"
 msgstr "Додати ще одне вкладення"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
 msgstr "У цих обговореннях ${star} з'явилися нові повідомлення з часу Вашого останнього відвідування."
 
 #. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:113
 msgid "no_comments_queued"
 msgstr "Для модерації немає повідомлень."
 
 #. Default: "No conversations started"
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
 msgid "no_conversations_started"
 msgstr "Обговорень поки немає."
 
 #. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "no_recent_conversations"
 msgstr "Обговорень не знайдено."
 
 #. Default: "No replies yet"
+#: ../browser/templates/forum.pt:127
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Відповідей поки що немає"
 
 #. Default: "No conversations in this forum yet."
+#: ../browser/templates/addconversation.pt:14
 msgid "not_conversations"
 msgstr "На цьому форумі немає обговорень."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
 msgstr "Тут поки не було додано жодного форуму. Натисніть 'Додати', щоб його створити"
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../browser/templates/addconversation.pt:41
 msgid "not_permission_start_conversation"
 msgstr "Вибачте, але Вам не вистачає прав для початку нового обговорення"
 
 #. Default: "Conversations"
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
 msgid "number_of_conversations"
 msgstr "Обговорення"
 
@@ -522,38 +617,50 @@ msgid "ploneboard_transform_panel"
 msgstr "Трансформації тексту"
 
 #. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
 msgstr "Додано"
 
 #. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
 msgstr "Перегляд повідомлення"
 
 #. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
 msgid "recent_conversations_description"
 msgstr "Це список обговорень, де нещодавно обмінювалися думками"
 
 #. Default: "Replies"
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
 msgid "replies"
 msgstr "Відповіді"
 
 #. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
 msgid "search_result_location"
 msgstr "На ${forum} &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Показати нові обговорення"
 
 #. Default: "Show only unanswered"
+#: ../browser/templates/forum.pt:38
 msgid "show_no_replies"
 msgstr "Показати тільки обговорення без відповідей"
 
 #. Default: "Show all unanswered"
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Показати всі обговорення без відповідей"
 
 #. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "в"
 
@@ -568,10 +675,14 @@ msgid "title_forum"
 msgstr "Обмеження до певного обговорення або форуму"
 
 #. Default: "General forums"
+#: ../browser/templates/board.pt:148
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
 msgstr "Форуми"
 
 #. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
 msgid "title_recent_conversations"
 msgstr "Останні обговорення на форумі ${title}"
 
@@ -581,10 +692,12 @@ msgid "title_title"
 msgstr "Назва портлету"
 
 #. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
 msgid "title_unanswered_conversations"
 msgstr "Обговорення без відповідей на форумі ${title}"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
 msgstr "Наступні обговорення були розміщені, але ще не отримали жодної відповіді."
 

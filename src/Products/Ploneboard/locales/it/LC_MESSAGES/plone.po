@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2014-01-17 11:21+0000\n"
+"POT-Creation-Date: 2014-01-17 16:25+0000\n"
 "PO-Revision-Date: 2007-02-16 17:29+0100\n"
 "Last-Translator: Paolo Melchiorre < paolo at advansis dot it>\n"
 "Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"

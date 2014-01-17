@@ -56,7 +56,7 @@
                  tal:define="anon_name request/anon_name|nothing;"> 
                 <label for="anon_name" i18n:translate="label_anon_name">Name</label>
                 <div class="formHelp">
-                  <span>You are an anonymous user. If you want, you can insert your name in this comment.</span>
+                  <span i18n:translate="help_anon_name">You are an anonymous user. If you want, you can insert your name in this comment.</span>
                 </div>
                 <input type="text" name="anon_name" tal:attributes="value anon_name"/>
             </div>

@@ -21,6 +21,8 @@ Changelog
 - Added check in ploneboard tool that allows anonymous users to insert a name in comments/discussions
   [cekk]
 
+- Fix rebuild_i18n script [cekk]
+
 3.4 (2013-05-11)
 ----------------
 
