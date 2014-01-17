@@ -1,4 +1,4 @@
-from zope.schema import Tuple
+from zope.schema import Tuple, Bool
 from zope.schema import Choice
 from zope.interface import implements
 from zope.interface import Interface
@@ -10,6 +10,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFDefault.formlib.schema import SchemaAdapterBase
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+
 
 class ITransformSchema(Interface):
     enabled_transforms = Tuple(
@@ -28,29 +29,42 @@ class ITransformSchema(Interface):
             value_type=Choice(
                 vocabulary="Products.Ploneboard.AvailableTransforms"))
 
+    enable_anon_name = Bool(
+            title=_(u"label_anon_nick",
+                default=u"Anonymous name"),
+            description=_(u"help_anon_nick",
+                default=u"If selected, anonymous users can insert a name in their comments."),
+            required=False)
+
+
 class ControlPanelAdapter(SchemaAdapterBase):
     adapts(IPloneSiteRoot)
     implements(ITransformSchema)
 
     def __init__(self, context):
         super(ControlPanelAdapter, self).__init__(context)
-        self.tool=getToolByName(self.context, "portal_ploneboard")
+        self.tool = getToolByName(self.context, "portal_ploneboard")
 
     def get_enabled_transforms(self):
         return self.tool.getEnabledTransforms()
 
-
     def set_enabled_transforms(self, value):
-        pb=getToolByName(self.context, "portal_ploneboard")
         for t in self.tool.getTransforms():
             self.tool.enableTransform(t, t in value)
 
-    enabled_transforms=property(get_enabled_transforms, set_enabled_transforms)
+    def get_enable_anon_name(self):
+        return self.tool.getEnableAnonName()
+
+    def set_enable_anon_name(self, value):
+        self.tool.setEnableAnonName(value)
+
+    enabled_transforms = property(get_enabled_transforms, set_enabled_transforms)
+    enable_anon_name = property(get_enable_anon_name, set_enable_anon_name)
 
 
 class ControlPanel(ControlPanelForm):
     form_fields = FormFields(ITransformSchema)
-    form_fields["enabled_transforms"].custom_widget=MultiCheckBoxVocabularyWidget
+    form_fields["enabled_transforms"].custom_widget = MultiCheckBoxVocabularyWidget
 
     label = _(u"ploneboard_configuration",
             default=u"Ploneboard configuration")
@@ -59,4 +73,3 @@ class ControlPanel(ControlPanelForm):
 
     form_name = _(u"ploneboard_transform_panel",
             default=u"Text transformations")
-

@@ -22,7 +22,9 @@
 <body>
 
     <div metal:fill-slot="main" 
-         tal:define="errors options/state/getErrors">
+         tal:define="errors options/state/getErrors;
+                     isAnon context/@@plone_portal_state/anonymous;
+                     enable_anon_name python:context.portal_ploneboard.getEnableAnonName()">
 
        <h1 class="documentFirstHeading"
            i18n:translate="add_conversation">Add conversation</h1>
@@ -39,6 +41,8 @@
             <input type="hidden" name="form.submitted" value="1" />
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_title" tal:omit-tag="" />
+
+            <div metal:use-macro="here/add_comment_form/macros/comment_anon_name" tal:omit-tag="" />
 
             <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
 

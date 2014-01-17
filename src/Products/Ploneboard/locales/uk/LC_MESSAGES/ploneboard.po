@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ploneboard-uk\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 11:21+0000\n"
 "PO-Revision-Date: 2013-05-10 19:17+0200\n"
 "Last-Translator: Michael Krishtopa <theo@heddex.biz>\n"
 "Language-Team: Ukrainian <plone-i18n@lists.sourceforge.net>\n"
@@ -62,7 +62,7 @@ msgstr "Змінити"
 msgid "Comment"
 msgstr "Повідомлення"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:55
 msgid "Comment added"
 msgstr "Повідомлення додано"
 
@@ -70,14 +70,14 @@ msgstr "Повідомлення додано"
 msgid "Comment deleted"
 msgstr "Повідомлення видалено"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:53
 msgid "Comment is pending moderation"
 msgstr "Повідомлення чекає модерації"
 
 msgid "Conversation"
 msgstr "Обговорення"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:45
 msgid "Conversation added"
 msgstr "Обговорення додано"
 
@@ -88,7 +88,7 @@ msgstr "Обговорення містить повідомлення"
 msgid "Conversation deleted"
 msgstr "Обговорення видалено"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation is pending moderation"
 msgstr "Обговорення чекає модерації"
 
@@ -198,7 +198,7 @@ msgstr "Переглянути профіль"
 msgid "Wrong captcha. Try again"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:40
 msgid "You can only add comments to conversations or comments."
 msgstr "Ви можете додавати тільки обговорення або повідомлення."
 
@@ -247,7 +247,7 @@ msgid "conversation_posted"
 msgstr "Відправлені"
 
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../browser/controlpanel.py:57
+#: ../browser/controlpanel.py:71
 msgid "description_ploneboard_config"
 msgstr "Налаштування сайту для використання форуму Ploneboard"
 
@@ -273,7 +273,13 @@ msgid "help_add_portlet"
 msgstr "Цей портлет показує останні коментарі."
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
+#: ../content/PloneboardForum.py:87
 msgid "help_allow_edit_comment"
+msgstr ""
+
+#. Default: "If selected, anonymous users can insert a name in their comments."
+#: ../browser/controlpanel.py:35
+msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
@@ -341,7 +347,7 @@ msgid "help_text"
 msgstr "Введіть текст коментаря."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../browser/controlpanel.py:18
+#: ../browser/controlpanel.py:19
 msgid "help_transforms"
 msgstr "Виберіть трансформації для тексту, які будуть застосовуватися для повідомлень на форумі. Текстові трансформації змінюють текст, введений користувачем, прибираючи потенційно небезпечні HTML-теги, або додаючи додаткову функціональність, наприклад перетворюючи текст з адресою сайту на активне посилання."
 
@@ -351,7 +357,13 @@ msgid "label_add_portlet"
 msgstr "Додати портлет для поточних обговорень."
 
 #. Default: "Allow users to edit their comments"
+#: ../content/PloneboardForum.py:85
 msgid "label_allow_edit_comment"
+msgstr ""
+
+#. Default: "Anonymous name"
+#: ../browser/controlpanel.py:33
+msgid "label_anon_nick"
 msgstr ""
 
 #. Default: "Back to discussion board"
@@ -435,7 +447,7 @@ msgid "label_title_posting"
 msgstr "Назва"
 
 #. Default: "Transforms"
-#: ../browser/controlpanel.py:16
+#: ../browser/controlpanel.py:17
 msgid "label_transforms"
 msgstr "Трансформації"
 
@@ -500,12 +512,12 @@ msgid "number_of_conversations"
 msgstr "Обговорення"
 
 #. Default: "Ploneboard configuration"
-#: ../browser/controlpanel.py:55
+#: ../browser/controlpanel.py:69
 msgid "ploneboard_configuration"
 msgstr "Налаштування форумів Ploneboard"
 
 #. Default: "Text transformations"
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "ploneboard_transform_panel"
 msgstr "Трансформації тексту"
 

@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind state=state
 ##bind subpath=traverse_subpath
-##parameters=title, text='', files=None
+##parameters=title, text='', files=None, anon_name=''
 ##title=Add a conversation
 
 from AccessControl import Unauthorized
@@ -17,9 +17,12 @@ wf = getToolByName(context, 'portal_workflow')
 putils = getToolByName(context, 'plone_utils')
 
 if pm.isAnonymousUser():
-    creator = 'Anonymous'
+    if anon_name:
+        creator = anon_name
+    else:
+        creator = 'Anonymous'
 else:
-    creator = pm.getAuthenticatedMember().getId()
+    creator = str(pm.getAuthenticatedMember())
 
 # Get files from session etc instead of just request
 files = context.portal_ploneboard.getUploadedFiles()

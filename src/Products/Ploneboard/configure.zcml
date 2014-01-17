@@ -144,6 +144,13 @@
         />
   </genericsetup:upgradeSteps>
 
+  <genericsetup:upgradeStep
+        title="Add field in ploneboard config"
+        description="Products.Ploneboard upgrade step"
+        source="3300"
+        destination="3310"
+        handler=".setuphandlers.upgradeTool"
+        profile="Products.Ploneboard:default" />
   <!--
       As Archetypes doesn't use the events machinery on the BaseObject
       we must mark the deprecated methods to avoid noisy warnings

@@ -26,6 +26,7 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
     security = ClassSecurityInfo()
     def __init__(self):
         self.transforms = PersistentMapping()
+        self.enable_anon_name = False
 
     security.declarePrivate('registerTransform')
     def registerTransform(self, name, module, friendlyName=None):
@@ -169,6 +170,15 @@ class PloneboardTool(UniqueObject, Folder, ActionProviderBase):
                             del request.SESSION[file]
                     del request.SESSION['ploneboard_uploads']
 
+    security.declareProtected(View, 'getEnableAnonName')
+    def getEnableAnonName(self):
+        """Returns if anonymous can insert a name in their comments."""
+        return self.enable_anon_name
+
+    security.declareProtected(ManagePortal, 'setEnableAnonName')
+    def setEnableAnonName(self, value):
+        """Set if anonymous can insert a name in their comments."""
+        self.enable_anon_name = value
 
 InitializeClass(PloneboardTool)
 registerToolInterface(PLONEBOARD_TOOL, IPloneboardTool)
