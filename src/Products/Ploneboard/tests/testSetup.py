@@ -48,14 +48,28 @@ class TestSetup(PloneboardTestCase.PloneboardTestCase):
         self.failUnless('text_to_emoticons' in transforms)
         self.failUnless('url_to_hyperlink' in transforms)
 
+    def testDefaultEnableAnonName(self):
+        from Products.Ploneboard.config import PLONEBOARD_TOOL
+        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
+        self.assertFalse(tool.getEnableAnonName())
+
+    def testEnableAnonName(self):
+        """Try set and unset EnableAnonName property"""
+        from Products.Ploneboard.config import PLONEBOARD_TOOL
+        tool = getToolByName(self.portal, PLONEBOARD_TOOL)
+        tool.setEnableAnonName(True)
+        self.assertTrue(tool.getEnableAnonName())
+        tool.setEnableAnonName(False)
+        self.assertFalse(tool.getEnableAnonName())
+
     def testCatalogIndex(self):
-        ct = getToolByName(self.portal, 'portal_catalog') 
+        ct = getToolByName(self.portal, 'portal_catalog')
         self.failUnless('object_provides' in ct.indexes())
         self.failUnless('num_comments' in ct.indexes())
         self.failUnless('num_comments' in ct.schema())
 
     def testPortalFactorySetup(self):
-        portal_factory = getToolByName(self.portal, 'portal_factory') 
+        portal_factory = getToolByName(self.portal, 'portal_factory')
         factoryTypes = portal_factory.getFactoryTypes().keys()
         for t in ['Ploneboard', 'PloneboardComment', 'PloneboardConversation', 'PloneboardForum']:
             self.failUnless(t in factoryTypes)

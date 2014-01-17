@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>3300</version>
+  <version>3310</version>
   <dependencies>
     <dependency>profile-Products.SimpleAttachment:default</dependency>
     <dependency>profile-Products.CMFPlacefulWorkflow:base</dependency>

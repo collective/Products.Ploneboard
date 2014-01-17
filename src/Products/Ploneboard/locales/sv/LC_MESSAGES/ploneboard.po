@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard.pot VERSION\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 11:21+0000\n"
 "PO-Revision-Date: 2008-05-25 11:08+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:55
 msgid "Comment added"
 msgstr ""
 
@@ -69,14 +69,14 @@ msgstr ""
 msgid "Comment deleted"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:53
 msgid "Comment is pending moderation"
 msgstr ""
 
 msgid "Conversation"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:45
 msgid "Conversation added"
 msgstr ""
 
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Conversation deleted"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation is pending moderation"
 msgstr ""
 
@@ -197,7 +197,7 @@ msgstr "Se profil"
 msgid "Wrong captcha. Try again"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:40
 msgid "You can only add comments to conversations or comments."
 msgstr ""
 
@@ -245,7 +245,7 @@ msgid "conversation_posted"
 msgstr ""
 
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../browser/controlpanel.py:57
+#: ../browser/controlpanel.py:71
 msgid "description_ploneboard_config"
 msgstr "Här kan du ändra inställningar för Ploneboard."
 
@@ -271,7 +271,13 @@ msgid "help_add_portlet"
 msgstr ""
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
+#: ../content/PloneboardForum.py:87
 msgid "help_allow_edit_comment"
+msgstr ""
+
+#. Default: "If selected, anonymous users can insert a name in their comments."
+#: ../browser/controlpanel.py:35
+msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
@@ -340,7 +346,7 @@ msgid "help_text"
 msgstr "Kommentarens innehåll"
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../browser/controlpanel.py:18
+#: ../browser/controlpanel.py:19
 msgid "help_transforms"
 msgstr "Välj de text transformeringar som ska användas för kommentarer i Ploneboard trådar. Text transformeringar ändrar texten från användaren, antingen för att ta bort HTML taggar som kan vara farliga, eller för att lägga till funktionalitet tex. göra länkar klickbara."
 
@@ -350,7 +356,13 @@ msgid "label_add_portlet"
 msgstr ""
 
 #. Default: "Allow users to edit their comments"
+#: ../content/PloneboardForum.py:85
 msgid "label_allow_edit_comment"
+msgstr ""
+
+#. Default: "Anonymous name"
+#: ../browser/controlpanel.py:33
+msgid "label_anon_nick"
 msgstr ""
 
 #. Default: "Back to discussion board"
@@ -434,7 +446,7 @@ msgid "label_title_posting"
 msgstr ""
 
 #. Default: "Transforms"
-#: ../browser/controlpanel.py:16
+#: ../browser/controlpanel.py:17
 msgid "label_transforms"
 msgstr "Transformer"
 
@@ -499,12 +511,12 @@ msgid "number_of_conversations"
 msgstr "Konversationer"
 
 #. Default: "Ploneboard configuration"
-#: ../browser/controlpanel.py:55
+#: ../browser/controlpanel.py:69
 msgid "ploneboard_configuration"
 msgstr ""
 
 #. Default: "Text transformations"
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "ploneboard_transform_panel"
 msgstr ""
 

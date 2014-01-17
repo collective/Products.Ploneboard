@@ -18,6 +18,9 @@ Changelog
 
 - Fixed attachment translations [cekk]
 
+- Added check in ploneboard tool that allows anonymous users to insert a name in comments/discussions
+  [cekk]
+
 3.4 (2013-05-11)
 ----------------
 

@@ -22,7 +22,8 @@
 <body>
   <div metal:fill-slot="main"
        tal:define="isAnon isAnon | context/@@plone_portal_state/anonymous;
-                   mtool mtool | context/@@plone_tools/membership;">
+                   mtool mtool | context/@@plone_tools/membership;
+                   enable_anon_name python:context.portal_ploneboard.getEnableAnonName()">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
 
@@ -70,9 +71,8 @@
         <fieldset>
           <legend i18n:translate="">Reply to this</legend>
           <form tal:attributes="action string:${firstcomment/absolute_url}/add_comment_form" method="post" enctype="multipart/form-data">
-
+            <div metal:use-macro="here/add_comment_form/macros/comment_anon_name" tal:omit-tag="" />
             <div metal:use-macro="here/add_comment_form/macros/comment_body_text" tal:omit-tag="" />
-
             <div metal:use-macro="here/add_comment_form/macros/comment_body_attachments" tal:omit-tag="" />
 
             <input type="hidden" name="form.submitted" value="1" />

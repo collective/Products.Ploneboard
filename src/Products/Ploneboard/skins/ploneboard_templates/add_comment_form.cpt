@@ -21,8 +21,10 @@
 <body>
   <div metal:fill-slot="main"
        tal:define="errors options/state/getErrors;
-       view context/@@singlecomment_view;
-       show_comment_actions python:False;"
+                   view context/@@singlecomment_view;
+                   show_comment_actions python:False;
+                   isAnon context/@@plone_portal_state/anonymous;
+                   enable_anon_name python:context.portal_ploneboard.getEnableAnonName()"
        i18n:domain="ploneboard">
 
     <h2 i18n:translate="add_comment">Add comment</h2>
@@ -47,6 +49,18 @@
               tal:attributes="action template/getId">
 
           <input type="hidden" name="form.submitted" value="1" />
+          <div tal:condition="python:isAnon and enable_anon_name"
+               metal:define-macro="comment_anon_name" tal:omit-tag="">
+            <div class="field"
+                 id="anon_name"
+                 tal:define="anon_name request/anon_name|nothing;"> 
+                <label for="anon_name" i18n:translate="label_anon_name">Name</label>
+                <div class="formHelp">
+                  <span>You are an anonymous user. If you want, you can insert your name in this comment.</span>
+                </div>
+                <input type="text" name="anon_name" tal:attributes="value anon_name"/>
+            </div>
+          </div>
 
           <div metal:define-macro="comment_body_title" tal:omit-tag="">
             <div class="commentReplyTitle" tal:omit-tag="title_required">

@@ -140,3 +140,8 @@ def uninstallVarious(self):
         return
     site = self.getSite()
     cleanupKupuResources(site)
+
+
+def upgradeTool(site):
+    pb_tool = getToolByName(site, 'portal_ploneboard')
+    pb_tool.enable_anon_name = False

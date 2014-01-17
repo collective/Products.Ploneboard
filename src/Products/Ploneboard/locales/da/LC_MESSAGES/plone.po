@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 11:21+0000\n"
 "PO-Revision-Date: 2005-08-22 11:50+0000\n"
 "Last-Translator: jakob bruun <jakob@headnet.dk>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -75,7 +75,7 @@ msgstr "Afvist"
 msgid "Require membership to post"
 msgstr "Medlemskab påkrævet"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "Required"
 msgstr ""
 

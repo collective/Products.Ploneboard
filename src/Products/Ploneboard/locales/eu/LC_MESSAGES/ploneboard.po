@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Products.Ploneboard\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 11:21+0000\n"
 "PO-Revision-Date: 2013-09-20 07:54+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
@@ -62,7 +62,7 @@ msgstr "Aldatu"
 msgid "Comment"
 msgstr "Erantzuna"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:55
 msgid "Comment added"
 msgstr "Erantzuna gehituta"
 
@@ -70,14 +70,14 @@ msgstr "Erantzuna gehituta"
 msgid "Comment deleted"
 msgstr "Erantzuna ezabatuta"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:53
 msgid "Comment is pending moderation"
 msgstr "Erantzuna moderazio kolan dago"
 
 msgid "Conversation"
 msgstr "Elkarrizketa-haria"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:45
 msgid "Conversation added"
 msgstr "Elkarrizketa-haria gehituta"
 
@@ -88,7 +88,7 @@ msgstr "Hariak erantzunak ditu"
 msgid "Conversation deleted"
 msgstr "Elkarrizketa-haria ezabatuta"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation is pending moderation"
 msgstr "Elkarrizketa-haria moderazio kolan dago"
 
@@ -198,7 +198,7 @@ msgstr "Profila ikusi"
 msgid "Wrong captcha. Try again"
 msgstr "Erantzuna ez da zuzena. Saiatu berriz mesedez"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:40
 msgid "You can only add comments to conversations or comments."
 msgstr "Erantzunak elkarrizketetan edo beste erantzunetan bakarrik gehitu daitezke"
 
@@ -246,7 +246,7 @@ msgid "conversation_posted"
 msgstr "Argitaratuta"
 
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../browser/controlpanel.py:57
+#: ../browser/controlpanel.py:71
 msgid "description_ploneboard_config"
 msgstr "Ploneboarden konfigurazioa aldatu dezakezu hemen."
 
@@ -272,8 +272,14 @@ msgid "help_add_portlet"
 msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakusten ditu"
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
+#: ../content/PloneboardForum.py:87
 msgid "help_allow_edit_comment"
-msgstr "Aukeratuta badago, erabiltzaileei beren erantzunak aldatzeko aukera agertuko zaie."
+msgstr ""
+
+#. Default: "If selected, anonymous users can insert a name in their comments."
+#: ../browser/controlpanel.py:35
+msgid "help_anon_nick"
+msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 msgid "help_body_attachments_maxsize"
@@ -335,7 +341,7 @@ msgid "help_text"
 msgstr "Testua idatzi"
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../browser/controlpanel.py:18
+#: ../browser/controlpanel.py:19
 msgid "help_transforms"
 msgstr "Ploneboardeko erantzunei aplikatu behar zaizkien transformazioak aukeratu. Testuzko transformazioek, erabiltzaileek sarturiko testua eraldatzen dute, adibidez behar ez den HTMLa ezabatu edo funtzionalitate gehigarriak eskeintzeko, loturak klikagarri egiteko adibidez."
 
@@ -345,8 +351,14 @@ msgid "label_add_portlet"
 msgstr "Azken elkarrizketen portleta gehitu"
 
 #. Default: "Allow users to edit their comments"
+#: ../content/PloneboardForum.py:85
 msgid "label_allow_edit_comment"
-msgstr "Erabiltzaileei beren erantzunak aldatzea utzi"
+msgstr ""
+
+#. Default: "Anonymous name"
+#: ../browser/controlpanel.py:33
+msgid "label_anon_nick"
+msgstr ""
 
 #. Default: "Back to discussion board"
 msgid "label_back_to_board"
@@ -429,7 +441,7 @@ msgid "label_title_posting"
 msgstr "Izenburua"
 
 #. Default: "Transforms"
-#: ../browser/controlpanel.py:16
+#: ../browser/controlpanel.py:17
 msgid "label_transforms"
 msgstr "Transformazioak"
 
@@ -494,12 +506,12 @@ msgid "number_of_conversations"
 msgstr "Elkarrizketak"
 
 #. Default: "Ploneboard configuration"
-#: ../browser/controlpanel.py:55
+#: ../browser/controlpanel.py:69
 msgid "ploneboard_configuration"
 msgstr "Ploneboarden konfigurazioa"
 
 #. Default: "Text transformations"
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "ploneboard_transform_panel"
 msgstr "Testu eraldaketak"
 

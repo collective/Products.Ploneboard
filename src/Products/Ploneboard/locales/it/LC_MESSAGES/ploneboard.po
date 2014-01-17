@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 11:21+0000\n"
 "PO-Revision-Date: 2007-02-16 18:22+0100\n"
 "Last-Translator: Luca Fabbri <luca.fabbri@redturtle.net>\n"
 "Language-Team: Paolo Melchiorre < paolo at advansis dot it>\n"
@@ -62,7 +62,7 @@ msgstr "Cambia"
 msgid "Comment"
 msgstr "Commento"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:55
 msgid "Comment added"
 msgstr "Commento aggiunto"
 
@@ -70,14 +70,14 @@ msgstr "Commento aggiunto"
 msgid "Comment deleted"
 msgstr "Commento eliminato"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:53
 msgid "Comment is pending moderation"
 msgstr "Commento in attesa di approvazione"
 
 msgid "Conversation"
 msgstr "Discussioni"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:45
 msgid "Conversation added"
 msgstr "Discussione aggiunta"
 
@@ -88,7 +88,7 @@ msgstr "Una discussione con commenti."
 msgid "Conversation deleted"
 msgstr "Discussione eliminata"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation is pending moderation"
 msgstr "Discussione in attesa di approvazione"
 
@@ -198,7 +198,7 @@ msgstr "Visualizza profilo"
 msgid "Wrong captcha. Try again"
 msgstr "Captcha sbagliato. Riprova"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:40
 msgid "You can only add comments to conversations or comments."
 msgstr "Puoi solo aggiungere commenti a discussioni o commenti"
 
@@ -246,7 +246,7 @@ msgid "conversation_posted"
 msgstr "Inviato"
 
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../browser/controlpanel.py:57
+#: ../browser/controlpanel.py:71
 msgid "description_ploneboard_config"
 msgstr "Qui puoi configurare Ploneboard per questo sito"
 
@@ -272,8 +272,14 @@ msgid "help_add_portlet"
 msgstr "Questo quadro mostra le discussioni con i commenti recenti"
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
+#: ../content/PloneboardForum.py:87
 msgid "help_allow_edit_comment"
-msgstr ""
+msgstr "Se selezionato, questo da agli utenti la possibilità di modificare i propri commenti."
+
+#. Default: "If selected, anonymous users can insert a name in their comments."
+#: ../browser/controlpanel.py:35
+msgid "help_anon_nick"
+msgstr "Se selezionato, gli anonimi potranno inserire un nome nei loro commenti."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
 msgid "help_body_attachments_maxsize"
@@ -335,7 +341,7 @@ msgid "help_text"
 msgstr "Inserisci il testo del commento."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../browser/controlpanel.py:18
+#: ../browser/controlpanel.py:19
 msgid "help_transforms"
 msgstr "Seleziona le trasformazioni automatiche del testo che verranno effettuate nei commenti inseriti nelle discussioni di Ploneboard. Le trasformazioni automatiche modificano il testo inserito dall'utente, sia per rimuovere il possibile codice html dannoso, sia per aggiungere altre funzionalità, come rendere i collegamenti cliccabili."
 
@@ -345,8 +351,14 @@ msgid "label_add_portlet"
 msgstr "Aggiunge quadro delle discussioni recenti"
 
 #. Default: "Allow users to edit their comments"
+#: ../content/PloneboardForum.py:85
 msgid "label_allow_edit_comment"
-msgstr ""
+msgstr "Permetti agli utenti di modificare i propri commenti"
+
+#. Default: "Anonymous name"
+#: ../browser/controlpanel.py:33
+msgid "label_anon_nick"
+msgstr "Nomi per gli anonimi"
 
 #. Default: "Back to discussion board"
 msgid "label_back_to_board"
@@ -429,7 +441,7 @@ msgid "label_title_posting"
 msgstr "Titolo"
 
 #. Default: "Transforms"
-#: ../browser/controlpanel.py:16
+#: ../browser/controlpanel.py:17
 msgid "label_transforms"
 msgstr "Trasformazioni"
 
@@ -494,12 +506,12 @@ msgid "number_of_conversations"
 msgstr "discussioni"
 
 #. Default: "Ploneboard configuration"
-#: ../browser/controlpanel.py:55
+#: ../browser/controlpanel.py:69
 msgid "ploneboard_configuration"
 msgstr "Configurazione di Ploneboard"
 
 #. Default: "Text transformations"
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "ploneboard_transform_panel"
 msgstr "Trasformazioni del testo"
 

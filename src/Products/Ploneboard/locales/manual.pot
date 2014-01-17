@@ -56,14 +56,6 @@ msgstr ""
 msgid "label_maxattachmentsize"
 msgstr ""
 
-#. Default: "If selected, this will give users the ability to edit their own comments."
-msgid "help_allow_edit_comment"
-msgstr ""
-
-#. Default: "Allow users to edit their comments"
-msgid "label_allow_edit_comment"
-msgstr ""
-
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
 msgid "help_showcaptcha"
 msgstr ""
