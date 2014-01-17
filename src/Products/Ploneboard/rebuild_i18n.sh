@@ -4,7 +4,7 @@ cd $(dirname $0)/locales
 set -e
 
 PRODUCTNAME='Products.Ploneboard'
-I18NDOMAIN=$PRODUCTNAME
+I18NDOMAIN="ploneboard"
 
 # first, create some pot containing anything
 i18ndude rebuild-pot --pot ${PRODUCTNAME}-generated.pot --create ${I18NDOMAIN} --merge manual.pot ../*
