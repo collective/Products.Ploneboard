@@ -18,6 +18,9 @@ Changelog
 
 - Fixed attachment translations [cekk]
 
+- Fixed bug: moderation_form fail to render when using VirtualHostMonster
+  [rafaelbco]
+
 3.4 (2013-05-11)
 ----------------
 

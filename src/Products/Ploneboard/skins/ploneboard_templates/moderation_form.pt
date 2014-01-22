@@ -4,7 +4,7 @@
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="ploneboard">
-      
+
 <body>
 
     <div metal:fill-slot="main"
@@ -15,7 +15,7 @@
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
         <h1 tal:content="here/Title"><tal:comment replace="nothing">Context title</tal:comment></h1>
-        
+
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <a href=""
@@ -30,15 +30,15 @@
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
         <!-- Search results -->
-        
+
         <div tal:condition="results">
-        
+
             <p i18n:translate="moderation_description">
               The following comments are pending moderation. Please click
               'Publish' or 'Reject' as necessary. Click the title of a comment
               to view it in the context of its conversation.
             </p>
-            
+
             <p>
                 <a href="#"
                    tal:condition="python: here.portal_type in ('PloneboardForum', 'PloneboardConversation', 'PloneboardComment')"
@@ -51,45 +51,47 @@
                  id="#"
                  tal:define="oddrow repeat/result/odd;
                              resultid string:seqno${repeat/result/number};
-                             resulturl string:${result/absolute_url}/${template/id};" 
+                             resulturl string:${result/absolute_url}/${template/id};
+                             iconpath python:'here/%s' % result.getIcon().lstrip('/')"
                  tal:attributes="class python:test(oddrow, 'moderationItem even', 'moderationItem odd');
                                  id resultid;" >
 
 
-                <div tal:condition="python: result.portal_type in ['PloneboardConversation','PloneboardForum']">    
+                <div tal:condition="python: result.portal_type in ['PloneboardConversation','PloneboardForum']">
                     <a href="#"
                        tal:attributes="href resulturl">
-                        <img src="#" 
+                        <img src="#"
                          height="16"
                          width="16"
                          alt=""
-                         tal:on-error="structure python:path('here/linkOpaque.gif')"
-                         tal:replace="structure python:path('here/%s' % result.getIcon())" 
+                         tal:on-error="nothing"
+                         tal:replace="structure python:path(iconpath)"
                          /></a>
                     <a href="#"
                        tal:attributes="href resulturl"
                        tal:content="result/Title" /> -
                     <span i18n:translate="moderation_count" tal:omit-tag="">
                     <span i18n:name="count"
-                                 replace="python: here.moderation_count_search(result)" /> 
+                                 replace="python: here.moderation_count_search(result)" />
                     comments in queue.</span>
                 </div>
 
                 <div tal:condition="python: result.portal_type == 'PloneboardComment'">
-                    <a href="#" 
+                    <a href="#"
                        tal:attributes="href result/absolute_url">
-                        <img src="#" 
+                        <img src="#"
                              height="16"
                              width="16"
                              alt=""
-                         tal:on-error="structure python:path('here/linkOpaque.gif')"
-                             tal:replace="structure python:path('here/%s' % result.getIcon())" /></a>
+                         tal:on-error="nothing"
+                         tal:replace="structure python:path(iconpath)"
+                         /></a>
                     <a href="#" tal:attributes="href result/absolute_url"
                        tal:content="python:result.Title() or result.getId()" />
 
                     <div tal:content="result/Creator" i18n:translate="">Author</div>
                     <div tal:content="result/Description"><tal:comment replace="nothing">Description</tal:comment></div>
-    
+
                     <div class="moderationActions">
                         <!-- Iterate over workflow transitions and make a button for each -->
                         <form i18n:domain="plone"
