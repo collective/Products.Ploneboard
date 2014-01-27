@@ -2,5 +2,8 @@
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
     <column value="getLastCommentAuthor"/>
     <column value="getLastCommentDate"/>
-    <column value="getLastCommentUrl"/>
+    <index name="getLastCommentId" meta_type="FieldIndex">
+        <indexed_attr value="getLastCommentId"/>
+    </index> 
+    <column value="getLastCommentId"/>
 </object>

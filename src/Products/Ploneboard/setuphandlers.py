@@ -142,6 +142,24 @@ def uninstallVarious(self):
     cleanupKupuResources(site)
 
 
-def upgradeTool(site):
+def to_3310(site):
+    """
+    Upgrade ploneboard_tool and catalog
+    """
     pb_tool = getToolByName(site, 'portal_ploneboard')
     pb_tool.enable_anon_name = False
+    site.plone_log('to_3310', 'Updated Ploneboard Tool with new attribute: enable_anon_name')
+    catalog = getToolByName(site, 'portal_catalog')
+    indexes = catalog.indexes()
+    schema = catalog.schema()
+    if "getLastCommentUrl" in indexes:
+        catalog.delIndex("getLastCommentUrl")
+    if "getLastCommentUrl" in schema:
+        catalog.delColumn("getLastCommentUrl")
+    site.plone_log('to_3310', 'Removed index and metadata from catalog: getLastCommentUrl')
+    site.runImportStepFromProfile("profile-Products.Ploneboard:default", 'catalog')
+    conversations = catalog(portal_type="PloneboardConversation")
+    for brain in conversations:
+        conversation = brain.getObject()
+        conversation.reindexObject(idxs=["getLastCommentId"])
+    site.plone_log('to_3310', 'Added new index and metadata (getLastCommentId) and reindex old conversations')

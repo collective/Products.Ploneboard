@@ -132,7 +132,7 @@
                         <!-- This should show "Thursday 13:56" if in this week, "Aug 13. 2003" if older than this week. (limi) -->
                         <td>
                           <tal:block condition="numComments">
-                             <a href="#" tal:attributes="href string:${conversation/getLastCommentUrl}">
+                             <a href="#" tal:attributes="href string:${conversation/absolute_url}/${conversation/getLastCommentId}">
                                <span i18n:translate="label_by_author">
                                  by <tal:author i18n:name="author"
                                          i18n:translate=""

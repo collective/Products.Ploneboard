@@ -206,17 +206,15 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return comment.Creator()
         return None
 
-    @security.protected(ViewBoard)
-    def getLastCommentUrl(self):
+    security.declareProtected(ViewBoard, 'getLastCommentId')
+    def getLastCommentId(self):
         """
         Returns the relative URL of the last comment
         for the conversation.
         """
         comment = self.getLastComment()
         if comment:
-            portal_url = api.portal.get().absolute_url()
-            comment_url = comment.absolute_url()
-            return comment_url[len(portal_url):]
+            return comment.getId()
         return None
 
     @security.protected(ViewBoard)

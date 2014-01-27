@@ -46,7 +46,6 @@ class ForumView(Five.BrowserView):
             sort_limit=(offset + limit),
             path='/'.join(self.context.getPhysicalPath())
         )
-        purl = api.portal.get().absolute_url()
         for brain in brains[offset:offset + limit]:
             data = dict()
             data['review_state'] = brain.review_state,
@@ -59,10 +58,7 @@ class ForumView(Five.BrowserView):
             data['getLastCommentDate'] = self.toPloneboardTime(
                 brain.getLastCommentDate
             )
-            if brain.getLastCommentUrl:
-                data['getLastCommentUrl'] = purl + brain.getLastCommentUrl
-            else:
-                data['getLastCommentUrl'] = None
+            data['getLastCommentId'] = brain.getLastCommentId
             res.append(data)
         return res
 
