@@ -55,25 +55,8 @@ Make sure the view reports 2 conversations
     2
 
 List the conversations
-
     >>> view.getConversations()
-    [{'getLastCommentAuthor': 'test_user_1_',
-      'Title': 'C2',
-      'absolute_url': 'http://nohost/plone/board1/forum1/...',
-      'Creator': 'test_user_1_',
-      'modified': DateTime('...'),
-      'getLastCommentDate': u'...',
-      'review_state': 'active',
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
-      'getNumberOfComments': 2},
-     {'getLastCommentAuthor': 'test_user_1_',
-      'Title': 'C1',
-      'absolute_url': 'http://nohost/plone/board1/forum1/...',
-      'Creator': 'test_user_1_', 'modified': DateTime('...'),
-      'getLastCommentDate': u'...',
-      'review_state': 'active',
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
-      'getNumberOfComments': 3}]
+    [{'getLastCommentAuthor': 'test_user_1_', 'getLastCommentId': '...', 'Title': 'C2', 'absolute_url': 'http://nohost/plone/board1/forum1/...', 'Creator': 'test_user_1_', 'modified': DateTime('...'), 'getLastCommentDate': u'...', 'review_state': 'active', 'getNumberOfComments': 2}, {'getLastCommentAuthor': 'test_user_1_', 'getLastCommentId': '...', 'Title': 'C1', 'absolute_url': 'http://nohost/plone/board1/forum1/...', 'Creator': 'test_user_1_', 'modified': DateTime('...'), 'getLastCommentDate': u'...', 'review_state': 'active', 'getNumberOfComments': 3}]
 
 Open the forum in a browser.
 

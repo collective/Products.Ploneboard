@@ -8,8 +8,8 @@
         <indexed_attr value="getLastCommentDate"/>
     </index> 
     <column value="getLastCommentDate"/>
-    <index name="getLastCommentUrl" meta_type="FieldIndex">
-        <indexed_attr value="getLastCommentUrl"/>
+    <index name="getLastCommentId" meta_type="FieldIndex">
+        <indexed_attr value="getLastCommentId"/>
     </index> 
-    <column value="getLastCommentUrl"/>
+    <column value="getLastCommentId"/>
 </object>

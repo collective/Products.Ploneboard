@@ -61,7 +61,7 @@ class ForumView(Five.BrowserView):
                         Creator=conversation.Creator,
                         getLastCommentAuthor=conversation.getLastCommentAuthor,# Depending on view rights to last comment
                         getLastCommentDate=self.toPloneboardTime(conversation.getLastCommentDate),
-                        getLastCommentUrl=conversation.getLastCommentUrl,
+                        getLastCommentId=conversation.getLastCommentId,
                         )
             res.append(data)
         return res
