@@ -34,25 +34,25 @@ PBCommentBaseBTreeFolderSchema['title'].write_permission = EditComment
 
 schema = PBCommentBaseBTreeFolderSchema + Schema((
     TextField('text',
-              searchable = 1,
-              default_content_type = 'text/html',
-              default_output_type = 'text/x-html-safe',
+              searchable=1,
+              default_content_type='text/html',
+              default_output_type='text/x-html-safe',
               allowable_content_types=('text/html',
                                        'text/plain'),
               accessor='getText',
-              read_permission = ViewBoard,
-              write_permission = EditComment,
-              widget = RichWidget(description = "Enter comment body.",
-                                      description_msgid = "help_text",
-                                      label = "Text",
-                                      label_msgid = "label_text",
+              read_permission=ViewBoard,
+              write_permission=EditComment,
+              widget=RichWidget(description="Enter comment body.",
+                                      description_msgid="help_text",
+                                      label="Text",
+                                      label_msgid="label_text",
                                       i18n_domain='ploneboard',
-                                      rows = 5,
-                                      helper_css = ('ploneboard.css',)
+                                      rows=5,
+                                      helper_css=('ploneboard.css',)
                                       )),
     ReferenceField(
         name='reply_to',
-        accessor='inReplyTo', # Suboptimal accessor naming here...
+        accessor='inReplyTo',  # Suboptimal accessor naming here...
         edit_accessor='inReplyToUID',
         mutator='setInReplyTo',
         relationship=REPLY_RELATIONSHIP,
@@ -64,9 +64,9 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         default=True,
         languageIndependent=0,
         widget=AttachmentsManagerWidget(
-            label = _("label_displayAttachments",
+            label=_("label_displayAttachments",
                       default=u"Attachments"),
-            expanded = True
+            expanded=True
         ),
     ),
 
@@ -75,9 +75,9 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
         default=True,
         languageIndependent=0,
         widget=ImagesManagerWidget(
-            label = _("label_displayImages",
+            label=_("label_displayImages",
                       default=u"Images"),
-            expanded = True
+            expanded=True
         ),
     ),
     ))
@@ -96,9 +96,9 @@ class PloneboardComment(BaseBTreeFolder):
 
     schema = schema
 
-    _replies = None       # OIBTree: { id -> 1 }
-    _reply_count = None   # A BTrees.Length
-    _in_reply_to = None   # Id to comment this is a reply to
+    _replies = None  # OIBTree: { id -> 1 }
+    _reply_count = None  # A BTrees.Length
+    _in_reply_to = None  # Id to comment this is a reply to
 
     security = ClassSecurityInfo()
 
@@ -128,7 +128,7 @@ class PloneboardComment(BaseBTreeFolder):
                  title,
                  text,
                  creator=None,
-                 files=None ):
+                 files=None):
         """Add a reply to this comment."""
 
         conv = self.getConversation()
@@ -170,7 +170,7 @@ class PloneboardComment(BaseBTreeFolder):
         event.notify(ObjectInitializedEvent(m))
         m.unmarkCreationFlag()
         m.reindexObject()
-        conv.reindexObject() # Sets modified
+        conv.reindexObject()  # Sets modified
         return m
 
     security.declareProtected(AddComment, 'deleteReply')
@@ -182,7 +182,9 @@ class PloneboardComment(BaseBTreeFolder):
     def getReplies(self):
         """Returns the comments that were replies to this one."""
         # Return backreferences
-        return self.getBRefs(REPLY_RELATIONSHIP)
+        replies = self.getBRefs(REPLY_RELATIONSHIP)
+        sorted_replies = sorted(replies, key=lambda reply: reply.created())
+        return sorted_replies
 
     security.declareProtected(ViewBoard, 'getTitle')
     def getTitle(self):
@@ -200,7 +202,7 @@ class PloneboardComment(BaseBTreeFolder):
         replies = self.getReplies()
         if replies:
             for msg_object in replies:
-                result = result + msg_object.childIds(level+1)
+                result = result + msg_object.childIds(level + 1)
         return result
 
 
@@ -234,12 +236,12 @@ class PloneboardComment(BaseBTreeFolder):
         # manually delete all replies
         for msgid in self.childIds():
             parent._delObject(msgid)
-        parent._delObject(self.getId()) # delete ourselves and all our descendants
+        parent._delObject(self.getId())  # delete ourselves and all our descendants
         # if conversation after branching is empty, remove it
         if parent.getNumberOfComments() == 0:
             forum._delObject(parent.getId())
         # we need to reindex stuff in newly created Conversation
-        #for o in conv.objectValues():
+        # for o in conv.objectValues():
         #    o.reindexObject()
         return conv
 
@@ -264,25 +266,25 @@ class PloneboardComment(BaseBTreeFolder):
     def validateAddAttachment(self, file):
         def FileSize(file):
             if hasattr(file, 'size'):
-                size=file.size
+                size = file.size
             elif hasattr(file, 'tell'):
                 file.seek(0, 2)
-                size=file.tell()
+                size = file.tell()
                 file.seek(0)
             else:
                 try:
-                    size=len(file)
+                    size = len(file)
                 except TypeError:
-                    size=0
+                    size = 0
 
-            return size/1024
+            return size / 1024
 
-        if self.getNumberOfAttachments()>=self.getNumberOfAllowedAttachments():
+        if self.getNumberOfAttachments() >= self.getNumberOfAllowedAttachments():
             return False
 
-        maxsize=self.getConversation().getMaxAttachmentSize()
-        if maxsize!=-1:
-            if FileSize(file)>maxsize:
+        maxsize = self.getConversation().getMaxAttachmentSize()
+        if maxsize != -1:
+            if FileSize(file) > maxsize:
                 return False
 
         return True
@@ -348,7 +350,7 @@ class PloneboardComment(BaseBTreeFolder):
         # Maybe we need to set caching for transform?
 
 
-        unit=self.Schema()["text"].getBaseUnit(self)
+        unit = self.Schema()["text"].getBaseUnit(self)
         raw = unit.getRaw()
         content_type = unit.getContentType()
 
@@ -384,7 +386,7 @@ class PloneboardComment(BaseBTreeFolder):
 
     def __str__(self):
         return "<PloneboardComment: title=%r;>" % self.Title()
-    __repr__  = __str__
+    __repr__ = __str__
 
 
     security.declareProtected(DeleteComment, "object_delete")

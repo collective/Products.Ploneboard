@@ -29,12 +29,12 @@ PBConversationBaseBTreeFolderSchema['title'].write_permission = EditComment
 schema = PBConversationBaseBTreeFolderSchema + Schema((
     TextField(
             'description',
-            searchable = 1,
-            read_permission = ViewBoard,
-            write_permission = EditComment,
-            default_content_type = 'text/plain',
-            default_output_type = 'text/plain',
-            widget = TextAreaWidget(
+            searchable=1,
+            read_permission=ViewBoard,
+            write_permission=EditComment,
+            default_content_type='text/plain',
+            default_output_type='text/plain',
+            widget=TextAreaWidget(
                 description="Enter a brief description of the conversation.",
                 description_msgid="help_description_conversation",
                 label="Description",
@@ -82,12 +82,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         return None
 
     security.declareProtected(ManageConversation, 'removeComment')
-    def removeComment( self, comment):
+    def removeComment(self, comment):
         self.manage_delObjects([comment.getId()])
         # XXX reparent replies to this comment ?
 
     security.declareProtected(AddComment, 'addComment')
-    def addComment( self, title, text, creator=None, files=None):
+    def addComment(self, title, text, creator=None, files=None):
         """Adds a new comment with subject and body."""
         id = self.generateId(prefix='')
         if not title:
@@ -122,13 +122,13 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         event.notify(ObjectInitializedEvent(m))
         m.indexObject()
         m.unmarkCreationFlag()
-        self.reindexObject() # Sets modified
+        self.reindexObject()  # Sets modified
         return m
 
     security.declareProtected(ViewBoard, 'getComment')
     def getComment(self, comment_id, default=None):
         """Returns the comment with the specified id."""
-        #return self._getOb(comment_id, default)
+        # return self._getOb(comment_id, default)
         comments = self.getCatalog()(
                 object_provides='Products.Ploneboard.interfaces.IComment',
                 getId=comment_id)
@@ -145,21 +145,21 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         query = {'object_provides' : 'Products.Ploneboard.interfaces.IComment',
                  'sort_on'           : 'created',
-                 'sort_limit'        : (offset+limit),
-                 'path'              : '/'.join(self.getPhysicalPath()),}
+                 'sort_limit'        : (offset + limit),
+                 'path'              : '/'.join(self.getPhysicalPath()), }
         query.update(kw)
-        catalog=self.getCatalog()
-        return [f.getObject() for f in catalog(**query)[offset:offset+limit]]
+        catalog = self.getCatalog()
+        return [f.getObject() for f in catalog(**query)[offset:offset + limit]]
 
     security.declareProtected(ViewBoard, 'getNumberOfComments')
     def getNumberOfComments(self):
         """
         Returns the number of comments in this conversation.
         """
-        #XXX this was a portal_catalog search but as this method is used
-        #by the index catalog.num_comments, there are problems when recataloging
-        #as the sub elements are not returned and so
-        #return len(self.getCatalog()(
+        # XXX this was a portal_catalog search but as this method is used
+        # by the index catalog.num_comments, there are problems when recataloging
+        # as the sub elements are not returned and so
+        # return len(self.getCatalog()(
         #    object_provides='Products.Ploneboard.interfaces.IComment',
         #    path='/'.join(self.getPhysicalPath())))
         mtool = getToolByName(self, 'portal_membership')
@@ -227,6 +227,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
         raw = self.getComments()
         ours = [ comment for comment in raw if comment.inReplyToUID() is None]
+        ours = sorted(ours, key=lambda our: our.created())
         return ours
 
     security.declareProtected(ViewBoard, 'getFirstComment')
@@ -249,7 +250,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         forum = self.getForum().getBoard().getForum(forum_id)
         if forum:
             parent = self.getForum()
-            cut_objects = parent.manage_cutObjects((self.getId(),) )
+            cut_objects = parent.manage_cutObjects((self.getId(),))
             forum.manage_pasteObjects(cut_objects)
 
     security.declareProtected(ManageConversation, 'delete')
@@ -288,7 +289,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             forum = obj.getForum()
             obj_id = obj.getId()
             o_list = obj.objectValues()
-            oblist=[Moniker(o1).dump() for o1 in o_list]
+            oblist = [Moniker(o1).dump() for o1 in o_list]
             cp = (1, oblist)
             cp = _cb_encode(cp)
             CopyContainer.manage_pasteObjects(self, cp)
