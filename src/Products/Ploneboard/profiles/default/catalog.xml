@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
-    <index name="getLastCommentAuthor" meta_type="FieldIndex">
-        <indexed_attr value="getLastCommentAuthor"/>
-    </index> 
     <column value="getLastCommentAuthor"/>
-    <index name="getLastCommentDate" meta_type="FieldIndex">
-        <indexed_attr value="getLastCommentDate"/>
-    </index> 
     <column value="getLastCommentDate"/>
-    <index name="getLastCommentUrl" meta_type="FieldIndex">
-        <indexed_attr value="getLastCommentUrl"/>
-    </index> 
     <column value="getLastCommentUrl"/>
 </object>
