@@ -1,23 +1,25 @@
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_inner, aq_chain
+from Acquisition import aq_chain
+from Acquisition import aq_inner
 from DateTime import DateTime
 from OFS.Image import File
-
-from zope.interface import implements
-from zope import event
-
 from Products.Archetypes.event import ObjectInitializedEvent
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField, ReferenceField, BooleanField
-from Products.Archetypes.public import RichWidget, ReferenceWidget
+from Products.Archetypes.public import BaseBTreeFolder
+from Products.Archetypes.public import BaseBTreeFolderSchema
+from Products.Archetypes.public import BooleanField
+from Products.Archetypes.public import ReferenceField
+from Products.Archetypes.public import ReferenceWidget
+from Products.Archetypes.public import registerType
+from Products.Archetypes.public import RichWidget
+from Products.Archetypes.public import Schema
+from Products.Archetypes.public import TextField
 from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
-
-from Products.SimpleAttachment.widget import AttachmentsManagerWidget, ImagesManagerWidget
 from Products.Ploneboard import utils
-from Products.Ploneboard.config import PROJECTNAME, REPLY_RELATIONSHIP
+from Products.Ploneboard.config import PROJECTNAME
+from Products.Ploneboard.config import REPLY_RELATIONSHIP
 from Products.Ploneboard.interfaces import IConversation, IComment
 from Products.Ploneboard.permissions import AddAttachment
 from Products.Ploneboard.permissions import AddComment
@@ -26,6 +28,10 @@ from Products.Ploneboard.permissions import EditComment
 from Products.Ploneboard.permissions import ManageComment
 from Products.Ploneboard.permissions import ViewBoard
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from Products.SimpleAttachment.widget import AttachmentsManagerWidget
+from Products.SimpleAttachment.widget import ImagesManagerWidget
+from zope import event
+from zope.interface import implementer
 
 PBCommentBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBCommentBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -84,16 +90,14 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
 utils.finalizeSchema(schema)
 
 
+@implementer(IComment, INonStructuralFolder)
 class PloneboardComment(BaseBTreeFolder):
     """A comment contains regular text body and metadata."""
 
     # Use RichDocument pattern for attachments
     # Don't inherit from btreefolder...
 
-    implements(IComment, INonStructuralFolder)
-
     meta_type = 'PloneboardComment'
-
     schema = schema
 
     _replies = None  # OIBTree: { id -> 1 }
@@ -118,9 +122,10 @@ class PloneboardComment(BaseBTreeFolder):
         # Try containment
         stoptypes = ['Plone Site']
         for obj in aq_chain(aq_inner(self)):
-            if hasattr(obj, 'portal_type') and obj.portal_type not in stoptypes:
-                if IConversation.providedBy(obj):
-                    return obj
+            if hasattr(obj, 'portal_type') \
+               and obj.portal_type not in stoptypes \
+               and IConversation.providedBy(obj):
+                return obj
         return None
 
     security.declareProtected(AddComment, 'addReply')
@@ -153,9 +158,15 @@ class PloneboardComment(BaseBTreeFolder):
         # Create files in message
         if files:
             for file in files:
-                # Get raw filedata, not persistent object with reference to tempstorage
-                # file.data might in fact be OFS.Image.Pdata - str will piece it all together
-                attachment = File(file.getId(), file.title_or_id(), str(file.data), file.getContentType())
+                # Get raw filedata, not persistent object with reference to
+                # tempstorage file.data might in fact be OFS.Image.Pdata - str
+                # will piece it all together
+                attachment = File(
+                    file.getId(),
+                    file.title_or_id(),
+                    str(file.data),
+                    file.getContentType()
+                )
                 m.addAttachment(attachment)
 
         # If this comment is being added by anonymous, make sure that the true
@@ -250,20 +261,21 @@ class PloneboardComment(BaseBTreeFolder):
     ###########################
 
     def attachmentFilter(self):
-        return { 'portal_type' : [
-                            'File', 'Image',
-                            'ImageAttachment', 'FileAttachment'
-                            ],
-                }
-
+        types = ['File', 'Image', 'ImageAttachment', 'FileAttachment']
+        return {'portal_type': types}
 
     security.declareProtected(ViewBoard, 'hasAttachment')
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""
-        return not not self.objectIds(spec=self.attachmentFilter()['portal_type'])
+        return not not self.objectIds(
+            spec=self.attachmentFilter()['portal_type']
+        )
 
     security.declareProtected(AddAttachment, 'validateAddAttachment')
     def validateAddAttachment(self, file):
+        if self.getNumberOfAttachments() >= self.getNumberOfAllowedAttachments():
+            return False
+
         def FileSize(file):
             if hasattr(file, 'size'):
                 size = file.size
@@ -279,16 +291,11 @@ class PloneboardComment(BaseBTreeFolder):
 
             return size / 1024
 
-        if self.getNumberOfAttachments() >= self.getNumberOfAllowedAttachments():
-            return False
-
         maxsize = self.getConversation().getMaxAttachmentSize()
-        if maxsize != -1:
-            if FileSize(file) > maxsize:
+        if maxsize != -1 and FileSize(file) > maxsize:
                 return False
 
         return True
-
 
     security.declareProtected(AddAttachment, 'addAttachment')
     def addAttachment(self, file, title=None):
