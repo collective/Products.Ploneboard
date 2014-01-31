@@ -59,7 +59,10 @@ class ForumView(Five.BrowserView):
             data['getLastCommentDate'] = self.toPloneboardTime(
                 brain.getLastCommentDate
             )
-            data['getLastCommentUrl'] = purl + brain.getLastCommentUrl
+            if brain.getLastCommentUrl:
+                data['getLastCommentUrl'] = purl + brain.getLastCommentUrl
+            else:
+                data['getLastCommentUrl'] = None
             res.append(data)
         return res
 
