@@ -1,26 +1,39 @@
-from zope.interface import implements, providedBy, Interface
-from zope import event
-
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_inner, aq_chain
-from OFS.CopySupport import _cb_decode, _cb_encode, CopyContainer, CopyError
+from Acquisition import aq_chain
+from Acquisition import aq_inner
+from OFS.CopySupport import _cb_decode
+from OFS.CopySupport import _cb_encode
+from OFS.CopySupport import CopyContainer
+from OFS.CopySupport import CopyError
 from OFS.Image import File
 from OFS.Moniker import Moniker
-
+from plone import api
 from Products.Archetypes.event import ObjectInitializedEvent
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema, TextField
+from Products.Archetypes.public import BaseBTreeFolder
+from Products.Archetypes.public import BaseBTreeFolderSchema
+from Products.Archetypes.public import registerType
+from Products.Archetypes.public import Schema
 from Products.Archetypes.public import TextAreaWidget
-from Products.CMFCore.utils import getToolByName
+from Products.Archetypes.public import TextField
 from Products.CMFCore.permissions import View
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME
-from Products.Ploneboard.interfaces import IForum, IConversation, IComment
-from Products.Ploneboard.permissions import (
-    ViewBoard, AddComment, ManageConversation, EditComment, MergeConversation)
+from Products.Ploneboard.interfaces import IComment
+from Products.Ploneboard.interfaces import IConversation
+from Products.Ploneboard.interfaces import IForum
+from Products.Ploneboard.permissions import AddComment
+from Products.Ploneboard.permissions import EditComment
+from Products.Ploneboard.permissions import ManageConversation
+from Products.Ploneboard.permissions import MergeConversation
+from Products.Ploneboard.permissions import ViewBoard
+from zope import event
+from zope.interface import implements
+from zope.interface import Interface
+from zope.interface import providedBy
+
 
 PBConversationBaseBTreeFolderSchema = BaseBTreeFolderSchema.copy()
 PBConversationBaseBTreeFolderSchema['title'].read_permission = ViewBoard
@@ -56,21 +69,21 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
 
     security = ClassSecurityInfo()
 
-    def getCatalog(self):
-        return getToolByName(self, 'portal_catalog')
+    def _get_catalog(self):
+        return api.portal.get_tool(name='portal_catalog')
 
-    security.declareProtected(ManageConversation, 'edit')
+    @security.protected(ManageConversation)
     def edit(self, **kwargs):
         """Alias for update()
         """
         self.update(**kwargs)
 
-    security.declareProtected(ViewBoard, 'getTitle')
+    @security.protected(ViewBoard)
     def getTitle(self):
         """Get the title of this conversation"""
         return self.Title()
 
-    security.declareProtected(ViewBoard, 'getForum')
+    @security.protected(ViewBoard)
     def getForum(self):
         """Returns containing forum."""
         # Try containment
@@ -81,12 +94,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                     return obj
         return None
 
-    security.declareProtected(ManageConversation, 'removeComment')
+    @security.protected(ManageConversation)
     def removeComment(self, comment):
         self.manage_delObjects([comment.getId()])
         # XXX reparent replies to this comment ?
 
-    security.declareProtected(AddComment, 'addComment')
+    @security.protected(AddComment)
     def addComment(self, title, text, creator=None, files=None):
         """Adds a new comment with subject and body."""
         id = self.generateId(prefix='')
@@ -114,7 +127,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         # owner in zope is the owner of the forum, not the parent comment or
         # conversation. Otherwise, that owner may be able to view or delete
         # the comment.
-        membership = getToolByName(self, 'portal_membership')
+        membership = api.portal.get_tool(name='portal_membership')
         if membership.isAnonymousUser():
             forum = self.getForum()
             utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
@@ -125,11 +138,11 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         self.reindexObject()  # Sets modified
         return m
 
-    security.declareProtected(ViewBoard, 'getComment')
+    @security.protected(ViewBoard)
     def getComment(self, comment_id, default=None):
         """Returns the comment with the specified id."""
         # return self._getOb(comment_id, default)
-        comments = self.getCatalog()(
+        comments = self._get_catalog()(
                 object_provides='Products.Ploneboard.interfaces.IComment',
                 getId=comment_id)
         if comments:
@@ -137,7 +150,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         else:
             return None
 
-    security.declareProtected(ViewBoard, 'getComments')
+    @security.protected(ViewBoard)
     def getComments(self, limit=30, offset=0, **kw):
         """
         Retrieves the specified number of comments with offset 'offset'.
@@ -148,10 +161,10 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
                  'sort_limit'        : (offset + limit),
                  'path'              : '/'.join(self.getPhysicalPath()), }
         query.update(kw)
-        catalog = self.getCatalog()
+        catalog = self._get_catalog()
         return [f.getObject() for f in catalog(**query)[offset:offset + limit]]
 
-    security.declareProtected(ViewBoard, 'getNumberOfComments')
+    @security.protected(ViewBoard)
     def getNumberOfComments(self):
         """
         Returns the number of comments in this conversation.
@@ -159,19 +172,19 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         # XXX this was a portal_catalog search but as this method is used
         # by the index catalog.num_comments, there are problems when recataloging
         # as the sub elements are not returned and so
-        # return len(self.getCatalog()(
+        # return len(self._get_catalog()(
         #    object_provides='Products.Ploneboard.interfaces.IComment',
         #    path='/'.join(self.getPhysicalPath())))
-        mtool = getToolByName(self, 'portal_membership')
+        membership = api.portal.get_tool(name='portal_membership')
         number = 0
         for comment in self.objectValues():
             if 'Products.Ploneboard.interfaces.IComment' in \
                [i.__identifier__ for i in providedBy(comment).flattened()] \
-               and mtool.checkPermission(View, comment):
+               and membership.checkPermission(View, comment):
                 number = number + 1
         return number
 
-    security.declareProtected(ViewBoard, 'getLastCommentDate')
+    @security.protected(ViewBoard)
     def getLastCommentDate(self):
         """
         Returns a DateTime corresponding to the timestamp of the last comment
@@ -182,7 +195,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return comment.created()
         return None
 
-    security.declareProtected(ViewBoard, 'getLastCommentAuthor')
+    @security.protected(ViewBoard)
     def getLastCommentAuthor(self):
         """
         Returns the name of the author of the last comment.
@@ -193,25 +206,27 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return comment.Creator()
         return None
 
-    security.declareProtected(ViewBoard, 'getLastCommentUrl')
+    @security.protected(ViewBoard)
     def getLastCommentUrl(self):
         """
-        Returns the URL of the last comment
+        Returns the relative URL of the last comment
         for the conversation.
         """
         comment = self.getLastComment()
         if comment:
-            return comment.absolute_url()
+            portal_url = api.portal.get().absolute_url()
+            comment_url = comment.absolute_url()
+            return comment_url[len(portal_url):]
         return None
 
-    security.declareProtected(ViewBoard, 'getLastComment')
+    @security.protected(ViewBoard)
     def getLastComment(self):
         """
         Returns the last comment as full object..
         Returns None if there is no comment
         """
 
-        res = self.getCatalog()(
+        res = self._get_catalog()(
                 object_provides='Products.Ploneboard.interfaces.IComment', \
                 sort_on='created', sort_order='reverse', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
@@ -219,7 +234,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             return res[0].getObject()
         return None
 
-    security.declareProtected(ViewBoard, 'getRootComments')
+    @security.protected(ViewBoard)
     def getRootComments(self):
         """
         Return a list all comments rooted to the board; ie comments which
@@ -230,12 +245,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         ours = sorted(ours, key=lambda our: our.created())
         return ours
 
-    security.declareProtected(ViewBoard, 'getFirstComment')
+    @security.protected(ViewBoard)
     def getFirstComment(self):
         """
         See IConversation.getFirstComment.__doc__
         """
-        res = self.getCatalog()(
+        res = self._get_catalog()(
                 object_provides='Products.Ploneboard.interfaces.IComment',
                 sort_on='created', sort_limit=1,
                 path='/'.join(self.getPhysicalPath()))
@@ -244,7 +259,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         else:
             return None
 
-    security.declareProtected(ManageConversation, 'moveToForum')
+    @security.protected(ManageConversation)
     def moveToForum(self, forum_id):
         """Moves conversation to another forum"""
         forum = self.getForum().getBoard().getForum(forum_id)
@@ -253,13 +268,13 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
             cut_objects = parent.manage_cutObjects((self.getId(),))
             forum.manage_pasteObjects(cut_objects)
 
-    security.declareProtected(ManageConversation, 'delete')
+    @security.protected(ManageConversation)
     def delete(self):
         """"""
         parent = self.getForum()
         parent._delObject(self.getId())
 
-    security.declareProtected(ViewBoard, 'Creator')
+    @security.protected(ViewBoard)
     def Creator(self):
         # XXX Backwards compatability with old version
         return getattr(self, '_creator', None) or BaseBTreeFolder.Creator(self)
@@ -271,7 +286,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
     def canSetDefaultPage(self):
         return False
 
-    security.declareProtected(MergeConversation, 'manage_pasteObjects')
+    @security.protected(MergeConversation)
     def manage_pasteObjects(self, cp):
         """ merge another conversation """
         try:

@@ -1,6 +1,13 @@
 from zope.interface import Interface
 
+class IForumView(Interface):
+
+    def getNumberOfConversations():
+        """Returns the number of conversations in this forum."""
+
+
 class IConversationView(Interface):
+
     def comments():
         """Return all comments in the conversation.
         """

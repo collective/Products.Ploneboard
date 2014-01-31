@@ -24,13 +24,14 @@ setup(
     license='GPL',
     namespace_packages=['Products'],
     packages=find_packages('src'),
-    package_dir = {'': 'src'},
+    package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
     install_requires=[
         'setuptools',
         'Products.CMFPlone >= 4.1',
         'Products.SimpleAttachment',
+        'plone.api',
         'plone.app.controlpanel',
         'plone.app.portlets',
         'plone.portlets',
@@ -42,7 +43,7 @@ setup(
     extras_require=dict(
         test=['plone.app.testing',
               'lxml',
-              'Products.PloneTestCase',],
+              'Products.PloneTestCase', ],
     ),
     entry_points="""
     [z3c.autoinclude.plugin]

@@ -1,31 +1,25 @@
 from DateTime import DateTime
-from zope.interface import Interface, implements
-
-from Products import Five
-from plone.memoize.view import memoize
-from Products.CMFCore.utils import getToolByName
+from plone import api
 from plone.app.layout.viewlets.common import ViewletBase
-
-from Products.Ploneboard.browser.utils import toPloneboardTime, getNumberOfConversations
+from plone.memoize.view import memoize
+from Products import Five
+from Products.Ploneboard.browser.utils import getNumberOfConversations
+from Products.Ploneboard.browser.utils import toPloneboardTime
 from Products.Ploneboard.interfaces import IConversation
+from zope.interface import implementer
+
+from .interfaces import IForumView
 
 
-class IForumView(Interface):
-
-    def getNumberOfConversations(self):
-        """Returns the number of conversations in this forum."""
-
-
+@implementer(IForumView)
 class ForumView(Five.BrowserView):
     """View methods for forum type
     """
 
-    implements(IForumView)
-
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
-        self.catalog = getToolByName(context, 'portal_catalog')
-        self.mt = getToolByName(context,'portal_membership')
+        self.catalog = api.portal.get_tool(name='portal_catalog')
+        self.mt = api.portal.get_tool(name='portal_membership')
 
     @memoize
     def last_login(self):
@@ -41,28 +35,31 @@ class ForumView(Five.BrowserView):
         return getNumberOfConversations(self.context, self.catalog)
 
     def getConversations(self, limit=20, offset=0):
-        """Returns conversations."""
+        """Returns conversations.
+        """
         catalog = self.catalog
-        # We also have to look up member info and preferably cache that member info.
-
         res = []
-        for conversation in \
-                catalog(object_provides=IConversation.__identifier__,
-                        sort_on='modified',
-                        sort_order='reverse',
-                        sort_limit=(offset+limit),
-                        path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]:
-
-            data = dict(review_state=conversation.review_state,
-                        absolute_url=conversation.getURL(),
-                        getNumberOfComments=conversation.num_comments,
-                        modified=conversation.modified,
-                        Title=conversation.Title,
-                        Creator=conversation.Creator,
-                        getLastCommentAuthor=conversation.getLastCommentAuthor,# Depending on view rights to last comment
-                        getLastCommentDate=self.toPloneboardTime(conversation.getLastCommentDate),
-                        getLastCommentUrl=conversation.getLastCommentUrl,
-                        )
+        brains = catalog(
+            object_provides=IConversation.__identifier__,
+            sort_on='modified',
+            sort_order='reverse',
+            sort_limit=(offset + limit),
+            path='/'.join(self.context.getPhysicalPath())
+        )
+        purl = api.portal.get().absolute_url()
+        for brain in brains[offset:offset + limit]:
+            data = dict()
+            data['review_state'] = brain.review_state,
+            data['absolute_url'] = brain.getURL()
+            data['getNumberOfComments'] = brain.num_comments
+            data['modified'] = brain.modified
+            data['Title'] = brain.Title
+            data['Creator'] = brain.Creator
+            data['getLastCommentAuthor'] = brain.getLastCommentAuthor
+            data['getLastCommentDate'] = self.toPloneboardTime(
+                brain.getLastCommentDate
+            )
+            data['getLastCommentUrl'] = purl + brain.getLastCommentUrl
             res.append(data)
         return res
 
@@ -77,6 +74,13 @@ class AddConversationViewlet(ViewletBase):
     def canStartConversation(self):
         """Check if user can start conversation
         """
-        mt = getToolByName(self.context,'portal_membership')
-        return mt.checkPermission('Ploneboard: Add Conversation', self.context) \
-          and mt.checkPermission('Add portal content', self.context)
+        mt = api.portal.get_tool(name='portal_membership')
+        has_add_conversation = mt.checkPermission(
+            'Ploneboard: Add Conversation',
+            self.context
+        )
+        has_add_portal_content = mt.checkPermission(
+            'Add portal content',
+            self.context
+        )
+        return has_add_conversation and has_add_portal_content
