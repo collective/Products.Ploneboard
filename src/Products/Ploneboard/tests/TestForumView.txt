@@ -56,24 +56,27 @@ Make sure the view reports 2 conversations
 
 List the conversations
 
-    >>> view.getConversations()
-    [{'getLastCommentAuthor': 'test_user_1_',
+    >>> from pprint import pprint
+    >>> pprint(view.getConversations())
+    [{'Creator': 'test_user_1_',
       'Title': 'C2',
       'absolute_url': 'http://nohost/plone/board1/forum1/...',
-      'Creator': 'test_user_1_',
-      'modified': DateTime('...'),
+      'getLastCommentAuthor': 'test_user_1_',
       'getLastCommentDate': u'...',
-      'review_state': 'active',
       'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
-      'getNumberOfComments': 2},
-     {'getLastCommentAuthor': 'test_user_1_',
+      'getNumberOfComments': 2,
+      'modified': DateTime('...'),
+      'review_state': ('active',)},
+     {'Creator': 'test_user_1_',
       'Title': 'C1',
       'absolute_url': 'http://nohost/plone/board1/forum1/...',
-      'Creator': 'test_user_1_', 'modified': DateTime('...'),
+      'getLastCommentAuthor': 'test_user_1_',
       'getLastCommentDate': u'...',
-      'review_state': 'active',
       'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
-      'getNumberOfComments': 3}]
+      'getNumberOfComments': 3,
+      'modified': DateTime('...'),
+      'review_state': ('active',)}]
+
 
 Open the forum in a browser.
 
