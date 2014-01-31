@@ -1,122 +1,133 @@
-from zope.interface import implements, Interface
-
 from AccessControl import ClassSecurityInfo
-from Acquisition import aq_chain, aq_inner
+from Acquisition import aq_chain
+from Acquisition import aq_chainaq_inner
 from OFS.CopySupport import CopyContainer
 from OFS.Image import File
-
+from Products.Archetypes.event import ObjectInitializedEvent
+from Products.Archetypes.public import BaseBTreeFolder
+from Products.Archetypes.public import BaseBTreeFolderSchema
+from Products.Archetypes.public import BooleanField
+from Products.Archetypes.public import BooleanWidget
+from Products.Archetypes.public import DisplayList
+from Products.Archetypes.public import IntDisplayList
+from Products.Archetypes.public import IntegerField
+from Products.Archetypes.public import IntegerWidget
+from Products.Archetypes.public import LinesField
+from Products.Archetypes.public import MultiSelectionWidget
+from Products.Archetypes.public import registerType
+from Products.Archetypes.public import Schema
+from Products.Archetypes.public import SelectionWidget
+from Products.Archetypes.public import TextAreaWidget
+from Products.Archetypes.public import TextField
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import _createObjectByType, log_deprecated
-from Products.Archetypes.public import BaseBTreeFolderSchema, Schema
-from Products.Archetypes.public import TextField, LinesField, IntegerField, BooleanField, BooleanWidget
-from Products.Archetypes.public import BaseBTreeFolder, registerType
-from Products.Archetypes.public import TextAreaWidget, MultiSelectionWidget, IntegerWidget, SelectionWidget, BooleanWidget
-from Products.Archetypes.public import DisplayList, IntDisplayList
-
-from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-from Products.Ploneboard.permissions import ViewBoard, ManageForum, AddConversation, MoveConversation
-from Products.Ploneboard.interfaces import IPloneboard, IForum
-from Products.Ploneboard.interfaces import IConversation, IComment
-from Products.Ploneboard import utils
-
 from Products.CMFPlone.interfaces import INonStructuralFolder as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
-from Products.Archetypes.event import ObjectInitializedEvent
+from Products.CMFPlone.utils import _createObjectByType, log_deprecated
+from Products.Ploneboard import utils
+from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
+from Products.Ploneboard.interfaces import IComment
+from Products.Ploneboard.interfaces import IConversation
+from Products.Ploneboard.interfaces import IForum
+from Products.Ploneboard.interfaces import IPloneboard
+from Products.Ploneboard.permissions import AddConversation
+from Products.Ploneboard.permissions import ManageForum
+from Products.Ploneboard.permissions import MoveConversation
+from Products.Ploneboard.permissions import ViewBoard
 from zope import event
+from zope.interface import implementer
+from zope.interface import Interface
+
 _ = utils.PloneboardMessageFactory
 
 AttachmentSizes = IntDisplayList((
-        (10,    _(u'10 kilobyte')),
-        (100,   _(u'100 kilobyte')),
-        (1000,  _(u'1 megabyte')),
+        (10, _(u'10 kilobyte')),
+        (100, _(u'100 kilobyte')),
+        (1000, _(u'1 megabyte')),
         (10000, _(u'10 megabyte')),
-        (-1,    _(u'unlimited')),
+        (-1, _(u'unlimited')),
    ))
 
 schema = BaseBTreeFolderSchema + Schema((
     TextField('description',
-              searchable = 1,
-              default_content_type = 'text/html',
-              default_output_type = 'text/plain',
-              widget = TextAreaWidget(
-                        description = "Brief description of the forum topic.",
-                        description_msgid = "help_description_forum",
-                        label = "Description",
-                        label_msgid = "label_description_forum",
-                        i18n_domain = "ploneboard",
-                        rows = 5)),
+              searchable=1,
+              default_content_type='text/html',
+              default_output_type='text/plain',
+              widget=TextAreaWidget(
+                        description="Brief description of the forum topic.",
+                        description_msgid="help_description_forum",
+                        label="Description",
+                        label_msgid="label_description_forum",
+                        i18n_domain="ploneboard",
+                        rows=5)),
 
     LinesField('category',
-                 write_permission = ManageForum,
-                 vocabulary = 'getCategories',
-                 widget = MultiSelectionWidget(
-                            description = "Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.",
-                            description_msgid = "help_category",
+                 write_permission=ManageForum,
+                 vocabulary='getCategories',
+                 widget=MultiSelectionWidget(
+                            description="Select which category the forum should be listed under. A forum can exist in multiple categories, although using only one category is recommended.",
+                            description_msgid="help_category",
                             condition="object/getCategories",
-                            label = "Category",
-                            label_msgid = "label_category",
-                            i18n_domain = "ploneboard",
+                            label="Category",
+                            label_msgid="label_category",
+                            i18n_domain="ploneboard",
                           )),
     IntegerField('maxAttachments',
-                write_permission = ManageForum,
-                default = 1,
-                widget = IntegerWidget(
-                         description = "Select the maximum number of attachments per comment.",
-                         description_msgid = "help_maxattachments",
-                         label = "Maximum number of attachments",
-                         label_msgid = "label_maxattachments",
-                         i18n_domain = "ploneboard",
+                write_permission=ManageForum,
+                default=1,
+                widget=IntegerWidget(
+                         description="Select the maximum number of attachments per comment.",
+                         description_msgid="help_maxattachments",
+                         label="Maximum number of attachments",
+                         label_msgid="label_maxattachments",
+                         i18n_domain="ploneboard",
                 )),
     IntegerField('maxAttachmentSize',
-                write_permission = ManageForum,
-                vocabulary = AttachmentSizes,
-                default = 100,
-                widget = SelectionWidget(
-                         description = "Select the maximum size for attachments.",
-                         description_msgid = "help_maxattachmentsize",
-                         label = "Maximum attachment size",
-                         label_msgid = "label_maxattachmentsize",
-                         i18n_domain = "ploneboard",
+                write_permission=ManageForum,
+                vocabulary=AttachmentSizes,
+                default=100,
+                widget=SelectionWidget(
+                         description="Select the maximum size for attachments.",
+                         description_msgid="help_maxattachmentsize",
+                         label="Maximum attachment size",
+                         label_msgid="label_maxattachmentsize",
+                         i18n_domain="ploneboard",
                 )),
     BooleanField('allowEditComment',
         default=False,
         languageIndependent=0,
-        widget = BooleanWidget(
-            label = u'Allow users to edit their comments',
-            description = u'If selected, this will give users the ability to edit their own comments.',
-            label_msgid = 'label_allow_edit_comment',
-            description_msgid = 'help_allow_edit_comment',
+        widget=BooleanWidget(
+            label=u'Allow users to edit their comments',
+            description=u'If selected, this will give users the ability to edit their own comments.',
+            label_msgid='label_allow_edit_comment',
+            description_msgid='help_allow_edit_comment',
             # Only show when no conversations exist
-            condition = "not:object/getNumberOfConversations|nothing",
+            condition="not:object/getNumberOfConversations|nothing",
             ),
     ),
     BooleanField('showCaptcha',
-                 write_permission = ManageForum,
-                 default = False,
-                 widget = BooleanWidget(
-                         description = _(u'help_showcaptcha', default=u'Select if show or not captcha for anonymous (if recaptcha installed and configured).'),
-                         label = _(u'label_show_captcha', default=u"Show Captcha"),
+                 write_permission=ManageForum,
+                 default=False,
+                 widget=BooleanWidget(
+                         description=_(u'help_showcaptcha', default=u'Select if show or not captcha for anonymous (if recaptcha installed and configured).'),
+                         label=_(u'label_show_captcha', default=u"Show Captcha"),
                 )),
     ))
 utils.finalizeSchema(schema)
 
 
 if not HAS_SIMPLEATTACHMENT:
-    schema['maxAttachments'].mode="r"
-    schema['maxAttachments'].default=0
-    schema['maxAttachments'].widget.visible={'edit' : 'invisible', 'view' : 'invisible' }
-    schema['maxAttachmentSize'].widget.visible={'edit' : 'invisible', 'view' : 'invisible' }
+    schema['maxAttachments'].mode = "r"
+    schema['maxAttachments'].default = 0
+    schema['maxAttachments'].widget.visible = {'edit' : 'invisible', 'view' : 'invisible' }
+    schema['maxAttachmentSize'].widget.visible = {'edit' : 'invisible', 'view' : 'invisible' }
 
 
+@implementer(IForum, INonStructuralFolder)
 class PloneboardForum(BaseBTreeFolder):
     """A Forum contains conversations."""
-    implements(IForum, INonStructuralFolder)
-#--plone4--    __implements__ = (BaseBTreeFolder.__implements__, ZopeTwoINonStructuralFolder)
 
     meta_type = 'PloneboardForum'
-
     schema = schema
-
     _at_rename_after_creation = True
 
     security = ClassSecurityInfo()
@@ -198,7 +209,7 @@ class PloneboardForum(BaseBTreeFolder):
     security.declareProtected(ViewBoard, 'getConversation')
     def getConversation(self, conversation_id, default=None):
         """Returns the conversation with the given conversation id."""
-        #return self._getOb(conversation_id, default)
+        # return self._getOb(conversation_id, default)
         catalog = self.getCatalog()
         conversations = catalog(
                 object_provides=IConversation.__identifier__,
@@ -223,8 +234,8 @@ class PloneboardForum(BaseBTreeFolder):
                 catalog(object_provides=IConversation.__identifier__,
                         sort_on='modified',
                         sort_order='reverse',
-                        sort_limit=(offset+limit),
-                        path='/'.join(self.getPhysicalPath()))[offset:offset+limit]]
+                        sort_limit=(offset + limit),
+                        path='/'.join(self.getPhysicalPath()))[offset:offset + limit]]
 
     security.declareProtected(ViewBoard, 'getNumberOfConversations')
     def getNumberOfConversations(self):
@@ -294,7 +305,7 @@ class PloneboardForum(BaseBTreeFolder):
         if board is not None and hasattr(board, 'getCategories'):
             categories = board.getCategories()
             if categories is not None:
-                value = [(c,c) for c in categories]
+                value = [(c, c) for c in categories]
         value.sort()
         return DisplayList(value)
 
