@@ -31,3 +31,6 @@ dist
 *.tmp*
 var
 sys
+include/
+lib/
+local/
