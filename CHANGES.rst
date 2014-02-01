@@ -4,6 +4,27 @@ Changelog
 3.5 (unreleased)
 ----------------
 
+- buildout fixes/update, code cleanup, pep8 and fixes in test, ...
+  [jensens]
+
+- removed some superfluos indexes. metadata is enough
+  [jensens]
+
+- update of basque translation
+  [erral]
+
+- make travis work
+  [Suresh V]
+
+- update german translations
+  [pbauer]
+
+- Fixed RSS for Plone 4.3
+  [kroman0]
+
+- Fixed UnicodeDecodeError on add portlet
+  [kroman0]
+
 - Fix wrong permission check in add conversation viewlet. Fixes #29.
   [jensens]
 
@@ -16,7 +37,8 @@ Changelog
 - Call unmarkCreationFlag method after comment creation, to remove creation flag
   [cekk]
 
-- Fixed attachment translations [cekk]
+- Fixed attachment translations 
+  [cekk]
 
 - Fixed bug: moderation_form fail to render when using VirtualHostMonster
   [rafaelbco]
