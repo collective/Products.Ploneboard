@@ -1,15 +1,14 @@
-from zope import interface
 from Acquisition import aq_base
 from DateTime.DateTime import DateTime
 from Products import Five
-from Products.CMFCore import utils as cmf_utils
 from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard import permissions
 from Products.Ploneboard.batch import Batch
-from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.interfaces import ICommentView
+from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.utils import toPloneboardTime
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
+from zope.interface  import implementer
 from zope.i18n import translate
 
 
@@ -19,38 +18,44 @@ class CommentViewableView(Five.BrowserView):
     """
 
     def __init__(self, context, request):
-        Five.BrowserView.__init__(self, context, request)
+        super(CommentViewableView, self).__init__(context, request)
 
-        self.portal_actions = cmf_utils.getToolByName(self.context, 'portal_actions')
-        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
-        self.portal_membership = cmf_utils.getToolByName(self.context, 'portal_membership')
-        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
+        self.portal_actions = getToolByName(self.context, 'portal_actions')
+        self.plone_utils = getToolByName(self.context, 'plone_utils')
+        self.portal_membership = getToolByName(
+            self.context,
+            'portal_membership'
+        )
+        self.portal_workflow = getToolByName(self.context, 'portal_workflow')
 
     def _buildDict(self, comment):
         """Produce a dict representative of all the important properties
         of a comment.
         """
-
         checkPermission = self.portal_membership.checkPermission
         actions = self.portal_actions.listFilteredActionsFor(comment)
-
-        res= {
-                'Title': comment.title_or_id(),
-                'Creator': comment.Creator(),
-                'creation_date': self.toPloneboardTime(comment.CreationDate()),
-                'getId': comment.getId(),
-                'getText': comment.getText(),
-                'absolute_url': comment.absolute_url(),
-                'getAttachments': comment.getAttachments(),
-                'canEdit': checkPermission(permissions.EditComment, comment),
-                'canDelete': checkPermission(permissions.DeleteComment, comment),
-                'canReply': checkPermission(permissions.AddComment, comment),
-                'getObject': comment,
-                'workflowActions' : actions['workflow'],
-                'review_state' : self.portal_workflow.getInfoFor(comment, 'review_state'),
-                'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(comment),
-                'UID': comment.UID(),
-            }
+        res = {
+            'Title': comment.title_or_id(),
+            'Creator': comment.Creator(),
+            'creation_date': self.toPloneboardTime(comment.CreationDate()),
+            'getId': comment.getId(),
+            'getText': comment.getText(),
+            'absolute_url': comment.absolute_url(),
+            'getAttachments': comment.getAttachments(),
+            'canEdit': checkPermission(permissions.EditComment, comment),
+            'canDelete': checkPermission(permissions.DeleteComment, comment),
+            'canReply': checkPermission(permissions.AddComment, comment),
+            'getObject': comment,
+            'workflowActions' : actions['workflow'],
+            'review_state' : self.portal_workflow.getInfoFor(
+                comment,
+                'review_state'
+            ),
+            'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(
+                comment
+            ),
+            'UID': comment.UID(),
+        }
         return res
 
     def toPloneboardTime(self, time_=None):
@@ -58,11 +63,10 @@ class CommentViewableView(Five.BrowserView):
         return toPloneboardTime(self.context, self.request, time_)
 
 
+@implementer(ICommentView)
 class CommentView(CommentViewableView):
     """A view for getting information about one specific comment.
     """
-
-    interface.implements(ICommentView)
 
     def comment(self):
         return self._buildDict(self.context)
@@ -77,21 +81,31 @@ class CommentView(CommentViewableView):
 
     def quotedBody(self):
         text = self.context.getText()
-        if text:
-            try:
-                return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": unicode(self.author(), 'utf-8'),
-                    "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})
-            except TypeError:
-                return _("label_quote", u"Previously ${author} wrote: ${quote}", {"author": self.author(), 
-                    "quote":  unicode("<blockquote>%s</blockquote></br>" % (self.context.getText()), 'utf-8')})            
-        else:
+        if not text:
             return ''
+        try:
+            return _(
+                "label_quote",
+                u"Previously ${author} wrote: ${quote}",
+                {"author": unicode(self.author(), 'utf-8'),
+                 "quote": unicode("<blockquote>%s</blockquote></br>" %
+                                  (self.context.getText()), 'utf-8')
+                 }
+            )
+        except TypeError:
+            return _(
+                "label_quote", u"Previously ${author} wrote: ${quote}",
+                {"author": self.author(),
+                 "quote":  unicode("<blockquote>%s</blockquote></br>" %
+                                   (self.context.getText()), 'utf-8')
+                }
+            )
 
+
+@implementer(IConversationView)
 class ConversationView(CommentView):
     """A view component for querying conversations.
     """
-
-    interface.implements(IConversationView)
 
     def conversation(self):
         checkPermission = self.portal_membership.checkPermission
@@ -101,8 +115,8 @@ class ConversationView(CommentView):
         return {
                 'maximumAttachments' : forum.getMaxAttachments(),
                 'maximumAttachmentSize' : forum.getMaxAttachmentSize(),
-                'canAttach': forum.getMaxAttachments()>0 and \
-                              checkPermission(permissions.AddAttachment,conv),
+                'canAttach': forum.getMaxAttachments() > 0 and \
+                              checkPermission(permissions.AddAttachment, conv),
                 }
 
     def comments(self):
@@ -116,7 +130,7 @@ class ConversationView(CommentView):
         return Batch(self._getComments, numComments, batchSize, batchStart, orphan=1)
 
     def root_comments(self):
-        rootcomments =  self.context.getRootComments()
+        rootcomments = self.context.getRootComments()
         for ob in rootcomments:
             yield self._buildDict(ob)
 
@@ -130,7 +144,8 @@ class ConversationView(CommentView):
     def _getComments(self, limit, offset):
         """Dictify comments before returning them to the batch
         """
-        return [self._buildDict(ob) for ob in self.context.getComments(limit=limit, offset=offset)]
+        return [self._buildDict(ob)
+                for ob in self.context.getComments(limit=limit, offset=offset)]
 
 
 class RecentConversationsView(CommentViewableView):
@@ -139,24 +154,31 @@ class RecentConversationsView(CommentViewableView):
 
     def __init__(self, context, request):
         Five.BrowserView.__init__(self, context, request)
-        self.portal_workflow = cmf_utils.getToolByName(self.context, 'portal_workflow')
-        self.plone_utils = cmf_utils.getToolByName(self.context, 'plone_utils')
-        self.portal_catalog = cmf_utils.getToolByName(self.context, 'portal_catalog')
-        self.portal_membership = cmf_utils.getToolByName(self.context, 'portal_membership')
+        self.portal_workflow = getToolByName(self.context, 'portal_workflow')
+        self.plone_utils = getToolByName(self.context, 'plone_utils')
+        self.portal_catalog = getToolByName(self.context, 'portal_catalog')
+        self.portal_membership = getToolByName(
+            self.context, 'portal_membership'
+        )
 
     def num_conversations(self):
         catalog = self.portal_catalog
-        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
-                          path='/'.join(self.context.getPhysicalPath()),)
+        results = catalog(
+            object_provides='Products.Ploneboard.interfaces.IConversation',
+            path='/'.join(self.context.getPhysicalPath()),
+        )
         return len(results)
 
     def results(self, limit=20, offset=0):
         catalog = self.portal_catalog
-        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
-                            sort_on='modified',
-                            sort_order='reverse',
-                            sort_limit=(offset+limit),
-                            path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]
+        results = catalog(
+            object_provides='Products.Ploneboard.interfaces.IConversation',
+            sort_on='modified',
+            sort_order='reverse',
+            sort_limit=(offset + limit),
+            path='/'.join(
+                self.context.getPhysicalPath())
+                )[offset:offset + limit]
         return filter(None, [self._buildDict(r.getObject()) for r in results])
 
     def _buildDict(self, ob):
@@ -172,7 +194,10 @@ class RecentConversationsView(CommentViewableView):
         lastComment = ob.getLastComment()
         if lastComment is None:
             return None
-        canAccessLastComment = self.portal_membership.checkPermission('View', lastComment)
+        canAccessLastComment = self.portal_membership.checkPermission(
+            'View',
+            lastComment
+        )
 
         lastCommentCreator = lastComment.Creator()
         creatorInfo = self.portal_membership.getMemberInfo(lastCommentCreator)
@@ -197,14 +222,15 @@ class RecentConversationsView(CommentViewableView):
     def _is_new(self, modified):
         llt = getattr(aq_base(self), '_last_login_time', [])
         if llt == []:
-            m = self.portal_membership.getAuthenticatedMember()
-            if m.has_role('Anonymous'):
+            member = self.portal_membership.getAuthenticatedMember()
+            if member.has_role('Anonymous'):
                 llt = self._last_login_time = None
             else:
-                llt = self._last_login_time = m.getProperty('last_login_time', 0)
-        if llt is None: # not logged in
+                llt = member.getProperty('last_login_time', 0)
+                self._last_login_time = llt
+        if llt is None:  # not logged in
             return False
-        elif llt == 0: # never logged in before
+        elif llt == 0:  # never logged in before
             return True
         else:
             return (modified >= DateTime(llt))
@@ -215,19 +241,24 @@ class UnansweredConversationsView(RecentConversationsView):
 
     def num_conversations(self):
         catalog = self.portal_catalog
-        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
-                          num_comments=1,
-                          path='/'.join(self.context.getPhysicalPath()),)
+        results = catalog(
+            object_provides='Products.Ploneboard.interfaces.IConversation',
+            num_comments=1,
+            path='/'.join(self.context.getPhysicalPath()),
+        )
         return len(results)
 
     def results(self, limit=20, offset=0):
         catalog = self.portal_catalog
-        results = catalog(object_provides='Products.Ploneboard.interfaces.IConversation',
-                            num_comments=1,
-                            sort_on='modified',
-                            sort_order='reverse',
-                            sort_limit=(offset+limit),
-                            path='/'.join(self.context.getPhysicalPath()))[offset:offset+limit]
+        results = catalog(
+            object_provides='Products.Ploneboard.interfaces.IConversation',
+            num_comments=1,
+            sort_on='modified',
+            sort_order='reverse',
+            sort_limit=(offset + limit),
+            path='/'.join(
+                self.context.getPhysicalPath())
+                )[offset:offset + limit]
         return [self._buildDict(r.getObject()) for r in results]
 
     def _buildDict(self, ob):
@@ -240,16 +271,18 @@ class UnansweredConversationsView(RecentConversationsView):
         if creatorInfo is not None and creatorInfo.get('fullname', "") != "":
             creator = creatorInfo['fullname']
 
-        return { 'Title': ob.title_or_id(),
-                 'Description' : ob.Description(),
-                 'created' : ob.created(),
-                 'absolute_url': ob.absolute_url(),
-                 'forum_title' : forum.title_or_id(),
-                 'forum_url' : forum.absolute_url(),
-                 'review_state_normalized' : wfstate,
-                 'creator' : creator,
-                 'is_new' : self._is_new(ob.modified()),
-               }
+        return {
+            'Title': ob.title_or_id(),
+            'Description' : ob.Description(),
+            'created' : ob.created(),
+            'absolute_url': ob.absolute_url(),
+            'forum_title' : forum.title_or_id(),
+            'forum_url' : forum.absolute_url(),
+            'review_state_normalized' : wfstate,
+            'creator' : creator,
+            'is_new' : self._is_new(ob.modified()),
+        }
+
 
 class DeleteCommentView(Five.BrowserView):
     """Delete the current comment.  If the comment is the root comment
@@ -260,7 +293,7 @@ class DeleteCommentView(Five.BrowserView):
         redirect = self.request.response.redirect
         comment = self.context
         conversation = comment.getConversation()
-        plone_utils = cmf_utils.getToolByName(comment, 'plone_utils')
+        plone_utils = getToolByName(comment, 'plone_utils')
 
         if len(conversation.getComments()) == 1:
             forum = conversation.getForum()
@@ -273,4 +306,3 @@ class DeleteCommentView(Five.BrowserView):
             msg = _(u'Comment deleted')
             plone_utils.addPortalMessage(msg)
             redirect(conversation.absolute_url())
-

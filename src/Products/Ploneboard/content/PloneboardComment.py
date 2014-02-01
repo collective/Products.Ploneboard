@@ -144,30 +144,30 @@ class PloneboardComment(BaseBTreeFolder):
             if not title.lower().startswith('re:'):
                 title = 'Re: ' + title
 
-        m = _createObjectByType(self.portal_type, conv, id)
+        msg = _createObjectByType(self.portal_type, conv, id)
 
         # XXX: There is some permission problem with AT write_permission
         # and using **kwargs in the _createObjectByType statement.
-        m.setTitle(title)
-        m.setText(text)
-        m.setInReplyTo(self.UID())
+        msg.setTitle(title)
+        msg.setText(text)
+        msg.setInReplyTo(self.UID())
 
         if creator is not None:
-            m.setCreators([creator])
+            msg.setCreators([creator])
 
         # Create files in message
         if files:
-            for file in files:
+            for attachment in files:
                 # Get raw filedata, not persistent object with reference to
                 # tempstorage file.data might in fact be OFS.Image.Pdata - str
                 # will piece it all together
-                attachment = File(
-                    file.getId(),
-                    file.title_or_id(),
-                    str(file.data),
-                    file.getContentType()
+                msg_attachment = File(
+                    attachment.getId(),
+                    attachment.title_or_id(),
+                    str(attachment.data),
+                    attachment.getContentType()
                 )
-                m.addAttachment(attachment)
+                msg.addAttachment(msg_attachment)
 
         # If this comment is being added by anonymous, make sure that the true
         # owner in zope is the owner of the forum, not the parent comment or
@@ -176,13 +176,13 @@ class PloneboardComment(BaseBTreeFolder):
         membership = getToolByName(self, 'portal_membership')
         if membership.isAnonymousUser():
             forum = self.getConversation().getForum()
-            utils.changeOwnershipOf(m, forum.owner_info()['id'], False)
+            utils.changeOwnershipOf(msg, forum.owner_info()['id'], False)
 
-        event.notify(ObjectInitializedEvent(m))
-        m.unmarkCreationFlag()
-        m.reindexObject()
+        event.notify(ObjectInitializedEvent(msg))
+        msg.unmarkCreationFlag()
+        msg.reindexObject()
         conv.reindexObject()  # Sets modified
-        return m
+        return msg
 
     security.declareProtected(AddComment, 'deleteReply')
     def deleteReply(self, comment):

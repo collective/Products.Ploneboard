@@ -227,9 +227,12 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         """
 
         res = self._get_catalog()(
-                object_provides='Products.Ploneboard.interfaces.IComment', \
-                sort_on='created', sort_order='reverse', sort_limit=1,
-                path='/'.join(self.getPhysicalPath()))
+                object_provides='Products.Ploneboard.interfaces.IComment',
+                sort_on='created',
+                sort_order='reverse',
+                sort_limit=1,
+                path='/'.join(self.getPhysicalPath())
+        )
         if res:
             return res[0].getObject()
         return None
