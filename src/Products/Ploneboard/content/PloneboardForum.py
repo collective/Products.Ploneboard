@@ -102,20 +102,12 @@ schema = BaseBTreeFolderSchema + Schema((
     BooleanField('allowEditComment',
         default=False,
         languageIndependent=0,
-<<<<<<< HEAD
         widget=BooleanWidget(
             label=u'Allow users to edit their comments',
             description=u'If selected, this will give users the ability to '
                         u'edit their own comments.',
             label_msgid='label_allow_edit_comment',
             description_msgid='help_allow_edit_comment',
-=======
-        widget = BooleanWidget(
-            label = _('label_allow_edit_comment',
-                      default=u'Allow users to edit their comments'),
-            description = _('help_allow_edit_comment',
-                            default=u'If selected, this will give users the ability to edit their own comments.'),
->>>>>>> anonumous can add a name to the comments, if a property in ploneboard tool is checked
             # Only show when no conversations exist
             condition="not:object/getNumberOfConversations|nothing",
             ),

@@ -77,7 +77,6 @@ List the conversations
       'modified': DateTime('...'),
       'review_state': ('active',)}]
 
-
 Open the forum in a browser.
 
     >>> from Testing.testbrowser import Browser
