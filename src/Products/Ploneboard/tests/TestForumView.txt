@@ -63,7 +63,7 @@ List the conversations
       'absolute_url': 'http://nohost/plone/board1/forum1/...',
       'getLastCommentAuthor': 'test_user_1_',
       'getLastCommentDate': u'...',
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
+      'getLastCommentId': '...',
       'getNumberOfComments': 2,
       'modified': DateTime('...'),
       'review_state': ('active',)},
@@ -72,11 +72,10 @@ List the conversations
       'absolute_url': 'http://nohost/plone/board1/forum1/...',
       'getLastCommentAuthor': 'test_user_1_',
       'getLastCommentDate': u'...',
-      'getLastCommentUrl': 'http://nohost/plone/board1/forum1/.../...',
+      'getLastCommentId': '...',
       'getNumberOfComments': 3,
       'modified': DateTime('...'),
       'review_state': ('active',)}]
-
 
 Open the forum in a browser.
 

@@ -29,6 +29,11 @@
     
             <div metal:define-macro="comment_preview_hidden_vars" tal:omit-tag="">
                 <input type="hidden"
+                       name="anon_name"
+                       tal:condition="request/anon_name|nothing"
+                       tal:attributes="value request/anon_name" 
+                       />
+                <input type="hidden"
                        name="title"
                        tal:condition="request/title | nothing"
                        tal:attributes="value request/title" 

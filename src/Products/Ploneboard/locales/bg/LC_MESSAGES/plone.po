@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 16:25+0000\n"
 "PO-Revision-Date: 2009-03-30 20:49+0200\n"
 "Last-Translator: Vladimir Iliev <vladimir.iliev@gmail.com>\n"
 "Language-Team: Ploneboard BG <vladimir.iliev@gmail.com>\n"
@@ -76,7 +76,7 @@ msgstr "Отказан"
 msgid "Require membership to post"
 msgstr "Изисква регистрация за изпращане"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "Required"
 msgstr ""
 

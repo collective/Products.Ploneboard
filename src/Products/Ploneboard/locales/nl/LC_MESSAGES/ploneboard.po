@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 16:25+0000\n"
 "PO-Revision-Date: 2007-07-26 20:35+0100\n"
 "Last-Translator: THijs <THijs@pareto.nl>\n"
 "Language-Team: Ploneboard NL <ploneboard-nl@lists.zestsoftware.nl>\n"
@@ -32,9 +32,11 @@ msgstr ""
 msgid "100 kilobyte"
 msgstr ""
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "A Forum contains conversations."
 msgstr ""
 
+#: ../profiles/default/types/PloneboardComment.xml
 msgid "A comment contains regular text body and metadata."
 msgstr ""
 
@@ -50,17 +52,22 @@ msgid "Attachment is too large"
 msgstr ""
 
 #. Default: "Cancel"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:90
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
 msgstr "Annuleren"
 
 #. Default: "Change"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:83
 msgid "Change"
 msgstr "Bewerken"
 
+#: ../profiles/default/types/PloneboardComment.xml
 msgid "Comment"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:49
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:55
 msgid "Comment added"
 msgstr "Reactie toegevoegd"
 
@@ -68,17 +75,19 @@ msgstr "Reactie toegevoegd"
 msgid "Comment deleted"
 msgstr "Reactie verwijderd"
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:47
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:53
 msgid "Comment is pending moderation"
 msgstr "Reactie ingezonden voor goedkeuring"
 
+#: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:42
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:45
 msgid "Conversation added"
 msgstr "Discussie toegevoegd"
 
+#: ../profiles/default/types/PloneboardConversation.xml
 msgid "Conversation contains comments."
 msgstr ""
 
@@ -86,7 +95,7 @@ msgstr ""
 msgid "Conversation deleted"
 msgstr "Discussie verwijderd"
 
-#: ../skins/ploneboard_scripts/add_conversation_script.cpy:40
+#: ../skins/ploneboard_scripts/add_conversation_script.cpy:43
 msgid "Conversation is pending moderation"
 msgstr "Discussie ingezonden voor goedkeuring"
 
@@ -94,6 +103,7 @@ msgstr "Discussie ingezonden voor goedkeuring"
 msgid "Data provider updated."
 msgstr "Data provider bijgewerkt."
 
+#: ../profiles/default/types/PloneboardForum.xml
 msgid "Forum"
 msgstr "Forum"
 
@@ -106,9 +116,11 @@ msgid "Install the intranet workflow definitions for Ploneboard"
 msgstr ""
 
 #. Default: "Log in to add comments"
+#: ../skins/ploneboard_templates/comment_view.pt:195
 msgid "Log in to add comments"
 msgstr "Log in om een reactie toe te voegen"
 
+#: ../profiles/default/types/Ploneboard.xml
 msgid "Message Board"
 msgstr ""
 
@@ -137,6 +149,7 @@ msgstr ""
 msgid "Ploneboard for intranets"
 msgstr ""
 
+#: ../profiles/default/types/Ploneboard.xml
 msgid "Ploneboard is the outmost board object, what shows up in your site."
 msgstr ""
 
@@ -149,14 +162,19 @@ msgid "Ploneboard performance test forum structure"
 msgstr ""
 
 #. Default: "Post"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:77
 msgid "Post"
 msgstr "Plaatsen"
 
 #. Default: "Post comment"
+#: ../browser/templates/conversation_view.pt:80
+#: ../skins/ploneboard_templates/add_comment_form.cpt:197
 msgid "Post comment"
 msgstr "Plaatsen"
 
 #. Default: "Reply to this"
+#: ../browser/templates/conversation_view.pt:72
+#: ../skins/ploneboard_templates/comment_view.pt:184
 msgid "Reply to this"
 msgstr "Reageer"
 
@@ -169,9 +187,11 @@ msgid "Set up posts for load testing"
 msgstr ""
 
 #. Default: "Start a new Conversation"
+#: ../browser/templates/addconversation.pt:23
 msgid "Start a new Conversation"
 msgstr "Begin een nieuwe discussie"
 
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:53
 msgid "Start conversation"
 msgstr ""
 
@@ -188,6 +208,7 @@ msgid "Uninstall Ploneboard product"
 msgstr ""
 
 #. Default: "View profile"
+#: ../skins/ploneboard_templates/comment_view.pt:85
 msgid "View profile"
 msgstr "Bekijk profiel"
 
@@ -196,15 +217,17 @@ msgstr "Bekijk profiel"
 msgid "Wrong captcha. Try again"
 msgstr ""
 
-#: ../skins/ploneboard_scripts/add_comment_script.cpy:34
+#: ../skins/ploneboard_scripts/add_comment_script.cpy:40
 msgid "You can only add comments to conversations or comments."
 msgstr "Je kunt alleen reageren op discussies of reacties."
 
 #. Default: "Add comment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:30
 msgid "add_comment"
 msgstr "Reageer"
 
 #. Default: "Add conversation"
+#: ../skins/ploneboard_templates/add_conversation_form.cpt:29
 msgid "add_conversation"
 msgstr "Voeg discussie toe"
 
@@ -212,55 +235,76 @@ msgid "alert_delete_popup"
 msgstr ""
 
 #. Default: "Search"
+#: ../browser/templates/board.pt:35
+#: ../skins/ploneboard_templates/board_view.pt:39
 msgid "board_search_button"
 msgstr "Zoeken"
 
 #. Default: "Search Boards"
+#: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
+#: ../skins/ploneboard_templates/board_view.pt:32
 msgid "board_search_label"
 msgstr "Zoek in fora"
 
 #. Default: "More…"
+#: ../portlet/recent.pt:40
 msgid "box_more_recent_conversations"
 msgstr "Meer..."
 
 #. Default: "by ${author}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:96
 msgid "by_author"
 msgstr "door ${author}"
 
 #. Default: "Current state:"
+#: ../skins/ploneboard_templates/comment_view.pt:165
 msgid "comment_current_state"
 msgstr "Huidige status:"
 
 #. Default: "Conversation"
+#: ../browser/templates/forum.pt:81
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:69
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:67
 msgid "conversation"
 msgstr "Discussies"
 
 #. Default: "Forum"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:68
 msgid "conversation_forum"
 msgstr "Forum"
 
 #. Default: "Posted"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:69
 msgid "conversation_posted"
 msgstr "Gestart"
 
 #. Default: "Here you can configure site settings for Ploneboard."
-#: ../browser/controlpanel.py:57
+#: ../browser/controlpanel.py:71
 msgid "description_ploneboard_config"
 msgstr "Configureer hier instellingen voor Discussiebord."
 
 #. Default: "Forum name"
+#: ../browser/templates/board.pt:86
+#: ../skins/ploneboard_templates/board_view.pt:94
 msgid "forum_name"
 msgstr "Forumnaam"
 
 #. Default: "Up to ${title}"
+#: ../browser/templates/conversation_view.pt:43
+#: ../browser/templates/forum.pt:51
+#: ../browser/templates/threaded_conversation_view.pt:44
 msgid "go_to_parent_url"
 msgstr "Terug naar ${title}"
 
 #. Default: "Return to ${name}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:37
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:35
 msgid "go_to_view_url"
 msgstr "Terug naar ${name}"
 
 #. Default: "Preview comment"
+#: ../skins/ploneboard_templates/add_comment_preview.cpt:19
 msgid "heading_preview_comment"
 msgstr "Voorbeeld van reactie bekijken"
 
@@ -270,26 +314,42 @@ msgid "help_add_portlet"
 msgstr "Toont discussies met recente reacties."
 
 #. Default: "If selected, this will give users the ability to edit their own comments."
+#: ../content/PloneboardForum.py:87
 msgid "help_allow_edit_comment"
 msgstr ""
 
+#. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+msgid "help_anon_name"
+msgstr ""
+
+#. Default: "If selected, anonymous users can insert a name in their comments."
+#: ../browser/controlpanel.py:35
+msgid "help_anon_nick"
+msgstr ""
+
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:171
 msgid "help_body_attachments_maxsize"
 msgstr "De maximale grootte van een bijlage is ${maxsize} kilobyte."
 
 #. Default: "Select a file to upload as an attachment to this comment."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:165
 msgid "help_body_attachments_posting"
 msgstr "Kies een bestand om als bijlage toe te voegen aan deze reactie."
 
 #. Default: "Basic HTML tags are OK."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:115
 msgid "help_body_text_posting"
 msgstr "Simpele HTML tags zijn toegestaan."
 
 #. Default: "URLs will be automatically hyperlinked."
+#: ../skins/ploneboard_templates/add_comment_form.cpt:110
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URL's worden automatisch omgezet naar links."
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:144
 msgid "help_captcha"
 msgstr ""
 
@@ -333,7 +393,7 @@ msgid "help_text"
 msgstr "Voer tekst in."
 
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
-#: ../browser/controlpanel.py:18
+#: ../browser/controlpanel.py:19
 msgid "help_transforms"
 msgstr "Kies de tekstfilters die gebruikt worden voor geplaatste reacties in discussies. Tekstfilters passen de door de gebruiker geplaatste tekst aan. Dit  om ofwel mogelijk schadelijke HTML tags te verwijderen, ofwel extra functionaliteit te bieden, zoals aanklikbare links."
 
@@ -343,26 +403,44 @@ msgid "label_add_portlet"
 msgstr "Voeg portlet met recente discussielijst toe."
 
 #. Default: "Allow users to edit their comments"
+#: ../content/PloneboardForum.py:85
 msgid "label_allow_edit_comment"
 msgstr ""
 
+#. Default: "Name"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+msgid "label_anon_name"
+msgstr ""
+
+#. Default: "Anonymous name"
+#: ../browser/controlpanel.py:33
+msgid "label_anon_nick"
+msgstr ""
+
 #. Default: "Back to discussion board"
+#: ../browser/search.pt:15
 msgid "label_back_to_board"
 msgstr "Terug naar het discussiebord"
 
 #. Default: "Attachments"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:162
 msgid "label_body_files_posting"
 msgstr "Bijlagen"
 
 #. Default: "Body text"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:102
 msgid "label_body_text_posting"
 msgstr "Hoofdtekst"
 
 #. Default: "by ${author}"
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
+#: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "door ${author}"
 
 #. Default: "Captcha"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:138
 msgid "label_captcha"
 msgstr ""
 
@@ -392,6 +470,7 @@ msgid "label_displayImages"
 msgstr ""
 
 #. Default: "in ${forum}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:99
 msgid "label_in_forum"
 msgstr "in ${forum}"
 
@@ -402,6 +481,7 @@ msgid "label_maxattachmentsize"
 msgstr "Maximale grootte van bijlage"
 
 #. Default: "Powered by ${link}"
+#: ../skins/ploneboard_templates/board_footer.pt:13
 msgid "label_powered_by"
 msgstr "Op basis van ${link}"
 
@@ -411,6 +491,7 @@ msgid "label_quote"
 msgstr ""
 
 #. Default: "(Required)"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:76
 msgid "label_required"
 msgstr "(Verplicht)"
 
@@ -423,117 +504,155 @@ msgid "label_text"
 msgstr "Tekst"
 
 #. Default: "Title"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:74
 msgid "label_title_posting"
 msgstr "Titel"
 
 #. Default: "Transforms"
-#: ../browser/controlpanel.py:16
+#: ../browser/controlpanel.py:17
 msgid "label_transforms"
 msgstr "Tekstfilters"
 
 #. Default: "Attachments"
+#: ../skins/ploneboard_templates/comment_view.pt:208
 msgid "legend_attachments"
 msgstr "Bijlagen"
 
 #. Default: "Log in to start a conversation"
+#: ../browser/templates/addconversation.pt:34
 msgid "log_to_start_conversation"
 msgstr "Log in om een discussie te beginnen"
 
 #. Default: "${count} comments in queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:73
 msgid "moderation_count"
 msgstr "${count} reacties in de wachtrij."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
+#: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
 msgstr "De volgende reacties wachten op moderatie. Klik a.u.b. op 'Publiseren' of 'Wijgeren'. Klik op de title van een reactie om de complete inhoud van de reactie te lezen."
 
 #. Default: "Most recent comment"
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
+#: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Laatste reacties"
 
 #. Default: "Add another attachment"
+#: ../skins/ploneboard_templates/add_comment_form.cpt:184
 msgid "new_attachment"
 msgstr "Voeg nog een bijlage toe"
 
 #. Default: "Conversations marked with ${star} have had activity since your last log-in."
+#: ../browser/templates/forum.pt:65
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:57
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
 msgstr "Discussies met een ${star} hebben nieuwe reacties sinds je laatste bezoek."
 
 #. Default: "There are no comments in the moderation queue."
+#: ../skins/ploneboard_templates/moderation_form.pt:113
 msgid "no_comments_queued"
 msgstr "Er staan geen reacties in de moderatiewachtrij."
 
 #. Default: "No conversations started"
+#: ../browser/templates/board.pt:118
+#: ../skins/ploneboard_templates/board_view.pt:126
 msgid "no_conversations_started"
 msgstr "Nog geen discussies."
 
 #. Default: "No conversations found."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:42
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:40
 msgid "no_recent_conversations"
 msgstr "Geen discussies gevonden."
 
 #. Default: "No replies yet"
+#: ../browser/templates/forum.pt:127
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:115
 msgid "no_replies_yet"
 msgstr "Nog geen reacties"
 
 #. Default: "No conversations in this forum yet."
+#: ../browser/templates/addconversation.pt:14
 msgid "not_conversations"
 msgstr "Er zijn nog geen discussies in dit forum."
 
 #. Default: "No forums exist in this board yet, use the add menu to add forums."
+#: ../browser/templates/board.pt:64
+#: ../skins/ploneboard_templates/board_view.pt:72
+#: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
 msgstr "Er zijn nog geen fora aangemaakt. U kunt een forum toevoegen via de \"voeg forum toe\" optie."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
+#: ../browser/templates/addconversation.pt:41
 msgid "not_permission_start_conversation"
 msgstr "U heeft onvoldoende rechten om een discussie toe te voegen."
 
 #. Default: "Conversations"
+#: ../browser/templates/board.pt:87
+#: ../skins/ploneboard_templates/board_view.pt:95
 msgid "number_of_conversations"
 msgstr "Discussies"
 
 #. Default: "Ploneboard configuration"
-#: ../browser/controlpanel.py:55
+#: ../browser/controlpanel.py:69
 msgid "ploneboard_configuration"
 msgstr "Discussiebord-instellingen"
 
 #. Default: "Text transformations"
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "ploneboard_transform_panel"
 msgstr "Tekstfilters"
 
 #. Default: "Posted by"
+#: ../skins/ploneboard_templates/comment_view.pt:71
 msgid "posted_by"
 msgstr "Geplaatst door"
 
 #. Default: "Preview message"
+#: ../skins/ploneboard_templates/add_conversation_preview.cpt:14
 msgid "preview_message"
 msgstr "Voorbeeldweergave"
 
 #. Default: "The following conversations have had recent activity."
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:50
 msgid "recent_conversations_description"
 msgstr "De volgende discussies zijn onlangs actief geweest."
 
 #. Default: "Replies"
+#: ../browser/templates/forum.pt:82
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:70
 msgid "replies"
 msgstr "Reacties"
 
 #. Default: "In ${forum} &rarr; ${conversation}."
+#: ../browser/search.pt:72
 msgid "search_result_location"
 msgstr "In ${forum} &rarr; ${conversation}."
 
 #. Default: "Show all recent activity"
+#: ../browser/templates/board.pt:41
+#: ../skins/ploneboard_templates/board_view.pt:45
 msgid "show_new_conversations_all"
 msgstr "Alle recente activiteit"
 
 #. Default: "Show only unanswered"
+#: ../browser/templates/forum.pt:38
 msgid "show_no_replies"
 msgstr "Alleen discussies zonder reacties"
 
 #. Default: "Show all unanswered"
+#: ../browser/templates/board.pt:48
+#: ../skins/ploneboard_templates/board_view.pt:52
 msgid "show_no_replies_all"
 msgstr "Alle discussies zonder reacties"
 
 #. Default: "at"
+#: ../skins/ploneboard_templates/comment_view.pt:77
 msgid "text_at"
 msgstr "op"
 
@@ -548,10 +667,14 @@ msgid "title_forum"
 msgstr ""
 
 #. Default: "General forums"
+#: ../browser/templates/board.pt:148
+#: ../skins/ploneboard_templates/board_view.pt:154
+#: ../skins/ploneboard_templates/board_view_global.pt:54
 msgid "title_general_forums"
 msgstr "Algemene fora"
 
 #. Default: "Recent conversations in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_recent.pt:28
 msgid "title_recent_conversations"
 msgstr "Recent actieve discussies in ${title}"
 
@@ -561,10 +684,12 @@ msgid "title_title"
 msgstr "Titel van het portlet"
 
 #. Default: "Unanswered posts in ${title}"
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:26
 msgid "title_unanswered_conversations"
 msgstr "Discussies zonder reacties in ${title}"
 
 #. Default: "The following conversations have been posted, but have not yet received any replies."
+#: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
 msgstr "De volgende discussies zijn gestart, maar hebben nog geen reacties."
 

@@ -23,6 +23,11 @@ def setUpDefaultMembersBoardAndForum(self):
     self.forum = self.board.addForum('forum1', 'Forum 1', 'Forum one')
     self.setRoles(('Member',))
 
+
+def enableDisableAnonName(self, value):
+    self.portal.portal_ploneboard.setEnableAnonName(value)
+
+
 def disableScriptValidators(portal):
     from Products.CMFFormController.FormController import ANY_CONTEXT, ANY_BUTTON
     scripts = ['add_comment_script', 'add_conversation_script', 'add_forum_script']

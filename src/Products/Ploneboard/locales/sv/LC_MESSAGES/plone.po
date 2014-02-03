@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-plone.pot\n"
-"POT-Creation-Date: 2013-11-14 16:16+0000\n"
+"POT-Creation-Date: 2014-01-17 16:25+0000\n"
 "PO-Revision-Date: 2008-05-25 11:29+0200\n"
 "Last-Translator: Martin Lundwall <martin@webworks.se>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -75,7 +75,7 @@ msgstr "Avslagen"
 msgid "Require membership to post"
 msgstr "Kräv medlemsskap för att posta"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:125
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "Required"
 msgstr ""
 
