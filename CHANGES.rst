@@ -52,15 +52,6 @@ Changelog
   This fixes a bug when we have frontend url different from backend.
   [cekk]
 
-- Added check in ploneboard tool that allows anonymous users to insert a name in comments/discussions
-  [cekk]
-
-- Fix rebuild_i18n script [cekk]
-
-- Replaced "getLastCommentUrl" index/metadata with "getLastCommentId".
-  This fixes a bug when we have frontend url different from backend.
-  [cekk]
-
 3.4 (2013-05-11)
 ----------------
 
