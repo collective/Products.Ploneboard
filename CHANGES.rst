@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.5 (unreleased)
+3.5 (2014-03-07)
 ----------------
 
 - buildout fixes/update, code cleanup, pep8 and fixes in test, ...
