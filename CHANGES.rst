@@ -4,7 +4,8 @@ Changelog
 3.6 (unreleased)
 ----------------
 
-- nothing so far
+- Fixed dependency for AccessControl. Plone < 4.3 have an old version pinned
+  [cekk]
 
 3.5 (2014-03-07)
 ----------------
