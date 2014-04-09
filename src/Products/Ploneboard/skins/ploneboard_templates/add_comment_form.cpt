@@ -49,7 +49,8 @@
               tal:attributes="action template/getId">
 
           <input type="hidden" name="form.submitted" value="1" />
-          <div tal:condition="python:isAnon and enable_anon_name"
+          <div tal:define="isAnon context/@@plone_portal_state/anonymous"
+               tal:condition="python:isAnon and enable_anon_name"
                metal:define-macro="comment_anon_name" tal:omit-tag="">
             <div class="field"
                  id="anon_name"
