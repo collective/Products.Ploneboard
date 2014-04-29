@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
 "POT-Creation-Date: 2014-01-17 16:25+0000\n"
-"PO-Revision-Date: 2012-03-15 17:07-0300\n"
-"Last-Translator: Davi Lima <davi@simplesconsultoria.com.br>\n"
+"PO-Revision-Date: 2014-04-29 17:24-0300\n"
+"Last-Translator: André Nogueira <agnogueira@gmail.com>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Language-Code: pt_BR\n"
 "Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
+"X-Generator: Poedit 1.5.4\n"
 
 msgid "Activate"
 msgstr "Ativar"
@@ -79,7 +80,7 @@ msgstr "Apenas membros do portal podem publicar"
 
 #: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "Required"
-msgstr ""
+msgstr "Obrigatório"
 
 msgid "Retracted"
 msgstr "Retraído"
@@ -94,7 +95,7 @@ msgstr "${number} itens satisfazem os termos da sua pesquisa"
 
 #. Default: "Global forum listing"
 msgid "board_view_global"
-msgstr ""
+msgstr "Listagem Global"
 
 #. Flat conversion view
 msgid "conversation_view"
@@ -104,6 +105,8 @@ msgstr "Visão de tópico"
 #: ../profiles/default/portlets.xml
 msgid "description_recent_conversations"
 msgstr ""
+"Um portlet que mostra uma visão geral de todas as conversas recentemente "
+"atualizadas"
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -125,13 +128,12 @@ msgstr "${day} de ${month} de ${year} às ${hours}:${minutes}"
 
 #. Default: "Ploneboard view"
 msgid "ploneboard_view"
-msgstr ""
+msgstr "Visão Ploneboard"
 
 #. Threaded conversion view
 msgid "threaded_conversation_view"
 msgstr "Visão de tópicos, por threads"
 
-#: ./skins/ploneboard_scripts/toPloneboardTime.py:33
+#: skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
-

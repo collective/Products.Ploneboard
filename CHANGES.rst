@@ -4,7 +4,8 @@ Changelog
 3.6 (unreleased)
 ----------------
 
-- nothing so far
+- update pt-br translations
+  [agnogueira]
 
 3.5 (2014-03-07)
 ----------------
