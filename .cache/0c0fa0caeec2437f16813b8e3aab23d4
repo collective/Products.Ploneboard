@@ -1,7 +1,0 @@
-[buildout]
-extends = test-4.1.x.cfg buildout-cache.cfg
-parts = download install test
-plone-series = 4.1
-package-name =
-package-extras =
-test-eggs =
