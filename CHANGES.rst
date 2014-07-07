@@ -4,6 +4,12 @@ Changelog
 3.6 (unreleased)
 ----------------
 
+- Fix unresolved or circular dependency when installing Ploneboard (or
+  when applying any GenericSetup profile).  The import step to apply
+  the information from the ``types`` directory is called ``typeinfo``.
+  Fixes https://github.com/collective/Products.Ploneboard/issues/31
+  [maurits]
+
 - update pt-br translations
   [agnogueira]
 
