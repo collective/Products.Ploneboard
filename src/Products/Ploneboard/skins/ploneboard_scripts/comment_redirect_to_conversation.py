@@ -11,13 +11,13 @@
 # XXX if we ever do batching, we need extra logic here.
 redirect_target = context.getConversation()
 anchor = context.getId()
-  
+
 conv = context.getConversation()
 query = {'object_implements' : 'Products.Ploneboard.interfaces.IComment',
          'sort_on'           : 'created',
          'path'              : '/'.join(conv.getPhysicalPath()),
         }
-catalog=conv.getCatalog()
+catalog = context.portal_catalog
 res = [ x.getId for x in catalog(query) ]
 if anchor in res:
     pos = res.index(anchor)

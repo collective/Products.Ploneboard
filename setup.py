@@ -39,6 +39,7 @@ setup(
         'plone.i18n',
         'Products.CMFPlacefulWorkflow',
         'python-dateutil<2.0dev',
+        'AccessControl>=3.0',
     ],
     extras_require=dict(
         test=['plone.app.testing',
