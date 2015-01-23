@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.6 (unreleased)
+3.6 (2015-01-23)
 ----------------
 
 - Fix unresolved or circular dependency when installing Ploneboard (or
