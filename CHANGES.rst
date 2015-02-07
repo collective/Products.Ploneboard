@@ -4,7 +4,7 @@ Changelog
 3.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Githib issue $45 [sureshvv]
 
 
 3.6 (2015-01-23)

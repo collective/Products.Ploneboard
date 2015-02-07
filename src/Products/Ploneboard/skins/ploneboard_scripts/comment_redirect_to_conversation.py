@@ -26,8 +26,4 @@ if anchor in res:
 else:
     offset = 0
 target_url = '%s?b_start=%d#%s' % (redirect_target.absolute_url(), offset, anchor)
-response = context.REQUEST.get('RESPONSE', None)
-if response is not None:
-    response.redirect(target_url)
-    print "Redirecting to %s" % target_url
-    return printed
+context.REQUEST.RESPONSE.redirect(target_url)
