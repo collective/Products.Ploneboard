@@ -4,6 +4,13 @@ Changelog
 3.7 (unreleased)
 ----------------
 
+- Updated i18n support, adding i18n sentences for workflow strings, synced
+  the pot files and updated the po files.
+  [macagua]
+
+- Update Spanish translations
+  [macagua]
+
 - Githib issue $45 [sureshvv]
 
 
