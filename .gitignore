@@ -1,11 +1,20 @@
 *.egg-info
 *.mo
+*~
 *.pyc
 *.pyo
 *.tmp*
 .bzr
 .coverage
 .hg
+*.egg
+*.EGG
+*.egg-info
+*.EGG-INFO
+*.kpf
+*.swp
+*.wpr
+.*.cfg
 .installed.cfg
 .minitage*
 .mr.developer.cfg
@@ -31,3 +40,10 @@ t
 tags
 tags.python
 var
+.project
+.pydevproject
+
+
+
+# OSX
+.DS_Store
