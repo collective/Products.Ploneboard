@@ -6,22 +6,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2015-07-13 12:27+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2015-07-13 07:58-0430\n"
 "Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
 "Language-Team: ES <LL@li.org>\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
 "Language-Code: es\n"
 "Language-Name: Spanish\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
-"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-"
-"gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"Language: es\n"
+"X-Generator: Virtaal 0.7.1\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 msgid "Activate"
 msgstr "Activar"
@@ -30,18 +29,22 @@ msgstr "Activar"
 msgid "Active"
 msgstr "Activo"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Automatic publishing in unmoderated boards"
 msgstr "Publicación automática en tablero no moderados"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Automatic publishing request"
 msgstr "Solicitud de publicación automática"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Being created"
 msgstr "Creándose"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Comment Workflow [Ploneboard]"
 msgstr "Flujo de trabajo de Comentario [Ploneboard]"
@@ -157,14 +160,17 @@ msgstr "Tablero cerrado privado"
 msgid "Private to members only"
 msgstr "Privado solo para miembros"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Public"
 msgstr "Público"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Re-publish a retracted comment"
 msgstr "Re-publicar un comentario retirado"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Rejected"
@@ -178,10 +184,12 @@ msgstr "Solicitar login para publicar"
 msgid "Required"
 msgstr "Requerido"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Retract a published comment"
 msgstr "Retirar un comentario publicado"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Retracted"
 msgstr "Retirado"
@@ -190,6 +198,7 @@ msgstr "Retirado"
 msgid "Reviewer locks conversation"
 msgstr "Revisar bloqueadas conversación"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Reviewer publishes content"
 msgstr "Revisar contenido publicado"
@@ -198,6 +207,7 @@ msgstr "Revisar contenido publicado"
 msgid "Reviewer rejects pending conversation"
 msgstr "Revisar conversación pendiente rechaza"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Reviewer rejects submission"
 msgstr "Revisar el envío rechazado"
@@ -208,9 +218,7 @@ msgstr "Revisar devuelve conversación a activa"
 
 #: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
 msgid "This allows owner to add a Conversation and enable it to receive Comments."
-msgstr ""
-"Esto permite al propietario para añadir una conversación y habilitarlo para "
-"recibir comentarios."
+msgstr "Esto permite al propietario para añadir una conversación y habilitarlo para recibir comentarios."
 
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "This allows owner to edit a Comment made into a Forum to be public."
@@ -240,6 +248,7 @@ msgstr "Este Foro es publicado para las discusiones de los usuarios de Plone."
 msgid "Unlock message board"
 msgstr "Desbloquear mensaje de foro"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
 #: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Waiting for moderator"
 msgstr "Pendientes de moderación"
@@ -295,3 +304,4 @@ msgstr "Vista de Conversación en hilo"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
+

@@ -1,14 +1,21 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="ploneboard_conversation_workflow"
+<dc-workflow xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+             i18n:domain="plone"
+             workflow_id="ploneboard_conversation_workflow"
              title="Conversation Workflow [Ploneboard]"
+             description="This allows owner to add a Conversation and enable it to receive Comments."
              state_variable="review_state"
-             initial_state="pending">
+             initial_state="pending"
+             i18n:attributes="title; description">
+
  <permission>Access contents information</permission>
  <permission>View</permission>
  <permission>Modify portal content</permission>
  <permission>Ploneboard: Add Comment</permission>
  <permission>Add portal content</permission>
- <state state_id="active" title="Active">
+ 
+ <state state_id="active" title="Active" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="lock"/>
   <permission-map name="Access contents information"
                   acquired="True">
@@ -25,7 +32,9 @@
   <permission-map name="View" acquired="True">
   </permission-map>
  </state>
- <state state_id="locked" title="Locked">
+ 
+ <state state_id="locked" title="Locked" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="publish"/>
   <permission-map name="Access contents information"
                   acquired="True">
@@ -42,7 +51,9 @@
   <permission-map name="View" acquired="True">
   </permission-map>
  </state>
- <state state_id="pending" title="Pending state">
+ 
+ <state state_id="pending" title="Pending state" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="publish"/>
   <exit-transition transition_id="reject"/>
   <permission-map name="Access contents information"
@@ -65,7 +76,9 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
- <state state_id="rejected" title="Rejected">
+ 
+ <state state_id="rejected" title="Rejected" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="publish"/>
   <permission-map name="Access contents information"
                   acquired="True">
@@ -85,28 +98,34 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
+ 
  <transition transition_id="lock"
-             title="Reviewer locks conversation"
+             title="Reviewer locks conversation" i18n:attributes="title"
              new_state="locked" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="" category="workflow">Lock</action>
   <guard>
    <guard-permission>Ploneboard: Manage Conversation</guard-permission>
   </guard>
  </transition>
+ 
  <transition transition_id="publish"
-             title="Reviewer returns conversation to active"
+             title="Reviewer returns conversation to active" i18n:attributes="title"
              new_state="active" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="" category="workflow">Activate</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>
   </guard>
  </transition>
+ 
  <transition transition_id="reject"
-             title="Reviewer rejects pending conversation"
+             title="Reviewer rejects pending conversation" i18n:attributes="title"
              new_state="rejected" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="" category="workflow">Reject</action>
   <guard>
    <guard-permission>Ploneboard: Approve Comment</guard-permission>

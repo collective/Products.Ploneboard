@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="ploneboard_forum_workflow"
+<dc-workflow xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+             i18n:domain="plone"
+             workflow_id="ploneboard_forum_workflow"
              title="Forum Workflow [Ploneboard]"
+             description="This allows owner to sending a Forum to be public, to receive discussion from users."
              state_variable="review_state"
-             initial_state="memberposting">
+             initial_state="memberposting"
+             i18n:attributes="title; description">
+
  <permission>Access contents information</permission>
  <permission>View</permission>
  <permission>Ploneboard: Add Conversation</permission>
@@ -12,7 +17,9 @@
  <permission>Ploneboard: Approve Comment</permission>
  <permission>Ploneboard: Retract Comment</permission>
  <permission>Ploneboard: Moderate Forum</permission>
- <state state_id="freeforall" title="Free for all">
+ 
+ <state state_id="freeforall" title="Free for all" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="make_memberposting"/>
   <exit-transition transition_id="make_moderated"/>
   <exit-transition transition_id="make_private"/>
@@ -71,8 +78,10 @@
    <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
+ 
  <state state_id="memberposting"
-        title="Require membership to post">
+        title="Require membership to post" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="make_freeforall"/>
   <exit-transition transition_id="make_moderated"/>
   <exit-transition transition_id="make_private"/>
@@ -126,7 +135,9 @@
    <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
- <state state_id="moderated" title="Moderated forum">
+ 
+ <state state_id="moderated" title="Moderated forum" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="make_freeforall"/>
   <exit-transition transition_id="make_memberposting"/>
   <exit-transition transition_id="make_private"/>
@@ -185,7 +196,9 @@
    <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
- <state state_id="private" title="Private to members only">
+ 
+ <state state_id="private" title="Private to members only" i18n:attributes="title">
+  <description i18n:translate=""></description>
   <exit-transition transition_id="make_freeforall"/>
   <exit-transition transition_id="make_memberposting"/>
   <exit-transition transition_id="make_moderated"/>
@@ -237,39 +250,48 @@
    <permission-role>Reviewer</permission-role>
   </permission-map>
  </state>
+ 
  <transition transition_id="make_freeforall"
-             title="Make the forum free for all"
+             title="Make the forum free for all" i18n:attributes="title"
              new_state="freeforall" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="%(content_url)s/content_publish_form"
           category="workflow">Make free-for-all</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
+ 
  <transition transition_id="make_memberposting"
-             title="Only let members post"
+             title="Only let members post" i18n:attributes="title"
              new_state="memberposting" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="%(content_url)s/content_publish_form"
           category="workflow">Make member-posting</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
+ 
  <transition transition_id="make_moderated"
-             title="Make moderated" new_state="moderated"
-             trigger="USER" before_script="" after_script="">
+             title="Make moderated" i18n:attributes="title" 
+             new_state="moderated" trigger="USER"
+             before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="%(content_url)s/content_publish_form"
           category="workflow">Make moderated</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
+ 
  <transition transition_id="make_private"
-             title="Private closed board"
+             title="Private closed board" i18n:attributes="title"
              new_state="private" trigger="USER"
              before_script="" after_script="">
+  <description i18n:translate=""></description>
   <action url="%(content_url)s/content_publish_form"
           category="workflow">Make private</action>
   <guard>

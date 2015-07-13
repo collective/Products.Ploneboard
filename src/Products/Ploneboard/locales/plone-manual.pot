@@ -93,6 +93,10 @@ msgstr ""
 msgid "conversation_view"
 msgstr ""
 
+#. Flat conversion view
+msgid "conversation_browserview"
+msgstr ""
+
 #. Threaded conversion view
 msgid "threaded_conversation_view"
 msgstr ""

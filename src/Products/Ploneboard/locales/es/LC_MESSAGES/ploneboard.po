@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2015-07-13 12:27+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2015-07-12 22:27-0430\n"
 "Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
 "Language-Team: ES <LL@li.org>\n"
@@ -386,7 +386,7 @@ msgid "help_maxattachmentsize"
 msgstr "Seleccione el tamaño máximo de cada archivo adjunto"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:120
+#: ../content/PloneboardForum.py:118
 msgid "help_showcaptcha"
 msgstr "Seleccionar si mostrar o no captcha para el usuario anónimo (si tiene el producto recaptcha instalado y configurado correctamente)."
 
@@ -492,7 +492,7 @@ msgid "label_required"
 msgstr "(Requerido)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:124
+#: ../content/PloneboardForum.py:122
 msgid "label_show_captcha"
 msgstr "Mostrar Captcha"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 0.1\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2014-04-29 17:20-0300\n"
 "Last-Translator: André Nogueira <agnogueira@gmail.com>\n"
 "Language-Team: Simples Consultoria <contato@simplesconsultoria.com.br>\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: ../content/PloneboardForum.py:31
+#: ../content/PloneboardForum.py:46
 msgid "1 megabyte"
 msgstr "1 megabyte"
 
-#: ../content/PloneboardForum.py:29
+#: ../content/PloneboardForum.py:44
 msgid "10 kilobyte"
 msgstr "10 kilobytes"
 
-#: ../content/PloneboardForum.py:32
+#: ../content/PloneboardForum.py:47
 msgid "10 megabyte"
 msgstr "10 megabytes"
 
-#: ../content/PloneboardForum.py:30
+#: ../content/PloneboardForum.py:45
 msgid "100 kilobyte"
 msgstr "100 kilobytes"
 
@@ -55,7 +55,7 @@ msgid "Attachment is too large"
 msgstr "O anexo é muito grande"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_form.cpt:204
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:90
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
@@ -74,7 +74,7 @@ msgstr "Comentário"
 msgid "Comment added"
 msgstr "Comentário adicionado"
 
-#: ../browser/comment.py:273
+#: ../browser/comment.py:306
 msgid "Comment deleted"
 msgstr "Comentário removido"
 
@@ -94,7 +94,7 @@ msgstr "Tópico adicionado"
 msgid "Conversation contains comments."
 msgstr "Um tópico contém comentários."
 
-#: ../browser/comment.py:268
+#: ../browser/comment.py:301
 msgid "Conversation deleted"
 msgstr "Tópico apagado"
 
@@ -146,9 +146,7 @@ msgstr "Ploneboard"
 
 #: ploneboard genericsetup profile title in configure.zcml
 msgid "Ploneboard (backward compatible version, please use default profile)"
-msgstr ""
-"Ploneboard (versão compatível com versões anteriores, utilize o perfil "
-"padrão)"
+msgstr "Ploneboard (versão compatível com versões anteriores, utilize o perfil padrão)"
 
 #: intranet genericsetup profile title in configure.zcml
 msgid "Ploneboard for intranets"
@@ -173,7 +171,7 @@ msgstr "Publicar"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:197
+#: ../skins/ploneboard_templates/add_comment_form.cpt:198
 msgid "Post comment"
 msgstr "Publicar comentário"
 
@@ -246,7 +244,8 @@ msgid "board_search_button"
 msgstr "Buscar"
 
 #. Default: "Search Boards"
-#: ../browser/search.pt:22 ../browser/templates/board.pt:28
+#: ../browser/search.pt:22
+#: ../browser/templates/board.pt:28
 #: ../skins/ploneboard_templates/board_view.pt:32
 msgid "board_search_label"
 msgstr "Buscar nos fóruns"
@@ -317,60 +316,46 @@ msgstr "Pré-visualizar comentário"
 msgid "help_add_portlet"
 msgstr "Este portlet mostra tópicos com comentários recentes."
 
-#. Default: "If selected, this will give users the ability to edit their own comments."
-#: ../content/PloneboardForum.py:87
-msgid "help_allow_edit_comment"
-msgstr ""
-"Caso selecionado, permite que os usuários editem suas próprias mensagens."
-
 #. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "help_anon_name"
-msgstr ""
-"Você não está logado. Caso prefira, você pode informar seu nome de usuário "
-"neste comentário."
+msgstr "Você não está logado. Caso prefira, você pode informar seu nome de usuário neste comentário."
 
 #. Default: "If selected, anonymous users can insert a name in their comments."
 #: ../browser/controlpanel.py:35
 msgid "help_anon_nick"
-msgstr ""
-"Caso selecionado, usuários anônimos poderão inserir o nome em seus "
-"comentários."
+msgstr "Caso selecionado, usuários anônimos poderão inserir o nome em seus comentários."
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:171
+#: ../skins/ploneboard_templates/add_comment_form.cpt:172
 msgid "help_body_attachments_maxsize"
 msgstr "O tamanho máximo de um anexo é ${maxsize} kilobytes."
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:165
+#: ../skins/ploneboard_templates/add_comment_form.cpt:166
 msgid "help_body_attachments_posting"
 msgstr "Selecione um arquivo para anexar a este comentário."
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:115
+#: ../skins/ploneboard_templates/add_comment_form.cpt:116
 msgid "help_body_text_posting"
 msgstr "Tags HTML básicas são permitidas."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:110
+#: ../skins/ploneboard_templates/add_comment_form.cpt:111
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLs serão automaticamente linkadas."
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:144
+#: ../skins/ploneboard_templates/add_comment_form.cpt:145
 msgid "help_captcha"
 msgstr "Forneça o texto da imagem. Apenas para evitar spambots"
 
 msgid "help_categories_board"
-msgstr ""
-"Informe as categorias que você quer disponibilizar nos fóruns. Uma categoria "
-"por linha."
+msgstr "Informe as categorias que você quer disponibilizar nos fóruns. Uma categoria por linha."
 
 msgid "help_category"
-msgstr ""
-"Selecione abaixo a qual categoria o fórum pertence. Um fórum pode existir em "
-"várias categorias, porém somente uma é o recomendado."
+msgstr "Selecione abaixo a qual categoria o fórum pertence. Um fórum pode existir em várias categorias, porém somente uma é o recomendado."
 
 #. Default: "How many items to list."
 #: ../portlet/recent.py:29
@@ -398,11 +383,9 @@ msgid "help_maxattachmentsize"
 msgstr "Defina qual o tamanho máximo de um anexo."
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:97
+#: ../content/PloneboardForum.py:118
 msgid "help_showcaptcha"
-msgstr ""
-"Selecione se deve ser exibido ou não o campo de captcha para usuários "
-"anônimos (se o recaptcha estiver instalado e configurado)."
+msgstr "Selecione se deve ser exibido ou não o campo de captcha para usuários anônimos (se o recaptcha estiver instalado e configurado)."
 
 msgid "help_text"
 msgstr "Digite o corpo do comentário."
@@ -410,25 +393,15 @@ msgstr "Digite o corpo do comentário."
 #. Default: "Select the text transformations that should be used for comments posted in Ploneboard conversations. Text transformations alter the text entered by the user, either to remove potentially malicious HTML tags, or to add additional functionality, such as making links clickable."
 #: ../browser/controlpanel.py:19
 msgid "help_transforms"
-msgstr ""
-"Selecione as transformações de texto que deverão ser utilizadas nos "
-"comentários publicados em tópicos do Ploneboard. As transformações de texto "
-"alteram o texto digitado pelo usuário, removem tags HTML potencialmente "
-"maliciosas ou executa funcionalidades adicionais, como auto-transformar URLs "
-"em links clicáveis."
+msgstr "Selecione as transformações de texto que deverão ser utilizadas nos comentários publicados em tópicos do Ploneboard. As transformações de texto alteram o texto digitado pelo usuário, removem tags HTML potencialmente maliciosas ou executa funcionalidades adicionais, como auto-transformar URLs em links clicáveis."
 
 #. Default: "Add recent conversations portlet."
 #: ../portlet/recent.py:131
 msgid "label_add_portlet"
 msgstr "Adicionar portlet de tópicos recentes"
 
-#. Default: "Allow users to edit their comments"
-#: ../content/PloneboardForum.py:85
-msgid "label_allow_edit_comment"
-msgstr "Permitir que os usuários editem seus comentários"
-
 #. Default: "Name"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+#: ../skins/ploneboard_templates/add_comment_form.cpt:58
 msgid "label_anon_name"
 msgstr "Nome"
 
@@ -443,23 +416,24 @@ msgid "label_back_to_board"
 msgstr "Voltar para a discussão"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "label_body_files_posting"
 msgstr "Anexos"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:102
+#: ../skins/ploneboard_templates/add_comment_form.cpt:103
 msgid "label_body_text_posting"
 msgstr "Corpo do texto"
 
 #. Default: "by ${author}"
-#: ../browser/templates/board.pt:126 ../browser/templates/forum.pt:108
+#: ../browser/templates/board.pt:126
+#: ../browser/templates/forum.pt:108
 #: ../skins/ploneboard_templates/board_view.pt:134
 msgid "label_by_author"
 msgstr "por ${author}"
 
 #. Default: "Captcha"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:138
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "label_captcha"
 msgstr "Captcha"
 
@@ -479,12 +453,12 @@ msgid "label_description_forum"
 msgstr "Descrição"
 
 #. Default: "Attachments"
-#: ../content/PloneboardComment.py:67
+#: ../content/PloneboardComment.py:73
 msgid "label_displayAttachments"
 msgstr "Anexos"
 
 #. Default: "Images"
-#: ../content/PloneboardComment.py:78
+#: ../content/PloneboardComment.py:84
 msgid "label_displayImages"
 msgstr "Imagens"
 
@@ -505,17 +479,17 @@ msgid "label_powered_by"
 msgstr "Tecnologia ${link}"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:82
+#: ../browser/comment.py:87
 msgid "label_quote"
 msgstr "citação"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:76
+#: ../skins/ploneboard_templates/add_comment_form.cpt:77
 msgid "label_required"
 msgstr "(Obrigatório)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:98
+#: ../content/PloneboardForum.py:122
 msgid "label_show_captcha"
 msgstr "Exibir Captcha"
 
@@ -523,7 +497,7 @@ msgid "label_text"
 msgstr "Corpo do texto"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:74
+#: ../skins/ploneboard_templates/add_comment_form.cpt:75
 msgid "label_title_posting"
 msgstr "Título"
 
@@ -543,26 +517,24 @@ msgid "log_to_start_conversation"
 msgstr "Autentique-se para iniciar um tópico"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:73
+#: ../skins/ploneboard_templates/moderation_form.pt:74
 msgid "moderation_count"
 msgstr "${count} comentários na lista."
 
 #. Default: "The following comments are pending moderation. Please click 'Publish' or 'Reject' as necessary. Click the title of a comment to view it in the context of its conversation."
 #: ../skins/ploneboard_templates/moderation_form.pt:36
 msgid "moderation_description"
-msgstr ""
-"Os seguintes comentários estão pendentes para moderação. Por favor, clique "
-"em 'Publicar' ou 'Rejeitar' conforme necessário. Clique no título de um "
-"comentário para visualizá-lo no conteúdo de seu tópico."
+msgstr "Os seguintes comentários estão pendentes para moderação. Por favor, clique em 'Publicar' ou 'Rejeitar' conforme necessário. Clique no título de um comentário para visualizá-lo no conteúdo de seu tópico."
 
 #. Default: "Most recent comment"
-#: ../browser/templates/board.pt:88 ../browser/templates/forum.pt:83
+#: ../browser/templates/board.pt:88
+#: ../browser/templates/forum.pt:83
 #: ../skins/ploneboard_templates/board_view.pt:96
 msgid "most_recent_comment"
 msgstr "Comentários recentes"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:184
+#: ../skins/ploneboard_templates/add_comment_form.cpt:185
 msgid "new_attachment"
 msgstr "Adicionar outro anexo"
 
@@ -571,11 +543,10 @@ msgstr "Adicionar outro anexo"
 #: ../skins/ploneboard_templates/ploneboard_recent.pt:57
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:55
 msgid "new_conversations_marked_with"
-msgstr ""
-"Tópicos marcados com ${star} tiveram atividade desde seu último acesso."
+msgstr "Tópicos marcados com ${star} tiveram atividade desde seu último acesso."
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:113
+#: ../skins/ploneboard_templates/moderation_form.pt:115
 msgid "no_comments_queued"
 msgstr "Não há comentários na fila de moderação."
 
@@ -607,9 +578,7 @@ msgstr "Ainda não há tópicos neste fórum."
 #: ../skins/ploneboard_templates/board_view.pt:72
 #: ../skins/ploneboard_templates/board_view_global.pt:30
 msgid "not_forums"
-msgstr ""
-"Ainda não existem fóruns nesta pasta. Use o menu Adicionar itens para criar "
-"um fórum."
+msgstr "Ainda não existem fóruns nesta pasta. Use o menu Adicionar itens para criar um fórum."
 
 #. Default: "Sorry, you do not have permission to start a new Conversation"
 #: ../browser/templates/addconversation.pt:41
@@ -715,10 +684,9 @@ msgstr "Tópicos não respondidos em ${title}"
 #. Default: "The following conversations have been posted, but have not yet received any replies."
 #: ../skins/ploneboard_templates/ploneboard_unanswered.pt:48
 msgid "unanswered_conversations_description"
-msgstr ""
-"Os tópicos a seguir foram publicados, mas ainda não receberam nenhuma "
-"resposta."
+msgstr "Os tópicos a seguir foram publicados, mas ainda não receberam nenhuma resposta."
 
-#: ../content/PloneboardForum.py:33
+#: ../content/PloneboardForum.py:48
 msgid "unlimited"
 msgstr "ilimitado"
+

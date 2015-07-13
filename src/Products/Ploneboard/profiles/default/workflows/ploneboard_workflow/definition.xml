@@ -1,5 +1,14 @@
 <?xml version="1.0"?>
-<dc-workflow workflow_id="ploneboard_workflow" title="Ploneboard Workflow [Ploneboard]" description="" state_variable="review_state" initial_state="published" manager_bypass="False">
+<dc-workflow xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+             i18n:domain="plone"
+             workflow_id="ploneboard_workflow"
+             title="Ploneboard Workflow [Ploneboard]"
+             description="This allows owner to sending a Ploneboard to be public, to receive discussion from users."
+             state_variable="review_state"
+             initial_state="published"
+             manager_bypass="False"
+             i18n:attributes="title; description">
+
  <permission>Access contents information</permission>
  <permission>Add portal content</permission>
  <permission>Modify portal content</permission>
@@ -12,7 +21,9 @@
  <permission>Ploneboard: Manage Conversation</permission>
  <permission>Ploneboard: Search</permission>
  <permission>View</permission>
- <state state_id="locked" title="Locked">
+ 
+ <state state_id="locked" title="Locked" i18n:attributes="title">
+  <description i18n:translate="">This message board is locked by his Owner / the Plone site manager.</description>
   <exit-transition transition_id="unlock"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
@@ -45,7 +56,9 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
  </state>
- <state state_id="private" title="Hidden">
+ 
+ <state state_id="private" title="Hidden" i18n:attributes="title">
+  <description i18n:translate="">This message board is private by discussions from Plone users.</description>
   <exit-transition transition_id="open"/>
   <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
@@ -95,7 +108,9 @@
    <permission-role>Owner</permission-role>
   </permission-map>
  </state>
- <state state_id="published" title="Open">
+ 
+ <state state_id="published" title="Open" i18n:attributes="title">
+  <description i18n:translate="">This message board is published to receive discussions from Plone users.</description>
   <exit-transition transition_id="hide"/>
   <exit-transition transition_id="lock"/>
   <permission-map name="Access contents information" acquired="True">
@@ -144,25 +159,45 @@
    <permission-role>Manager</permission-role>
   </permission-map>
  </state>
- <transition transition_id="hide" title="Hide message board" new_state="private" trigger="USER" before_script="" after_script="">
+ 
+ <transition transition_id="hide"
+             title="Hide message board" i18n:attributes="title"
+             new_state="private" trigger="USER" 
+             before_script="" after_script="">
+  <description i18n:translate="">Making an Hide message board means that it will not be visible to anyone but the owner and the site administrator.</description>
   <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Hide</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="lock" title="Lock message board" new_state="locked" trigger="USER" before_script="" after_script="lock_or_unlock">
+ 
+ <transition transition_id="lock"
+             title="Lock message board" i18n:attributes="title"
+             new_state="locked" trigger="USER" 
+             before_script="" after_script="lock_or_unlock">
+  <description i18n:translate="">Making an Lock message board means that it will not be editable to anyone, just the owner and the site administrator.</description>
   <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Lock</action>
   <guard>
    <guard-permission>Ploneboard: Manage Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="open" title="Open message board" new_state="published" trigger="USER" before_script="" after_script="">
+ 
+ <transition transition_id="open"
+             title="Open message board" i18n:attributes="title"
+             new_state="published" trigger="USER"
+             before_script="" after_script="">
+  <description i18n:translate="">Making an Open message board means that it will receive discussions.</description>
   <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Open</action>
   <guard>
    <guard-permission>Ploneboard: Add Forum</guard-permission>
   </guard>
  </transition>
- <transition transition_id="unlock" title="Unlock message board" new_state="published" trigger="USER" before_script="" after_script="lock_or_unlock">
+ 
+ <transition transition_id="unlock"
+             title="Unlock message board" i18n:attributes="title"
+             new_state="published" trigger="USER"
+             before_script="" after_script="lock_or_unlock">
+  <description i18n:translate="">Making an Unlock message board means that it will be editable.</description>
   <action url="%(content_url)s/content_publish_form" category="workflow" icon="">Unlock</action>
   <guard>
    <guard-permission>Ploneboard: Manage Forum</guard-permission>

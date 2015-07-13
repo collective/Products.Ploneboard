@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Products.Ploneboard\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2013-09-20 07:54+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: eu <eu@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Poedit-Language: Basque\n"
 
-#: ../content/PloneboardForum.py:31
+#: ../content/PloneboardForum.py:46
 msgid "1 megabyte"
 msgstr "Megabyte 1"
 
-#: ../content/PloneboardForum.py:29
+#: ../content/PloneboardForum.py:44
 msgid "10 kilobyte"
 msgstr "10 kilobyte"
 
-#: ../content/PloneboardForum.py:32
+#: ../content/PloneboardForum.py:47
 msgid "10 megabyte"
 msgstr "10 megabyte"
 
-#: ../content/PloneboardForum.py:30
+#: ../content/PloneboardForum.py:45
 msgid "100 kilobyte"
 msgstr "100 kilobyte"
 
@@ -54,7 +54,7 @@ msgid "Attachment is too large"
 msgstr "Fitxategia handiegia da"
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_form.cpt:204
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:90
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
@@ -73,7 +73,7 @@ msgstr "Erantzuna"
 msgid "Comment added"
 msgstr "Erantzuna gehituta"
 
-#: ../browser/comment.py:273
+#: ../browser/comment.py:306
 msgid "Comment deleted"
 msgstr "Erantzuna ezabatuta"
 
@@ -93,7 +93,7 @@ msgstr "Elkarrizketa-haria gehituta"
 msgid "Conversation contains comments."
 msgstr "Hariak erantzunak ditu"
 
-#: ../browser/comment.py:268
+#: ../browser/comment.py:301
 msgid "Conversation deleted"
 msgstr "Elkarrizketa-haria ezabatuta"
 
@@ -170,7 +170,7 @@ msgstr "Argitaratu"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:197
+#: ../skins/ploneboard_templates/add_comment_form.cpt:198
 msgid "Post comment"
 msgstr "Erantzuna argitaratu"
 
@@ -315,13 +315,8 @@ msgstr "Erantzuna aurreikusi"
 msgid "help_add_portlet"
 msgstr "Portlet honek azkenaldian erantzunak izan dituzten elkarrizketak erakusten ditu"
 
-#. Default: "If selected, this will give users the ability to edit their own comments."
-#: ../content/PloneboardForum.py:87
-msgid "help_allow_edit_comment"
-msgstr ""
-
 #. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "help_anon_name"
 msgstr ""
 
@@ -331,27 +326,27 @@ msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:171
+#: ../skins/ploneboard_templates/add_comment_form.cpt:172
 msgid "help_body_attachments_maxsize"
 msgstr "Fitxategiaren gehienezko tamaina ${maxsize} kilobytekoa da"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:165
+#: ../skins/ploneboard_templates/add_comment_form.cpt:166
 msgid "help_body_attachments_posting"
 msgstr "Mezu honekin batera argitaratuko den fitxategia kargatu"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:115
+#: ../skins/ploneboard_templates/add_comment_form.cpt:116
 msgid "help_body_text_posting"
 msgstr "Oinarrizko HTML etiketak idatz daitezke"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:110
+#: ../skins/ploneboard_templates/add_comment_form.cpt:111
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URLak automatikoki lotura bihurtuko dira"
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:144
+#: ../skins/ploneboard_templates/add_comment_form.cpt:145
 msgid "help_captcha"
 msgstr "Irudiko testua idatzi. Spama ekiditeko metodoa da hau."
 
@@ -387,7 +382,7 @@ msgid "help_maxattachmentsize"
 msgstr "Aukeratu gehitutako fitxategien tamaina maximoa"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:97
+#: ../content/PloneboardForum.py:118
 msgid "help_showcaptcha"
 msgstr "Aukeratu erabiltzaile anonimoentzat captcha irudi bat erakutsi nahi baduzu (recaptcha instalatuta eta konfiguratuta badago)."
 
@@ -404,13 +399,8 @@ msgstr "Ploneboardeko erantzunei aplikatu behar zaizkien transformazioak aukerat
 msgid "label_add_portlet"
 msgstr "Azken elkarrizketen portleta gehitu"
 
-#. Default: "Allow users to edit their comments"
-#: ../content/PloneboardForum.py:85
-msgid "label_allow_edit_comment"
-msgstr ""
-
 #. Default: "Name"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+#: ../skins/ploneboard_templates/add_comment_form.cpt:58
 msgid "label_anon_name"
 msgstr ""
 
@@ -425,12 +415,12 @@ msgid "label_back_to_board"
 msgstr "Forora itzuli"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "label_body_files_posting"
 msgstr "Fitxategiak"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:102
+#: ../skins/ploneboard_templates/add_comment_form.cpt:103
 msgid "label_body_text_posting"
 msgstr "Testua"
 
@@ -442,7 +432,7 @@ msgid "label_by_author"
 msgstr "${author}"
 
 #. Default: "Captcha"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:138
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "label_captcha"
 msgstr "Captcha"
 
@@ -462,12 +452,12 @@ msgid "label_description_forum"
 msgstr "Deskribapena"
 
 #. Default: "Attachments"
-#: ../content/PloneboardComment.py:67
+#: ../content/PloneboardComment.py:73
 msgid "label_displayAttachments"
 msgstr ""
 
 #. Default: "Images"
-#: ../content/PloneboardComment.py:78
+#: ../content/PloneboardComment.py:84
 msgid "label_displayImages"
 msgstr ""
 
@@ -488,17 +478,17 @@ msgid "label_powered_by"
 msgstr "${link}ekin egina"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:82
+#: ../browser/comment.py:87
 msgid "label_quote"
 msgstr "${author}(e)k zera idatzi zuen: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:76
+#: ../skins/ploneboard_templates/add_comment_form.cpt:77
 msgid "label_required"
 msgstr "Beharrezkoa"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:98
+#: ../content/PloneboardForum.py:122
 msgid "label_show_captcha"
 msgstr "Captcha erakutsi"
 
@@ -506,7 +496,7 @@ msgid "label_text"
 msgstr "Testua"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:74
+#: ../skins/ploneboard_templates/add_comment_form.cpt:75
 msgid "label_title_posting"
 msgstr "Izenburua"
 
@@ -526,7 +516,7 @@ msgid "log_to_start_conversation"
 msgstr "Egin login elkarrizketa-hari berri bat sortzeko"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:73
+#: ../skins/ploneboard_templates/moderation_form.pt:74
 msgid "moderation_count"
 msgstr "${count} mezu moderazio kolan."
 
@@ -543,7 +533,7 @@ msgid "most_recent_comment"
 msgstr "Azken erantzuna"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:184
+#: ../skins/ploneboard_templates/add_comment_form.cpt:185
 msgid "new_attachment"
 msgstr "Beste fitxategi bat gehitu"
 
@@ -555,7 +545,7 @@ msgid "new_conversations_marked_with"
 msgstr "${star} ikurrarekin markatutako mezuetan, azken aldiz etorri zinenetik aldaketak egon dira."
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:113
+#: ../skins/ploneboard_templates/moderation_form.pt:115
 msgid "no_comments_queued"
 msgstr "Ez dago erantzunik moderazio kolan."
 
@@ -695,7 +685,7 @@ msgstr "${title}-(e)n dauden erantzun gabeko azkenak"
 msgid "unanswered_conversations_description"
 msgstr "Elkarrizketa-hari hauek oraindik ez dute erantzunik."
 
-#: ../content/PloneboardForum.py:33
+#: ../content/PloneboardForum.py:48
 msgid "unlimited"
 msgstr "mugarik gabe"
 

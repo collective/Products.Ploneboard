@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard-ca\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2013-05-10 19:17+0200\n"
 "Last-Translator: Pilar Marinas Luis <pilar.marinas@upcnet.es>\n"
 "Language-Team: <en@li.org>\n"
@@ -15,19 +15,19 @@ msgstr ""
 "Domain: ploneboard\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../content/PloneboardForum.py:31
+#: ../content/PloneboardForum.py:46
 msgid "1 megabyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:29
+#: ../content/PloneboardForum.py:44
 msgid "10 kilobyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:32
+#: ../content/PloneboardForum.py:47
 msgid "10 megabyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:30
+#: ../content/PloneboardForum.py:45
 msgid "100 kilobyte"
 msgstr ""
 
@@ -51,7 +51,7 @@ msgid "Attachment is too large"
 msgstr ""
 
 #. Default: "Cancel"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_form.cpt:204
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:90
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Comment added"
 msgstr "Comentari afegit"
 
-#: ../browser/comment.py:273
+#: ../browser/comment.py:306
 msgid "Comment deleted"
 msgstr "Comentari esborrat"
 
@@ -90,7 +90,7 @@ msgstr "Conversa"
 msgid "Conversation contains comments."
 msgstr ""
 
-#: ../browser/comment.py:268
+#: ../browser/comment.py:301
 msgid "Conversation deleted"
 msgstr "Publicat"
 
@@ -167,7 +167,7 @@ msgstr "Respon"
 
 #. Default: "Post comment"
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:197
+#: ../skins/ploneboard_templates/add_comment_form.cpt:198
 msgid "Post comment"
 msgstr "Respon comentari"
 
@@ -312,13 +312,8 @@ msgstr "Previsualitzar comentari"
 msgid "help_add_portlet"
 msgstr "Introdueixi el cos del comentari"
 
-#. Default: "If selected, this will give users the ability to edit their own comments."
-#: ../content/PloneboardForum.py:87
-msgid "help_allow_edit_comment"
-msgstr ""
-
 #. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "help_anon_name"
 msgstr ""
 
@@ -328,27 +323,27 @@ msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:171
+#: ../skins/ploneboard_templates/add_comment_form.cpt:172
 msgid "help_body_attachments_maxsize"
 msgstr "La grandària màxima de l'arxiu adjunt és de ${maxsize} kilobytes"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:165
+#: ../skins/ploneboard_templates/add_comment_form.cpt:166
 msgid "help_body_attachments_posting"
 msgstr "Seleccioni un fitxer per posar com a annex a aquest comentari"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:115
+#: ../skins/ploneboard_templates/add_comment_form.cpt:116
 msgid "help_body_text_posting"
 msgstr "Els tags HTML estan OK."
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:110
+#: ../skins/ploneboard_templates/add_comment_form.cpt:111
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "Les URLS seran automaticament enllaçades"
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:144
+#: ../skins/ploneboard_templates/add_comment_form.cpt:145
 msgid "help_captcha"
 msgstr ""
 
@@ -384,7 +379,7 @@ msgid "help_maxattachmentsize"
 msgstr "Seleccioni la grandària màxima de cada arxiu adjunt"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:97
+#: ../content/PloneboardForum.py:118
 msgid "help_showcaptcha"
 msgstr ""
 
@@ -401,13 +396,8 @@ msgstr "Seleccioni les transformacions del text que han d'utilitzar-se en els co
 msgid "label_add_portlet"
 msgstr "Text"
 
-#. Default: "Allow users to edit their comments"
-#: ../content/PloneboardForum.py:85
-msgid "label_allow_edit_comment"
-msgstr ""
-
 #. Default: "Name"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+#: ../skins/ploneboard_templates/add_comment_form.cpt:58
 msgid "label_anon_name"
 msgstr ""
 
@@ -422,12 +412,12 @@ msgid "label_back_to_board"
 msgstr "Categories"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "label_body_files_posting"
 msgstr "Annexes"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:102
+#: ../skins/ploneboard_templates/add_comment_form.cpt:103
 msgid "label_body_text_posting"
 msgstr "Cos del missatge"
 
@@ -439,7 +429,7 @@ msgid "label_by_author"
 msgstr "per ${author}"
 
 #. Default: "Captcha"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:138
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "label_captcha"
 msgstr ""
 
@@ -459,12 +449,12 @@ msgid "label_description_forum"
 msgstr "Descripció Fòrum"
 
 #. Default: "Attachments"
-#: ../content/PloneboardComment.py:67
+#: ../content/PloneboardComment.py:73
 msgid "label_displayAttachments"
 msgstr ""
 
 #. Default: "Images"
-#: ../content/PloneboardComment.py:78
+#: ../content/PloneboardComment.py:84
 msgid "label_displayImages"
 msgstr ""
 
@@ -485,17 +475,17 @@ msgid "label_powered_by"
 msgstr "Amb el suport de ${link}"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:82
+#: ../browser/comment.py:87
 msgid "label_quote"
 msgstr ""
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:76
+#: ../skins/ploneboard_templates/add_comment_form.cpt:77
 msgid "label_required"
 msgstr "(Requerit)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:98
+#: ../content/PloneboardForum.py:122
 msgid "label_show_captcha"
 msgstr ""
 
@@ -503,7 +493,7 @@ msgid "label_text"
 msgstr "Text"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:74
+#: ../skins/ploneboard_templates/add_comment_form.cpt:75
 msgid "label_title_posting"
 msgstr "Títol"
 
@@ -523,7 +513,7 @@ msgid "log_to_start_conversation"
 msgstr "Comença una nova conversa"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:73
+#: ../skins/ploneboard_templates/moderation_form.pt:74
 msgid "moderation_count"
 msgstr "${count} comentaris encuats"
 
@@ -540,7 +530,7 @@ msgid "most_recent_comment"
 msgstr "Comentari més recent"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:184
+#: ../skins/ploneboard_templates/add_comment_form.cpt:185
 msgid "new_attachment"
 msgstr "Afegir annexe"
 
@@ -552,7 +542,7 @@ msgid "new_conversations_marked_with"
 msgstr "Les converses marcades amb ${star} han tingut activitat des de l'última vegada que ens va visitar"
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:113
+#: ../skins/ploneboard_templates/moderation_form.pt:115
 msgid "no_comments_queued"
 msgstr "No hi ha comentaris encuats"
 
@@ -692,7 +682,7 @@ msgstr "Converses sense resposta"
 msgid "unanswered_conversations_description"
 msgstr ""
 
-#: ../content/PloneboardForum.py:33
+#: ../content/PloneboardForum.py:48
 msgid "unlimited"
 msgstr ""
 

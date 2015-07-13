@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2011-07-06 15:18+0100\n"
 "Last-Translator: Radek Jankiewicz <radoslaw.jankiewicz@stxnext.pl>\n"
 "Language-Team: \n"
@@ -18,25 +18,66 @@ msgstr ""
 msgid "Activate"
 msgstr "Aktywuj"
 
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
 msgid "Active"
 msgstr "Aktywny"
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Automatic publishing in unmoderated boards"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Automatic publishing request"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Being created"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Comment Workflow [Ploneboard]"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Conversation Workflow [Ploneboard]"
+msgstr ""
 
 #: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr ""
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Forum Workflow [Ploneboard]"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Free for all"
 msgstr "Otwarte dla wszystkich"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Hidden"
 msgstr "Versteckt"
 
 msgid "Hide"
 msgstr "Schowaj"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Hide message board"
+msgstr ""
+
 msgid "Lock"
 msgstr "Zablokuj"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Lock message board"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Locked"
 msgstr ""
 
@@ -46,42 +87,164 @@ msgstr "Otwórz dla wszystkich"
 msgid "Make member-posting"
 msgstr "Komentowanie tylko przez zarejestrowanych użytkowników"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Make moderated"
 msgstr "Forum moderowane"
 
 msgid "Make private"
 msgstr ""
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Make the forum free for all"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Hide message board means that it will not be visible to anyone but the owner and the site administrator."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Lock message board means that it will not be editable to anyone, just the owner and the site administrator."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Open message board means that it will receive discussions."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Unlock message board means that it will be editable."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Member requests publishing"
+msgstr ""
+
 msgid "Moderate"
 msgstr "Moderuj"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Moderated forum"
 msgstr "Fora moderowane"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Only let members post"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Open"
 msgstr "Otwórz"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Open message board"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Pending state"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Ploneboard Workflow [Ploneboard]"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Private closed board"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Private to members only"
 msgstr "Tylko dla zarejestrowanych użytkowników"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Public"
 msgstr "Publiczne"
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Re-publish a retracted comment"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Rejected"
 msgstr "Wycofane"
 
 # Require membership to post
 #. Default: "Require membership to post"
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Require membership to post"
 msgstr "Wymagana jest rejestracja, żeby móc dodawać posty"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:139
+#: ../skins/ploneboard_templates/add_comment_form.cpt:140
 msgid "Required"
 msgstr ""
 
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Retract a published comment"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Retracted"
 msgstr "Zurückgezogen"
 
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer locks conversation"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Reviewer publishes content"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer rejects pending conversation"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Reviewer rejects submission"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer returns conversation to active"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "This allows owner to add a Conversation and enable it to receive Comments."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "This allows owner to edit a Comment made into a Forum to be public."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "This allows owner to sending a Forum to be public, to receive discussion from users."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This allows owner to sending a Ploneboard to be public, to receive discussion from users."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is locked by his Owner / the Plone site manager."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is private by discussions from Plone users."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is published to receive discussions from Plone users."
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Unlock message board"
+msgstr ""
+
+#: ../profiles/default/workflows/ploneboard_comment_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Waiting for moderator"
 msgstr "Wartet auf Moderation"
 
@@ -92,6 +255,10 @@ msgstr ""
 
 #. Default: "Global forum listing"
 msgid "board_view_global"
+msgstr ""
+
+#. Flat conversion view
+msgid "conversation_browserview"
 msgstr ""
 
 #. Flat conversion view

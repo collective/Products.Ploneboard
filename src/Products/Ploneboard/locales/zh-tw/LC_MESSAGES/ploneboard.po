@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
+"POT-Creation-Date: 2015-07-13 14:37+0000\n"
 "PO-Revision-Date: 2012-08-06 11:50+0800\n"
 "Last-Translator: TsungWei Hu <marr.tw@gmail.com>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -14,19 +14,19 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: ploneboard\n"
 
-#: ../content/PloneboardForum.py:31
+#: ../content/PloneboardForum.py:46
 msgid "1 megabyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:29
+#: ../content/PloneboardForum.py:44
 msgid "10 kilobyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:32
+#: ../content/PloneboardForum.py:47
 msgid "10 megabyte"
 msgstr ""
 
-#: ../content/PloneboardForum.py:30
+#: ../content/PloneboardForum.py:45
 msgid "100 kilobyte"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Attachment is too large"
 msgstr "附件檔案過大"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:203
+#: ../skins/ploneboard_templates/add_comment_form.cpt:204
 #: ../skins/ploneboard_templates/add_comment_preview.cpt:90
 #: ../skins/ploneboard_templates/add_conversation_form.cpt:59
 msgid "Cancel"
@@ -67,7 +67,7 @@ msgstr "留言"
 msgid "Comment added"
 msgstr "留言已新增"
 
-#: ../browser/comment.py:273
+#: ../browser/comment.py:306
 msgid "Comment deleted"
 msgstr "留言已刪除"
 
@@ -87,7 +87,7 @@ msgstr "留言已新增"
 msgid "Conversation contains comments."
 msgstr "留言已有回覆。"
 
-#: ../browser/comment.py:268
+#: ../browser/comment.py:301
 msgid "Conversation deleted"
 msgstr "留言已刪除"
 
@@ -161,7 +161,7 @@ msgid "Post"
 msgstr "張貼留言"
 
 #: ../browser/templates/conversation_view.pt:80
-#: ../skins/ploneboard_templates/add_comment_form.cpt:197
+#: ../skins/ploneboard_templates/add_comment_form.cpt:198
 msgid "Post comment"
 msgstr "張貼留言"
 
@@ -303,13 +303,8 @@ msgstr "預覽"
 msgid "help_add_portlet"
 msgstr "用來顯示最新的留言。"
 
-#. Default: "If selected, this will give users the ability to edit their own comments."
-#: ../content/PloneboardForum.py:87
-msgid "help_allow_edit_comment"
-msgstr ""
-
 #. Default: "You are an anonymous user. If you want, you can insert your name in this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:59
+#: ../skins/ploneboard_templates/add_comment_form.cpt:60
 msgid "help_anon_name"
 msgstr ""
 
@@ -319,27 +314,27 @@ msgid "help_anon_nick"
 msgstr ""
 
 #. Default: "The maximum allowed attachment size is ${maxsize} kilobytes."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:171
+#: ../skins/ploneboard_templates/add_comment_form.cpt:172
 msgid "help_body_attachments_maxsize"
 msgstr "附件檔案最大限制是 ${maxsize} KB。"
 
 #. Default: "Select a file to upload as an attachment to this comment."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:165
+#: ../skins/ploneboard_templates/add_comment_form.cpt:166
 msgid "help_body_attachments_posting"
 msgstr "上傳留言的附件檔案。"
 
 #. Default: "Basic HTML tags are OK."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:115
+#: ../skins/ploneboard_templates/add_comment_form.cpt:116
 msgid "help_body_text_posting"
 msgstr "可以使用基本的 HTML 標籤。"
 
 #. Default: "URLs will be automatically hyperlinked."
-#: ../skins/ploneboard_templates/add_comment_form.cpt:110
+#: ../skins/ploneboard_templates/add_comment_form.cpt:111
 msgid "help_body_text_posting_linkify_enabled"
 msgstr "URL 會自動轉換成可連結網址。"
 
 #. Default: "Provide the text in the image. Just to avoid spambots"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:144
+#: ../skins/ploneboard_templates/add_comment_form.cpt:145
 msgid "help_captcha"
 msgstr ""
 
@@ -375,7 +370,7 @@ msgid "help_maxattachmentsize"
 msgstr "指定附件檔案的最大容量限制。"
 
 #. Default: "Select if show or not captcha for anonymous (if recaptcha installed and configured)."
-#: ../content/PloneboardForum.py:97
+#: ../content/PloneboardForum.py:118
 msgid "help_showcaptcha"
 msgstr ""
 
@@ -392,13 +387,8 @@ msgstr ""
 msgid "label_add_portlet"
 msgstr "新增最新留言方框。"
 
-#. Default: "Allow users to edit their comments"
-#: ../content/PloneboardForum.py:85
-msgid "label_allow_edit_comment"
-msgstr ""
-
 #. Default: "Name"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:57
+#: ../skins/ploneboard_templates/add_comment_form.cpt:58
 msgid "label_anon_name"
 msgstr ""
 
@@ -413,12 +403,12 @@ msgid "label_back_to_board"
 msgstr "回到討論區"
 
 #. Default: "Attachments"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:162
+#: ../skins/ploneboard_templates/add_comment_form.cpt:163
 msgid "label_body_files_posting"
 msgstr "附件"
 
 #. Default: "Body text"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:102
+#: ../skins/ploneboard_templates/add_comment_form.cpt:103
 msgid "label_body_text_posting"
 msgstr "內文"
 
@@ -430,7 +420,7 @@ msgid "label_by_author"
 msgstr "作者：${author}"
 
 #. Default: "Captcha"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:138
+#: ../skins/ploneboard_templates/add_comment_form.cpt:139
 msgid "label_captcha"
 msgstr ""
 
@@ -450,12 +440,12 @@ msgid "label_description_forum"
 msgstr "摘要說明"
 
 #. Default: "Attachments"
-#: ../content/PloneboardComment.py:67
+#: ../content/PloneboardComment.py:73
 msgid "label_displayAttachments"
 msgstr ""
 
 #. Default: "Images"
-#: ../content/PloneboardComment.py:78
+#: ../content/PloneboardComment.py:84
 msgid "label_displayImages"
 msgstr ""
 
@@ -476,17 +466,17 @@ msgid "label_powered_by"
 msgstr "以 ${link} 建立"
 
 #. Default: "Previously ${author} wrote: ${quote}"
-#: ../browser/comment.py:82
+#: ../browser/comment.py:87
 msgid "label_quote"
 msgstr "前文中 ${author} 寫到: ${quote}"
 
 #. Default: "(Required)"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:76
+#: ../skins/ploneboard_templates/add_comment_form.cpt:77
 msgid "label_required"
 msgstr "(必填)"
 
 #. Default: "Show Captcha"
-#: ../content/PloneboardForum.py:98
+#: ../content/PloneboardForum.py:122
 msgid "label_show_captcha"
 msgstr ""
 
@@ -494,7 +484,7 @@ msgid "label_text"
 msgstr "內文"
 
 #. Default: "Title"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:74
+#: ../skins/ploneboard_templates/add_comment_form.cpt:75
 msgid "label_title_posting"
 msgstr "標題"
 
@@ -514,7 +504,7 @@ msgid "log_to_start_conversation"
 msgstr "登入帳號後可以留言"
 
 #. Default: "${count} comments in queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:73
+#: ../skins/ploneboard_templates/moderation_form.pt:74
 msgid "moderation_count"
 msgstr "${count} 留言等待審核。"
 
@@ -531,7 +521,7 @@ msgid "most_recent_comment"
 msgstr "最新留言"
 
 #. Default: "Add another attachment"
-#: ../skins/ploneboard_templates/add_comment_form.cpt:184
+#: ../skins/ploneboard_templates/add_comment_form.cpt:185
 msgid "new_attachment"
 msgstr "新增其他附件"
 
@@ -543,7 +533,7 @@ msgid "new_conversations_marked_with"
 msgstr "標記 ${star} 符號的留言有新的回覆。"
 
 #. Default: "There are no comments in the moderation queue."
-#: ../skins/ploneboard_templates/moderation_form.pt:113
+#: ../skins/ploneboard_templates/moderation_form.pt:115
 msgid "no_comments_queued"
 msgstr "沒有留言待審。"
 
@@ -683,7 +673,7 @@ msgstr "在 ${title} 未被回覆的留言"
 msgid "unanswered_conversations_description"
 msgstr "下列留言尚未被回覆。"
 
-#: ../content/PloneboardForum.py:33
+#: ../content/PloneboardForum.py:48
 msgid "unlimited"
 msgstr ""
 
