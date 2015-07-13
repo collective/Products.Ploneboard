@@ -2,48 +2,86 @@
 # Gettext File for Ploneboard
 # Pedro Fuentes <pedro dot fuentes at telefonica dot net>, 2006.
 # Pilar Marinas Luis <pilar.marinas@upcnet.es>, 2008.
-# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2013.
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2013, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: Ploneboard 1.0\n"
-"POT-Creation-Date: 2014-01-17 16:25+0000\n"
-"PO-Revision-Date: 2013-03-08 11:48-0430\n"
+"POT-Creation-Date: 2015-07-13 12:27+0000\n"
+"PO-Revision-Date: 2015-07-13 07:58-0430\n"
 "Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
-"Language-Team: Leonardo J. Caballero G.\n"
+"Language-Team: ES <LL@li.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 "Language-Code: es\n"
 "Language-Name: Spanish\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
-"Language: es\n"
-"X-Generator: Virtaal 0.7.1\n"
-"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-"
+"gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 msgid "Activate"
 msgstr "Activar"
 
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
 msgid "Active"
 msgstr "Activo"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Automatic publishing in unmoderated boards"
+msgstr "Publicación automática en tablero no moderados"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Automatic publishing request"
+msgstr "Solicitud de publicación automática"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Being created"
+msgstr "Creándose"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Comment Workflow [Ploneboard]"
+msgstr "Flujo de trabajo de Comentario [Ploneboard]"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Conversation Workflow [Ploneboard]"
+msgstr "Flujo de trabajo de Conversación [Ploneboard]"
 
 #: ../skins/ploneboard_templates/comment_view.pt:118
 msgid "Edit"
 msgstr "Editar"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Forum Workflow [Ploneboard]"
+msgstr "Flujo de trabajo de Foro [Ploneboard]"
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Free for all"
 msgstr "Libre para todos"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Hidden"
 msgstr "Oculto"
 
 msgid "Hide"
 msgstr "Ocultar"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Hide message board"
+msgstr "Ocultar mensaje de foro"
+
 msgid "Lock"
 msgstr "Bloquear"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Lock message board"
+msgstr "Bloquear mensaje de foro"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Locked"
 msgstr "Bloqueado"
 
@@ -53,40 +91,156 @@ msgstr "Dejar libre para todos"
 msgid "Make member-posting"
 msgstr "Sólo para miembros"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Make moderated"
 msgstr "Haz moderado"
 
 msgid "Make private"
 msgstr "Hacer privado"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Make the forum free for all"
+msgstr "Hacer el foro libre para todos"
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Hide message board means that it will not be visible to anyone but the owner and the site administrator."
+msgstr "Al hacer un mensaje de foro oculto no será visible para ninguna persona salvo para su propietario y el administrador del sitio."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Lock message board means that it will not be editable to anyone, just the owner and the site administrator."
+msgstr "Al hacer un bloqueo de un mensaje de foro no será visible para ninguna persona salvo para su propietario y el administrador del sitio."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Open message board means that it will receive discussions."
+msgstr "Haciendo a un tablero de mensaje Abierto significa que recibirá discusiones."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Making an Unlock message board means that it will be editable."
+msgstr "Haciendo a un desbloqueo de tablero de mensaje significa que será editable."
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Member requests publishing"
+msgstr "Los miembros solicitan publicación"
+
 msgid "Moderate"
 msgstr "Moderar"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Moderated forum"
 msgstr "Foro moderado"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Only let members post"
+msgstr "Sólo permitir que los miembros publiquen"
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
 msgid "Open"
 msgstr "Abierto"
 
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Open message board"
+msgstr "Tablero de mensaje abierto"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Pending state"
+msgstr "Estado pendiente"
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Ploneboard Workflow [Ploneboard]"
+msgstr "Flujo de trabajo de Ploneboard [Ploneboard]"
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "Private closed board"
+msgstr "Tablero cerrado privado"
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Private to members only"
 msgstr "Privado solo para miembros"
 
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Public"
 msgstr "Público"
 
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Re-publish a retracted comment"
+msgstr "Re-publicar un comentario retirado"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Rejected"
 msgstr "Rechazado"
 
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
 msgid "Require membership to post"
 msgstr "Solicitar login para publicar"
 
-#: ../skins/ploneboard_templates/add_comment_form.cpt:139
+#: ../skins/ploneboard_templates/add_comment_form.cpt:140
 msgid "Required"
 msgstr "Requerido"
 
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Retract a published comment"
+msgstr "Retirar un comentario publicado"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Retracted"
 msgstr "Retirado"
 
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer locks conversation"
+msgstr "Revisar bloqueadas conversación"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Reviewer publishes content"
+msgstr "Revisar contenido publicado"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer rejects pending conversation"
+msgstr "Revisar conversación pendiente rechaza"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "Reviewer rejects submission"
+msgstr "Revisar el envío rechazado"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "Reviewer returns conversation to active"
+msgstr "Revisar devuelve conversación a activa"
+
+#: ../profiles/default/workflows/ploneboard_conversation_workflow/definition.xml
+msgid "This allows owner to add a Conversation and enable it to receive Comments."
+msgstr ""
+"Esto permite al propietario para añadir una conversación y habilitarlo para "
+"recibir comentarios."
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
+msgid "This allows owner to edit a Comment made into a Forum to be public."
+msgstr "Esto permite al propietario para editar un comentario hecho en un foro que sea pública."
+
+#: ../profiles/default/workflows/ploneboard_forum_workflow/definition.xml
+msgid "This allows owner to sending a Forum to be public, to receive discussion from users."
+msgstr "Esto permite al propietario enviar un foro a que sea público, para recibir la discusión de los usuarios."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This allows owner to sending a Ploneboard to be public, to receive discussion from users."
+msgstr "Esto permite al propietario enviar un Ploneboard a que sea público, para recibir la discusión de los usuarios."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is locked by his Owner / the Plone site manager."
+msgstr "Este Foro está bloqueado por su propietario / administrador del sitio Plone."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is private by discussions from Plone users."
+msgstr "Este Foro es privado para las discusiones de los usuarios de Plone."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "This message board is published to receive discussions from Plone users."
+msgstr "Este Foro es publicado para las discusiones de los usuarios de Plone."
+
+#: ../profiles/default/workflows/ploneboard_workflow/definition.xml
+msgid "Unlock message board"
+msgstr "Desbloquear mensaje de foro"
+
+#: ../profiles/default/workflows/ploneboard_editable_comment_workflow/definition.xml
 msgid "Waiting for moderator"
 msgstr "Pendientes de moderación"
 
@@ -100,13 +254,17 @@ msgid "board_view_global"
 msgstr "Vista global de foros"
 
 #. Flat conversion view
+msgid "conversation_browserview"
+msgstr "Vista de Conversación plana"
+
+#. Flat conversion view
 msgid "conversation_view"
 msgstr "Vista de Conversación plana"
 
 #. Default: "A portlet which shows an overview of all recently updated conversations"
 #: ../profiles/default/portlets.xml
 msgid "description_recent_conversations"
-msgstr ""
+msgstr "Un portlet que muestra una visión general de todas las conversaciones recientemente actualizadas"
 
 #. Default: "Search results"
 #: ../browser/search.pt:32
@@ -137,4 +295,3 @@ msgstr "Vista de Conversación en hilo"
 #: ./skins/ploneboard_scripts/toPloneboardTime.py:33
 msgid "young_date_format: ${wday} ${hours}:${minutes}"
 msgstr "${wday} ${hours}:${minutes}"
-
