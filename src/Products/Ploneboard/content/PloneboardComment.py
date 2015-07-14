@@ -49,8 +49,8 @@ schema = PBCommentBaseBTreeFolderSchema + Schema((
               read_permission=ViewBoard,
               write_permission=EditComment,
               widget=RichWidget(description="Enter comment body.",
-                                      description_msgid="help_text",
-                                      label="Text",
+                                description_msgid="help_text",
+                                label="Text",
                                       label_msgid="label_text",
                                       i18n_domain='ploneboard',
                                       rows=5,
@@ -111,12 +111,14 @@ class PloneboardComment(BaseBTreeFolder):
         self.creation_date = DateTime()
 
     security.declareProtected(EditComment, 'edit')
+
     def edit(self, **kwargs):
         """Alias for update()
         """
         self.update(**kwargs)
 
     security.declareProtected(ViewBoard, 'getConversation')
+
     def getConversation(self):
         """Returns containing conversation."""
         # Try containment
@@ -129,6 +131,7 @@ class PloneboardComment(BaseBTreeFolder):
         return None
 
     security.declareProtected(AddComment, 'addReply')
+
     def addReply(self,
                  title,
                  text,
@@ -185,11 +188,13 @@ class PloneboardComment(BaseBTreeFolder):
         return msg
 
     security.declareProtected(AddComment, 'deleteReply')
+
     def deleteReply(self, comment):
         """ Removes comment from the replies index """
         comment.deleteReference(self, REPLY_RELATIONSHIP)
 
     security.declareProtected(ViewBoard, 'getReplies')
+
     def getReplies(self):
         """Returns the comments that were replies to this one."""
         # Return backreferences
@@ -198,6 +203,7 @@ class PloneboardComment(BaseBTreeFolder):
         return sorted_replies
 
     security.declareProtected(ViewBoard, 'getTitle')
+
     def getTitle(self):
         """Returns the subject of the comment."""
         return self.Title()
@@ -216,8 +222,8 @@ class PloneboardComment(BaseBTreeFolder):
                 result = result + msg_object.childIds(level + 1)
         return result
 
-
     security.declareProtected(ManageComment, 'makeBranch')
+
     def makeBranch(self):
         """"""
         # Contains mappings - old_msg_id -> new_msg_id
@@ -229,14 +235,14 @@ class PloneboardComment(BaseBTreeFolder):
         # here we get id of the first Comment in newly created Conversation
         first_msg_id = conv.objectIds()[0]
 
-        ids.update({self.getId() : first_msg_id})
+        ids.update({self.getId(): first_msg_id})
 
         objects = map(parent.getComment, self.childIds())
         for obj in objects:
             replyId = obj.inReplyTo().getId()
             comment = conv.getComment(ids.get(replyId))
             msg = comment.addReply(obj.getTitle(), obj.getText())
-            ids.update({obj.getId() : msg.getId()})
+            ids.update({obj.getId(): msg.getId()})
             # Here we need to set some fields from old objects
             # What else should we update?
             msg.creation_date = obj.creation_date
@@ -265,6 +271,7 @@ class PloneboardComment(BaseBTreeFolder):
         return {'portal_type': types}
 
     security.declareProtected(ViewBoard, 'hasAttachment')
+
     def hasAttachment(self):
         """Return 0 or 1 if this comment has attachments."""
         return not not self.objectIds(
@@ -272,6 +279,7 @@ class PloneboardComment(BaseBTreeFolder):
         )
 
     security.declareProtected(AddAttachment, 'validateAddAttachment')
+
     def validateAddAttachment(self, file):
         if self.getNumberOfAttachments() >= self.getNumberOfAllowedAttachments():
             return False
@@ -298,6 +306,7 @@ class PloneboardComment(BaseBTreeFolder):
         return True
 
     security.declareProtected(AddAttachment, 'addAttachment')
+
     def addAttachment(self, file, title=None):
         """ """
         if not self.validateAddAttachment(file):
@@ -322,25 +331,30 @@ class PloneboardComment(BaseBTreeFolder):
             attachment.at_post_create_script()
 
     security.declareProtected(AddAttachment, 'removeAttachment')
+
     def removeAttachment(self, id):
         """ """
         self._delObject(id)
 
     security.declareProtected(ViewBoard, 'getAttachment')
+
     def getAttachment(self, id):
         """ """
         return getattr(self, id)
 
     security.declareProtected(ViewBoard, 'getAttachments')
+
     def getAttachments(self):
         """ """
         return self.contentValues(filter=self.attachmentFilter())
 
     security.declareProtected(ViewBoard, 'getNumberOfAttachments')
+
     def getNumberOfAttachments(self):
         return len(self.contentIds(filter=self.attachmentFilter()))
 
     security.declareProtected(AddAttachment, 'getNumberOfAllowedAttachments')
+
     def getNumberOfAllowedAttachments(self):
         """
         Returns number of allowed attachments
@@ -349,13 +363,12 @@ class PloneboardComment(BaseBTreeFolder):
         forum = parent.getForum()
         return forum.getMaxAttachments()
 
-
     ############################################
     security.declareProtected(ViewBoard, 'getText')
+
     def getText(self, mimetype=None, **kwargs):
         """  """
         # Maybe we need to set caching for transform?
-
 
         unit = self.Schema()["text"].getBaseUnit(self)
         raw = unit.getRaw()
@@ -366,6 +379,7 @@ class PloneboardComment(BaseBTreeFolder):
                                                content_type=content_type)
 
     security.declareProtected(ViewBoard, 'Description')
+
     def Description(self, **kwargs):
         """We have to override Description here to handle arbitrary
         arguments since PortalFolder defines it."""
@@ -374,6 +388,7 @@ class PloneboardComment(BaseBTreeFolder):
         return self.getField('text').get(self, **kwargs)
 
     security.declareProtected(DeleteComment, "delete")
+
     def delete(self):
         """Delete this comment and make sure all comment replies to this
         comment are also cleaned up.
@@ -395,8 +410,8 @@ class PloneboardComment(BaseBTreeFolder):
         return "<PloneboardComment: title=%r;>" % self.Title()
     __repr__ = __str__
 
-
     security.declareProtected(DeleteComment, "object_delete")
+
     def object_delete(self):
         """Delete the comment the 'proper' way.
         """

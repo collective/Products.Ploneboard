@@ -31,7 +31,7 @@ from Products.Ploneboard.permissions import MergeConversation
 from Products.Ploneboard.permissions import ViewBoard
 from zope import event
 from zope.interface import implements
-from zope.interface import Interface
+# from zope.interface import Interface
 from zope.interface import providedBy
 
 
@@ -106,7 +106,6 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         if not title:
             title = self.Title()
 
-
         m = _createObjectByType('PloneboardComment', self, id)
 
         # XXX: There is some permission problem with AT write_permission
@@ -156,10 +155,10 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         Retrieves the specified number of comments with offset 'offset'.
         In addition there are kw args for sorting and retrieval options.
         """
-        query = {'object_provides' : 'Products.Ploneboard.interfaces.IComment',
-                 'sort_on'           : 'created',
-                 'sort_limit'        : (offset + limit),
-                 'path'              : '/'.join(self.getPhysicalPath()), }
+        query = {'object_provides': 'Products.Ploneboard.interfaces.IComment',
+                 'sort_on': 'created',
+                 'sort_limit': (offset + limit),
+                 'path': '/'.join(self.getPhysicalPath()), }
         query.update(kw)
         catalog = self._get_catalog()
         return [f.getObject() for f in catalog(**query)[offset:offset + limit]]
@@ -207,6 +206,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         return None
 
     security.declareProtected(ViewBoard, 'getLastCommentId')
+
     def getLastCommentId(self):
         """
         Returns the relative URL of the last comment
@@ -242,7 +242,7 @@ class PloneboardConversation(BrowserDefaultMixin, BaseBTreeFolder):
         are not replies to other comments.
         """
         raw = self.getComments()
-        ours = [ comment for comment in raw if comment.inReplyToUID() is None]
+        ours = [comment for comment in raw if comment.inReplyToUID() is None]
         ours = sorted(ours, key=lambda our: our.created())
         return ours
 

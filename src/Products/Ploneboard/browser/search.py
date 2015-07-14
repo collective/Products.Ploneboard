@@ -39,7 +39,7 @@ class SearchView(BrowserView):
             return
 
         text = self.request.form["q"]
-        for char in [ "(", ")" ]:
+        for char in ["(", ")"]:
             text = text.replace(char, '"%s"' % char)
 
         ct = getToolByName(self.context, "portal_catalog")

@@ -1,5 +1,5 @@
 from DateTime import DateTime
-from Products.CMFPlacefulWorkflow.WorkflowPolicyConfig import manage_addWorkflowPolicyConfig
+# from Products.CMFPlacefulWorkflow.WorkflowPolicyConfig import manage_addWorkflowPolicyConfig
 from Products.Ploneboard.browser.events import onForumCreated
 
 
@@ -7,7 +7,8 @@ def addMember(self, username, fullname="", email="", roles=('Member',), last_log
     self.portal.portal_membership.addMember(username, 'secret', roles, [])
     member = self.portal.portal_membership.getMemberById(username)
     member.setMemberProperties({'fullname': fullname, 'email': email,
-                                'last_login_time': DateTime(last_login_time),})
+                                'last_login_time': DateTime(last_login_time)})
+
 
 def setUpDefaultMembersBoardAndForum(self):
     addMember(self, 'member1', 'Member one', 'member1@example.com', roles=('Member',))
@@ -39,6 +40,7 @@ def disableScriptValidators(portal):
     except Exception:
         pass
 
+
 def logoutThenLoginAs(self, browser, userid):
     browser.open('%s/logout' % self.portal.absolute_url())
     browser.open('%s/login_form' % self.portal.absolute_url())
@@ -48,11 +50,13 @@ def logoutThenLoginAs(self, browser, userid):
     browser.getControl('Log in').click()
     return
 
+
 def setupEditableForum(self, forum):
     self.setRoles(('Manager',))
     forum.setAllowEditComment(True)
     onForumCreated(forum, None)
     self.setRoles(('Member',))
+
 
 def lockBoard(self, state):
     self.setRoles(('Manager',))

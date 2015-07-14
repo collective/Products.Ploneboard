@@ -14,7 +14,7 @@ def autopublish_script(self, sci):
         parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
-                if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
+                if wftool.getInfoFor(parent, 'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'publish')
             except ConflictError:
                 raise
@@ -32,13 +32,13 @@ def publish_script(self, sci):
         parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
-                if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
+                if wftool.getInfoFor(parent, 'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'publish')
             except ConflictError:
                 raise
             except Exception:
                 pass
-            #Reindex conversation to update num_comments index
+            # Reindex conversation to update num_comments index
             parent.reindexObject(idxs=('num_comments',))
 
 
@@ -47,7 +47,7 @@ def reject_script(self, sci):
     # Dispatch to more easily customizable methods
     object = sci.object
     # We don't have notifyPublished method anymore
-    #object.notifyRetracted()
+    # object.notifyRetracted()
 
     wftool = sci.getPortal().portal_workflow
 
@@ -56,7 +56,7 @@ def reject_script(self, sci):
         parent = aq_parent(aq_inner(object))
         if IConversation.providedBy(parent):
             try:
-                 if wftool.getInfoFor(parent,'review_state', None) in (sci.old_state.getId(), 'pending'):
+                if wftool.getInfoFor(parent, 'review_state', None) in (sci.old_state.getId(), 'pending'):
                     wftool.doActionFor(parent, 'reject')
             except ConflictError:
                 raise
@@ -71,4 +71,3 @@ def lock_or_unlock(self, sci):
         obj.unlock_board()
     elif sci.new_state.id == 'locked':
         obj.lock_board()
-

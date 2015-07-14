@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Ploneboard.browser.utils import toPloneboardTime, getNumberOfConversations
 from Products.Ploneboard.interfaces import IForum, IComment
 
+
 class BoardView(Five.BrowserView):
     """View methods for board type
     """
@@ -13,7 +14,7 @@ class BoardView(Five.BrowserView):
     def getKeyedForums(self, sitewide=False):
         """Return all the forums in a board."""
         catalog = getToolByName(self.context, 'portal_catalog')
-        query = {'object_provides':IForum.__identifier__}
+        query = {'object_provides': IForum.__identifier__}
         if not sitewide:
             query['path'] = '/'.join(self.context.getPhysicalPath())
 
@@ -24,7 +25,7 @@ class BoardView(Five.BrowserView):
             data = dict(absolute_url=f.getURL(),
                         Title=f.Title,
                         Description=f.Description,
-                        getNumberOfConversations=getNumberOfConversations(obj, catalog), # XXX THIS AND CATEGORY IS WHY WE NEED GETOBJECT, TRY CACHING
+                        getNumberOfConversations=getNumberOfConversations(obj, catalog),  # XXX THIS AND CATEGORY IS WHY WE NEED GETOBJECT, TRY CACHING
                         getLastCommentDate=None,
                         getLastCommentAuthor=None,
                         )
@@ -39,21 +40,20 @@ class BoardView(Five.BrowserView):
                 data['getLastCommentDate'] = self.toPloneboardTime(lastcomment.created)
                 data['getLastCommentAuthor'] = lastcomment.Creator
 
-
             try:
                 categories = obj.getCategory()
             except AttributeError:
                 categories = None
             if not categories:
                 categories = None
-            if not isinstance(categories, (tuple,list)):
+            if not isinstance(categories, (tuple, list)):
                 categories = categories,
             for category in categories:
                 try:
                     categoryforums = result.get(category, [])
                     categoryforums.append(data)
                     result[category] = categoryforums
-                except TypeError: # category is list?!
+                except TypeError:  # category is list?!
                     result[', '.join(category)] = data
         return result
 

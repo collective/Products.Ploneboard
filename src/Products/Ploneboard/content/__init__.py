@@ -1,7 +1,7 @@
 import Ploneboard
 import PloneboardForum
 import PloneboardConversation
-import PloneboardComment
+# import PloneboardComment
 
 from zope import interface
 

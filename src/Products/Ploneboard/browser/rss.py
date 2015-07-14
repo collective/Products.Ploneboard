@@ -17,6 +17,7 @@ class RSSView(BrowserView):
                                            name="plone_context_state")
         sp = getToolByName(context, "portal_properties").site_properties
         plone_view = getMultiAdapter((context, request), name="plone")
+
         def crop(text):
             return plone_view.cropText(text,
                     sp.search_results_description_length, sp.ellipsis)

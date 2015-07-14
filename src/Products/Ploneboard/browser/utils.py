@@ -10,6 +10,7 @@ from zope.i18n import translate
 
 import time
 
+
 class defer(object):
     """Defer function call until actually used.
 
@@ -24,17 +25,17 @@ class defer(object):
     def __str__(self):
         return self.func(*self.args, **self.kwargs)
 
+
 def toPloneboardTime(context, request, time_=None):
     """Return time formatted for Ploneboard"""
     ploneboard_time = None
     ts = getToolByName(context, 'translation_service')
 
-    format = '%Y;%m;%d;%w;%H;%M;%S'
+    # format = '%Y;%m;%d;%w;%H;%M;%S'
 
     # fallback formats, english
-    young_format_en = '%A %H:%M'
+    # young_format_en = '%A %H:%M'
     old_format_en = '%B %d. %Y'
-
 
     if not time_:
         return 'Unknown date'
@@ -96,6 +97,7 @@ def toPloneboardTime(context, request, time_=None):
 
     return ploneboard_time
 
+
 def getNumberOfComments(node, catalog=None):
     """Returns the number of comments to this forum.
     """
@@ -104,6 +106,7 @@ def getNumberOfComments(node, catalog=None):
     return len(catalog(
         object_provides=IComment.__identifier__,
         path='/'.join(node.getPhysicalPath())))
+
 
 def getNumberOfConversations(node, catalog=None):
     """Returns the number of conversations in this forum.
