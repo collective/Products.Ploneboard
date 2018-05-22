@@ -1,6 +1,5 @@
 from zope.interface import Interface
 
-
 class IForumView(Interface):
 
     def getNumberOfConversations():
@@ -25,7 +24,6 @@ class IConversationView(Interface):
         """Return all of the children comments for a parent comment.
         """
 
-
 class ICommentView(Interface):
 
     def comment():
@@ -40,3 +38,5 @@ class ICommentView(Interface):
     def quotedBody():
         """Return the body of the comment, quoted for a reply.
         """
+
+

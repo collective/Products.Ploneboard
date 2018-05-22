@@ -1,5 +1,4 @@
-# from zope.interface import Interface
-from zope.interface import implements
+from zope.interface import implements, Interface
 
 from AccessControl import ClassSecurityInfo
 
@@ -61,7 +60,7 @@ schema = ATBTreeFolderSchema + Schema((
             label_msgid = "label_categories_board",
             i18n_domain = "ploneboard")),
     ))
-
+    
 utils.finalizeSchema(schema)
 
 
@@ -78,21 +77,22 @@ class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
         return getToolByName(self, 'portal_catalog')
 
     security.declareProtected(ManageBoard, 'edit')
-
     def edit(self, **kwargs):
         """Alias for update()
         """
         self.update(**kwargs)
 
     security.declareProtected(AddForum, 'addForum')
-
-    def addForum(self, id, title, description):
+    def addForum( self
+                , id
+                , title
+                , description ):
         """Add a forum to the board.
 
         XXX: Should be possible to parameterise the exact type that is being
         added.
         """
-        kwargs = {'title': title, 'description': description}
+        kwargs = {'title' : title, 'description' : description}
         forum = PloneboardForum(id)
         self._setObject(id, forum)
         forum = getattr(self, id)
@@ -105,42 +105,38 @@ class Ploneboard(BrowserDefaultMixin, ATBTreeFolder):
             if (syn_tool.isSiteSyndicationAllowed() and not syn_tool.isSyndicationAllowed(forum)):
                 syn_tool.enableSyndication(forum)
 
-        # forum.setDescription(description)
+        #forum.setDescription(description)
         return forum
 
     security.declareProtected(ViewBoard, 'getForums')
-
     def getForums(self, sitewide=False):
         """Return all the forums in this board."""
-        query = {'object_provides': 'Products.Ploneboard.interfaces.IForum'}
+        query = {'object_provides':'Products.Ploneboard.interfaces.IForum'}
         if not sitewide:
             query['path'] = '/'.join(self.getPhysicalPath())
         return [f.getObject() for f in self.getCatalog()(query)]
 
-    security.declareProtected(ViewBoard, 'getForumIds')
 
+    security.declareProtected(ViewBoard, 'getForumIds')
     def getForumIds(self):
         """Return all the forums in this board."""
         return [f.getId for f in self.getCatalog()(
                 object_provides='Products.Ploneboard.interfaces.IForum')]
 
     security.declareProtected(ManageBoard, 'removeForum')
-
     def removeForum(self, forum_id):
         """Remove a forum from this board."""
         self._delObject(forum_id)
 
     security.declareProtected(SearchBoard, 'searchComments')
-
     def searchComments(self, query):
         """This method searches through all forums, conversations and comments."""
         return self.getCatalog()(**query)
 
     security.declarePublic('getForum')
-
     def getForum(self, forum_id):
         """Returns forum with specified forum id."""
-        # return getattr(self, forum_id, None)
+        #return getattr(self, forum_id, None)
         forums = self.getCatalog()(
                 object_provides='Products.Ploneboard.interfaces.IForum',
                 getId=forum_id)

@@ -8,7 +8,7 @@ from Products.Ploneboard.browser.interfaces import ICommentView
 from Products.Ploneboard.browser.interfaces import IConversationView
 from Products.Ploneboard.browser.utils import toPloneboardTime
 from Products.Ploneboard.utils import PloneboardMessageFactory as _
-from zope.interface import implementer
+from zope.interface  import implementer
 from zope.i18n import translate
 
 
@@ -46,12 +46,12 @@ class CommentViewableView(Five.BrowserView):
             'canDelete': checkPermission(permissions.DeleteComment, comment),
             'canReply': checkPermission(permissions.AddComment, comment),
             'getObject': comment,
-            'workflowActions': actions['workflow'],
-            'review_state': self.portal_workflow.getInfoFor(
+            'workflowActions' : actions['workflow'],
+            'review_state' : self.portal_workflow.getInfoFor(
                 comment,
                 'review_state'
             ),
-            'reviewStateTitle': self.plone_utils.getReviewStateTitleFor(
+            'reviewStateTitle' : self.plone_utils.getReviewStateTitleFor(
                 comment
             ),
             'UID': comment.UID(),
@@ -96,7 +96,7 @@ class CommentView(CommentViewableView):
             return _(
                 "label_quote", u"Previously ${author} wrote: ${quote}",
                 {"author": self.author(),
-                 "quote": unicode("<blockquote>%s</blockquote></br>" %
+                 "quote":  unicode("<blockquote>%s</blockquote></br>" %
                                    (self.context.getText()), 'utf-8')
                 }
             )
@@ -113,8 +113,8 @@ class ConversationView(CommentView):
         forum = conv.getForum()
 
         return {
-                'maximumAttachments': forum.getMaxAttachments(),
-                'maximumAttachmentSize': forum.getMaxAttachmentSize(),
+                'maximumAttachments' : forum.getMaxAttachments(),
+                'maximumAttachmentSize' : forum.getMaxAttachmentSize(),
                 'canAttach': forum.getMaxAttachments() > 0 and \
                               checkPermission(permissions.AddAttachment, conv),
                 }
@@ -204,19 +204,19 @@ class RecentConversationsView(CommentViewableView):
         if creatorInfo is not None and creatorInfo.get('fullname', '') != "":
             lastCommentCreator = creatorInfo['fullname']
 
-        return {'Title': ob.title_or_id(),
-                'Description': ob.Description(),
-                'absolute_url': ob.absolute_url(),
-                'forum_title': forum.title_or_id(),
-                'forum_url': forum.absolute_url(),
-                'review_state_normalized': wfstate,
-                'num_comments': ob.getNumberOfComments(),
-                'creator': creator,
-                'last_comment_id': lastComment.getId(),
-                'last_comment_creator': lastCommentCreator,
-                'last_comment_date': lastComment.created(),
-                'can_access_last_comment': canAccessLastComment,
-                'is_new': self._is_new(ob.modified()),
+        return { 'Title': ob.title_or_id(),
+                 'Description' : ob.Description(),
+                 'absolute_url': ob.absolute_url(),
+                 'forum_title' : forum.title_or_id(),
+                 'forum_url' : forum.absolute_url(),
+                 'review_state_normalized' : wfstate,
+                 'num_comments' : ob.getNumberOfComments(),
+                 'creator' : creator,
+                 'last_comment_id' : lastComment.getId(),
+                 'last_comment_creator' : lastCommentCreator,
+                 'last_comment_date' : lastComment.created(),
+                 'can_access_last_comment' : canAccessLastComment,
+                 'is_new' : self._is_new(ob.modified()),
                }
 
     def _is_new(self, modified):
@@ -234,7 +234,6 @@ class RecentConversationsView(CommentViewableView):
             return True
         else:
             return (modified >= DateTime(llt))
-
 
 class UnansweredConversationsView(RecentConversationsView):
     """Find unanswered conversations
@@ -259,7 +258,7 @@ class UnansweredConversationsView(RecentConversationsView):
             sort_limit=(offset + limit),
             path='/'.join(
                 self.context.getPhysicalPath())
-                )[offset: offset + limit]
+                )[offset:offset + limit]
         return [self._buildDict(r.getObject()) for r in results]
 
     def _buildDict(self, ob):
@@ -274,14 +273,14 @@ class UnansweredConversationsView(RecentConversationsView):
 
         return {
             'Title': ob.title_or_id(),
-            'Description': ob.Description(),
-            'created': ob.created(),
+            'Description' : ob.Description(),
+            'created' : ob.created(),
             'absolute_url': ob.absolute_url(),
-            'forum_title': forum.title_or_id(),
-            'forum_url': forum.absolute_url(),
-            'review_state_normalized': wfstate,
-            'creator': creator,
-            'is_new': self._is_new(ob.modified()),
+            'forum_title' : forum.title_or_id(),
+            'forum_url' : forum.absolute_url(),
+            'review_state_normalized' : wfstate,
+            'creator' : creator,
+            'is_new' : self._is_new(ob.modified()),
         }
 
 

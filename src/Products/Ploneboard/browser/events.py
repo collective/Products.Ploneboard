@@ -11,7 +11,6 @@ import logging
 
 LOG = logging.getLogger('Plone')
 
-
 def onForumCreated(forum, event):
     """Subscriber for ObjectModifiedEvent
     """
@@ -29,14 +28,13 @@ def onForumCreated(forum, event):
         )
 
     elif WorkflowPolicyConfig_id in forum.objectIds() \
-        and not forum.getAllowEditComment():
+         and not forum.getAllowEditComment():
 
         forum.manage_delObjects([WorkflowPolicyConfig_id])
         LOG.info(
             'Deleted workflow polify for forum %s' %
             '/'.join(forum.getPhysicalPath())
         )
-
 
 def onCommentCreated(comment, event):
     """Subscriber for ObjectModifiedEvent

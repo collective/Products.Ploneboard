@@ -20,13 +20,13 @@ from Products.Archetypes.public import Schema
 from Products.Archetypes.public import SelectionWidget
 from Products.Archetypes.public import TextAreaWidget
 from Products.Archetypes.public import TextField
-# from Products.CMFPlone.interfaces import INonStructuralFolder \
-#    as ZopeTwoINonStructuralFolder
+from Products.CMFPlone.interfaces import INonStructuralFolder \
+    as ZopeTwoINonStructuralFolder
 from Products.CMFPlone.interfaces.structure import INonStructuralFolder
 from Products.CMFPlone.utils import _createObjectByType, log_deprecated
 from Products.Ploneboard import utils
 from Products.Ploneboard.config import PROJECTNAME, HAS_SIMPLEATTACHMENT
-# from Products.Ploneboard.interfaces import IComment
+from Products.Ploneboard.interfaces import IComment
 from Products.Ploneboard.interfaces import IConversation
 from Products.Ploneboard.interfaces import IForum
 from Products.Ploneboard.interfaces import IPloneboard
@@ -36,7 +36,7 @@ from Products.Ploneboard.permissions import MoveConversation
 from Products.Ploneboard.permissions import ViewBoard
 from zope import event
 from zope.interface import implementer
-# from zope.interface import Interface
+from zope.interface import Interface
 
 _ = utils.PloneboardMessageFactory
 
@@ -102,13 +102,15 @@ schema = BaseBTreeFolderSchema + Schema((
     BooleanField('allowEditComment',
         default=False,
         languageIndependent=0,
-        widget=BooleanWidget(label=u'Allow users to edit their comments',
-                             description=u'If selected, this will give users the ability to '
-                                         u'edit their own comments.',
-                             label_msgid='label_allow_edit_comment',
-                             description_msgid='help_allow_edit_comment',
-                             # Only show when no conversations exist
-                             condition="not:object/getNumberOfConversations|nothing",),
+        widget=BooleanWidget(
+            label=u'Allow users to edit their comments',
+            description=u'If selected, this will give users the ability to '
+                        u'edit their own comments.',
+            label_msgid='label_allow_edit_comment',
+            description_msgid='help_allow_edit_comment',
+            # Only show when no conversations exist
+            condition="not:object/getNumberOfConversations|nothing",
+            ),
     ),
     BooleanField(
         'showCaptcha',
@@ -129,12 +131,12 @@ if not HAS_SIMPLEATTACHMENT:
     schema['maxAttachments'].mode = "r"
     schema['maxAttachments'].default = 0
     schema['maxAttachments'].widget.visible = {
-        'edit': 'invisible',
-        'view': 'invisible'
+        'edit' : 'invisible',
+        'view' : 'invisible'
     }
     schema['maxAttachmentSize'].widget.visible = {
-        'edit': 'invisible',
-        'view': 'invisible'
+        'edit' : 'invisible',
+        'view' : 'invisible'
     }
 
 
@@ -236,9 +238,10 @@ class PloneboardForum(BaseBTreeFolder):
         """Returns the conversation with the given conversation id."""
         # return self._getOb(conversation_id, default)
         catalog = self._get_catalog()
-        conversations = catalog(object_provides=IConversation.__identifier__,
-                                getId=conversation_id,
-                                path='/'.join(self.getPhysicalPath()))
+        conversations = catalog(
+                object_provides=IConversation.__identifier__,
+                getId=conversation_id,
+                path='/'.join(self.getPhysicalPath()))
         if conversations:
             return conversations[0].getObject()
         else:
@@ -269,13 +272,15 @@ class PloneboardForum(BaseBTreeFolder):
         )
         return [f.getObject() for f in brains[offset:offset + limit]]
 
+
     @security.protected(ViewBoard)
     def getNumberOfConversations(self):
         """Returns the number of conversations in this forum."""
         log_deprecated("Products.Ploneboard.content.PloneboardForum."
                        "PloneboardForum.getNumberOfConversations is "
                        "deprecated in favor of Products.Ploneboard.browser."
-                       "forum.ForumView.getNumberOfConversations")
+                       "forum.ForumView.getNumberOfConversations"
+        )
         return len(
             self._get_catalog()(
                 object_provides=IConversation.__identifier__,
@@ -301,9 +306,10 @@ class PloneboardForum(BaseBTreeFolder):
         Returns the last conversation.
         """
         # XXX Is Created or Modified the most interesting part?
-        res = self._get_catalog()(object_provides=IConversation.__identifier__,
-                                  sort_on='created', sort_order='reverse', sort_limit=1,
-                                  path='/'.join(self.getPhysicalPath()))
+        res = self._get_catalog()(
+                object_provides=IConversation.__identifier__,
+                sort_on='created', sort_order='reverse', sort_limit=1,
+                path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].getObject()
 
@@ -325,9 +331,10 @@ class PloneboardForum(BaseBTreeFolder):
         """
         Returns the name of the author of the last comment.
         """
-        res = self._get_catalog()(object_provides='Products.Ploneboard.interfaces.IComment',
-                                  sort_on='created', sort_order='reverse', sort_limit=1,
-                                  path='/'.join(self.getPhysicalPath()))
+        res = self._get_catalog()(
+                object_provides='Products.Ploneboard.interfaces.IComment',
+                sort_on='created', sort_order='reverse', sort_limit=1,
+                path='/'.join(self.getPhysicalPath()))
         if res:
             return res[0].Creator
         else:
@@ -365,6 +372,7 @@ class PloneboardForum(BaseBTreeFolder):
         if pb_tool.hasProperty(prop_name):
             return pb_tool.getProperty(prop_name)
         return 30
+
 
     ############################################################################
     # Folder methods, indexes and such
