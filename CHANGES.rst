@@ -7,14 +7,14 @@ Changelog
 - Drop support for Python 2.6 and Plone 4.1.
   [hvelarde]
 
-- Updated i18n support, adding i18n sentences for workflow strings, synced
-  the pot files and updated the po files.
+- Updated i18n support, adding i18n sentences for workflow strings, synced the pot files and updated the po files.
   [macagua]
 
-- Update Spanish translations
+- Update Spanish translations.
   [macagua]
 
-- Githib issue $45 [sureshvv]
+- Do not check if the response is ``None`` on redirecting from a comment to it's conversation (closes `#45 <https://github.com/collective/Products.Ploneboard/issues/45>`_).
+  [sureshvv]
 
 
 3.6 (2015-01-23)
@@ -26,7 +26,7 @@ Changelog
   Fixes https://github.com/collective/Products.Ploneboard/issues/31
   [maurits]
 
-- update pt-br translations
+- Update pt-br translations.
   [agnogueira]
 
 - Fixed dependency for AccessControl. Plone < 4.3 have an old version pinned
