@@ -1,8 +1,12 @@
 language: python
 python: 2.7
+sudo: false
+cache:
+  directories:
+  - eggs
 env:
   - PLONE_VERSION=4.2
-  - PLONE_VERSION=4.3 QA=true
+  - PLONE_VERSION=4.3
   - PLONE_VERSION=5.0
 matrix:
   include:
@@ -10,18 +14,19 @@ matrix:
       env: PLONE_VERSION=4.1
   fast_finish: true
 install:
-  - sed -ie "s#travis-4.x.cfg#travis-$PLONE_VERSION.x.cfg#" travis.cfg
-  - mkdir -p buildout-cache/downloads
-  - easy_install -U setuptools
-  - python bootstrap.py -c travis.cfg
-  - bin/buildout -c travis.cfg annotate
-  - bin/buildout -c travis.cfg -N -q
+- sed -ie "s#test-4.3#test-$PLONE_VERSION#" buildout.cfg
+- python bootstrap.py
+- bin/buildout -c travis.cfg annotate
+- bin/buildout -c travis.cfg
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - test $QA && bin/code-analysis || true
-  - bin/test
-after_success: test $QA && bin/coverage.sh && pip install -q coveralls && coveralls || true
+- bin/code-analysis
+- bin/test
+after_success:
+- bin/createcoverage --output-dir=htmlcov -t "--layer=!Robot"
+- pip install coveralls
+- coveralls
 notifications:
   irc: irc.freenode.org#plone-testing
