@@ -42,9 +42,12 @@ setup(
         'AccessControl>=3.0',
     ],
     extras_require=dict(
-        test=['plone.app.testing',
-              'lxml',
-              'Products.PloneTestCase', ],
+        test=[
+            'cssselect',
+            'lxml',
+            'plone.app.testing',
+            'Products.PloneTestCase',
+        ],
     ),
     entry_points="""
     [z3c.autoinclude.plugin]
