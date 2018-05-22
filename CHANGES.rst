@@ -4,6 +4,9 @@ Changelog
 3.7 (unreleased)
 ----------------
 
+- Drop support for Python 2.6 and Plone 4.1.
+  [hvelarde]
+
 - Updated i18n support, adding i18n sentences for workflow strings, synced
   the pot files and updated the po files.
   [macagua]
@@ -63,13 +66,13 @@ Changelog
 - Check if toPloneboardTime gets a callable and call it to get a Datetime
   [jensens]
 
-- Fixed visual issue with HTML lists when WISIWYG editor is enabled 
+- Fixed visual issue with HTML lists when WISIWYG editor is enabled
   [keul]
 
 - Call unmarkCreationFlag method after comment creation, to remove creation flag
   [cekk]
 
-- Fixed attachment translations 
+- Fixed attachment translations
   [cekk]
 
 - Fixed bug: moderation_form fail to render when using VirtualHostMonster

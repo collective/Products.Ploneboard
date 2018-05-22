@@ -11,11 +11,11 @@ setup(
     open("CHANGES.rst").read(),
     classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
         "Framework :: Zope2",
-        "Programming Language :: Python",
+        'Programming Language :: Python :: 2 :: Only',
+        'Programming Language :: Python :: 2.7',
     ],
     keywords='Zope CMF Plone board forum',
     author='Jarn, Wichert Akkerman, Martin Aspeli',
@@ -29,7 +29,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'Products.CMFPlone >= 4.1',
+        'Products.CMFPlone >= 4.2',
         'Products.SimpleAttachment',
         'plone.api',
         'plone.app.controlpanel',
